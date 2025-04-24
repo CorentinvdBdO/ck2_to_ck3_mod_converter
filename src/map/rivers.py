@@ -4,6 +4,7 @@ import numpy as np
 from dataclasses import dataclass
 from typing import Optional, List, Tuple
 from scipy.interpolate import interp1d
+import random
 
 # River map color constants
 RIVER_COLORS = {
@@ -23,54 +24,39 @@ class RiverPoint:
 class River:
     def __init__(self):
         self.points: List[RiverPoint] = []
-        self.tributaries: List[River] = []
+        self.tributaries: List[Tuple[River, int]] = []  # Now stores (tributary, parent_point_index)
         self.start_pixel_color_type: str = ''
         self.end_pixel_color_type: str = ''
     
-    def scale(self, factor: float) -> 'River':
-        """Scale the river curve by a factor"""
-        scaled_river = River()
-        scaled_river.start_pixel_color_type = self.start_pixel_color_type
-        scaled_river.end_pixel_color_type = self.end_pixel_color_type
+    def scale(self, factor: float, offset: tuple[int, int], deletion_rate: float = 0) -> 'River':
+        """Scale the river curve by a factor and ensure tributaries stay connected"""
+        # Scale main river points
+        scaled_points = []
+        for point in self.points:
+            scaled_points.append(RiverPoint(
+                x=point.x * factor + offset[0],
+                y=point.y * factor + offset[1],
+                color=point.color
+            ))
+        self.points = scaled_points
+
+        # Scale tributaries and ensure they stay connected
+        for tributary, parent_idx in self.tributaries:
+            # Get the parent point where this tributary connects
+            parent_point = self.points[parent_idx]
+            
+            # Scale tributary
+            tributary.scale(factor, offset, deletion_rate)
+            
+            # Adjust tributary's first point to match parent point
+            if tributary.points:
+                tributary.points[0] = RiverPoint(
+                    x=parent_point.x,
+                    y=parent_point.y,
+                    color=tributary.points[0].color
+                )
         
-        # Scale points
-        if len(self.points) > 1:
-            # Get x and y coordinates as separate arrays
-            x_coords = np.array([p.x for p in self.points])
-            y_coords = np.array([p.y for p in self.points])
-            
-            # Scale coordinates
-            x_scaled = x_coords * factor
-            y_scaled = y_coords * factor
-            
-            # Create interpolation parameter (distance along the curve)
-            t = np.arange(len(self.points))
-            t_new = np.linspace(0, len(self.points) - 1, int(len(self.points) * factor))
-            
-            # Interpolate points along the curve
-            if len(self.points) > 2:
-                # Use cubic interpolation for smoother curves
-                fx = interp1d(t, x_coords, kind='cubic')
-                fy = interp1d(t, y_coords, kind='cubic')
-            else:
-                # Use linear interpolation for short segments
-                fx = interp1d(t, x_coords, kind='linear')
-                fy = interp1d(t, y_coords, kind='linear')
-            
-            x_new = fx(t_new)
-            y_new = fy(t_new)
-            
-            # Create new points with interpolated colors
-            for i in range(len(t_new)):
-                # Find position in original curve for color interpolation
-                pos = t_new[i] / (len(self.points) - 1)
-                idx = int(pos * (len(self.points) - 1))
-                color = self.points[idx].color
-                scaled_river.points.append(RiverPoint(x_new[i], y_new[i], color))
-        
-        # Scale tributaries
-        scaled_river.tributaries = [t.scale(factor) for t in self.tributaries]
-        return scaled_river
+        return self
 
     def follow(self, start_pixel: RiverPoint, image_array: np.ndarray, visited: set):
         """Follow the river from the start pixel, building the river structure"""
@@ -91,10 +77,11 @@ class River:
                     color = tuple(image_array[ny, nx])
                     
                     if color == RIVER_COLORS['TRIBUTARY']:
+                        # Store the tributary with the index of its parent point
                         tributary = River()
                         tributary.start_pixel_color_type = 'TRIBUTARY'
                         tributary.follow_tributary(RiverPoint(nx, ny, color), image_array, visited)
-                        self.tributaries.append(tributary)
+                        self.tributaries.append((tributary, len(self.points) - 1))
                     elif color != RIVER_COLORS['LAND']:
                         next_point = RiverPoint(nx, ny, color)
                         break
@@ -131,7 +118,7 @@ def convert_rivers_map(
     # Find all river systems (starting from green source pixels)
     river_systems = []
     visited = set()
-    
+    print("Following rivers...")
     for y in range(image_array.shape[0]):
         for x in range(image_array.shape[1]):
             if tuple(image_array[y, x]) == RIVER_COLORS['SOURCE'] and (x, y) not in visited:
@@ -142,62 +129,121 @@ def convert_rivers_map(
                 river_systems.append(river)
     
     # Scale river systems
-    scaled_systems = [system.scale(conversion_scale) for system in river_systems]
+    for system in river_systems:
+        system.scale(conversion_scale, conversion_offset, deletion_rate=0.)
     
     # Create new image
     final_image = Image.new('RGB', destination_dimensions, RIVER_COLORS['LAND'])
     
+    print("Drawing rivers...")
     # Draw scaled rivers
-    for system in scaled_systems:
-        draw_river_system(final_image, system, conversion_offset)
+    for system in river_systems:
+        draw_river_system(final_image, system)
     
     # Save result
     final_image.save(destination_rivers_map_path, "PNG")
 
-def draw_river_system(image: Image.Image, river: River, offset: tuple[int, int]):
+def draw_river_system(image: Image.Image, river: River):    
     """Draw a river system onto the image using exact pixel placement"""
     pixels = image.load()
+    drawn_pixels = set()  # Keep track of all pixels drawn by main rivers
+    special_points = []  # Store (x, y, color) tuples for special points
     
-    def draw_line(p1: RiverPoint, p2: RiverPoint):
-        """
-        Draw a line segment between two points using exact pixel placement.
-        Only colors pixels that lie exactly on the mathematical line.
-        """
-        x1, y1 = p1.x + offset[0], p1.y + offset[1]
-        x2, y2 = p2.x + offset[0], p2.y + offset[1]
+    def get_line_pixels(p1: RiverPoint, p2: RiverPoint) -> List[Tuple[int, int]]:
+        """Get all pixels for a line segment using Bresenham's algorithm"""
+        x1, y1 = int(round(p1.x)), int(round(p1.y))
+        x2, y2 = int(round(p2.x)), int(round(p2.y))
+        line_pixels = []
         
-        # Calculate line length
-        length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-        if length == 0:
-            # Handle single point case
-            px, py = int(round(x1)), int(round(y1))
-            if 0 <= px < image.width and 0 <= py < image.height:
-                pixels[px, py] = p1.color
-            return
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
         
-        # Calculate how many pixels we need (round up to ensure we don't miss pixels)
-        num_points = abs(int(length * 1.5) + 1)
+        x, y = x1, y1
+        step_x = 1 if x1 < x2 else -1
+        step_y = 1 if y1 < y2 else -1
         
-        # Generate points along the line
-        for i in range(num_points):
-            t = i / (num_points)
-            # Linear interpolation
-            x = x1 + t * (x2 - x1)
-            y = y1 + t * (y2 - y1)
-            
-            # Round to nearest pixel
-            px, py = int(round(x)), int(round(y))
-            
-            # Check bounds and draw if valid
-            if 0 <= px < image.width and 0 <= py < image.height:
-                # Determine color based on position along the line
-                color = p1.color if t < 0.5 else p2.color
-                pixels[px, py] = color
-    
-    # Draw main river
-    for i in range(len(river.points) - 1):
-        draw_line(river.points[i], river.points[i + 1])
-    
+        if dx > dy:
+            err = dx / 2
+            while x != x2:
+                x += step_x
+                err -= dy
+                if err < 0:
+                    y += step_y
+                    err += dx
+                if 0 <= x < image.width and 0 <= y < image.height:
+                    line_pixels.append((x, y))
+        else:
+            err = dy / 2
+            while y != y2:
+                y += step_y
+                err -= dx
+                if err < 0:
+                    x += step_x
+                    err += dy
+                if 0 <= x < image.width and 0 <= y < image.height:
+                    line_pixels.append((x, y))
+        
+        return line_pixels
+
+    # Draw main river first - collect all pixels
+    main_river_pixels = []
+    if len(river.points) > 1:
+        # Get all segments
+        for i in range(len(river.points) - 1):
+            p1, p2 = river.points[i], river.points[i + 1]
+            # Use regular blue color for the line
+            color = p2.color
+            if color in [RIVER_COLORS['SOURCE'], RIVER_COLORS['TRIBUTARY'], RIVER_COLORS['SPLIT']]:
+                color = p1.color  # Use previous point's color
+            pixels_in_segment = get_line_pixels(p1, p2)
+            main_river_pixels.extend((x, y, color) for x, y in pixels_in_segment)
+        
+        # Store source point if it exists
+        if river.start_pixel_color_type == 'SOURCE':
+            start_x, start_y = int(round(river.points[0].x)), int(round(river.points[0].y))
+            special_points.append((start_x, start_y, RIVER_COLORS['SOURCE']))
+        
+        # Draw main river and track pixels
+        for x, y, color in main_river_pixels:
+            pixels[x, y] = color
+            drawn_pixels.add((x, y))
+
     # Draw tributaries
-    for tributary in river.tributaries:
-        draw_river_system(image, tributary, offset)
+    for tributary, parent_idx in river.tributaries:
+        if len(tributary.points) > 1:
+            # Collect all tributary pixels first
+            tributary_pixels = []
+            for i in range(len(tributary.points) - 1):
+                p1, p2 = tributary.points[i], tributary.points[i + 1]
+                # Use regular blue color
+                color = p2.color
+                if color in [RIVER_COLORS['SOURCE'], RIVER_COLORS['TRIBUTARY'], RIVER_COLORS['SPLIT']]:
+                    color = p1.color
+                pixels_in_segment = get_line_pixels(p1, p2)
+                tributary_pixels.extend((x, y, color) for x, y in pixels_in_segment)
+            
+            # Find first intersection with main river
+            first_intersection = None
+            for i, (x, y, _) in enumerate(tributary_pixels):
+                if (x, y) in drawn_pixels:
+                    first_intersection = i
+                    break
+            
+            if first_intersection is not None:
+                # Remove all pixels up to and including intersection
+                tributary_pixels = tributary_pixels[first_intersection + 1:]
+            
+            if tributary_pixels:
+                # Add tributary marker at first remaining point
+                first_x, first_y, _ = tributary_pixels[0]
+                special_points.append((first_x, first_y, RIVER_COLORS['TRIBUTARY']))
+                
+                # Draw remaining tributary pixels
+                for x, y, color in tributary_pixels[1:]:
+                    if (x, y) not in drawn_pixels:  # Extra safety check
+                        pixels[x, y] = color
+
+    # Draw all special points last
+    for x, y, color in special_points:
+        if 0 <= x < image.width and 0 <= y < image.height:
+            pixels[x, y] = color
