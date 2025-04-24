@@ -1,0 +1,12 @@
+[project]
+name = "ck2-ck3-mod-converter"
+version = "0.1.0"
+description = "Convert CK2 mod to CK3 compatible mod"
+readme = "README.md"
+dependencies = [
+    "pydantic",
+    "pathlib",
+    "gitpython",
+    "scipy>=1.15.2",
+]
+

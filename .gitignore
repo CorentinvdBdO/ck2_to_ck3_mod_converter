@@ -1,0 +1,7 @@
+/.venv
+/converted_mods
+/manual_steps
+/uv.lock
+/Faerun
+*.pyc
+*.egg-info
