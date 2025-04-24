@@ -43,7 +43,7 @@ def convert_mod(
         
 ):
     # Initialize the mod
-    # initialize_mod(to_folder, mod_name)
+    initialize_mod(to_folder, mod_name)
     mod_folder = Path(to_folder) / mod_name
 
     # Convert the map
