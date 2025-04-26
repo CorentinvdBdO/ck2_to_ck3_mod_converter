@@ -1,4 +1,5 @@
 from src.map.convert_map import convert_map
+from src.titles.all_titles import convert_titles
 import git
 from pathlib import Path
 import shutil
@@ -42,15 +43,21 @@ def convert_mod(
         conversion_offset: tuple[int, int] = (0, 0),
         
 ):
-    # Initialize the mod
-    initialize_mod(to_folder, mod_name)
+    # # Initialize the mod
+    # initialize_mod(to_folder, mod_name)
     mod_folder = Path(to_folder) / mod_name
 
-    # Convert the map
-    convert_map(
+    # # Convert the map
+    # convert_map(
+    #     from_folder,
+    #     mod_folder,
+    #     destination_dimensions,
+    #     conversion_scale,
+    #     conversion_offset
+    # )
+
+    convert_titles(
         from_folder,
         mod_folder,
-        destination_dimensions,
-        conversion_scale,
-        conversion_offset
+        0,
     )
