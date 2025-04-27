@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, Tuple, List, Optional
+from typing import Dict, Tuple, List, Optional, Union
 import re
 from pprint import pprint   
 
@@ -61,10 +61,48 @@ def regex_paradox_parser(file_path: Path) -> Dict:
     """
     General regex parser for Paradox txt files.
     Returns a nested dictionary structure.
+    
+    Type conversion:
+    - Integers: Matches \d+ or -\d+
+    - Floats: Matches numbers with decimal points
+    - Booleans: 'yes' -> True, 'no' -> False
+    - Enums: Converts {enum: [1,2,3]} to [1,2,3]
+    - Repeated keys: Converts {key=a, key=b} to {key:[a,b]}
     """
+    def convert_repeated_keys(d: Dict) -> Dict:
+        """Convert repeated keys into lists in dictionary"""
+        if not isinstance(d, dict):
+            return d
+            
+        # First convert all nested dictionaries
+        result = {k: convert_repeated_keys(v) if isinstance(v, dict) else v 
+                 for k, v in d.items()}
+        
+        # Then find keys that appear multiple times with same name
+        keys = {}
+        for k, v in result.items():
+            if k not in keys:
+                keys[k] = []
+            keys[k].append(v)
+            
+        # Convert to lists where needed
+        return {k: v[0] if len(v) == 1 else v for k, v in keys.items()}
+
+    def convert_enum_dict(d: Dict) -> Union[Dict, List]:
+        """Convert enum dictionary to list if it only contains an enum key"""
+        if isinstance(d, dict):
+            if len(d) == 1 and 'enum' in d:
+                return d['enum']
+            return {k: convert_enum_dict(v) for k, v in d.items()}
+        return d
+
     lines_with_comments = file_reader(file_path)
     content = compact_lines([line for line, _ in lines_with_comments])
     
+    def convert_number(value: str) -> Union[int, float]:
+        """Convert string to int or float based on presence of decimal point"""
+        return float(value) if '.' in value else int(value)
+
     def find_matching_brace(content: str) -> int:
         """Find the position of matching closing brace, handling nested braces"""
         count = 1  # We start after an opening brace
@@ -94,12 +132,12 @@ def regex_paradox_parser(file_path: Path) -> Dict:
             match = re.match(r'''
                 (?P<key>[\w\.]+)\s?=\s?                   # Key = 
                 (
-                    (?P<value>\w+)                    # Simple value
+                    (?P<value>-?\d+\.?\d*|yes|no|\w+)  # Simple value (including numbers and booleans)
                     |"(?P<string>[^"]+)"             # Quoted string
                     |(?P<block>\{)                   # Opening brace
                     |(?P<date>\d+\.\d+\.\d+)         # Date
                 )
-                |(?P<enum>\w+)(?!\s?=)               # Enumeration (not followed by =)
+                |(?P<enum>-?\d+\.?\d*|\w+)(?!\s?=)    # Enumeration (not followed by =)
                 ''', content, re.VERBOSE)
             
             if not match:
@@ -108,10 +146,13 @@ def regex_paradox_parser(file_path: Path) -> Dict:
                 continue
                 
             if match.group('enum'):
-                # Handle enumeration
+                # Handle enumeration with type conversion
                 enum_value = match.group('enum')
                 if 'enum' not in result:
                     result['enum'] = []
+                # Try to convert to number if it matches number pattern
+                if re.match(r'-?\d+\.?\d*', enum_value):
+                    enum_value = convert_number(enum_value)
                 result['enum'].append(enum_value)
                 content = content[match.end():].lstrip()
                 continue
@@ -127,19 +168,55 @@ def regex_paradox_parser(file_path: Path) -> Dict:
                 
                 nested_content = content[block_start:block_start + block_end - 1]
                 nested_dict, _ = parse_block(nested_content)
-                result[key] = nested_dict
+                
+                # Handle repeated keys by converting to list
+                if key in result:
+                    if not isinstance(result[key], list):
+                        result[key] = [result[key]]
+                    result[key].append(nested_dict)
+                else:
+                    result[key] = nested_dict
+                
                 content = content[block_start + block_end:].lstrip()
             elif match.group('string'):
-                result[key] = match.group('string')
+                value = match.group('string')
+                if key in result:
+                    if not isinstance(result[key], list):
+                        result[key] = [result[key]]
+                    result[key].append(value)
+                else:
+                    result[key] = value
                 content = content[match.end():].lstrip()
             elif match.group('date'):
-                result[key] = match.group('date')
+                value = match.group('date')
+                if key in result:
+                    if not isinstance(result[key], list):
+                        result[key] = [result[key]]
+                    result[key].append(value)
+                else:
+                    result[key] = value
                 content = content[match.end():].lstrip()
             else:
-                result[key] = match.group('value')
+                value = match.group('value')
+                # Convert value types
+                if re.match(r'-?\d+\.?\d*', value):
+                    value = convert_number(value)
+                elif value == 'yes':
+                    value = True
+                elif value == 'no':
+                    value = False
+                
+                if key in result:
+                    if not isinstance(result[key], list):
+                        result[key] = [result[key]]
+                    result[key].append(value)
+                else:
+                    result[key] = value
                 content = content[match.end():].lstrip()
         
         return result, ''
 
     parsed_dict, _ = parse_block(content)
-    return parsed_dict
+    # Apply both conversions
+    parsed_dict = convert_repeated_keys(parsed_dict)
+    return convert_enum_dict(parsed_dict)
