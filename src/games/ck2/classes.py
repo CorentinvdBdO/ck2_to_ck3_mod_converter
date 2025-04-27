@@ -1,9 +1,40 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, GetCoreSchemaHandler, GetJsonSchemaHandler
 from typing import Optional, Dict, List, Tuple, Union, Literal, Any
 from enum import Enum
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import CoreSchema, core_schema
 
 # All objects in CK2
 
+class ParadoxList(List[Any]):
+    """
+    A custom list type that converts empty dictionaries to empty lists.
+    This handles Paradox's ambiguous empty {} syntax which could mean either.
+    """
+    
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls,
+        _source_type: Any,
+        _handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        def convert_empty_dict(value: Any) -> List[Any]:
+            if isinstance(value, dict) and not value:
+                return []
+            if isinstance(value, list):
+                return value
+            return [value]
+            
+        return core_schema.no_info_plain_validator_function(convert_empty_dict)
+
+    @classmethod
+    def __get_pydantic_json_schema__(
+        cls,
+        _core_schema: CoreSchema,
+        _handler: GetJsonSchemaHandler,
+    ) -> JsonSchemaValue:
+        return {"type": "array"}
+    
 class Definition(BaseModel):
     id: int
     r: Optional[int] = None
@@ -32,12 +63,12 @@ class DefaultDotMap(BaseModel):
     static:str = "statics"
     seasons:str = "seasons.txt"
 
-    externals:List[int] = []
-    sea_zones:Dict[int, List[int]] = {}
+    externals:ParadoxList[int] = []
+    sea_zones:Dict[int, ParadoxList[int]] = {}
     ocean_regions:Dict[int, OceanRegion] = {}
-    major_rivers: List[int] = []
+    major_rivers: ParadoxList[int] = []
 
-    tree: List[int] = []
+    tree: ParadoxList[int] = []
 
 class Terrain(BaseModel):
     name: str
@@ -80,12 +111,12 @@ class LandedTitle(BaseModel):
     mercenary_type: Optional[str] = None
     independent: Optional[bool] = None
     holy_order: Optional[bool] = None
-    modifiers: Optional[List[str]] = None
+    modifiers: Optional[ParadoxList[str]] = None
     strength_growth_per_century: Optional[float] = None
     religion_crusade_target: Optional[Dict[str, int]] = None
     religion_group_crusade_target: Optional[Dict[str, int]] = None
-    male_names: Optional[List[str]] = None
-    female_names: Optional[List[str]] = None
+    male_names: Optional[ParadoxList[str]] = None
+    female_names: Optional[ParadoxList[str]] = None
     controls_religion: Optional[str] = None
     tribe: Optional[bool] = None
     creation_requires_capital: Optional[bool] = None
@@ -96,7 +127,7 @@ class LandedTitle(BaseModel):
     cultural_names: Optional[Dict[str, str]] = None
     location_ruler_title: Optional[bool] = None
     dignity: Optional[int] = None
-    holy_site_for: Optional[List[str]] = None
+    holy_site_for: Optional[ParadoxList[str]] = None
     pentarchy: Optional[Union[bool, str]] = None
     assimilate: Optional[bool] = None
     duchy_revocation: Optional[bool] = None
@@ -107,7 +138,7 @@ class LandedTitle(BaseModel):
     extra_ai_eval_troops: Optional[int] = None
     hire_range: Optional[int] = None
 
-    children: Optional[List["LandedTitle"]] = []
+    children: Optional[ParadoxList["LandedTitle"]] = []
 
 
 class Empire(LandedTitle):
@@ -137,7 +168,7 @@ class Change(BaseModel):
     value: Union[Any]
 
 class History(BaseModel):
-    history: Dict[str, List[Change]] = Field(default_factory=dict) # date: changes
+    history: Dict[str, ParadoxList[Change]] = Field(default_factory=dict) # date: changes
 
 class TitleChangeKeys(Enum):
     HOLDER = "holder"
@@ -151,7 +182,7 @@ class TitleChange(Change):
     value: Optional[Union[int, str, bool]] = None
 
 class TitleHistory(History):
-    changes: Dict[str, List[TitleChange]] = Field(default_factory=dict)
+    changes: Dict[str, ParadoxList[TitleChange]] = Field(default_factory=dict)
 
 class CountyProvinceHistory(History):
     """
@@ -220,7 +251,7 @@ class CharacterChange(Change):
     key: CharacterChangeKeys
 
 class CharacterHistory(History):
-    changes: Dict[str, List[CharacterChange]] = Field(default_factory=dict)
+    changes: Dict[str, ParadoxList[CharacterChange]] = Field(default_factory=dict)
 
 class Character(BaseModel):
     """
@@ -236,7 +267,7 @@ class Character(BaseModel):
     mother: Optional[int] = None
 
     dna: Optional[str] = None
-    properties: Optional[List[str]] = None
+    properties: Optional[ParadoxList[str]] = None
     
     martial: Optional[int] = None
     diplomacy: Optional[int] = None
@@ -250,7 +281,7 @@ class Character(BaseModel):
     secret_religion: Optional[str] = None
     culture: Optional[str] = None
     race: Optional[str] = None
-    traits: Optional[List[str]] = None
+    traits: Optional[ParadoxList[str]] = None
     disallow_random_traits: Optional[bool] = None
     occluded: Optional[bool] = None
     historical: Optional[bool] = None
@@ -263,9 +294,9 @@ class Culture(BaseModel):
     https://ck2.paradoxwikis.com/Culture_modding
     """
     name: str
-    graphical_cultures: Optional[List[str]] = None
-    unit_graphical_cultures: Optional[List[str]] = None
-    secondary_event_pictures: Optional[List[str]] = None
+    graphical_cultures: Optional[ParadoxList[str]] = None
+    unit_graphical_cultures: Optional[ParadoxList[str]] = None
+    secondary_event_pictures: Optional[ParadoxList[str]] = None
     color: Optional[Tuple[float, float, float]] = None
     horde: Optional[bool] = None
     used_for_random: Optional[bool] = None
@@ -274,8 +305,8 @@ class Culture(BaseModel):
     baron_titles_hidden: Optional[bool] = None
     count_titles_hidden: Optional[bool] = None
     parent: Optional[str] = None
-    modifiers: Optional[List[str]] = None
-    character_modifier: Optional[List[str]] = None
+    modifiers: Optional[ParadoxList[str]] = None
+    character_modifier: Optional[ParadoxList[str]] = None
     founder_named_dynasties: Optional[bool] = None
     dynasty_title_names: Optional[bool] = None
     dishinerit_from_blinding:Optional[bool] = None
@@ -313,9 +344,9 @@ class Religion(BaseModel):
     color: Tuple[float, float, float]
     crusade_name: str
     scripture_name: str 
-    god_names: List[str]
+    god_names: ParadoxList[str]
     high_god_name: str
-    evil_god_names: List[str]
+    evil_god_names: ParadoxList[str]
     piety_name: str
     priest_title: str
     investiture: bool
@@ -339,7 +370,7 @@ class Religion(BaseModel):
     psc_marriage: Optional[bool] = None
     cousin_marriage: Optional[bool] = None
     matrilineal_marriage: Optional[bool] = None
-    intermarry_religions: Optional[List[str]] = None
+    intermarry_religions: Optional[ParadoxList[str]] = None
     max_wives: Optional[int] = None
     allow_viking_invasion: Optional[bool] = None
     allow_looting: Optional[bool] = None
@@ -400,7 +431,7 @@ class ReligionGroup(BaseModel):
     merge_republic_interface: Optional[bool] = None
 
 
-    religions: List["Religion"] = []
+    religions: ParadoxList["Religion"] = []
 
 # TODO: Technology
 # TODO: Wr history
@@ -662,7 +693,7 @@ class Trait(BaseModel):
     leader: Optional[bool] = None
     leadership_traits: Optional[int] = None
     lifestyle: Optional[bool] = None
-    opposites: Optional[List]= None    
+    opposites: Optional[ParadoxList] = None
     personality: Optional[bool] = None
     pilgrimage: Optional[bool] = None
     prevent_decadence: Optional[bool] = None
@@ -674,27 +705,27 @@ class Trait(BaseModel):
     ruler_designer_cost: Optional[int] = None
     same_trait_visibility: Optional[bool] = None
     succession_gfx: Optional[bool] = None
-    tolerated_religious_group: Optional[Union[str, List[str]]] = None
+    tolerated_religious_group: Optional[Union[str, ParadoxList]] = None
     vice: Optional[bool] = None
     virtue: Optional[bool] = None
 
     modifiers: Optional[Dict[str, Any]] = None
     
-    male_compliment: Optional[str] = None
-    male_compliment_adj: Optional[str] = None
-    female_compliment: Optional[str] = None
-    female_compliment_adj: Optional[str] = None
-    male_insult: Optional[str] = None
-    female_insult: Optional[str] = None
-    male_insult_adj: Optional[str] = None
-    female_insult_adj: Optional[str] = None
-    child_compliment: Optional[str] = None
-    child_compliment_adj: Optional[str] = None
-    child_insult: Optional[str] = None
-    child_insult_adj: Optional[str] = None
+    male_compliment: Optional[Union[str, ParadoxList]] = None
+    male_compliment_adj: Optional[Union[str, ParadoxList]] = None
+    female_compliment: Optional[Union[str, ParadoxList]] = None
+    female_compliment_adj: Optional[Union[str, ParadoxList]] = None
+    male_insult: Optional[Union[str, ParadoxList]] = None
+    female_insult: Optional[Union[str, ParadoxList]] = None
+    male_insult_adj: Optional[Union[str, ParadoxList]] = None
+    female_insult_adj: Optional[Union[str, ParadoxList]] = None
+    child_compliment: Optional[Union[str, ParadoxList]] = None
+    child_compliment_adj: Optional[Union[str, ParadoxList]] = None
+    child_insult: Optional[Union[str, ParadoxList]] = None
+    child_insult_adj: Optional[Union[str, ParadoxList]] = None
 
     command_modifier: Optional["CommandModifier"] = None
-    potential: Optional[Dict] = None
+    potential: Optional[Union[Dict, str]] = None
 
 class ModifiersPrefix(Enum):
     # Special Units
@@ -898,7 +929,7 @@ class CommandModifier(BaseModel):
     center: Optional[float] = None
     cavalry: Optional[float] = None
     religious_enemy: Optional[float] = None
-    terrain: Optional[Union[str, List[str]]] = None
+    terrain: Optional[Union[str, ParadoxList[str]]] = None
     narrow_flank: Optional[float] = None
     winter_supply: Optional[float] = None
     winter_combat: Optional[float] = None
@@ -915,3 +946,4 @@ title_from_id = {
     "c": County,
     "b": Barony
 }
+

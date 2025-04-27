@@ -9,24 +9,28 @@ def read_traits_file(file_path: str, all_modifiers: Dict[str, Dict[str, CustomMo
     traits = {}
     for trait_name, trait_data in file_json.items():
         modifiers_data = {}
-        for key, value in trait_data.items():
-            # key in Trait
-            if key in Trait.model_fields:
-                trait_data[key] = value
-            elif not check_modifiers:
-                modifiers_data[key] = value
-            elif key in Modifiers:
-                modifiers_data[key] = value
-            elif all_modifiers is None:
-                raise ValueError(f"check_modifiers is True but all_modifiers not provided")
-            else:
-                for modifier_file, modifier_data in all_modifiers.items():
-                    if key in modifier_data:
-                        modifiers_data[key] = modifier_data[key]
-                        break
+        try:
+            for key, value in trait_data.items():
+                # key in Trait
+                if key in Trait.model_fields:
+                    trait_data[key] = value
+                elif not check_modifiers:
+                    modifiers_data[key] = value
+                elif key in Modifiers:
+                    modifiers_data[key] = value
+                elif all_modifiers is None:
+                    raise ValueError(f"check_modifiers is True but all_modifiers not provided")
                 else:
-                    raise ValueError(f"Key {key} not found in Trait, base modifiers or custom modifiers")
-
+                    for modifier_file, modifier_data in all_modifiers.items():
+                        if key in modifier_data:
+                            modifiers_data[key] = modifier_data[key]
+                            break
+                    else:
+                        raise ValueError(f"Key {key} not found in Trait, base modifiers or custom modifiers")
+        except Exception as e:
+            print(trait_data)
+            print(f"Error reading trait {trait_name}: {e}")
+            raise e
         trait = Trait(name=trait_name, **trait_data, modifiers=modifiers_data)
         traits[trait_name] = trait
     return traits

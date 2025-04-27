@@ -34,6 +34,42 @@ Map resizer & offset & auto save compatible with the game: heightmap, provinces,
 - Characters
 - History
 
+## Games
+Need to implement read, check and write capabilites for each game. For conversion from, need at least read and check, for conversion to, need at least check and write.
+
+Then for each pair of games, implement the conversion logic.
+
+### CK2
+Read Check Write
+- [X] [ ] [X] Map (heightmap, provinces, rivers)
+- [X] [X] [ ] modifers
+- [X] [X] [ ] traits (depends on modifiers)
+- [ ] [ ] [ ] religions (depends on modifiers)
+- [ ] [ ] [ ] cultures
+- [ ] [ ] [ ] provinces (depends on modifiers, culture, religion, buildings, wonders)
+- [ ] [ ] [ ] titles (depends on modifiers, culture, religion, provinces)
+- [ ] [ ] [ ] characters
+
+### CK3
+Read Check Write
+- [ ] [ ] [ ] modifers
+- [ ] [ ] [ ] traits (depends on modifiers)
+- [ ] [ ] [ ] religions (depends on modifiers)
+- [ ] [ ] [ ] ethnicities
+- [ ] [ ] [ ] cultures
+- [ ] [ ] [ ] provinces (depends on modifiers, culture, religion, buildings, wonders)
+- [ ] [ ] [ ] titles (depends on modifiers, culture, religion, provinces)
+- [ ] [ ] [ ] characters
+
+## Converter
+### CK2 -> CK3
+- [X] map (heightmap, provinces, rivers)
+- [ ] holdings
+- [ ] history
+- [ ] titles
+- [ ] provinces
+- [ ] characters
+
 ## Utility
 
 - One UI to own them all
