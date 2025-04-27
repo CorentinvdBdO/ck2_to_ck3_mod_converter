@@ -41,25 +41,25 @@ Then for each pair of games, implement the conversion logic.
 
 ### CK2
 Read Check Write
-- [X] [ ] [X] Map (heightmap, provinces, rivers)
-- [X] [X] [ ] modifers
-- [X] [X] [ ] traits (depends on modifiers)
-- [ ] [ ] [ ] religions (depends on modifiers)
-- [ ] [ ] [ ] cultures
-- [ ] [ ] [ ] provinces (depends on modifiers, culture, religion, buildings, wonders)
-- [ ] [ ] [ ] titles (depends on modifiers, culture, religion, provinces)
-- [ ] [ ] [ ] characters
+- ✅ ❌ ✅ Map (heightmap, provinces, rivers)
+- ✅ ✅ ❌ modifers
+- ✅ ✅ ❌ traits (depends on modifiers)
+- ❌ ❌ ❌ religions (depends on modifiers)
+- ❌ ❌ ❌ cultures
+- ❌ ❌ ❌ provinces (depends on modifiers, culture, religion, buildings, wonders)
+- ❌ ❌ ❌ titles (depends on modifiers, culture, religion, provinces)
+- ❌ ❌ ❌ characters
 
 ### CK3
 Read Check Write
-- [ ] [ ] [ ] modifers
-- [ ] [ ] [ ] traits (depends on modifiers)
-- [ ] [ ] [ ] religions (depends on modifiers)
-- [ ] [ ] [ ] ethnicities
-- [ ] [ ] [ ] cultures
-- [ ] [ ] [ ] provinces (depends on modifiers, culture, religion, buildings, wonders)
-- [ ] [ ] [ ] titles (depends on modifiers, culture, religion, provinces)
-- [ ] [ ] [ ] characters
+- ❌ ❌ ❌ modifers
+- ❌ ❌ ❌ traits (depends on modifiers)
+- ❌ ❌ ❌ religions (depends on modifiers)
+- ❌ ❌ ❌ ethnicities
+- ❌ ❌ ❌ cultures
+- ❌ ❌ ❌ provinces (depends on modifiers, culture, religion, buildings, wonders)
+- ❌ ❌ ❌ titles (depends on modifiers, culture, religion, provinces)
+- ❌ ❌ ❌ characters
 
 ## Converter
 ### CK2 -> CK3
