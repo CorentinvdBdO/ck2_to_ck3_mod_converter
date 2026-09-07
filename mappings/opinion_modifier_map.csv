@@ -1,0 +1,170 @@
+# CK2 opinion modifier key -> CK3 opinion modifier key, resolved against the
+# culture and faith ids the `cultures` / `religions` steps emit.
+# Written by scripts/export_opinion_modifier_map.py; consumed by the traits lane.
+# A CK2 culture-GROUP key produces one row per culture of the group: CK3 has no
+# culture-group opinion scope (verified: 0 heritage_*_opinion keys in 1.19).
+# Every ck3_modifier_key here is declared in the generated
+# common/modifier_definition_formats/fae_{culture,faith}_opinions.txt.
+# Vanilla-key collisions: 0 (none)
+ck2_modifier_key,ck3_modifier_key,scope,status,note
+aberration_culture_group_opinion,aboleth_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,beholder_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,elder_brain_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,ghaunadan_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,hcathan_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,illithid_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,spectator_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,starspawn_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+aberration_culture_group_opinion,thoon_opinion,culture,approx,"CK2 culture group aberration_culture_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+abyssal_cult_opinion,abyssal_cult_opinion,faith,exact,
+adama_opinion,adama_opinion,faith,exact,
+arcane_opinion,arcane_opinion,faith,exact,
+avariel_opinion,avariel_opinion,culture,exact,
+bahamut_opinion,bahamut_opinion,faith,exact,
+blue_flame_opinion,blue_flame_opinion,faith,exact,
+calishite_group_opinion,arnadar_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,aslanlar_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,borderer_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,djen_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,kochar_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,nelanthern_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,shoon_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,skulk_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,tethan_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+calishite_group_opinion,turmic_opinion,culture,approx,"CK2 culture group calishite_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+christian_opinion,,,none,"CK2 dangling reference: Faerun defines no religion or culture of this name (CK2-base leftover or typo), so there is nothing to map"
+church_of_cyric_opinion,church_of_cyric_opinion,faith,exact,
+dark_elf_group_opinion,aevendrow_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dark_elf_group_opinion,crinti_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dark_elf_group_opinion,dark_elf_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dark_elf_group_opinion,draegloth_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dark_elf_group_opinion,drow_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dark_elf_group_opinion,lorendrow_opinion,culture,approx,"CK2 culture group dark_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,amphiptere_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,dragonborn_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,dragonspawn_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,kobold_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,strixiki_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,thymari_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dragonkin_group_opinion,vayemniri_opinion,culture,approx,"CK2 culture group dragonkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,arctic_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,chultan_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,derro_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,duergar_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,earthfast_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,earthroot_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,gold_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,korpokkur_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,shield_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,urdunnir_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarf_group_opinion,wild_dwarf_opinion,culture,approx,"CK2 culture group dwarf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+dwarven_pantheon_group_opinion,fae_dwarven_pantheon_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_dwarven_pantheon_opinion
+eilistraee_opinion,eilistraee_opinion,faith,exact,
+eladrin_group_opinion,eladrin_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,half_eladrin_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,half_shadar_kai_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,leshay_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,maraloi_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,shadar_kai_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+eladrin_group_opinion,star_elf_opinion,culture,approx,"CK2 culture group eladrin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+elven_pantheon_group_opinion,fae_elven_pantheon_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_elven_pantheon_opinion
+elven_pantheon_opinion,elven_pantheon_opinion,faith,exact,
+enlil_opinion,enlil_opinion,faith,exact,
+entropy_opinion,entropy_opinion,faith,exact,
+evil_human_pantheon_group_opinion,fae_evil_human_pantheon_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_evil_human_pantheon_opinion
+faceless_god_opinion,faceless_god_opinion,faith,exact,
+faithless_opinion,faithless_opinion,faith,exact,
+giant_group_opinion,ash_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,cloud_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,fire_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,fog_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,frost_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,hill_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,mountain_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,stone_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giant_group_opinion,storm_giant_opinion,culture,approx,"CK2 culture group giant_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,firbolg_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,fomorian_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,half_ogre_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,merrow_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,ogre_magi_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,ogre_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,ogrima_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,red_oni_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,verbeeg_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+giantkin_group_opinion,voadkyn_opinion,culture,approx,"CK2 culture group giantkin_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gith_group_opinion,githvyrik_opinion,culture,approx,"CK2 culture group gith_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gith_group_opinion,githyanki_opinion,culture,approx,"CK2 culture group gith_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gith_group_opinion,githzerai_opinion,culture,approx,"CK2 culture group gith_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gnome_group_opinion,forest_gnome_opinion,culture,approx,"CK2 culture group gnome_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gnome_group_opinion,gnome_opinion,culture,approx,"CK2 culture group gnome_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gnome_group_opinion,lantanna_opinion,culture,approx,"CK2 culture group gnome_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+gnome_group_opinion,svirfneblin_opinion,culture,approx,"CK2 culture group gnome_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,bakemono_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,batiri_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,bugbear_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,dekanter_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,goblin_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,hobgoblin_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+goblinoid_group_opinion,tasloi_opinion,culture,approx,"CK2 culture group goblinoid_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+good_human_pantheon_group_opinion,fae_good_human_pantheon_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_good_human_pantheon_opinion
+high_elf_group_opinion,astral_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,avariel_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,feyri_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,half_moon_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,half_sea_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,half_sun_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,llewyrr_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,moon_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,sea_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,snow_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+high_elf_group_opinion,sun_elf_opinion,culture,approx,"CK2 culture group high_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+humanoid_group_opinion,fae_humanoid_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_humanoid_opinion
+illithid_pantheon_opinion,illithid_pantheon_opinion,faith,exact,
+infernal_opinion,infernal_opinion,faith,exact,
+interloper_opinion,interloper_opinion,faith,exact,
+karaturan_group_opinion,fae_karaturan_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_karaturan_opinion
+kiaransalee_opinion,kiaransalee_opinion,faith,exact,
+kobold_opinion,kobold_opinion,culture,exact,
+kossuth_opinion,kossuth_opinion,faith,exact,
+lolth_cult_opinion,lolth_cult_opinion,faith,exact,
+mercantile_opinion,mercantile_opinion,faith,exact,
+muslim_opinion,,,none,"CK2 dangling reference: Faerun defines no religion or culture of this name (CK2-base leftover or typo), so there is nothing to map"
+northlander_opinion,northlander_opinion,culture,exact,
+orc_group_opinion,gray_orc_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,half_orc_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,ogrillon_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,ondonti_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,orc_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,orog_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,oscray_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,scro_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_group_opinion,tanarukk_opinion,culture,approx,"CK2 culture group orc_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+orc_pantheon_opinion,orc_pantheon_opinion,faith,exact,
+orc_reformed_opinion,orc_reformed_opinion,faith,exact,
+pagan_group_opinion,fae_pagan_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_pagan_opinion
+planar_opinion,planar_opinion,culture,exact,
+qismaite_group_opinion,fae_qismaite_religion_opinion,religion,approx,CK2 religion group -> CK3 religion; the sibling family key is rf_fae_qismaite_opinion
+sahuagin_opinion,sahuagin_opinion,culture,exact,
+sylvan_elf_group_opinion,green_elf_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,half_green_elf_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,half_wood_elf_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,lythari_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,poscadar_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,wood_elf_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_elf_group_opinion,yuir_elf_opinion,culture,approx,"CK2 culture group sylvan_elf_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+sylvan_opinion,sylvan_opinion,faith,exact,
+thasmudyan_opinion,,,none,"CK2 dangling reference: Faerun defines no religion or culture of this name (CK2-base leftover or typo), so there is nothing to map"
+thasmudyanic_opinion,thasmudyanic_opinion,faith,exact,
+tiamat_opinion,tiamat_opinion,faith,exact,
+triadic_opinion,triadic_opinion,faith,exact,
+turm_opinion,turm_opinion,faith,exact,
+ubtao_worship_opinion,ubtao_worship_opinion,faith,exact,
+uthgardt_faith_opinion,uthgardt_faith_opinion,faith,exact,
+zakharan_group_opinion,badia_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zakharan_group_opinion,fabada_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zakharan_group_opinion,hadhar_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zakharan_group_opinion,qarsan_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zakharan_group_opinion,raurindi_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zakharan_group_opinion,semphari_opinion,culture,approx,"CK2 culture group zakharan_group: CK3 has no culture-group opinion scope, so the CK2 key fans out to every culture of the group"
+zoroastrian_opinion,,,none,"CK2 dangling reference: Faerun defines no religion or culture of this name (CK2-base leftover or typo), so there is nothing to map"
