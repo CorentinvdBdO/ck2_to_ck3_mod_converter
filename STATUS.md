@@ -1,12 +1,12 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-07 by Claude session (project kickoff)
+Updated: 2026-09-07 by Claude session (ship project-kickoff)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
 |---|---|---|---|---|---|
-| project-kickoff | lane/project-kickoff | Claude 2026-09-07 | charter, decisions, surveys, map/races designs, mechanics inventory, CLAUDE/STATUS, ci/checks.sh green; submod + asset-lib skeletons exist | review (user to /ship or amend) | green |
+| project-kickoff | lane/project-kickoff | Claude 2026-09-07 | charter, decisions, surveys, map/races designs, mechanics inventory, CLAUDE/STATUS, ci/checks.sh green; submod + asset-lib skeletons exist | merged 2026-09-07 | green |
 
 ## Repos
 | repo | path | base | origin | state |
