@@ -1,0 +1,59 @@
+# Faerûn (Project Faerûn, CK2) → CK3 1.19. Reference config for `ck2ck3`.
+# Key reference: docs/cli.md. Relative paths resolve against the repository root.
+
+[mod]
+name = "Faerun (CK2 conversion, raw)"
+# Prefix for every generated identifier and filename (fae_*). `fk_` is the
+# hand-written submod, see docs/PROJECT.md.
+prefix = "fae"
+version = "0.1.0"
+supported_version = "1.19.*"
+tags = ["Total Conversion", "Map", "Historical"]
+# CK3 start date of the generated bookmark. Faerûn's own start is 1357 DR;
+# open decision in docs/design_map.md §C.
+bookmark_date = "1357.1.1"
+# Vanilla folders the mod replaces rather than adds to. Seeded from Elder
+# Kings 2 (a working CK3 total conversion, verified 2026-09-07); each lane adds
+# the folders it takes over.
+replace_paths = [
+    "common/bookmark_portraits",
+    "common/culture/cultures",
+    "common/culture/name_lists",
+    "common/dna_data",
+    "common/dynasties",
+    "common/landed_titles",
+    "common/province_terrain",
+    "common/religion/doctrine_types",
+    "common/religion/holy_site_types",
+    "common/religion/religion_family_types",
+    "common/religion/religion_types",
+    "common/terrain_types",
+    "gfx/interface/illustrations/loading_screens",
+    "gfx/portraits/portrait_modifiers",
+    "history",
+    "history/characters",
+    "history/cultures",
+    "history/provinces",
+    "history/titles",
+    "history/wars",
+]
+
+[paths]
+# CK2 is not installed on this machine (STATUS.md); the path is kept so a step
+# that needs vanilla CK2 files can say so instead of guessing.
+ck2_game = "/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II"
+# The CK2 mod being converted (gitignored clone, see CLAUDE.md).
+ck2_mod = "Faerun/Faerun"
+# CK3 game files, read-only reference for vanilla shapes.
+ck3_game = "/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game"
+# The generated mod repository. Never hand-edited.
+out = "/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted"
+
+# Placeholders until lane `map-physical` measures the real numbers. These are
+# the values the deleted convert.py used, kept so nothing is lost:
+# dimensions = same as the CK3 base map, scale = 5918/4096 for a 1:1 Faerûn,
+# offset = the chosen placement of Faerûn on the CK3 canvas.
+[map]
+dimensions = [8192, 4096]
+scale = 1.4448242187
+offset = [-146, 26]

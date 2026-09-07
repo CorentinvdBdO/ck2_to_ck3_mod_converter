@@ -1,6 +1,4 @@
 from pathlib import Path
-from PIL import Image, ImageChops
-import numpy as np
 from .heightmap import convert_height_map
 from .province import convert_province_map
 from .rivers import convert_rivers_map

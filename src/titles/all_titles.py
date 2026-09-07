@@ -1,188 +1,173 @@
+"""CK2-side readers for definitions, province history, climate and landed titles.
+
+Reads through `ck2ck3.pdx` (tokenizer parser, comments kept, cp1252 sniffed).
+The write side belongs to lane `titles-history`.
+"""
+
 from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
 from pydantic import BaseModel, Field
-from .definitions import convert_definitions
-from typing import Dict, List, Optional, Tuple, Any
-from src.utils.paradox_file_parser import regex_paradox_parser
-import re
-from pprint import pprint
+
+from ck2ck3.pdx import Block, Color, Date, parse_file
+from ck2ck3.pdx.encoding import CK2_ENCODING, read_text
+
+#: The five CK2 / CK3 title tiers, by identifier prefix.
+TITLE_PREFIXES = ("e_", "k_", "d_", "c_", "b_")
+
 
 class Definition(BaseModel):
-    id: int
+    id: Optional[int] = None
     r: Optional[int] = None
     g: Optional[int] = None
     b: Optional[int] = None
     name: str
-    comment: str
+    comment: Optional[str] = None
 
-def open_definitions(definitions_path: Path):
-    """
-    Open and keep in memory the comments
-    """
-    definitions = []
-    id_to_line = {}
-    with open(definitions_path, "r") as file:
-        lines = file.readlines()
-        line_index = 0
-        for line in lines[1:]:
-            line = line.strip()
-            if line.startswith("#"):
-               definitions.append(line)
-            else:
-               id_to_line[line.split(";")[0]] = line_index
-               values = line.split(";")
-               id = int(values[0]) if len(values[0]) > 0 else None
-               r = int(values[1]) if len(values[1]) > 0 else None
-               g = int(values[2]) if len(values[2]) > 0 else None
-               b = int(values[3]) if len(values[3]) > 0 else None
-               name = " ".join(values[4:-1])
-               x = values[-1]
-               x = x.split("#")
-               if len(x) > 0:
-                   comment = "#".join(x[1:])        
-               else:
-                   comment = None
-               definitions.append(Definition(
-                   id=id,
-                   r=r,
-                   g=g,
-                   b=b,
-                   name=name,
-                   comment=comment
-               ))
-            line_index += 1
-    return definitions, id_to_line
 
+def open_definitions(
+    definitions_path: Path,
+) -> Tuple[List[object], Dict[str, int]]:
+    """Read CK2 `map/definition.csv`, keeping comment lines in place.
+
+    Windows-1252 like the rest of a CK2 mod. Returns the rows in file order
+    (a `Definition` or the raw comment string) and a province-id → row-index
+    map.
+    """
+    text, _ = read_text(definitions_path, CK2_ENCODING)
+    rows: List[object] = []
+    id_to_line: Dict[str, int] = {}
+    lines = text.split("\n")
+    for index, raw in enumerate(lines[1:]):
+        line = raw.strip()
+        if not line:
+            continue
+        if line.startswith("#"):
+            rows.append(line)
+            continue
+        values = line.split(";")
+        id_to_line[values[0]] = index
+        head, tail = values[0:4], values[-1]
+        name = " ".join(values[4:-1])
+        comment = "#".join(tail.split("#")[1:]) or None
+        rows.append(
+            Definition(
+                id=int(head[0]) if head[0] else None,
+                r=int(head[1]) if len(head) > 1 and head[1] else None,
+                g=int(head[2]) if len(head) > 2 and head[2] else None,
+                b=int(head[3]) if len(head) > 3 and head[3] else None,
+                name=name,
+                comment=comment,
+            )
+        )
+    return rows, id_to_line
 
 
 class BaronyHistory(BaseModel):
-    holding: Optional[str]     # Some default holdings do exist
-    history: Dict[str, Dict] = Field(default_factory=dict) # Changes in buildings and holdings
+    holding: Optional[str]  # Some default holdings do exist
+    history: Dict[str, Dict] = Field(default_factory=dict)  # holding changes
+
 
 class CountyProvinceHistory(BaseModel):
     id: int
-    title: Optional[str] = None # Initialize optional fields to None
+    title: Optional[str] = None
     base_culture: Optional[str] = None
     base_religion: Optional[str] = None
-    # barony_holding: Optional[str] # This seems redundant if we have baronies_history
     baronies_history: Dict[str, BaronyHistory] = Field(default_factory=dict)
-    history: Dict[str, Dict] = Field(default_factory=dict) # Changes in culture and religion
+    history: Dict[str, Dict] = Field(default_factory=dict)  # culture / religion
     max_settlements: Optional[int] = None
     terrain: Optional[str] = None
     comments: Optional[str] = None
 
+
+def _is_date(key: str) -> bool:
+    try:
+        Date.parse(key)
+    except (ValueError, TypeError):
+        return False
+    return True
+
+
 def read_province_history(province_id: int, file_path: Path) -> CountyProvinceHistory:
-    """
-    Reads and parses a province history file using the general paradox parser.
-    Converts the parsed dict to a CountyProvinceHistory object.
-    """
-    # Parse file into dict structure
-    parsed = regex_paradox_parser(file_path)
-    
-    # Initialize province history
-    province_history = CountyProvinceHistory(
-        id=province_id,
-        comments=""
-    )
+    """Read one `history/provinces/<id> - <name>.txt` file."""
+    document = parse_file(file_path)
+    province = CountyProvinceHistory(id=province_id, comments="")
 
-    # Extract base properties
-    if 'title' in parsed:
-        province_history.title = parsed['title']
-    if 'max_settlements' in parsed:
-        province_history.max_settlements = int(parsed['max_settlements'])
-    if 'terrain' in parsed:
-        province_history.terrain = parsed['terrain']
-    if 'culture' in parsed:
-        province_history.base_culture = parsed['culture']
-    if 'religion' in parsed:
-        province_history.base_religion = parsed['religion']
-
-    # Extract baronies (base holdings)
-    for key, value in parsed.items():
-        if key.startswith('b_') and isinstance(value, str):
-            province_history.baronies_history[key] = BaronyHistory(
-                holding=value,
-                history={}
+    for node in document.nodes():
+        key, value = node.key, node.value
+        if key == "title":
+            province.title = str(value)
+        elif key == "max_settlements":
+            province.max_settlements = int(value)
+        elif key == "terrain":
+            province.terrain = str(value)
+        elif key == "culture":
+            province.base_culture = str(value)
+        elif key == "religion":
+            province.base_religion = str(value)
+        elif key.startswith("b_") and not isinstance(value, Block):
+            province.baronies_history[key] = BaronyHistory(
+                holding=str(value), history={}
             )
-
-    # Extract history blocks
-    for key, value in parsed.items():
-        if isinstance(key, str) and '.' in key:  # Date entries
-            date = key
-            if isinstance(value, dict):
-                # Handle province-level history
-                if date not in province_history.history:
-                    province_history.history[date] = {}
-                
-                for k, v in value.items():
-                    if k.startswith('b_'):
-                        # Barony history
-                        barony_name = k
-                        if barony_name not in province_history.baronies_history:
-                            province_history.baronies_history[barony_name] = BaronyHistory(
-                                holding="none",
-                                history={}
-                            )
-                        if date not in province_history.baronies_history[barony_name].history:
-                            province_history.baronies_history[barony_name].history[date] = {}
-                        province_history.baronies_history[barony_name].history[date]["holding"] = v
-                    else:
-                        # Province-level history
-                        province_history.history[date][k] = v
-
-    return province_history
+        elif _is_date(key) and isinstance(value, Block):
+            _apply_dated_block(province, key, value)
+    return province
 
 
-def read_all_histories(indices, original_province_history_folder) -> Dict[int, CountyProvinceHistory]:
-    id_to_history = {}
-    for index in indices:
-        # Get history/province (missing if sea or coastline)
-        ls_result = list(original_province_history_folder.glob(f"{index} - *"))
-        if not ls_result:  # Empty list
-            print(f"No history file found for {index}")
-            continue
+def _apply_dated_block(
+    province: CountyProvinceHistory, date: str, block: Block
+) -> None:
+    """Fold one `<date> = { … }` block into the province history."""
+    for node in block.nodes():
+        if node.key.startswith("b_"):
+            barony = province.baronies_history.setdefault(
+                node.key, BaronyHistory(holding="none", history={})
+            )
+            barony.history.setdefault(date, {})["holding"] = node.value
         else:
-            history_file = ls_result[0]
-            history = read_province_history(index, history_file)
-            id_to_history[index] = history
+            province.history.setdefault(date, {})[node.key] = node.value
+
+
+def read_all_histories(
+    indices, original_province_history_folder: Path
+) -> Dict[int, CountyProvinceHistory]:
+    """Read the province history of every id in `indices` that has a file."""
+    id_to_history: Dict[int, CountyProvinceHistory] = {}
+    for index in indices:
+        matches = sorted(original_province_history_folder.glob(f"{index} - *"))
+        if not matches:
+            # Sea zones and coastline provinces have no history file.
+            continue
+        id_to_history[int(index)] = read_province_history(int(index), matches[0])
     return id_to_history
 
+
 def read_provinces_climate(climate_path: Path) -> Dict[int, str]:
+    """Read CK2 `map/climate.txt` into province id → climate type.
+
+    ``severe_winter = { 4 10 17 … }`` becomes ``{4: "severe_winter", …}``.
     """
-    Read the climate file and return a dictionary mapping province IDs to their climate type.
-    
-    Example input:
-    normal_winter = {
-        1 2 3 5 6 7 9 11 ...
-    }
-    
-    Returns: {1: "normal_winter", 2: "normal_winter", ...}
-    """
-    parsed = regex_paradox_parser(climate_path)
-    
-    id_to_climate = {}
-    for climate_type, value in parsed.items():
-        if not climate_type.endswith('_winter'):
+    document = parse_file(climate_path)
+    id_to_climate: Dict[int, str] = {}
+    for node in document.nodes():
+        if not node.key.endswith("_winter") or not isinstance(node.value, Block):
             continue
-            
-        # Value should be a dict with 'enum' key containing list of province IDs
-        if isinstance(value, dict) and 'enum' in value:
-            for province_id in value['enum']:
-                id_to_climate[int(province_id)] = climate_type
-    
+        for province_id in node.value.list_values():
+            id_to_climate[int(province_id)] = node.key
     return id_to_climate
+
 
 class LandedTitle(BaseModel):
     rank: int
     title_name: str
     color: Optional[Tuple[int, int, int]] = None
     color2: Optional[Tuple[int, int, int]] = None
-    cultural_names: Optional[Dict[str, str]] = {}
+    cultural_names: Dict[str, str] = Field(default_factory=dict)
     capital: Optional[int] = None
     capital_comment: Optional[str] = None
     comment: Optional[str] = None
-    children: Optional[List["LandedTitle"]] = []
+    children: List["LandedTitle"] = Field(default_factory=list)
 
-    # More properties
     assimilate: Optional[bool] = None
     title_female: Optional[str] = None
     title: Optional[str] = None
@@ -194,164 +179,193 @@ class LandedTitle(BaseModel):
     can_be_claimed: Optional[bool] = None
     can_be_usurped: Optional[bool] = None
     extra_ai_eval_troops: Optional[int] = None
+    #: Every key this model has no field for, kept verbatim so lane
+    #: `titles-history` can decide what to do with it.
+    extra: Dict[str, object] = Field(default_factory=dict)
+
 
 class Empire(LandedTitle):
     rank: int = 1
-    pass
+
 
 class Kingdom(LandedTitle):
     rank: int = 2
-    pass
+
 
 class Duchy(LandedTitle):
     rank: int = 3
-    pass
+
 
 class County(LandedTitle):
     rank: int = 4
-    pass
+
 
 class Barony(LandedTitle):
     rank: int = 5
-    capital: Optional[int] = None
-    color: Optional[Tuple[int, int, int]] = None
-    color2: Optional[Tuple[int, int, int]] = None
-    pass
 
-title_from_id = {
-    "e": Empire,
-    "k": Kingdom,
-    "d": Duchy,
-    "c": County,
-    "b": Barony
-}
+
+title_from_id = {"e": Empire, "k": Kingdom, "d": Duchy, "c": County, "b": Barony}
+
+#: Boolean `landed_titles` keys carried straight onto the model.
+_FLAGS = (
+    "short_name",
+    "landless",
+    "independent",
+    "primary",
+    "dynasty_title_names",
+    "can_be_claimed",
+    "can_be_usurped",
+    "assimilate",
+)
+
+#: Every CK2 `landed_titles` keyword that takes a scalar. Measured on Faerun
+#: (`docs/formats_ck2_landed_titles.md`): any *other* scalar key inside a title
+#: block is a culture or culture-group id and its value is a cultural name.
+_SCALAR_KEYWORDS = frozenset(
+    {
+        "assimilate",
+        "caliphate",
+        "can_be_claimed",
+        "can_be_usurped",
+        "capital",
+        "controls_religion",
+        "creation_requires_capital",
+        "culture",
+        "dignity",
+        "dynasty_title_names",
+        "extra_ai_eval_troops",
+        "foa",
+        "graphical_culture",
+        "holy_order",
+        "holy_site",
+        "independent",
+        "landless",
+        "location_ruler_title",
+        "mercenary",
+        "mercenary_type",
+        "monthly_income",
+        "name_tier",
+        "pirate",
+        "primary",
+        "rebel",
+        "religion",
+        "short_name",
+        "strength_growth_per_century",
+        "title",
+        "title_female",
+        "title_prefix",
+        "tribe",
+    }
+)
+
+#: Block keys that are not cultural name overrides.
+_BLOCK_KEYWORDS = frozenset(
+    {"allow", "gain_effect", "color", "color2", "male_names", "female_names"}
+)
+
+
+def _color(value: object) -> Optional[Tuple[int, int, int]]:
+    """`color = { 20 30 40 }` or `color = rgb { 20 30 40 }` → an RGB tuple."""
+    if isinstance(value, Color):
+        components = value.components
+    elif isinstance(value, Block):
+        components = value.list_values()
+    else:
+        return None
+    if len(components) < 3:
+        return None
+    return tuple(int(c) for c in components[:3])  # type: ignore[return-value]
+
+
+def _parse_title_block(title_name: str, block: Block) -> LandedTitle:
+    title = title_from_id[title_name[0]](title_name=title_name)
+    for node in block.nodes():
+        key, value = node.key, node.value
+        if key == "color":
+            title.color = _color(value)
+        elif key == "color2":
+            title.color2 = _color(value)
+        elif key == "capital":
+            title.capital = int(value)
+            title.capital_comment = node.trailing_comment
+        elif key in ("title", "title_female"):
+            setattr(title, key, str(value))
+        elif key in _FLAGS:
+            title.__setattr__(key, bool(value))
+        elif key == "extra_ai_eval_troops":
+            title.extra_ai_eval_troops = int(value)
+        elif isinstance(value, Block):
+            if key.startswith(TITLE_PREFIXES):
+                title.children.append(_parse_title_block(key, value))
+            elif key not in _BLOCK_KEYWORDS:
+                title.extra[key] = value
+        elif key in _SCALAR_KEYWORDS:
+            title.extra[key] = value
+        else:
+            # A culture or culture-group id: `green_elf = Cormanthor`.
+            title.cultural_names[key] = str(value)
+    return title
+
 
 def read_landed_titles(file_path: Path) -> List[LandedTitle]:
-    """
-    Reads and parses a landed titles file using the general parser.
-    Converts the parsed dict to LandedTitle objects maintaining hierarchy.
-    """
-    parsed = regex_paradox_parser(file_path)
-    
-    def parse_title_block(title_name: str, title_data: Dict) -> LandedTitle:
-        """Convert a title block to a LandedTitle object"""
-        # Get title type from name prefix
-        title_type = title_name[0]  # e, k, d, c, b
-        title_class = title_from_id[title_type]
-        
-        # Create title object
-        title = title_class(
-            title_name=title_name,
-            children=[]
-        )
-        
-        # Parse properties
-        for key, value in title_data.items():
-            if key == 'color' and isinstance(value, dict) and 'enum' in value:
-                title.color = tuple(int(x) for x in value['enum'][:3])
-            elif key == 'color2' and isinstance(value, dict) and 'enum' in value:
-                title.color2 = tuple(int(x) for x in value['enum'][:3])
-            elif key == 'capital':
-                title.capital = int(value)
-            elif key == 'title':
-                title.title = value
-            elif key == 'title_female':
-                title.title_female = value
-            elif key == 'short_name':
-                title.short_name = value == 'yes'
-            elif key == 'landless':
-                title.landless = value == 'yes'
-            elif key == 'independent':
-                title.independent = value == 'yes'
-            elif key == 'primary':
-                title.primary = value == 'yes'
-            elif key == 'dynasty_title_names':
-                title.dynasty_title_names = value == 'yes'
-            elif key == 'can_be_claimed':
-                title.can_be_claimed = value == 'yes'
-            elif key == 'can_be_usurped':
-                title.can_be_usurped = value == 'yes'
-            elif key == 'assimilate':
-                title.assimilate = value == 'yes'
-            elif key == 'extra_ai_eval_troops':
-                title.extra_ai_eval_troops = int(value)
-            elif isinstance(value, dict):
-                # Nested title
-                if key.startswith(('e_', 'k_', 'd_', 'c_', 'b_')):
-                    child = parse_title_block(key, value)
-                    title.children.append(child)
-                # Culture-specific names
-                elif not any(key.startswith(x) for x in ['allow', 'gain_effect', 'color']):
-                    title.cultural_names[key] = value
-        
-        return title
+    """Read one `common/landed_titles/*.txt` file into a title hierarchy."""
+    document = parse_file(file_path)
+    return [
+        _parse_title_block(node.key, node.value)
+        for node in document.nodes()
+        if node.key.startswith(TITLE_PREFIXES) and isinstance(node.value, Block)
+    ]
 
-    # Parse all top-level titles
-    titles = []
-    for title_name, title_data in parsed.items():
-        if isinstance(title_data, dict) and title_name.startswith(('e_', 'k_', 'd_', 'c_', 'b_')):
-            title = parse_title_block(title_name, title_data)
-            titles.append(title)
 
-    return titles
+def read_all_titles(landed_titles_path: Path) -> Dict[str, List[LandedTitle]]:
+    """Read every landed-titles file of a folder, keyed by file stem."""
+    return {
+        path.stem: read_landed_titles(path)
+        for path in sorted(landed_titles_path.glob("*.txt"))
+    }
 
-def read_all_titles(landed_titles_path: Path) -> Dict[str, LandedTitle]:
-    all_titles = {}
-    for file in landed_titles_path.glob("*.txt"):
-        all_titles[file.stem] = read_landed_titles(file)
-    return all_titles
+
+def flatten_titles(titles: List[LandedTitle]) -> List[LandedTitle]:
+    """Depth-first list of a title hierarchy, parents before children."""
+    flat: List[LandedTitle] = []
+    stack = list(reversed(titles))
+    while stack:
+        title = stack.pop()
+        flat.append(title)
+        stack.extend(reversed(title.children))
+    return flat
+
 
 def convert_titles(
-        original_mod_folder: str,
-        new_mod_folder: str,
-        start_definition_id: int,
-    ):
-    """
-    Convert the titles as is for e, d, c, b
+    original_mod_folder: str,
+    new_mod_folder: str,
+    start_definition_id: int,
+):
+    """Read the CK2 title side. Writing is lane `titles-history`.
 
-    Specific for c and b
-    In ck2: Counties in definition.csv, 
-    [ ]has de jure titles in common/landed_titles
-    [X] Winter climate in map/climate.txt
-    [ ] History in history/titles
-    [X] History in history/provinces: title definition, culture, religion,  
-         baronies (holding type), terrain, 
-    Localization
-    CoA in gfx/flags
+    Change of paradigm between the games:
 
-    In ck3: Baronies in definition.csv, as de jure titles in common/landed_titles
-    as de jure titles in common/landed_titles (with province id)
-    Terrain in common/province_terrain
-    Winter climate in common/province_properties
-    History in history/provinces: culture, religion
-    Titles history in history/titles
-
-    Need to define history/characters, cultures, religions to have proper history
-    Use atlantean placeholders for now
+    - CK2: counties are in `map/definition.csv`, de jure titles in
+      `common/landed_titles`, winter climate in `map/climate.txt`, history in
+      `history/titles` and `history/provinces` (title, culture, religion,
+      baronies as holding types, terrain), localisation in `localisation/`,
+      coats of arms in `gfx/flags`.
+    - CK3: baronies are in `map_data/definition.csv` and are de jure titles in
+      `common/landed_titles` with a province id; terrain in
+      `common/province_terrain`, winter in `common/province_properties`,
+      province history in `history/provinces` (culture, religion), title
+      history in `history/titles`.
     """
     original_mod_folder = Path(original_mod_folder)
-    # Get all "useful" baronies: present in history/provinces:
-
-    print("Opening original definitions")
-    original_definitions = Path(original_mod_folder, "map", "definition.csv")
-    original_province_history_folder = Path(original_mod_folder, "history", "provinces")
-    new_definitions = Path(original_mod_folder, "map_data", "definition.csv")
-
-    definitions, id_to_line = open_definitions(original_definitions)
-    print("Opening original definitions")
+    definitions, id_to_line = open_definitions(
+        original_mod_folder / "map" / "definition.csv"
+    )
     id_to_history = read_all_histories(
-        id_to_line.keys(),  
-        original_province_history_folder
+        [key for key in id_to_line if not key.startswith("#")],
+        original_mod_folder / "history" / "provinces",
     )
     id_to_climate = read_provinces_climate(
-        Path(original_mod_folder, "map", "climate.txt")
+        original_mod_folder / "map" / "climate.txt"
     )
-
-    print("Reading all titles")
-    
-    titles = read_all_titles(
-        Path(original_mod_folder, "common", "landed_titles.txt")
-    )
-        
-    pass
-
+    titles = read_all_titles(original_mod_folder / "common" / "landed_titles")
+    return definitions, id_to_history, id_to_climate, titles
