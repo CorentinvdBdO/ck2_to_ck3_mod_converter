@@ -15,6 +15,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - Convert: `uv run ck2ck3 --config configs/faerun.toml [--steps a,b] [--dry-run]` (`uv run -m ck2ck3` works too). `--list-steps` lists the registry. See `docs/cli.md`.
 - `uv run scripts/pdx_scan.py [mod_dir] [--roundtrip N]` — parse every script file of a mod, report failures and timings.
 - `uv run pytest -m "not slow"` — fast tests only (the slow ones parse the whole Faerûn clone).
+- `uv run scripts/survey_cultures_religions.py` → `uv run scripts/seed_culture_overrides.py` → `uv run scripts/export_opinion_modifier_map.py` → `uv run scripts/check_id_collisions.py` → `uv run scripts/validate_cultures_religions.py` — the `cultures`/`religions` pipeline: source survey, first draft of `overrides/*.csv`, tables for the traits + loc lanes, vanilla-id safety, ck3-tiger evidence.
 
 ## Rules
 - Base branch is `main`. Lanes `lane/<name>`. Never commit on main.
@@ -29,11 +30,16 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `positions.txt` is optional; `default.map` comments it out in vanilla and major TCs.
 - Packed heightmap pair comes from the in-game map editor; the converter writes only `heightmap.png` (16-bit).
 - Faerûn defines ~15k baronies but builds ~3.8k holdings; barony set = built holdings, never the defined list.
+- Faerûn has **67 culture groups / 419 cultures** and **15 religion groups / 94 religions** (`verified`; the survey's "~495 cultures" and "~130–184 religions" were upper bounds).
+- A CK2 culture *group* carries only `graphical_cultures` and `alternate_start` — **no colour**. A CK3 language pillar requires one.
+- `common/culture/pillars`, `common/culture/traditions`, `common/ethnicities` and `common/modifier_definition_formats` are **not** `replace_path`s: an id emitted there must not collide with vanilla (Faerûn's `gur` and `mari` cultures do).
+- ck3-tiger wants a **UTF-8 BOM on script files**, not just localisation; `pdx.encoding.OUT_ENCODING` writes plain UTF-8 (open, see `docs/step_cultures_religions.md`).
 - CK2 `positions.txt` is per province; there are no barony coordinates to import.
 - The PyPI package `jomini` is unrelated to Paradox parsing (battle simulator). Do not add it.
 
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`
+- `docs/step_cultures_religions.md` — the `cultures` + `religions` steps: id scheme, every derived default, the CK2-flag→doctrine table, what the neighbouring lanes own. Tables: `mappings/culture_fields.csv`, `mappings/religion_fields.csv`, `mappings/opinion_modifier_map.csv`, `mappings/loc_key_renames_cultures_religions.csv`. Human input: `overrides/*.csv`.
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.
