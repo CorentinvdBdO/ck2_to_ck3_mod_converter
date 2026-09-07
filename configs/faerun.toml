@@ -57,3 +57,21 @@ out = "/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted
 dimensions = [8192, 4096]
 scale = 1.4448242187
 offset = [-146, 26]
+
+# Localisation port (step `loc`, docs/formats_loc.md + docs/loc_codes.md).
+[loc]
+# Omit to auto-pick: english plus every column filled on at least min_share of
+# the rows. Faerûn fills english 100 % and french/german/spanish 70.1 % each.
+languages = ["english", "french", "german", "spanish"]
+min_share = 0.05
+# Optional `ck2_key,ck3_key` rename table, applied after everything else, so a
+# later lane can rename an id and still resolve the CK2 text.
+# key_map = "overrides/loc_keys.csv"
+# 827 Faerûn keys shadow a vanilla CK3 string (mostly CK2 interface strings).
+# Keeping them is deliberate: a total conversion replaces the interface too.
+skip_vanilla_collisions = false
+vanilla_keys = "docs/evidence/ck3_vanilla_loc_keys.txt"
+# "custom": a `[X.GetFoo]` that is no CK2 engine built-in becomes
+# `Custom('GetFoo')` (that is what it is in CK2) and is warned about.
+# "marker": leave a visible <!CK2:...!> instead. See docs/loc_codes.md.
+unknown_codes = "custom"

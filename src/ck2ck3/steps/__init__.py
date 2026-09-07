@@ -24,6 +24,7 @@ from types import ModuleType
 DEFAULT_ORDER: tuple[str, ...] = (
     "clean",
     "descriptor",
+    "loc",
 )
 
 
