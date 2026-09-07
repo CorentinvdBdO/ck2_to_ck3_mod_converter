@@ -109,3 +109,42 @@ def test_structurally_equal_can_ignore_comments():
 
 def test_structurally_equal_keeps_bool_and_int_apart():
     assert not structurally_equal(parse("a = yes"), parse("a = 1"))
+
+
+# -- comment mode (added by lane `traits`) ---------------------------------
+def test_commented_mode_prefixes_every_line():
+    """`commented=True` turns a tree into dead script the game ignores."""
+    text = (
+        "creature_elf = {\n"
+        "\tdiplomacy = 1 # ears\n"
+        "\n"
+        "\topposites = { creature_orc }\n"
+        "}\n"
+    )
+    out = pdx.write(pdx.parse(text), commented=True)
+    assert all(line.startswith("#") for line in out.splitlines())
+    # a preserved blank line stays a bare `#`, not `# `
+    assert "#\n" in out
+    # nothing is left for the parser to see
+    assert pdx.parse(out).nodes() == []
+
+
+def test_commented_mode_is_reversible():
+    """Stripping the prefix gives back exactly the default rendering."""
+    text = (
+        "# lead\n"
+        "t = {\n"
+        "\ta = 1 # trail\n"
+        "\tb = { 1 2 3 }\n"
+        "\t# end\n"
+        "}\n"
+    )
+    doc = pdx.parse(text)
+    plain = pdx.write(doc)
+    commented = pdx.write(doc, commented=True)
+    revived = "\n".join(
+        line[2:] if line.startswith("# ") else line[1:]
+        for line in commented.splitlines()
+    )
+    assert revived + "\n" == plain
+    assert pdx.structurally_equal(pdx.parse(revived), doc)

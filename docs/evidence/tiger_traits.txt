@@ -1,0 +1,1302 @@
+# ck3-tiger report for lane `traits` (mod folder = only common/traits + gfx/interface/icons/traits)
+# generated: 2026-09-07 · ck3-tiger ck3-tiger 1.19.0 · CK3 1.19.0.6
+# command: ck3-tiger <scratch>/traits_only.mod --game "<CK3>/game"
+
+Using CK3 directory: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+That does not look like a CK3 directory.
+Trying: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/..
+Ok.
+Tiger was made for Crusader Kings 3 version 1.19.0 (Scribe),
+which matches the detected game version 1.19.0.6.
+Using mod directory: /tmp/claude-1000/-home-cvdbdo-git/cca1f4a7-19e7-4fe8-b641-7e1441b73fa2/scratchpad/traits_only
+
+warning(encoding): Expected UTF-8 BOM encoding
+ --> [MOD] common/traits/fae_traits.txt
+ --> [MOD] common/traits/fae_traits_unported.txt
+
+warning(missing-file): file gfx/interface/icons/traits/stressed.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+153 | stressed = {
+    | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/harelip.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+162 | harelip = {
+    | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/envious.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+176 | envious = {
+    | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/light_foot_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+193 | light_foot_leader = {
+    | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/heavy_infantry_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+198 | heavy_infantry_leader = {
+    | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cavalry_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+203 | cavalry_leader = {
+    | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/experimenter.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+208 | experimenter = {
+    | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/eunuch.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+234 | eunuch = {
+    | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/blinded.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+247 | blinded = {
+    | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/flat_terrain_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+263 | flat_terrain_leader = {
+    | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/rough_terrain_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+272 | rough_terrain_leader = {
+    | ^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/mountain_terrain_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+280 | mountain_terrain_leader = {
+    | ^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/desert_terrain_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+288 | desert_terrain_leader = {
+    | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/unyielding_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+296 | unyielding_leader = {
+    | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/has_aztec_disease.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+302 | has_aztec_disease = {
+    | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/child_of_consort.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+328 | child_of_consort = {
+    | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/monk.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+334 | monk = {
+    | ^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/nun.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+348 | nun = {
+    | ^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/on_pilgrimage.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+362 | on_pilgrimage = {
+    | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/mutazilite.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+370 | mutazilite = {
+    | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/ashari.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+382 | ashari = {
+    | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_christian.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+728 | bad_priest_christian = {
+    | ^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_muslim.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+751 | bad_priest_muslim = {
+    | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_norse.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+774 | bad_priest_norse = {
+    | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_tengri.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+797 | bad_priest_tengri = {
+    | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_zoroastrian.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+820 | bad_priest_zoroastrian = {
+    | ^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bad_priest_aztec.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+843 | bad_priest_aztec = {
+    | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/narrow_flank_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+866 | narrow_flank_leader = {
+    | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/war_elephant_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+871 | war_elephant_leader = {
+    | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/jungle_terrain_leader.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+879 | jungle_terrain_leader = {
+    | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/in_hiding.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+887 | in_hiding = {
+    | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/seductress.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+904 | seductress = {
+    | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/socializer.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+923 | socializer = {
+    | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/gamer.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+938 | gamer = {
+    | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/erudite.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+949 | erudite = {
+    | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/haughty.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+966 | haughty = {
+    | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/affectionate.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+979 | affectionate = {
+    | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/timid.dds does not exist
+   --> [MOD] common/traits/fae_traits.txt
+991 | timid = {
+    | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/willful.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1002 | willful = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/brooding.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1011 | brooding = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/indolent.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1022 | indolent = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/playful.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1029 | playful = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/conscientious.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1036 | conscientious = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/fussy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1043 | fussy = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/idolizer.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1050 | idolizer = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/horse.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1057 | horse = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/robust.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1082 | robust = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/feeble.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1094 | feeble = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cough.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1106 | cough = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/fever.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1123 | fever = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/diarrhea.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1145 | diarrhea = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/vomiting.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1167 | vomiting = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/chest_pain.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1189 | chest_pain = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cramps.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1205 | cramps = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/rash.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1223 | rash = {
+     | ^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/headache.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1241 | headache = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/abdominal_pain.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1262 | abdominal_pain = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/fatigue.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1278 | fatigue = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/malaise.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1297 | malaise = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/infection.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1311 | infection = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/one_handed.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1337 | one_handed = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/mangled.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1376 | mangled = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/severely_injured.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1402 | severely_injured = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/flu.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1423 | flu = {
+     | ^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/gout.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1444 | gout = {
+     | ^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/food_poisoning.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1464 | food_poisoning = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/rabies.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1488 | rabies = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/valhalla_bound.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1515 | valhalla_bound = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/ravager.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1529 | ravager = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/seaking.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1590 | seaking = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dancing_plague.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1650 | dancing_plague = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sick_incapable.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1711 | sick_incapable = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cannot_marry.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1725 | cannot_marry = {
+     | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sea_queen.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1733 | sea_queen = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/eagle_warrior.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1794 | eagle_warrior = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sun_warrior.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1813 | sun_warrior = {
+     | ^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/ukkos_shield.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1832 | ukkos_shield = {
+     | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/nyames_shield.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1851 | nyames_shield = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/peruns_chosen.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1870 | peruns_chosen = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/romuvas_own.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1889 | romuvas_own = {
+     | ^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/ares_own.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1908 | ares_own = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/tengri_warrior.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1927 | tengri_warrior = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/shaddai.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1946 | shaddai = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/gondi_shahansha.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1965 | gondi_shahansha = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cannibal_trait.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1984 | cannibal_trait = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/masterless_dog.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+1999 | masterless_dog = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/house_dog.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2008 | house_dog = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/hedgehog.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2016 | hedgehog = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/otter.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2025 | otter = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/cat.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2035 | cat = {
+     | ^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/master_of_flame.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2060 | master_of_flame = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/logistics_expert.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2074 | logistics_expert = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/levy_coordinator.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2089 | levy_coordinator = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sapper.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2104 | sapper = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/familial_kinslayer.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2119 | familial_kinslayer = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dynastic_kinslayer.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2140 | dynastic_kinslayer = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/kow_tow_travels.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2160 | kow_tow_travels = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/kow_tow_completed_tier_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2169 | kow_tow_completed_tier_1 = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/kow_tow_completed_tier_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2177 | kow_tow_completed_tier_2 = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/kow_tow_completed_tier_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2185 | kow_tow_completed_tier_3 = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/crowned_by_priest.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2193 | crowned_by_priest = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/crowned_by_bishop.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2206 | crowned_by_bishop = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/crowned_by_pope.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2220 | crowned_by_pope = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/crowned_by_myself.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2235 | crowned_by_myself = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/uncrowned.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2250 | uncrowned = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/travelling.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2258 | travelling = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pregnancy_finishing.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2263 | pregnancy_finishing = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/hard_pregnancy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2269 | hard_pregnancy = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/troubled_pregnancy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2283 | troubled_pregnancy = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/lefthanded.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2297 | lefthanded = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/freckles.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2310 | freckles = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sturdy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2326 | sturdy = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/is_fat.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2334 | is_fat = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/is_malnourished.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2352 | is_malnourished = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/baptized_by_pope.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2370 | baptized_by_pope = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/baptized_by_bishop.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2384 | baptized_by_bishop = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/baptized_by_satan.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2397 | baptized_by_satan = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/baptized_by_patriarch.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2416 | baptized_by_patriarch = {
+     | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_leader.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2431 | norse_leader = {
+     | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pagan_branch_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2496 | pagan_branch_1 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pagan_branch_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2520 | pagan_branch_2 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pagan_branch_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2540 | pagan_branch_3 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pagan_branch_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2560 | pagan_branch_4 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_hre.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2580 | dead_crown_hre = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_pahlavi.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2587 | dead_crown_pahlavi = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_byzantine.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2594 | dead_crown_byzantine = {
+     | ^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2601 | dead_crown_fylkir = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_tengri_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2608 | dead_crown_tengri_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_finnish_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2615 | dead_crown_finnish_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_iron_crown_lombardy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2622 | dead_iron_crown_lombardy = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_cursed_diamond_crown.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2629 | dead_cursed_diamond_crown = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/freckles_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2636 | freckles_2 = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/freckles_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2650 | freckles_3 = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/freckles_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2664 | freckles_4 = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/freckles_5.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2678 | freckles_5 = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/beatified.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2692 | beatified = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/blessed_ancestor.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2698 | blessed_ancestor = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/i_used_to_be_a_player.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2704 | i_used_to_be_a_player = {
+     | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/child_of_consort_male.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2710 | child_of_consort_male = {
+     | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_west_african_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2716 | dead_crown_west_african_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_slavic_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2723 | dead_crown_slavic_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_romuva_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2730 | dead_crown_romuva_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_scepter_bon_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2737 | dead_scepter_bon_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_zun_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2744 | dead_crown_zun_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_scepter_hellenic_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2751 | dead_scepter_hellenic_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/dead_crown_aztec_fylkir.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2758 | dead_crown_aztec_fylkir = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/pirate.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2765 | pirate = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bloodthirsty_gods_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2823 | bloodthirsty_gods_1 = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bloodthirsty_gods_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2858 | bloodthirsty_gods_2 = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/bloodthirsty_gods_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2893 | bloodthirsty_gods_3 = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/groomed.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2928 | groomed = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/uncouth.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2940 | uncouth = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/tribal_kinslayer.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2951 | tribal_kinslayer = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/knight_order_leader.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2972 | knight_order_leader = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/kailash_guardian.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2983 | kailash_guardian = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+2998 | scarred_type_1 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3009 | scarred_type_2 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3020 | scarred_type_3 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3031 | scarred_type_4 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_5.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3042 | scarred_type_5 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_6.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3053 | scarred_type_6 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_7.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3064 | scarred_type_7 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_8.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3075 | scarred_type_8 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_9.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3086 | scarred_type_9 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_type_10.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3097 | scarred_type_10 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_mid.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3108 | scarred_mid = {
+     | ^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/scarred_high.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3122 | scarred_high = {
+     | ^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3136 | thayan_tattoo_1 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3144 | thayan_tattoo_2 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3152 | thayan_tattoo_3 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3160 | thayan_tattoo_4 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_5.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3168 | thayan_tattoo_5 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_6.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3176 | thayan_tattoo_6 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_7.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3184 | thayan_tattoo_7 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_8.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3192 | thayan_tattoo_8 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3200 | norse_tattoo_1 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3208 | norse_tattoo_2 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3216 | norse_tattoo_3 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3224 | norse_tattoo_4 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_5.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3232 | norse_tattoo_5 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/norse_tattoo_6.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3240 | norse_tattoo_6 = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_1.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3248 | slavic_tattoo_1 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_2.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3256 | slavic_tattoo_2 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_3.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3264 | slavic_tattoo_3 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_4.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3272 | slavic_tattoo_4 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_5.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3280 | slavic_tattoo_5 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slavic_tattoo_6.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3288 | slavic_tattoo_6 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_9.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3296 | thayan_tattoo_9 = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_10.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3304 | thayan_tattoo_10 = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_11.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3312 | thayan_tattoo_11 = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_12.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3320 | thayan_tattoo_12 = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_13.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3328 | thayan_tattoo_13 = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/thayan_tattoo_14.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3336 | thayan_tattoo_14 = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/gladiator.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3345 | gladiator = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/learned.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3589 | learned = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/acute.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3609 | acute = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/sharp.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3622 | sharp = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/lucid.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3635 | lucid = {
+     | ^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/careless.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3646 | careless = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/unschooled.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3657 | unschooled = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/ignorant.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3668 | ignorant = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/witless.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3679 | witless = {
+     | ^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/immaculate.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3744 | immaculate = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/tidy.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3755 | tidy = {
+     | ^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/slovenly.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3760 | slovenly = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/obnoxious.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3765 | obnoxious = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/deathmask.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3802 | deathmask = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/is_clone.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+3844 | is_clone = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/tb_sterile.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4249 | tb_sterile = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/secret_patrician.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4257 | secret_patrician = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/spellscar.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4285 | spellscar = {
+     | ^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/horned.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4294 | horned = {
+     | ^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/hornless.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4301 | hornless = {
+     | ^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/rusting_trait.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4323 | rusting_trait = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/hidden_spellplague_trait.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4348 | hidden_spellplague_trait = {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_drow.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4357 | creature_drow = {
+     | ^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_draegloth.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4431 | creature_draegloth = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_satyr.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4471 | creature_satyr = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_hengeyokai.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4485 | creature_hengeyokai = {
+     | ^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_troll.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4679 | creature_troll = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_goliath.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4697 | creature_goliath = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_tabaxi.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4838 | creature_tabaxi = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_hagspawn.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4868 | creature_hagspawn = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_deep_imaskari.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+4916 | creature_deep_imaskari = {
+     | ^^^^^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_aboleth.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5031 | creature_aboleth = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_sarrukh.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5180 | creature_sarrukh = {
+     | ^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_lamia.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5278 | creature_lamia = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_dragon.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5312 | creature_dragon = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_aarakocra.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5397 | creature_aarakocra = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_sahuagin.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5412 | creature_sahuagin = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_kuotoa.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5442 | creature_kuotoa = {
+     | ^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_construct.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5661 | creature_construct = {
+     | ^^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_outsider.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5678 | creature_outsider = {
+     | ^^^^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/creature_slaad.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5694 | creature_slaad = {
+     | ^^^^^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/werespider.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+5845 | werespider = {
+     | ^^^^^^^^^^ 
+
+warning(missing-file): file gfx/interface/icons/traits/stasis_clone.dds does not exist
+    --> [MOD] common/traits/fae_traits.txt
+6488 | stasis_clone = {
+     | ^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_vice`
+   --> [MOD] common/traits/fae_traits.txt
+179 |     flag = vice
+    |            ^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+   --> [MOD] common/traits/fae_traits.txt
+240 |     flag = can_not_marry
+    |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_epidemic_disease`
+   --> [MOD] common/traits/fae_traits.txt
+303 |     flag = epidemic_disease
+    |            ^^^^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+   --> [MOD] common/traits/fae_traits.txt
+304 |     flag = illness
+    |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+   --> [MOD] common/traits/fae_traits.txt
+341 |     flag = can_not_marry
+    |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+   --> [MOD] common/traits/fae_traits.txt
+355 |     flag = can_not_marry
+    |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+    --> [MOD] common/traits/fae_traits.txt
+1074 |     flag = can_not_marry
+     |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1312 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1424 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1445 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1465 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1489 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_epidemic_disease`
+    --> [MOD] common/traits/fae_traits.txt
+1651 |     flag = epidemic_disease
+     |            ^^^^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1652 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+1694 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+    --> [MOD] common/traits/fae_traits.txt
+1726 |     flag = can_not_marry
+     |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+    --> [MOD] common/traits/fae_traits.txt
+2052 |     flag = can_not_marry
+     |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_illness`
+    --> [MOD] common/traits/fae_traits.txt
+4326 |     flag = illness
+     |            ^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_epidemic_disease`
+    --> [MOD] common/traits/fae_traits.txt
+4327 |     flag = epidemic_disease
+     |            ^^^^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+    --> [MOD] common/traits/fae_traits.txt
+5460 |     flag = can_not_marry
+     |            ^^^^^^^^^^^^^ 
+
+tips(suggest-localization): you can define localization `TRAIT_FLAG_DESC_can_not_marry`
+    --> [MOD] common/traits/fae_traits.txt
+6490 |     flag = can_not_marry
+     |            ^^^^^^^^^^^^^ 
+
+fatal: 0, error: 0, warning: 237, untidy: 0, tips: 21

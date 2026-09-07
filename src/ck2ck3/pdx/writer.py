@@ -6,6 +6,12 @@ Two modes:
   ``parse(write(parse(x)))`` is structurally equal to ``parse(x)``.
 * ``canonical=True`` — no comments, no blank lines, one entry per line. Used to
   diff two files for meaning rather than for layout.
+
+On top of either mode, ``commented=True`` prefixes every rendered line with
+``# ``, so a parse tree can be shipped inside a script file as dead script the
+game ignores. The `traits` step uses it for the CK2 traits that have no CK3
+landing place: nothing is dropped, and a human can revive a block by deleting
+the prefix.
 """
 
 from __future__ import annotations
@@ -85,10 +91,12 @@ class Writer:
         indent: str = "\t",
         newline: str = "\n",
         canonical: bool = False,
+        commented: bool = False,
     ) -> None:
         self.indent = indent
         self.newline = newline
         self.canonical = canonical
+        self.commented = commented
 
     # -- public ------------------------------------------------------------
     def write(self, block: Block) -> str:
@@ -96,6 +104,8 @@ class Writer:
         self._emit_entries(block, 0, lines)
         if not self.canonical:
             lines.extend(self._comment_lines(block.end_comments, ""))
+        if self.commented:
+            lines = [f"# {line}" if line else "#" for line in lines]
         text = self.newline.join(lines)
         return text + self.newline if text else ""
 
@@ -196,9 +206,15 @@ def write(
     indent: str = "\t",
     newline: str = "\n",
     canonical: bool = False,
+    commented: bool = False,
 ) -> str:
-    """Render a parse tree as Paradox script text."""
-    return Writer(indent=indent, newline=newline, canonical=canonical).write(block)
+    """Render a parse tree as Paradox script text.
+
+    ``commented=True`` prefixes every line with ``# `` (see the module docstring).
+    """
+    return Writer(
+        indent=indent, newline=newline, canonical=canonical, commented=commented
+    ).write(block)
 
 
 def write_file(
