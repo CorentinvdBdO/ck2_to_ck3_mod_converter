@@ -10,6 +10,7 @@ Decisions here are converter defaults. Everything human-judged enters through ov
 | provinces | 4096×3328 bmp | 9216×4608 png | 8256×5504 | 8192×4096 |
 | heightmap | 8-bit `topology.bmp` same size | 16-bit `heightmap.png` **2×** (18432×9216) | 16-bit, 1× | 16-bit, 1× |
 | packed heightmap | — | `packed_heightmap.png` + `indirection_heightmap.png`, `heightmap.heightmap` (tile 65) | tile 33 | tile 33 |
+| **our output** | — | 8192×6656 provinces, 1× heightmap, tile 33, packed pair written by the converter | | |
 | positions | per province, 7 slots | `positions` commented out in `default.map` | commented out | 2-line file |
 | rivers | 8-bit palette bmp | 8-bit palette png | same | same |
 | province count | 2697 (369 sea) | 14152 rows | 5846 | 8734 |
@@ -21,7 +22,14 @@ Decisions here are converter defaults. Everything human-judged enters through ov
 ### Pipeline (converter)
 1. `provinces.bmp` → NEAREST resize by `scale`, paste at `offset` on a canvas of `dims`; padding = a dedicated "ocean" colour registered in `definition.csv`, never black.
 2. Lost-province detection: every CK2 colour must survive with ≥ `min_pixels` (default 64) or be reported; tiny ones are re-grown by one dilation pass inside their county, else listed in `docs/evidence/lost_provinces.csv`.
-3. `topology.bmp` → 16-bit, LANCZOS resize to 2×dims, curve remap: CK2 sea level 95/255 → CK3 water level (measure from vanilla `heightmap.png` at coast pixels, task), mountains compressed by a configurable curve (`heightmap_curve` in the config, default = current 12-point curve).
+3. `topology.bmp` → 16-bit, LANCZOS resize (at **1×** dims, not 2×: both
+   Elder Kings 2 and Godherja ship a 1× heightmap), curve remap pinned at
+   `0 → 0`, `95 → 4883`, `255 → 49205`. Both sea levels are measured, not
+   assumed: CK2's topology has a zero-pixel dead band at 93–96, and the CK3
+   water surface is `WATERLEVEL / WORLD_EXTENTS_Y × 65535` (`docs/map_scale.md`
+   §4). **Then pack it**: the game loads `heightmap.heightmap`, not
+   `heightmap.png`, and the converter now writes the packed pair itself
+   (`docs/formats_packed_heightmap.md`) — the map editor is not needed.
 4. Rivers: keep the vector follow/redraw approach; fix SPLIT (yellow) and WATER (magenta) handling; add a unit test on a synthetic river.
 5. Write `default.map` (sea_zones from CK2 `sea_zones`, lakes from `ocean_region` "Lakes", impassable from CK2 wasteland), `definition.csv` (barony-keyed, see B), `adjacencies.csv` (straits from CK2 file, ids remapped), `climate.txt` (CK2 winter → CK3 `mild_winter/normal_winter/severe_winter` lists), `island_region.txt`, `geographical_regions/` (from CK2 `geographical_region.txt`, duchy lists remapped), `common/province_terrain/` (CK2 `terrain.bmp` majority colour per barony → CK3 terrain key via a mapping table).
 6. `positions.txt`: omit; let the game generate. Optional later: centroid-based generation for cities at CK2 city position (rescaled), `assumed` acceptable since Godherja ships an empty file.
@@ -57,6 +65,12 @@ Better than pizza slices or one-per-county, and scales with human input:
 - All 7 defined baronies as physical: 15k baronies of ~8×8 px, unreadable. Rejected.
 
 ## C. Open items (human decisions, not blocking the converter)
-1. Target dimensions: keep 1:1 with vanilla scale (Faerûn ≈ 5918×4808 after scaling, i.e. bigger than vanilla) or fit into 9216×4608 with borders. Default in config: 1:1 scale, canvas 6144×5120 (multiples of 64 `assumed` required).
+1. ~~Target dimensions~~ **SETTLED 2026-09-07 by lane `map-physical`**: canvas
+   **8192×6656**, scale factor **1.9543**, derived from measured km-per-pixel on
+   both maps rather than chosen (`docs/map_scale.md`). The one judgement call
+   left inside it is which vanilla figure to scale against: the core-Europe
+   latitude fit (1.4839 km/px, used) or the whole-map fit (1.7426 km/px, which
+   would give a 28% smaller canvas at the same province count). One config line,
+   `[map] vanilla_km_per_px`.
 2. Bookmark date driving the barony set (default 1357.1.1 ∪ later).
 3. How far to align the CK2 political map to the atlas 1371 canon: converter only reports diffs (county → atlas nation colour sampled at centroid) in `docs/evidence/canon_diff.csv`; edits are submod work.
