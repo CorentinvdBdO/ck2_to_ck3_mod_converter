@@ -6,7 +6,7 @@ Updated: 2026-09-07 by Claude session (project kickoff)
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
 |---|---|---|---|---|---|
-| project-kickoff | lane/project-kickoff | Claude 2026-09-07 | charter, decisions, surveys, map/races designs, mechanics inventory, CLAUDE/STATUS, ci/checks.sh green; submod + asset-lib skeletons exist | WIP | not run |
+| project-kickoff | lane/project-kickoff | Claude 2026-09-07 | charter, decisions, surveys, map/races designs, mechanics inventory, CLAUDE/STATUS, ci/checks.sh green; submod + asset-lib skeletons exist | review (user to /ship or amend) | green |
 
 ## Repos
 | repo | path | base | origin | state |
@@ -19,13 +19,14 @@ Updated: 2026-09-07 by Claude session (project kickoff)
 ## Environment (verified 2026-09-07)
 - CK3 1.19.0.6 installed; CK2 **not** installed (no vanilla CK2 files locally; Faerûn clone is the only CK2 source).
 - Faerûn upstream HEAD shallow-cloned in `Faerun/` (1.5 GB). Elder Kings 2 and Godherja installed via Workshop (race references).
-- Python 3.12, uv, no Rust, no ck3-tiger.
+- Python 3.12, uv, no Rust. ck3-tiger v1.19.0 at `~/.local/bin/ck3-tiger` (installed 2026-09-07).
 
 ## Blockers and open flags
 - Open decisions in `docs/design_map.md` §C (target dims, bookmark date) and `docs/design_races.md` (asset licensing).
 - Faerûn has no LICENSE; conversion output inherits WotC Fan Content Policy constraints.
 
 ## Last results
+- 2026-09-07 — races research: no CK3 FR mod exists, no reusable race assets; EK2 pattern adopted (`docs/races_research.md`, `docs/design_races.md`).
 - 2026-09-07 — `scripts/faerun_barony_stats.py`: 2132 counties, 15,195 defined baronies, 3,786 built @1368.9.2 (median 1/county). `docs/evidence/barony_stats.csv`.
 
 ## Next 3

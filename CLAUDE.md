@@ -10,7 +10,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 ## Commands
 - `uv sync --group dev` — env. `uv run pytest` — tests (must be green before `/ship`).
 - `uv run scripts/faerun_barony_stats.py` — barony/holding statistics (writes `docs/evidence/barony_stats.csv`).
-- `ci/checks.sh` — pytest + ruff-free syntax check + docs present. `/ship` runs it.
+- `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
 - Convert: `uv run convert.py` (being replaced by `uv run -m ck2ck3 --config configs/faerun.toml`, lane `foundation`).
 
 ## Rules
