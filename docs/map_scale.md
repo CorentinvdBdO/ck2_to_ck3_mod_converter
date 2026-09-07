@@ -295,3 +295,40 @@ ship that pair. See `docs/formats_packed_heightmap.md`.
 - Citable canon distances. If a source with real straight-line mileages between
   Faerûnian cities turns up, §2b stops being `assumed` and becomes a second
   authoritative measurement.
+
+
+---
+
+## 7. Known limitation: the padding ocean is one province over 25% of the canvas
+
+`verified` on the generated map: the colour `(0, 0, 96)` owns **25.3%** of the
+8192×6656 canvas as a *single* sea province.
+
+That is not the 64 px margin. It is the CK2 source: 2,949,448 pixels of
+`Faerun/Faerun/map/provinces.bmp` — 21% of it — are pure white and appear in no
+`definition.csv` row, so CK2 itself never assigned them to a province. They are
+the unclaimed water south and west of the continent. The converter cannot
+invent provinces there (CLAUDE.md: no invention), so they all fall to the
+padding province, along with the margin.
+
+Consequences, none fatal but all worth knowing:
+
+- naval movement across that whole area is **one province hop**;
+- it is one sea zone, so it cannot carry distinct names, trade or travel
+  modifiers;
+- the province's centre of mass is meaningless, so any generated position for
+  it will be odd.
+
+Fixes, in increasing effort, for whoever picks this up:
+
+1. **Crop the canvas** to the CK2 map's actual painted extent before scaling.
+   Cheapest, loses nothing, and shrinks the images — the 21% white is dead
+   weight in every output file too.
+2. **Subdivide the padding** into a grid of sea provinces (a Voronoi over the
+   existing coastal sea provinces would follow the coast better than a grid).
+   Cheap to generate, and gives sane naval movement.
+3. **Extend the CK2 map** upstream so the water is assigned there. Correct, but
+   not our repository.
+
+Option 1 is the one to do first, and it is a change to `plan_canvas` plus a
+"painted extent" pass over the source bitmap, not a redesign.
