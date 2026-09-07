@@ -82,7 +82,7 @@ def is_river(idx: int) -> bool:
 
 
 @dataclass
-class Path:
+class RiverPath:
     """One traced polyline in source pixel coordinates."""
 
     points: list[tuple[int, int]] = field(default_factory=list)  # (y, x)
@@ -97,7 +97,7 @@ class Path:
         return int(np.bincount(bodies).argmax())
 
 
-def trace(idx_map: np.ndarray) -> list[Path]:
+def trace(idx_map: np.ndarray) -> list[RiverPath]:
     """Trace every river pixel into polylines.
 
     Walk order: start from the specials (source / merge / split) first so their
@@ -119,8 +119,8 @@ def trace(idx_map: np.ndarray) -> list[Path]:
                 out.append((ny, nx))
         return out
 
-    def walk(sy: int, sx: int) -> Path:
-        path = Path()
+    def walk(sy: int, sx: int) -> RiverPath:
+        path = RiverPath()
         y, x = sy, sx
         while True:
             visited[y, x] = True
@@ -149,7 +149,7 @@ def trace(idx_map: np.ndarray) -> list[Path]:
                 path.values.append(int(idx_map[y, x]))
                 return path
 
-    paths: list[Path] = []
+    paths: list[RiverPath] = []
     specials = [
         (int(y), int(x))
         for y, x in zip(*np.nonzero(np.isin(idx_map, SPECIAL)))

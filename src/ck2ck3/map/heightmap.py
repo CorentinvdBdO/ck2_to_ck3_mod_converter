@@ -94,7 +94,12 @@ def write_png(heights: np.ndarray, path: str | Path) -> None:
         raise ValueError(f"heightmap must be uint16, got {heights.dtype}")
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(heights, mode="I;16").save(p, optimize=True)
+    # no `mode=` argument: Pillow infers I;16 from the uint16 dtype, and
+    # passing mode= to change the data type is deprecated (removed in Pillow 13)
+    im = Image.fromarray(heights)
+    if im.mode != "I;16":
+        raise ValueError(f"expected PIL mode I;16 for a 16-bit heightmap, got {im.mode}")
+    im.save(p, optimize=True)
 
 
 def measure_sea_level(

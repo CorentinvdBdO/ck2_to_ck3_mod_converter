@@ -28,8 +28,13 @@ supported_version = "1.19.*"
 # army scale was tuned against. scripts/measure_vanilla_scale.py.
 vanilla_km_per_px = 1.4839
 
-# Faerûn: see docs/map_scale.md. scripts/measure_faerun_scale.py.
-source_km_per_px = 2.7526
+# Faerûn: 2.90 km/px, from the Atlas of Ice and Fire 1371 DR guide map's own
+# miles scale bar (123 px = 250 mi -> 3.2710 km/atlas-px) divided by the
+# atlas->CK2 similarity transform scale (1.1275, rotation +0.000 deg, landmark
+# RMS 1.93 px). 3.2710 / 1.1275 = 2.90. The CK2 mod really is drawn on the
+# atlas projection. docs/evidence/atlas_registration.md,
+# scripts/measure_faerun_scale.py.
+source_km_per_px = 2.90
 
 # Set to pin the factor and ignore the two numbers above (regression runs).
 # The legacy convert.py value was 5918/4096 = 1.4448.
