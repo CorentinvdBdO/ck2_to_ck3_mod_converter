@@ -1,0 +1,182 @@
+ck2_death_reason,ck3_death_reason,status,note
+death_accident,death_accident,exact,same id in both games
+death_accident_arrow,death_shot_by_arrows,approx,CK3 has no generic arrow accident
+death_accident_bear,death_bear,exact,CK3 animal death
+death_accident_boar,death_boar,exact,CK3 animal death
+death_accident_cold,death_froze,approx,CK3 death_froze / death_hypothermia; froze is the accident reading
+death_accident_crushing,death_crushed,exact,-
+death_accident_dragon,death_accident,fallback,no dragons in CK3; nearest generic accident
+death_accident_drink,death_drank_to_death,approx,-
+death_accident_drowning,death_drowned,exact,-
+death_accident_fall,death_fall,exact,-
+death_accident_fire,death_fire,exact,-
+death_accident_generic_beast,death_wild_animal,exact,-
+death_accident_hunt,death_hunting_accident,exact,-
+death_accident_magic,death_accident,fallback,CK3 has no magic; generic accident
+death_accident_monster,death_wild_animal,approx,nearest CK3 beast death
+death_accident_sex,death_best_sex_of_their_life,approx,CK3's only sex-related death
+death_accident_ship,death_sea_storm,approx,-
+death_accident_snakes,death_snakes,exact,-
+death_accident_space,death_accident,fallback,Faerun spelljammer death; no CK3 equivalent
+death_accident_tiger,death_tiger,exact,-
+death_accident_volcano,death_accident,fallback,CK3 has no volcano death
+death_accident_wolf,death_wolf,exact,-
+death_accident_wonder_traps,death_hunting_trap,approx,-
+death_adventurers,death_bandit_attack,approx,killed by a rival adventuring party
+death_adventuring,death_lost,approx,died while adventuring
+death_apotheosis,death_vanished,approx,Faerun ascension to godhood; CK3 has no equivalent
+death_auril_embrace,death_froze,approx,Faerun goddess of cold
+death_banished_spell,death_vanished,approx,-
+death_battle,death_battle,exact,same id in both games
+death_battle_duel,death_duel,exact,-
+death_berserker_rage,death_fight,approx,-
+death_binding,death_vanished,approx,Faerun magical binding
+death_brain_eaten,death_eaten,approx,illithid; CK3 has no mind flayers
+death_ceremorphosis,death_eaten,approx,illithid transformation
+death_chaos_phage,death_horrible_disease,approx,-
+death_childbirth,death_childbirth,exact,same id in both games
+death_claim_duel_attacker,death_duel,exact,-
+death_claim_duel_defender,death_duel,exact,-
+death_combat_dragon,death_battle,fallback,no dragons in CK3
+death_combat_magic,death_battle,fallback,no magic in CK3
+death_crocodile,death_crocodile,exact,-
+death_disintegrated,death_vanished,approx,-
+death_dismemberment,death_viciously_dismembered,exact,-
+death_dissolution,death_vanished,approx,Faerun outsider dissolution
+death_drank_poison,death_poison,exact,-
+death_duel,death_duel,exact,same id in both games
+death_dungeon,death_dungeon,exact,same id in both games
+death_electrocuted,death_struck_by_lightning,approx,-
+death_executed_by_chinese_emperor,death_execution,fallback,offmap power execution
+death_executed_by_shou_lung_emperor,death_execution,fallback,offmap power execution
+death_execution,death_execution,exact,same id in both games
+death_execution_abyss_sacrifice,death_sacrificed_to_foreign_gods,approx,-
+death_execution_ash,death_burned,approx,-
+death_execution_aztec_sacrifice,death_sacrificed_to_foreign_gods,approx,-
+death_execution_back_breaking,death_broken_bones,approx,-
+death_execution_bamboo,death_execution,fallback,-
+death_execution_bear,death_bear,approx,executed by animal
+death_execution_beheading,death_decapitated,exact,-
+death_execution_blood_eagle,death_execution_blood_eagle,exact,same id in both games
+death_execution_boar,death_boar,approx,executed by animal
+death_execution_boiling,death_execution,fallback,-
+death_execution_brazen_bull,death_burned,approx,-
+death_execution_burning,death_burned,exact,-
+death_execution_crucifixion,death_crucified,exact,-
+death_execution_crushing,death_crushed,exact,-
+death_execution_cyric_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_dead_three_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_disembowelment,death_strangled_with_own_intestines,approx,nearest CK3 disembowelment
+death_execution_dof_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_drowning_pit,death_drowned,exact,-
+death_execution_eaten,death_eaten,exact,-
+death_execution_eaten_unknown,death_eaten,exact,-
+death_execution_elephants,death_crushed_by_elephant,exact,-
+death_execution_faceless_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_flaying,death_ripped_apart_limb_by_limb,approx,CK3 has no flaying death
+death_execution_garrotting,death_choked,approx,-
+death_execution_geomancy_sacrifice,death_sacrificed_to_foreign_gods,approx,-
+death_execution_hanging,death_hanged,exact,-
+death_execution_hdq,death_hanged_and_disemboweled_by_mob,approx,hanged drawn and quartered
+death_execution_horses,death_dragged,approx,-
+death_execution_hunt,death_manhunted,exact,-
+death_execution_ilsensine_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_immurement,death_execution,fallback,-
+death_execution_impaling,death_execution,fallback,CK3 has no impaling death reason
+death_execution_infernal_sacrifice,death_sacrificed_to_foreign_gods,approx,-
+death_execution_lion,death_lion,approx,executed by animal
+death_execution_live_burial,death_execution,fallback,-
+death_execution_lolth_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_loviatar_sacrifice,death_sacrificed_to_foreign_gods,approx,Faerun deity sacrifice
+death_execution_macabre_banquet,death_ritually_eaten,approx,-
+death_execution_poison,death_poison,exact,-
+death_execution_sawing,death_cloven_in_half,approx,-
+death_execution_scaphism,death_execution,fallback,-
+death_execution_snake_pit,death_snakes,exact,-
+death_execution_stoning,death_execution,fallback,CK3 has no stoning death reason
+death_execution_tiger,death_tiger,approx,executed by animal
+death_execution_wheel,death_broken_bones,approx,breaking wheel
+death_execution_wine,death_drowned,approx,drowned in wine
+death_execution_wonder_moat_pit,death_fall_in_hole,approx,-
+death_execution_wonder_moat_spikes,death_execution,fallback,-
+death_execution_wonder_moat_water,death_drowned,exact,-
+death_execution_wonder_spikes,death_execution,fallback,-
+death_hashish_overdose,death_strongest_potion,approx,-
+death_hashshashin,death_assassination,exact,-
+death_heartstop,death_heart_attack,exact,-
+death_high_magic,death_vanished,approx,Faerun elven high magic
+death_in_china_historic,death_natural_causes,fallback,offmap power departure
+death_in_shou_lung_historic,death_natural_causes,fallback,offmap power departure
+death_legendary_fail_duel,death_duel,exact,-
+death_legendary_win_duel,death_duel,exact,-
+death_longlived,death_old_age,exact,-
+death_missing,death_disappearance,exact,-
+death_mission_duel,death_duel,exact,-
+death_murder,death_murder,exact,same id in both games
+death_murder_arrow,death_shot_by_arrows,exact,-
+death_murder_beheading,death_decapitated,exact,-
+death_murder_butchered,death_chopped_to_pieces,approx,-
+death_murder_cuckold,death_murder,fallback,CK3 has no cuckold murder reason
+death_murder_disintegrated,death_vanished,approx,-
+death_murder_drowning,death_drowned,exact,-
+death_murder_fall,death_fall,exact,-
+death_murder_fire,death_burned,exact,-
+death_murder_fire_unknown,death_burned,exact,-
+death_murder_hashashin,death_assassination,exact,-
+death_murder_hunt,death_hunting_mistakenly_shot,approx,murdered during a hunt
+death_murder_monster,death_wild_animal,approx,-
+death_murder_poison,death_poison,exact,-
+death_murder_poison_fr,death_poison,exact,Faerun variant of the poison murder
+death_murder_snakes,death_snakes,exact,-
+death_murder_strangle,death_choked,approx,-
+death_murder_undead,death_murder,fallback,CK3 has no undead
+death_murder_unknown,death_mysterious,exact,-
+death_murder_unknown_arrow,death_shot_by_arrows,exact,-
+death_murder_unknown_beheading,death_decapitated,exact,-
+death_murder_unknown_butchered,death_chopped_to_pieces,approx,-
+death_murder_unknown_combustion,death_burned,approx,spontaneous combustion
+death_murder_unknown_crows,death_torn_to_pieces_by_mob,approx,-
+death_murder_unknown_drowning,death_drowned,exact,-
+death_murder_unknown_fall,death_fall,exact,-
+death_murder_unknown_fear,death_fear,exact,-
+death_murder_unknown_hashashin,death_assassination,exact,-
+death_murder_unknown_lightning,death_struck_by_lightning,exact,-
+death_murder_unknown_poison,death_poison,exact,-
+death_murder_unknown_possessed_fall,death_fall,approx,-
+death_murder_unknown_snakes,death_snakes,exact,-
+death_murder_unknown_strangle,death_choked,approx,-
+death_natural,death_natural_causes,exact,CK2 id lacks the _causes suffix
+death_offmap,death_natural_causes,fallback,offmap power departure; CK3 has no offmap powers
+death_pilgrimage,death_pilgrimage_bandit_attack,approx,-
+death_planes,death_vanished,approx,Faerun planar travel
+death_platypus,death_wild_animal,approx,CK2 easter egg
+death_poor_health,death_ill,exact,-
+death_rabble,death_slain_in_riot,approx,-
+death_ravenloft,death_disappearance,approx,Faerun demiplane abduction
+death_retirement,death_natural_causes,fallback,CK3 has no retirement death
+death_sacrificed,death_sacrificed_to_gods,exact,-
+death_sacrificed_ancestors,death_sacrificed_to_gods,exact,-
+death_sacrificed_norse,death_sacrificed_to_gods,exact,-
+death_slavery,death_disappeared_into_slave_markets,exact,-
+death_spellplague,death_horrible_disease,approx,Faerun magical plague
+death_starvation,death_starved,exact,-
+death_suicide,death_suicide,exact,same id in both games
+death_suicide_drowning,death_drowned,approx,CK3 has no per-method suicide reasons
+death_suicide_entombed,death_suicide,fallback,-
+death_suicide_fall,death_fall,approx,-
+death_suicide_hanging,death_hanged,approx,-
+death_suicide_poison,death_poison,approx,-
+death_suicide_silver_fire,death_suicide,fallback,Faerun Mystra silver fire
+death_trait,death_ill,approx,CK2 death caused by a trait
+death_transformation_horror,death_vanished,approx,Faerun transformation into a monster
+death_transformation_item,death_vanished,approx,Faerun transformation into an item
+death_transformation_place,death_vanished,approx,Faerun transformation into a place
+death_transformation_spirit,death_vanished,approx,Faerun transformation into a spirit
+death_troubled_pregnancy,death_delivery,approx,-
+death_vampire_illithid,death_eaten,approx,-
+death_vanished,death_vanished,exact,same id in both games
+death_went_back_to_china,death_natural_causes,fallback,offmap power departure
+death_went_back_to_shou_lung,death_natural_causes,fallback,offmap power departure
+death_went_to_china,death_natural_causes,fallback,offmap power departure
+death_went_to_shou_lung,death_natural_causes,fallback,offmap power departure
+death_wild_magic_surge,death_vanished,approx,Faerun wild magic; no CK3 equivalent
