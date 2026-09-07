@@ -1,6 +1,6 @@
 [project]
 name = "ck2-ck3-mod-converter"
-version = "0.2.0"
+version = "0.3.0"
 description = "Convert a CK2 total-conversion mod into a CK3 mod (map, titles, history, characters, cultures, religions)"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -12,17 +12,21 @@ dependencies = [
     "pillow",
 ]
 
+[project.scripts]
+ck2ck3 = "ck2ck3.cli:main"
+
 [dependency-groups]
 dev = ["pytest"]
 
 [build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["ck2ck3*"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/ck2ck3"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+# `src` for the new `ck2ck3` package, `.` for the legacy `src.*` modules.
+pythonpath = ["src", "."]
 testpaths = ["tests"]
+markers = ["slow: parses the whole Faerun mod; skipped when Faerun/ is absent"]

@@ -1,10 +1,8 @@
 from pathlib import Path
-from PIL import Image, ImageChops
+from PIL import Image
 import numpy as np
 from dataclasses import dataclass
-from typing import Optional, List, Tuple
-from scipy.interpolate import interp1d
-import random
+from typing import List, Tuple
 
 # River map color constants
 RIVER_COLORS = {

@@ -1,0 +1,89 @@
+ck2_key,ck3_key,status,note,ck3_evidence
+agnatic,parent_inheritance_sex,approx,CK2 agnatic=yes -> CK3 parent_inheritance_sex=male; CK2 has no child-side switch,common/traits/_traits.info:120
+ai_ambition,ai_boldness,approx,CK2 ai_ambition has no direct CK3 counterpart; ai_boldness is the nearest drive. Same -100..100 range,common/traits/00_traits.txt:1540
+ai_greed,ai_greed,exact,"same key, same -100..100 range",common/traits/00_traits.txt:1100
+ai_honor,ai_honor,exact,"same key, same -100..100 range",common/traits/00_traits.txt:1541
+ai_rationality,ai_rationality,exact,"same key, same -100..100 range",common/traits/00_traits.txt:1469
+ai_zeal,ai_zeal,exact,"same key, same -100..100 range",common/traits/00_traits.txt:1873
+attribute,,none,CK2 education traits name their attribute; CK3 encodes it in the trait key (education_intrigue_1..5) - emit as comment,
+birth,birth,approx,"scale 0.01: CK2 birth is per 10000 (traits.info), CK3 birth is a percent out of 100",common/traits/_traits.info:107
+blinding,,none,CK2 marks the trait as blinding; CK3 has a `blind` trait but no trait property - emit as comment,
+both_parent_has_trait_inherit_chance,both_parent_has_trait_inherit_chance,exact,"same key, both 0-100",common/traits/_traits.info:118
+cached,,none,CK2 engine caching hint; no CK3 equivalent and none needed - drop,
+can_hold_titles,,none,CK2 can_hold_titles=no; CK3 has no such trait property (use inheritance_blocker plus scripted triggers) - emit as comment,
+cannot_inherit,inheritance_blocker,approx,CK2 bool -> CK3 enum none/dynasty/all; cannot_inherit=yes becomes inheritance_blocker=all,common/traits/_traits.info:66
+cannot_marry,flag,approx,"CK3 has no property; use flag = can_not_marry, which 00_marriage_triggers.txt:20 reads via has_trait_with_flag",common/traits/00_traits.txt:6652
+caste_tier,,none,CK2 Indian caste tier (Faerun reuses it as a race tier); no CK3 equivalent - emit as comment,
+child_compliment,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+child_compliment_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+child_insult,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+child_insult_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+childhood,category,exact,CK3 category = childhood,common/traits/_traits.info:41
+combat,,none,CK2 combat-modifier block; CK3 traits carry combat effects as flat modifiers - see mappings/modifiers.csv,
+command_modifier,,none,"CK2 commander-modifier block; CK3 traits have no such block, its keys become flat trait modifiers - see mappings/modifiers.csv",
+congenital,genetic,approx,"CK2 congenital -> CK3 genetic; CK3 genetic is mutually exclusive with inherit_chance, so drop inherit_chance when setting it",common/traits/_traits.info:79
+country,,none,CK2 realm-wide modifier block; in CK3 the same keys are flat trait modifiers - see mappings/modifiers.csv,
+customizer,shown_in_ruler_designer,exact,CK2 customizer=no <-> CK3 shown_in_ruler_designer=no,common/traits/_traits.info:97
+education,category,exact,CK3 category = education,common/traits/_traits.info:41
+enatic,parent_inheritance_sex,approx,CK2 enatic=yes -> CK3 parent_inheritance_sex=female,common/traits/_traits.info:120
+female_compliment,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+female_compliment_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+female_insult,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+female_insult_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+hidden,shown_in_encyclopedia,approx,CK3 cannot hide a trait from the character window; shown_in_encyclopedia=no plus shown_in_ruler_designer=no is the closest,common/traits/_traits.info:95
+hidden_from_others,,none,CK3 has no per-observer trait visibility - emit as comment,
+immortal,immortal,exact,"same key and meaning (stops visual aging, blocks natural death)",common/traits/_traits.info:99
+in_hiding,,none,CK2 in-hiding state; no CK3 trait property - emit as comment,
+inbred,enables_inbred,approx,"semantics differ: CK2 inbred=yes marks the trait as the inbreeding outcome, CK3 enables_inbred=yes marks a trait whose holder's children may become inbred",common/traits/_traits.info:91
+incapacitating,incapacitating,exact,same key and meaning (character needs a regent),common/traits/_traits.info:71
+inherit_chance,inherit_chance,exact,"same key, both 0-100 percent",common/traits/_traits.info:117
+is_epidemic,flag,approx,CK3 has no property; use flag = epidemic_disease as vanilla epidemic traits do,common/traits/00_traits.txt:6253
+is_health,category,approx,"CK3 category = health; CK2 is_health is a bool, CK3 category is a single-valued enum so it collides with personality/lifestyle",common/traits/_traits.info:41
+is_illness,flag,approx,CK3 has no property; use flag = illness as vanilla illness traits do,common/traits/00_traits.txt:5376
+is_symptom,,none,CK2 illness symptom marker; CK3 models epidemics without symptom traits - emit as comment,
+is_visible,,none,CK2 per-observer visibility trigger; CK3 traits have no is_visible - emit as comment,
+leader,category,approx,CK3 category = commander (or winter_commander); CK2 leader=yes is a bool,common/traits/_traits.info:41
+leadership_traits,,none,CK2 lists which commander traits the character may get; CK3 uses add_commander_trait plus trait_exclusive_if_realm_contains - emit as comment,common/traits/_traits.info:69
+lifestyle,category,exact,CK3 category = lifestyle,common/traits/_traits.info:41
+male_compliment,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+male_compliment_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+male_insult,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+male_insult_adj,,none,CK2 insult/compliment vocabulary; CK3 has nicknames instead - emit as comment,
+opinions,,none,CK2 opinion block; CK3 uses triggered_opinion and the flat opinion modifiers - see mappings/modifiers.csv,common/traits/_traits.info:141
+opposite_opinion,opposite_opinion,exact,"same key, same -100..100 opinion points",common/traits/_traits.info:138
+opposites,opposites,exact,"same key, same block of trait names",common/traits/_traits.info:163
+personality,category,exact,CK3 category = personality,common/traits/_traits.info:41
+pilgrimage,,none,CK2 away-on-pilgrimage state; CK3 models pilgrimage as an activity - emit as comment,
+potential,potential,exact,"same key, same meaning (triggers gating who may get the trait); CK3 additionally purges non-potential traits on game start",common/traits/_traits.info:60
+prevent_decadence,,none,CK2 Muslim decadence; no CK3 equivalent - emit as comment,
+priest,,none,CK2 marks the trait as a priest trait; CK3 has no equivalent property - emit as comment,
+province,,none,CK2 province modifier block; CK3 traits are character scope only - emit as comment,
+random,random_creation_weight,approx,"CK2 random is a bool; CK3 random_creation_weight = 0 means never picked randomly, which is the equivalent of random = no",common/traits/_traits.info:111
+rebel_inherited,,none,CK2 rebel inheritance flag; no CK3 equivalent - emit as comment,
+religious,,none,CK2 trait is lost on religion change; CK3 has no such property - emit as comment,
+religious_branch,,none,CK2 religious branch restriction; use a CK3 potential trigger instead,common/traits/_traits.info:60
+ruler_designer_cost,ruler_designer_cost,exact,"same key, integer cost",common/traits/_traits.info:179
+same_opinion,same_opinion,exact,"same key, same -100..100 opinion points",common/traits/_traits.info:134
+same_opinion_if_same_religion,same_opinion_if_same_faith,exact,CK2 religion -> CK3 faith; same value range,common/traits/_traits.info:136
+same_trait_visibility,,none,CK3 has no per-observer trait visibility - emit as comment,
+succession_gfx,,none,CK2 succession portrait gfx; no CK3 equivalent - emit as comment,
+trigger,potential,approx,CK2 traits use trigger inside is_visible/customizer; the CK3 gate on gaining a trait is potential,common/traits/_traits.info:60
+vice,flag,approx,CK3 flags are free-form; declare flag = vice and read it with has_trait_with_flag,common/traits/_traits.info:181
+virtue,flag,approx,CK3 flags are free-form; declare flag = virtue and read it with has_trait_with_flag,common/traits/_traits.info:181
+(none),category,exact,CK3-only: mandatory for personality/education/childhood/commander/lifestyle/health traits,common/traits/_traits.info:41
+(none),level,exact,"CK3-only: tier inside a trait group, used by the congenital tiers (intellect_good_1..3)",common/traits/_traits.info:169
+(none),group,exact,CK3-only: trait group for inheritance and equivalence; needed to port CK2 tiered traits,common/traits/_traits.info:171
+(none),flag,exact,CK3-only: free-form marker read by has_trait_with_flag; the landing place for CK2 booleans with no CK3 property,common/traits/_traits.info:181
+(none),genetic,exact,CK3-only: replaces CK2 congenital plus inherit_chance for genetic traits,common/traits/_traits.info:79
+(none),physical,exact,CK3-only: marks a bodily trait; set it on ported CK2 congenital body traits,common/traits/_traits.info:73
+(none),can_have_children,exact,CK3-only: CK2 has no trait-level fertility block,common/traits/_traits.info:77
+(none),random_creation,exact,"CK3-only: percent chance on character creation, distinct from birth",common/traits/_traits.info:108
+(none),compatibility,exact,CK3-only: the replacement for CK2 <trait>_opinion / opinion_of_<trait> modifiers,common/traits/_traits.info:157
+(none),triggered_opinion,exact,CK3-only: conditional opinion modifier block,common/traits/_traits.info:141
+(none),tracks,exact,"CK3-only: XP level tracks, the replacement for CK2 tiered lifestyle traits",common/traits/_traits.info:193
+(none),culture_modifier,exact,CK3-only: modifiers gated on a culture parameter; vanilla brave uses it for county_opinion_add,common/traits/_traits.info:236
+(none),faith_modifier,exact,CK3-only: modifiers gated on a faith doctrine parameter,common/traits/_traits.info:242
+(none),trait_exclusive_if_realm_contains,exact,"CK3-only: terrain gate for commander traits, the nearest thing to CK2 command_modifier terrain lists",common/traits/_traits.info:104
+(none),valid_sex,exact,CK3-only: restricts the trait to one sex,common/traits/_traits.info:55
+(none),minimum_age,exact,CK3-only: age gate,common/traits/_traits.info:57
+(none),maximum_age,exact,CK3-only: age gate,common/traits/_traits.info:58
