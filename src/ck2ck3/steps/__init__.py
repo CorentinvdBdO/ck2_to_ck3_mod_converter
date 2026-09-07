@@ -26,6 +26,7 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "descriptor",
     "map",
     "traits",
+    "loc",
 )
 
 
