@@ -14,6 +14,7 @@ lanes must read it rather than assume anything.
 from __future__ import annotations
 
 import csv
+import io
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -134,25 +135,35 @@ def _reject_colour_collision(
             raise ValueError(f"provinces.ocean_rgb must not be {reserved}")
 
 
+def render_id_map_csv(idmap: IdMap) -> str:
+    """``docs/evidence/province_id_map.csv`` — the contract for later lanes.
+
+    Later lanes must READ this file rather than assume the mapping: the ids of
+    everything after a dropped CK2 province shift when upstream changes.
+    """
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\n")
+    w.writerow(["ck2_id", "ck3_id", "r", "g", "b", "name", "kind"])
+    for p in idmap.provinces:
+        w.writerow(
+            [
+                "" if p.ck2_id is None else p.ck2_id,
+                p.id,
+                *p.rgb,
+                p.name,
+                _kind(p),
+            ]
+        )
+    for ck2_id in idmap.dropped:
+        w.writerow([ck2_id, "", "", "", "", "", "dropped"])
+    return buf.getvalue()
+
+
 def write_id_map_csv(idmap: IdMap, path: str | Path) -> None:
-    """``docs/evidence/province_id_map.csv`` — the contract for later lanes."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
-        w.writerow(["ck2_id", "ck3_id", "r", "g", "b", "name", "kind"])
-        for p in idmap.provinces:
-            w.writerow(
-                [
-                    "" if p.ck2_id is None else p.ck2_id,
-                    p.id,
-                    *p.rgb,
-                    p.name,
-                    _kind(p),
-                ]
-            )
-        for ck2_id in idmap.dropped:
-            w.writerow([ck2_id, "", "", "", "", "", "dropped"])
+    """Convenience wrapper for the standalone entry point."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_id_map_csv(idmap), encoding="utf-8", newline="")
 
 
 def _kind(p: Ck3Province) -> str:

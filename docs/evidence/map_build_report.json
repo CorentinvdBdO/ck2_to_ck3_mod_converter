@@ -1,0 +1,72 @@
+{
+  "adjacencies": {
+    "dropped": 0,
+    "kept": 323
+  },
+  "bootstrap": {
+    "baronies": 2335,
+    "province_history": 2335
+  },
+  "canvas": {
+    "factor": 1.954309589594986,
+    "height": 6656,
+    "offset_x": 93,
+    "offset_y": 76,
+    "source_km_per_px": 2.9,
+    "vanilla_km_per_px": 1.4839,
+    "width": 8192
+  },
+  "heightmap": {
+    "distinct_tiles": 46613,
+    "height": 6656,
+    "heightmap_file": "map_data/packed_heightmap.png",
+    "indirection_bytes": 62441,
+    "indirection_file": "map_data/indirection_heightmap.png",
+    "max_abs_error": 885,
+    "max_compress_level": 4,
+    "packed_bytes": 4277083,
+    "resolution_factor": 1,
+    "should_wrap_x": false,
+    "tile_size": 33,
+    "water_level": 4883,
+    "width": 8192
+  },
+  "impassable": 0,
+  "provinces": {
+    "ck3_total": 2696,
+    "lake": 95,
+    "land": 2335,
+    "lost": 3,
+    "regrown": 1,
+    "river": 86,
+    "sea": 180
+  },
+  "rivers": {
+    "body": 87636,
+    "land": 26359521,
+    "merges": 279,
+    "sources": 327,
+    "splits": 9,
+    "water": 28078180
+  },
+  "source": {
+    "height": 3328,
+    "provinces": 2698,
+    "width": 4096
+  },
+  "terrain": {
+    "desert": 217,
+    "drylands": 1,
+    "farmlands": 2,
+    "forest": 115,
+    "hills": 358,
+    "jungle": 66,
+    "mountains": 235,
+    "plains": 917,
+    "steppe": 216,
+    "taiga": 170,
+    "wetlands": 38
+  },
+  "terrain_fallbacks": 0,
+  "terrain_no_ck3_equivalent": 170
+}

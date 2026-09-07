@@ -25,9 +25,12 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - Long runs (full conversion, image work > 2 min) under nohup with a log in `docs/evidence/`.
 
 ## Invariants (bite once, write here)
-- CK3 1.19 vanilla map is 9216×4608, heightmap 16-bit at 2×. Custom dims allowed (Elder Kings 2: 8256×5504).
+- CK3 1.19 vanilla map is 9216×4608, heightmap 16-bit at 2×. Custom dims allowed, any multiple of 64 (`assumed`); Elder Kings 2 8256×5504 and Godherja 8192×4096 both ship a **1×** heightmap, so 2× is a vanilla choice, not a rule. Ours: 8192×6656 (`docs/map_scale.md`).
 - `positions.txt` is optional; `default.map` comments it out in vanilla and major TCs.
-- Packed heightmap pair comes from the in-game map editor; the converter writes only `heightmap.png` (16-bit).
+- `map_data/default.map` loads the heightmap via `topology = "heightmap.heightmap"`, which points at `packed_heightmap.png` + `indirection_heightmap.png`. **`heightmap.png` alone is not what the game reads.** The converter writes the packed pair itself (`ck2ck3.map.packed_heightmap`, format in `docs/formats_packed_heightmap.md`); no map editor needed.
+- Any custom map size needs a `common/defines` override: `WORLD_EXTENTS_X` = width−1, `WORLD_EXTENTS_Z` = height−1. The 16-bit water level is `WATERLEVEL / WORLD_EXTENTS_Y * 65535` (we write 3.8/51 → 4883). Get this wrong and the coastline moves silently.
+- `replace_path` is **not** recursive: `history` does nothing for `history/provinces`. `map_data` needs none at all (same-filename override is enough). See `docs/output_bootstrap.md`.
+- All three shipped CK3 heightmap/atlas PNGs are stored **bottom-up**.
 - Faerûn defines ~15k baronies but builds ~3.8k holdings; barony set = built holdings, never the defined list.
 - CK2 `positions.txt` is per province; there are no barony coordinates to import.
 - The PyPI package `jomini` is unrelated to Paradox parsing (battle simulator). Do not add it.
@@ -35,5 +38,6 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`
+- `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.

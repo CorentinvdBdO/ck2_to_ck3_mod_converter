@@ -20,6 +20,7 @@ the game logs a province error.  So the pipeline is:
 from __future__ import annotations
 
 import csv
+import io
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -206,30 +207,43 @@ def _regrow(
     return tgt, regrown
 
 
+def to_rgb(
+    raster: ProvinceRaster,
+    id_to_rgb: dict[int, tuple[int, int, int]],
+    padding_rgb: tuple[int, int, int],
+) -> np.ndarray:
+    """The ``provinces.png`` pixel array, 24-bit RGB."""
+    max_id = max(id_to_rgb) if id_to_rgb else 0
+    lut = np.zeros((max_id + 1, 3), dtype=np.uint8)
+    lut[PADDING] = padding_rgb
+    for pid, rgb in id_to_rgb.items():
+        lut[pid] = rgb
+    return lut[np.clip(raster.ids, 0, max_id)]
+
+
+def save_png(rgb: np.ndarray, path: Path) -> None:
+    """Write ``map_data/provinces.png``. CK3 wants 24-bit RGB, not a palette."""
+    Image.fromarray(rgb, mode="RGB").save(path, optimize=True)
+
+
 def render_png(
     raster: ProvinceRaster,
     id_to_rgb: dict[int, tuple[int, int, int]],
     padding_rgb: tuple[int, int, int],
     path: str | Path,
 ) -> None:
-    """Write ``map_data/provinces.png`` as 24-bit RGB."""
-    max_id = max(id_to_rgb) if id_to_rgb else 0
-    lut = np.zeros((max_id + 1, 3), dtype=np.uint8)
-    lut[PADDING] = padding_rgb
-    for pid, rgb in id_to_rgb.items():
-        lut[pid] = rgb
-    rgb = lut[np.clip(raster.ids, 0, max_id)]
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(rgb, mode="RGB").save(p, optimize=True)
+    """Convenience wrapper: build the array and write it in one call."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    save_png(to_rgb(raster, id_to_rgb, padding_rgb), out)
 
 
-def write_lost_report(raster: ProvinceRaster, names: dict[int, str], path: str | Path) -> None:
-    """``docs/evidence/lost_provinces.csv``."""
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    with p.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+def render_lost_report(raster: ProvinceRaster, names: dict[int, str]) -> str:
+    """``docs/evidence/lost_provinces.csv`` content."""
+    buf = io.StringIO()
+    if True:
+        fh = buf
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["ck2_id", "name", "ck2_pixels", "ck3_pixels", "outcome"])
         for pid, (src_n, tgt_n) in sorted(raster.lost.items()):
             w.writerow([pid, names.get(pid, ""), src_n, tgt_n, "dropped"])
@@ -237,3 +251,13 @@ def write_lost_report(raster: ProvinceRaster, names: dict[int, str], path: str |
             w.writerow([pid, names.get(pid, ""), "", raster.pixel_counts.get(pid, 0), "regrown"])
         for rgb, n in sorted(raster.undefined_colours.items(), key=lambda kv: -kv[1]):
             w.writerow(["", f"undefined colour {rgb}", n, 0, "not in definition.csv"])
+    return buf.getvalue()
+
+
+def write_lost_report(
+    raster: ProvinceRaster, names: dict[int, str], path: str | Path
+) -> None:
+    """Convenience wrapper for the standalone entry point."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_lost_report(raster, names), encoding="utf-8", newline="")

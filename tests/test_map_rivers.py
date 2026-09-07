@@ -308,3 +308,33 @@ def test_render_stamps_all_specials_even_when_paths_share_a_junction(tmp_path):
 def test_count_specials():
     arr = np.array([[0, 0, 1, 2, 3, 255]], dtype=np.uint8)
     assert rivers.count_specials(arr) == {"sources": 2, "merges": 1, "splits": 1}
+
+
+def test_render_nudges_a_source_that_lands_on_water_to_the_next_land_pixel(tmp_path):
+    """A CK2 river flowing out of a lake has its SOURCE pixel inside the lake.
+
+    Dropping it lost 6.6% of Faerun's sources; the marker must move downstream
+    onto land instead.
+    """
+    src = np.full((16, 16), rivers.LAND, dtype=np.int16)
+    src[8, 2] = rivers.SOURCE
+    src[8, 3:14] = 3
+    bmp = write_bmp(src, tmp_path / "rivers.bmp")
+    c = canvas(w=64, h=64, factor=2.0, ox=8, oy=8)
+    mask = np.zeros((c.height, c.width), dtype=bool)
+    mask[:, :16] = True  # the source's target pixel (x=12) is inside a lake
+    out = rivers.render(bmp, c, mask)
+    assert rivers.count_specials(out)["sources"] == 1
+    ys, xs = np.nonzero(out == rivers.SOURCE)
+    assert not mask[ys[0], xs[0]], "the source must end up on land"
+
+
+def test_render_drops_a_special_whose_whole_path_is_under_water(tmp_path):
+    src = np.full((16, 16), rivers.LAND, dtype=np.int16)
+    src[8, 2] = rivers.SOURCE
+    src[8, 3:6] = 3
+    bmp = write_bmp(src, tmp_path / "rivers.bmp")
+    c = canvas(w=64, h=64, factor=2.0, ox=8, oy=8)
+    out = rivers.render(bmp, c, np.ones((c.height, c.width), dtype=bool))
+    assert rivers.count_specials(out)["sources"] == 0
+    assert (out == rivers.WATER).all()

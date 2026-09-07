@@ -88,18 +88,23 @@ def build(
     return build_curve(cfg)[out8]
 
 
-def write_png(heights: np.ndarray, path: str | Path) -> None:
+def save_png(heights: np.ndarray, path: Path) -> None:
     """Write a 16-bit greyscale PNG (PIL mode ``I;16``)."""
     if heights.dtype != np.uint16:
         raise ValueError(f"heightmap must be uint16, got {heights.dtype}")
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
     # no `mode=` argument: Pillow infers I;16 from the uint16 dtype, and
     # passing mode= to change the data type is deprecated (removed in Pillow 13)
     im = Image.fromarray(heights)
     if im.mode != "I;16":
         raise ValueError(f"expected PIL mode I;16 for a 16-bit heightmap, got {im.mode}")
-    im.save(p, optimize=True)
+    im.save(path, optimize=True)
+
+
+def write_png(heights: np.ndarray, path: str | Path) -> None:
+    """Convenience wrapper for the standalone entry point."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    save_png(heights, out)
 
 
 def measure_sea_level(

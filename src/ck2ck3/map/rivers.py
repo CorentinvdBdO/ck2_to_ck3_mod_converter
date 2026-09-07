@@ -259,14 +259,35 @@ def render(
                         out[py, px] = width
 
     for path in paths:
-        for (y, x), value in zip(path.points, path.values):
+        scaled = [canvas.to_target(x, y) for (y, x) in path.points]
+        for index, value in enumerate(path.values):
             if value not in SPECIAL:
                 continue
-            tx, ty = canvas.to_target(x, y)
-            if 0 <= ty < canvas.height and 0 <= tx < canvas.width:
-                if not water_mask[ty, tx]:
-                    out[ty, tx] = value
+            spot = _first_land(scaled, index, canvas, water_mask)
+            if spot is not None:
+                out[spot[1], spot[0]] = value
     return out
+
+
+def _first_land(
+    scaled: list[tuple[int, int]],
+    index: int,
+    canvas: Canvas,
+    water_mask: np.ndarray,
+) -> tuple[int, int] | None:
+    """The special's own target pixel, or the next one along the path on land.
+
+    A CK2 river that flows out of a lake has its SOURCE pixel *inside* the
+    lake, and a tributary MERGE sits on the water it joins.  Both land on a
+    water pixel of the target province map, and dropping them silently lost
+    6.6% of Faerun's sources and 9.4% of its merges.  Walking forward along the
+    already-traced path to the first land pixel keeps the marker on the same
+    river, one or two pixels downstream, which is what the game needs.
+    """
+    for x, y in scaled[index:] + scaled[:index][::-1]:
+        if 0 <= y < canvas.height and 0 <= x < canvas.width and not water_mask[y, x]:
+            return x, y
+    return None
 
 
 def count_specials(idx_map: np.ndarray) -> dict[str, int]:
@@ -278,16 +299,21 @@ def count_specials(idx_map: np.ndarray) -> dict[str, int]:
     }
 
 
-def write_png(idx: np.ndarray, path: str | Path) -> None:
+def save_png(idx: np.ndarray, path: Path) -> None:
     """Write ``map_data/rivers.png`` as an 8-bit palette PNG with CK3's palette."""
     im = Image.fromarray(idx, mode="P")
     flat = [0] * 768
     for i, (r, g, b) in PALETTE.items():
         flat[i * 3 : i * 3 + 3] = [r, g, b]
     im.putpalette(flat)
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    im.save(p, optimize=True)
+    im.save(path, optimize=True)
+
+
+def write_png(idx: np.ndarray, path: str | Path) -> None:
+    """Convenience wrapper for the standalone entry point."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    save_png(idx, out)
 
 
 def stats(idx: np.ndarray) -> dict[str, int]:
