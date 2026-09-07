@@ -1,0 +1,25 @@
+CK3 game dir: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+tokens checked: 462
+
+verdicts:
+  found      455
+  info_only  7
+
+rows per table and status:
+  character_fields.csv:approx                  21
+  character_fields.csv:exact                   23
+  character_fields.csv:none                    16
+  culture_fields.csv:approx                    21
+  culture_fields.csv:exact                     14
+  culture_fields.csv:none                      18
+  government_map.csv:approx                    14
+  government_map.csv:exact                     6
+  government_map.csv:none                      1
+  religion_fields.csv:approx                   35
+  religion_fields.csv:exact                    16
+  religion_fields.csv:none                     27
+  title_fields.csv:approx                      39
+  title_fields.csv:exact                       11
+  title_fields.csv:none                        25
+
+no MISSING tokens on exact/approx rows.
