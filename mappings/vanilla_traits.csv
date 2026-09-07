@@ -1,0 +1,113 @@
+ck2_trait,ck3_trait,status,note
+aggressive_leader,aggressive_attacker,approx,"CK2 commander trait -> CK3 commander trait, both favour attacking"
+amateurish_plotter,education_intrigue_1,exact,CK2 intrigue education tier 1 of 4 -> CK3 tier 1 of 5
+ambitious,ambitious,exact,same name and concept
+arbitrary,arbitrary,exact,same name and concept
+bastard,bastard,exact,same name; CK3 also has bastard=illegitimate/legitimate as a trait property
+brave,brave,exact,"same name; martial 2 on both sides (CK2 00_traits.txt:1727, CK3 00_traits.txt:3264)"
+brilliant_strategist,education_martial_4,exact,CK2 martial education tier 4 of 4 -> CK3 tier 4 of 5
+cavalry_leader,,none,CK3 has no per-unit commander traits; emit as comment
+celibate,celibate,exact,same name and concept
+charismatic_negotiator,education_diplomacy_3,exact,CK2 diplomacy education tier 3 of 4
+charitable,generous,approx,"same concept, renamed in CK3"
+chaste,chaste,exact,same name and concept
+clubfooted,clubfooted,exact,same name and concept
+content,content,exact,same name and concept
+craven,craven,exact,same name and concept
+cruel,sadistic,approx,"same concept, renamed in CK3; CK3 opposite is compassionate"
+crusader,holy_warrior,approx,"CK2 crusader marks a returned crusader; CK3 holy_warrior is the commander trait for holy wars. crusader_king is a different, fame trait"
+cynical,cynical,exact,same name and concept
+deceitful,deceitful,exact,same name and concept
+defensive_leader,unyielding_defender,approx,"CK2 commander trait -> CK3 commander trait, both favour defending"
+depressed,depressed_1,exact,CK3 splits it into depressed_1 (acquired) and depressed_genetic
+detached_priest,education_learning_1,exact,CK2 learning education tier 1 of 4
+diligent,diligent,exact,same name and concept
+drunkard,drunkard,exact,same name and concept
+duelist,lifestyle_blademaster,approx,CK2 duelist -> CK3 blademaster lifestyle trait (level tracks)
+dwarf,dwarf,exact,same name and concept
+elusive_shadow,education_intrigue_4,exact,CK2 intrigue education tier 4 of 4
+envious,,none,CK3 has no envy trait; emit as comment
+excommunicated,excommunicated,exact,same name and concept
+experimenter,,none,CK2 Way of Life commander/lifestyle trait; no CK3 equivalent - emit as comment
+fair,beauty_good_3,exact,"attraction matches exactly: CK2 sex_appeal_opinion 30 (00_traits.txt:884) = CK3 attraction_opinion 30 (00_traits.txt:7053). CK2 has one tier, CK3 three; beauty_good_1 matches the diplomacy 1 instead"
+falconer,lifestyle_hunter,approx,CK2 falconer -> CK3 hunter lifestyle; CK3 has no separate falconry trait
+flamboyant_schemer,education_intrigue_2,exact,CK2 intrigue education tier 2 of 4
+flanker,flexible_leader,approx,CK3 has no battle flanks; flexible_leader is the nearest commander trait
+fortune_builder,education_stewardship_3,exact,CK2 stewardship education tier 3 of 4
+gardener,lifestyle_gardener,exact,"same concept, CK3 prefixes lifestyle traits"
+genius,intellect_good_3,exact,"all five attributes +5 on both sides (CK2 00_traits.txt:949, CK3 00_traits.txt:7364)"
+gluttonous,gluttonous,exact,same name and concept
+greedy,greedy,exact,same name and concept
+gregarious,gregarious,exact,same name and concept
+grey_eminence,education_diplomacy_4,exact,CK2 diplomacy education tier 4 of 4
+harelip,,none,"CK3 has no harelip trait; candidates are beauty_bad_1 or disfigured - needs an override, emit as comment"
+has_bubonic_plague,bubonic_plague,exact,"same disease, CK3 drops the has_ prefix"
+has_measles,measles,exact,"same disease, CK3 drops the has_ prefix"
+has_small_pox,smallpox,exact,"same disease, CK3 spells it as one word"
+has_tuberculosis,consumption,approx,CK3 names tuberculosis 'consumption'
+has_typhoid_fever,typhus,approx,CK3 has no typhoid fever; typhus is the closest disease trait
+has_typhus,typhus,exact,same disease
+heavy_infantry_leader,,none,CK3 has no per-unit commander traits; emit as comment
+hedonist,lifestyle_reveler,approx,CK2 hedonist (Way of Life) -> CK3 reveler lifestyle trait
+homosexual,sodomite,approx,CK3 models sexual orientation outside traits; sodomite is the acquired secret trait
+honest,honest,exact,same name and concept
+humble,humble,exact,same name and concept
+hunchback,hunchbacked,exact,"same concept, CK3 spells it hunchbacked"
+hunter,lifestyle_hunter,exact,"same concept, CK3 prefixes lifestyle traits"
+ill,ill,exact,same name; CK2 health -2 vs CK3 health -1
+imbecile,intellect_bad_3,exact,"all five attributes -8 on both sides (CK2 00_traits.txt:1025, CK3 00_traits.txt:7200)"
+impaler,torturer,approx,CK2 impaler (cruelty/dread) -> CK3 torturer
+inbred,inbred,exact,same name and concept
+incapable,incapable,exact,same name; incapacitating = yes on both sides
+indulgent_wastrel,education_stewardship_1,exact,CK2 stewardship education tier 1 of 4
+infirm,infirm,exact,same name and concept
+inspiring_leader,gallant,approx,"CK2 inspiring_leader raised morale, which CK3 removed; gallant is the nearest commander trait"
+intricate_webweaver,education_intrigue_3,exact,CK2 intrigue education tier 3 of 4
+just,just,exact,same name and concept
+kind,compassionate,approx,"same concept, renamed in CK3"
+kinslayer,kinslayer_1,exact,CK3 tiers it kinslayer_1..3 by how close the victim was
+legit_bastard,legitimized_bastard,exact,"same concept, spelled out in CK3"
+leper,leper,exact,same name and concept
+light_foot_leader,,none,CK3 has no per-unit commander traits; emit as comment
+lisp,lisping,exact,"same concept, CK3 spells it lisping"
+lunatic,lunatic_1,exact,CK3 splits it into lunatic_1 (acquired) and lunatic_genetic
+lustful,lustful,exact,same name and concept
+maimed,maimed,exact,same name and concept
+martial_cleric,education_learning_2,exact,CK2 learning education tier 2 of 4
+mastermind_theologian,education_learning_4,exact,CK2 learning education tier 4 of 4
+midas_touched,education_stewardship_4,exact,CK2 stewardship education tier 4 of 4
+misguided_warrior,education_martial_1,exact,CK2 martial education tier 1 of 4
+mystic,lifestyle_mystic,exact,"same concept, CK3 prefixes lifestyle traits"
+naive_appeaser,education_diplomacy_1,exact,CK2 diplomacy education tier 1 of 4
+organizer,organizer,exact,"same name, commander trait on both sides"
+paranoid,paranoid,exact,same name and concept
+patient,patient,exact,same name and concept
+pneumonic,pneumonic,exact,same name and concept
+poet,lifestyle_poet,exact,"same concept, CK3 prefixes lifestyle traits"
+possessed,possessed_1,exact,CK3 splits it into possessed_1 (acquired) and possessed_genetic
+pregnant,pregnant,exact,same name and concept
+proud,arrogant,approx,"same concept, renamed in CK3"
+quick,intellect_good_2,exact,"all five attributes +3 on both sides (CK2 00_traits.txt:980, CK3 00_traits.txt:7306)"
+scholar,scholar,exact,same name and concept
+scholarly_theologian,education_learning_3,exact,CK2 learning education tier 3 of 4
+shy,shy,exact,same name and concept
+siege_leader,military_engineer,approx,CK2 siege commander -> CK3 military_engineer
+skilled_tactician,education_martial_3,exact,CK2 martial education tier 3 of 4
+slothful,lazy,approx,"same concept, renamed in CK3"
+slow,intellect_bad_2,approx,CK2 attributes -3 sits between CK3 intellect_bad_1 and intellect_bad_2 (-4)
+stressed,,none,"CK3 models stress as a character value with stress levels, not a trait - emit as comment"
+strong,physique_good_3,exact,"health 1 on both sides (CK2 00_traits.txt:1082, CK3 00_traits.txt:7649); CK3 also has a non-genetic trait literally named strong (00_traits.txt:7754, health 0.5)"
+stutter,stuttering,exact,"same concept, CK3 spells it stuttering"
+syphilitic,great_pox,approx,CK3 names syphilis 'great pox' (early_great_pox and lovers_pox are the other stages)
+temperate,temperate,exact,same name and concept
+thrifty_clerk,education_stewardship_2,exact,CK2 stewardship education tier 2 of 4
+tough_soldier,education_martial_2,exact,CK2 martial education tier 2 of 4
+trickster,strategist,approx,CK2 trickster (ambush) -> CK3 strategist commander trait
+trusting,trusting,exact,same name and concept
+twin,twin,exact,same name; twin_opinion on both sides
+ugly,beauty_bad_2,exact,attraction matches exactly: CK2 sex_appeal_opinion -20 (00_traits.txt:902) = CK3 attraction_opinion -20 (00_traits.txt:6876)
+underhanded_rogue,education_diplomacy_2,exact,CK2 diplomacy education tier 2 of 4
+weak,physique_bad_3,exact,"health -1 and attraction -10 on both sides (CK2 00_traits.txt:1101,1107 vs CK3 00_traits.txt:7507,7510)"
+wounded,wounded_1,exact,CK3 tiers it wounded_1..3
+wroth,wrathful,approx,"same concept, renamed in CK3"
+zealous,zealous,exact,same name and concept

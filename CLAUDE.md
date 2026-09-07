@@ -10,6 +10,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 ## Commands
 - `uv sync --group dev` — env. `uv run pytest` — tests (must be green before `/ship`).
 - `uv run scripts/faerun_barony_stats.py` — barony/holding statistics (writes `docs/evidence/barony_stats.csv`).
+- `uv run scripts/collect_ck2_modifier_keys.py` → `uv run scripts/build_modifiers_csv.py` → `uv run scripts/classify_faerun_traits.py` → `uv run scripts/verify_ck3_keys.py` — regenerate the mapping tables in `mappings/` and verify every CK3 key against the 1.19 install (must report `MISSES: 0`).
 - `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
 - Convert: `uv run convert.py` (being replaced by `uv run -m ck2ck3 --config configs/faerun.toml`, lane `foundation`).
 
@@ -32,4 +33,5 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`
+- `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.

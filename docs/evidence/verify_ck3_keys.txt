@@ -1,0 +1,25 @@
+# verify_ck3_keys.py against /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+# modifier keys declared in modifier_definition_formats/: 1950
+# distinct `key =` left-hand sides under common/: 72972
+# trait properties (from _traits.info + 00_traits.txt): 687
+# trait names in 00_traits.txt: 301
+
+modifiers.csv: 95 keys verified against modifier_definition_formats/ or any common/ assignment
+trait_fields.csv: 53 keys verified against _traits.info or 00_traits.txt
+vanilla_traits.csv: 105 keys verified against 00_traits.txt trait names
+
+modifiers.csv keys found only as a common/ assignment and not declared in modifier_definition_formats/ (4) - these are CK3 core modifiers/trait fields that need no declaration:
+  health
+  opposite_opinion
+  same_opinion
+  same_opinion_if_same_faith
+
+placeholder keys deferred to the culture/religion lanes: 60
+  modifiers.csv: aberration_culture_group_opinion -> <ck3_culture>_opinion
+  modifiers.csv: abyssal_cult_opinion -> <ck3_faith>_opinion
+  modifiers.csv: adama_opinion -> <ck3_faith>_opinion
+  modifiers.csv: arcane_opinion -> <ck3_faith>_opinion
+  modifiers.csv: avariel_opinion -> <ck3_culture>_opinion
+  ... and 55 more
+
+MISSES: 0
