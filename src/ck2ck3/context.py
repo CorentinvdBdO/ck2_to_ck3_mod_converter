@@ -8,6 +8,7 @@ the :class:`Context`, so ``--dry-run`` is honest and the run log in
 from __future__ import annotations
 
 import logging
+import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -165,6 +166,42 @@ class Context:
                 canonical=canonical,
             )
         self._record(path, len(write(block, canonical=canonical)))
+        return path
+
+    def write_commented_script(
+        self,
+        rel: str | Path,
+        block: Block,
+        *,
+        source: str | Path | None = None,
+        preamble: Iterable[str] = (),
+    ) -> Path:
+        """Write a parse tree as *commented-out* script (every line ``# ``-prefixed).
+
+        The landing place for CK2 content that has no CK3 construct: the file is
+        inert for the game, and a submod revives a block by stripping the
+        prefixes. ``preamble`` lines are written verbatim after the banner.
+        """
+        path = self.out_path(str(rel))
+        body = "".join(f"{line}\n" for line in preamble)
+        body += write(block, commented=True)
+        text = self.header(source) + body
+        if not self.dry_run:
+            write_text(path, text)
+        self._record(path, len(text))
+        return path
+
+    def copy_file(self, rel: str | Path, source: Path) -> Path:
+        """Copy a binary asset (``.dds``, ``.png``) into the output mod.
+
+        Steps must not touch the filesystem themselves, so asset copies go
+        through here: ``--dry-run`` stays honest and the run log stays complete.
+        """
+        path = self.out_path(str(rel))
+        if not self.dry_run:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, path)
+        self._record(path, source.stat().st_size)
         return path
 
     def write_text(self, rel: str | Path, text: str) -> Path:
