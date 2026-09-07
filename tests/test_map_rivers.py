@@ -283,3 +283,28 @@ def test_trace_covers_every_river_pixel_on_a_dense_map():
     for path in rivers.trace(src):
         seen.update(path.points)
     assert len(seen) == total
+
+
+def test_render_stamps_all_specials_even_when_paths_share_a_junction(tmp_path):
+    """Regression: body-then-specials per path let a later path overwrite an
+    earlier path's source/merge pixel. On Faerun that ate 23 of 350 sources."""
+    src = np.full((32, 32), rivers.LAND, dtype=np.int16)
+    # a main stem with two tributaries merging into it, so junction pixels are
+    # shared between three traced paths
+    src[16, 2] = rivers.SOURCE
+    src[16, 3:28] = 3
+    src[10, 10] = rivers.SOURCE
+    src[11:16, 10] = 4
+    src[15, 10] = rivers.MERGE
+    src[22, 20] = rivers.SOURCE
+    src[17:22, 20] = 4
+    src[17, 20] = rivers.MERGE
+    bmp = write_bmp(src, tmp_path / "rivers.bmp")
+    c = canvas(w=96, h=96, factor=2.0, ox=16, oy=16)
+    out = rivers.render(bmp, c, np.zeros((c.height, c.width), dtype=bool))
+    assert rivers.count_specials(out) == rivers.count_specials(src)
+
+
+def test_count_specials():
+    arr = np.array([[0, 0, 1, 2, 3, 255]], dtype=np.uint8)
+    assert rivers.count_specials(arr) == {"sources": 2, "merges": 1, "splits": 1}

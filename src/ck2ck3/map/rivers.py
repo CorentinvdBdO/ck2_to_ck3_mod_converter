@@ -241,20 +241,41 @@ def render(
     out = np.full((canvas.height, canvas.width), LAND, dtype=np.uint8)
     out[water_mask] = WATER
 
-    for path in trace(src):
+    paths = trace(src)
+
+    # TWO passes, and the order is the whole point: every body segment first,
+    # every special pixel second. Doing body-then-specials per path lets the
+    # NEXT path's Bresenham run over a special that an earlier path already
+    # stamped, which silently ate 23 of Faerun's 350 sources and 29 of its 308
+    # merges. Junction pixels are shared between paths, so this is the common
+    # case, not an edge case.
+    for path in paths:
         scaled = [canvas.to_target(x, y) for (y, x) in path.points]  # -> (x, y)
         width = path.width_index
-        # body first, so a special pixel is never overdrawn by the next segment
         for (x0, y0), (x1, y1) in zip(scaled, scaled[1:]):
             for py, px in bresenham(y0, x0, y1, x1):
                 if 0 <= py < canvas.height and 0 <= px < canvas.width:
                     if not water_mask[py, px]:
                         out[py, px] = width
-        for (x, y), value in zip(scaled, path.values):
-            if value in SPECIAL and 0 <= y < canvas.height and 0 <= x < canvas.width:
-                if not water_mask[y, x]:
-                    out[y, x] = value
+
+    for path in paths:
+        for (y, x), value in zip(path.points, path.values):
+            if value not in SPECIAL:
+                continue
+            tx, ty = canvas.to_target(x, y)
+            if 0 <= ty < canvas.height and 0 <= tx < canvas.width:
+                if not water_mask[ty, tx]:
+                    out[ty, tx] = value
     return out
+
+
+def count_specials(idx_map: np.ndarray) -> dict[str, int]:
+    """Source / merge / split counts in a rivers index array, for a survival check."""
+    return {
+        "sources": int((idx_map == SOURCE).sum()),
+        "merges": int((idx_map == MERGE).sum()),
+        "splits": int((idx_map == SPLIT).sum()),
+    }
 
 
 def write_png(idx: np.ndarray, path: str | Path) -> None:
