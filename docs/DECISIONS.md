@@ -1,0 +1,11 @@
+# Decisions (append-only; date, decision, reason)
+
+- 2026-09-07 — Converter stays in Python 3.12 (uv), no Rust rewrite. Reason: Rust toolchain absent on the dev machine, team fluency, PIL/numpy/scipy cover the image work; revisit only if parsing speed on 16k-file mods becomes a blocker.
+- 2026-09-07 — Three repos: converter, generated mod (`faerun_ck3`, never hand-edited), submod (`forgotten_kings`), plus an asset library. Reason: upstream Faerun CK2 mod is still updated; a clean regenerate must stay possible.
+- 2026-09-07 — Target CK3 1.19.x; vanilla map is 9216×4608 (not 8192×4096 as the old `convert.py` assumed). Map dimensions become a converter parameter.
+- 2026-09-07 — Canon political map: Atlas of Ice and Fire "Nations of the Forgotten Realms" (1371 DR). Reference image kept locally in `refs/` (gitignored, copyrighted).
+- 2026-09-07 — Anything without a CK3 equivalent is emitted as a comment next to the nearest CK3 construct. No invention in the converter.
+- 2026-09-07 — Human-judgement inputs (barony seeds, race→asset mapping, id remaps) are override files read by the converter, so a re-run after an upstream update keeps human work.
+- 2026-09-07 — Race model: heritage pillar `species_<race>` parameter + genetic `creature_*` traits (ported from CK2) + on-birth inheritance table + tiered portraits (trait morphs → placeholder ethnicity → asset pack). Reason: Elder Kings 2 pattern is the only proven CK3 race system; no reusable 3D assets exist, so placeholders are unavoidable (`docs/design_races.md`).
+- 2026-09-07 — Asset library accepts only packs with an explicit licence or written permission. Reason: every surveyed fantasy mod reserves all rights; Faerûn CK2 portraits are 2D and not portable anyway.
+- 2026-09-07 — ck3-tiger v1.19.0 installed at `~/.local/bin/ck3-tiger` (from github.com/amtep/tiger). Converter output will be validated with it in `ci/checks.sh` once a mod exists.

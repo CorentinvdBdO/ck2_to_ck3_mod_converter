@@ -1,12 +1,16 @@
 [project]
 name = "ck2-ck3-mod-converter"
-version = "0.1.0"
-description = "Convert CK2 mod to CK3 compatible mod"
+version = "0.2.0"
+description = "Convert a CK2 total-conversion mod into a CK3 mod (map, titles, history, characters, cultures, religions)"
 readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
-    "pydantic",
-    "pathlib",
+    "pydantic>=2",
     "gitpython",
-    "scipy>=1.15.2",
+    "numpy",
+    "scipy>=1.15",
+    "pillow",
 ]
 
+[dependency-groups]
+dev = ["pytest"]

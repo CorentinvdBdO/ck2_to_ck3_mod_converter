@@ -3,5 +3,7 @@
 /manual_steps
 /uv.lock
 /Faerun
+/refs
 *.pyc
 *.egg-info
+__pycache__/
