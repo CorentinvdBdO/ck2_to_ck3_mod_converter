@@ -50,6 +50,12 @@ converter repository root, so the CLI behaves the same from any directory.
 | `map.scale` | float | multiplier applied to the CK2 source pixels |
 | `map.offset` | [int, int] | where the scaled CK2 map lands on the CK3 canvas |
 | `map.source_dimensions` | [int, int] | optional; CK2 source size, filled by lane `map-physical` |
+| `loc.languages` | list[str] | languages to write; omit to auto-pick english + every column over `loc.min_share` |
+| `loc.min_share` | float | how full a language column must be to earn a file, default `0.05` |
+| `loc.key_map` | path | optional `ck2_key,ck3_key` rename table, applied last |
+| `loc.skip_vanilla_collisions` | bool | drop keys that already exist in CK3 vanilla, default `false` |
+| `loc.vanilla_keys` | path | the cached vanilla key set, `docs/evidence/ck3_vanilla_loc_keys.txt` |
+| `loc.unknown_codes` | str | `custom` (default) or `marker`, see `docs/loc_codes.md` |
 
 The `[map]` values are placeholders carried over from the deleted `convert.py`
 (see below). Lane `map-physical` owns them.
@@ -116,6 +122,7 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 |---|---|---|
 | `clean` | `*` | deletes every top-level entry of the output mod that is not protected |
 | `descriptor` | `descriptor.mod` | writes `descriptor.mod` from the config |
+| `loc` | `localization` | every CK2 localisation CSV → one CK3 `.yml` per language |
 
 `clean` protects `.git`, `.gitattributes`, `.gitignore`, `LICENSE`,
 `README.md`, `descriptor.mod`, `docs`, `thumbnail.png`
@@ -127,6 +134,14 @@ cannot wipe a source tree.
 `version`, a multi-line `tags` block, `name`, `supported_version`, then one
 `replace_path` line per replaced folder. No comment banner: that file is read
 by the launcher, and neither vanilla nor EK2 puts comments in it.
+
+`loc` writes `localization/<language>/<prefix>_<csv stem>_l_<language>.yml`,
+one file per source CSV per language, keys keeping their CK2 name
+(`docs/DECISIONS.md`). On Faerûn: 480 files, 108,986 keys per language, 94 % of
+147,711 text codes converted, ~1 s. The formats and every CSV quirk are in
+`docs/formats_loc.md`, the text-code table and its coverage in
+`docs/loc_codes.md`. Its warnings are the lane hand-off: the codes with no CK3
+equivalent, and the `save_scope_as = ck2_from` the event port owes it.
 
 ## What happened to `convert.py` and `src/converter.py`
 
