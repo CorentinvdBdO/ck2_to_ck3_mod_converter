@@ -1,0 +1,2700 @@
+ck2_id,ck3_id,r,g,b,name,kind
+1,1,131,206,243,Waterdeep,land
+2,2,131,167,167,Amphail,land
+3,3,91,170,213,Daggerford,land
+4,4,61,109,128,Triboar,land
+5,5,70,152,225,Red Cliffs,land
+6,6,30,161,137,Dragonspear,land
+7,7,43,115,161,Secomber,land
+8,8,15,71,167,Neverwinter,land
+9,9,76,124,143,Mere of Dead Men,land
+10,10,61,137,209,Port Llast,land
+11,11,125,191,134,Neverwinter Wood,land
+12,12,27,83,209,Leilon,land
+13,13,0,109,188,Baldurs Gate,land
+14,14,173,182,200,The Trollclaws,land
+15,15,59,149,15,Elturel,land
+16,16,121,152,103,Scornubel,land
+17,17,152,222,237,Luskan,land
+18,18,118,149,191,Red Larch,land
+19,19,143,107,49,Longsaddle,land
+20,20,13,89,77,Kryptgarden Forest,land
+21,21,194,55,33,Lurkwood,land
+22,22,79,106,140,Ardeepsward,land
+23,23,209,234,249,Fireshear,land
+24,24,64,73,121,Uluvin,land
+25,25,88,97,167,Silverymoon,land
+26,26,100,106,106,Surbrin Hills,land
+27,27,209,200,222,The Evermoors,land
+28,28,176,146,194,Rivermoot,land
+29,29,155,103,167,Everlund,land
+30,30,185,185,194,Silvermoon Pass,land
+31,31,179,206,246,Calling Horns,land
+32,32,131,167,185,Mithral Hall,land
+33,33,39,146,25,Druarwood,land
+34,34,25,134,101,Moonwood,land
+35,35,83,158,25,Coldwood,land
+36,36,131,158,179,Citadel Adbar,land
+37,37,61,143,9,Turlangs Wood,land
+38,38,94,118,188,Sundabar,land
+39,39,179,179,188,Fell Pass,land
+40,40,137,27,19,Mirabar,land
+41,41,200,131,70,Khedrun Valley,land
+42,42,97,103,134,Blackford,land
+43,43,206,194,188,Ironmaster,land
+44,44,194,234,188,Hundelstone,land
+45,45,197,225,237,Kelvins Cairn,land
+46,46,237,243,225,Lac Dinneshere,land
+47,47,15,85,13,Night Trees,land
+48,48,131,182,194,Hartsvale,land
+49,49,194,216,213,Tholvarr,land
+50,50,234,216,206,The Great Oak,land
+51,51,143,140,155,Evermelt,land
+52,52,161,206,209,Endless Blizzard,land
+53,53,97,131,112,Arn Forest,land
+54,54,191,137,49,Loudwater,land
+55,55,55,128,73,Lost Peaks,land
+56,56,37,121,13,Heartblood,land
+57,57,61,182,131,The Sisters,land
+58,58,112,158,118,Trollbark Forest,land
+59,59,131,146,200,Zelbross,land
+60,60,191,188,176,Southwood,land
+61,61,94,112,206,Cloakwood,land
+62,62,19,131,200,Beregost,land
+63,63,106,128,170,Soubar,land
+64,64,237,222,27,Nashkel,land
+65,65,188,158,170,Durlags Tower,land
+66,66,216,137,103,Berdusk,land
+67,67,21,109,47,Tall Trees,land
+68,68,209,209,173,Ebenfar,land
+69,69,88,173,173,The Bleak Plain,land
+70,70,0,95,65,Unicorn Run,land
+71,71,134,185,164,Candlekeep,land
+72,72,128,128,43,Roaringshore,land
+73,73,25,134,7,Greenest,land
+74,74,246,191,53,Athkatla,land
+75,75,246,200,125,Kalathtyr,land
+76,76,237,173,59,Esmeltaran,land
+77,77,216,167,21,Crimmor,land
+78,78,185,53,33,Eshpurta,land
+79,79,143,64,33,Imnescar,land
+80,80,188,121,33,Amnwater,land
+81,81,243,222,107,Keczulla,land
+82,82,225,155,82,Murann,land
+83,83,225,216,134,Trademeet,land
+84,84,231,131,118,Brost,land
+85,85,67,146,19,Firewine,land
+86,86,231,61,91,Meiritin,land
+87,87,219,100,88,East Tejarn,land
+88,88,188,82,27,Trailstone,land
+89,89,237,149,91,Shilmista,land
+90,90,82,137,6,Old Well,land
+91,91,185,167,43,Arylon,land
+92,92,209,146,161,Iriaebor,land
+93,93,249,216,39,Hills Edge,land
+94,94,225,237,67,Corm Orp,land
+95,95,216,106,115,Asbravn,land
+96,96,216,76,103,Yarthrain,land
+97,97,164,124,88,Serpent Hills,land
+98,98,228,191,88,Hammer Hall,land
+99,99,188,161,88,The Rockshaws,land
+100,100,179,176,109,Beliard,land
+101,101,203,134,85,Najara,land
+102,102,203,182,85,Forest of Wyrms,land
+103,103,158,140,85,Reaching Wood,land
+104,104,231,128,103,Llorkh,land
+105,105,97,143,94,Ascalhorn,land
+106,106,182,173,79,Felbarr,land
+107,107,124,115,24,Far Forest,land
+108,108,194,194,52,Fallen Lands,land
+109,109,149,161,43,Lonely Moor,land
+110,110,121,118,43,Forgotten Forest,land
+111,111,191,216,128,Chelimber,land
+112,112,121,194,100,Evereska,land
+113,113,94,152,70,Greycloak Hills,land
+114,114,228,103,91,Pelleors Prairie,land
+115,115,237,161,152,Well of Dragons,land
+116,116,58,88,140,Firedrake,land
+117,117,82,143,179,Fyraven,land
+118,118,82,173,121,Greenshores,land
+119,119,37,161,209,Starspur,land
+120,120,19,125,158,Vintor,land
+121,121,109,164,182,Bardshyr,land
+122,122,55,131,131,Elemetar,land
+123,123,112,79,109,Ithmonn,land
+124,124,15,83,197,Uluran,land
+125,125,149,76,61,Calimmon,land
+126,126,222,37,19,Monteshi,land
+127,127,219,83,219,Rivershire,land
+128,128,170,91,128,Clovis Fields,land
+129,129,191,176,176,Alonmarch,land
+130,130,103,131,158,Surkazar,land
+131,131,140,73,73,Varyth,land
+132,132,243,219,152,Hazamarch,land
+133,133,255,203,33,Morninggold,land
+134,134,216,173,109,Valashar,land
+135,135,194,67,121,Spellshire,land
+136,136,231,47,164,West Tejarn,land
+137,137,213,185,158,Suldanessellar,land
+138,138,125,125,95,Mytharan Woods,land
+139,139,33,143,161,Iskashyoll,land
+140,140,115,185,191,Alisiwhann,land
+141,141,164,197,161,Ithal Pass,land
+142,142,255,206,73,Calimport,land
+143,143,173,112,64,Teshburl,land
+144,144,228,216,176,Memnon,land
+145,145,179,131,91,Manshaka,land
+146,146,237,203,176,Calim Desert,land
+147,147,237,185,128,Keltar,land
+148,148,200,115,106,Valshada,land
+149,149,237,140,103,Schamedar,land
+150,150,228,106,49,Volothamp,land
+151,151,222,203,49,Almraiven,land
+152,152,65,128,194,Sarenestar,land
+153,153,173,70,43,Plainsmarch,land
+154,154,164,67,209,Darromar,land
+155,155,37,113,219,Dunod,land
+156,156,91,149,164,Yartar,land
+157,157,118,143,124,The Shield,land
+158,158,158,200,158,Moonglade,land
+159,159,197,152,185,Suldolphor,land
+160,160,91,94,185,Yeshpek,land
+161,161,188,134,124,Alamirs End,land
+162,162,37,194,161,Impresk,land
+163,163,97,140,185,Lheshayl,land
+164,164,65,213,197,Shalanar,land
+165,165,143,200,124,Tanistan,land
+166,166,106,152,100,Kzelter,land
+167,167,200,164,53,Mintar,land
+168,168,188,206,194,Midvale,land
+169,169,152,134,124,The Crags,land
+170,170,73,158,109,Carrelath,land
+171,171,76,137,82,Ahlarkhem,land
+172,172,158,176,194,Saelmur,land
+173,173,209,182,25,Ankhapur,land
+174,174,158,146,185,Yhep,land
+175,175,185,209,143,Thornwood,land
+176,176,200,67,124,Ioma,land
+177,177,137,91,222,Irphong,land
+178,178,155,103,179,Thordentor,land
+179,179,222,146,200,The Rookery,land
+180,180,112,58,179,Toaridge-at-the-Suns-Setting,land
+181,181,203,128,243,The Flint,land
+182,182,228,143,206,The Tusks,land
+183,183,188,158,155,The Singing Rocks,land
+184,184,134,100,91,Proskur,land
+185,185,222,176,131,Elversult,land
+186,186,194,121,112,Priapurl,land
+187,187,197,112,82,Teziir,land
+188,188,173,64,67,Reddansyr,land
+189,189,216,97,97,Redwater Dale,land
+190,190,216,58,52,Westgate,land
+191,191,191,106,33,Starmantle,land
+192,192,179,182,176,Karlyns Vale,land
+193,193,131,152,131,Widestep,land
+194,194,191,155,179,Nathlekh,land
+195,195,146,188,206,Assam,land
+196,196,137,197,79,Starfields,land
+197,197,79,121,152,Ormath,land
+198,198,103,164,197,Murpeth,land
+199,199,76,124,131,Surkh,land
+200,200,182,19,9,Cortrynn,land
+201,201,161,170,112,Giants Run,land
+202,202,200,213,197,Long Arm,land
+203,203,197,209,194,Westmark,land
+204,204,240,234,237,Broadfields,land
+205,205,52,155,106,Hlondeth,land
+206,206,97,185,191,The Wetwoods,land
+207,207,70,167,176,Lachom,land
+208,208,76,188,143,Nimpeth,land
+209,209,124,149,155,Pikemans Folly,land
+210,210,164,188,194,Arrabar,land
+211,211,152,103,30,Marsh of Tun,land
+212,212,182,146,67,Veilstone,land
+213,213,167,197,103,Gullrocks,land
+214,214,219,146,128,Flamsterd,land
+215,215,64,143,112,Norheim,land
+216,216,91,194,140,Korinn,land
+217,217,103,185,170,Frostfenn,land
+218,218,103,112,134,Grondsgrunn,land
+219,219,197,185,143,Wave Rocks,land
+220,220,173,185,206,Westphal,land
+221,221,149,188,185,Sunset,land
+222,222,131,206,143,Grampalt Highlands,land
+223,223,79,167,197,Mintarn,land
+224,224,52,137,124,Ruathym,land
+225,225,55,73,85,The Icepeak,land
+226,226,79,137,64,Gundarlun,land
+227,227,55,113,65,Tuern,land
+228,228,137,82,158,Purple Rocks,land
+229,229,82,152,149,Umukek,land
+230,230,59,58,85,The Whalebones,land
+231,231,55,158,131,Tulbeghoth,land
+232,232,222,52,52,Cimarine Isles,land
+233,233,164,209,216,Ardeep Forest,land
+234,234,30,76,106,The Fell Wood,land
+235,235,225,170,197,Amkethran,land
+236,236,103,137,140,Coast Way,land
+237,237,246,140,43,Purskul,land
+238,238,246,216,43,Alaghon,land
+239,239,216,158,52,Alaoreum,land
+240,240,188,103,0,Gildenglade,land
+241,241,255,200,128,Holdensword,land
+242,242,231,167,149,Nonthal,land
+243,243,219,188,94,The Faraway,land
+244,244,249,134,76,Xorhun,land
+245,245,255,131,121,The Perloush,land
+246,246,255,228,155,The Allascar,land
+247,247,206,137,91,Tharsult,land
+248,248,255,237,213,Telpir,land
+249,249,167,64,179,Suzail,land
+250,250,234,91,121,Wyvernwater,land
+251,251,209,76,140,Eveningstar,land
+252,252,170,52,61,Marsember,land
+253,253,209,88,79,Arabel,land
+254,254,203,143,176,Dawngleam,land
+255,255,226,5,45,Warmshores,land
+256,256,88,188,191,Selgaunt,land
+257,257,33,140,137,Urmlaspyr,land
+258,258,46,164,228,Saerloon,land
+259,259,21,140,179,Daerlun,land
+260,260,70,191,228,Ordulin,land
+261,261,21,76,143,Yhaunn,land
+262,262,112,134,143,Tantras,land
+263,263,164,167,182,Ravens Bluff,land
+264,264,164,194,213,Calaunt,land
+265,265,155,134,131,Procampur,land
+266,266,88,109,146,Zhentil Keep,land
+267,267,115,176,164,Yulash,land
+268,268,164,191,206,Hillsfar,land
+269,269,97,146,188,Elventree,land
+270,270,155,191,170,Mulmaster,land
+271,271,73,173,185,Ylraphon,land
+272,272,167,179,228,Essembra,land
+273,273,27,70,85,Archenbridge,land
+274,274,21,106,176,Daggerdale,land
+275,275,100,118,128,Highmoon,land
+276,276,146,179,203,Blackfeather Bridge,land
+277,277,30,167,164,Harrowdale,land
+278,278,58,131,231,Highcastle,land
+279,279,91,179,197,Ashabenford,land
+280,280,15,103,106,Scardale,land
+281,281,58,158,137,Sessrenglade,land
+282,282,36,112,131,Shadowdale,land
+283,283,179,191,140,Miir,land
+284,284,64,124,115,Tegal's Mark,land
+285,285,64,140,79,Teshwave,land
+286,286,164,112,143,Storm Horns,land
+287,287,197,47,176,Sambar,land
+288,288,188,85,97,Leth,land
+289,289,200,124,152,Sundrah,land
+290,290,216,158,216,Tsan,land
+291,291,164,94,191,Baelrah,land
+292,292,131,64,97,Mother-of-Mists,land
+293,293,219,36,61,The Dawn Warrior,land
+294,294,206,30,46,Salpir,land
+295,295,167,100,85,Ormen,land
+296,296,209,91,30,Curstallyon,land
+297,297,234,82,79,Sombor,land
+298,298,43,131,158,Beacon Rocks,land
+299,299,43,73,85,The Whales Flukes,land
+300,300,128,225,146,Eastwood,land
+301,301,170,146,185,Kings Forest,land
+302,302,222,158,100,Farshore,land
+303,303,225,155,124,Amry,land
+304,304,112,206,182,Mulhessen,land
+305,305,200,197,134,Weathercote Wood,land
+306,306,109,194,188,Mt. Hotenow,land
+307,307,12,143,115,Westwood,land
+308,308,121,182,91,Callidyrr,land
+309,309,73,118,73,Talffolk,land
+310,310,146,173,52,Stagford,land
+311,311,106,124,109,Stirgewick,land
+312,312,115,188,188,Bregonshire,land
+313,313,52,131,137,Gnarhelm,land
+314,314,76,188,179,Hardang,land
+315,315,91,173,143,Sunder,land
+316,316,73,149,234,Dynnegall,land
+317,317,91,209,203,Kork,land
+318,318,140,149,121,Synnoria,land
+319,319,146,115,164,Kingsbay,land
+320,320,106,131,143,Myrloch Vale,land
+321,321,158,191,194,Corwell,land
+322,322,118,161,191,Cambro,land
+323,323,76,152,131,Winterglen,land
+324,324,109,206,191,Codsbay,land
+325,325,103,91,121,Wyngate,land
+326,326,64,143,140,Shrouded Lands,land
+327,327,30,112,152,Huddagh,land
+328,328,155,134,167,Tilverton,land
+329,329,134,73,103,Hullack Forest,land
+330,330,206,83,121,The Ride,land
+331,331,249,67,97,Redspring,land
+332,332,246,170,149,Thunderstone,land
+333,333,70,206,124,Semberholme,land
+334,334,36,158,76,Mosstrunks,land
+335,335,88,167,52,Elven Court,land
+336,336,33,103,33,Tangled Trees,land
+337,337,49,167,124,Vale of Lost Voices,land
+338,338,61,137,53,Myth Drannor,land
+339,339,15,70,0,Darkwoods,land
+340,340,76,121,9,Liswood,land
+341,341,161,203,194,Phlan,land
+342,342,97,131,103,Melvaunt,land
+343,343,161,143,82,Galenarr,land
+344,344,167,164,43,Hulburg,land
+345,345,146,146,143,Thar,land
+346,346,206,200,115,Thentia,land
+347,347,85,115,134,North Rystall,land
+348,348,58,67,91,Hawksroost,land
+349,349,94,146,115,Citadel of the Raven,land
+350,350,134,179,191,Rystall Wood,land
+351,351,100,94,91,Ilinvur,land
+352,352,61,49,88,Whitehorn,land
+353,353,170,197,191,Forharn,land
+354,354,91,112,134,Barze,land
+355,355,188,185,176,Frozen Flindyke,land
+356,356,134,149,124,Ondathel,land
+357,357,240,191,206,Darmshall,land
+358,358,206,112,94,Stillmoors,land
+359,359,209,112,15,Cinnabar,land
+360,360,209,222,216,Mirror Lake,land
+361,361,191,164,158,Arcata,land
+362,362,143,118,97,Bloodstone,land
+363,363,237,216,200,Carmathan,land
+364,364,164,118,134,Brandiar,land
+365,365,143,91,103,Highcountry,land
+366,366,197,137,161,Merkungard,land
+367,367,173,134,137,Tokards Cross,land
+368,368,161,158,112,East Soravia,land
+369,369,149,79,76,Polten,land
+370,370,194,79,61,Heliogabalus,land
+371,371,100,112,79,Ostel,land
+372,372,88,152,140,Spiderhaunt Woods,land
+373,373,209,152,88,Araugul,land
+374,374,197,158,128,Goblin Marches,land
+375,375,170,146,128,Farsea Marsh,land
+376,376,118,100,24,The Stonelands,land
+377,377,185,170,179,Shaddath,land
+378,378,219,124,82,Sixstreams,land
+379,379,114,143,106,Fire River,land
+380,380,106,149,173,Kings Reach,land
+381,381,155,158,152,Hlintar,land
+382,382,36,46,100,Kurth,land
+383,383,46,82,121,Daltonsvale,land
+384,384,225,167,155,Bottomless Bog,land
+385,385,140,185,121,Misty Forest,land
+386,386,140,131,137,Remorhaz Ride,land
+387,387,182,173,149,Frozen Forest,land
+388,388,55,70,91,Taurax,land
+389,389,143,146,134,Gaethluntar,land
+390,390,176,167,176,Wintersburn,land
+391,391,191,55,30,Dilpur,land
+392,392,71,225,115,Samargol,land
+393,393,176,64,88,Lenchvale,land
+394,394,209,70,88,Soleineflow,land
+395,395,103,158,76,Uthmere,land
+396,396,94,200,206,Snout of Omgar,land
+397,397,97,203,143,Rassatan,land
+398,398,76,143,85,Sorl,land
+399,399,46,203,158,Taruin,land
+400,400,170,112,21,Lyrabar,land
+401,401,164,152,121,Ilmwatch,land
+402,402,222,167,121,Three Horns,land
+403,403,152,100,39,Sarshel,land
+404,404,191,161,128,Tsurlagol,land
+405,405,118,112,67,Laviguer,land
+406,406,222,100,85,Uplands,land
+407,407,182,158,88,Songhal,land
+408,408,24,155,49,Joums,land
+409,409,91,194,167,Soussal,land
+410,410,94,134,82,Laas,land
+411,411,67,167,219,Tashluta,land
+412,412,71,191,194,Zamazda,land
+413,413,39,155,203,Delphin,land
+414,414,33,71,134,Akaam,land
+415,415,21,49,149,Veshit,land
+416,416,94,155,197,Narubel,land
+417,417,79,121,149,Arabalar,land
+418,418,103,152,179,Ahma,land
+419,419,43,76,106,Tembasi,land
+420,420,64,115,128,Tashan Gap,land
+421,421,255,219,9,Ithmong,land
+422,422,249,173,21,Sammaresh,land
+423,423,197,121,21,Abreon,land
+424,424,216,179,58,Lushpool,land
+425,425,216,131,15,Sheirtalar,land
+426,426,243,216,115,Ormpur,land
+427,427,237,225,143,Lapalgard,land
+428,428,197,170,115,Usurr,land
+429,429,179,137,79,Makaxar,land
+430,430,61,67,155,Thindar,land
+431,431,91,82,240,Blackvale,land
+432,432,134,124,203,Deltar,land
+433,433,167,131,225,Samagard,land
+434,434,109,100,200,Lundeth Bay,land
+435,435,112,82,128,Delselar,land
+436,436,167,106,158,Aztul,land
+437,437,73,88,203,Dolsel Gap,land
+438,438,146,140,179,Guth,land
+439,439,161,164,216,Tching,land
+440,440,118,112,131,Thingulphar,land
+441,441,0,131,0,Mezro,land
+442,442,85,200,103,The Samarlogh,land
+443,443,65,131,0,Talacoast,land
+444,444,33,161,55,Ishau,land
+445,445,36,128,155,Sapphire Shores,land
+446,446,43,134,49,The Chultengar,land
+447,447,85,143,140,Valley of Dread,land
+448,448,91,137,21,Hisari,land
+449,449,64,152,103,Shilku Bay,land
+450,450,85,121,9,Valley of Lost Honor,land
+451,451,43,155,43,Couatl Wilds,land
+452,452,27,131,61,Nyanzaru,land
+453,453,88,155,33,Mbala,land
+454,454,128,176,58,Olung,land
+455,455,85,128,24,Shatterwave,land
+456,456,27,91,0,Aldani Basin,land
+457,457,64,112,97,Land of Ash and Smoke,land
+458,458,82,173,128,Wildstorm Vale,land
+459,459,21,97,70,Bulobo,land
+460,460,43,155,149,Orolunga,land
+461,461,100,164,30,Jahaka Bay,land
+462,462,152,167,39,Snapping Turtle Bay,land
+463,463,18,100,76,Nangalore,land
+464,464,55,85,47,Nsi,land
+465,465,182,170,61,Matolo,land
+466,466,158,59,55,Immerflow,land
+467,467,179,97,176,Lapalgulph,land
+468,468,112,112,134,Forlorn Hills,land
+469,469,128,52,137,Mhairling,land
+470,470,143,158,185,Julkoun,land
+471,471,73,164,240,Cony Gap,land
+472,472,94,176,209,Lyntara,land
+473,473,146,112,209,Jalanthar,land
+474,474,106,97,200,Zanzazzar,land
+475,475,30,128,209,Themasulter,land
+476,476,61,188,209,Theymarsh,land
+477,477,27,167,149,Yallasch,land
+478,478,182,115,200,Monksblade,land
+479,479,185,170,197,The Fork,land
+480,480,61,118,85,Beland,land
+481,481,79,155,79,Azun,land
+482,482,155,149,112,Council Hills,land
+483,483,197,176,137,Jeradin,land
+484,484,97,164,146,Brightfields,land
+485,485,109,191,209,Hardcastle,land
+486,486,100,112,82,Sharawood,land
+487,487,112,170,128,Balaj,land
+488,488,176,170,83,Riftwood,land
+489,489,191,231,237,Eartheart,land
+490,490,97,188,179,Delzimmer,land
+491,491,103,149,206,Kholtar,land
+492,492,118,170,188,Three Swords,land
+493,493,167,131,106,Channathgate,land
+494,494,188,185,188,Channathwood,land
+495,495,134,158,206,Dapplegate,land
+496,496,49,121,143,Venne,land
+497,497,49,140,203,Thur,land
+498,498,121,213,194,Alamontyr,land
+499,499,21,146,131,Innarlith,land
+500,500,249,240,194,Laila,land
+501,501,200,182,152,Dun Hills,land
+502,502,82,36,176,Saraath,land
+503,503,46,97,176,Coilvines,land
+504,504,27,222,194,Derlusk,land
+505,505,231,64,121,Kaarekh,land
+506,506,170,73,100,Bamas,land
+507,507,118,121,234,Oostar,land
+508,508,155,46,143,Qota,land
+509,509,179,73,164,Toa,land
+510,510,161,134,197,The Vensal,land
+511,511,137,43,228,Moonvales,land
+512,512,134,21,94,Orphar,land
+513,513,213,79,191,Mhairhetel,land
+514,514,164,30,140,Lapaalis,land
+515,515,134,67,143,Sesserash,land
+516,516,155,121,200,Kassa Bay,land
+517,517,137,39,176,Kinyo,land
+518,518,225,219,225,Jaasa,land
+519,519,213,185,176,Laphe,land
+520,520,234,200,188,Ssensval,land
+521,521,155,140,115,Scrabbleground,land
+522,522,209,197,197,Broken Swords,land
+523,523,197,176,134,Deadstars,land
+524,524,115,140,115,Misty Vale,land
+525,525,158,173,146,Talarvale,land
+526,526,143,118,100,Iirgar,land
+527,527,152,140,118,Rethmar,land
+528,528,173,185,222,Sebben,land
+529,529,240,234,216,The Shaarwood,land
+530,530,213,213,216,Shaarmid,land
+531,531,158,167,179,Lhesper,land
+532,532,155,140,109,Kormul,land
+533,533,124,167,149,Lhespenbog,land
+534,534,140,164,106,Riverride,land
+535,535,82,112,109,Shaareach Forest,land
+536,536,194,179,155,Lowfork,land
+537,537,146,121,83,Kindle,land
+538,538,188,173,83,Flatshield,land
+539,539,103,152,146,Urula,land
+540,540,61,109,124,Genval,land
+541,541,164,182,191,Skeska,land
+542,542,115,188,182,The Duskwood,land
+543,543,152,137,112,Firesteap Hills,land
+544,544,179,194,152,Skywall,land
+545,545,161,161,131,Horizons,land
+546,546,176,179,161,Qurth Forest,land
+547,547,61,94,121,Torsch,land
+548,548,43,158,182,Old Road,land
+549,549,73,121,79,Everwide,land
+550,550,109,179,179,Errusk,land
+551,551,113,219,185,Stingfields,land
+552,552,155,185,179,Forol,land
+553,553,94,82,64,Outlaw Waste,land
+554,554,158,140,115,Fornaluit Plain,land
+555,555,143,140,109,Shining Gap,land
+556,556,83,125,131,Hundred Spears,land
+557,557,140,170,155,Dust Road,land
+558,558,65,134,121,Redstar,land
+559,559,112,140,134,Eskat,land
+560,560,167,152,134,The Scarland,land
+561,561,137,134,73,Legionsway,land
+562,562,128,209,161,Asher Plain,land
+563,563,91,149,161,Tensteps,land
+564,564,121,179,176,Kollyat,land
+565,565,231,203,194,Jelvak,land
+566,566,88,134,88,Yorash,land
+567,567,131,176,103,Buldamar,land
+568,568,24,58,164,Thornwash Vale,land
+569,569,216,209,222,Orbrekhland,land
+570,570,36,94,152,Cedarvale,land
+571,571,30,131,112,Westgulth,land
+572,572,3,85,55,Eastgulth,land
+573,573,24,124,137,Shamph,land
+574,574,49,146,149,Nun,land
+575,575,52,182,70,Lilit Pass,land
+576,576,70,137,149,Nunwood,land
+577,577,49,173,82,Hlath,land
+578,578,33,115,36,Airspur,land
+579,579,33,161,170,Cimbar,land
+580,580,79,209,197,Soorenar,land
+581,581,131,200,76,Ixinos,land
+582,582,94,131,185,Nesme,land
+583,583,255,197,94,Snakewood,land
+584,584,58,121,115,Rucien-Xan,land
+585,585,67,137,188,Underhome,land
+586,586,124,170,234,Quarat,land
+587,587,24,118,173,Shadows End,land
+588,588,191,100,191,Rimmator,land
+589,589,167,146,213,Tarnhall,land
+590,590,100,64,182,Daunting,land
+591,591,188,176,243,Harlending,land
+592,592,152,103,206,Glitterdelve,land
+593,593,140,85,188,Sundasz,land
+594,594,79,164,118,Satyr Road,land
+595,595,43,94,97,Nearwoods,land
+596,596,91,179,219,Olum,land
+597,597,73,131,143,Illuks,land
+598,598,70,118,143,Adder Woods,land
+599,599,128,182,188,Velsit,land
+600,600,185,234,179,Nagarr,land
+601,601,197,209,79,Wintercloak,land
+602,602,228,197,146,North Winterwood,land
+603,603,152,118,103,South Winterwood,land
+604,604,231,219,76,Ankhwood,land
+605,605,185,176,100,Kurrsh,land
+606,606,185,88,76,Ormpetarr,land
+607,607,234,173,67,Arran,land
+608,608,243,112,109,Elbulder,land
+609,609,249,219,128,Golden Road,land
+610,610,140,164,167,Zamsgrove,land
+611,611,158,182,85,Sumbria,land
+612,612,67,200,134,Lomatra,land
+613,613,43,134,94,Rivers Run,land
+614,614,115,131,103,Rodanar,land
+615,615,91,161,194,Oslin,land
+616,616,94,185,182,Elghal,land
+617,617,27,131,88,Avax,land
+618,618,52,100,112,Irestone,land
+619,619,58,118,149,Vargath,land
+620,620,33,106,222,Wolfwoods,land
+621,621,21,52,131,Addak,land
+622,622,3,58,149,Gnollhomes,land
+623,623,46,149,146,Luthcheq,land
+624,624,85,188,200,Mordulkin,land
+625,625,43,79,121,Soolabax,land
+626,626,97,237,200,Erebos,land
+627,627,61,103,143,Maerch,land
+628,628,15,170,173,Maerchwoods,land
+629,629,91,112,76,Maerduuth,land
+630,630,24,91,134,Akanax,land
+631,631,118,88,79,Mourktar,land
+632,632,121,115,140,Thulbane,land
+633,633,43,106,143,Watchers Cape,land
+634,634,46,158,158,Jade Hills,land
+635,635,170,82,100,Halarahh,land
+636,636,143,52,76,Bathme,land
+637,637,155,112,121,Ghalagar,land
+638,638,176,118,243,Ralasuu Isle,land
+639,639,225,112,170,Halaze,land
+640,640,203,161,191,Halagard,land
+641,641,140,58,109,Lhair,land
+642,642,149,134,106,Halar Hills,land
+643,643,194,128,167,Aluar,land
+644,644,140,76,240,Maeruhal,land
+645,645,134,64,213,Sulaziir,land
+646,646,103,79,115,Elchulmarch,land
+647,647,91,42,191,Maerzalar,land
+648,648,100,115,191,The Nath,land
+649,649,185,140,194,Talathgard,land
+650,650,179,52,152,Thilzoun,land
+651,651,194,91,170,Zzuntal,land
+652,652,124,76,146,Edouura,land
+653,653,39,27,131,Azuni,land
+654,654,146,131,176,Mithel,land
+655,655,140,106,182,Assundath,land
+656,656,185,70,197,Yaulazna,land
+657,657,182,103,140,Neldorild,land
+658,658,112,76,70,Ship of the Gods,land
+659,659,115,106,82,Unthalass,land
+660,660,170,182,140,Dalath,land
+661,661,128,118,91,Red Shores,land
+662,662,161,146,94,Methwood,land
+663,663,213,118,97,Kaoll,land
+664,664,206,194,155,Firetrees,land
+665,665,197,164,128,Angol,land
+666,666,131,188,61,Inkrath,land
+667,667,124,118,124,Black Ash Plain,land
+668,668,206,182,140,Messemprar,land
+669,669,216,206,194,Shussel,land
+670,670,182,121,109,Sadamzar,land
+671,671,15,170,191,Adder Swamp,land
+672,672,64,118,27,Fussellshade,land
+673,673,149,143,121,Uthangol,land
+674,674,131,82,164,Angast,land
+675,675,231,185,216,Mishtan,land
+676,676,161,100,137,Klondor,land
+677,677,200,115,216,Surbroar,land
+678,678,112,128,182,Aina,land
+679,679,170,131,188,Gheldaneth,land
+680,680,143,128,91,Skuld,land
+681,681,203,197,118,Jhalhoran,land
+682,682,118,91,70,Vintal,land
+683,683,191,179,46,Sultim,land
+684,684,124,106,91,Rauthgor,land
+685,685,91,158,143,Ganathwood,land
+686,686,191,179,161,Rauthil,land
+687,687,240,197,106,Mulharahold,land
+688,688,216,197,170,Maelar,land
+689,689,137,88,55,Fields of Kesk,land
+690,690,94,209,82,Phannaskul,land
+691,691,76,179,94,Isfasan,land
+692,692,46,124,39,White Coast,land
+693,693,131,179,106,Port Ghast,land
+694,694,137,203,161,Kilastann,land
+695,695,27,234,173,Mortens Gap,land
+696,696,161,173,131,Thandyl,land
+697,697,137,118,88,Murghyr,land
+698,698,167,170,118,High Valley,land
+699,699,152,149,152,Upper Murghol,land
+700,700,188,106,149,Denzar,land
+701,701,82,191,203,Ejen Horo,land
+702,702,216,240,94,Rume,land
+703,703,70,118,106,Ustann and Tuulish,land
+704,704,155,185,52,Athab Cape,land
+705,705,76,100,15,Umarah,land
+706,706,143,131,118,Somraggah,land
+707,707,209,131,82,Dhaztanar,land
+708,708,173,73,82,Darabjind,land
+709,709,149,161,143,Howling Gap,land
+710,710,173,149,64,Naysabur,land
+711,711,167,167,64,Plain of Heroes,land
+712,712,209,173,58,Iliphanar,land
+713,713,173,112,70,Dustwaves,land
+714,714,179,185,167,Semphar Water,land
+715,715,222,173,155,Upper Goldenflow,land
+716,716,203,197,94,Takrit,land
+717,717,176,146,115,Sempharin,land
+718,718,158,97,103,Zabad,land
+719,719,209,197,100,Phelzol,land
+720,720,197,179,46,Harb,land
+721,721,231,176,164,Banu,land
+722,722,173,179,173,Duirtanal,land
+723,723,91,206,209,Tonge,land
+724,724,219,197,170,Fuirgar,land
+725,725,164,164,115,Nezras,land
+726,726,52,149,152,Ghaastwood,land
+727,727,49,88,149,Haqar,land
+728,728,15,152,176,Estan,land
+729,729,24,112,149,Fergana,land
+730,730,234,209,155,Luenath,land
+731,731,170,94,85,Maarlith,land
+732,732,143,106,88,Cathyr,land
+733,733,152,121,131,Hazuth,land
+734,734,64,161,164,Kingshore,land
+735,735,155,118,88,Elveswatch,land
+736,736,213,203,182,Ammathtar,land
+737,737,97,161,103,Ammathluir,land
+738,738,97,67,46,Beastburn,land
+739,739,112,203,124,Fasriul,land
+740,740,70,121,67,Otennath,land
+741,741,55,131,88,East Lluirwood,land
+742,742,143,197,158,Granuin Forest,land
+743,743,170,219,158,Great Traders Way,land
+744,744,143,164,64,Lluirwood,land
+745,745,91,152,94,Isle of Quelthiir,land
+746,746,161,182,143,Luirund,land
+747,747,112,158,82,Beluir,land
+748,748,67,146,209,Klionna,land
+749,749,27,191,194,Ulara,land
+750,750,88,200,219,Rastaal,land
+751,751,112,143,182,Envarl,land
+752,752,49,124,109,Gundar Forest,land
+753,753,206,152,31,Pyratar,land
+754,754,234,95,39,Des,land
+755,755,252,188,77,Myrmyr,land
+756,756,194,182,173,Kolapur,land
+757,757,146,113,53,Tiry,land
+758,758,213,228,47,Golden Fields,land
+759,759,252,225,119,Zelpir,land
+760,760,134,170,216,Xiltor,land
+761,761,134,85,216,Lastarr,land
+762,762,55,140,115,Aerilpar Forest,land
+763,763,43,143,155,Beast Lands,land
+764,764,79,88,106,Vaelan,land
+765,765,179,109,118,Adamas Tooth,land
+766,766,121,49,85,Sezilinta,land
+767,767,128,179,182,Orpher,land
+768,768,39,131,143,Turelve,land
+769,769,52,143,188,Ormpe,land
+770,770,191,118,213,Dustwall,land
+771,771,131,100,134,Heldar,land
+772,772,79,137,170,Durgach,land
+773,773,146,200,200,Sandsrun,land
+774,774,61,152,182,Morvar,land
+775,775,109,206,219,Ajmer Forest,land
+776,776,49,91,140,Protain,land
+777,777,134,191,206,Midwinter Pass,land
+778,778,58,167,118,Bhaluin,land
+779,779,115,109,146,Orvyltar,land
+780,780,228,143,52,Surbar,land
+781,781,197,94,21,Dralpur,land
+782,782,131,52,0,Barbarians Road,land
+783,783,131,106,33,Suormpar,land
+784,784,234,155,88,Kasper,land
+785,785,185,149,106,Flyndagol,land
+786,786,200,182,36,Blumantle Pass,land
+787,787,155,64,46,Dalvind,land
+788,788,100,179,185,Kellesar,land
+789,789,49,121,219,Esbresh,land
+790,790,79,140,170,Kelazzan,land
+791,791,43,55,128,Suntar,land
+792,792,49,67,97,Tharkar,land
+793,793,88,109,52,Hills of the Dead Kings,land
+794,794,206,134,121,Prastuil,land
+795,795,167,152,76,Herath,land
+796,796,206,185,82,Guilmarl,land
+797,797,234,200,134,Hethar,land
+798,798,237,173,112,Darmesh,land
+799,799,33,173,36,Skuldusk,land
+800,800,234,158,137,Ship Isle,land
+801,801,167,134,121,Kethid,land
+802,802,225,176,170,Conaluil,land
+803,803,70,137,67,Dekar,land
+804,804,85,149,173,Zendum,land
+805,805,52,94,94,Zendar,land
+806,806,103,164,64,Eldrinfar,land
+807,807,67,128,43,Doegenflow,land
+808,808,118,158,94,Doegwood,land
+809,809,52,91,27,Grendel,land
+810,810,118,131,206,Lo Tu,land
+811,811,161,64,155,Edenvale,land
+812,812,191,112,209,Serpent Valley,land
+813,813,124,36,30,Olstone,land
+814,814,146,52,155,Highstars,land
+815,815,55,115,219,Yellow Serpent,land
+816,816,146,39,21,Konigheim,land
+817,817,222,112,46,Khelas,land
+818,818,203,73,58,Sragadha,land
+819,819,222,143,46,Lipo,land
+820,820,188,67,85,Suns Eye,land
+821,821,164,73,67,Ommvale,land
+822,822,206,146,112,Venasca,land
+823,823,49,76,191,Lagiluri,land
+824,824,216,161,131,Fustat,land
+825,825,115,164,206,Jorhat Shan,land
+826,826,55,115,164,Leopard Shan,land
+827,827,85,109,158,Amassa,land
+828,828,134,164,176,Jelnesh,land
+829,829,191,152,103,Westbay,land
+830,830,91,58,121,Mangangan,land
+831,831,200,109,194,Qarintg,land
+832,832,206,106,161,Kholaa,land
+833,833,149,61,134,Braleuz,land
+834,834,124,94,109,Neryudzhan,land
+835,835,213,176,152,Galuka,land
+836,836,176,100,118,Talukhi,land
+837,837,228,158,161,Khaa,land
+838,838,152,106,112,Shay Hills,land
+839,839,209,85,79,Naiganga,land
+840,840,115,64,88,Avyn,land
+841,841,164,88,76,Citadel Rashemar,land
+842,842,64,143,219,Khopet-Dag,land
+843,843,100,115,240,Sant,land
+844,844,128,191,228,Ugewood,land
+845,845,58,131,179,Boorva,land
+846,846,52,115,213,Bynua,land
+847,847,106,61,112,Songfarla,land
+848,848,176,58,118,Kouangi,land
+849,849,112,30,82,Tane,land
+850,850,209,161,43,Borich,land
+851,851,231,91,27,Firepeaks,land
+852,852,231,170,79,Jarir,land
+853,853,188,118,52,Iris Spring,land
+854,854,219,167,115,Sentinel Spire,land
+855,855,58,39,143,Iceroot Forest,land
+856,856,131,91,182,Shirc,land
+857,857,85,30,134,Bulangalant,land
+858,858,152,209,155,Umberwood,land
+859,859,73,167,82,Ni-Ko,land
+860,860,49,209,152,Gukh,land
+861,861,33,128,100,Burich,land
+862,862,91,134,36,Mata,land
+863,863,36,79,18,Khol,land
+864,864,109,158,140,Qantun,land
+865,865,85,106,88,Bisoturi,land
+866,866,170,91,170,Syevyer Forest,land
+867,867,176,182,100,Tonli,land
+868,868,124,197,58,Chan-Liu-Shui,land
+869,869,49,155,143,Bakhuk,land
+870,870,243,225,30,Chegoyui,land
+871,871,134,128,94,Tungtairira,land
+872,872,112,88,76,Kholassa,land
+873,873,170,149,146,Bunshin,land
+874,874,216,209,188,Peqqir,land
+875,875,140,115,76,Shota,land
+876,876,115,19,47,Nagoo,land
+877,877,188,100,55,Ansi,land
+878,878,222,161,94,Deraiairgak,land
+879,879,222,173,88,Sakh,land
+880,880,234,200,55,Bariya,land
+881,881,194,106,27,Tariatooroi,land
+882,882,222,149,100,Munli,land
+883,883,240,94,27,Gurvandene,land
+884,884,240,197,109,Bulaantaro,land
+885,885,188,140,64,Hatgiainli,land
+886,886,206,137,33,Nogoonraat,land
+887,887,234,61,12,Banda,land
+888,888,179,43,46,Horseshoe Oasis,land
+889,889,146,18,27,Tatanulgts,land
+890,890,61,97,112,Chama,land
+891,891,194,158,121,Bitter Well,land
+892,892,200,182,109,Pigeon Rock,land
+893,893,209,173,124,Bara,land
+894,894,146,103,79,Teri,land
+895,895,219,179,164,Tuma,land
+896,896,164,118,79,Daynk,land
+897,897,185,176,167,Qorkh,land
+898,898,203,209,213,Flowery Well,land
+899,899,152,155,152,Quaraband,land
+900,900,82,85,97,Salira,land
+901,901,173,179,176,Nanhu,land
+902,902,112,103,91,Darakh,land
+903,903,216,188,194,Winterkeep,land
+904,904,128,124,112,Banlm,land
+905,905,209,179,167,Kourmira,land
+906,906,191,124,100,Atoratgins,land
+907,907,52,118,149,Chan,land
+908,908,91,164,191,Yidyn,land
+909,909,46,85,115,Quli,land
+910,910,73,152,167,Cholta,land
+911,911,58,137,176,Noondai,land
+912,912,167,52,82,Geman,land
+913,913,58,100,137,Almorel,land
+914,914,209,106,167,Beacon Cairn,land
+915,915,234,209,197,Yegororyanen,land
+916,916,109,134,188,Nathoud,land
+917,917,170,194,213,Kalish,land
+918,918,109,146,140,Nenvar,land
+919,919,146,219,213,Horaholm,land
+920,920,91,128,158,Luirbrech,land
+921,921,206,182,213,Aspervi,land
+922,922,170,170,188,The Teardrops,land
+923,923,115,140,55,Qutel,land
+924,924,79,128,152,Hoarbridge,land
+925,925,64,170,88,Erech Forest,land
+926,926,109,152,49,Falls of Erech,land
+927,927,143,191,79,Kolium,land
+928,928,197,222,79,NJast,land
+929,929,55,179,143,Nar Ormpur,land
+930,930,73,146,103,Icetail,land
+931,931,106,143,49,Quistrade,land
+932,932,134,185,118,Jelvym,land
+933,933,213,231,237,Akashay,land
+934,934,64,137,64,The Bird,land
+935,935,27,88,106,The Dancer,land
+936,936,158,152,103,The Dune,land
+937,937,91,121,128,The Chador,land
+938,938,30,55,18,The Camels Hump,land
+939,939,194,121,30,Ghajar,land
+940,940,182,182,85,Hawa,land
+941,941,79,115,49,The Eyes,land
+942,942,146,182,121,al-Azra,land
+943,943,64,143,94,al-Harir,land
+944,944,15,203,124,The Wizards Reach,land
+945,945,76,197,203,Muluk,land
+946,946,52,112,124,Simbaya,land
+947,947,94,185,179,Sakina,land
+948,948,85,191,106,Bladed Coast,land
+949,949,46,124,143,Umara,land
+950,950,39,52,94,Hafaya,land
+951,951,94,167,191,Qadib,land
+952,952,52,94,131,al-Haul,land
+953,953,161,94,64,al-Anwahr,land
+954,954,219,134,115,Utaqa,land
+955,955,179,143,161,Inkelvale,land
+956,956,121,73,216,Gate of Heaven,land
+957,957,182,112,164,Enlightened Ring,land
+958,958,146,73,216,Fiends Wing,land
+959,959,179,149,88,al-Kidr,land
+960,960,209,191,161,Jasan Pass,land
+961,961,103,61,121,Ghost Leopard,land
+962,962,170,82,134,Yaks Horn,land
+963,963,134,112,164,Red Goat,land
+964,964,176,88,197,Bronze Falcon,land
+965,965,115,167,191,Zanda Tholing,land
+966,966,94,100,167,Tsaparang,land
+967,967,73,134,134,Punakha Dzong,land
+968,968,128,191,206,Katakoro Tundra,land
+969,969,103,222,194,Wild Yak Meadows,land
+970,970,46,134,219,Muren Tso,land
+971,971,103,191,191,Lashghar,land
+972,972,64,115,91,Scarlet Jungle,land
+973,973,58,182,194,Shey Chorten,land
+974,974,70,91,155,Yarlhang La,land
+975,975,30,137,222,Fatuta Chuba,land
+976,976,43,118,134,Neachal,land
+977,977,36,88,170,Alashan,land
+978,978,58,149,152,Skarou,land
+979,979,67,167,191,Manass,land
+980,980,91,143,155,Broken Wall Pass,land
+981,981,115,103,128,Saikhoi,land
+982,982,30,209,213,Rainbow Falls,land
+983,983,161,112,146,Yumbu Shan,land
+984,984,203,88,170,Road Less Traveled,land
+985,985,61,137,191,Kushk,land
+986,986,109,94,64,Helenas Wood,land
+987,987,194,170,124,Sidewinder Wood,land
+988,988,61,182,140,Takt Muren,land
+989,989,149,128,73,Dunwood,land
+990,990,161,213,55,Carwyth,land
+991,991,39,73,112,West Lethyr,land
+992,992,140,155,79,Bildoobaris,land
+993,993,18,149,149,Narderwood,land
+994,994,128,167,43,Bezentil,land
+995,995,70,128,43,Mettledale,land
+996,996,49,173,91,Spearsmouth Dale,land
+997,997,12,121,55,Kront,land
+998,998,82,213,103,New Sarshel,land
+999,999,33,155,149,Nyth,land
+1000,1000,46,155,225,Telflamm,land
+1001,1001,85,194,213,Culmaster,land
+1002,1002,27,131,246,Phent,land
+1003,1003,91,173,194,Phsant,land
+1004,1004,55,134,140,Surcross,land
+1005,1005,9,118,143,Tammar,land
+1006,1006,9,173,140,Two-Stars,land
+1007,1007,21,97,79,Tezir,land
+1008,1008,88,170,143,Murthil,land
+1009,1009,76,155,100,Surmarsh,land
+1010,1010,118,213,170,Ashanvast,land
+1011,1011,146,182,219,Nethjet,land
+1012,1012,82,128,188,Nethentir,land
+1013,1013,91,137,146,Ethvale,land
+1014,1014,164,76,109,Umber Marsh,land
+1015,1015,76,52,194,Mulsantir,land
+1016,1016,121,109,228,Ashenwood,land
+1017,1017,170,64,185,Immilmar,land
+1018,1018,170,100,213,Mulptan,land
+1019,1019,209,115,213,Urlingwood,land
+1020,1020,128,52,213,Thasunta,land
+1021,1021,191,152,206,Rashaflow,land
+1022,1022,152,46,91,Mulsanyaar,land
+1023,1023,76,121,161,Surthay,land
+1024,1024,191,70,52,Velprintalar,land
+1025,1025,246,27,88,Dlusk,land
+1026,1026,243,61,49,Orithar,land
+1027,1027,170,24,30,Urve,land
+1028,1028,240,124,79,Emmech,land
+1029,1029,194,55,79,Milvarune,land
+1030,1030,237,161,36,Laothkund,land
+1031,1031,158,15,24,Tyraturos,land
+1032,1032,225,30,30,Bezantur,land
+1033,1033,231,88,24,The Alaor,land
+1034,1034,228,21,9,Eltabbar,land
+1035,1035,152,55,30,Umratharos,land
+1036,1036,206,118,91,Thasselen,land
+1037,1037,170,67,43,Murbant,land
+1038,1038,252,137,0,Anhaurz,land
+1039,1039,231,27,15,Gauros,land
+1040,1040,209,146,67,Escalant,land
+1041,1041,112,39,76,Pyarados,land
+1042,1042,167,82,109,Moszabbar,land
+1043,1043,213,18,52,Umbthal,land
+1044,1044,234,70,91,Szul,land
+1045,1045,167,52,55,Dmir,land
+1046,1046,200,146,109,Sefriszar,land
+1047,1047,206,155,88,Thazarim,land
+1048,1048,182,52,88,Amruthar,land
+1049,1049,149,43,128,Zolum,land
+1050,1050,158,82,137,Nuthretos,land
+1051,1051,237,61,85,Rathmar,land
+1052,1052,249,194,18,Taskaunt,land
+1053,1053,237,219,43,Tilbrand,land
+1054,1054,255,115,12,Delthuntle,land
+1055,1055,173,76,12,Ingdals Arm,land
+1056,1056,131,24,12,Spandeliyon,land
+1057,1057,182,121,9,Yuirwood,land
+1058,1058,167,100,231,Tinnir,land
+1059,1059,231,39,134,The Surague,land
+1060,1060,188,128,164,Fallen Giant Rift,land
+1061,1061,100,58,55,Netheril River,land
+1062,1062,176,143,36,The Swordpoint,land
+1063,1063,185,167,158,Tauros,land
+1064,1064,179,164,164,Helm Rift,land
+1065,1065,194,100,67,Vuerthyl,land
+1066,1066,173,76,33,The Throat,land
+1067,1067,137,61,73,Atars Looking Glass,land
+1068,1068,161,128,106,Bhaerlith,land
+1069,1069,131,85,112,Terbakar,land
+1070,1070,185,137,155,Tomai,land
+1071,1071,131,61,100,Jab,land
+1072,1072,158,103,106,Medinat Muskawoon,land
+1073,1073,228,173,185,Inupras,land
+1074,1074,188,149,149,Broaspu,land
+1075,1075,228,137,200,al-Qahera,land
+1076,1076,237,167,167,Pazar,land
+1077,1077,121,97,185,Solon,land
+1078,1078,203,161,206,Khuld,land
+1079,1079,176,67,158,Imroley,land
+1080,1080,140,91,182,Maskana,land
+1081,1081,137,134,155,Uysos,land
+1082,1082,109,58,61,Uitoril,land
+1083,1083,88,61,124,Chiem,land
+1084,1084,167,97,64,Peskar,land
+1085,1085,164,39,70,The Stormtails,land
+1086,1086,222,115,39,Shipgrave Isles,land
+1087,1087,255,179,231,Plain of the Talon,land
+1088,1088,146,115,249,Rauder,land
+1089,1089,176,149,128,End-of-Light,land
+1090,1090,85,88,73,Fields of Rime,land
+1091,1091,216,188,155,Hlaungadath,land
+1092,1092,152,176,164,Spellgard,land
+1093,1093,100,88,128,Oreme,land
+1094,1094,152,128,94,Quaver,land
+1095,1095,134,146,161,Glakis,land
+1096,1096,85,49,58,Hills of Scent,land
+1097,1097,188,128,21,Olomaa,land
+1098,1098,64,43,12,Shattered Tower,land
+1099,1099,243,137,103,Shoal of Thirst,land
+1100,1100,219,79,103,Anauril,land
+1101,1101,231,234,146,Great Sands,land
+1102,1102,246,219,179,The Saiyaddar,land
+1103,1103,216,197,118,Lundeth,land
+1104,1104,143,149,118,Amazandar,land
+1105,1105,200,176,82,Quarter of Emptiness,land
+1106,1106,231,73,43,The Alley,land
+1107,1107,152,200,85,Leuthilspar,land
+1108,1108,67,109,24,Siiluth,land
+1109,1109,27,115,76,Nimlith,land
+1110,1110,43,161,27,Sumbrar,land
+1111,1111,91,164,134,Drelagara,land
+1112,1112,97,234,206,Belintholme,land
+1113,1113,82,131,94,Ruith,land
+1114,1114,158,200,121,The Farmeadows,land
+1115,1115,39,112,73,Taltempla,land
+1116,1116,64,170,161,Silver Hills,land
+1117,1117,36,216,134,Eagle Hills,land
+1118,1118,24,103,137,Elion,land
+1119,1119,97,179,203,Corellons Grove,land
+1120,1120,3,64,121,Araksa,land
+1121,1121,228,176,137,Thonns Fist,land
+1122,1122,140,70,70,The Red Giant,land
+1123,1123,219,140,46,Wards Islands,land
+1124,1124,185,167,46,Far Nemoree,land
+1125,1125,228,61,46,The White Rocks,land
+1126,1126,219,46,115,The Pearls,land
+1127,1127,82,143,176,The Teeth,land
+1128,1128,112,46,67,Phoenix,land
+1129,1129,209,225,203,Nagaflow,land
+1130,1130,121,131,134,Misty Plains,land
+1131,1131,103,216,203,Minta Vale,land
+1132,1132,61,106,146,Vale of the Reaver,land
+1133,1133,179,206,231,Treshla,land
+1134,1134,200,73,103,Isle of Prespur,land
+1135,1135,149,103,176,Whamite Isles,land
+1136,1136,155,76,134,Dragonisle,land
+1137,1137,234,143,194,Alphar and Kelthan,land
+1138,1138,173,39,149,The Jaws,land
+1139,1139,121,31,131,Middle Rendai,land
+1140,1140,167,36,115,Sunset Rocks,land
+1141,1141,249,185,112,Vanorva,land
+1142,1142,161,143,115,Kesh,land
+1143,1143,55,146,30,Shaelyn,land
+1144,1144,197,170,67,Midways,land
+1145,1145,46,216,143,Thommar,land
+1146,1146,173,73,70,The Wayrock,land
+1147,1147,231,237,185,Northdark Woods,land
+1148,1148,237,164,82,Trielta Hills,land
+1149,1149,18,225,94,Orlumbor,land
+1150,1150,73,100,55,Naurogloth,land
+1151,1151,30,155,158,Dawn Pass,land
+1152,1152,121,200,97,Centaur Run,land
+1153,1153,15,85,52,Wildergroves,land
+1154,1154,149,167,67,Ssrenshen,land
+1155,1155,73,216,155,Greentree,land
+1156,1156,94,188,225,Middlewoods,land
+1157,1157,228,216,200,Naupau,land
+1158,1158,167,170,167,Sundice,land
+1159,1159,237,243,240,Dharvil,land
+1160,1160,128,149,158,Armridge,land
+1161,1161,94,103,134,Sossvaal,land
+1162,1162,79,91,3,Lothen,land
+1163,1163,46,85,97,Bowshot,land
+1164,1164,137,107,85,Kalmins Grove,land
+1165,1165,255,118,79,Valley of Klaidson,land
+1166,1166,43,91,82,Segaran Swamp,land
+1167,1167,118,161,161,Hernes Wood,land
+1168,1168,82,173,155,Jhalolokati,land
+1169,1169,61,79,76,Odesh,land
+1170,1170,137,140,43,Tshalkha,land
+1171,1171,170,155,115,Dancing Dolphins,land
+1172,1172,203,88,106,Keluthar,land
+1173,1173,228,146,67,Fields of Ganath,land
+1174,1174,246,194,118,Semkhrun,land
+1175,1175,106,197,179,Prints Floe,land
+1176,1176,140,106,170,Dzoulins Cradle,land
+1177,1177,191,161,85,Gallads Garden,land
+1178,1178,243,97,58,Lonefang,land
+1179,1179,39,103,39,Axard,land
+1180,1180,137,179,21,Nerth,land
+1181,1181,146,197,213,Earthwood,land
+1182,1182,76,152,143,Uldoon,land
+1183,1183,219,112,121,Peldvale,land
+1184,1184,209,128,140,Beowood,land
+1185,1185,109,79,85,Bjeoerns Pass,land
+1186,1186,176,85,152,Konig Hills,land
+1187,1187,146,128,33,Treggi Jungle,land
+1188,1188,219,176,88,Phantom Pass,land
+1189,1189,200,109,134,Nix,land
+1190,1190,121,143,91,Anktarina,land
+1191,1191,234,222,46,Lower Terrace,land
+1192,1192,182,216,225,The Neth Stand,land
+1193,1193,30,185,225,Arthyn,land
+1194,1194,112,73,100,Talduth Vale,land
+1195,1195,203,131,64,Shantal,land
+1196,1196,39,91,106,Jundarwood,land
+1197,1197,222,124,118,Beasts Coast,land
+1198,1198,237,188,61,Spider Swamp,land
+1199,1199,76,112,188,Mimph,land
+1200,1200,176,88,85,Grunwald,land
+1201,1201,39,109,58,Maviddi Forest,land
+1202,1202,219,140,155,Grey Wood,land
+1203,1203,161,21,15,Nimsur,land
+1204,1204,64,197,152,Haelwood,land
+1205,1205,27,109,109,Othars Hand,land
+1206,1206,88,216,234,Aluivyn,land
+1207,1207,106,146,79,Ilighon,land
+1208,1208,176,197,46,Wavecrest,land
+1209,1209,240,240,216,Ilimar,land
+1210,1210,173,146,206,Nath Pass,land
+1211,1211,228,188,73,Budais Cleft,land
+1212,1212,52,115,170,Zabbasz,land
+1213,1213,176,197,219,Halruaan Heights,land
+1214,1214,39,206,79,Hidden Hopes,land
+1215,1215,179,140,173,Serpents Tail,land
+1216,1216,109,152,143,Dark Arrow,land
+1217,1217,203,91,91,Umbarra,land
+1218,1218,246,140,128,Nemoree Isles,land
+1219,1219,146,179,213,Vale of Clouds,land
+1220,1220,194,167,79,Stormy High,land
+1221,1221,140,167,191,Mabasha,land
+1222,1222,206,191,173,Conaluil Range,land
+1223,1223,206,118,231,Lower Wing,land
+1224,1224,137,61,76,Darkhold,land
+1225,1225,234,216,170,Katakoro Pass,land
+1226,1226,231,112,182,Mhaelos,land
+1227,1227,234,167,39,Traders Road,land
+1228,1228,231,219,222,Road of Dust,land
+1229,1229,237,134,109,River of Metals,land
+1230,1230,128,219,200,Maerchlin,land
+1231,1231,149,170,194,Azhul Pass,land
+1232,1232,219,143,112,Firealm,land
+1233,1233,158,64,124,Orlil,land
+1234,1234,237,128,46,Riatavin,land
+1235,1235,191,194,173,North Reaching Wood,land
+1236,1236,52,61,191,Iljak,land
+1237,1237,21,85,112,Samra,land
+1238,1238,197,118,173,Battle of Bones,land
+1239,1239,219,73,12,Naga Plain,land
+1240,1240,206,228,121,Mortik Swamp,land
+1241,1241,134,161,9,Sunglade,land
+1242,1242,49,109,173,Lilinuk,land
+1243,1243,88,173,213,Vekkak,land
+1244,1244,24,106,121,Saichik,land
+1245,1245,158,182,200,Hykopgrok,land
+1246,1246,76,115,213,Eghagu,land
+1247,1247,103,143,213,Imajuvisik,land
+1248,1248,149,146,170,Patatak,land
+1249,1249,128,100,137,Snokkok,land
+1250,1250,197,155,173,Gomwenk,land
+1251,1251,213,209,131,Utui,land
+1252,1252,161,164,91,Igenghack,land
+1253,1253,164,140,88,Huplik,land
+1254,1254,222,194,70,Shannath,land
+1255,1255,106,188,137,Kresttet,land
+1256,1256,79,203,131,Wertikak,land
+1257,1257,164,203,158,Siksuv,land
+1258,1258,39,176,134,Jajam,land
+1259,1259,121,143,143,Aurora,land
+1260,1260,85,216,213,Anarath,land
+1261,1261,27,149,170,Bhaulaea,land
+1262,1262,115,164,243,Untrivven,land
+1263,1263,82,109,152,Smokeholes,land
+1264,1264,124,197,246,Riven Frost,land
+1265,1265,61,158,197,Lugotak,land
+1266,1266,216,219,206,Ibelgrak,land
+1267,1267,39,106,94,Ahtitlak,land
+1268,1268,118,106,94,Morrowikik,land
+1269,1269,49,106,73,Shakkak,land
+1270,1270,67,143,106,Olyniak,land
+1271,1271,234,124,52,Haxkhun,land
+1272,1272,197,176,106,Quaraqand,land
+1273,1273,243,185,94,Genies Garden,land
+1274,1274,106,206,103,Shih Tuh,land
+1275,1275,33,197,203,Tempat Larang,land
+1276,1276,49,167,200,Kelereng Valley,land
+1277,1277,64,143,152,Lajang,land
+1278,1278,70,146,158,Kumandang,land
+1279,1279,115,124,118,Banai,land
+1280,1280,240,170,55,Joya,land
+1281,1281,15,112,185,Kabut,land
+1282,1282,82,179,197,Lower Kuning,land
+1283,1283,146,188,167,Kabus Highlands,land
+1284,1284,115,140,170,Ketcheel,land
+1285,1285,76,203,194,Muara,land
+1286,1286,100,137,179,Medang Perang,land
+1287,1287,24,134,161,Hanya Maut,land
+1288,1288,33,79,131,Chowok,land
+1289,1289,76,188,161,Kaget Valley,land
+1290,1290,179,97,39,UChan,land
+1291,1291,222,121,73,Bidnop So,land
+1292,1292,197,58,33,Larut,land
+1293,1293,206,124,61,Phutan,land
+1294,1294,176,79,61,Namtan,land
+1295,1295,170,146,64,Tocpe,land
+1296,1296,131,73,49,Draya,land
+1297,1297,121,24,24,Wide Cascades,land
+1298,1298,164,43,24,Tsagang,land
+1299,1299,164,115,118,Mache Gap,land
+1300,1300,188,67,70,Langdarma,land
+1301,1301,152,52,39,Kemati Valley,land
+1302,1302,79,70,213,Yenching,land
+1303,1303,121,109,137,Ochre Hills,land
+1304,1304,88,55,124,Sorghum Fields,land
+1305,1305,112,88,158,Shanshu,land
+1306,1306,134,46,118,West Rendai,land
+1307,1307,94,58,152,Zoahua,land
+1308,1308,118,213,134,West Road,land
+1309,1309,88,179,167,Sky Fields,land
+1310,1310,15,115,225,Shihfang,land
+1311,1311,21,155,161,Nanxun,land
+1312,1312,128,197,225,Tapenga,land
+1313,1313,39,225,146,Generals Stand,land
+1314,1314,85,143,89,Hulan,land
+1315,1315,73,200,33,Qudao,land
+1316,1316,25,155,27,Taikho Gaze,land
+1317,1317,103,152,52,Kwachow,land
+1318,1318,55,121,21,Nagai Terrace,land
+1319,1319,79,209,67,Yohun Fields,land
+1320,1320,36,30,106,Fallow Steppe,land
+1321,1321,21,119,25,Hai Jungle,land
+1322,1322,27,140,213,Kuning,land
+1323,1323,39,100,88,Perpustakaan,land
+1324,1324,30,158,121,Sekola Atas,land
+1325,1325,128,97,21,Uhon Tsa,land
+1326,1326,206,103,21,Ohmai,land
+1327,1327,213,64,15,Tsetu,land
+1328,1328,173,97,146,Ekwong,land
+1329,1329,124,24,12,Shentsa,land
+1330,1330,43,73,21,Shan Sao,land
+1331,1331,131,143,82,Li-Raz,land
+1332,1332,164,216,112,Alamaqu,land
+1333,1333,115,124,164,Panjuis,land
+1334,1334,109,176,161,Jugicha,land
+1335,1335,76,134,131,Ondene,land
+1336,1336,85,97,33,Xair,land
+1337,1337,176,64,149,Jade Gate,land
+1338,1338,43,152,79,Liham,land
+1339,1339,52,115,24,The Fortress,land
+1340,1340,137,164,121,Ironfang Deep,land
+1341,1341,158,173,36,Old Drivendelve,land
+1342,1342,94,146,76,Bronzehelms,land
+1343,1343,59,155,95,Chao Yang,land
+1344,1344,39,134,64,Kuang Chu Road,land
+1345,1345,76,209,152,Loulan,land
+1346,1346,149,39,191,Suzhai,land
+1347,1347,206,146,97,Krak al-Niraan,land
+1348,1348,152,76,55,Moradask,land
+1349,1349,216,121,55,Sokkar,land
+1350,1350,194,146,149,Burning Shore,land
+1351,1351,97,176,67,Lahib Island,land
+1352,1352,225,197,161,Taham,land
+1353,1353,88,146,30,Pasar,land
+1354,1354,97,124,61,Lower Kayu,land
+1355,1355,161,173,33,Keluh,land
+1356,1356,155,146,12,Kobar,land
+1357,1357,43,85,88,Penuh Susak,land
+1358,1358,88,149,155,Mahligwi,land
+1359,1359,39,161,121,Binatang,land
+1360,1360,52,194,149,Soto,land
+1361,1361,91,185,161,Rimba,land
+1362,1362,191,170,121,Kera,land
+1363,1363,39,137,170,ToMing,land
+1364,1364,161,112,170,Kai Shan,land
+1365,1365,124,124,155,Yao Sai,land
+1366,1366,97,85,124,KoChung,land
+1367,1367,94,106,206,Mishan,land
+1368,1368,140,137,206,Wang,land
+1369,1369,200,149,200,Weifei,land
+1370,1370,155,170,228,Taishan,land
+1371,1371,67,152,179,Saigai,land
+1372,1372,149,131,112,Akshu,land
+1373,1373,106,112,106,Seikung,land
+1374,1374,100,91,100,Feifeng,land
+1375,1375,152,161,164,Herders Crook,land
+1376,1376,188,185,182,Atai,land
+1377,1377,203,203,203,Halu,land
+1378,1378,53,121,79,Kangste,land
+1379,1379,76,137,225,Laiwei,land
+1380,1380,225,197,124,Thunder Hills,land
+1381,1381,106,179,121,Fukiow,land
+1382,1382,33,219,164,Taotie,land
+1383,1383,33,88,185,Shou Kuan,land
+1384,1384,109,137,146,Bunsha,land
+1385,1385,70,73,76,Jaria,land
+1386,1386,61,152,21,Ungaran,land
+1387,1387,43,149,73,Tehing,land
+1388,1388,179,185,206,Chulq,land
+1389,1389,67,124,128,Silapathar,land
+1390,1390,115,164,170,Narari,land
+1391,1391,109,76,149,Thunder Gap,land
+1392,1392,46,94,246,Fertile Moon,land
+1393,1393,24,152,216,Chaikou Hills,land
+1394,1394,49,197,225,Wellspring Hills,land
+1395,1395,164,107,170,Fields of Salt,land
+1396,1396,30,82,43,Qudra,land
+1397,1397,30,115,94,Taliat,land
+1398,1398,30,128,79,Adhal,land
+1399,1399,55,188,106,Mina,land
+1400,1400,85,118,43,al-Faddi,land
+1401,1401,30,182,131,Northwind,land
+1402,1402,131,222,191,Salju,land
+1403,1403,46,118,100,The Old Trees,land
+1404,1404,76,112,152,The Tradeway,land
+1405,1405,49,64,161,Crab Reach,land
+1406,1406,15,100,206,Rassalantar,land
+1407,1407,79,91,112,High Gap,land
+1408,1408,213,176,146,Loagrann,land
+1409,1409,213,164,219,Silverwood,land
+1410,1410,67,124,149,Lizard Marsh,land
+1411,1411,55,152,191,Chionthar,land
+1412,1412,200,18,39,Shoonach,land
+1413,1413,43,109,134,Settlestone,land
+1414,1414,91,112,161,Far Ulhai,land
+1415,1415,143,103,188,White Hills,land
+1416,1416,206,219,209,Shamandra,land
+1417,1417,200,106,79,Motra,land
+1418,1418,176,167,131,Po Yul Dzayul,land
+1419,1419,146,134,115,Skyvale,land
+1420,1420,115,197,109,Pterafolk Eyries,land
+1421,1421,79,106,58,Batiriland,land
+1422,1422,200,203,203,Ingmur,land
+1423,1423,12,82,179,Wood of Flam,land
+1424,1424,52,97,67,Denderdale,land
+1425,1425,76,36,203,Surag,land
+1426,1426,103,46,39,Thaymount,land
+1427,1427,106,73,109,Watchwall,land
+1428,1428,243,112,94,The Wyrmbones,land
+1429,1429,164,85,75,Easting,land
+1430,1430,219,137,61,Ilipur,land
+1431,1431,128,143,155,Vercy Wood,land
+1432,1432,164,182,179,Ospkur,land
+1433,1433,97,143,152,Ruriks End,land
+1434,1434,209,209,137,Toraldur,land
+1435,1435,134,209,228,Winters Edge,land
+1436,1436,97,146,52,Vordrorn Forest,land
+1437,1437,36,76,33,Mhiilamnir,land
+1438,1438,158,36,18,Vrandaks Grave,land
+1439,1439,167,149,103,Starmetal Hills,land
+1440,1440,149,143,149,Sampranasz,land
+1441,1441,255,155,206,Ulzel,land
+1442,1442,143,185,112,Reth,land
+1443,1443,203,121,85,Ssintar,land
+1444,1444,137,182,85,Winding River,land
+1445,1445,18,158,246,Zundbridge,land
+1446,1446,33,247,150,Upper Nix,land
+1447,1447,103,165,44,Halangorn,land
+1448,1448,123,29,185,Open Marches,land
+1449,1449,170,49,106,Dekanter,land
+1450,1450,237,229,227,Zuwaruk,land
+1451,1451,218,13,41,Rago,land
+1452,1452,239,218,205,al-Wahl,land
+1453,1453,103,11,203,Hiyal,land
+1454,1454,242,212,51,Dubegat,land
+1455,1455,63,94,4,Shakham,land
+1456,1456,197,8,195,Adrila,land
+1457,1457,33,164,206,Hand of the Sky,land
+1458,1458,14,206,124,Golden Falcon,land
+1459,1459,115,20,84,Jibal al-Taif,land
+1460,1460,116,34,41,Hayyir,land
+1461,1461,214,190,114,Wasat,land
+1462,1462,222,226,105,Zill,land
+1463,1463,226,172,191,al-Malih,land
+1464,1464,124,162,12,Halwa,land
+1465,1465,126,5,243,Zarif,land
+1466,1466,161,12,249,al-Sarif,land
+1467,1467,98,198,86,Huzuz,land
+1468,1468,113,20,190,Saraq,land
+1469,1469,186,213,124,Zayir,land
+1470,1470,218,129,32,Fujegat,land
+1471,1471,187,218,214,Hilm,land
+1472,1472,223,3,58,Talab,land
+1473,1473,253,36,192,Dakan,land
+1474,1474,226,170,54,Fahhas,land
+1475,1475,190,213,3,Sumuk Island,land
+1476,1476,141,196,7,Hitan Island,land
+1477,1477,233,19,207,Itiraf,land
+1478,1478,231,77,148,al-Munamma,land
+1479,1479,147,211,27,Burj,land
+1480,1480,112,219,122,Mahabba,land
+1481,1481,226,50,56,Hudid,land
+1482,1482,40,123,125,Fanus,land
+1483,1483,55,108,77,al-Faraq Islands,land
+1484,1484,53,127,19,al-Harmah,land
+1485,1485,21,149,132,Qosodera,land
+1486,1486,247,139,204,Ysawis,land
+1487,1487,128,203,5,Bisatare,land
+1488,1488,144,128,35,Dihliz,land
+1489,1489,197,60,254,Sidi Island,land
+1490,1490,205,147,185,Elne,land
+1491,1491,187,217,222,Qudalla,land
+1492,1492,238,202,37,Yinazzil,land
+1493,1493,38,102,111,Krak al-Sajjaan,land
+1494,1494,179,255,44,Kadarasto,land
+1495,1495,146,36,118,Dawihi Island,land
+1496,1496,167,181,174,Rogosto,land
+1497,1497,104,200,226,Mafrad,land
+1498,1498,71,140,156,Krak al-Uruj,land
+1499,1499,166,132,34,Ankatatra,land
+1500,1500,204,157,108,Mahazaka,land
+1501,1501,128,151,101,Kitbezi,land
+1502,1502,49,227,117,Kapuli,land
+1503,1503,111,160,184,Tayaraan,land
+1504,1504,188,200,234,al-Hanieh,land
+1505,1505,190,118,108,Kajiaruti,land
+1506,1506,227,157,178,Hudariyah,land
+1507,1507,241,34,242,Giniracha,land
+1508,1508,116,68,61,Sigram,land
+1509,1509,251,24,68,Sariban,land
+1510,1510,220,221,82,Samphos,land
+1511,1511,22,90,10,Jeranjah,land
+1512,1512,226,251,31,Limjung,land
+1513,1513,188,78,241,Tadabbur,land
+1514,1514,20,144,39,Nawal,land
+1515,1515,163,145,77,Gimise,land
+1516,1516,207,4,213,Qanadad,land
+1517,1517,89,72,24,Nathenje,land
+1518,1518,64,99,38,Tayabuk,land
+1519,1519,92,83,132,Narodara,land
+1520,1520,73,134,161,Bukitega,land
+1521,1521,116,169,9,al-Kurtum,land
+1522,1522,156,241,130,Bab-al-Gaba,land
+1523,1523,195,197,118,The Calves,land
+1524,1524,22,174,39,Nahr al-Fil,land
+1525,1525,222,99,245,al-Asirr,land
+1526,1526,223,60,114,Horn of Afyal,land
+1527,1527,190,209,50,Kasal,land
+1528,1528,41,175,5,Medina al-Afyal,land
+1529,1529,76,140,249,Mergu,land
+1530,1530,240,200,70,Jinutt,land
+1531,1531,179,85,139,Uruk,land
+1532,1532,167,180,160,Misbahd,land
+1533,1533,223,146,131,Rubbans Tears,land
+1534,1534,159,189,169,Jezarh Mar,land
+1535,1535,12,180,102,Serzeman Bamar,land
+1536,1536,7,220,203,Lizards Tongue Pass,land
+1537,1537,216,30,25,Nouarada,land
+1538,1538,187,212,202,Dahab Island,land
+1539,1539,151,130,243,Telah,land
+1540,1540,183,126,46,Mevarand,land
+1541,1541,138,247,181,Hulm,land
+1542,1542,202,255,220,Teladem,land
+1543,1543,143,235,115,Naqayna,land
+1544,1544,174,154,186,Sabrasha,land
+1545,1545,212,137,110,Sadazeh,land
+1546,1546,100,59,72,Medina Akota,land
+1547,1547,252,198,93,Fida,land
+1548,1548,135,38,222,Marching Camels Road,land
+1549,1549,83,219,72,Wakrawa,land
+1550,1550,118,130,243,Yarrat,land
+1551,1551,165,138,111,Raziz,land
+1552,1552,105,93,197,Aman,land
+1553,1553,110,96,233,Malualti,land
+1554,1554,69,112,178,Karzuwa,land
+1555,1555,251,122,208,Aib,land
+1556,1556,222,217,90,al-Nuziyyah,land
+1557,1557,227,113,150,Magrib,land
+1558,1558,231,194,217,Gamruhan,land
+1559,1559,136,232,36,Ar Rasumah,land
+1560,1560,180,187,30,Hamid,land
+1561,1561,146,180,124,Jamal,land
+1562,1562,32,185,38,Takeyef,land
+1563,1563,175,55,111,Tajar,land
+1564,1564,221,15,14,Vast Swamp,land
+1565,1565,100,170,31,Valley of Embers,land
+1566,1566,129,214,18,Omu,land
+1567,1567,176,167,15,Fairheight,land
+1568,1568,159,229,120,Pharren,land
+1569,1569,254,220,215,Earthfast,land
+1570,1570,132,91,31,Tun,land
+1571,1571,249,244,134,Hamlar Hills,land
+1572,1572,115,227,253,Zaz-in-Vintor,land
+1573,1573,235,92,130,Nleeth and Amah,land
+1574,1574,152,95,127,Nemessor,land
+1575,1575,217,153,210,Haatar Baen,land
+1576,1576,65,192,65,Myth Telvondial,land
+1577,1577,125,10,10,Poltensmark,land
+1578,1578,121,45,59,Galena Snake,land
+1579,1579,197,217,89,Icelace,land
+1580,1580,214,159,122,Middenlands,land
+1581,1581,64,91,109,Karondar,land
+1582,1582,224,195,217,Brynwood,land
+1583,1583,135,133,145,Boareskyr Bridge,land
+1584,1584,190,20,190,Glister,land
+1585,1585,167,124,101,Hlammach,land
+1586,1586,144,5,42,Orsraun Mountains,land
+1587,1587,40,105,66,al-Abib,land
+1588,1588,244,66,184,Turab,land
+1589,1589,87,162,199,Zaym,land
+1590,1590,198,225,11,Hakim,land
+1591,1591,196,90,157,Hahami,land
+1592,1592,192,232,227,Sikak,land
+1593,1593,186,11,122,Maribar Island,land
+1594,1594,235,23,38,Jumlat,land
+1595,1595,15,148,20,Safaq,land
+1596,1596,196,48,24,Pearl Banks,land
+1597,1597,73,14,241,Krak al-Shidda,land
+1598,1598,243,187,65,Gana,land
+1599,1599,197,202,251,Taam,land
+1600,1600,29,213,180,Msalin,land
+1601,1601,207,79,14,Murr,land
+1602,1602,121,142,104,Araneh,land
+1603,1603,109,35,229,al-Mahabanah,land
+1604,1604,230,36,24,Intibah,land
+1605,1605,87,230,150,Ajayib,land
+1606,1606,158,233,133,Regdasaid,land
+1607,1607,224,193,33,al-Tarik Islands,land
+1608,1608,182,4,71,Tarikat Island,land
+1609,1609,191,53,2,Ibreb,land
+1610,1610,91,182,96,Dabab,land
+1611,1611,50,184,22,Anklis and Qusur,land
+1612,1612,131,143,237,Manhus and Saliam,land
+1613,1613,178,22,180,Naqq and Qutil,land
+1614,1614,176,185,134,Thueban,land
+1615,1615,124,163,90,Eayan Aljunun,land
+1616,1616,98,255,108,Ithan,land
+1617,1617,105,134,46,Sathadech,land
+1618,1618,40,165,17,Jezarh Jadew,land
+1619,1619,145,5,32,Jezarh Shemshar,land
+1620,1620,6,134,44,Bender Berdh,land
+1621,1621,248,36,83,Bender Adewah,land
+1622,1622,207,40,239,Almawt,land
+1623,1623,128,124,189,Sharira,land
+1624,1624,208,193,67,Wahasha,land
+1625,1625,237,148,91,Harglast,land
+1626,1626,252,85,213,Sambral,land
+1627,1627,141,89,125,Ishamar Isles,land
+1628,1628,227,163,231,Imdolphyn,land
+1629,1629,250,143,149,Orgymist,land
+1630,1630,192,208,88,Ramekho,land
+1631,1631,94,120,114,Maskath,land
+1632,1632,168,110,82,Kothask,land
+1633,1633,210,104,225,Long Marsh,land
+1634,1634,187,179,252,Sunrise Hills,land
+1635,1635,141,68,248,Wrecking Coast,land
+1636,1636,145,151,140,Mraar Forest,land
+1637,1637,207,232,10,Fanedown,land
+1638,1638,252,26,164,Tarmalune,land
+1639,1639,200,137,225,Aldreth,land
+1640,1640,138,8,100,Ulark,land
+1641,1641,49,212,24,Rorst,land
+1642,1642,156,80,165,Maelevarar,land
+1643,1643,70,105,42,Sawsh,land
+1644,1644,100,74,193,Belprins Hold,land
+1645,1645,70,60,224,Raurokh,land
+1646,1646,232,170,218,Mistshaws,land
+1647,1647,236,168,132,Stormhelm,land
+1648,1648,170,213,242,Rondeval,land
+1649,1649,21,202,99,Nornglast,land
+1650,1650,155,111,189,Stormslough,land
+1651,1651,174,88,245,Bregenduth,land
+1652,1652,159,82,105,Spiteful Isles,land
+1653,1653,252,182,46,Bellakh,land
+1654,1654,205,8,49,Argul,land
+1655,1655,55,77,165,Hargleth Forest,land
+1656,1656,218,209,85,Arangyn,land
+1657,1657,238,118,33,Glarn,land
+1658,1658,245,37,137,Mratanga,land
+1659,1659,65,111,18,Narvarr,land
+1660,1660,1,158,104,Tymanchebar,land
+1661,1661,253,113,20,Oceans Sigh,land
+1662,1662,192,149,185,Qaragar,land
+1663,1663,248,181,228,Lamrar,land
+1664,1664,145,10,177,Mirande,land
+1665,1665,238,50,47,Marangor,land
+1666,1666,223,229,143,Kaluth,land
+1667,1667,124,172,60,Daerr,land
+1668,1668,193,236,42,Ulvarr,land
+1669,1669,76,198,11,Maeynda,land
+1670,1670,244,6,234,Mistfells,land
+1671,1671,128,33,159,Argaervale,land
+1672,1672,96,137,174,Pelandar,land
+1673,1673,183,33,155,Fangmoor,land
+1674,1674,59,130,11,Gondistho,land
+1675,1675,104,62,252,Chain of Broken Dreams,land
+1676,1676,30,184,21,Dragonbones,land
+1677,1677,80,230,69,Grimroost,land
+1678,1678,202,185,245,Darrawn,land
+1679,1679,139,52,42,Rimlost,land
+1680,1680,190,178,80,Coldlight Cliffs,land
+1681,1681,109,248,118,Roraari,land
+1682,1682,130,190,37,Lost Land,land
+1683,1683,18,176,72,Amarrev,land
+1684,1684,208,57,27,Rokthorl,land
+1685,1685,24,160,193,Tera-Dur,land
+1686,1686,217,127,45,Taranmire,land
+1687,1687,56,67,228,Malaarar,land
+1688,1688,176,232,242,Talaran Highlands,land
+1689,1689,214,2,88,Graulthanc,land
+1690,1690,160,44,113,Landithust,land
+1691,1691,30,210,115,Starspire,land
+1692,1692,3,145,87,Elven Port,land
+1693,1693,80,220,255,Tangkap,land
+1694,1694,114,135,110,Daong Forest,land
+1695,1695,87,211,8,Kuo Meilan,land
+1696,1696,214,218,183,Orbedal,land
+1697,1697,224,182,243,Cloven Hills,land
+1698,1698,223,109,131,Ochoq,land
+1699,1699,170,181,175,Kuraakim,land
+1700,1700,40,157,33,Fendarls Gate,land
+1701,1701,168,232,90,Green Fields,land
+1702,1702,35,193,37,Nember,land
+1703,1703,243,154,67,Vyridian Forest,land
+1704,1704,88,114,167,Beldenshyn,land
+1705,1705,61,90,220,Kheldrivver,land
+1706,1706,131,197,11,Orogoth,land
+1707,1707,195,195,93,Eldaths Water,land
+1708,1708,241,65,137,Endar Aglandtor,land
+1709,1709,254,13,20,Qadim Hills,land
+1710,1710,113,75,159,The Dells,land
+1711,1711,47,171,235,Karmsteppe,land
+1712,1712,3,227,116,Obarval,land
+1713,1713,221,187,246,Argenmoor,land
+1714,1714,103,155,100,Orbrekh Hills,land
+1715,1715,110,95,144,Nymphwood,land
+1716,1716,120,149,61,Elbencort,land
+1717,1717,64,160,180,Pehrrifaal,land
+1718,1718,133,106,174,Misted Court,land
+1719,1719,195,182,25,Golden Crossing,land
+1720,1720,33,169,243,Eldergroves,land
+1721,1721,112,234,222,Firesteap Woods,land
+1722,1722,42,177,50,Adderspring,land
+1723,1723,78,183,162,Tezarbal,land
+1724,1724,210,197,59,Leaping Grasses,land
+1725,1725,168,211,35,Shaargald,land
+1726,1726,56,99,82,The Wormbones,land
+1727,1727,64,139,96,Channath Rise,land
+1728,1728,248,136,212,Mangale,land
+1729,1729,178,129,47,Shadowed Grave,land
+1730,1730,238,25,90,Ulguum,land
+1731,1731,218,77,107,Yorduul,land
+1732,1732,77,64,57,Zoundar,land
+1733,1733,97,238,192,Taertal Gates,land
+1734,1734,173,182,75,Rethild Shore,land
+1735,1735,182,142,165,South Fornaluit,land
+1736,1736,112,134,205,North Fornaluit,land
+1737,1737,30,142,244,Molken,land
+1738,1738,62,16,110,Aznawood,land
+1739,1739,96,56,231,Amtar Eave,land
+1740,1740,202,182,142,Caraguir,land
+1741,1741,18,180,126,Achelar,land
+1742,1742,6,253,33,Middle Longwood,land
+1743,1743,215,180,179,West Toadsquat,land
+1744,1744,57,137,166,Harngel,land
+1745,1745,119,150,210,Bloodlake,land
+1746,1746,190,143,194,Quorat,land
+1747,1747,100,112,130,Varshum,land
+1748,1748,97,171,4,Warfields,land
+1749,1749,103,123,1,Turmans,land
+1750,1750,180,251,191,Despond,land
+1751,1751,70,136,138,Arjol,land
+1752,1752,124,182,42,Skouth,land
+1753,1753,235,231,77,Nagarana,land
+1754,1754,164,154,44,Quretta,land
+1755,1755,206,59,156,Ku-Akh,land
+1756,1756,245,226,210,Nisalin,land
+1757,1757,248,97,172,Ket-Bel,land
+1758,1758,54,67,115,Akararbasa,land
+1759,1759,158,128,106,Erum,land
+1760,1760,198,26,60,Free Heights,land
+1761,1761,99,98,116,Upper Sempadan,land
+1762,1762,39,244,233,Aval,land
+1763,1763,188,152,229,Upper Pass,land
+1764,1764,128,242,92,Yudol,land
+1765,1765,122,88,113,Hame,land
+1766,1766,181,243,223,Qinyi,land
+1767,1767,42,75,197,Hengfena,land
+1768,1768,8,253,237,Xuheing,land
+1769,1769,63,231,236,Huai,land
+1770,1770,8,72,135,Naon,land
+1771,1771,209,214,253,Meinan,land
+1772,1772,197,10,93,Zhoman,land
+1773,1773,152,3,129,Drubiev,land
+1774,1774,210,99,210,Oyargh,land
+1775,1775,98,175,145,Zada,land
+1776,1776,128,125,166,Vral,land
+1777,1777,114,128,165,Panforza,land
+1778,1778,204,108,145,Kituzeelal,land
+1779,1779,182,73,63,Bukhouk,land
+1780,1780,253,211,90,Abarun,land
+1781,1781,60,104,80,Maldali,land
+1782,1782,247,56,53,Zoy Zando,land
+1783,1783,160,252,5,Bahat,land
+1784,1784,93,64,242,Soranda,land
+1785,1785,97,100,232,Deraala,land
+1786,1786,124,122,208,Satous,land
+1787,1787,185,199,108,Seshano,land
+1788,1788,183,69,50,Aurils End,land
+1789,1789,91,125,254,Tulmene,land
+1790,1790,35,166,228,Delrune,land
+1791,1791,223,157,218,Coast of Moray,sea
+1792,1792,194,213,228,Sea of Swords,sea
+1793,1793,232,251,68,Trackless Sea,sea
+1794,1794,157,200,255,Lantan Coast,sea
+1795,1795,242,212,245,Lantan Coast,sea
+1796,1796,119,187,206,Sea of Swords,sea
+1797,1797,246,226,209,Middle Shining Sea,sea
+1798,1798,143,180,182,Lapal Coast,sea
+1799,1799,127,236,188,Lake of Steam,sea
+1800,1800,185,191,213,Far Northern Sea of Swords,sea
+1801,1801,143,164,161,Northern Sea of Swords,sea
+1802,1802,188,200,225,Sea of Swords,sea
+1803,1803,216,222,213,Western Frozenfar,sea
+1804,1804,164,191,173,Eastern Frozenfar,sea
+1805,1805,197,219,234,Middle Frozenfar,sea
+1806,1806,146,182,200,Southern Frozenfar,sea
+1807,1807,179,219,237,Korinn Archipelago,sea
+1808,1808,128,173,225,Southern Sea of Swords,sea
+1809,1809,200,170,197,Flamsterd Coast,sea
+1810,1810,213,197,194,Sea of Moonshae,sea
+1811,1811,161,237,197,Norland Coast,sea
+1812,1812,225,216,234,Wave Rocks,sea
+1813,1813,231,179,197,Snowdown Coast,sea
+1814,1814,149,170,182,The Teeth,sea
+1815,1815,197,185,161,Tashtan Coast,sea
+1816,1816,237,213,188,Dolphingulph,sea
+1817,1817,167,194,185,Calim Coast,sea
+1818,1818,213,216,213,Eastern Calim Coast,sea
+1819,1819,173,173,179,Lapal Coast,sea
+1820,1820,197,191,228,The Singing Rocks,sea
+1821,1821,164,222,185,Talagaths Gauntlet,sea
+1822,1822,170,231,219,Eastern Lake of Steam,sea
+1823,1823,234,231,170,Western Lake of Steam,sea
+1824,1824,237,200,170,Nelanther Isles,sea
+1825,1825,228,228,206,Firedrake Bay,sea
+1826,1826,209,222,173,Western Shining Sea,sea
+1827,1827,188,191,228,Chultan Coast,sea
+1828,1828,206,209,191,Araksa,sea
+1829,1829,206,252,206,Lantan Coast,sea
+1830,1830,182,203,161,Outer Shining Sea,sea
+1831,1831,194,228,200,Coast of Mists,sea
+1832,1832,219,222,185,Wild Coast,sea
+1833,1833,234,182,158,Thindol Coast,sea
+1834,1834,234,228,200,Bay of Taertal,sea
+1835,1835,167,197,234,Lake Halruaa,sea
+1836,1836,240,216,219,Nimlith Coast,sea
+1837,1837,209,209,191,Farmeadows Coast,sea
+1838,1838,231,185,206,Evermeet Approach,sea
+1839,1839,182,219,170,Taltempla Coast,sea
+1840,1840,240,197,209,Beacon Rocks Passage,sea
+1841,1841,161,231,182,Northern Nimbral Coast,sea
+1842,1842,170,206,231,Southern Nimbral Coast,sea
+1843,1843,219,206,228,Konigheim Coast,sea
+1844,1844,170,228,209,Bay of Pirates,sea
+1845,1845,206,167,222,Coast of Pearls,sea
+1846,1846,188,219,194,Utter Eastern Coast,sea
+1847,1847,188,194,255,Estagund Coast,sea
+1848,1848,222,216,206,Bay of the Dancing Dolphins,sea
+1849,1849,246,200,173,Inner Golden Water,sea
+1850,1850,246,237,182,Outer Golden Water,sea
+1851,1851,158,206,234,Luiren Coast,sea
+1852,1852,170,182,170,Corsair Straits,sea
+1853,1853,237,219,194,Trackless Sea,sea
+1854,1854,237,115,176,River Mirar,river
+1855,1855,158,228,246,Lower River Chionthar,river
+1856,1856,182,155,167,River Chionthar,river
+1857,1857,191,219,197,Eastern Segara Sea,sea
+1858,1858,158,237,100,Esmel River,river
+1859,1859,115,219,200,Lake Esmel,river
+1860,1860,158,219,55,Lower Sulduskoon River,river
+1861,1861,52,179,155,Sulduskoon River,river
+1862,1862,246,167,131,Lower River Ith,river
+1863,1863,134,228,58,River Ith,river
+1864,1864,121,143,146,River Olung,river
+1865,1865,182,206,203,Lake Luo,river
+1866,1866,231,225,158,River Shaar,river
+1867,1867,137,231,188,Lake Lhespen,river
+1868,1868,219,179,103,Upper River Shaar,river
+1869,1869,237,237,231,River Talar,river
+1870,1870,18,170,207,Istishias Respite,sea
+1871,1871,21,64,169,Sashela's Fountain,sea
+1872,1872,213,225,219,River Delimbiyr,river
+1873,1873,249,200,158,Lower River Dessarin,river
+1874,1874,228,164,106,River Dessarin,river
+1875,1875,209,209,231,Golden Coast,sea
+1876,1876,137,216,216,Corsair Sea,sea
+1877,1877,246,228,134,Haunted Coast,sea
+1878,1878,185,222,200,Corsair Passage,sea
+1879,1879,228,219,219,Middle Shining Sea,sea
+1880,1880,176,200,206,Sea of Nemoree,sea
+1881,1881,179,182,161,Lapalgulph,sea
+1882,1882,203,222,176,River Panka,river
+1883,1883,12,188,225,Lapal Sea,river
+1884,1884,222,222,234,Lapal Flow,river
+1885,1885,243,216,252,Reaching River,river
+1886,1886,203,237,237,Upper River Chionthar,river
+1887,1887,219,203,237,Amstel River,river
+1888,1888,237,252,240,River Maeru,river
+1889,1889,209,216,185,River Halar,river
+1890,1890,228,206,231,River Aluar,river
+1891,1891,55,124,91,Lake Maeru,river
+1892,1892,219,243,249,Highridden River,river
+1893,1893,209,191,12,River Agis,river
+1894,1894,112,228,219,Bay of Chult,sea
+1895,1895,200,182,134,Samarach Coast,sea
+1896,1896,203,234,155,Zakharan Coast,sea
+1897,1897,193,203,244,Bay of Bormul,sea
+1898,1898,240,209,219,Nelanther Isles,sea
+1899,1899,213,206,231,Xontuil Bay,sea
+1900,1900,197,217,185,Rauvin River,river
+1901,1901,29,14,100,Trollcrag Mountains,land
+1902,1902,222,149,124,The Riftlake,lake
+1903,1903,185,179,176,Icerim Lake,lake
+1904,1904,128,131,131,Lake Thaylambar,lake
+1905,1905,43,191,246,Lake Woe,lake
+1906,1906,143,155,149,Lake Tirulag,lake
+1907,1907,216,203,216,Lake Musker,lake
+1908,1908,161,164,173,Lake Mereth,lake
+1909,1909,91,109,112,Lake Muirenon,lake
+1910,1910,213,219,228,Huta Lake,lake
+1911,1911,85,73,79,Pelauvir Lake,lake
+1912,1912,143,121,131,Ice Lakes,lake
+1913,1913,109,61,70,Redwaters,lake
+1914,1914,149,124,112,Lac Dinneshere,lake
+1915,1915,39,55,52,Maer Dualdon,lake
+1916,1916,27,76,67,Everlake,lake
+1917,1917,85,118,152,Highstar Lake,lake
+1918,1918,155,188,203,Lake Weng,lake
+1919,1919,112,155,173,Lake of the Snake,lake
+1920,1920,70,76,73,Redwater,lake
+1921,1921,97,112,188,Lake Sember,lake
+1922,1922,52,176,200,Pool of Yeven,lake
+1923,1923,149,206,170,Lake Icemelt,lake
+1924,1924,64,79,118,Impresk Lake,lake
+1925,1925,24,39,164,Shalane Lake,lake
+1926,1926,161,61,61,Bloodlake,lake
+1927,1927,30,209,21,Evenstar Lake,lake
+1928,1928,58,46,219,Beastburn Lake,lake
+1929,1929,33,24,146,Nor Tso,lake
+1930,1930,33,203,191,Nor Yudol,lake
+1931,1931,15,36,149,Nor Zanskra,lake
+1932,1932,209,200,55,Nor Takt,lake
+1933,1933,58,131,55,Nor Subra,lake
+1934,1934,109,206,161,Nor Gubol,lake
+1935,1935,131,58,170,Lonely Lake,lake
+1936,1936,222,176,73,Lake Ashane,lake
+1937,1937,237,191,197,Lugotak Sea,lake
+1938,1938,194,109,97,Umaylu Lake,lake
+1939,1939,124,46,55,Igotak Sea,lake
+1940,1940,234,216,176,Nakalpgotak Sea,lake
+1941,1941,112,85,49,Lugalpgotak Sea,lake
+1942,1942,170,167,152,Nukqup Lake,lake
+1943,1943,97,55,36,Ahtahqugotak Sea,lake
+1944,1944,228,134,124,Angsaas Lake,lake
+1945,1945,185,100,36,Lake of Dreams,lake
+1946,1946,246,79,185,Myrloch,lake
+1947,1947,219,185,222,Lake Sunder,lake
+1948,1948,149,85,146,Norfen Lake,lake
+1949,1949,203,128,185,Vasty Drink,lake
+1950,1950,164,234,200,Cherrapuni Nor,lake
+1951,1951,88,203,82,Manasowar,lake
+1952,1952,243,228,149,Norasil,lake
+1953,1953,213,197,206,Akundi,lake
+1954,1954,155,158,231,Dharbang,lake
+1955,1955,243,170,185,The Lost King,lake
+1956,1956,206,219,88,Hungste,lake
+1957,1957,185,225,64,Lake of Palms,lake
+1958,1958,128,252,188,Lake of Drifting Stars,lake
+1959,1959,152,36,158,Taak Lake,lake
+1960,1960,70,200,36,Akpahlurik Lake,lake
+1961,1961,43,33,64,Risuak Lake,lake
+1962,1962,30,85,30,Nyu Lake,lake
+1963,1963,173,219,213,Llashloch,lake
+1964,1964,216,21,179,Nad Ho Ting,lake
+1965,1965,30,21,179,Nam Tso,lake
+1966,1966,206,106,39,Lake Menuap,lake
+1967,1967,197,161,252,Lake Serampa,lake
+1968,1968,121,49,182,Lake Pasar,lake
+1969,1969,234,225,200,Lake Panjang,lake
+1970,1970,234,228,143,Lake Dingin,lake
+1971,1971,43,58,228,Lake Halu,lake
+1972,1972,67,240,216,Lake Murthil,lake
+1973,1973,121,52,182,Yeshelmaar Lake,lake
+1974,1974,213,106,209,Lake Flamm,lake
+1975,1975,161,231,140,Lake Aryana,lake
+1976,1976,213,64,131,Nebulae Pool,lake
+1977,1977,149,213,167,Clearflow River,river
+1978,1978,246,176,185,River Murghol,river
+1979,1979,191,225,206,Lake of Mists,river
+1980,1980,179,209,225,Brightstar Lake,sea
+1981,1981,191,219,206,Semphar Water,sea
+1982,1982,128,231,246,Upper Rauthenflow River,river
+1983,1983,206,155,188,Lower Rauthenflow River,river
+1984,1984,234,240,112,Lower River Murghol,river
+1985,1985,164,203,234,The Goldenflow,river
+1986,1986,231,228,240,Sempharin,river
+1987,1987,196,240,197,Aldani Basin,lake
+1988,1988,114,216,244,Arch Basin,lake
+1989,1989,41,100,203,Lake of the Ghuls,lake
+1990,1990,2,176,38,Lake of the Winter Spirits,lake
+1991,1991,98,176,195,Lake Oraundil,lake
+1992,1992,62,161,250,Ulvarr Water,lake
+1993,1993,226,207,170,Lake Miir,lake
+1994,1994,51,154,206,Bloodmuck,lake
+1995,1995,128,203,186,Lake Tabat,lake
+1996,1996,61,46,236,Shadow Sea,lake
+1997,1997,228,228,228,Icelace Lake,lake
+1998,1998,202,172,202,Alamber Sea,sea
+1999,1999,188,230,232,Eastern Moonsea,sea
+2000,2000,222,216,228,Easting Reach,sea
+2001,2001,137,164,167,Northern Alamber Sea,sea
+2002,2002,179,206,200,Eastern Wizards Reach,sea
+2003,2003,134,161,146,Bay of Chessenta,sea
+2004,2004,200,213,213,Southern Alamber Sea,sea
+2005,2005,185,194,255,Lake of Dragons,sea
+2006,2006,134,146,200,Dragon Reach,sea
+2007,2007,128,206,225,Inner Vilhon Reach,sea
+2008,2008,70,155,209,Outer Vilhon Reach,sea
+2009,2009,109,155,176,Chessentan Coast,sea
+2010,2010,149,152,203,Sea of Dlurg,sea
+2011,2011,88,191,209,Turmish Coast,sea
+2012,2012,131,161,167,Starmantle Reach,sea
+2013,2013,118,176,170,Thousand Swords,sea
+2014,2014,118,200,182,Sea of Fallen Stars,sea
+2015,2015,203,246,155,River Lis,sea
+2016,2016,176,225,216,Western Moonsea,sea
+2017,2017,246,140,18,Fire River,river
+2018,2018,246,182,234,Traders Bay,river
+2019,2019,170,231,203,River of Metals,river
+2020,2020,112,106,134,Methmere,river
+2021,2021,219,219,167,River of Swords,river
+2022,2022,231,228,231,Azulduth,river
+2023,2023,237,167,176,Adder River,river
+2024,2024,228,219,194,River Akax,river
+2025,2025,64,225,46,The Akanamere,river
+2026,2026,222,213,234,The Nagaflow,river
+2027,2027,39,112,231,Nagawater,river
+2028,2028,237,179,197,River Umber,river
+2029,2029,76,73,85,Lake Umber,river
+2030,2030,176,185,188,Lower Wet River,river
+2031,2031,225,237,225,Wet River,river
+2032,2032,49,82,140,Lake of the Long Arm,river
+2033,2033,213,213,179,Great Imphras River,river
+2034,2034,237,188,237,Icelace River,river
+2035,2035,194,231,176,River of Shadows,river
+2036,2036,237,191,161,River Alambar,river
+2037,2037,225,234,252,River Beaumaris,river
+2038,2038,124,228,231,The Wyvernflow,river
+2039,2039,185,219,237,Wyvernwater,river
+2040,2040,219,225,167,River Arkhen,river
+2041,2041,164,179,206,Selgaunt Bay,sea
+2042,2042,204,252,138,The Neck,sea
+2043,2043,163,225,184,Easting Reach,sea
+2044,2044,85,224,198,Vilhon Reach,sea
+2045,2045,143,206,225,Western Wizard's Reach,sea
+2046,2046,169,199,241,Forgotten Shore,sea
+2047,2047,49,223,157,River Xon,river
+2048,2048,140,194,190,Trackless Sea,sea
+2049,2049,14,111,141,Trackless Sea,sea
+2050,2050,18,246,241,Western Trackless Sea,sea
+2051,2051,49,135,150,Western Trackless Sea,sea
+2052,2052,147,250,250,Western Trackless Sea,sea
+2053,2053,156,245,204,Trackless Sea,sea
+2054,2054,35,113,196,Western Trackless Sea,sea
+2055,2055,2,172,204,Trackless Sea,sea
+2056,2056,165,222,211,Dragon Sea,sea
+2057,2057,70,137,210,Dragon Sea,sea
+2058,2058,83,161,223,Dragon Sea,sea
+2059,2059,162,222,205,Bay of Relmaur,sea
+2060,2060,70,236,187,Sea of Caravans,sea
+2061,2061,24,167,107,al-Tariq Channel,sea
+2062,2062,60,51,215,Suq Bay,sea
+2063,2063,17,60,220,Suq Bay,sea
+2064,2064,26,94,176,Golden Gulf,sea
+2065,2065,19,95,153,Golden Gulf,sea
+2066,2066,4,126,228,Golden Gulf,sea
+2067,2067,58,95,96,Pearl Banks,sea
+2068,2068,97,186,242,Crowded Sea,sea
+2069,2069,105,169,127,Pilgrims Gulf,sea
+2070,2070,18,94,154,Crowded Sea,sea
+2071,2071,12,226,213,Serpent Bay,sea
+2072,2072,32,145,212,The Gateway,sea
+2073,2073,25,179,213,Gulf of Kadar,sea
+2074,2074,236,150,36,Upper River Delimbiyr,river
+2075,2075,7,209,190,Crowded Sea,sea
+2076,2076,224,234,224,Foreigners Sea,sea
+2077,2077,6,233,196,Foreigners Sea,sea
+2078,2078,119,203,229,Foreigners Sea,sea
+2079,2079,47,148,248,Southern Segara Sea,sea
+2080,2080,108,96,186,Crowded Sea,sea
+2081,2081,25,155,152,Crimson Sea,sea
+2082,2082,51,123,232,Devil Shark Coast,sea
+2083,2083,134,170,177,Sea of Marids,sea
+2084,2084,171,245,241,Luirenstrand,sea
+2085,2085,26,54,168,Crowded Sea,sea
+2086,2086,54,115,174,Crowded Sea,sea
+2087,2087,59,136,150,Crowded Sea,sea
+2088,2088,13,149,224,Crowded Sea,sea
+2089,2089,205,197,228,Trackless Sea,sea
+2090,2090,184,176,216,Surbrin River,river
+2091,2091,61,213,225,Nogaro River,river
+2092,2092,42,195,90,Nogaro River,river
+2093,2093,192,212,124,Kadan River,river
+2094,2094,67,216,152,al-Iltifat River,river
+2095,2095,134,228,218,al-Iltifat River,river
+2096,2096,75,150,238,River Tantulph,river
+2097,2097,56,253,20,River Sundarra,river
+2098,2098,108,246,121,Sword River,river
+2099,2099,41,166,191,The Stormflow,river
+2100,2100,41,189,62,Skelkor River,river
+2101,2101,203,218,225,Crescent Lake,river
+2102,2102,135,211,140,River Vypaeryn,river
+2103,2103,102,157,215,River Esmur,river
+2104,2104,251,238,59,Glaur River,river
+2105,2105,240,191,126,Lake Glaur,river
+2106,2106,48,185,238,Corsair's Doom,sea
+2107,2107,81,246,243,Crowded Sea,sea
+2108,2108,124,179,115,Eastern Segara Sea,sea
+2109,2109,170,243,197,Western Segara Sea,sea
+2110,2110,141,209,227,Sempar River,river
+2111,2111,43,203,213,Nixin River,river
+2112,2112,43,159,254,Merrow's Feast,sea
+2113,2113,83,138,167,Pirate's Wreck,sea
+2114,2114,105,159,192,Akotan Sea,sea
+2115,2115,91,192,98,Great Sea,sea
+2116,2116,127,223,45,Belhancol,land
+2117,2117,227,153,150,Mekebat,land
+2118,2118,1,162,174,Babado,land
+2119,2119,146,3,217,Kiasia,land
+2120,2120,13,118,53,Lugabi,land
+2121,2121,186,86,111,Zeibiley,land
+2122,2122,224,189,20,Sembabule,land
+2123,2123,193,56,22,Krak-al-Mazhar,land
+2124,2124,205,53,188,Jabal Sarahin,land
+2125,2125,173,85,135,Ubar,land
+2126,2126,237,101,126,Midnight Waters,land
+2127,2127,170,51,6,Mella,land
+2128,2128,22,170,18,Hrakhamar,land
+2129,2129,66,148,110,The Fang,land
+2130,2130,226,140,35,Lower Glaur,land
+2131,2131,152,159,92,Surraer,land
+2132,2132,130,241,8,Riimlost,land
+2133,2133,83,238,194,Alorev,land
+2134,2134,128,128,27,Umbral Murk,land
+2135,2135,144,220,160,Lyndar,land
+2136,2136,102,137,78,Glaurflow,land
+2137,2137,109,183,201,Sierrak,land
+2138,2138,209,239,76,Aretax Bay,land
+2139,2139,108,41,212,Djerad Harngha,land
+2140,2140,4,206,7,Szant,land
+2141,2141,61,137,130,Gontal,land
+2142,2142,69,216,195,Darkturret,land
+2143,2143,163,86,211,Korar Hills,land
+2144,2144,55,150,79,Velandilmur,land
+2145,2145,126,63,65,Telox,land
+2146,2146,137,250,74,Tarsith,land
+2147,2147,112,79,238,Mreyelundar,land
+2148,2148,252,134,145,Gontal Pass,land
+2149,2149,207,53,123,Aradiman,land
+2150,2150,133,117,230,Lylorn,land
+2151,2151,215,155,224,Marrauk,land
+2152,2152,37,236,68,Xoraar,land
+2153,2153,224,80,94,Araash,land
+2154,2154,238,66,224,Dusklan,land
+2155,2155,194,19,144,Brittlebone Coast,land
+2156,2156,245,44,244,Oraundil,land
+2157,2157,112,211,69,Graxan Forest,land
+2158,2158,67,237,164,Arashand,land
+2159,2159,207,244,182,Arael Hills,land
+2160,2160,79,138,251,Southspar,land
+2161,2161,119,36,236,Sartha Coast,land
+2162,2162,204,129,162,Jezarh Mah Alewd,land
+2163,2163,148,23,126,Mergu Saah,land
+2164,2164,184,106,150,Jezarh Restakhaz,land
+2165,2165,35,201,199,Leneta,land
+2166,2166,4,133,82,al-Zabdiyat,land
+2167,2167,210,114,112,Masud Jazayir,land
+2168,2168,10,211,24,Jazayir al-Alfar,land
+2169,2169,187,55,248,Dirs,land
+2170,2170,228,71,174,Kaslaib,land
+2171,2171,237,22,176,Sinna,land
+2172,2172,109,237,57,Sendalam,land
+2173,2173,24,167,120,Sorib,land
+2174,2174,155,123,160,Lower Red Goat,land
+2175,2175,84,237,158,Ragado,land
+2176,2176,49,84,221,High Desert,land
+2177,2177,89,56,179,High Desert,land
+2178,2178,31,32,192,Genies Anvil,land
+2179,2179,64,72,27,Mamnu Island,land
+2180,2180,49,1,173,al-Sartan,land
+2181,2181,33,35,26,Harab,land
+2182,2182,66,57,28,Bariya,land
+2183,2183,37,41,103,al-Akara Mountains,land
+2184,2184,80,22,38,Howling Mountains,land
+2185,2185,96,37,125,The Elephants Spine,land
+2186,2186,61,47,9,al-Sayaj Mountains,land
+2187,2187,71,20,96,Ghost Mountains,land
+2188,2188,32,55,109,al-Yabki Mountains,land
+2189,2189,56,2,221,al-Suqut Mountains,land
+2190,2190,61,53,54,Range of the Marching Camels,land
+2191,2191,44,49,41,Spine of the Dog,land
+2192,2192,58,56,1,Mountains of Forgotten Dreams,land
+2193,2193,87,1,73,Mountains of the Lizards Tongue,land
+2194,2194,62,31,35,Wall of the Wailing Elephant,land
+2195,2195,134,28,10,Mount Illefarn,land
+2196,2196,151,229,211,Endless Ice Sea,land
+2197,2197,40,66,177,The Starspur,land
+2198,2198,13,18,44,Jumpa Gorge,land
+2199,2199,155,169,137,Lake Longreach,land
+2200,2200,161,200,228,Spine of the World,land
+2201,2201,228,231,237,Sea of Moving Ice,land
+2202,2202,191,191,213,Great Ice Sea,land
+2203,2203,194,200,194,Reghed Glacier,land
+2204,2204,112,182,240,Lammasu's Plain,land
+2205,2205,137,222,216,Endless Ice Sea,land
+2206,2206,254,92,168,Sanrach Mountains,land
+2207,2207,182,203,133,Ghalyi Shan,land
+2208,2208,188,234,252,Land of the Snow Spirits,land
+2209,2209,167,143,243,The Yehimal,land
+2210,2210,149,118,58,Furrowed Mountains,land
+2211,2211,240,228,191,Kavir al-Mawt,land
+2212,2212,194,216,206,Katakoro Shan,land
+2213,2213,15,179,70,Kuan Road,land
+2214,2214,243,209,121,The Giants Belt,land
+2215,2215,216,115,55,Dragonsword Mountains,land
+2216,2216,228,67,121,Dustwall Mountains,land
+2217,2217,213,200,191,Spiderhaunt Peaks,land
+2218,2218,39,43,64,Mountains of Copper,land
+2219,2219,27,134,43,Sentinel Spire,land
+2220,2220,115,36,18,Kora Shan,land
+2221,2221,164,85,55,Hagon Shan,land
+2222,2222,100,39,161,Glittering Spires,land
+2223,2223,234,146,58,Curna Mountains,land
+2224,2224,43,137,55,The North Wall,land
+2225,2225,100,182,124,The West Wall,land
+2226,2226,64,155,58,The East Wall,land
+2227,2227,30,112,222,Gnollwatch Mountains,land
+2228,2228,46,55,46,Rathgaunt Hills,land
+2229,2229,30,49,64,Tannath,land
+2230,2230,91,36,61,Alamir Mountains,land
+2231,2231,213,58,43,Firesteap Mountains,land
+2232,2232,149,24,18,Uthangol Mountains,land
+2233,2233,206,158,222,Adder Peaks,land
+2234,2234,155,58,137,The Maerthwatch,land
+2235,2235,91,222,70,Smoking Mountains,land
+2236,2236,36,231,128,Cloven Mountains,land
+2237,2237,219,231,85,Thunder Peaks,land
+2238,2238,219,216,197,Eastern Stormhorns,land
+2239,2239,170,200,143,Sunset Mountains,land
+2240,2240,249,109,115,The Stormhorns,land
+2241,2241,12,231,167,Dolblunde,land
+2242,2242,24,170,112,Galena Mountains,land
+2243,2243,36,94,200,Sunrise Mountains,land
+2244,2244,61,188,173,The Thaymount,land
+2245,2245,59,5,37,Earthfast Mountains,land
+2246,2246,33,137,103,Earthspur Mountains,land
+2247,2247,237,46,167,Sword Mountains,land
+2248,2248,225,85,176,Nether Mountains,land
+2249,2249,225,79,18,Rauvin Mountains,land
+2250,2250,88,79,243,Ice Mountains,land
+2251,2251,43,36,167,The Ice Spires,land
+2252,2252,140,252,118,Greypeak Mountains,land
+2253,2253,97,206,219,The High Country,land
+2254,2254,52,61,179,A-Ling Shan,land
+2255,2255,85,100,234,Kun-Yen Shan,land
+2256,2256,33,39,188,Toadsquat Mountains,land
+2257,2257,100,112,240,Dragonspine Mountains,land
+2258,2258,36,188,191,Qimam al-Kadan,land
+2259,2259,70,240,140,World Pillar Mountains,land
+2260,2260,24,194,134,Wu Pi Te Shao,land
+2261,2261,167,234,73,Konig Peaks,land
+2262,2262,24,100,209,Mistcliff Mountains,land
+2263,2263,197,49,179,Sanrach Mountains,land
+2264,2264,234,49,58,Hazur Mountains,land
+2265,2265,252,115,9,Guth Mountains,land
+2266,2266,179,46,82,Delphin Mountains,land
+2267,2267,228,106,158,Sky Lizard Mountains,land
+2268,2268,30,103,94,Marching Mountains,land
+2269,2269,58,234,27,Starspire Mountains,land
+2270,2270,27,234,200,Omlarandin,land
+2271,2271,76,33,200,Kobold Mountains,land
+2272,2272,21,121,255,Wild Coast,land
+2273,2273,33,33,70,Snowflake Mountains,land
+2274,2274,109,109,21,Kuldin Peaks,land
+2275,2275,109,55,164,High Peaks,land
+2276,2276,124,33,58,Deepwing Mountains,land
+2277,2277,100,33,21,Orsraun Mountains,land
+2278,2278,39,33,94,Giants Run Mountains,land
+2279,2279,21,67,121,Troll Mountains,land
+2280,2280,91,216,185,Orbrekh Mountains,land
+2281,2281,118,200,134,Cloud Peaks,land
+2282,2282,128,237,219,Small Teeth,land
+2283,2283,203,206,219,Akanapeaks,land
+2284,2284,203,173,219,Aphrunn Mountains,land
+2285,2285,88,35,198,Dragonjaw Mountains,land
+2286,2286,182,73,200,Thesk Mountains,land
+2287,2287,243,73,79,The Riders to the Sky,land
+2288,2288,243,100,46,Mount Thulbane,land
+2289,2289,191,39,82,White Peaks,land
+2290,2290,240,197,24,Desertsmouth Mountains,land
+2291,2291,191,70,24,Troll Hills,land
+2292,2292,56,31,23,Giantspire Mountains,land
+2293,2293,167,64,24,Firward Mountains,land
+2294,2294,228,228,191,Icerim Mountains,land
+2295,2295,228,43,18,Godswatch Mountains,land
+2296,2296,213,94,85,Raurin Alta Mountains,land
+2297,2297,255,94,36,Abbey Mountains,land
+2298,2298,39,234,222,Mountains of Gold,land
+2299,2299,225,246,64,Firepeaks,land
+2300,2300,30,52,36,Scimitar Spires,land
+2301,2301,167,176,24,Dragons Back Peaks,land
+2302,2302,73,234,234,Teeth of Taglo,land
+2303,2303,249,149,70,Ushar Mountains,land
+2304,2304,219,49,61,Ulhai Shan,land
+2305,2305,27,158,234,Koryaz Shan,land
+2306,2306,55,52,206,Hagga Shan,land
+2307,2307,15,134,12,The Great Spire,land
+2308,2308,237,36,49,Arnrock,land
+2309,2309,170,103,85,Jotunhammer Mountains,land
+2310,2310,106,103,46,Black Mountains,land
+2311,2311,116,235,255,Ancient's Hollow,land
+2312,2312,228,109,112,Hollow Crown Mountains,land
+2313,2313,79,73,134,Ardulith Mountains,land
+2315,2314,9,60,195,Skelkor Mountains,land
+2317,2315,213,43,46,Lugsaas Chain,land
+2318,2316,149,137,234,Tutsaas Chain,land
+2319,2317,15,33,179,Angsaas Chain,land
+2320,2318,209,91,216,Keryjek Range,land
+2321,2319,115,49,12,Novularond,land
+2322,2320,131,64,52,Surykyk Range,land
+2323,2321,85,109,106,Heroes Height,land
+2324,2322,216,200,164,Nakalpgotak Range,land
+2325,2323,121,225,203,Glacier of Ulutiu,land
+2326,2324,158,61,43,Shan Trango,land
+2327,2325,79,115,24,Chu Yuan,land
+2328,2326,58,43,70,Deang Mountains,land
+2329,2327,43,52,24,Jumpa River Gorge,land
+2330,2328,158,216,106,Hakari Ridge,land
+2331,2329,183,202,218,Senia Plateau,land
+2332,2330,21,131,112,East Rendai,land
+2333,2331,0,33,64,Mahasarpa,land
+2334,2332,197,73,15,Southern Wu Pi Te Shao,land
+2335,2333,146,243,79,Northern Wu Pi Te Shao,land
+2336,2334,106,33,170,Po Yul Dzayul Range,land
+2337,2335,176,191,112,Growing Mountains,land
+2338,2336,94,18,21,Salju Shan,land
+2339,2337,203,164,179,The Burning Lands,land
+2340,2338,216,158,115,Haunted Lands,land
+2341,2339,67,219,209,Sacred Mountain of Kushk,land
+2342,2340,91,91,152,Intan Shan,land
+2343,2341,203,237,213,Fengnao,land
+2344,2342,33,43,237,Petan,land
+2345,2343,21,24,43,Krashatai Shan,land
+2346,2344,49,73,91,Delliun,land
+2347,2345,97,188,194,The Dock,land
+2348,2346,97,33,97,Salju Shan,land
+2349,2347,149,64,225,Peaks of Flame,land
+2350,2348,112,216,164,Glacier of the White Worm,land
+2351,2349,55,49,158,Gorge of Gauros,land
+2352,2350,141,25,182,Po Yul Dzayul,land
+2353,2351,166,220,125,Greypeak Mountains,land
+2354,2352,141,216,84,Greypeak Mountains,land
+2355,2353,151,220,63,Greypeak Mountains,land
+2356,2354,48,30,14,Star Mounts,land
+2357,2355,71,38,69,Shining Plateau,land
+2358,2356,88,213,149,Western Yal Tengri,sea
+2359,2357,134,234,170,Eastern Yal Tengri,sea
+2360,2358,67,188,121,Bay of Raum,sea
+2361,2359,134,200,124,Northern Yal Tengri,sea
+2362,2360,237,191,188,Lower Arundi River,river
+2363,2361,225,222,176,Arundi River,river
+2364,2362,52,164,240,Winterflow River,river
+2365,2363,163,185,144,The Great Anvil,land
+2366,2364,8,114,105,Ardhi Kavu,land
+2367,2365,169,113,123,Hasira,land
+2368,2366,180,154,235,Amekufa,land
+2369,2367,152,12,180,Kupoteza,land
+2370,2368,206,135,230,Damu,land
+2371,2369,142,237,180,Mnyama,land
+2372,2370,112,46,248,Ndoto,land
+2373,2371,69,150,171,Nyangumi,land
+2374,2372,225,205,216,Sayf,land
+2375,2373,110,217,244,Risha,land
+2376,2374,69,22,155,Eskornar Peaks,land
+2377,2375,17,62,170,Dusk Mountains,land
+2378,2376,12,59,150,Glaur Mountains,land
+2379,2377,51,30,22,Elkannath Mountains,land
+2380,2378,55,104,131,Lopango,land
+2381,2379,18,40,245,Arandron,land
+2382,2380,38,62,118,Katashaka,land
+2383,2381,250,197,29,Farhaven,land
+2384,2382,81,143,226,Mokalonni Islands,land
+2385,2383,214,60,173,Sentinel Island,land
+2386,2384,79,107,33,Xirev,land
+2387,2385,242,195,95,Blackhold,land
+2388,2386,190,22,195,Lylkara Valley,land
+2389,2387,8,77,46,Giteyosha,land
+2390,2388,127,143,116,Moraan,land
+2391,2389,226,184,84,Windswept Plain,land
+2392,2390,195,102,61,Forgefires,land
+2393,2391,169,99,139,Cormanda,land
+2394,2392,177,166,132,Amral,land
+2395,2393,174,54,123,Dimee Moor,land
+2396,2394,144,127,167,Aldoman,land
+2397,2395,177,100,209,Olattan,land
+2398,2396,92,74,100,Tantay,land
+2399,2397,99,131,103,Khivak,land
+2400,2398,118,73,142,Inner Ama,land
+2401,2399,165,112,186,Sinking Palace,land
+2402,2400,135,98,125,Kayari,land
+2403,2401,112,110,84,Karoah,land
+2404,2402,68,60,102,Tomyris,land
+2405,2403,111,32,91,West Nanayok,land
+2406,2404,83,133,150,Palevash,land
+2407,2405,91,78,110,Upper Ama,land
+2408,2406,127,98,79,Mountain of Iron,land
+2409,2407,209,149,206,Upper Reddan,land
+2410,2408,19,31,60,Dawning Mountains,land
+2411,2409,219,186,130,The Flats,land
+2412,2410,226,93,149,Sunset Foothills,land
+2413,2411,141,63,41,High Moors,land
+2414,2412,164,115,191,Phelajarama,land
+2415,2413,238,75,30,Tethyamar,land
+2416,2414,157,58,71,The Burn,land
+2417,2415,60,87,69,Fields of Pryollus,land
+2418,2416,121,253,198,Nolin,land
+2419,2417,45,127,114,Heartwood,land
+2420,2418,88,172,166,Beast Marches,land
+2421,2419,93,86,176,Saerb,land
+2422,2420,190,14,12,Lost Vale,land
+2423,2421,201,131,38,Iritasker,land
+2424,2422,61,193,140,Wyrms Tooth,land
+2425,2423,233,88,73,Sea of Salt,land
+2426,2424,55,167,199,Helms Hold,land
+2427,2425,120,189,226,Goldenfields,land
+2428,2426,72,125,231,Sharandar,land
+2429,2427,209,157,110,Womford,land
+2430,2428,95,169,51,Colletro,land
+2431,2429,123,143,58,Zutria,land
+2432,2430,169,187,147,Maerwatch,land
+2433,2431,96,147,211,Heptios,land
+2434,2432,221,114,171,The Imnescourse,land
+2435,2433,164,172,42,Hluthvar,land
+2436,2434,167,106,81,Iyrandrar,land
+2437,2435,118,160,59,Relkaths Foot,land
+2438,2436,124,166,188,Illuskwood,land
+2439,2437,167,118,85,Westfells,land
+2440,2438,133,142,221,Mount Sarengard,land
+2441,2439,68,187,196,Splendarrmornn,land
+2442,2440,86,124,46,Nether Mountains,land
+2443,2441,157,52,113,Eryndlyn,land
+2444,2442,91,179,155,Eyegad,land
+2445,2443,137,198,166,Kanaglym,land
+2446,2444,79,131,190,Yaunoroth,land
+2447,2445,107,233,93,Oghrann,land
+2448,2446,92,152,230,Sshamath,land
+2449,2447,162,83,192,Adbarrim,land
+2450,2448,165,207,118,Maerimydra,land
+2451,2449,69,105,193,Zanhoriloch,land
+2452,2450,97,131,176,Smoking Mountains,land
+2453,2451,112,191,146,Tomb Hills,land
+2454,2452,213,152,109,East Methwood,land
+2455,2453,134,70,152,Cennuroth,land
+2456,2454,131,100,58,Delbyl,land
+2457,2455,161,173,106,Golden Shore,land
+2458,2456,228,191,149,Sekras,land
+2459,2457,179,216,173,Riders to the Sky,land
+2460,2458,88,167,109,Ashfields,land
+2461,2459,106,191,76,Ascore,land
+2462,2460,152,185,120,Cold Vale,land
+2463,2461,211,118,91,Thunderholme,land
+2464,2462,137,55,36,The Highlands,land
+2465,2463,121,140,182,Kalterland,land
+2466,2464,177,188,219,Pelauvir,land
+2467,2465,131,88,179,Verdigris,land
+2468,2466,37,188,211,Elmwood,land
+2469,2467,105,136,91,Turnback Mountain,land
+2470,2468,97,137,176,Ironfang Keep,land
+2471,2469,78,116,139,Hollow Mountain,land
+2472,2470,94,170,118,Chilled Plain,land
+2473,2471,52,127,85,Glaurachyndaar,land
+2474,2472,224,157,133,East Keep,land
+2475,2473,112,170,112,Ong Woods,land
+2476,2474,240,124,173,Seventon,land
+2477,2475,209,179,79,North Peak,land
+2478,2476,203,152,188,Treacherous Isles,land
+2479,2477,137,143,82,Guihar,land
+2480,2478,111,214,134,Quchang,land
+2481,2479,174,182,71,Tongchun,land
+2482,2480,155,213,179,Zoajing,land
+2483,2481,197,225,112,Shangtao,land
+2484,2482,164,219,73,Minlow,land
+2485,2483,112,188,143,Changdao,land
+2486,2484,118,203,179,Forests Edge,land
+2487,2485,46,103,118,Panjang River,land
+2488,2486,53,105,154,Jakadiri,land
+2489,2487,94,152,188,Detar Land,land
+2490,2488,100,79,167,Chulacca,land
+2491,2489,134,158,155,Lunru,land
+2492,2490,73,39,15,Hissing Isles,land
+2493,2491,176,137,88,Menzoberranzan,land
+2494,2492,191,182,106,Bauthwaf,land
+2495,2493,171,34,135,Nethra,land
+2496,2494,173,184,169,Ankhur,land
+2497,2495,238,158,182,Thazar,land
+2498,2496,13,195,155,Clearflow Vale,land
+2499,2497,219,78,80,Mhair Pass,land
+2500,2498,177,176,67,Mazat,land
+2501,2499,165,198,240,Maharas Vale,land
+2502,2500,69,163,132,Gracklstugh,land
+2503,2501,212,216,156,Ched Nasad,land
+2504,2502,54,163,157,Oryndoll,land
+2505,2503,121,239,70,Drik Hargunen,land
+2506,2504,156,218,130,Dunspeirrin,land
+2507,2505,163,62,186,Ust Natha,land
+2508,2506,120,127,136,Sumber Hills,land
+2509,2507,224,219,36,Flint Rock,land
+2510,2508,83,195,186,Shining White,land
+2511,2509,84,164,155,Selskar Vale,land
+2512,2510,31,31,160,Frost Hills,land
+2513,2511,102,41,93,Svardborg,land
+2514,2512,221,122,34,Mount Sundabar,land
+2515,2513,166,226,6,Dareth,land
+2516,2514,190,169,231,High Horn,land
+2517,2515,181,46,119,Oroth,land
+2518,2516,132,144,193,Qarlondrar,land
+2519,2517,194,79,12,Harheldur,land
+2520,2518,27,179,192,Ahruukar,land
+2521,2519,176,154,96,Raskuldin,land
+2522,2520,252,194,159,Khaelud,land
+2523,2521,151,98,41,Fireforges,land
+2524,2522,165,167,215,Graskynar,land
+2525,2523,141,174,21,Utuerth,land
+2526,2524,186,210,237,Skurrukh,land
+2527,2525,212,128,78,Moonrise,land
+2528,2526,141,42,199,Cloak Bay,land
+2529,2527,211,28,218,Wood of Sharp Teeth,land
+2530,2528,147,21,131,Amstelar,land
+2531,2529,249,190,41,Lake Weng,land
+2532,2530,166,132,132,Wild Hills,land
+2533,2531,121,191,61,Green Shadows,land
+2534,2532,153,124,23,The Ridge,land
+2535,2533,187,121,77,Windspear Hills,land
+2536,2534,221,102,26,Thundar's Ride,land
+2537,2535,124,179,138,Dun-Orthass,land
+2538,2536,118,251,166,Giant Gap,land
+2539,2537,229,149,79,Dun-Tharos,land
+2540,2538,58,138,211,Shandaular,land
+2541,2539,181,151,164,Southern Shandaular,land
+2542,2540,100,102,214,Mussum,land
+2543,2541,119,104,126,Fields of Nun,land
+2544,2542,248,119,35,Sar'Rukoth,land
+2545,2543,170,57,44,Vaults of Record,land
+2546,2544,214,133,147,Xul-Jarak,land
+2547,2545,40,192,124,Star Mounts,land
+2548,2546,35,191,153,Mount Sar,land
+2549,2547,230,11,222,Traaskl Thorog,land
+2550,2548,40,100,10,Dead Orc Pass,land
+2551,2549,100,40,40,Finger Pass,land
+2552,2550,80,80,100,Saekolath,land
+2553,2551,161,69,90,Thornhold,land
+2554,2552,211,109,233,Perilous,land
+2555,2553,216,2,198,Palischuk,land
+2556,2554,102,17,52,Talagbar,land
+2557,2555,153,201,57,Sschindylryn,land
+2558,2556,237,186,224,Deep Imaskar,land
+2559,2557,202,247,52,Ikemmu,land
+2560,2558,120,234,171,Undraeth,land
+2561,2559,223,215,100,Icewind Coast,land
+2562,2560,3,18,164,Llurth Dreier,land
+2563,2561,149,105,223,Titan Peaks,land
+2564,2562,191,76,22,Okk,land
+2565,2563,106,74,12,Ironspur,land
+2566,2564,255,102,152,Severed Hand,land
+2567,2565,68,174,100,Outer Reghed,land
+2568,2566,186,222,27,The Rift,land
+2569,2567,222,4,171,Tulmon,land
+2570,2568,248,252,167,Thazar Pass,land
+2571,2569,168,11,48,Hosttower,land
+2572,2570,244,114,126,Tilver's Gap,land
+2573,2571,170,182,31,Three Rivers,land
+2574,2572,115,79,121,Archtassel,land
+2575,2573,196,26,179,Arch Wood,land
+2576,2574,108,248,23,White Ford,land
+2577,2575,20,251,32,Hidden Vale,land
+2578,2576,190,104,185,Jungled Approach,land
+2579,2577,239,44,48,Southwatch,land
+2580,2578,164,236,195,Couatl's Landing,land
+2581,2579,85,87,48,West Sea,sea
+2582,2580,52,57,246,Gulf of Katashaka,sea
+2583,2581,65,212,157,Gulf of Lopango,sea
+2584,2582,163,255,182,Lopango Sea,sea
+2585,2583,232,217,189,South Maztica Sea,sea
+2586,2584,183,20,53,North Maztica Sea,sea
+2587,2585,90,204,159,Wyrmdoom Crag,land
+2588,2586,187,254,102,Thargill,land
+2589,2587,63,101,35,Smokespire,land
+2590,2588,69,65,180,Calim River,land
+2591,2589,184,232,195,Faeressar,land
+2592,2590,215,77,50,Nykkar,land
+2593,2591,142,84,109,Kochar Steppe,land
+2594,2592,102,16,203,Iltkazar,land
+2595,2593,60,41,204,Myth Dyraalis,land
+2596,2594,113,24,105,Magis Tor,land
+2597,2595,249,13,202,Dashadjen,land
+2598,2596,84,204,132,Calimban,land
+2599,2597,70,41,111,Teshyll,land
+2600,2598,38,181,175,Calimstone,land
+2601,2599,69,108,240,Velarswood,land
+2602,2600,88,108,240,Cold Field,land
+2603,2601,143,111,223,Freedale,land
+2604,2602,65,159,110,Shadowglade,land
+2605,2603,198,42,234,Lashloc,land
+2606,2604,81,64,31,Beast Country,land
+2607,2605,176,150,5,Barrowfield,land
+2608,2606,62,215,211,Hap,land
+2609,2607,122,12,60,Upper Khedrun,land
+2610,2608,150,200,200,Wright's Ferry,land
+2611,2609,200,1,70,Chandlerscross,land
+2612,2610,10,10,70,Dagger Falls,land
+2613,2611,20,30,40,Voonlar,land
+2614,2612,50,11,50,Maer Dualdon,land
+2615,2613,60,11,60,Redwaters,land
+2616,2614,70,11,70,Dwarven Valley,land
+2617,2615,80,11,80,Highplume Station,land
+2618,2616,100,100,50,Skytower Shelter,land
+2619,2617,100,200,50,Broken Well,land
+2620,2618,200,100,50,The Icefields,land
+2621,2619,60,100,30,Caer Moray,land
+2622,2620,15,20,25,Icespire Peak,land
+2623,2621,160,160,150,Conyberry,land
+2624,2622,133,122,133,Cragmaw,land
+2625,2623,80,155,132,Shederran Grove,land
+2626,2624,153,23,111,Bloodhawk Hold,land
+2627,2625,54,130,112,Skadaurak,land
+2628,2626,155,200,187,Szith Morcane,land
+2629,2627,65,22,100,Olafstaad,land
+2630,2628,75,195,232,Trackless Sea,sea
+2631,2629,8,51,64,Trackless Sea,sea
+2632,2630,74,113,126,Trackless Sea,sea
+2633,2631,122,139,144,The Western Frost,land
+2634,2632,89,11,200,Shivering Coast,land
+2635,2633,66,20,50,Roof of the World,land
+2636,2634,211,50,210,The Anchorage,land
+2637,2635,100,225,225,Havraquoar,land
+2638,2636,80,80,90,Dragongrounds,land
+2639,2637,80,155,214,Coldcrag,land
+2640,2638,77,123,9,Whaler's End,land
+2641,2639,6,10,40,Lonely Rock,land
+2642,2640,54,162,111,Spearhead Point,land
+2643,2641,65,11,100,The High Ice,land
+2644,2642,99,222,100,Xothaerin,land
+2645,2643,214,60,60,Kossuth's Eye,land
+2646,2644,190,55,190,Korolnor,land
+2647,2645,213,213,0,Torglor,land
+2648,2646,90,20,70,Drakkalor,land
+2649,2647,79,113,199,Barakuir,land
+2650,2648,108,149,29,Holorar,land
+2651,2649,19,46,113,Guallidurth,land
+2652,2650,211,83,146,Brightaxe Hall,land
+2653,2651,160,147,147,Zolkir,land
+2654,2652,237,9,121,Rogarsheim,land
+2655,2653,56,143,23,Tvarstoldt,land
+2656,2654,193,186,20,Jotunhammer,land
+2657,2655,192,43,193,Stone Wood,land
+2658,2656,43,193,193,Lillemaren,land
+2659,2657,193,43,50,Iron Keep,land
+2660,2658,19,124,19,Trondhelm,land
+2661,2659,109,184,202,Trackless Strait,sea
+2662,2660,141,222,245,Strait of Oman,sea
+2663,2661,121,121,181,Strait of Alaron,sea
+2664,2662,220,170,240,Strait of the Leviathan,sea
+2665,2663,153,213,223,Lotan's Abyss,sea
+2666,2664,173,247,222,Corwell Firth,sea
+2667,2665,245,210,245,Dragon Head,sea
+2668,2666,210,245,233,Kingsbay,sea
+2669,2667,235,210,245,Mintarn Coast,sea
+2670,2668,210,245,230,Callidyrr Coast,sea
+2671,2669,230,180,220,Northwind Strait,sea
+2672,2670,135,100,35,Cambro Mountains,land
+2673,2671,20,75,0,Lisloch,land
+2674,2672,75,0,22,Lisbunt,land
+2675,2673,75,55,0,Farfair,land
+2676,2674,0,0,1,Fairheight Range,land
+2677,2675,144,4,4,Aspenheight,land
+2678,2676,245,220,245,Lake of the Leech,lake
+2679,2677,245,200,245,Lisloch,lake
+2680,2678,245,190,245,Lac Sielya,lake
+2681,2679,245,180,245,Firloch,lake
+2682,2680,245,170,245,Shee Pool,lake
+2683,2681,245,160,245,Mal Tamesis,lake
+2684,2682,245,150,245,Mal Tarbat,lake
+2685,2683,245,140,245,Lake Chrysalis,lake
+2686,2684,245,130,245,Harloch,lake
+2687,2685,125,150,5,Brannoch,land
+2688,2686,10,235,40,Dernall,land
+2689,2687,9,90,90,Storaad,land
+2690,2688,180,210,90,Orcskulls,land
+2691,2689,100,210,90,Breasal,land
+2692,2690,100,95,30,Dennin's Delve,land
+2693,2691,35,100,30,Llyrath,land
+2694,2692,200,100,100,Undermountain,land
+2695,2693,150,100,100,Sargauth,land
+2696,2694,122,95,112,Skullport,land
+2697,2695,124,230,4,Lair of the Eye,land
+,2696,0,0,96,Trackless Deep,sea
+2314,,,,,,dropped
+2316,,,,,,dropped
+2698,,,,,,dropped

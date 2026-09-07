@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 import shutil
 from dataclasses import dataclass, field
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -233,6 +234,23 @@ class Context:
                 header_comments=[*header_comments, self.header().strip("#\n ")],
             )
         self._record(path, len(pairs))
+        return path
+
+    def write_binary(self, rel: str | Path, save: Callable[[Path], None]) -> Path:
+        """Write a binary file by handing ``save`` the resolved output path.
+
+        For output no ``write_*`` above covers: the map lane's four PNGs.  A
+        callable rather than bytes because a 54 Mpx PNG is cheaper for PIL to
+        write straight to the final path than to serialise into memory, and in a
+        dry run the callable is never invoked at all.
+        """
+        path = self.out_path(str(rel))
+        size = 0
+        if not self.dry_run:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            save(path)
+            size = path.stat().st_size if path.exists() else 0
+        self._record(path, size)
         return path
 
     def _record(self, path: Path, size: int) -> None:

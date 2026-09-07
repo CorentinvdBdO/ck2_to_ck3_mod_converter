@@ -1,0 +1,117 @@
+# Physical-map conversion: CK2 Faerûn -> CK3 1.19.
+#
+#   uv run python -m ck2ck3.map.build --config configs/faerun_map.toml
+#
+# Every number here is either measured (see docs/map_scale.md and
+# docs/formats_map.md, both with method and evidence) or a documented choice.
+# Nothing map-specific belongs in the code.
+
+[input]
+ck2_map_dir = "Faerun/Faerun/map"
+
+[output]
+mod_dir = "../claudespace/mods/faerun_ck2_to_ck3_converted"
+prefix = "fae"
+evidence_dir = "docs/evidence"
+mod_name = "Faerun (CK2 conversion, raw)"
+mod_version = "0.1.0"
+supported_version = "1.19.*"
+
+[scale]
+# km per pixel of the two maps. The factor is their ratio, so 10 km in Faerûn
+# spans the same number of pixels as 10 km in vanilla CK3.
+#
+# vanilla: 1.4839 km/px, from a least-squares latitude fit over 16 core-Europe
+# baronies (R^2 = 0.9962) x 111.19 km/deg. The CK3 sheet is NOT a uniform
+# projection - a whole-map fit over 25 cities gives 1.7426 km/px - so the
+# Europe figure is used deliberately: it is the density the game's barony and
+# army scale was tuned against. scripts/measure_vanilla_scale.py.
+vanilla_km_per_px = 1.4839
+
+# Faerûn: 2.90 km/px, from the Atlas of Ice and Fire 1371 DR guide map's own
+# miles scale bar (123 px = 250 mi -> 3.2710 km/atlas-px) divided by the
+# atlas->CK2 similarity transform scale (1.1275, rotation +0.000 deg, landmark
+# RMS 1.93 px). 3.2710 / 1.1275 = 2.90. The CK2 mod really is drawn on the
+# atlas projection. docs/evidence/atlas_registration.md,
+# scripts/measure_faerun_scale.py.
+source_km_per_px = 2.90
+
+# Set to pin the factor and ignore the two numbers above (regression runs).
+# The legacy convert.py value was 5918/4096 = 1.4448.
+# factor_override = 1.4448
+
+sea_margin_px = 64
+canvas_multiple = 64
+max_canvas_px = 32768
+
+[heightmap]
+# 1 = heightmap.png same size as provinces.png. Elder Kings 2 (8256x5504) and
+# Godherja (8192x4096) both do this and both declare original_heightmap_size
+# equal to their provinces size; vanilla alone uses 2 (18432x9216, a 120 MB
+# PNG). 1 is chosen for size; 2 is a one-line change if detail ever matters.
+resolution_factor = 1
+
+# CK2 topology.bmp 8-bit value of the water surface. Faerûn's sea floor sits
+# around 33-47 and its lowest land around 97; measured, not the CK2 default.
+ck2_sea_level = 95
+
+# CK3 16-bit value of the water surface = WATERLEVEL / WORLD_EXTENTS_Y * 65535.
+# We write WATERLEVEL = 3.8 and WORLD_EXTENTS_Y = 51 (the Elder Kings 2 and
+# Godherja values), so 3.8 / 51 * 65535 = 4883 - exactly the value measured off
+# both mods' coastlines. Vanilla's 3 / 50 gives 3932.
+ck3_water_level = 4883
+ck3_max_level = 49205  # vanilla's own heightmap maximum; no point going higher
+
+# Extra (ck2_8bit, ck3_16bit) control points between sea level and the top.
+# Empty = a straight line from the water level to ck3_max_level, which keeps
+# relative altitudes honest. Add points here to compress mountains.
+curve = []
+
+tile_size = 33  # both reference total conversions use 33; vanilla uses 65
+
+[provinces]
+# A CK2 colour with fewer than this many target pixels is reported, and
+# re-grown inside its own CK2 footprint if it can be.
+min_pixels = 16
+regrow_lost = true
+
+# Padding ocean, registered in definition.csv as a real sea province.
+# Must not be black, white, or any CK2 province colour - the converter checks.
+ocean_rgb = [0, 0, 96]
+ocean_name = "Trackless Deep"
+
+[regions]
+# CK2 labels its lakes only by the ocean_region comment text in default.map.
+lake_names = ["Lakes"]
+
+[terrain]
+default = "plains"
+
+# Faerûn derives forest from trees.bmp, not terrain.bmp: terrain index 20
+# (type = forest) has zero pixels. Left empty to read the `tree` list straight
+# out of the CK2 default.map (which is { 3 4 7 10 }).
+tree_indices = []
+
+# CK2 terrain category -> CK3 1.19 terrain key. Rationale per line is in
+# src/ck2ck3/map/terrain.py; the four marked NO EQUIVALENT get a comment in the
+# run report rather than a pretend mapping.
+[terrain.map]
+plains = "plains"
+farmlands = "farmlands"
+coastal = "farmlands"           # shares farmlands' colour in CK2
+forest = "forest"
+woods = "forest"                # CK3 has one forest tier
+hills = "hills"
+mountain = "mountains"
+impassable_mountains = "mountains"
+steppe = "steppe"
+desert = "desert"
+coastal_desert = "drylands"
+jungle = "jungle"
+marsh = "wetlands"
+arctic = "taiga"                # NO EQUIVALENT: no arctic key in CK3
+glacier = "taiga"               # NO EQUIVALENT: no glacier key in CK3
+subterranean = "mountains"      # NO EQUIVALENT: the Underdark
+pti = "plains"
+ocean = "sea"
+inland_ocean = "coastal_sea"

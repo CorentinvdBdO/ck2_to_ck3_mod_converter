@@ -1,0 +1,70 @@
+# vanilla CK3 1.19 map scale measurement
+# provinces.png 9216x4608; R=6371.0 km; 111.19 km/deg lat
+# lat/lon are well-known real-world city centres (assumed); cx/cy are measured province-colour centroids
+
+section,key,city,province_id,r,g,b,cx,cy,lat,lon,pixels
+city,b_reykjavik,Reykjavik,2,84,6,1,265.99,238.65,64.1466,-21.9426,4075
+city,b_dublin,Dublin,28,84,81,141,623.66,1144.94,53.3498,-6.2603,665
+city,b_uppsala,Uppsala,342,84,174,71,1867.97,730.17,59.8586,17.6389,1885
+city,b_novgorod,Veliky Novgorod,5137,89,75,196,2379.54,853.6,58.5213,31.271,1350
+city,b_london,London,1527,85,108,191,949.19,1291.77,51.5072,-0.1276,386
+city,b_moskva,Moscow,575,0,21,215,2701.86,1020.33,55.7558,37.6173,1352
+city,b_kiev,Kyiv,547,84,150,201,2501.87,1453.37,50.4501,30.5234,1236
+city,b_praha,Prague,4125,4,21,190,1729.83,1462.26,50.0755,14.4378,597
+city,b_paris,Paris,2333,128,183,194,1057.99,1534.72,48.8566,2.3522,234
+city,b_venezia,Venice,2517,86,96,186,1668.93,1842.38,45.4408,12.3155,261
+city,b_roma,Rome,2575,2,57,215,1672.46,2107.65,41.9028,12.4964,333
+city,b_constantinople,Istanbul,496,42,210,48,2586.34,2127.91,41.0082,28.9784,595
+city,b_toledo,Toledo,1919,169,6,187,732.52,2186.81,39.8628,-4.0273,965
+city,b_lisboa,Lisbon,1754,169,150,77,441.6,2251.54,38.7223,-9.1393,728
+city,b_athens,Athens,482,84,168,41,2340.02,2372.12,37.9838,23.7275,1009
+city,b_tunis,Tunis,4582,88,114,91,1557.41,2487.4,36.8065,10.1815,638
+city,b_antiocheia,Antakya (Antioch),5910,5,51,55,2996.37,2447.31,36.2023,36.1613,620
+city,b_samarkand,Samarkand,4404,172,6,2,4382.07,2058.83,39.627,66.975,479
+city,b_baghdad,Baghdad,4828,130,0,14,3378.08,2536.96,33.3152,44.3661,616
+city,b_isfahan,Isfahan,4106,46,177,53,3711.07,2544.16,32.6539,51.666,1554
+city,b_jerusalem,Jerusalem,5965,5,3,210,2958.68,2707.58,31.7683,35.2137,517
+city,b_marrakesh,Marrakesh,4718,130,96,59,564.51,2703.0,31.6295,-7.9811,1588
+city,b_cairo,Cairo,6042,90,21,21,2766.2,2827.58,30.0444,31.2357,759
+city,b_aden,Aden,6290,6,126,45,3463.8,3569.01,12.7855,45.0187,810
+city,b_mogadishu,Mogadishu,8463,134,42,159,3482.93,4052.6,2.0469,45.3182,734
+
+section,a,b,axis,gc_km,px_dist,km_per_px,dx,dy,ew_km,ns_km,km_per_px_axis
+pair,b_lisboa,b_samarkand,EW,6349.22,3945.18,1.60936,3940.47,-192.71,6560.84,100.59,1.66499
+pair,b_london,b_moskva,EW,2500.53,1773.56,1.40989,1752.67,-271.44,2488.64,472.4,1.41991
+pair,b_toledo,b_constantinople,EW,2779.66,1854.76,1.49867,1853.82,-58.9,2793.3,127.36,1.50678
+pair,b_cairo,b_baghdad,EW,1293.55,677.39,1.90961,611.88,-290.62,1242.43,363.68,2.03051
+pair,b_tunis,b_antiocheia,EW,2315.89,1439.52,1.60879,1438.96,-40.09,2321.96,67.18,1.61364
+pair,b_dublin,b_kiev,EW,2515.77,1903.37,1.32175,1878.21,308.43,2523.67,322.42,1.34366
+pair,b_marrakesh,b_jerusalem,EW,4058.76,2394.17,1.69526,2394.17,4.58,4086.35,15.43,1.70679
+pair,b_paris,b_venezia,EW,842.88,684.03,1.23221,610.94,307.66,753.43,379.8,1.23322
+pair,b_uppsala,b_roma,NS,2027.45,1391.29,1.45725,-195.51,1377.48,360.77,1996.51,1.44939
+pair,b_novgorod,b_jerusalem,NS,2989.63,1942.33,1.5392,579.14,1853.98,309.2,2974.67,1.60448
+pair,b_london,b_marrakesh,NS,2301.63,1462.72,1.57353,-384.68,1411.23,653.32,2210.2,1.56615
+pair,b_praha,b_tunis,NS,1514.28,1039.54,1.45669,-172.42,1025.14,343.62,1475.38,1.4392
+pair,b_moskva,b_baghdad,NS,2549.11,1660.55,1.5351,676.22,1516.63,534.9,2495.17,1.64521
+pair,b_dublin,b_lisboa,NS,1641.27,1121.48,1.46349,-182.06,1106.6,222.23,1626.43,1.46976
+pair,b_isfahan,b_aden,NS,2310.51,1054.26,2.1916,-247.27,1024.85,681.76,2209.17,2.1556
+pair,b_aden,b_mogadishu,NS,1194.53,483.97,2.46821,19.13,483.59,33.02,1194.02,2.46909
+pair,b_reykjavik,b_roma,NS,3301.66,2339.09,1.41152,1406.47,1869.0,2303.2,2473.29,1.32332
+pair,b_athens,b_cairo,NS,1120.82,623.76,1.79689,426.18,455.46,692.0,882.78,1.93822
+
+section,metric,value,unit,note
+metric,deg_per_px_lon,0.01921127,deg/px,"least squares lon~x, R2=0.986577"
+metric,deg_per_px_lat,0.01567188,deg/px,"least squares lat~y, R2=0.970927"
+metric,r2_lon,0.986577,,goodness of lon~x fit
+metric,r2_lat,0.970927,,goodness of lat~y fit
+metric,px_per_deg_lon,52.0528,px/deg,
+metric,px_per_deg_lat,63.8086,px/deg,
+metric,implied_globe_width_px,18739.0,px,if the projection were extended to 360 deg
+metric,implied_globe_height_px,11485.5,px,if extended to 180 deg
+metric,km_per_px_x,1.56494,km/px,"mean of 8 EW pairs, along mean parallel"
+metric,km_per_px_y,1.70604,km/px,mean of 10 NS pairs
+metric,km_per_px_combined_median,1.53715,km/px,median of 18 great-circle pairs
+metric,anisotropy_x_over_y,0.91729,,>1 means x is stretched relative to y
+metric,deg_per_px_lon_core_europe,0.01904077,deg/px,"core-Europe subset (n=16), R2=0.982785"
+metric,deg_per_px_lat_core_europe,0.01334583,deg/px,"core-Europe subset (n=16), R2=0.996211"
+metric,r2_lat_core_europe,0.996211,,
+metric,km_per_px_lat_fit_global,1.7426,km/px,"all 25 cities, R2=0.9709"
+metric,lat_residual_spread_px,652.8,px,global fit error range; proof the projection is non-uniform
+metric,vanilla_km_per_px,1.4839,km/px,RECOMMENDED: core-Europe lat fit x 111.19 km/deg

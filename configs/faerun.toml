@@ -17,25 +17,37 @@ bookmark_date = "1357.1.1"
 # the folders it takes over.
 replace_paths = [
     "common/bookmark_portraits",
-    "common/culture/cultures",
-    "common/culture/name_lists",
     "common/dna_data",
     "common/dynasties",
     "common/landed_titles",
     "common/province_terrain",
-    "common/religion/doctrine_types",
-    "common/religion/holy_site_types",
-    "common/religion/religion_family_types",
-    "common/religion/religion_types",
-    "common/terrain_types",
+    # NOT replaced, and each removal is load-bearing (ck3-tiger, 2026-09-07):
+    #   common/terrain_types        - province_terrain names vanilla terrain keys
+    #   common/culture/cultures     - history/provinces names a vanilla culture
+    #   common/culture/name_lists     (both until lane cultures-religions ships)
+    #   common/religion/*           - history/provinces names a vanilla faith
+    # Replacing them dropped the vanilla definitions and produced 2338 "terrain
+    # not defined", 2336 "culture not defined" and 2335 "faith not defined"
+    # errors. Each lane adds its folder back when it ships content for it.
     "gfx/interface/illustrations/loading_screens",
     "gfx/portraits/portrait_modifiers",
-    "history",
+    # `replace_path` is NOT recursive: replacing "history" does nothing for
+    # history/provinces (verified, ck3-tiger diagnostic: "replace_path only
+    # replaces the specific directory, not any directories below it"), so every
+    # subfolder is listed. docs/output_bootstrap.md §0.
     "history/characters",
     "history/cultures",
+    "history/province_mapping",
     "history/provinces",
+    "history/struggles",
     "history/titles",
     "history/wars",
+    # map_data itself needs NO replace_path: same-filename override is enough,
+    # which is the Elder Kings 2 / Godherja pattern. Its geographical_regions
+    # subfolder does need one, since vanilla ships three files there that
+    # reference vanilla duchies.
+    "map_data/geographical_regions",
+    "common/defines",
 ]
 
 [paths]
@@ -49,11 +61,110 @@ ck3_game = "/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/
 # The generated mod repository. Never hand-edited.
 out = "/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted"
 
-# Placeholders until lane `map-physical` measures the real numbers. These are
-# the values the deleted convert.py used, kept so nothing is lost:
-# dimensions = same as the CK3 base map, scale = 5918/4096 for a 1:1 Faerûn,
-# offset = the chosen placement of Faerûn on the CK3 canvas.
+# Physical map. Every number is measured; the derivation, the method and the
+# evidence are in docs/map_scale.md. Lane `map-physical` owns this table.
 [map]
-dimensions = [8192, 4096]
-scale = 1.4448242187
-offset = [-146, 26]
+# Legacy fields kept for anything that still reads them. They are DERIVED from
+# [map.scale] below, not inputs: the canvas is planned from the CK2 source size
+# and the scale factor, so these mirror the result.
+dimensions = [8192, 6656]
+scale = 1.9543095896
+offset = [93, 76]
+source_dimensions = [4096, 3328]
+
+# true = write the text files only, skipping the four PNGs (30 s, ~45 MB).
+skip_images = false
+
+# CK2 labels its lakes only by the ocean_region comment text in default.map.
+lake_names = ["Lakes"]
+
+# --- measured scale inputs (flat keys: `scale` under [map] is already the
+# --- derived float above, so a [map.scale] table would collide with it)
+#
+# km per pixel of each map. The factor is their ratio, so 10 km in Faerun spans
+# the same number of pixels as 10 km in vanilla CK3.
+#
+# vanilla 1.4839: least-squares latitude fit over 16 core-Europe barony
+# centroids (R^2 0.9962) x 111.19 km/deg. Deliberately NOT the whole-map figure
+# of 1.7426: the CK3 sheet is not a uniform projection (latitude residuals span
+# 653 px), and Europe is the density the game's barony and army scale was tuned
+# against. scripts/measure_vanilla_scale.py.
+vanilla_km_per_px = 1.4839
+# Faerun 2.90 +/- 0.03: the Atlas of Ice and Fire 1371 DR guide map's own miles
+# scale bar (123 px = 250 mi -> 3.2710 km/atlas-px) divided by the fitted
+# atlas->CK2 similarity scale 1.1275 (rotation +0.000 deg, landmark RMS 1.93 px).
+# The mod is drawn on the atlas projection. scripts/measure_faerun_scale.py.
+source_km_per_px = 2.90
+# Set to pin the factor and ignore the two numbers above (regression runs).
+# The deleted convert.py used 5918/4096 = 1.4448242187, which implies 2.144
+# km/px for Faerun - unmeasured, and 26% too small.
+# factor_override = 1.4448242187
+sea_margin_px = 64
+# Every shipping CK3 map is a multiple of 64 on both axes (vanilla 9216x4608,
+# Elder Kings 2 8256x5504, Godherja 8192x4096). No define states it, so the
+# requirement is `assumed`; obeying it costs at most 63 px of ocean.
+canvas_multiple = 64
+max_canvas_px = 32768
+
+[map.heightmap]
+# 1 = heightmap.png the same size as provinces.png. Both Elder Kings 2 and
+# Godherja do this and declare original_heightmap_size equal to their provinces
+# size; only vanilla uses 2 (a 122 MB PNG).
+resolution_factor = 1
+# CK2 topology.bmp value of the water surface. Measured, not the CK2 default of
+# 95 taken on faith - though it turns out to be 95: Faerun's topology has a
+# four-value dead band at 93-96 with zero pixels, water tops out at 92 and land
+# starts at 97. scripts/measure_ck2_sea_level.py.
+ck2_sea_level = 95
+# CK3 16-bit water surface = WATERLEVEL / WORLD_EXTENTS_Y * 65535. We write
+# WATERLEVEL 3.8 and WORLD_EXTENTS_Y 51 (the Elder Kings 2 and Godherja values)
+# into common/defines, so 3.8 / 51 * 65535 = 4883 - exactly the value measured
+# off both mods' coastlines. Vanilla's 3 / 50 gives 3932.
+ck3_water_level = 4883
+ck3_max_level = 49205  # vanilla's own heightmap maximum
+# Extra (ck2_8bit, ck3_16bit) control points between the water level and the
+# top. Empty = a straight line, which keeps relative altitudes honest.
+curve = []
+# Both reference total conversions use 33; vanilla uses 65.
+tile_size = 33
+
+[map.provinces]
+# A CK2 colour with fewer than this many target pixels is reported, and re-grown
+# inside its own CK2 footprint if it can be.
+min_pixels = 16
+regrow_lost = true
+# Padding ocean, registered in definition.csv as a real sea province. Must not
+# be black, white, or any CK2 province colour - the converter checks.
+ocean_rgb = [0, 0, 96]
+ocean_name = "Trackless Deep"
+
+[map.terrain]
+default = "plains"
+# Faerun derives forest from trees.bmp, not terrain.bmp (whose forest index has
+# zero pixels). Left empty to read the `tree` list from the CK2 default.map,
+# which is { 3 4 7 10 }.
+tree_indices = []
+
+# CK2 terrain category -> CK3 1.19 terrain key. The per-line rationale is in
+# src/ck2ck3/map/terrain.py; the entries with no real CK3 counterpart are
+# counted in the run report rather than passed off as faithful.
+[map.terrain.map]
+plains = "plains"
+farmlands = "farmlands"
+coastal = "farmlands"           # shares farmlands' colour in CK2
+forest = "forest"
+woods = "forest"                # CK3 has one forest tier
+hills = "hills"
+mountain = "mountains"
+impassable_mountains = "mountains"
+steppe = "steppe"
+desert = "desert"
+coastal_desert = "drylands"
+jungle = "jungle"
+marsh = "wetlands"
+arctic = "taiga"                # NO EQUIVALENT: no arctic key in CK3
+glacier = "taiga"               # NO EQUIVALENT: no glacier key in CK3
+subterranean = "mountains"      # NO EQUIVALENT: the Underdark
+pti = "plains"
+ocean = "sea"
+inland_ocean = "coastal_sea"
