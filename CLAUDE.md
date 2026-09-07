@@ -11,7 +11,9 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `uv sync --group dev` — env. `uv run pytest` — tests (must be green before `/ship`).
 - `uv run scripts/faerun_barony_stats.py` — barony/holding statistics (writes `docs/evidence/barony_stats.csv`).
 - `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
-- Convert: `uv run convert.py` (being replaced by `uv run -m ck2ck3 --config configs/faerun.toml`, lane `foundation`).
+- Convert: `uv run ck2ck3 --config configs/faerun.toml [--steps a,b] [--dry-run]` (`uv run -m ck2ck3` works too). `--list-steps` lists the registry. See `docs/cli.md`.
+- `uv run scripts/pdx_scan.py [mod_dir] [--roundtrip N]` — parse every script file of a mod, report failures and timings.
+- `uv run pytest -m "not slow"` — fast tests only (the slow ones parse the whole Faerûn clone).
 
 ## Rules
 - Base branch is `main`. Lanes `lane/<name>`. Never commit on main.

@@ -251,6 +251,64 @@ def structurally_equal(
     return left == right
 
 
+def as_dict(block: Block) -> dict[str, object]:
+    """Flatten a block into plain python, for feeding a schema.
+
+    **Explicitly lossy** — comments, operators, quoting and the order of
+    duplicate keys are dropped. Use it to build a pydantic model or to compare
+    values; never to write a file back. The rules:
+
+    * ``key = scalar`` → ``{"key": scalar}``; a :class:`Date` becomes its
+      string form and a :class:`VarRef` its ``@name`` form.
+    * ``key = { 1 2 3 }`` (items only) → ``{"key": [1, 2, 3]}``.
+    * ``key = { a = 1 }`` → ``{"key": {"a": 1}}``.
+    * ``key = rgb { 1 2 3 }`` → ``{"key": [1, 2, 3]}``.
+    * a repeated key → a list of its values.
+    * bare items at this level → ``{"_items": [...]}``.
+    """
+    out: dict[str, object] = {}
+    items: list[object] = []
+    for entry in block.entries:
+        if isinstance(entry, Item):
+            items.append(_as_python(entry.value))
+            continue
+        assert isinstance(entry, Node)
+        value = _as_python(entry.value)
+        if entry.key in out:
+            existing = out[entry.key]
+            if isinstance(existing, list) and not _is_value_list(block, entry.key):
+                existing.append(value)
+            else:
+                out[entry.key] = [existing, value]
+        else:
+            out[entry.key] = value
+    if items:
+        out["_items"] = items
+    return out
+
+
+def _is_value_list(block: Block, key: str) -> bool:
+    """True when the first value of ``key`` was itself a list."""
+    first = block.get(key)
+    return isinstance(first, (Block, Color))
+
+
+def _as_python(value: object) -> object:
+    if isinstance(value, Color):
+        return [_as_python(v) for v in value.components]
+    if isinstance(value, Block):
+        if value.entries and all(isinstance(e, Item) for e in value.entries):
+            return [_as_python(e.value) for e in value.entries]
+        return as_dict(value)
+    if isinstance(value, Date):
+        return str(value)
+    if isinstance(value, VarRef):
+        return f"@{value.name}"
+    if isinstance(value, Operator):
+        return value.text
+    return value
+
+
 def variables(block: Block) -> dict[str, object]:
     """Collect ``@name = value`` definitions of a block, in source order."""
     out: dict[str, object] = {}

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, GetJsonSchemaHandler
-from typing import Optional, Dict, List, Tuple, Union, Literal, Any
+from typing import Optional, Dict, List, Tuple, Union, Any
 from enum import Enum
 from pydantic.json_schema import JsonSchemaValue
 from pydantic_core import CoreSchema, core_schema
