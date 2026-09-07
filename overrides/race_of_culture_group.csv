@@ -1,0 +1,74 @@
+# Race of each CK2 culture group -> heritage `parameters = { species_<race> = yes }`.
+# Seeded by scripts/seed_culture_overrides.py; docs/design_races.md item 1.
+# review = yes means the value was derived from the group NAME, not from an
+# unambiguous source file: a human must confirm it (e.g. elves.txt holds four
+# groups but one race, giants.txt holds giants and giantkin).
+# Editing `race` changes the emitted species flag and the placeholder ethnicity id.
+ck2_culture_group,race,ck2_source_file,review,derivation
+horse_group,horse,99_animals.txt,yes,CK2 group id horse_group (file 99_animals.txt mixes races)
+cat_group,cat,99_animals.txt,yes,CK2 group id cat_group (file 99_animals.txt mixes races)
+bear_group,bear,99_animals.txt,yes,CK2 group id bear_group (file 99_animals.txt mixes races)
+hedgehog_group,hedgehog,99_animals.txt,yes,CK2 group id hedgehog_group (file 99_animals.txt mixes races)
+duck_group,duck,99_animals.txt,yes,CK2 group id duck_group (file 99_animals.txt mixes races)
+dog_group,dog,99_animals.txt,yes,CK2 group id dog_group (file 99_animals.txt mixes races)
+elephant_group,elephant,99_animals.txt,yes,CK2 group id elephant_group (file 99_animals.txt mixes races)
+dragon_group,dragon,99_animals.txt,yes,CK2 group id dragon_group (file 99_animals.txt mixes races)
+panda_group,panda,99_animals.txt,yes,CK2 group id panda_group (file 99_animals.txt mixes races)
+orc_group,orc,demihuman.txt,yes,CK2 group id orc_group (file demihuman.txt mixes races)
+goblinoid_group,goblinoid,demihuman.txt,yes,CK2 group id goblinoid_group (file demihuman.txt mixes races)
+draconic_culture_group,dragon,dragons.txt,yes,CK2 file dragons.txt
+dragonkin_group,dragon,dragons.txt,yes,CK2 file dragons.txt
+dwarf_group,dwarf,dwarves.txt,no,CK2 file dwarves.txt
+dark_elf_group,elf,elves.txt,yes,CK2 file elves.txt
+high_elf_group,elf,elves.txt,yes,CK2 file elves.txt
+sylvan_elf_group,elf,elves.txt,yes,CK2 file elves.txt
+eladrin_group,elf,elves.txt,yes,CK2 file elves.txt
+giant_group,giant,giants.txt,no,CK2 file giants.txt
+giantkin_group,giant,giants.txt,yes,CK2 file giants.txt
+nafili_group,giant,giants.txt,yes,CK2 file giants.txt
+mordrin_group,giant,giants.txt,yes,CK2 file giants.txt
+abeiran_group,human,human.txt,no,CK2 file human.txt
+amaese_group,human,human.txt,no,CK2 file human.txt
+calishite_group,human,human.txt,no,CK2 file human.txt
+celestial_sea_group,human,human.txt,no,CK2 file human.txt
+raum_group,human,human.txt,no,CK2 file human.txt
+damaran_group,human,human.txt,no,CK2 file human.txt
+chondathan_group,human,human.txt,no,CK2 file human.txt
+illuskan_group,human,human.txt,no,CK2 file human.txt
+imaskari_group,human,human.txt,no,CK2 file human.txt
+katakoro_group,human,human.txt,no,CK2 file human.txt
+katashakan_group,human,human.txt,no,CK2 file human.txt
+lapal_group,human,human.txt,no,CK2 file human.txt
+malatran_group,human,human.txt,no,CK2 file human.txt
+maztican_group,human,human.txt,no,CK2 file human.txt
+mulan_group,human,human.txt,no,CK2 file human.txt
+zakharan_group,human,human.txt,no,CK2 file human.txt
+netherese_group,human,human.txt,no,CK2 file human.txt
+taan_group,human,human.txt,no,CK2 file human.txt
+shou_group,human,human.txt,no,CK2 file human.txt
+tethyrian_group,human,human.txt,no,CK2 file human.txt
+ulutiun_group,human,human.txt,no,CK2 file human.txt
+old_zakharan_group,human,human.txt,no,CK2 file human.txt
+gnome_group,gnome,littlefolk.txt,yes,CK2 group id gnome_group (file littlefolk.txt mixes races)
+halfling_group,halfling,littlefolk.txt,yes,CK2 group id halfling_group (file littlefolk.txt mixes races)
+undead_group,undead,monsters.txt,yes,CK2 group id undead_group (file monsters.txt mixes races)
+minotaur_group,minotaur,monsters.txt,yes,CK2 group id minotaur_group (file monsters.txt mixes races)
+beastfolk_group,beastfolk,monsters.txt,yes,CK2 group id beastfolk_group (file monsters.txt mixes races)
+fish_group,fish,monsters.txt,yes,CK2 group id fish_group (file monsters.txt mixes races)
+centaur_group,centaur,monsters.txt,yes,CK2 group id centaur_group (file monsters.txt mixes races)
+avian_group,avian,monsters.txt,yes,CK2 group id avian_group (file monsters.txt mixes races)
+aberration_culture_group,aberration,monsters.txt,yes,CK2 group id aberration_culture_group (file monsters.txt mixes races)
+construct_group,construct,monsters.txt,yes,CK2 group id construct_group (file monsters.txt mixes races)
+plant_group,plant,monsters.txt,yes,CK2 group id plant_group (file monsters.txt mixes races)
+fey_group,fey,monsters.txt,yes,CK2 group id fey_group (file monsters.txt mixes races)
+celestial_group,celestial,outsiders.txt,yes,CK2 group id celestial_group (file outsiders.txt mixes races)
+fiendish_group,fiendish,outsiders.txt,yes,CK2 group id fiendish_group (file outsiders.txt mixes races)
+gith_group,gith,outsiders.txt,yes,CK2 group id gith_group (file outsiders.txt mixes races)
+planetouched_group,planetouched,outsiders.txt,yes,CK2 group id planetouched_group (file outsiders.txt mixes races)
+genie_group,genie,outsiders.txt,yes,CK2 group id genie_group (file outsiders.txt mixes races)
+outsider_group,outsider,outsiders.txt,yes,CK2 group id outsider_group (file outsiders.txt mixes races)
+outworlder_group,outworlder,outsiders.txt,yes,CK2 group id outworlder_group (file outsiders.txt mixes races)
+slaad_group,slaad,outsiders.txt,yes,CK2 group id slaad_group (file outsiders.txt mixes races)
+monster_group,monster,province_monster_culture.txt,no,CK2 file province_monster_culture.txt
+serpent_group,serpent,scalykind.txt,yes,CK2 group id serpent_group (file scalykind.txt mixes races)
+scaly_group,scaly,scalykind.txt,yes,CK2 group id scaly_group (file scalykind.txt mixes races)

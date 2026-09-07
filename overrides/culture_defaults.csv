@@ -1,0 +1,5 @@
+# Per-culture override of the three CK3 pillar keys CK2 cannot supply.
+# Empty file = every culture takes the derived value
+# (docs/step_cultures_religions.md, table `Derived culture keys`).
+# Blank cells fall back to the derived value, so a row may override just one.
+ck2_culture,ethos,martial_custom,head_determination,note

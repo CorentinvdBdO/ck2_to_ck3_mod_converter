@@ -1,0 +1,74 @@
+# Portrait ethnicity of each CK2 culture group -> culture `ethnicities = { 10 = <x> }`.
+# Seeded by scripts/seed_culture_overrides.py; docs/design_races.md item 5 tier 2.
+# Human groups get the nearest vanilla ethnicity, non-human groups a generated
+# `fae_placeholder_<race>` that inherits a vanilla look with a # TODO comment.
+# review = yes means a human must confirm: either no real-world analogue existed
+# for the CK2 graphical_cultures value, or the race needs real art.
+ck2_culture_group,ck3_ethnicity,review,note
+horse_group,fae_placeholder_horse,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+cat_group,fae_placeholder_cat,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+bear_group,fae_placeholder_bear,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+hedgehog_group,fae_placeholder_hedgehog,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+duck_group,fae_placeholder_duck,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+dog_group,fae_placeholder_dog,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+elephant_group,fae_placeholder_elephant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+dragon_group,fae_placeholder_dragon,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+panda_group,fae_placeholder_panda,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+orc_group,fae_placeholder_orc,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+goblinoid_group,fae_placeholder_goblinoid,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+draconic_culture_group,fae_placeholder_dragon,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+dragonkin_group,fae_placeholder_dragon,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+dwarf_group,fae_placeholder_dwarf,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+dark_elf_group,fae_placeholder_elf,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+high_elf_group,fae_placeholder_elf,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+sylvan_elf_group,fae_placeholder_elf,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+eladrin_group,fae_placeholder_elf,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+giant_group,fae_placeholder_giant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+giantkin_group,fae_placeholder_giant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+nafili_group,fae_placeholder_giant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+mordrin_group,fae_placeholder_giant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+abeiran_group,mediterranean,no,assumed from the CK2 graphical_cultures value occitangfx
+amaese_group,asian_tibetan,no,assumed from the CK2 graphical_cultures value bodpagfx
+calishite_group,arab,no,assumed from the CK2 graphical_cultures value persiangfx
+celestial_sea_group,asian_han_chinese,no,assumed from the CK2 graphical_cultures value chinesegfx
+raum_group,slavic,no,assumed from the CK2 graphical_cultures value easternslavicgfx
+damaran_group,slavic,no,assumed from the CK2 graphical_cultures value easterngfx
+chondathan_group,caucasian,no,assumed from the CK2 graphical_cultures value frankishgfx
+illuskan_group,caucasian_northern_blond,no,assumed from the CK2 graphical_cultures value norsegfx
+imaskari_group,indian,no,assumed from the CK2 graphical_cultures value indiangfx
+katakoro_group,asian_tibetan,no,assumed from the CK2 graphical_cultures value bodpagfx
+katashakan_group,african,no,assumed from the CK2 graphical_cultures value westafricangfx
+lapal_group,indian,no,assumed from the CK2 graphical_cultures value indiangfx
+malatran_group,south_indian,no,assumed from the CK2 graphical_cultures value southindiangfx
+maztican_group,east_african,no,assumed from the CK2 graphical_cultures value mesoamericangfx
+mulan_group,arab,no,assumed from the CK2 graphical_cultures value persiangfx
+zakharan_group,arab,no,assumed from the CK2 graphical_cultures value muslimgfx
+netherese_group,arab,no,assumed from the CK2 graphical_cultures value muslimgfx
+taan_group,asian_mongol,no,assumed from the CK2 graphical_cultures value mongolgfx
+shou_group,asian_han_chinese,no,assumed from the CK2 graphical_cultures value chinesegfx
+tethyrian_group,caucasian,no,assumed from the CK2 graphical_cultures value englishgfx
+ulutiun_group,circumpolar,no,assumed from the CK2 graphical_cultures value ugricgfx
+old_zakharan_group,indian,no,assumed from the CK2 graphical_cultures value indiangfx
+gnome_group,fae_placeholder_gnome,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+halfling_group,fae_placeholder_halfling,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+undead_group,fae_placeholder_undead,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+minotaur_group,fae_placeholder_minotaur,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+beastfolk_group,fae_placeholder_beastfolk,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+fish_group,fae_placeholder_fish,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+centaur_group,fae_placeholder_centaur,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+avian_group,fae_placeholder_avian,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+aberration_culture_group,fae_placeholder_aberration,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+construct_group,fae_placeholder_construct,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+plant_group,fae_placeholder_plant,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+fey_group,fae_placeholder_fey,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+celestial_group,fae_placeholder_celestial,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+fiendish_group,fae_placeholder_fiendish,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+gith_group,fae_placeholder_gith,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+planetouched_group,fae_placeholder_planetouched,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+genie_group,fae_placeholder_genie,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+outsider_group,fae_placeholder_outsider,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+outworlder_group,fae_placeholder_outworlder,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+slaad_group,fae_placeholder_slaad,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+monster_group,fae_placeholder_monster,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+serpent_group,fae_placeholder_serpent,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity
+scaly_group,fae_placeholder_scaly,yes,placeholder until a ck3_fantasy_assets pack ships a real ethnicity

@@ -1,0 +1,6 @@
+# Per-faith override of the three CK3 core tenets.
+# Empty file = every faith takes the default set decided in docs/DECISIONS.md
+# (tenet_ritual_celebrations / tenet_sanctity_of_nature / tenet_ancestor_worship),
+# except where a CK2 flag justifies a different one (docs/step_cultures_religions.md).
+# One row per CK2 religion id; all three columns must be filled to take effect.
+ck2_religion,tenet_1,tenet_2,tenet_3,note
