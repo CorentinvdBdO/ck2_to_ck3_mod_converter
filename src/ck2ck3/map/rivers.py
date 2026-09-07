@@ -76,9 +76,22 @@ _NEIGHBOURS = [
 ]
 
 
+#: every palette index that is part of a river (not 254 water, not 255 land)
+RIVER_INDICES: tuple[int, ...] = tuple(SPECIAL) + tuple(range(BODY_MIN, BODY_MAX + 1))
+
+
 def is_river(idx: int) -> bool:
     """River pixels are the three specials plus the width bodies. 254 is not."""
     return idx in SPECIAL or BODY_MIN <= idx <= BODY_MAX
+
+
+def river_mask(idx_map: np.ndarray) -> np.ndarray:
+    """Vectorised ``is_river`` over a whole bitmap.
+
+    ``np.isin`` against the index list, not ``np.vectorize(is_river)``: the
+    latter is a Python call per pixel and takes minutes on a 13.6 Mpx bitmap.
+    """
+    return np.isin(idx_map, RIVER_INDICES)
 
 
 @dataclass
@@ -107,7 +120,7 @@ def trace(idx_map: np.ndarray) -> list[RiverPath]:
     code lose branches.
     """
     h, w = idx_map.shape
-    river = np.vectorize(is_river, otypes=[bool])(idx_map)
+    river = river_mask(idx_map)
     degree = _degree(river)
     visited = np.zeros_like(river)
 
@@ -150,27 +163,25 @@ def trace(idx_map: np.ndarray) -> list[RiverPath]:
                 return path
 
     paths: list[RiverPath] = []
-    specials = [
-        (int(y), int(x))
-        for y, x in zip(*np.nonzero(np.isin(idx_map, SPECIAL)))
-    ]
-    endpoints = [
-        (int(y), int(x)) for y, x in zip(*np.nonzero(river & (degree == 1)))
-    ]
-    leftovers = lambda: [  # noqa: E731
-        (int(y), int(x)) for y, x in zip(*np.nonzero(river & ~visited))
-    ]
+    # Seed order matters: specials first so a source/merge/split is the head of
+    # its path, then plain endpoints, then whatever is left (closed loops).
+    # All three seed lists are computed ONCE. Recomputing "which river pixels
+    # are still unvisited" inside the loop is a full 13.6 Mpx scan per leftover
+    # pixel and never finishes on a real map.
+    specials = _coords(np.isin(idx_map, SPECIAL))
+    endpoints = _coords(river & (degree == 1))
+    everything = _coords(river)
 
-    for seeds in (specials, endpoints):
+    for seeds in (specials, endpoints, everything):
         for y, x in seeds:
             if not visited[y, x]:
                 paths.append(walk(y, x))
-    remaining = leftovers()
-    while remaining:
-        y, x = remaining[0]
-        paths.append(walk(y, x))
-        remaining = leftovers()
     return [p for p in paths if p.points]
+
+
+def _coords(mask: np.ndarray) -> list[tuple[int, int]]:
+    ys, xs = np.nonzero(mask)
+    return list(zip(ys.tolist(), xs.tolist()))
 
 
 def _degree(river: np.ndarray) -> np.ndarray:

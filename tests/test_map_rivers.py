@@ -253,3 +253,33 @@ def test_stats_counts_each_class():
     s = rivers.stats(idx)
     assert s["sources"] == 1 and s["merges"] == 1 and s["splits"] == 1
     assert s["body"] == 4 and s["water"] == 4
+
+
+def test_river_mask_matches_is_river_elementwise():
+    """The vectorised mask must agree with the scalar predicate."""
+    arr = np.array([[0, 1, 2, 3, 11, 12, 254, 255]], dtype=np.int16)
+    expected = np.array([[rivers.is_river(int(v)) for v in arr[0]]])
+    assert (rivers.river_mask(arr) == expected).all()
+
+
+def test_trace_covers_every_river_pixel_on_a_dense_map():
+    """Regression: the old leftover scan was O(n) per pixel and never finished.
+
+    Also the property that matters: no river pixel may be dropped.
+    """
+    rng = np.random.default_rng(0)
+    src = np.full((120, 120), rivers.LAND, dtype=np.int16)
+    for _ in range(20):  # 20 wiggly rivers
+        y, x = int(rng.integers(5, 115)), int(rng.integers(5, 20))
+        src[y, x] = rivers.SOURCE
+        for _ in range(60):
+            x += 1
+            y = int(np.clip(y + rng.integers(-1, 2), 0, 119))
+            if x >= 119:
+                break
+            src[y, x] = 3
+    total = int(rivers.river_mask(src).sum())
+    seen: set[tuple[int, int]] = set()
+    for path in rivers.trace(src):
+        seen.update(path.points)
+    assert len(seen) == total
