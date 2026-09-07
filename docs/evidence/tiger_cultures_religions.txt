@@ -1,0 +1,61 @@
+ck3-tiger validation of the `cultures` + `religions` steps
+=========================================================
+
+tool:      ck3-tiger 1.19.0
+game:      /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+source:    /home/cvdbdo/git/paradox/ck3/wt/cultures-religions/Faerun/Faerun
+regenerate: uv run scripts/validate_cultures_religions.py
+
+The mod under test holds ONLY this lane's outputs plus a minimal
+.mod, with the replace_path list of configs/faerun.toml that covers
+them. No landed_titles and no localization exist yet, so every
+cross-reference to a county and every faith loc key is expected to be
+reported: those belong to the titles and localisation lanes.
+
+Step counts
+-----------
+cultures.culture_groups            67
+cultures.cultures                  419
+cultures.name_lists                419
+cultures.placeholder_ethnicities   37
+cultures.traditions_emitted        97
+cultures.opinion_formats           417
+cultures.opinion_formats_vanilla_already 2
+cultures.missing_race_overrides    0
+cultures.missing_ethnicity_overrides 0
+religions.religion_groups          15
+religions.families                 15
+religions.faiths                   94
+religions.holy_site_types          255
+religions.holy_site_links          470
+religions.faiths_without_holy_site 0
+religions.pagan_roots_religions    6
+religions.loc_rename_rows          367
+religions.opinion_formats          124
+religions.opinion_formats_vanilla_already 0
+
+tiger totals: fatal: 0, error: 255, warning: 94, untidy: 0, tips: 0
+
+Findings by class
+-----------------
+  255  error(missing-item): title c_<county> not defined in common/landed_titles/
+   93  warning(missing-file): file gfx/interface/icons/faith/<faith>.dds does not exist
+    1  warning(encoding): Expected UTF-8 BOM encoding
+
+Reading the classes
+-------------------
+* `error(missing-item): title c_<county> not defined` — the 255 counties
+  the CK2 holy sites sit on. The titles lane generates them and keeps the
+  CK2 ids, so the references resolve once it lands. Not fixable here.
+* `warning(missing-file): gfx/interface/icons/faith/<faith>.dds` — tiger
+  infers a faith icon path from the faith id when the faith sets no
+  `icon`. CK2 ships one strip atlas (gfx/interface/religion_icon_strip.dds)
+  indexed by an integer, not per-faith files, so slicing it is image work
+  for the assets lane. Visible-but-non-fatal in game.
+* `warning(encoding): Expected UTF-8 BOM encoding` — one finding covering
+  all 46 generated files. `pdx.encoding.OUT_ENCODING` writes plain UTF-8
+  for script; tiger (and vanilla) want a BOM on script files too. That is
+  a converter-wide writer setting owned by the foundation lane, not this
+  step: flagged for the coordinator.
+
+0 fatal is the bar this lane had to clear, and it does.

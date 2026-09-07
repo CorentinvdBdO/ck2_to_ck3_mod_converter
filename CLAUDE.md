@@ -17,6 +17,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `uv run scripts/survey_faerun_loc.py` → `docs/evidence/loc_quirks.md`; `uv run scripts/collect_ck2_loc_codes.py` → `docs/evidence/ck2_loc_codes.csv` (text-code coverage); `uv run scripts/check_ck3_loc.py <mod>` — validate a generated `localization/` tree (exit 1 on a malformed line).
 - `nohup uv run scripts/build_ck3_vanilla_loc_keys.py > docs/evidence/ck3_vanilla_loc_keys.log 2>&1 &` — refresh the 169,096-key vanilla CK3 loc key cache.
 - `uv run pytest -m "not slow"` — fast tests only (the slow ones parse the whole Faerûn clone).
+- `uv run scripts/survey_cultures_religions.py` → `uv run scripts/seed_culture_overrides.py` → `uv run scripts/export_opinion_modifier_map.py` → `uv run scripts/check_id_collisions.py` → `uv run scripts/validate_cultures_religions.py` — the `cultures`/`religions` pipeline: source survey, first draft of `overrides/*.csv`, tables for the traits + loc lanes, vanilla-id safety, ck3-tiger evidence.
 
 ## Rules
 - Base branch is `main`. Lanes `lane/<name>`. Never commit on main.
@@ -34,6 +35,10 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `replace_path` is **not** recursive: `history` does nothing for `history/provinces`. `map_data` needs none at all (same-filename override is enough). See `docs/output_bootstrap.md`.
 - All three shipped CK3 heightmap/atlas PNGs are stored **bottom-up**.
 - Faerûn defines ~15k baronies but builds ~3.8k holdings; barony set = built holdings, never the defined list.
+- Faerûn has **67 culture groups / 419 cultures** and **15 religion groups / 94 religions** (`verified`; the survey's "~495 cultures" and "~130–184 religions" were upper bounds).
+- A CK2 culture *group* carries only `graphical_cultures` and `alternate_start` — **no colour**. A CK3 language pillar requires one.
+- `common/culture/pillars`, `common/culture/traditions`, `common/ethnicities` and `common/modifier_definition_formats` are **not** `replace_path`s: an id emitted there must not collide with vanilla (Faerûn's `gur` and `mari` cultures do).
+- ck3-tiger wants a **UTF-8 BOM on script files**, not just localisation; `pdx.encoding.OUT_ENCODING` writes plain UTF-8 (open, see `docs/step_cultures_religions.md`).
 - CK2 `positions.txt` is per province; there are no barony coordinates to import.
 - CK3 localisation has no `FROM` scope; CK2 `From…` codes need a saved scope (`docs/loc_codes.md`).
 - CK3 text formats are named in `game/gui/preload/textformatting.gui`; there is no `#Y`, yellow is `#M`.
@@ -44,5 +49,6 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`
 - `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
 - `docs/formats_loc.md` — CK2 localisation CSV quirks and the CK3 `.yml` rules. `docs/loc_codes.md` — CK2 text code → CK3 data function table, evidence and coverage (94.0 %).
+- `docs/step_cultures_religions.md` — the `cultures` + `religions` steps: id scheme, every derived default, the CK2-flag→doctrine table, what the neighbouring lanes own. Tables: `mappings/culture_fields.csv`, `mappings/religion_fields.csv`, `mappings/opinion_modifier_map.csv`, `mappings/loc_key_renames_cultures_religions.csv`. Human input: `overrides/*.csv`.
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.

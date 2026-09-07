@@ -25,6 +25,8 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "clean",
     "descriptor",
     "map",
+    "cultures",
+    "religions",
     "traits",
     "loc",
 )
