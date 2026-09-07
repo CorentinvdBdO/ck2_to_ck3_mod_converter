@@ -1,0 +1,463 @@
+table,ck2_key,column,status,token,verdict,live_hits,info_hits,evidence
+culture_fields.csv,<group_id> = { ... },ck3_key,approx,heritage,found,335,5,common/casus_belli_types/09_mpo_wars.txt:1756
+culture_fields.csv,<group_id> = { ... },ck3_key,approx,language,found,472,4,common/scripted_character_templates/01_ep1_character_templates.txt:614
+culture_fields.csv,parent,ck3_key,approx,parents,found,73,6,common/defines/00_defines.txt:356
+culture_fields.csv,color,ck3_key,exact,color,found,4089,7,common/legends/legend_types/00_legends.txt:2
+culture_fields.csv,graphical_cultures,ck3_key,approx,building_gfx,found,254,4,common/culture/aesthetics_bundles/00_aesthetics.txt:24
+culture_fields.csv,graphical_cultures,ck3_key,approx,clothing_gfx,found,259,2,common/culture/aesthetics_bundles/00_aesthetics.txt:25
+culture_fields.csv,graphical_cultures,ck3_key,approx,coa_gfx,found,255,2,common/culture/aesthetics_bundles/00_aesthetics.txt:23
+culture_fields.csv,graphical_cultures,default_when_none,approx,building_gfx,found,254,4,common/culture/aesthetics_bundles/00_aesthetics.txt:24
+culture_fields.csv,graphical_cultures,default_when_none,approx,western_building_gfx,found,276,1,common/scripted_triggers/00_illustration_triggers.txt:47
+culture_fields.csv,graphical_cultures,default_when_none,approx,clothing_gfx,found,259,2,common/culture/aesthetics_bundles/00_aesthetics.txt:25
+culture_fields.csv,graphical_cultures,default_when_none,approx,western_clothing_gfx,found,56,0,common/customizable_localization/00_regional_custom_localization.txt:4457
+culture_fields.csv,graphical_cultures,default_when_none,approx,coa_gfx,found,255,2,common/culture/aesthetics_bundles/00_aesthetics.txt:23
+culture_fields.csv,graphical_cultures,default_when_none,approx,western_coa_gfx,found,79,1,common/coat_of_arms/template_lists/coa_templates.txt:266
+culture_fields.csv,graphical_cultures (culture-level override),ck3_key,approx,building_gfx,found,254,4,common/culture/aesthetics_bundles/00_aesthetics.txt:24
+culture_fields.csv,graphical_cultures (culture-level override),ck3_key,approx,clothing_gfx,found,259,2,common/culture/aesthetics_bundles/00_aesthetics.txt:25
+culture_fields.csv,graphical_cultures (culture-level override),ck3_key,approx,coa_gfx,found,255,2,common/culture/aesthetics_bundles/00_aesthetics.txt:23
+culture_fields.csv,unit_graphical_cultures,ck3_key,approx,unit_gfx,found,253,2,common/culture/aesthetics_bundles/00_aesthetics.txt:26
+culture_fields.csv,unit_graphical_cultures,default_when_none,approx,unit_gfx,found,253,2,common/culture/aesthetics_bundles/00_aesthetics.txt:26
+culture_fields.csv,unit_graphical_cultures,default_when_none,approx,western_unit_gfx,found,38,0,common/customizable_localization/00_regional_custom_localization.txt:3775
+culture_fields.csv,(none),ck3_key,none,ethnicities,found,247,2,common/ethnicities/00_ethnicities_templates.txt:2
+culture_fields.csv,(none),default_when_none,none,ethnicities,found,247,2,common/ethnicities/00_ethnicities_templates.txt:2
+culture_fields.csv,(none),ck3_key,none,house_coa_frame,found,234,1,common/culture/cultures/00_west_germanic.txt:24
+culture_fields.csv,(none),ck3_key,none,house_coa_mask_offset,found,143,0,common/culture/cultures/00_west_germanic.txt:25
+culture_fields.csv,(none),ck3_key,none,house_coa_mask_scale,found,143,0,common/culture/cultures/00_west_germanic.txt:26
+culture_fields.csv,(none),ck3_key,none,dynasty_coa_frame,info_only,0,1,common/culture/cultures/_cultures.info:90
+culture_fields.csv,(none),ck3_key,none,ethos,found,263,3,common/accolade_types/04_ep2_skilled_attributes.txt:78
+culture_fields.csv,(none),default_when_none,none,ethos_communal,found,177,0,common/accolade_types/04_ep2_eminent_attributes.txt:540
+culture_fields.csv,(none),ck3_key,none,heritage,found,335,5,common/casus_belli_types/09_mpo_wars.txt:1756
+culture_fields.csv,(none),ck3_key,none,language,found,472,4,common/scripted_character_templates/01_ep1_character_templates.txt:614
+culture_fields.csv,feminist,ck3_key,approx,martial_custom,found,248,0,common/game_concepts/00_game_concepts.txt:331
+culture_fields.csv,feminist,default_when_none,approx,martial_custom_male_only,found,234,0,common/culture/pillars/00_martial_custom.txt:6
+culture_fields.csv,horde,ck3_key,approx,head_determination,found,246,1,common/culture/pillars/00_head_determination.txt:6
+culture_fields.csv,horde,ck3_key,approx,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,horde,default_when_none,approx,head_determination_domain,found,208,0,common/culture/pillars/00_head_determination.txt:5
+culture_fields.csv,(none),ck3_key,none,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,(none),default_when_none,none,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,seafarer,ck3_key,approx,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,allow_looting,ck3_key,approx,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,castes,ck3_key,approx,traditions,found,295,2,common/defines/00_defines.txt:1163
+culture_fields.csv,dukes_called_kings,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+culture_fields.csv,dukes_called_kings,ck3_key,approx,title,found,3953,143,common/council_positions/00_council_positions.txt:2760
+culture_fields.csv,dukes_called_kings,ck3_key,approx,tier,found,4056,40,common/council_positions/00_council_positions.txt:882
+culture_fields.csv,dukes_called_kings,ck3_key,approx,duchy,found,1998,21,common/task_contracts/admin_contracts.txt:2836
+culture_fields.csv,dukes_called_kings,ck3_key,approx,name_lists,found,316,3,common/flavorization/10_tgp_korea_flavorization.txt:9
+culture_fields.csv,tribal_name,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+culture_fields.csv,tribal_name,ck3_key,approx,title,found,3953,143,common/council_positions/00_council_positions.txt:2760
+culture_fields.csv,tribal_name,ck3_key,approx,governments,found,1146,18,common/council_positions/00_council_positions.txt:1760
+culture_fields.csv,tribal_name,ck3_key,approx,tribal_government,found,1456,1,common/casus_belli_types/01_fp1_wars.txt:1003
+culture_fields.csv,tribal_name,ck3_key,approx,name_lists,found,316,3,common/flavorization/10_tgp_korea_flavorization.txt:9
+culture_fields.csv,modifier,ck3_key,approx,province_modifier,found,1388,12,common/legends/legend_types/00_legends.txt:207
+culture_fields.csv,character_modifier,ck3_key,exact,character_modifier,found,2972,22,common/game_concepts/00_game_concepts.txt:2639
+culture_fields.csv,male_names,ck3_key,exact,male_names,found,218,3,common/culture/name_lists/00_west_germanic.txt:58
+culture_fields.csv,male_names,default_when_none,exact,male_names,found,218,3,common/culture/name_lists/00_west_germanic.txt:58
+culture_fields.csv,male_names,default_when_none,exact,Placeholder,found,156,0,common/customizable_localization/99_pl_relations.txt:2
+culture_fields.csv,female_names,ck3_key,exact,female_names,found,218,3,common/culture/name_lists/00_west_germanic.txt:78
+culture_fields.csv,female_names,default_when_none,exact,female_names,found,218,3,common/culture/name_lists/00_west_germanic.txt:78
+culture_fields.csv,female_names,default_when_none,exact,Placeholder,found,156,0,common/customizable_localization/99_pl_relations.txt:2
+culture_fields.csv,(none),ck3_key,none,name_list,found,254,3,common/flavorization/00_title_holders.txt:8015
+culture_fields.csv,(dynasty names live in common/dynasties),ck3_key,approx,dynasty_names,found,219,2,common/culture/name_lists/00_west_germanic.txt:30
+culture_fields.csv,(dynasty names live in common/dynasties),ck3_key,approx,cadet_dynasty_names,found,203,1,common/culture/name_lists/00_west_germanic.txt:3
+culture_fields.csv,(dynasty names live in common/dynasties),default_when_none,approx,dynasty_names,found,219,2,common/culture/name_lists/00_west_germanic.txt:30
+culture_fields.csv,from_dynasty_prefix,ck3_key,approx,dynasty_of_location_prefix,found,128,2,common/culture/name_lists/00_west_germanic.txt:82
+culture_fields.csv,bastard_dynasty_prefix,ck3_key,exact,bastard_dynasty_prefix,found,3,0,common/culture/name_lists/00_west_germanic.txt:83
+culture_fields.csv,male_patronym / female_patronym + prefix (bool),ck3_key,approx,patronym_prefix_male,found,33,1,common/culture/name_lists/00_west_germanic.txt:529
+culture_fields.csv,male_patronym / female_patronym + prefix (bool),ck3_key,approx,patronym_suffix_male,found,46,2,common/culture/name_lists/00_west_germanic.txt:85
+culture_fields.csv,male_patronym / female_patronym + prefix (bool),ck3_key,approx,patronym_prefix_female,found,29,1,common/culture/name_lists/00_west_germanic.txt:530
+culture_fields.csv,male_patronym / female_patronym + prefix (bool),ck3_key,approx,patronym_suffix_female,found,37,2,common/culture/name_lists/00_west_germanic.txt:86
+culture_fields.csv,(implicit in CK2 whenever a patronym is set),ck3_key,approx,always_use_patronym,found,31,7,common/governments/00_government_types.txt:134
+culture_fields.csv,(implicit in CK2 whenever a patronym is set),default_when_none,approx,always_use_patronym,found,31,7,common/governments/00_government_types.txt:134
+culture_fields.csv,pat_grf_name_chance,ck3_key,exact,pat_grf_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:89
+culture_fields.csv,mat_grf_name_chance,ck3_key,exact,mat_grf_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:90
+culture_fields.csv,father_name_chance,ck3_key,exact,father_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:91
+culture_fields.csv,pat_grm_name_chance,ck3_key,exact,pat_grm_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:94
+culture_fields.csv,mat_grm_name_chance,ck3_key,exact,mat_grm_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:95
+culture_fields.csv,mother_name_chance,ck3_key,exact,mother_name_chance,found,85,1,common/culture/name_lists/00_west_germanic.txt:96
+culture_fields.csv,founder_named_dynasties,ck3_key,exact,founder_named_dynasties,found,88,1,common/culture/name_lists/00_tungusic.txt:157
+culture_fields.csv,dynasty_name_first,ck3_key,approx,dynasty_name_first,found,22,0,common/culture/name_lists/00_ainu.txt:3
+culture_fields.csv,dynasty_name_first,ck3_key,approx,name_order_convention,found,26,1,common/culture/cultures/00_magyar.txt:40
+culture_fields.csv,dynasty_title_names,ck3_key,approx,can_be_named_after_dynasty,found,171,2,common/landed_titles/06_philippines.txt:1886
+culture_fields.csv,dynasty_title_names,ck3_key,approx,house_based_map_names,found,64,1,common/culture/name_lists/00_japanese.txt:3
+culture_fields.csv,mercenary_names (CK2 keeps these in common/mercenaries),ck3_key,approx,mercenary_names,found,82,2,common/culture/name_lists/00_west_germanic.txt:100
+culture_fields.csv,grammar_transform,ck3_key,exact,grammar_transform,found,9,0,common/culture/name_lists/00_iberian.txt:666
+culture_fields.csv,(none),ck3_key,none,suggest_family_names,found,7,1,common/culture/name_lists/00_ryukyuan.txt:4
+culture_fields.csv,(none),ck3_key,none,suggest_ancestor_names,found,7,1,common/culture/name_lists/00_ryukyuan.txt:5
+culture_fields.csv,(none),ck3_key,none,house_based_map_names,found,64,1,common/culture/name_lists/00_japanese.txt:3
+culture_fields.csv,(none),ck3_key,none,created,found,340,20,common/scripted_character_templates/00_peasants_template.txt:326
+culture_fields.csv,(none),ck3_key,none,history_loc_override,found,6,1,common/culture/cultures/00_south_slavic.txt:101
+culture_fields.csv,(none),ck3_key,none,dlc_tradition,found,173,1,common/culture/cultures/00_west_germanic.txt:85
+culture_fields.csv,(none),ck3_key,none,dlc_fallback_pillar,info_only,0,1,common/culture/cultures/_cultures.info:54
+culture_fields.csv,per-province tech levels (15 files),ck3_key,approx,discover_innovation,found,3380,1,common/scripted_effects/01_dlc_fp1_scripted_effects.txt:1230
+culture_fields.csv,per-province tech levels (15 files),ck3_key,approx,join_era,found,171,1,history/cultures/radhanite.txt:24
+religion_fields.csv,<group_id> = { ... },ck3_key,approx,family,found,687,20,common/accolade_types/04_ep2_eminent_attributes.txt:566
+religion_fields.csv,<group_id> = { ... },ck3_key,approx,faiths,found,215,29,common/casus_belli_types/00_religious_war.txt:134
+religion_fields.csv,(no CK2 equivalent above the group),ck3_key,none,hostility_doctrine,found,4,2,common/religion/religion_family_types/00_religion_family_types.txt:3
+religion_fields.csv,(no CK2 equivalent above the group),ck3_key,none,piety_icon_group,found,9,5,common/religion/religion_family_types/00_religion_family_types.txt:8
+religion_fields.csv,(no CK2 equivalent above the group),ck3_key,none,graphical_faith,found,78,6,common/religion/religion_family_types/00_religion_family_types.txt:2
+religion_fields.csv,(no CK2 equivalent above the group),ck3_key,none,doctrine_background_icon,found,6,4,common/religion/religion_family_types/00_religion_family_types.txt:4
+religion_fields.csv,<religion_id> = { ... },ck3_key,exact,faiths,found,215,29,common/casus_belli_types/00_religious_war.txt:134
+religion_fields.csv,graphical_culture,ck3_key,approx,graphical_faith,found,78,6,common/religion/religion_family_types/00_religion_family_types.txt:2
+religion_fields.csv,graphical_culture,default_when_none,approx,graphical_faith,found,78,6,common/religion/religion_family_types/00_religion_family_types.txt:2
+religion_fields.csv,graphical_culture,default_when_none,approx,pagan_gfx,found,76,0,common/buildings/00_temple_buildings.txt:453
+religion_fields.csv,hostile_within_group,ck3_key,approx,parameters,found,1866,47,common/house_aspirations/10_tgp_japan_house_aspirations.txt:16
+religion_fields.csv,hostile_within_group,ck3_key,approx,hostility_same_religion,found,7,1,common/religion/doctrine_types/30_core_tenets.txt:1784
+religion_fields.csv,hostile_within_group,default_when_none,approx,hostility_same_religion,found,7,1,common/religion/doctrine_types/30_core_tenets.txt:1784
+religion_fields.csv,male_names / female_names,ck3_key,approx,reserved_male_names,found,7,2,common/religion/religion_types/00_dualism.txt:46
+religion_fields.csv,male_names / female_names,ck3_key,approx,reserved_female_names,found,3,2,common/religion/religion_types/00_judaism.txt:50
+religion_fields.csv,color,ck3_key,exact,color,found,4089,7,common/legends/legend_types/00_legends.txt:2
+religion_fields.csv,icon,ck3_key,approx,icon,found,4042,54,common/accolade_types/04_ep2_eminent_attributes.txt:29
+religion_fields.csv,graphical_culture,ck3_key,approx,graphical_faith,found,78,6,common/religion/religion_family_types/00_religion_family_types.txt:2
+religion_fields.csv,high_god_name,ck3_key,approx,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,high_god_name,ck3_key,approx,HighGodName,found,81,0,common/religion/religion_types/00_shintoism.txt:63
+religion_fields.csv,high_god_name,ck3_key,approx,HighGodNamePossessive,found,69,0,common/religion/religion_types/00_shintoism.txt:65
+religion_fields.csv,high_god_name,ck3_key,approx,HighGodNameSheHe,found,67,0,common/religion/religion_types/00_shintoism.txt:66
+religion_fields.csv,high_god_name,ck3_key,approx,CHARACTER_SHEHE_SHE,found,188,0,common/customizable_localization/05_bp2_custom_loc.txt:55
+religion_fields.csv,high_god_name,ck3_key,approx,HighGodHerHis,found,67,0,common/religion/religion_types/00_shintoism.txt:68
+religion_fields.csv,god_names,ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,god_names,ck3_key,exact,GoodGodNames,found,71,0,common/religion/religion_types/00_shintoism.txt:172
+religion_fields.csv,evil_god_names,ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,evil_god_names,ck3_key,exact,EvilGodNames,found,57,0,common/religion/religion_types/00_shintoism.txt:173
+religion_fields.csv,evil_god_names,ck3_key,exact,DevilName,found,58,0,common/religion/religion_types/00_shintoism.txt:150
+religion_fields.csv,scripture_name,ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,scripture_name,ck3_key,exact,ReligiousText,found,61,0,common/religion/religion_types/00_shintoism.txt:187
+religion_fields.csv,scripture_name,ck3_key,exact,ReligiousText2,found,61,0,common/religion/religion_types/00_shintoism.txt:188
+religion_fields.csv,scripture_name,ck3_key,exact,ReligiousText3,found,61,0,common/religion/religion_types/00_shintoism.txt:189
+religion_fields.csv,priest_title,ck3_key,approx,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,priest_title,ck3_key,approx,PriestMale,found,77,0,common/religion/religion_types/00_shintoism.txt:198
+religion_fields.csv,priest_title,ck3_key,approx,PriestMalePlural,found,77,0,common/religion/religion_types/00_shintoism.txt:199
+religion_fields.csv,priest_title,ck3_key,approx,PriestFemale,found,77,0,common/religion/religion_types/00_shintoism.txt:200
+religion_fields.csv,priest_title,ck3_key,approx,PriestFemalePlural,found,77,0,common/religion/religion_types/00_shintoism.txt:201
+religion_fields.csv,priest_title,ck3_key,approx,PriestNeuter,found,75,0,common/religion/religion_types/00_shintoism.txt:202
+religion_fields.csv,priest_title,ck3_key,approx,PriestNeuterPlural,found,75,0,common/religion/religion_types/00_shintoism.txt:203
+religion_fields.csv,priest_title,ck3_key,approx,AltPriestTermPlural,found,55,0,common/religion/religion_types/00_shintoism.txt:204
+religion_fields.csv,piety_name,ck3_key,approx,piety_icon_group,found,9,5,common/religion/religion_family_types/00_religion_family_types.txt:8
+religion_fields.csv,piety_name,default_when_none,approx,piety_icon_group,found,9,5,common/religion/religion_family_types/00_religion_family_types.txt:8
+religion_fields.csv,piety_name,default_when_none,approx,pagan,found,150,1,common/defines/graphic/00_graphics.txt:819
+religion_fields.csv,crusade_name,ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,crusade_name,ck3_key,exact,GHWName,found,49,0,common/religion/religion_types/00_shintoism.txt:221
+religion_fields.csv,crusade_name,ck3_key,exact,GHWNamePlural,found,49,0,common/religion/religion_types/00_shintoism.txt:222
+religion_fields.csv,intermarry,ck3_key,approx,hostility,found,28,9,common/defines/00_defines.txt:804
+religion_fields.csv,intermarry,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,intermarry,ck3_key,approx,parameters,found,1866,47,common/house_aspirations/10_tgp_japan_house_aspirations.txt:16
+religion_fields.csv,intermarry,ck3_key,approx,doctrine_pluralism_pluralistic,found,176,0,common/accolade_types/04_ep2_common_attributes.txt:1206
+religion_fields.csv,intermarry,default_when_none,approx,doctrine_pluralism_righteous,found,43,1,common/scripted_modifiers/00_faction_modifiers.txt:109
+religion_fields.csv,max_wives,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,max_wives,default_when_none,approx,doctrine_monogamy,found,24,0,common/religion/religion_types/00_basque_paganism.txt:17
+religion_fields.csv,max_consorts,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,max_consorts,default_when_none,approx,doctrine_monogamy,found,24,0,common/religion/religion_types/00_basque_paganism.txt:17
+religion_fields.csv,women_can_take_consorts / men_can_take_consorts,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,women_can_take_consorts / men_can_take_consorts,default_when_none,approx,doctrine_gender_male_dominated,found,193,0,common/scripted_character_templates/05_bp2_character_templates.txt:63
+religion_fields.csv,feminist,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,feminist,default_when_none,approx,doctrine_gender_male_dominated,found,193,0,common/scripted_character_templates/05_bp2_character_templates.txt:63
+religion_fields.csv,priests_can_marry,ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,priests_can_marry,default_when_none,exact,doctrine_clerical_marriage_allowed,found,55,0,common/scripted_triggers/00_adultery_triggers.txt:76
+religion_fields.csv,priests_can_inherit,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,priests_can_inherit,default_when_none,approx,doctrine_clerical_succession_temporal_appointment,found,51,0,common/scripted_triggers/00_activity_triggers.txt:81
+religion_fields.csv,female_temple_holders / male_temple_holders,ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,female_temple_holders / male_temple_holders,default_when_none,exact,doctrine_clerical_gender_male_only,found,48,0,common/customizable_localization/00_divinity_custom_loc.txt:164
+religion_fields.csv,can_hold_temples,ck3_key,approx,theocracy_government,found,323,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1017
+religion_fields.csv,can_hold_temples,ck3_key,approx,can_get_government,found,12,2,common/governments/01_japan_government_types.txt:52
+religion_fields.csv,can_grant_divorce,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,can_grant_divorce,default_when_none,approx,doctrine_divorce_approval,found,15,0,common/religion/religion_types/00_basque_paganism.txt:18
+religion_fields.csv,cousin_marriage,ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,cousin_marriage,default_when_none,exact,doctrine_consanguinity_restricted,found,15,0,common/scripted_triggers/00_religious_triggers.txt:241
+religion_fields.csv,psc_marriage,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,bs_marriage / pc_marriage,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,divine_blood,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,can_excommunicate,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,can_excommunicate,default_when_none,approx,doctrine_no_head,found,76,0,common/religion/religion_types/00_shintoism.txt:8
+religion_fields.csv,can_call_crusade,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,can_call_crusade,default_when_none,approx,doctrine_pluralism_righteous,found,43,1,common/scripted_modifiers/00_faction_modifiers.txt:109
+religion_fields.csv,can_retire_to_monastery,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,pacifist,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,allow_looting,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,allow_rivermovement,ck3_key,none,wanua_government,found,168,0,common/customizable_localization/00_government_custom_loc.txt:985
+religion_fields.csv,allow_rivermovement,ck3_key,none,flag,found,4094,2,common/scripted_character_templates/04_fp3_character_templates.txt:319
+religion_fields.csv,allow_rivermovement,ck3_key,none,government_enables_river_travel,found,2,0,common/scripted_rules/00_rules.txt:538
+religion_fields.csv,seafarer,ck3_key,approx,traditions,found,295,2,common/defines/00_defines.txt:1163
+religion_fields.csv,seafarer,ck3_key,approx,tradition_seafaring,found,25,0,common/script_values/06_ce1_epidemics_values.txt:1333
+religion_fields.csv,pentarchy / autocephaly,ck3_key,approx,tenet_pentarchy,found,7,0,common/religion/religion_types/00_christianity.txt:339
+religion_fields.csv,pentarchy / autocephaly,ck3_key,approx,religious_head,found,578,1,common/council_positions/00_council_positions.txt:876
+religion_fields.csv,has_heir_designation,ck3_key,approx,succession_laws,found,1463,0,common/game_concepts/00_game_concepts.txt:1761
+religion_fields.csv,has_heir_designation,ck3_key,approx,appointment_succession_law,found,9,0,common/game_concepts/07_ep3_game_concepts.txt:326
+religion_fields.csv,unit_modifier / unit_home_modifier,ck3_key,approx,character_modifier,found,2972,22,common/game_concepts/00_game_concepts.txt:2639
+religion_fields.csv,character_modifier,ck3_key,approx,character_modifier,found,2972,22,common/game_concepts/00_game_concepts.txt:2639
+religion_fields.csv,uses_jizya_tax,ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,hard_to_convert,ck3_key,approx,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,reformed,ck3_key,approx,pagan_roots,found,35,1,common/religion/religion_types/00_basque_paganism.txt:5
+religion_fields.csv,reformed,ck3_key,approx,religion,found,4067,29,common/council_positions/00_council_positions.txt:664
+religion_fields.csv,reformed,ck3_key,approx,unreformed_faith_doctrine,found,47,0,common/scripted_triggers/00_religious_triggers.txt:1798
+religion_fields.csv,reformed,ck3_key,approx,unreformed,found,121,2,common/task_contracts/laamp_base_contracts.txt:5143
+religion_fields.csv,reformed,ck3_key,approx,faith,found,4078,18,common/council_positions/00_council_positions.txt:593
+religion_fields.csv,reformer_head_of_religion,ck3_key,approx,religious_head,found,578,1,common/council_positions/00_council_positions.txt:876
+religion_fields.csv,(none),ck3_key,none,religious_head,found,578,1,common/council_positions/00_council_positions.txt:876
+religion_fields.csv,(none),default_when_none,none,doctrine_no_head,found,76,0,common/religion/religion_types/00_shintoism.txt:8
+religion_fields.csv,(none),ck3_key,none,traits,found,1654,35,common/scripted_character_templates/04_fp3_character_templates.txt:683
+religion_fields.csv,(none),ck3_key,none,virtues,found,100,3,common/game_concepts/00_game_concepts.txt:2189
+religion_fields.csv,(none),ck3_key,none,sins,found,84,5,common/game_concepts/00_game_concepts.txt:2193
+religion_fields.csv,(none),ck3_key,none,holy_order_names,found,43,2,common/religion/religion_types/00_basque_paganism.txt:54
+religion_fields.csv,(none),ck3_key,none,holy_order_maa,found,24,1,common/defines/00_defines.txt:1210
+religion_fields.csv,(none),ck3_key,none,custom_faith_icons,found,49,1,common/religion/religion_types/00_shintoism.txt:58
+religion_fields.csv,(none),ck3_key,none,doctrine_background_icon,found,6,4,common/religion/religion_family_types/00_religion_family_types.txt:4
+religion_fields.csv,(none),ck3_key,none,doctrine_selection_pair,found,15,1,common/religion/religion_types/00_finno_ugric.txt:236
+religion_fields.csv,holy_site = <religion>,ck3_key,approx,county,found,4022,74,common/scripted_character_templates/00_officials_templates.txt:7
+religion_fields.csv,holy_site = <religion>,ck3_key,approx,barony,found,1595,23,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:38
+religion_fields.csv,holy_site = <religion>,ck3_key,approx,parameters,found,1866,47,common/house_aspirations/10_tgp_japan_house_aspirations.txt:16
+religion_fields.csv,holy_site = <religion>,ck3_key,approx,flag,found,4094,2,common/scripted_character_templates/04_fp3_character_templates.txt:319
+religion_fields.csv,holy_site = <religion>,ck3_key,approx,character_modifier,found,2972,22,common/game_concepts/00_game_concepts.txt:2639
+religion_fields.csv,(the faith's side of the link),ck3_key,approx,holy_site,found,733,1,common/legends/legend_seeds/00_legend_seeds.txt:369
+religion_fields.csv,(what a valid CK3 faith needs),ck3_key,exact,mandatory,found,7,1,common/great_projects/types/00_ministry_projects.txt:256
+religion_fields.csv,(what a valid CK3 faith needs),ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,(what a valid CK3 faith needs),ck3_key,exact,groups,found,13,21,common/situation/situations/tgp_dynastic_cycle.txt:384
+religion_fields.csv,(what a valid CK3 faith needs),ck3_key,exact,doctrine_core_tenets,found,1,0,common/religion/doctrine_group_types/00_doctrine_group_types.txt:288
+religion_fields.csv,(what a valid CK3 faith needs),ck3_key,exact,x3,found,3,0,common/character_interactions/00_invite_agent_to_scheme.txt:404
+religion_fields.csv,(safe fantasy-pantheon default doctrine set),ck3_key,exact,copy,found,13,1,common/script_values/00_culture_values.txt:643
+religion_fields.csv,(safe fantasy-pantheon default doctrine set),ck3_key,exact,doctrine,found,2205,42,common/scripted_character_templates/03_fp2_character_templates.txt:150
+religion_fields.csv,(mandatory-in-practice non-doctrine fields),ck3_key,exact,family,found,687,20,common/accolade_types/04_ep2_eminent_attributes.txt:566
+religion_fields.csv,(mandatory-in-practice non-doctrine fields),ck3_key,exact,color,found,4089,7,common/legends/legend_types/00_legends.txt:2
+religion_fields.csv,(mandatory-in-practice non-doctrine fields),ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+religion_fields.csv,god/priest/afterlife naming,ck3_key,exact,localization,found,1246,62,common/task_contracts/laamp_transport_contracts.txt:1947
+government_map.csv,feudal_government,ck3_government,exact,feudal_government,found,1334,1,common/casus_belli_types/01_fp1_wars.txt:1015
+government_map.csv,democratic_feudal_government,ck3_government,approx,feudal_government,found,1334,1,common/casus_belli_types/01_fp1_wars.txt:1015
+government_map.csv,democratic_feudal_government,succession_law_to_emit,approx,feudal_elective_succession_law,found,9,0,common/laws/01_title_succession_laws.txt:3
+government_map.csv,divine_feudal_government,ck3_government,approx,feudal_government,found,1334,1,common/casus_belli_types/01_fp1_wars.txt:1015
+government_map.csv,theocratic_feudal_government,ck3_government,approx,feudal_government,found,1334,1,common/casus_belli_types/01_fp1_wars.txt:1015
+government_map.csv,theocracy_government,ck3_government,exact,theocracy_government,found,323,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1017
+government_map.csv,theocracy_government,succession_law_to_emit,exact,bishop_theocratic_succession_law,found,1,0,common/laws/00_succession_laws.txt:708
+government_map.csv,baron_theocracy_government,ck3_government,exact,theocracy_government,found,323,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1017
+government_map.csv,baron_theocracy_government,succession_law_to_emit,exact,bishop_theocratic_succession_law,found,1,0,common/laws/00_succession_laws.txt:708
+government_map.csv,muslim_government,ck3_government,approx,clan_government,found,762,0,common/casus_belli_types/05_fp3_wars.txt:904
+government_map.csv,republic_government,ck3_government,approx,republic_government,found,322,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1024
+government_map.csv,republic_government,succession_law_to_emit,approx,city_succession_law,found,1,0,common/laws/00_succession_laws.txt:770
+government_map.csv,merchant_republic_government,ck3_government,approx,republic_government,found,322,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1024
+government_map.csv,merchant_republic_government,succession_law_to_emit,approx,city_succession_law,found,1,0,common/laws/00_succession_laws.txt:770
+government_map.csv,tribal_government,ck3_government,exact,tribal_government,found,1456,1,common/casus_belli_types/01_fp1_wars.txt:1003
+government_map.csv,nomadic_tribal_government,ck3_government,approx,nomad_government,found,782,1,common/casus_belli_types/00_religious_war.txt:3664
+government_map.csv,nomadic_tribal_government,succession_law_to_emit,approx,single_heir_succession_kurultai_law,found,7,0,common/laws/00_succession_laws.txt:344
+government_map.csv,semi_nomadic_government,ck3_government,approx,tribal_government,found,1456,1,common/casus_belli_types/01_fp1_wars.txt:1003
+government_map.csv,ordning_government,ck3_government,approx,tribal_government,found,1456,1,common/casus_belli_types/01_fp1_wars.txt:1003
+government_map.csv,order_government,ck3_government,exact,holy_order_government,found,21,0,common/customizable_localization/00_government_custom_loc.txt:845
+government_map.csv,order_government,succession_law_to_emit,exact,holy_order_succession_law,found,1,0,common/laws/00_succession_laws.txt:729
+government_map.csv,roman_imperial_government,ck3_government,approx,administrative_government,found,646,0,common/customizable_localization/00_government_custom_loc.txt:1085
+government_map.csv,roman_imperial_government,succession_law_to_emit,approx,noble_family_succession_law,found,1341,0,common/laws/01_title_succession_laws.txt:217
+government_map.csv,celestial_government,ck3_government,approx,celestial_government,found,1901,0,common/customizable_localization/00_government_custom_loc.txt:949
+government_map.csv,celestial_government,succession_law_to_emit,approx,celestial_ministry_appointment_succession_law,found,15,0,common/laws/01_title_succession_laws.txt:292
+government_map.csv,celestial_bureaucracy,ck3_government,approx,meritocratic_government,found,459,0,common/customizable_localization/00_government_custom_loc.txt:1003
+government_map.csv,celestial_bureaucracy,succession_law_to_emit,approx,meritocratic_appointment_succession_law,found,7,0,common/laws/00_succession_laws.txt:1450
+government_map.csv,yikaria_government,ck3_government,approx,theocracy_government,found,323,0,common/customizable_localization/00_pl_custom_loc_extra.txt:1017
+government_map.csv,yikaria_government,succession_law_to_emit,approx,bishop_theocratic_succession_law,found,1,0,common/laws/00_succession_laws.txt:708
+government_map.csv,(landed_titles mercenary = yes),ck3_government,exact,mercenary_government,found,20,0,common/customizable_localization/00_government_custom_loc.txt:865
+government_map.csv,(landed_titles mercenary = yes),succession_law_to_emit,exact,mercenary_company_succession_law,found,1,0,common/laws/00_succession_laws.txt:750
+government_map.csv,(landless titular e_ organisation titles),ck3_government,approx,landless_adventurer_government,found,540,0,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:163
+government_map.csv,(landless titular e_ organisation titles),succession_law_to_emit,approx,landless_adventurer_succession_law,found,73,0,common/laws/00_succession_laws.txt:674
+title_fields.csv,color,ck3_key,exact,color,found,4089,7,common/legends/legend_types/00_legends.txt:2
+title_fields.csv,color,default_when_none,exact,color,found,4089,7,common/legends/legend_types/00_legends.txt:2
+title_fields.csv,capital,ck3_key,approx,capital,found,3293,34,common/task_contracts/laamp_transport_contracts.txt:33
+title_fields.csv,"<culture_id> = ""Name""  (bare culture key, 229 distinct ids in Faerun)",ck3_key,approx,cultural_names,found,1563,2,common/landed_titles/06_philippines.txt:1888
+title_fields.csv,title,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+title_fields.csv,title,ck3_key,approx,character,found,3639,457,common/scripted_character_templates/04_fp3_character_templates.txt:184
+title_fields.csv,title,ck3_key,approx,gender,found,1219,6,common/scripted_character_templates/04_fp3_character_templates.txt:75
+title_fields.csv,title,ck3_key,approx,male,found,3938,11,common/scripted_character_templates/04_fp3_character_templates.txt:116
+title_fields.csv,title,ck3_key,approx,tier,found,4056,40,common/council_positions/00_council_positions.txt:882
+title_fields.csv,title,ck3_key,approx,titles,found,539,45,common/council_positions/00_council_positions.txt:2113
+title_fields.csv,title_female,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+title_fields.csv,title_female,ck3_key,approx,character,found,3639,457,common/scripted_character_templates/04_fp3_character_templates.txt:184
+title_fields.csv,title_female,ck3_key,approx,gender,found,1219,6,common/scripted_character_templates/04_fp3_character_templates.txt:75
+title_fields.csv,title_female,ck3_key,approx,female,found,4085,11,common/scripted_character_templates/04_fp3_character_templates.txt:75
+title_fields.csv,title_prefix,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+title_fields.csv,title_prefix,ck3_key,approx,title,found,3953,143,common/council_positions/00_council_positions.txt:2760
+title_fields.csv,short_name,ck3_key,approx,definite_form,found,1437,2,common/landed_titles/01_japan_noble_family.txt:9
+title_fields.csv,location_ruler_title,ck3_key,approx,ruler_uses_title_name,found,1396,2,common/landed_titles/01_japan_noble_family.txt:11
+title_fields.csv,dignity,ck3_key,approx,ai_primary_priority,found,1516,2,common/landed_titles/01_japan_noble_family.txt:17
+title_fields.csv,holy_site,ck3_key,approx,county,found,4022,74,common/scripted_character_templates/00_officials_templates.txt:7
+title_fields.csv,holy_site,ck3_key,approx,barony,found,1595,23,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:38
+title_fields.csv,landless,ck3_key,exact,landless,found,1547,9,common/casus_belli_types/07_ep3_wars.txt:6054
+title_fields.csv,primary,ck3_key,approx,always_follows_primary_heir,found,1337,2,common/landed_titles/01_japan_noble_family.txt:12
+title_fields.csv,primary,ck3_key,approx,ai_primary_priority,found,1516,2,common/landed_titles/01_japan_noble_family.txt:17
+title_fields.csv,tribe,ck3_key,approx,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,tribe,ck3_key,approx,tribal_government,found,1456,1,common/casus_belli_types/01_fp1_wars.txt:1003
+title_fields.csv,pirate,ck3_key,approx,landless,found,1547,9,common/casus_belli_types/07_ep3_wars.txt:6054
+title_fields.csv,pirate,ck3_key,approx,require_landless,found,53,2,common/landed_titles/01_korea_noble_family.txt:1291
+title_fields.csv,pirate,ck3_key,approx,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,pirate,ck3_key,approx,landless_adventurer_government,found,540,0,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:163
+title_fields.csv,mercenary,ck3_key,approx,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,mercenary,ck3_key,approx,mercenary_government,found,20,0,common/customizable_localization/00_government_custom_loc.txt:865
+title_fields.csv,holy_order,ck3_key,approx,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,holy_order,ck3_key,approx,holy_order_government,found,21,0,common/customizable_localization/00_government_custom_loc.txt:845
+title_fields.csv,creation_requires_capital,ck3_key,approx,can_create,found,130,3,common/landed_titles/06_philippines.txt:1893
+title_fields.csv,allow,ck3_key,approx,can_create,found,130,3,common/landed_titles/06_philippines.txt:1893
+title_fields.csv,caliphate,ck3_key,approx,religious_head,found,578,1,common/council_positions/00_council_positions.txt:876
+title_fields.csv,caliphate,ck3_key,approx,doctrine_temporal_head,found,37,0,common/casus_belli_types/00_subjugation.txt:15
+title_fields.csv,pentarchy,ck3_key,approx,tenet_pentarchy,found,7,0,common/religion/religion_types/00_christianity.txt:339
+title_fields.csv,controls_religion,ck3_key,approx,religious_head,found,578,1,common/council_positions/00_council_positions.txt:876
+title_fields.csv,dynasty_title_names,ck3_key,approx,can_be_named_after_dynasty,found,171,2,common/landed_titles/06_philippines.txt:1886
+title_fields.csv,used_for_dynasty_names,ck3_key,approx,dynasty_names,found,219,2,common/culture/name_lists/00_west_germanic.txt:30
+title_fields.csv,assimilate,ck3_key,approx,de_jure_drift_disabled,found,15,2,common/landed_titles/00_landed_titles.txt:83
+title_fields.csv,male_names / female_names (Faerun uses both),ck3_key,approx,holding_regnal_male_names,found,1,2,common/landed_titles/00_landed_titles.txt:86
+title_fields.csv,male_names / female_names (Faerun uses both),ck3_key,approx,holding_regnal_female_names,info_only,0,2,common/landed_titles/_landed_titles.info:176
+title_fields.csv,male_names / female_names (Faerun uses both),ck3_key,approx,posthumous_regnal_male_names,found,1,2,common/landed_titles/01_japan.txt:1625
+title_fields.csv,male_names / female_names (Faerun uses both),ck3_key,approx,posthumous_regnal_female_names,found,1,2,common/landed_titles/01_japan.txt:1699
+title_fields.csv,name_tier (Faerun only),ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+title_fields.csv,name_tier (Faerun only),ck3_key,approx,title,found,3953,143,common/council_positions/00_council_positions.txt:2760
+title_fields.csv,name_tier (Faerun only),ck3_key,approx,tier,found,4056,40,common/council_positions/00_council_positions.txt:882
+title_fields.csv,name_tier (Faerun only),ck3_key,approx,name_lists,found,316,3,common/flavorization/10_tgp_korea_flavorization.txt:9
+title_fields.csv,can_be_claimed / can_be_usurped (Faerun only),ck3_key,approx,no_automatic_claims,found,1398,2,common/landed_titles/01_japan_noble_family.txt:13
+title_fields.csv,de_jure_liege / dejure_liege_title / owner / has_holder / holder_scope / is_titular / show_scope_change / hire_range / any_direct_de_jure_vassal_title,ck3_key,approx,de_jure_liege,found,310,3,common/casus_belli_types/00_claim.txt:23
+title_fields.csv,coat_of_arms (CK2 base) / Faerun gfx/flags/*.tga,ck3_key,approx,pattern,found,3357,0,common/defines/00_defines.txt:1446
+title_fields.csv,coat_of_arms (CK2 base) / Faerun gfx/flags/*.tga,ck3_key,approx,colored_emblem,found,4096,0,common/coat_of_arms/coat_of_arms/99_coa_designer_templates.txt:8
+title_fields.csv,coat_of_arms (CK2 base) / Faerun gfx/flags/*.tga,default_when_none,approx,default,found,473,198,common/game_rules/00_game_rules.txt:7
+title_fields.csv,coat_of_arms (CK2 base) / Faerun gfx/flags/*.tga,default_when_none,approx,pattern,found,3357,0,common/defines/00_defines.txt:1446
+title_fields.csv,coat_of_arms (CK2 base) / Faerun gfx/flags/*.tga,default_when_none,approx,color1,found,4096,0,common/coat_of_arms/coat_of_arms/99_coa_designer_templates.txt:4
+title_fields.csv,(none),ck3_key,none,province,found,4077,19,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:38
+title_fields.csv,(none),default_when_none,none,province,found,4077,19,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:38
+title_fields.csv,(none),ck3_key,none,noble_family,found,1298,4,common/game_concepts/tgp_game_concepts.txt:880
+title_fields.csv,(none),ck3_key,none,destroy_if_invalid_heir,found,1396,3,common/landed_titles/01_japan_noble_family.txt:15
+title_fields.csv,(none),ck3_key,none,destroy_on_succession,found,1,2,common/landed_titles/00_landed_titles.txt:111
+title_fields.csv,(none),ck3_key,none,delete_on_destroy,info_only,0,2,common/landed_titles/_landed_titles.info:74
+title_fields.csv,(none),ck3_key,none,delete_on_gain_same_tier,info_only,0,2,common/landed_titles/_landed_titles.info:81
+title_fields.csv,(none),ck3_key,none,figurehead,found,2,3,common/landed_titles/05_goryeo.txt:1132
+title_fields.csv,(none),ck3_key,none,allow_domicile,found,11,2,common/landed_titles/05_goryeo.txt:1133
+title_fields.csv,(none),ck3_key,none,can_use_nomadic_naming,found,63,0,common/landed_titles/00_landed_titles.txt:44
+title_fields.csv,(none),ck3_key,none,ignore_titularity_for_title_weighting,info_only,0,2,common/landed_titles/_landed_titles.info:165
+title_fields.csv,(none),ck3_key,none,personal_relation_entry,found,4,1,common/landed_titles/05_goryeo.txt:40
+title_fields.csv,(none),ck3_key,none,personal_relation_vassal,found,2,1,common/landed_titles/05_goryeo.txt:55
+title_fields.csv,holder (25993 uses in Faerun),ck3_key,exact,holder,found,4058,38,common/scripted_character_templates/00_pool_repopulation_character_templates.txt:1089
+title_fields.csv,liege (5613),ck3_key,exact,liege,found,3980,116,common/council_positions/00_council_positions.txt:109
+title_fields.csv,de_jure_liege (7),ck3_key,exact,de_jure_liege,found,310,3,common/casus_belli_types/00_claim.txt:23
+title_fields.csv,law (9198 uses in Faerun),ck3_key,approx,succession_laws,found,1463,0,common/game_concepts/00_game_concepts.txt:1761
+title_fields.csv,law (9198 uses in Faerun),ck3_key,approx,remove_succession_laws,found,3,0,history/titles/k_scotland.txt:236
+title_fields.csv,law (9198 uses in Faerun),default_when_none,approx,succession_laws,found,1463,0,common/game_concepts/00_game_concepts.txt:1761
+title_fields.csv,name (123) / adjective (113),ck3_key,approx,name,found,4043,53,common/achievement_groups.txt:2
+title_fields.csv,name (123) / adjective (113),ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+title_fields.csv,name (123) / adjective (113),ck3_key,approx,set_title_name,found,34,0,common/effect_localization/00_landed_title_effects.txt:16
+title_fields.csv,"reset_name / reset_adjective (CK2 base only, 0 uses in Faerun)",ck3_key,exact,reset_name,found,6,0,history/titles/e_seasia.txt:67
+title_fields.csv,government (44 uses in Faerun),ck3_key,exact,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,government (44 uses in Faerun),default_when_none,exact,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+title_fields.csv,government (44 uses in Faerun),default_when_none,exact,feudal_government,found,1334,1,common/casus_belli_types/01_fp1_wars.txt:1015
+title_fields.csv,set_tribute_suzerain (83) / clear_tribute_suzerain (61),ck3_key,approx,tributary_of,found,113,0,history/titles/k_kamarupa.txt:1718
+title_fields.csv,capital (24),ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+title_fields.csv,capital (24),ck3_key,approx,set_capital_county,found,70,0,common/casus_belli_types/07_ep3_wars.txt:6189
+title_fields.csv,effect (437) / qisma = { set_religion_head = ... },ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+title_fields.csv,set_global_flag (2),ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+title_fields.csv,set_global_flag (2),ck3_key,approx,set_global_variable,found,526,0,common/casus_belli_types/00_event_war.txt:57
+title_fields.csv,(none),ck3_key,none,change_development_level,found,4096,0,common/task_contracts/admin_contracts.txt:107
+title_fields.csv,(none),ck3_key,none,insert_title_history,found,7,0,history/titles/k_spanish_galicia.txt:7
+title_fields.csv,(none),ck3_key,none,holder_ignore_head_of_faith_requirement,found,45,0,history/titles/00_other_titles.txt:735
+title_fields.csv,b_<barony> = castle|city|temple|tribal|ct_spelljammer_port|ct_planar_portal,ck3_key,approx,holding,found,4050,46,common/task_contracts/laamp_extra_contracts.txt:1266
+title_fields.csv,b_<barony> = castle|city|temple|tribal|ct_spelljammer_port|ct_planar_portal,default_when_none,approx,holding,found,4050,46,common/task_contracts/laamp_extra_contracts.txt:1266
+title_fields.csv,building keys b_<barony> = ca_wall_1 | ct_port_1 | tp_barracks_1 | tb_shipyard_1 (CK2 base only: 63 distinct; ZERO in Faerun),ck3_key,approx,buildings,found,640,28,common/task_contracts/laamp_base_contracts.txt:2912
+title_fields.csv,culture,ck3_key,exact,culture,found,4087,9,common/council_positions/00_council_positions.txt:661
+title_fields.csv,religion,ck3_key,exact,religion,found,4067,29,common/council_positions/00_council_positions.txt:664
+title_fields.csv,terrain,ck3_key,approx,terrain,found,3235,19,common/scripted_character_templates/00_holy_order_character_templates.txt:82
+title_fields.csv,terrain,default_when_none,approx,default_land,found,1,0,common/province_terrain/00_province_terrain.txt:1
+title_fields.csv,terrain,default_when_none,approx,plains,found,2634,2,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:883
+title_fields.csv,build_wonder / build_wonder_upgrade / set_wonder_stage / set_wonder_damaged / destroy_wonder (Faerun),ck3_key,approx,special_building_slot,found,148,3,history/provinces/k_andhra.txt:415
+title_fields.csv,build_wonder / build_wonder_upgrade / set_wonder_stage / set_wonder_damaged / destroy_wonder (Faerun),ck3_key,approx,special_building,found,201,2,common/game_concepts/00_game_concepts.txt:1161
+title_fields.csv,build_wonder / build_wonder_upgrade / set_wonder_stage / set_wonder_damaged / destroy_wonder (Faerun),ck3_key,approx,duchy_capital_building,found,3,1,history/provinces/k_andalusia.txt:123
+title_fields.csv,(none),ck3_key,none,add_travel_point_of_interest,found,8,1,common/on_action/province_on_actions.txt:370
+character_fields.csv,name,ck3_key,exact,name,found,4043,53,common/achievement_groups.txt:2
+character_fields.csv,female,ck3_key,exact,female,found,4085,11,common/scripted_character_templates/04_fp3_character_templates.txt:75
+character_fields.csv,dynasty,ck3_key,exact,dynasty,found,4060,36,common/scripted_character_templates/04_ep2_character_templates.txt:3
+character_fields.csv,(none),ck3_key,none,dynasty_house,found,4093,3,common/scripted_character_templates/04_fp3_character_templates.txt:535
+character_fields.csv,religion,ck3_key,exact,religion,found,4067,29,common/council_positions/00_council_positions.txt:664
+character_fields.csv,culture,ck3_key,exact,culture,found,4087,9,common/council_positions/00_council_positions.txt:661
+character_fields.csv,martial / diplomacy / intrigue / stewardship / learning,ck3_key,exact,martial,found,4091,5,common/council_positions/00_council_positions.txt:285
+character_fields.csv,martial / diplomacy / intrigue / stewardship / learning,ck3_key,exact,diplomacy,found,4087,9,common/council_positions/00_council_positions.txt:2
+character_fields.csv,martial / diplomacy / intrigue / stewardship / learning,ck3_key,exact,intrigue,found,4094,2,common/council_positions/00_council_positions.txt:433
+character_fields.csv,martial / diplomacy / intrigue / stewardship / learning,ck3_key,exact,stewardship,found,4092,4,common/council_positions/00_council_positions.txt:143
+character_fields.csv,martial / diplomacy / intrigue / stewardship / learning,ck3_key,exact,learning,found,2366,7,common/council_positions/00_council_positions.txt:576
+character_fields.csv,combat_rating,ck3_key,approx,prowess,found,1634,2,common/council_positions/00_council_positions.txt:360
+character_fields.csv,health,ck3_key,exact,health,found,700,2,common/scripted_character_templates/05_bp2_character_templates.txt:19
+character_fields.csv,fertility,ck3_key,exact,fertility,found,294,4,common/task_contracts/nomads_migration_contracts.txt:41
+character_fields.csv,father / mother,ck3_key,exact,father,found,4090,6,common/scripted_character_templates/04_fp3_character_templates.txt:535
+character_fields.csv,father / mother,ck3_key,exact,mother,found,4087,9,common/secret_types/00_secret_types.txt:241
+character_fields.csv,real_father,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,real_father,ck3_key,approx,set_real_father,found,1,0,common/effect_localization/00_additional_effects.txt:168
+character_fields.csv,trait,ck3_key,exact,trait,found,4012,84,common/scripted_character_templates/04_ep2_character_templates.txt:9
+character_fields.csv,add_trait / remove_trait,ck3_key,exact,add_trait,found,1176,0,common/scripted_character_templates/04_ep2_character_templates.txt:608
+character_fields.csv,add_trait / remove_trait,ck3_key,exact,remove_trait,found,558,0,common/scripted_character_templates/00_pool_repopulation_character_templates.txt:1598
+character_fields.csv,disallow_random_traits,ck3_key,exact,disallow_random_traits,found,241,1,history/characters/berber.txt:7349
+character_fields.csv,dna,ck3_key,none,dna,found,469,2,common/defines/jomini/portraits.txt:5
+character_fields.csv,immortal_age,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,immortal_age,ck3_key,approx,set_immortal_age,found,1,1,common/effect_localization/00_additional_effects.txt:184
+character_fields.csv,give_nickname,ck3_key,exact,give_nickname,found,892,2,common/scripted_character_templates/04_ep2_character_templates.txt:605
+character_fields.csv,employer,ck3_key,exact,employer,found,1980,17,common/task_contracts/laamp_transport_contracts.txt:30
+character_fields.csv,add_claim,ck3_key,approx,add_pressed_claim,found,645,0,common/task_contracts/laamp_extra_contracts.txt:5106
+character_fields.csv,add_claim,ck3_key,approx,add_unpressed_claim,found,38,0,common/effect_localization/00_title_effects.txt:111
+character_fields.csv,add_claim,default_when_none,approx,add_unpressed_claim,found,38,0,common/effect_localization/00_title_effects.txt:111
+character_fields.csv,add_spouse / add_matrilineal_spouse,ck3_key,exact,add_spouse,found,4095,1,history/characters/oirat.txt:10
+character_fields.csv,add_spouse / add_matrilineal_spouse,ck3_key,exact,add_matrilineal_spouse,found,61,1,history/characters/galician.txt:1170
+character_fields.csv,remove_spouse,ck3_key,exact,remove_spouse,found,179,0,history/characters/galician.txt:1671
+character_fields.csv,add_consort,ck3_key,approx,add_concubine,found,54,0,history/characters/berber.txt:7361
+character_fields.csv,add_lover,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,add_lover,ck3_key,approx,set_relation_lover,found,42,0,common/effect_localization/00_character_effects.txt:886
+character_fields.csv,add_friend,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,add_friend,ck3_key,approx,set_relation_friend,found,109,0,common/effect_localization/00_character_effects.txt:824
+character_fields.csv,add_rival,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,add_rival,ck3_key,approx,set_relation_rival,found,121,0,common/effect_localization/00_character_effects.txt:852
+character_fields.csv,secret_religion,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,secret_religion,ck3_key,approx,add_secret,found,88,0,common/scripted_character_templates/01_ep1_character_templates.txt:1050
+character_fields.csv,secret_religion,ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+character_fields.csv,secret_religion,ck3_key,approx,secret_crypto_religionist,found,30,0,common/secret_types/00_secret_types.txt:587
+character_fields.csv,set_character_flag,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,set_character_flag,ck3_key,approx,add_character_flag,found,2040,0,common/scripted_character_templates/04_fp3_character_templates.txt:318
+character_fields.csv,capital,ck3_key,approx,capital,found,3293,34,common/task_contracts/laamp_transport_contracts.txt:33
+character_fields.csv,wealth / prestige,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,wealth / prestige,ck3_key,approx,add_gold,found,299,11,common/scripted_character_templates/04_ep2_character_templates.txt:569
+character_fields.csv,wealth / prestige,ck3_key,approx,add_prestige,found,996,0,common/council_positions/00_council_positions.txt:2900
+character_fields.csv,piety / decadence,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,piety / decadence,ck3_key,approx,add_piety,found,484,0,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:439
+character_fields.csv,effect,ck3_key,approx,effect,found,3920,176,common/scripted_character_templates/03_fp2_character_templates.txt:547
+character_fields.csv,birth,ck3_key,exact,birth,found,4095,1,common/customizable_localization/00_diarchy_custom_loc.txt:1565
+character_fields.csv,death,ck3_key,exact,death,found,4085,11,common/casus_belli_types/00_civil_war.txt:929
+character_fields.csv,death,default_when_none,exact,death,found,4085,11,common/casus_belli_types/00_civil_war.txt:929
+character_fields.csv,death_reason (inside death block),ck3_key,approx,death_reason,found,1362,0,common/secret_types/00_secret_types.txt:434
+character_fields.csv,death_reason (inside death block),default_when_none,approx,death_reason,found,1362,0,common/secret_types/00_secret_types.txt:434
+character_fields.csv,death_reason (inside death block),default_when_none,approx,death_natural_causes,found,133,0,common/game_concepts/00_game_concepts.txt:843
+character_fields.csv,(none),ck3_key,none,sexuality,found,201,1,common/scripted_character_templates/01_bp1_character_templates.txt:20
+character_fields.csv,(none),ck3_key,none,give_council_position,found,77,0,history/titles/e_china.txt:263
+character_fields.csv,(none),ck3_key,none,move_to_pool,found,80,0,common/council_positions/00_council_positions.txt:894
+character_fields.csv,(none),ck3_key,none,set_primary_title_to,found,43,0,common/casus_belli_types/09_mpo_wars.txt:1094
+character_fields.csv,(none),ck3_key,none,add_trait_xp,found,668,1,common/scripted_character_templates/04_ep2_character_templates.txt:340
+character_fields.csv,(none),ck3_key,none,add_character_modifier,found,795,0,common/scripted_character_templates/04_ep2_character_templates.txt:251
+character_fields.csv,(none),ck3_key,none,add_perk,found,95,0,common/effect_localization/00_additional_effects.txt:136
+character_fields.csv,(none),ck3_key,none,learn_language,found,77,0,common/council_positions/00_council_positions.txt:914
+character_fields.csv,(none),ck3_key,none,learn_language_of_culture,found,108,0,common/council_positions/00_council_positions.txt:909
+character_fields.csv,(none),ck3_key,none,portrait_override,info_only,0,1,history/_characters.info:31
+character_fields.csv,name,ck3_key,approx,name,found,4043,53,common/achievement_groups.txt:2
+character_fields.csv,name,default_when_none,approx,name,found,4043,53,common/achievement_groups.txt:2
+character_fields.csv,(none),ck3_key,none,prefix,found,2875,8,common/modifier_definition_formats/00_vassal_stance_definitions.txt:18
+character_fields.csv,culture,ck3_key,exact,culture,found,4087,9,common/council_positions/00_council_positions.txt:661
+character_fields.csv,coat_of_arms = { template layer { texture texture_internal emblem color } },ck3_key,approx,pattern,found,3357,0,common/defines/00_defines.txt:1446
+character_fields.csv,coat_of_arms = { template layer { texture texture_internal emblem color } },ck3_key,approx,colored_emblem,found,4096,0,common/coat_of_arms/coat_of_arms/99_coa_designer_templates.txt:8
+character_fields.csv,coat_of_arms = { template layer { texture texture_internal emblem color } },default_when_none,approx,placeholder,found,1927,0,common/event_transitions/debug_test_transitions.txt:4
+character_fields.csv,coat_of_arms = { template layer { texture texture_internal emblem color } },default_when_none,approx,CoA,found,43,2,common/casus_belli_types/01_fp1_wars.txt:710
+character_fields.csv,(none),ck3_key,none,motto,found,151,1,common/defines/00_defines.txt:1039
+character_fields.csv,(none - CK2 has no cadet houses),ck3_key,none,name,found,4043,53,common/achievement_groups.txt:2
+character_fields.csv,(none - CK2 has no cadet houses),ck3_key,none,dynasty,found,4060,36,common/scripted_character_templates/04_ep2_character_templates.txt:3
+character_fields.csv,(none - CK2 has no cadet houses),ck3_key,none,prefix,found,2875,8,common/modifier_definition_formats/00_vassal_stance_definitions.txt:18
+character_fields.csv,(none - CK2 has no cadet houses),ck3_key,none,motto,found,151,1,common/defines/00_defines.txt:1039
+character_fields.csv,date,ck3_key,exact,start_date,found,89,2,common/bookmarks/bookmarks/00_bookmarks.txt:2
+character_fields.csv,era = yes,ck3_key,approx,default_start_date,found,3,2,common/bookmarks/groups/00_bookmark_groups.txt:2
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,character,found,3639,457,common/scripted_character_templates/04_fp3_character_templates.txt:184
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,name,found,4043,53,common/achievement_groups.txt:2
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,history_id,found,281,2,common/bookmarks/bookmarks/00_bookmarks.txt:22
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,birth,found,4095,1,common/customizable_localization/00_diarchy_custom_loc.txt:1565
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,title,found,3953,143,common/council_positions/00_council_positions.txt:2760
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,government,found,4004,92,common/travel/point_of_interest_types/travel_point_of_interest_types.txt:58
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,culture,found,4087,9,common/council_positions/00_council_positions.txt:661
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,religion,found,4067,29,common/council_positions/00_council_positions.txt:664
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,dynasty,found,4060,36,common/scripted_character_templates/04_ep2_character_templates.txt:3
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,dynasty_splendor_level,found,164,0,common/bookmarks/bookmarks/00_bookmarks.txt:14
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,difficulty,found,195,0,common/game_rules/00_game_rules.txt:1
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,position,found,3988,108,common/council_positions/00_council_positions.txt:137
+character_fields.csv,selectable_character = { id age name title title_name character = { ... } },ck3_key,approx,animation,found,1251,45,common/task_contracts/laamp_base_contracts.txt:1025
+character_fields.csv,(none),ck3_key,none,type,found,3953,143,common/council_positions/00_council_positions.txt:887
+character_fields.csv,(none),ck3_key,none,id,found,1541,1,common/scripted_character_templates/00_mongol_templates.txt:2
+character_fields.csv,(none),ck3_key,none,age,found,3277,10,common/scripted_character_templates/04_ep2_character_templates.txt:2
+character_fields.csv,(none),ck3_key,none,genes,found,776,2,common/dna_data/00_mpo_dna.txt:4
+character_fields.csv,(none),ck3_key,none,entity,found,399,8,common/defines/jomini/portraits.txt:9
+character_fields.csv,(none),default_when_none,none,file,found,412,22,common/house_aspirations/00_admin_house_powers.txt:142
+character_fields.csv,(none),default_when_none,none,entirely,found,27,7,common/casus_belli_types/03_fp2_wars.txt:595
