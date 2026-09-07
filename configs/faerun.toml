@@ -17,17 +17,18 @@ bookmark_date = "1357.1.1"
 # the folders it takes over.
 replace_paths = [
     "common/bookmark_portraits",
-    "common/culture/cultures",
-    "common/culture/name_lists",
     "common/dna_data",
     "common/dynasties",
     "common/landed_titles",
     "common/province_terrain",
-    "common/religion/doctrine_types",
-    "common/religion/holy_site_types",
-    "common/religion/religion_family_types",
-    "common/religion/religion_types",
-    "common/terrain_types",
+    # NOT replaced, and each removal is load-bearing (ck3-tiger, 2026-09-07):
+    #   common/terrain_types        - province_terrain names vanilla terrain keys
+    #   common/culture/cultures     - history/provinces names a vanilla culture
+    #   common/culture/name_lists     (both until lane cultures-religions ships)
+    #   common/religion/*           - history/provinces names a vanilla faith
+    # Replacing them dropped the vanilla definitions and produced 2338 "terrain
+    # not defined", 2336 "culture not defined" and 2335 "faith not defined"
+    # errors. Each lane adds its folder back when it ships content for it.
     "gfx/interface/illustrations/loading_screens",
     "gfx/portraits/portrait_modifiers",
     # `replace_path` is NOT recursive: replacing "history" does nothing for

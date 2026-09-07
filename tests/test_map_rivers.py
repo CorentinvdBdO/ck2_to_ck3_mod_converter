@@ -338,3 +338,39 @@ def test_render_drops_a_special_whose_whole_path_is_under_water(tmp_path):
     out = rivers.render(bmp, c, np.ones((c.height, c.width), dtype=bool))
     assert rivers.count_specials(out)["sources"] == 0
     assert (out == rivers.WATER).all()
+
+
+def test_trace_anchors_a_merge_to_the_river_it_joins(tmp_path):
+    """Regression: scaling moved a tributary head off the main river.
+
+    ck3-tiger reported "river tributary (red) not joining another river" for
+    273 of Faerun's 308 merges. The merge's path must start on the main stem so
+    the redraw connects them at any scale factor.
+    """
+    src = np.full((16, 16), rivers.LAND, dtype=np.int16)
+    src[8, 1] = rivers.SOURCE
+    src[8, 2:14] = 3          # main stem along row 8
+    src[4, 6] = rivers.SOURCE
+    src[5:7, 6] = 4           # tributary coming down column 6
+    src[7, 6] = rivers.MERGE  # joins the stem at (8, 6)
+    bmp = write_bmp(src, tmp_path / "rivers.bmp")
+    c = canvas(w=64, h=64, factor=2.0, ox=8, oy=8)
+    out = rivers.render(bmp, c, np.zeros((c.height, c.width), dtype=bool))
+
+    ys, xs = np.nonzero(out == rivers.MERGE)
+    assert len(ys) == 1
+    my, mx = int(ys[0]), int(xs[0])
+    ring = out[my - 1 : my + 2, mx - 1 : mx + 2]
+    body = [v for v in ring.ravel() if rivers.BODY_MIN <= v <= rivers.BODY_MAX]
+    assert body, "the merge pixel must touch a river body pixel"
+
+
+def test_directory_sink_applies_the_bom_policy_by_path(tmp_path):
+    """The sink, not each call site, decides the BOM - from the path."""
+    from ck2ck3.map.sink import DirectorySink
+
+    sink = DirectorySink(tmp_path, verbose=False)
+    a = sink.text("common/defines/x.txt", "NJominiMap = {}\n")
+    b = sink.text("map_data/definition.csv", "0;0;0;0;x;x;\n")
+    assert a.read_bytes().startswith(b"\xef\xbb\xbf")
+    assert not b.read_bytes().startswith(b"\xef\xbb\xbf")

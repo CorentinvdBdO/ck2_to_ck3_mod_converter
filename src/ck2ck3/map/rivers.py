@@ -134,6 +134,18 @@ def trace(idx_map: np.ndarray) -> list[RiverPath]:
 
     def walk(sy: int, sx: int) -> RiverPath:
         path = RiverPath()
+        # A MERGE (red) pixel is a tributary head whose CK2 neighbour is the
+        # main river. Scaling by 1.95 moves the two ~2 px apart, so the redrawn
+        # tributary no longer touches what it joins and ck3-tiger reports
+        # "river tributary (red) not joining another river" - 273 of Faerun's
+        # 308 merges. Prepending that already-traced neighbour makes the
+        # Bresenham pass draw the connecting segment, at any scale factor.
+        # Same reasoning for SPLIT (yellow), which leaves a larger river.
+        if int(idx_map[sy, sx]) in (MERGE, SPLIT):
+            anchor = _anchor(sy, sx, neighbours, visited, idx_map)
+            if anchor is not None:
+                path.points.append(anchor)
+                path.values.append(int(idx_map[anchor]))
         y, x = sy, sx
         while True:
             visited[y, x] = True
@@ -182,6 +194,24 @@ def trace(idx_map: np.ndarray) -> list[RiverPath]:
 def _coords(mask: np.ndarray) -> list[tuple[int, int]]:
     ys, xs = np.nonzero(mask)
     return list(zip(ys.tolist(), xs.tolist()))
+
+
+def _anchor(sy, sx, neighbours, visited, idx_map):
+    """The neighbouring river pixel a tributary head should stay attached to.
+
+    Prefers an already-visited body pixel (it belongs to the river being
+    joined); falls back to any body neighbour. Never another special, which
+    would chain two markers together.
+    """
+    candidates = [
+        (ny, nx)
+        for ny, nx in neighbours(sy, sx)
+        if BODY_MIN <= int(idx_map[ny, nx]) <= BODY_MAX
+    ]
+    if not candidates:
+        return None
+    candidates.sort(key=lambda p: (not visited[p], -int(idx_map[p])))
+    return candidates[0]
 
 
 def _degree(river: np.ndarray) -> np.ndarray:

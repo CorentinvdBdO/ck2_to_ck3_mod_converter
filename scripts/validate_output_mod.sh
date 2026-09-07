@@ -13,7 +13,10 @@
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-MOD_DIR="${1:-$HERE/../claudespace/mods/faerun_ck2_to_ck3_converted}"
+# Default is the workspace path, not $HERE/../claudespace: this repo is often
+# checked out as a git worktree under wt/<lane>/, where ../claudespace does not
+# exist. Override with $1 or CK3_OUT_MOD.
+MOD_DIR="${1:-${CK3_OUT_MOD:-$HOME/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted}}"
 MOD_DIR="$(cd "$MOD_DIR" && pwd)"
 GAME="${CK3_GAME:-$HOME/.local/share/Steam/steamapps/common/Crusader Kings III/game}"
 TIGER="${CK3_TIGER:-$HOME/.local/bin/ck3-tiger}"
@@ -34,18 +37,25 @@ echo "ck3-tiger $(date -Is)"          >  "$REPORT"
 echo "mod:  $MOD_DIR"                 >> "$REPORT"
 echo "game: $GAME"                    >> "$REPORT"
 echo "---"                            >> "$REPORT"
-"$TIGER" "$DESC" --game "$GAME" >> "$REPORT" 2>&1
-RC=$?
+# Tiger colours its output with ANSI escapes even into a pipe, so strip them:
+# `grep -c '^error'` silently counts zero otherwise, which reads as "clean".
+"$TIGER" "$DESC" --game "$GAME" 2>&1 | sed -r 's/\x1B\[[0-9;]*[mK]//g' >> "$REPORT"
+RC=${PIPESTATUS[0]}
 
-# tiger prints one block per finding, headed by a severity keyword
-errors=$(grep -cE '^(error|fatal)' "$REPORT" || true)
-warns=$(grep -cE '^warning' "$REPORT" || true)
-tips=$(grep -cE '^(tips|untidy|advice)' "$REPORT" || true)
+# tiger prints one block per finding, headed by `severity(kind): message`
+errors=$(grep -cE '^(error|fatal)\(' "$REPORT" || true)
+warns=$(grep -cE '^warning\(' "$REPORT" || true)
+tips=$(grep -cE '^(tips|untidy|advice)\(' "$REPORT" || true)
 {
   echo "---"
   echo "summary: $errors error/fatal, $warns warning, $tips tips/untidy (tiger exit $RC)"
+  echo "--- by kind"
+  grep -oE '^[a-z]+\([a-z-]+\)' "$REPORT" | sort | uniq -c | sort -rn
+  echo "--- by message"
+  grep -oE '^[a-z]+\([a-z-]+\): .*' "$REPORT" \
+    | sed -r 's/[0-9]+/N/g' | sort | uniq -c | sort -rn | head -40
 } >> "$REPORT"
-tail -2 "$REPORT"
+sed -n '/^--- by kind/,$p' "$REPORT"
 echo "report   $REPORT"
 # tiger exits non-zero when it finds anything; the counts above are the signal
 exit 0

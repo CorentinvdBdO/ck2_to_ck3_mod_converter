@@ -69,7 +69,7 @@ def test_definition_csv_row_format_has_a_trailing_semicolon():
 def test_definition_csv_carries_no_bom_of_its_own():
     """The BOM decision belongs to the sink; definition.csv gets none."""
     assert not writers.render_definition_csv([prov(1)]).startswith("\ufeff")
-    assert "map_data/definition.csv" not in writers.NEEDS_BOM
+    assert not writers.needs_bom("map_data/definition.csv")
 
 
 def test_definition_csv_replaces_semicolons_in_names():
@@ -176,11 +176,37 @@ def test_adjacencies_remaps_ids_and_maps_the_type():
 
 def test_adjacencies_ck2_major_river_becomes_river_large():
     """CK3 accepts only `sea` and `river_large` as adjacency types."""
-    m = make_idmap([prov(1), prov(2)])
+    m = make_idmap([prov(1), prov(2), prov(3)])
     text, _ = writers.render_adjacencies_csv(
-        [Ck2Adjacency(1, 2, "major_river", -1, "")], m
+        [Ck2Adjacency(1, 2, "major_river", 3, "")], m
     )
-    assert ";river_large;" in text
+    assert ";river_large;3;" in text
+
+
+def test_adjacencies_without_a_through_is_dropped():
+    """CK3 needs a real province id in Through on EVERY row; CK2 allows -1."""
+    m = make_idmap([prov(1), prov(2)])
+    log: list[str] = []
+    text, n = writers.render_adjacencies_csv(
+        [Ck2Adjacency(1, 2, "major_river", -1, "")], m, dropped_log=log
+    )
+    assert n == 0
+    assert len(text.splitlines()) == 2  # header + the -1 terminator, no data
+    assert log and "no Through province" in log[0]
+
+
+def test_no_adjacency_row_ever_has_a_minus_one_through():
+    """The parse error tiger reported was a -1 in the Through column."""
+    m = make_idmap([prov(1), prov(2), prov(3)])
+    text, _ = writers.render_adjacencies_csv(
+        [
+            Ck2Adjacency(1, 2, "sea", 3, "ok"),
+            Ck2Adjacency(1, 2, "sea", -1, "no through"),
+        ],
+        m,
+    )
+    for line in text.splitlines()[1:-1]:  # skip header and the terminator row
+        assert line.split(";")[3] != "-1"
 
 
 def test_adjacencies_drops_rows_whose_endpoint_was_lost():
@@ -193,14 +219,27 @@ def test_adjacencies_drops_rows_whose_endpoint_was_lost():
     assert log and "endpoint lost" in log[0]
 
 
-def test_adjacencies_keeps_the_row_but_blanks_a_lost_through():
+def test_adjacencies_drops_a_row_whose_through_was_lost():
     m = make_idmap([prov(1), prov(2)])
     log: list[str] = []
-    text, _ = writers.render_adjacencies_csv(
+    text, n = writers.render_adjacencies_csv(
         [Ck2Adjacency(1, 2, "sea", 99, "c")], m, dropped_log=log
     )
-    assert ";sea;-1;" in text
-    assert log and "set -1" in log[0]
+    assert n == 0
+    assert len(text.splitlines()) == 2  # header + the -1 terminator
+    assert log and "Through" in log[0]
+
+
+def test_climate_never_puts_a_province_in_two_lists():
+    """CK2 lists some provinces twice; CK3 rejects that."""
+    m = make_idmap([prov(1), prov(2)])
+    m.ck2_to_ck3 = {10: 1, 20: 2}
+    text = writers.render_climate(
+        {"mild_winter": [10, 20], "severe_winter": [10]}, m
+    )
+    ids = [tok for line in text.splitlines() if line.startswith("\t")
+           for tok in line.split()]
+    assert sorted(ids) == ["1", "2"]
 
 
 # --------------------------------------------------------------------------- #
@@ -264,7 +303,7 @@ def test_geographical_regions_survive_a_reference_cycle():
 # --------------------------------------------------------------------------- #
 def test_province_terrain_needs_a_bom_and_has_the_three_default_lines():
     """Vanilla common/province_terrain/00_province_terrain.txt starts EF BB BF."""
-    assert "common/province_terrain" in writers.NEEDS_BOM
+    assert writers.needs_bom("common/province_terrain/fae_province_terrain.txt")
     text = writers.render_province_terrain({5: "hills"}, default="plains")
     assert "default_land=plains" in text
     assert "default_sea=sea" in text
@@ -284,3 +323,53 @@ def test_continent_lists_the_land_provinces():
     text = writers.render_continent(name="fae_continent", province_ids=[3, 1, 2])
     assert "fae_continent = {" in text and "id = 1" in text
     assert "1 2 3" in text
+
+
+# --------------------------------------------------------------------------- #
+# BOM policy
+# --------------------------------------------------------------------------- #
+def test_bom_is_required_for_script_files_and_not_for_flat_map_data():
+    """ck3-tiger: "Expected UTF-8 BOM encoding" on everything under common/ and
+    history/, plus map_data/geographical_regions. Vanilla's flat map_data text
+    files have none."""
+    for rel in (
+        "common/defines/fae_defines.txt",
+        "common/landed_titles/fae_landed_titles.txt",
+        "common/province_terrain/fae_province_terrain.txt",
+        "history/provinces/fae_provinces.txt",
+        "history/titles/fae_titles.txt",
+        "map_data/geographical_regions/fae_regions.txt",
+        "map_data/heightmap.heightmap",
+    ):
+        assert writers.needs_bom(rel), rel
+    for rel in (
+        "map_data/definition.csv",
+        "map_data/default.map",
+        "map_data/climate.txt",
+        "map_data/adjacencies.csv",
+        "map_data/island_region.txt",
+        "map_data/continent.txt",
+    ):
+        assert not writers.needs_bom(rel), rel
+
+
+def test_adjacencies_ends_with_the_minus_one_terminator_row():
+    """CK3 requires it: tiger errors "needs a line with all `-1;` at the end"."""
+    m = make_idmap([prov(1), prov(2), prov(3)])
+    text, _ = writers.render_adjacencies_csv(
+        [Ck2Adjacency(1, 2, "sea", 3, "strait")], m
+    )
+    assert text.splitlines()[-1] == "-1;-1;;-1;-1;-1;-1;-1;"
+
+
+# --------------------------------------------------------------------------- #
+# bootstrap banners
+# --------------------------------------------------------------------------- #
+def test_empty_replacement_banners_are_not_script_files():
+    """CK3 reads the filename in some history folders as an identifier."""
+    from ck2ck3.map import bootstrap
+
+    files = bootstrap.render_empty_replacements()
+    assert files, "there must be a banner in every replaced directory"
+    assert not any(rel.endswith(".txt") for rel in files)
+    assert "history/cultures/zz_emptied_by_converter.md" in files

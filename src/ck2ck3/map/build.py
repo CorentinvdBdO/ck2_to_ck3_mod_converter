@@ -203,7 +203,13 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
 
     # -------------------------------------------------------- text map files
     log("writing map_data text files")
-    sink.text("map_data/definition.csv", writers.render_definition_csv(ids.provinces))
+    keys = bootstrap.unique_keys(ids.provinces)
+    sink.text(
+        "map_data/definition.csv",
+        writers.render_definition_csv(
+            ids.provinces, bootstrap.definition_names(keys)
+        ),
+    )
     sink.text(
         "map_data/default.map",
         writers.render_default_map(ids, sea_zone_names=_sea_zone_names(dm, ids)),
@@ -230,13 +236,11 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     sink.text(
         f"common/province_terrain/{prefix}_province_terrain.txt",
         writers.render_province_terrain(terrain_ck3, default=cfg.terrain_default),
-        bom=True,
     )
     report["adjacencies"] = {"kept": kept_adj, "dropped": len(dropped_adj)}
 
     # ------------------------------------------------------------ bootstrap
     log("writing throwaway title scaffolding")
-    keys = bootstrap.unique_keys(ids.provinces)
     sink.text(
         f"common/defines/{prefix}_defines.txt",
         bootstrap.render_defines(width=canvas.width, height=canvas.height),

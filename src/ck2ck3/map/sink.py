@@ -30,8 +30,14 @@ class Sink(Protocol):
     @property
     def dry_run(self) -> bool: ...
 
-    def text(self, rel: str, content: str, *, bom: bool = False) -> Path:
-        """Write a text file under the output mod. ``rel`` is POSIX-style."""
+    def text(self, rel: str, content: str, *, bom: bool | None = None) -> Path:
+        """Write a text file under the output mod. ``rel`` is POSIX-style.
+
+        ``bom=None`` (the default) lets :func:`ck2ck3.map.writers.needs_bom`
+        decide from the path, which is what CK3 actually wants: script files
+        under ``common/`` and ``history/`` need a UTF-8 BOM, the flat
+        ``map_data`` files must not have one.
+        """
         ...
 
     def binary(self, rel: str, save: Callable[[Path], None]) -> Path:
@@ -44,6 +50,13 @@ class Sink(Protocol):
 
 
 BOM = "﻿"
+
+
+def _prefix(rel: str, bom: bool | None) -> str:
+    """The BOM to prepend: explicit if given, else decided by the path."""
+    from .writers import needs_bom
+
+    return BOM if (needs_bom(rel) if bom is None else bom) else ""
 
 
 class DirectorySink:
@@ -66,11 +79,11 @@ class DirectorySink:
             path.parent.mkdir(parents=True, exist_ok=True)
         return path
 
-    def text(self, rel: str, content: str, *, bom: bool = False) -> Path:
+    def text(self, rel: str, content: str, *, bom: bool | None = None) -> Path:
         path = self._path(rel)
         if not self._dry_run:
             path.write_text(
-                (BOM if bom else "") + content, encoding="utf-8", newline="\n"
+                _prefix(rel, bom) + content, encoding="utf-8", newline="\n"
             )
         self.written.append(path)
         return path
@@ -110,8 +123,8 @@ class ContextSink:
     def dry_run(self) -> bool:
         return bool(getattr(self.ctx, "dry_run", False))
 
-    def text(self, rel: str, content: str, *, bom: bool = False) -> Path:
-        path = self.ctx.write_text(rel, (BOM if bom else "") + content)
+    def text(self, rel: str, content: str, *, bom: bool | None = None) -> Path:
+        path = self.ctx.write_text(rel, _prefix(rel, bom) + content)
         self.written.append(path)
         return path
 

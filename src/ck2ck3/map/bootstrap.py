@@ -56,6 +56,20 @@ def slugify(name: str, fallback: str) -> str:
     return s or fallback
 
 
+def definition_names(keys: dict[int, str]) -> dict[int, str]:
+    """CK3 province id -> the identifier that goes in definition.csv column 5.
+
+    Vanilla writes an uppercase identifier there (``VESTFIRDIR``,
+    ``REYKJAVIK``), not a display name, and ck3-tiger reads the column as a
+    localisation key. Faerun's CK2 names have spaces and apostrophes, so
+    writing them raw produced 2600 "missing localization key Trackless Sea"
+    warnings and then, once a key with a space was emitted, 1092 "Unexpected
+    character, expected `:`" parse warnings in the .yml. The slug is uppercased
+    instead and the display name lives in localisation, exactly as in vanilla.
+    """
+    return {pid: slug.upper() for pid, slug in keys.items()}
+
+
 def unique_keys(provinces: Sequence[Ck3Province]) -> dict[int, str]:
     """CK3 province id -> unique slug, suffixed on collision."""
     out: dict[int, str] = {}
@@ -72,9 +86,14 @@ def unique_keys(provinces: Sequence[Ck3Province]) -> dict[int, str]:
 class BootstrapDefaults:
     """Vanilla ids used as placeholders so the game has something valid to load."""
 
+    #: `verified` in CK3 1.19: culture `norse` is in
+    #: common/culture/cultures/00_north_germanic.txt, faith `norse_pagan` is in
+    #: common/religion/religion_types/00_germanic.txt. NOTE 1.19 renamed
+    #: common/religion/religions/ to common/religion/religion_types/, and there
+    #: is no faith called `asatru` any more - that was the first guess and
+    #: ck3-tiger rejected it 2335 times.
     culture: str = "norse"
-    religion: str = "asatru"
-    faith: str = "asatru"
+    faith: str = "norse_pagan"
     holding: str = "castle_holding"
 
 
@@ -205,7 +224,7 @@ def render_province_history(
         out += [
             f"{p.id} = {{",
             f"\tculture = {defaults.culture}",
-            f"\treligion = {defaults.faith}",
+            f"\tfaith = {defaults.faith}",
             f"\tholding = {defaults.holding}",
             "}",
         ]
@@ -217,6 +236,18 @@ def render_title_history(*, kingdom_key: str = "k_placeholder") -> str:
     return THROWAWAY + f"# No title holders yet; {kingdom_key} starts unheld.\n"
 
 
+#: Localisation keys that must NOT be emitted because CK3 hashes keys with
+#: MURMUR3A and these collide with a vanilla key, which is a hard ck3-tiger
+#: error rather than a warning:
+#:   b_lonefang_adj  vs  court.6070.b  (hash 0x89D63247)
+#:
+#: A deny-list is the honest fix here only because this file is throwaway
+#: scaffolding. The titles-history lane emits real titles and needs a proper
+#: check: hash every generated key with MURMUR3A and compare against the vanilla
+#: key set. Treat this constant as a reminder, not a pattern to copy.
+LOC_KEY_COLLISIONS = frozenset({"b_lonefang_adj"})
+
+
 #: replaced directories this lane fills with real content, so they get no banner
 HAS_REAL_CONTENT = frozenset(
     {
@@ -226,6 +257,15 @@ HAS_REAL_CONTENT = frozenset(
         "map_data/geographical_regions",
     }
 )
+
+
+#: Filename of the banner dropped in each replaced directory. NOT `.txt`:
+#: CK3 reads the *filename* in some history folders as an identifier, so a
+#: `history/cultures/zz_emptied_by_converter.txt` made the game look for a
+#: culture called `zz_emptied_by_converter` (`verified`, ck3-tiger
+#: "culture zz_emptied_by_converter not defined"). A `.md` is ignored by the
+#: game and still keeps the directory alive in git.
+EMPTY_MARKER = "zz_emptied_by_converter.md"
 
 
 def render_empty_replacements(
@@ -241,7 +281,7 @@ def render_empty_replacements(
     for rel in REPLACE_PATHS:
         if rel in skip:
             continue  # this lane writes real content there
-        out[f"{rel}/zz_emptied_by_converter.txt"] = (
+        out[f"{rel}/{EMPTY_MARKER}"] = (
             THROWAWAY
             + f"# {rel} is replace_path'd so vanilla content here is dropped:\n"
             "# it references vanilla province ids that do not exist on this map.\n"
@@ -260,11 +300,20 @@ def localisation_entries(
     """
     out: dict[str, str] = {}
     for p in provinces:
+        # A province NAME needs a key even for water and impassable provinces:
+        # ck3-tiger reads map_data/definition.csv column 5 as a localisation key
+        # and warns for every one that is missing, which was 2600 warnings from
+        # the sea provinces alone ("Trackless Sea", "Crowded Sea", ...).
+        out.setdefault(keys[p.id].upper(), p.name or keys[p.id])
         if p.is_water or p.is_impassable:
             continue
         out[f"c_{keys[p.id]}"] = p.name
         out[f"b_{keys[p.id]}"] = p.name
-    out["e_placeholder"] = "Converter Placeholder Empire"
-    out["k_placeholder"] = "Converter Placeholder Kingdom"
-    out["d_placeholder"] = "Converter Placeholder Duchy"
+    for tier, label in (("e", "Empire"), ("k", "Kingdom"), ("d", "Duchy")):
+        out[f"{tier}_placeholder"] = f"Converter Placeholder {label}"
+        out[f"{tier}_placeholder_adj"] = f"Converter Placeholder {label}"
+    for key in [k for k in out if k.startswith(("c_", "b_"))]:
+        adj = f"{key}_adj"
+        if adj not in LOC_KEY_COLLISIONS:
+            out[adj] = out[key]
     return out
