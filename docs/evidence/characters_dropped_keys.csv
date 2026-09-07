@@ -1,0 +1,59 @@
+ck2_key,level,reason,occurrences
+trait,history,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,9526
+add_trait,dated,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,1435
+give_nickname,dated,nickname has no CK3 id in mappings/nicknames.csv; Faerun defines it in its own common/nicknames,814
+death_reason,history,approx,671
+death_reason,history,exact,613
+remove_trait,dated,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,461
+effect_even_if_dead,history,renamed to effect,407
+easter_egg,history,CK2 random-generation exclusion flag; no CK3 equivalent,336
+join_society,effect,CK3 has no societies (docs/mechanics_inventory.md),324
+trait,dated,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,299
+death_reason,history,fallback,272
+dna,history,CK2 11-char 2D sprite index; CK3 dna references common/dna_data gene templates,220
+set_graphical_culture,effect,CK3 portraits come from ethnicity/genes not a graphical culture string,214
+add_artifact,effect,CK3 artifacts are history/artifacts plus common/artifacts; the artifacts lane owns them,176
+secret_religion,history,CK3 models a hidden faith as a secret; the concealed faith itself cannot be stored,171
+set_special_character_title,effect,as the history-level key,134
+give_job_title,effect,as the history-level key,114
+society_rank_up,effect,CK3 has no societies,95
+imprison,effect,CK2 imprison = <id> is ambiguous about who jails whom; CK3 wants { target imprisoner },85
+give_minor_title,effect,CK3 has no minor titles; the nearest is a court position,68
+create_bloodline,dated,CK3 has no bloodlines (docs/mechanics_inventory.md),65
+set_society_grandmaster,effect,CK3 has no societies,63
+add_trait,effect,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,51
+spawn_unit,effect,CK3 spawns armies through create_army-style effects on a title; not portable from history,37
+secret_religion,dated,CK3 models a hidden faith as a secret; the concealed faith itself cannot be stored,33
+properties,history,CK2 2D accessory layer indices; CK3 accessories come from portrait_modifiers,25
+banish,effect,CK3 banish needs a target scope CK2 history does not supply,24
+give_job_title,dated,CK3 council positions are give_council_position; the CK2 job ids need the government lane's table,19
+leave_society,effect,CK3 has no societies,19
+opinion,effect,CK3 opinion modifiers need add_opinion with a target scope CK2 history does not supply,12
+remove_trait,effect,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,9
+set_government_type,effect,government ids come from mappings/government_map.csv and belong to a title's history,9
+set_reincarnation,effect,CK2 offmap/flavour mechanic; no CK3 equivalent,8
+give_nickname,effect,nickname has no CK3 id in mappings/nicknames.csv; Faerun defines it in its own common/nicknames,7
+new_artifact,effect,as add_artifact,7
+remove_special_character_title,effect,as the history-level key,7
+set_gender,effect,CK3 has no set_gender effect; the history-level female key is the only lever,7
+set_secret_religion,effect,as the history-level secret_religion,5
+clear_secret_religion,effect,as the history-level secret_religion,4
+remove_title,effect,as give_job_title / give_minor_title,4
+destroy_artifact,effect,as add_artifact,3
+disband_event_forces,effect,as spawn_unit,3
+create_bloodline,effect,CK3 has no bloodlines,2
+prisoner,effect,as imprison,2
+add_ambition,effect,CK3 has no ambitions (objectives were cut),1
+add_trait,history,trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv,1
+c_66230,effect,CK2 scope change; CK3 history effects run in the character's scope,1
+c_bloodstone,effect,CK2 scope change; CK3 history effects run in the character's scope,1
+c_citadel_of_the_raven,effect,CK2 scope change; CK3 history effects run in the character's scope,1
+c_kourmira,effect,CK2 scope change; CK3 history effects run in the character's scope,1
+e_tan_shou_lung,effect,CK2 scope change; CK3 history effects run in the character's scope,1
+fertility,dated,"CK3 `fertility` is a trigger, not an effect (tiger: wrong-use); only the character-level key works",1
+religion,effect,changing faith mid-history needs set_character_faith with a faith: scope; the faith lane owns the ids,1
+set_dynasty_name,effect,CK3 dynasty names are loc keys on common/dynasties not a runtime string,1
+set_name,effect,CK2 value is an empty string; nothing to convert,1
+set_special_character_title,dated,CK2 offmap/flavour title; CK3 has set_title_name on a title not a character,1
+spawn_fleet,effect,as spawn_unit,1
+unsafe_destroy_artifact,effect,as add_artifact,1

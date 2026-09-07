@@ -1,0 +1,21 @@
+ck3_dynasty,ck2_dynasty,name,culture,ck2_coat_of_arms
+fae_1048,1048,Hillsafar,shield_dwarf,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 14 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_112,112,De'vir,drow,coat_of_arms = { 	template = 0 	layer = { 		texture = 1 		texture_internal = 2 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2,2,Dlardrageth,feyri,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 11 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2005,2005,Thann,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 8 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2007,2007,Amcathra,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 9 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2014,2014,Anteos,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 7 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2051,2051,Majarra,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 6 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_2061,2061,Piiradost,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 10 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_3399,3399,Farlong,wood_elf,coat_of_arms = { 	template = 0 	layer = { 		texture = 11 		texture_internal = 61 		emblem = 0 		color = 3 		color = 1 		color = 7 	} }
+fae_3963,3963,of the Fifth Tower,illuskan,coat_of_arms = { 	template = 0 	layer = { 		texture = 11 		texture_internal = 67 		emblem = 3 		color = 6 		color = 5 		color = 3 	} }
+fae_4000,4000,Rhys,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 11 		texture_internal = 7 		emblem = 0 		color = 3 		color = 5 		color = 0 	} }
+fae_4001,4001,Fisher,highcoaster,coat_of_arms = { 	template = 0 	layer = { 		texture = 11 		texture_internal = 6 		emblem = 0 		color = 3 		color = 5 		color = 0 	} }
+fae_500,500,Obarskyr,cormyrean,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 15 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_502,502,Cormaeril,cormyrean,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 4 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_509,509,Truesilver,cormyrean,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 16 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_518,518,Wyvernspur,cormyrean,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 5 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_7333,7333,Tranth,damaran,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 13 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_7901,7901,Shoon,tharian,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 1 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_7903,7903,Chembryl,tharian,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 0 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
+fae_7904,7904,Ogon,tharian,coat_of_arms = { 	template = 0 	layer = { 		texture = 10 		texture_internal = 2 		emblem = 0 		color = 0 		color = 0 		color = 0 	} }
