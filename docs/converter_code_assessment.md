@@ -4,7 +4,7 @@ All items `verified` by reading the code unless marked `assumed`.
 
 ## 1. Per-file inventory
 
-- `convert.py` (14 lines) — entry script, not a CLI. Hardcodes `Faerun/Faerun`, `converted_mods`, `faerun_ck3`, dims `(8192,4096)`, scale `5918/4096`, offset `(-146,26)`.
+- `convert.py` (14 lines) — entry script, not a CLI. Hardcodes `Faerun/Faerun`, `converted_mods`, `faerun_ck2_to_ck3_converted`, dims `(8192,4096)`, scale `5918/4096`, offset `(-146,26)`.
 - `src/converter.py` (62) — `initialize_mod()` rmtree's the destination without confirmation and clones the Atlantis template; descriptor rename is commented out. `convert_mod()` has `initialize_mod` and `convert_map` calls **commented out**; only `convert_titles()` runs.
 - `src/conversion/ck2_ck3.py` — empty file, unreferenced.
 - `src/utils/paradox_file_parser.py` (215) — regex recursive parser: `file_reader`, `compact_lines`, `regex_paradox_parser`. See §2.
