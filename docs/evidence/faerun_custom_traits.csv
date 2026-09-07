@@ -1,0 +1,1093 @@
+ck2_trait,source_file,ck3_treatment,note
+absent,misc_traits.txt,port,misc character trait
+acute,acquired_traits.txt,port,acquired character trait
+adopted,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+afflicted_lycanthrope,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+androgynous,misc_traits.txt,port,misc character trait
+angered_patron,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+aoist_trait,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+archfiend,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+archlich,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+asexual,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+athar_trait,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+atheist_trait,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+avatar,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+beautiful,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+bhaalspawn,misc_traits.txt,port,misc character trait
+bio_aarin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_abdel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_abu_bakr,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_acererak,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aerie,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aeron,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aida,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ajantis,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_akar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alaundo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alias,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alicia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alora,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alphonse,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alusair,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alustriel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_alvaerele,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_amaranth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_amelyssan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ammon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_anomen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_anthraxus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aoth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_araithe,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_arauthator,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_arcturia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aribeth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ariel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_arietta,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_arilyn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_artemis,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_artor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_artus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_arveiaturace,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_astarion,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aumon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_auril,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aurora,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aurora2,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_avarice,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_aylin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_azoun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_azuth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_baalzebul,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_baeloth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_baerick,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_balthazar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_balthazar2,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bane,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_baphomet,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_barrowin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bayalun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_belaphoss,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bhaal,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bhrokiti,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bidderdoo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_biha,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bjornhild,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bladenkerst,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_blizzard,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bobby,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_boddyknock,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bodhi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bohn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_brandon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_branwen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_brianna,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_brie_zara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_brindol,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_briza,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_bruenor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_cadderly,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_caelar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_caitlyn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_caladorn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_casal,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_cassana,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_catti_brie,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_cazador,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_cernd,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_chanar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_chardath,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_chuth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_clara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_clariburnus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_coral_princess,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_coran,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_cryovain,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_daelan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dagult,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dahlia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_danifae,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_danilo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dantrag,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_darathra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_darfin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dark_urge,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_daurgothoth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_deekin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_demogorgon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_derval,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_deryan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_desther,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_deudermont,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_diana,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dinin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dispater,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_doric,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dorn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dove,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dragonbait,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dran,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_drizfryn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_drizzt,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_durnan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_durth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_duvessa,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_dynaheir,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ebondeath,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_edgin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_edwin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_elaith,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_elanee,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_elbereth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_eldest,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_eldoth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ellesime,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_elminster,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_eltab,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_enver,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_erevis,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_eric,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_errtu,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_evani,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_evin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_faldorn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_farideh,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_fenthick,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_filfaeril,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_finder,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_firkraag,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_florin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_forfallen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_forge,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_foril,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_fzoul,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gale,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gandalug,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_garagos,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_garbo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gareth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_garius,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gark,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_garmult,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_garrick,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gerti,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ghaunadaur,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ghiirvox,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_giogi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_glasya,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_glint,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gnawbone,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gorion,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_grandolpha,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_grazzt,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_grimgnaw,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gromph,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_grypht,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_gut,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hadrhune,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_haer_dalis,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_halaster,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_haliator,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_halima,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_halisstra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_halsin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hank,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_havarlan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_havilar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hazaufein,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hedrun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hekaton,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hephernaan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_herzgo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hexxat,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_holga,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_horgar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hubadai,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_hydia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ibbalar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_icewind,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_icingdeath,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ilvara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_imbrar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_imix,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_imoen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_inferno,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_io,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_irae,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_isair,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_isarr,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ishi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_isobel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_isteval,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ivus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_iymrith,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jaheira,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jaluth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jarir,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jarlaxle,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jarnathan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_javen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jeervan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jeggred,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jenevelle,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jil,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_jurin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kaanyr,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kadroth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kagain,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kagha,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_karas,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_karlach,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kayalithica,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kazerabet,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_keene,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_keirgar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_keldorn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kella,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kelson,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ketheric,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_khalid,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_khaspere,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_khelben,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_khelben2,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kimmuriel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_king_of_shadows,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kinnuki,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kirukesai,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_klarg,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_klauth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kleef,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_koja,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_korgan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kregos,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_krydle,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kryonar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kyorl,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_kyriani,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_laeral,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_laezel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lamruil,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lareth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_larissa,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_larloch,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_liara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_linu,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_liriel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lod,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lostmauth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lyonarth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_lysan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_madae,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malabog,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malaina,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malcanthet,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malchor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malice,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malik,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_malkizid,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_manshoon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_markham,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_markos,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mathise,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_maugrim,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_maura,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_maxiladanarr,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_maya,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mazzy,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mei_wan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_melegaunt,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mephistopheles,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_methil,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mhaere,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_midnight,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_min_ho,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ming,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_minsc,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_minthara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_miquiztl,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mirran,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mirt,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mist,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mizora,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_mkhiin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_moander,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_montaron,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_moonfire,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_muiral,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_myrineyl,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_myrkul,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nahaunglaroth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nalia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nasher,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nathur,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_neera,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_neeshka,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_neri,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_neronvain,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_niko,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nildar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nimor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ningal,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nobanion,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nocturne,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nuli,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nung_chiang,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nym,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_nymara,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_obould,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_obould_xvii,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ogandi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_orcus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ordalf,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_orin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_oswald,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_othovir,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_pandorym,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_pelendralaar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_penelope,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_pereghost,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_pharaun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_piergeiron,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_presto,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_protanther,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_pwyll,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_quavylene,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_quayle,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_quenthel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rakor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_raphael,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rasaad,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rashel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_redeye,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_regis,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_remallia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ren,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_renwick,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rezmir,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rizzen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_robillard,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_robyn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rora,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rowen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ryld,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_rynnarvyx,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_saarvin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_safana,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_saharel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sammaster,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sangalor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sansuri,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sarevok,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sarya,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sathfissith,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_schael,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_scyllua,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sememmon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sendai,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_serissa,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_severin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shadowheart,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shaerl,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shalendra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shandril,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shar_teel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sharpfangs,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sharwyn,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sheila,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_shuruppak,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_simbul,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_simon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sirac,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_skie,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sofina,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_soneillon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_songal,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sosumptu,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_srossar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_sseth,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_storm_silverhand,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_storvald,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_szass,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_taern,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tamarand,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tanalasta,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tchazzar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_teirgoh,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_thalamra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_thamalon,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_thauglorimorgorus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_thavius,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_thazienne,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_themberchaud,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tiago,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tiamat_planar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tiamat_unther,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tiax,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tomi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_torg,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_torlin,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_trelasarra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_triel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tristan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_trobriand,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_trovus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tsabanor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tsabrak,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tsao,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_tyranthraxus,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ulder,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_uresgol,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_ususi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vaelish,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vajra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vala,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_valamaradace,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_valen,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_valindra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_valygar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_veiti,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vellynne,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vendes,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_venger,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_viconia,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vierna,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_vizeran,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_voaraghamanthar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_voghiln,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_volo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_volsembra,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_voss,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_waervaerendor,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_wulfgar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_wyll,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xan,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xanathar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xanos,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xardorok,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xenk,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xeremiah,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xvim,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xzar,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_xzar2,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yamun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yeenoghu,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yeslick,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yoshimo,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yu_wu,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_yvonnel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zaknafein,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zaltember,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zalto,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zaranda,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zariel,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zelraun,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zhengyi,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zhjaeve,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zrie,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bio_zushaxx,z_biography_traits.txt,comment,hidden biography/flavour marker read by Faerun events
+bisexual,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+black_chung_tao,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+bright,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+brilliant,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+careless,acquired_traits.txt,port,acquired character trait
+chosen_asmodeus,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_auril,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_bahamut,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_bane,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_bhaal,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_cyric,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_deneir,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_eilistraee,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_enlil,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_faceless_god,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_gilgeam,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_gruumsh,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_helm,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_kossuth,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_lolth,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_malar,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_mask,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_mielikki,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_myrkul,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_mystra,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_seldarine,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_shar,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_siamorphe,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_sseth,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_sune,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_talona,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_thasmudyan,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_tiamat,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_ubtao,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+chosen_umberlee,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+class_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+construct,misc_traits.txt,port,misc character trait
+creature_aarakocra,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_aasimar,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_aboleth,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_abomination,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_beholder,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_bugbear,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_celestial,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_centaur,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_construct,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_deep_imaskari,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_draegloth,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_dragon,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_dragonborn,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_drow,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_dwarf,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_elder_brain,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_elf,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_feyri,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_fiend,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_genasi,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_genie,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_giant,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_gith,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_gnoll,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_gnome,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_goblin,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_goliath,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_hag,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_hagspawn,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_dwarf,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_elf,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_giant,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_gnoll,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_ogre,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_half_orc,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_halfling,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_hengeyokai,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_hobgoblin,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_human,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_illithid,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_kobold,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_kuotoa,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_lamia,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_lizardfolk,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_malenti,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_malison,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_minotaur,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_monster,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_naga,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_ogre,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_ogrillon,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_orc,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_outsider,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_pterafolk,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_pureblood,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_sahuagin,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_sarrukh,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_satyr,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_saurial,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_slaad,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_spirit_folk,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_tabaxi,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_tanarukk,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_tengu,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_tiefling,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_treant,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_troll,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_ulitharid,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_wemic,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+creature_yikarian,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+cursed,misc_traits.txt,port,misc character trait
+deathmask,misc_traits.txt,port,misc character trait
+delicate,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+dhampyr,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+dim,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+dragon_adult,misc_traits.txt,port,misc character trait
+dragon_ancient,misc_traits.txt,port,misc character trait
+dragon_wyrmling,misc_traits.txt,port,misc character trait
+dragon_young,misc_traits.txt,port,misc character trait
+druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+dumb,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+dwarven_lodge_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+elder_orb,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+elven_lodge_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+ethoist,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+expert_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+expert_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+feytouched,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+fit,acquired_traits.txt,port,acquired character trait
+former_adventurer,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+goblins_lodge_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+greater_celestial,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+greater_fiend,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+grounded,02_traits.txt,port,Faerun addition to the vanilla trait file
+half_celestial,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+half_dragon,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+half_fiend,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+half_troll,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+hardy,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+hearty,acquired_traits.txt,port,acquired character trait
+hidden_spellplague_trait,misc_traits.txt,port,misc character trait
+horned,misc_traits.txt,port,misc character trait
+hornless,misc_traits.txt,port,misc character trait
+idiot,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+ignorant,acquired_traits.txt,port,acquired character trait
+immaculate,acquired_traits.txt,port,acquired character trait
+is_clone,misc_traits.txt,port,misc character trait
+is_spelljamming,misc_traits.txt,port,misc character trait
+journeyman_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+journeyman_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+knight_order_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+learned,acquired_traits.txt,port,acquired character trait
+legendary_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+legendary_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+lich,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+lich_baelnorn,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+lifespan_1000,misc_traits.txt,port,misc character trait
+lifespan_150,misc_traits.txt,port,misc character trait
+lifespan_160,misc_traits.txt,port,misc character trait
+lifespan_180,misc_traits.txt,port,misc character trait
+lifespan_200,misc_traits.txt,port,misc character trait
+lifespan_250,misc_traits.txt,port,misc character trait
+lifespan_300,misc_traits.txt,port,misc character trait
+lifespan_350,misc_traits.txt,port,misc character trait
+lifespan_400,misc_traits.txt,port,misc character trait
+lifespan_500,misc_traits.txt,port,misc character trait
+lifespan_600,misc_traits.txt,port,misc character trait
+lifespan_800,misc_traits.txt,port,misc character trait
+lifespan_ageless,misc_traits.txt,port,misc character trait
+longevity,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+loyal,roleplaying_traits.txt,comment,roleplaying marker read by Faerun events
+lucid,acquired_traits.txt,port,acquired character trait
+master_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+master_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+moralist,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+mutant,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+natural_lycanthrope,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+obnoxious,acquired_traits.txt,port,acquired character trait
+orcs_lodge_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+origin_aberrant_mind,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+origin_divine_soul,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+origin_draconic,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+origin_shadow,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+origin_storm,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+origin_wild_magic,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+padhran_mountain,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+padhran_ocean,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+padhran_river,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+patron_abbathor,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_achazar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_aerdrie_faenya,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_agni,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ai_ching,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_akadi,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_amaunator,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_anhur,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_arvoreen,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_asgorath,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_astilabor,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_auppenser,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_auril,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_azul,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_azuth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_baervan_wildwanderer,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bahamut,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bahgtru,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bala,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_balder,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bane,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_baphomet,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_baravar_cloakshadow,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bazim_gorag,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_berronar_truesilver,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_beshaba,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_bhaal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_blibdoolpoolp,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_botu_astok,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_brandobaris,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_callarduran_smoothhands,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_celestian,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_chan_cheng,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_chauntea,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_chen_hsiang,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_chih_shih,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_cirotralech,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_clangeddin_silverbeard,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_corellon_larethian,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_cyrrollalee,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_demogorgon,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_dendar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_deneir,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_diirinka,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_dugmaren_brightmantle,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_dumathoin,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_dunatis,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_eha,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_eldath,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_elder_evil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_elemental_evil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_eltab,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_emmantiensien,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_erevan_ilesere,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_essylliss,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_fa_kuan,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_fenmarel_mestarine,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_finder_wyvernspur,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_flandal_steelskin,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_fraz_urbluu,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_fzoul_chembryl,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gaerdal_ironhand,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_garagos,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gargauth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_garl_glittergold,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_garyx,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_geb,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ghaunadaur,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gilgeam,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gond,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gorm_gulthyn,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_grazzt,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_grumbar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gruumsh,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_gwaeron_windstrom,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_haela_brightaxe,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hajama,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hakiyah,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_haku,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hanali_celanil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hathor,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_helm,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hlal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hoar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_horus_re,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hsing_yong,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_hyrsam,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ibrandul,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ilmater,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ilneval,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_indra,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_isis,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_istishia,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_iyachtu_xvim,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_jarmik,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_jergal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_jisan,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_karrrga,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kelemvor,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kereska,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kiga,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kiltzi,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kor,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kossuth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kurtulmak,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_kwan_ying,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_labelas_enoreth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_laogzed,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lathander,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_leira,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lendys,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lliira,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lolth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lost_one,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_loviatar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_lurue,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_luthic,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_malar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_malcanthet,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_marthammor_duin,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_mask,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_maztica,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_mielikki,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_migal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_milil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_moander,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_moradin,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_myrkul,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_mystra,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_najm,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nehushta,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nephthys,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nergal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nobanion,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nula,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_null,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_nung_chiang,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_oberon,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_obould,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_oghma,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_orcus,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_osiris,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_pag,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_pazuzu,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_plutoq,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_poseidon,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_prometheus,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ptah,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_qotal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ragarra,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_ravanna,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_raven_queen,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_re,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_red_knight,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_rillifane_rallathil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_rorn,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sardior,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_savras,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sebek,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_segojan_earthcaller,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sehanine_moonbow,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_selune,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_selvetarm,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_semuanya,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sess_innek,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_set,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shajar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sharess,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shargaas,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sharindlar,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shaundakul,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sheela_peryroyl,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shekinester,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shevarash,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shiallia,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_shu_chia,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_siamorphe,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_silvanus,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_simbul,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_skerrit,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_solonor_thelandira,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sseth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_sune,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_talona,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_talos,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tamara,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_task,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_telos,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tempus,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tezca,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_the_drummer,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_thoth,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tiamat,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_titania,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_torm,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_trickster_gods,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tymora,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_tyr,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_umberlee,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_untamo,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_urogalan,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_valkur,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_vandria_gilmadrith,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_vataqatal,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_vecna,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_velsharoon,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_vergadain,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_vlaakith,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_watil,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_waukeen,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_yama,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_yeenoghu,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_yondalla,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_yurtrus,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_zaerith,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_zaltec,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_zann,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_zorquan,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+patron_zuggtmoy,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+plain,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+planetouched,misc_traits.txt,port,misc character trait
+pragmatist_trait,religious_traits.txt,comment,chosen-of-deity trait tied to the CK2 religion system
+pretty,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+psi_potential,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+rashemen_lodge_leader,02_traits.txt,port,Faerun addition to the vanilla trait file
+renowned_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+renowned_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+rusting_trait,misc_traits.txt,port,misc character trait
+sahuagin_baron,misc_traits.txt,port,misc character trait
+sahuagin_chief,misc_traits.txt,port,misc character trait
+sahuagin_emperor,misc_traits.txt,port,misc character trait
+sahuagin_king,misc_traits.txt,port,misc character trait
+sahuagin_prince,misc_traits.txt,port,misc character trait
+sahuagin_warrior,misc_traits.txt,port,misc character trait
+secret_patrician,misc_traits.txt,port,misc character trait
+seelie_court,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+sharp,acquired_traits.txt,port,acquired character trait
+shield_of_torm,misc_traits.txt,port,misc character trait
+shifter,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+slack,acquired_traits.txt,port,acquired character trait
+slaughterer,misc_traits.txt,port,misc character trait
+slovenly,acquired_traits.txt,port,acquired character trait
+sluggardly,acquired_traits.txt,port,acquired character trait
+smart,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+soft,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+spellscar,misc_traits.txt,port,misc character trait
+stasis_clone,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+sword_of_torm,misc_traits.txt,port,misc character trait
+sympathy_aberration_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_atheist_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_draconic_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_drow_pantheon,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_dwarven_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_elven_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_evil_human_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_giant_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_good_human_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_humanoid_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_karaturan_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_many,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_qismaite_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_unenlightened_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+sympathy_wild_human_pantheon_group,02_traits.txt,port,Faerun addition to the vanilla trait file
+tb_sterile,misc_traits.txt,port,misc character trait
+thayan_tattoo_1,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_10,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_11,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_12,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_13,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_14,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_2,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_3,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_4,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_5,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_6,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_7,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_8,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+thayan_tattoo_9,04_battle_scars_and_tattoos_traits.txt,port,battle scar / tattoo trait; CK3 has scarred plus one_eyed/one_legged
+tidy,acquired_traits.txt,port,acquired character trait
+tough,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+trained_aristocrat,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_artificer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_barbarian,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_bard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_cleric,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_druid,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_fighter,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_monk,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_paladin,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_psion,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_ranger,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_rogue,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_shadow,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_sorcerer,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+trained_wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+undead,race_traits.txt,race_trait,creature/race trait; owned by the races lane (docs/design_races.md)
+unschooled,acquired_traits.txt,port,acquired character trait
+unseelie_court,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+unsightly,Congenital_Traits.txt,port,congenital trait; CK3 target is genetic = yes plus a group/level tier
+uthgar_black_lion,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_black_raven,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_blue_bear,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_elk,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_gray_wolf,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_great_worm,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_griffon,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_red_tiger,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_sky_pony,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_thunderbeast,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+uthgar_tree_ghost,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+vampire,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+vampire_spawn,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+warlock,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
+warlock_celestial,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+warlock_elemental,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+warlock_fey,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+warlock_fiend,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+warlock_old_one,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+werecrocodile,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wererat,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+werespider,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+weretiger,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+werewolf,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+white_chung_tao,god_patron_traits.txt,comment,"god-patron trait, drives CK2 <trait>_opinion modifiers; no CK3 equivalent"
+witless,acquired_traits.txt,port,acquired character trait
+wiz_abjuration,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_conjuration,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_divination,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_enchantment,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_evocation,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_illusion,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_necromancy,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wiz_transmutation,template_traits.txt,race_trait,"creature template (lycanthrope, feytouched, ...); owned by the races lane"
+wizard,character_class_traits.txt,comment,D&D class/level system; no CK3 equivalent
