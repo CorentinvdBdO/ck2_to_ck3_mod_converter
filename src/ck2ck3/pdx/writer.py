@@ -176,6 +176,8 @@ class Writer:
 
     def _inline(self, block: Block) -> bool:
         """An item-only block with no comments and no blank groups fits a line."""
+        if block.multiline:
+            return False
         if block.end_comments and not self.canonical:
             return False
         for entry in block.entries:

@@ -124,6 +124,10 @@ class Block:
     entries: list[Entry] = field(default_factory=list)
     #: Comments sitting after the last entry, before the closing brace.
     end_comments: list[str] = field(default_factory=list)
+    #: Force one entry per line even when the block would fit on one. Set by a
+    #: writer that must match a vanilla file's layout (``descriptor.mod``);
+    #: never set by the parser and never part of structural equality.
+    multiline: bool = field(default=False, compare=False)
 
     # -- sequence protocol -------------------------------------------------
     def __iter__(self) -> Iterator[Entry]:
