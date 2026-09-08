@@ -70,6 +70,8 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - A CK3 name list **must** carry `dynasty_names` (`MINIMUM_DYNASTY_NAMES = 2`, `common/defines/00_defines.txt:1145`; the define's own comment says culture-**group** names count toward it). CK2 keeps dynasty names globally in `common/dynasties` with a `culture` each, so step `dynasties` runs before `cultures` and hands them over — with none, all 419 name lists drew `culture_name_lists.cpp:169` and CK3 had no name to mint a generated character's dynasty from.
 - `Setting idler 'Frontend'` in `debug.log` is the **main menu**; `Setting idler 'In Game'` needs the game to actually start a bookmark, which headlessly means the `-test` launch argument (`../claudespace/scripts/ck3_launch.sh … --args "-test"`). Without it a run waiting for `In Game` can only time out. **Vanilla with `-test` reaches `In Game` in 54 s** in this harness (`verified` 2026-09-08), so that is the control: a mod that does not is the mod's fault, not the harness's.
 
+- `history/province_mapping` must never be empty when `history/provinces` has any block: the 1.19 loader crashes (null deref) on an empty table. `history_titles` writes one entry (`docs/DECISIONS.md` 2026-09-08). A `replace_path` that leaves a folder empty is only safe when the engine tolerates an empty table; test with a game launch, not just ck3-tiger.
+
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`

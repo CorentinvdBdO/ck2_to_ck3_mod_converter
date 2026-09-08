@@ -153,6 +153,9 @@ class HistoryConfig:
     #: title -> holder timeline, from :func:`holder_spans`.
     spans: Spans = field(default_factory=dict)
     prefix: str = "fae"
+    #: county-capital baronies: CK3 executes their history on the county and
+    #: logs "Trying to execute history in b_x capital barony title" otherwise.
+    capital_baronies: frozenset[str] = frozenset()
 
 
 def _stamp(date: Date) -> str:
@@ -299,12 +302,18 @@ class _TitleWriter:
         raw = str(node.value)
         comment = f"\t{tail(node.trailing_comment).strip()}" if node.trailing_comment else ""
         if raw in ("0", "-1"):
+            if title[:2] in ("b_", "c_"):
+                # CK3: "Land associated barony/county X is given a null holder
+                # (ie. it's set to be destroyed)" - a land title cannot be unheld.
+                return f"# CK2 holder = 0 at {_stamp(date)}: land titles cannot be unheld in CK3{comment}"
             return f"holder = 0{comment}"
         stub = self.cfg.characters.get(raw)
         if stub is None:
             self.result.warnings.append(
                 f"{title} {_stamp(date)}: holder {raw} is not in CK2 history/characters"
             )
+            if title[:2] in ("b_", "c_"):
+                return f"# CK2 holder = {raw} at {_stamp(date)}: no such character, land title left to the game"
             return f"holder = 0\t# CK2 holder = {raw}, no such character"
         if stub.birth and _before(date, stub.birth):
             self.result.warnings.append(
@@ -365,6 +374,14 @@ def render(
             out.raw(f"# tier: {tier}_")
             out.raw("")
             per_tier[tier] = out
+        if title in config.capital_baronies:
+            out.comment(0, f"{title}: county-capital barony, CK3 executes its history on the county; kept commented")
+            body = Lines()
+            writer.write(history, body)
+            out.commented_block(0, body.text().rstrip("\n").split("\n"))
+            out.blank()
+            skipped += 1
+            continue
         if title not in config.live_titles:
             reason = config.dead_titles.get(title, "not a live CK3 title")
             out.comment(0, f"{title}: history kept commented - {reason}")
@@ -382,6 +399,10 @@ def render(
         if title in histories:
             continue
         tier = title[0]
+        if tier == "b":
+            # vanilla baronies have no history; a `holder = 0` stub would set
+            # the barony to be destroyed (titlehistory.cpp:325)
+            continue
         out = per_tier.get(tier)
         if out is None:
             out = Lines()
@@ -395,7 +416,10 @@ def render(
         for line in STUB_HISTORY:
             out.raw(f"\t{line}")
         out.line(1, f"{EARLY_DATE} = {{")
-        out.line(2, "holder = 0")
+        if tier != "c":
+            out.line(2, "holder = 0")
+        else:
+            out.comment(2, "no CK2 history: a county cannot be unheld, the game assigns a holder")
         if government:
             out.line(2, f"government = {government.government}")
         out.line(1, "}")
