@@ -18,6 +18,8 @@ Config (``[loc]``, all optional)::
     skip_vanilla_collisions = false
     vanilla_keys = "docs/evidence/ck3_vanilla_loc_keys.txt"
     unknown_codes = "custom"            # or "marker"
+    custom_loc = "marker"               # or "call"
+    named_scope = "marker"              # or "reference"
 """
 
 from __future__ import annotations
@@ -62,6 +64,8 @@ class LocConfig:
     skip_vanilla_collisions: bool = False
     vanilla_keys: Path | None = None
     unknown_codes: str = "custom"
+    custom_loc: str = "marker"
+    named_scope: str = "marker"
 
     @classmethod
     def from_raw(cls, raw: dict) -> "LocConfig":
@@ -72,6 +76,18 @@ class LocConfig:
                 f"[loc] unknown_codes must be one of "
                 f"{', '.join(loc_codes.UNKNOWN_POLICIES)}, not {unknown!r}"
             )
+        custom = str(raw.get("custom_loc", "marker"))
+        if custom not in loc_codes.CUSTOM_LOC_POLICIES:
+            raise ValueError(
+                f"[loc] custom_loc must be one of "
+                f"{', '.join(loc_codes.CUSTOM_LOC_POLICIES)}, not {custom!r}"
+            )
+        scope = str(raw.get("named_scope", "marker"))
+        if scope not in loc_codes.NAMED_SCOPE_POLICIES:
+            raise ValueError(
+                f"[loc] named_scope must be one of "
+                f"{', '.join(loc_codes.NAMED_SCOPE_POLICIES)}, not {scope!r}"
+            )
         return cls(
             languages=tuple(str(x) for x in languages) if languages else None,
             min_share=float(raw.get("min_share", DEFAULT_MIN_SHARE)),
@@ -79,6 +95,8 @@ class LocConfig:
             skip_vanilla_collisions=bool(raw.get("skip_vanilla_collisions", False)),
             vanilla_keys=_repo_path(raw.get("vanilla_keys")),
             unknown_codes=unknown,
+            custom_loc=custom,
+            named_scope=scope,
         )
 
 
@@ -281,6 +299,8 @@ def build(ctx: Context, config: LocConfig) -> Plan:
                     text,
                     custom_loc=custom_loc,
                     unknown=config.unknown_codes,
+                    custom_loc_policy=config.custom_loc,
+                    named_scope_policy=config.named_scope,
                     report=plan.report,
                 )
                 for target in key_map.keys_for(key):
@@ -299,6 +319,16 @@ def build(ctx: Context, config: LocConfig) -> Plan:
 def run(ctx: Context) -> StepResult:
     config = LocConfig.from_raw(ctx.config.raw.get("loc", {}))
     plan = build(ctx, config)
+    name_loc: dict[str, str] = dict(
+        ctx.data.get("cultures", {}).get("name_loc", {})
+    )
+    if not name_loc:
+        ctx.warn(
+            "no name-list tokens from step `cultures` in this pass; "
+            f"localization/*/{ctx.config.prefix}_names_l_*.yml not written, so "
+            "every name in common/culture/name_lists shows as its raw key "
+            "(run `cultures` in the same pass)"
+        )
 
     written = []
     counts: dict[str, int] = {"files": 0}
@@ -317,6 +347,26 @@ def run(ctx: Context) -> StepResult:
                 )
             )
             keys += len(entries)
+        # The `cultures` step's name-list tokens. A CK3 male_names/female_names
+        # entry is a localisation key, not a display string (77 736 "Missing
+        # loc X" errors without it, `verified` 2026-09-08), and CK2 kept the
+        # literals in common/cultures rather than in a CSV, so they reach this
+        # step through ctx.data rather than through a source file.
+        if name_loc:
+            written.append(
+                ctx.write_loc(
+                    Path("localization") / language
+                    / f"{ctx.config.prefix}_names_l_{language}.yml",
+                    name_loc,
+                    language=language,
+                    header_comments=[
+                        "name-list token -> the CK2 literal it stands for "
+                        "(step cultures)"
+                    ],
+                )
+            )
+            counts["files"] += 1
+            keys += len(name_loc)
         counts["files"] += len(per_file)
         counts[f"keys_{language}"] = keys
 
@@ -328,6 +378,11 @@ def run(ctx: Context) -> StepResult:
     counts["icon_codes"] = report.icons
     counts["stray_brackets"] = report.stray_brackets
     counts["stray_colour_marks"] = report.stray_colour_marks
+    counts["name_list_keys"] = len(name_loc)
+    counts["custom_loc_markered"] = sum(report.custom_loc_markered.values())
+    counts["custom_loc_names"] = len(report.custom_loc_markered)
+    counts["named_scope_markered"] = sum(report.named_scope_markered.values())
+    counts["named_scope_names"] = len(report.named_scope_markered)
     counts["duplicate_keys"] = len(plan.duplicates)
     counts["invalid_keys"] = len(plan.invalid_keys)
     if plan.renamed:
@@ -362,10 +417,33 @@ def run(ctx: Context) -> StepResult:
             f"converted event ({len(report.needs_scope)} distinct); see "
             f"docs/loc_codes.md"
         )
+    if report.named_scope_markered:
+        warnings.append(
+            f"{sum(report.named_scope_markered.values())} references to a CK2 "
+            f"saved scope ({len(report.named_scope_markered)} distinct) became "
+            "visible markers, because nothing ports CK2's events and so nothing "
+            "runs save_scope_as: CK3 answers an unresolvable scope with "
+            "\"pdx_data_localize.cpp: Data error in loc string '<key>'\". Set "
+            '[loc] named_scope = "reference" in the commit that ships the event '
+            "port"
+        )
     if report.needs_custom_loc:
         warnings.append(
-            f"{sum(report.needs_custom_loc.values())} codes became Custom() calls "
-            f"that nothing defines yet ({len(report.needs_custom_loc)} distinct)"
+            f"{sum(report.needs_custom_loc.values())} codes became Custom() "
+            f"calls that nothing defines yet "
+            f"({len(report.needs_custom_loc)} distinct). CK3 answers each with "
+            "jomini_custom_text.h: \"Object of type 'character' is not valid "
+            "for '<name>'\" - see docs/evidence/game_load_2026-09-08.md"
+        )
+    if report.custom_loc_markered:
+        warnings.append(
+            f"{sum(report.custom_loc_markered.values())} CK2 "
+            f"customizable-localisation codes "
+            f"({len(report.custom_loc_markered)} distinct) became visible "
+            "markers, because nothing emits common/customizable_localization "
+            "and a Custom() call to a name CK3 does not know is an error per "
+            'evaluation. That count is the size of the port; set [loc] '
+            'custom_loc = "call" in the commit that ships it'
         )
     for warning in warnings:
         ctx.warn(warning)

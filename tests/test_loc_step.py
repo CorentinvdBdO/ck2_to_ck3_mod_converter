@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -9,6 +10,7 @@ import pytest
 
 from ck2ck3.config import Config
 from ck2ck3.context import Context
+from ck2ck3 import loc_codes
 from ck2ck3.steps import loc as loc_step
 from ck2ck3.steps.loc import LocConfig, out_name
 
@@ -320,8 +322,41 @@ def test_the_whole_faerun_localisation_converts_cleanly(tmp_path):
     assert counts["keys_english"] > 100_000
     for language in ("french", "german", "spanish"):
         assert counts[f"keys_{language}"] == counts["keys_english"]
+    # `[loc] custom_loc = "marker"` (the default) turns a CK2 customizable
+    # localisation into a visible marker, and the run log has to say how many:
+    # that number is the hand-off to whoever ports
+    # common/customizable_localization. A Custom() call to a name CK3 does not
+    # know is an error per evaluation, not a blank
+    # (docs/evidence/game_load_2026-09-08.md).
+    assert counts["custom_loc_markered"] > 40_000
+    assert counts["custom_loc_names"] > 700
+    assert any("customizable-localisation" in w for w in result.warnings)
+    # same reasoning for a CK2 saved scope nothing saves
+    assert counts["named_scope_markered"] > 60_000
+    assert counts["named_scope_names"] > 2_000
+    assert any("saved scope" in w for w in result.warnings)
+    # and no generated line references a scope nothing puts there: the only
+    # legal chain heads are the CK3 scope words the converter itself emits
+    heads = {v.split(".")[0] for v in loc_codes.ROOT_SCOPES.values()}
+    for path in sorted(ctx.out_path("localization").rglob("*.yml")):
+        text = path.read_text(encoding="utf-8-sig")
+        for chain in set(re.findall(r"\[([A-Za-z_][\w.]*)\.", text)):
+            assert chain.split(".")[0] in heads, f"{path.name}: {chain}"
+    # and no generated line calls a custom loc the mod does not define
+    for path in sorted(ctx.out_path("localization").rglob("*.yml")):
+        for name in set(
+            re.findall(r"Custom\('([^']+)'\)", path.read_text(encoding="utf-8-sig"))
+        ):
+            assert name in loc_codes.CK3_VANILLA_CUSTOM_LOC, f"{path.name}: {name}"
+
     coverage = counts["codes_converted"] / counts["codes"]
-    assert coverage > 0.93, f"text-code coverage dropped to {coverage:.1%}"
+    # 91.0 % with `[loc] custom_loc = "marker"` (the default). The 2.9 points
+    # between this and the old 93.9 % are CK2 codes that used to become
+    # `Custom('GetFoo')` calls to names nothing defines — an error per
+    # evaluation in the game, not a conversion (docs/loc_codes.md,
+    # docs/evidence/game_load_2026-09-08.md). `custom_loc = "call"` restores
+    # them, and the number, once the custom-loc port ships.
+    assert coverage > 0.90, f"text-code coverage dropped to {coverage:.1%}"
 
     problems: list[str] = []
     keys = 0
@@ -334,3 +369,25 @@ def test_the_whole_faerun_localisation_converts_cleanly(tmp_path):
         counts[f"keys_{language}"]
         for language in ("english", "french", "german", "spanish")
     )
+
+
+# -- name-list tokens from step `cultures` ----------------------------------
+def test_name_list_tokens_get_a_loc_file_per_language(tmp_path, ck2_mod):
+    """A CK3 male_names/female_names entry is a localisation key. CK2 kept the
+    literals in common/cultures, not in a CSV, so `cultures` hands them over
+    through ctx.data and this step — which owns localization/ — writes them."""
+    ctx = make_context(tmp_path, ck2_mod)
+    ctx.data["cultures"] = {"name_loc": {"Ari": "Ari", "Clever_Hans": "Clever Hans"}}
+    result = loc_step.run(ctx)
+    for language in ("english", "french"):
+        path = ctx.config.out / "localization" / language / f"tst_names_l_{language}.yml"
+        assert read_yml(path) == {"Ari": "Ari", "Clever_Hans": "Clever Hans"}
+    assert result.counts["name_list_keys"] == 2
+
+
+def test_no_name_tokens_is_a_warning_not_a_silent_skip(tmp_path, ck2_mod):
+    ctx = make_context(tmp_path, ck2_mod)
+    result = loc_step.run(ctx)
+    assert not (ctx.config.out / "localization" / "english" / "tst_names_l_english.yml").exists()
+    assert any("name-list tokens" in w for w in ctx.warnings)
+    assert result.counts["name_list_keys"] == 0

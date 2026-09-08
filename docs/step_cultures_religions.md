@@ -111,11 +111,31 @@ CK3 counterpart and fall through to the default.
 
 ## Name lists
 
-`male_names`, `female_names`, the six `*_name_chance` keys,
-`founder_named_dynasties`, `grammar_transform` and `bastard_dynasty_prefix` move
-onto the name list **verbatim**, including CK2's `Name_Base` variant syntax.
+The six `*_name_chance` keys, `founder_named_dynasties`, `grammar_transform` and
+`bastard_dynasty_prefix` move onto the name list **verbatim**, including CK2's
+`Name_Base` variant syntax.
 
-Two conversions are not verbatim:
+`male_names` / `female_names` do **not**. A CK3 name-list entry is a
+**localisation key**, not a display string: vanilla
+`common/culture/name_lists/00_ainu.txt:108` lists `Akarakay Antaaynu …` and
+`localization/english/names/character_names_l_english.yml` carries
+`Akarakay:0 "Akarakay"`. So `ck2ck3.nametokens` turns every CK2 literal into a
+token and the literal becomes the token's localisation, written by the `loc`
+step (which owns `localization/`) as
+`localization/<lang>/fae_names_l_<lang>.yml` from
+`ctx.data["cultures"]["name_loc"]`. On Faerûn: **44,231 tokens**.
+
+The token rules, each one paid for by a boot (`docs/evidence/game_load_2026-09-08.md`):
+
+| rule | why |
+|---|---|
+| whitespace → `_` | a token may not contain a space; vanilla spells two-word names `Asir_Rera` (`00_ainu.txt:149`). Quoting `"Sergeant Reckless"` instead left the name equivalency table unable to look it up. |
+| ASCII-fold, `_` per collision | a loc key must be ASCII (251 `Invalid character in key name`). Vanilla does the same: `BjO_rn`, `AndrE_s`, `A__ke`. |
+| a leading non-letter gets the `name_` prefix | **a bare token starting with a digit breaks the CK3 parser for the rest of the file.** Faerûn's `modron` names are serial numbers (`2BD71SF2`); one of them cost the 14 `name_list_*` blocks after it in `fae_monsters.txt`, and then a character of one of those cultures caused an `EXCEPTION_ACCESS_VIOLATION` in `characterhistory.cpp`. |
+| one token per literal, run-wide | the same name appears in dozens of cultures; a per-file table would give it different keys. |
+| duplicates dropped inside one list | CK2 lists `Beauty` twice for `horse`. |
+
+Two more conversions are not verbatim:
 
 - `from_dynasty_prefix` / `male_patronym` / `female_patronym` are literal strings
   in CK2 and **loc keys** in CK3. The step emits
@@ -125,9 +145,53 @@ Two conversions are not verbatim:
   it to **no**, and without it a converted patronym is invisible
   (`docs/mapping_world.md` gotcha 5).
 
-`dynasty_names` / `cadet_dynasty_names` are **not** filled here: they come from
-grouping Faerûn's 11952 dynasties by culture, which is the characters lane's
-data (`mappings/character_fields.csv`).
+`dynasty_names` **is** filled here, and it is why the `dynasties` step now runs
+**before** this one (`src/ck2ck3/steps/__init__.py`). CK2 keeps dynasty names
+globally in `common/dynasties`, each block carrying a `culture`; CK3 keeps them
+per name list. So the `dynasties` step hands over
+`ctx.data["dynasties"]["names_by_culture"]` — CK2 culture → the `dynn_fae_<id>`
+loc keys of its dynasties — and each name list takes its own culture's keys,
+topped up from the **culture group** when the culture alone has fewer than
+`MINIMUM_DYNASTY_NAMES`. That top-up is not an invention: vanilla's own define
+says so — `common/defines/00_defines.txt:1145`, "We'll log an error for any
+culture with less dynasty names than this. Dynasty names from the culture group
+will count". A culture whose whole group has no dynasties gets an empty list and
+a comment saying which. On Faerûn: **396 of 419** cultures reach the minimum;
+the 23 that do not are the animal and undead cultures (`horse`, `cat`, `bear`,
+`lich`, `vampire`, `wraith`, `dracolich`, …), for which CK2 defines no dynasty
+anywhere in the group. The step names them in a warning; filling them is human
+input, not a derivation.
+
+Without it the game logged `culture_name_lists.cpp:169: Name list
+name_list_fae_X has only 0 dynasty names defined, which is less than
+MINIMUM_DYNASTY_NAMES` **838 times** — one per name list — which also means CK3
+had no name to mint a generated character's dynasty from
+(`docs/evidence/game_load_2026-09-08.md`).
+
+`cadet_dynasty_names` stays empty: CK2 has no cadet houses to convert.
+
+## Culture localisation
+
+CK3 asks a culture for **three** keys and CK2 supplies one. Vanilla
+`localization/english/culture/cultures_l_english.yml:460-462`:
+
+```
+ norse:0 "Norse"
+ norse_prefix:0 "Norse"
+ norse_collective_noun:0 "Norse"
+```
+
+Without the latter two the game logs `culture_template.cpp: Missing
+localization for <culture>_prefix` — 832 keys over 416 cultures on Faerûn.
+`scripts/export_opinion_modifier_map.py` therefore adds a `copy`-mode row per
+culture per suffix to `mappings/loc_key_renames_cultures_religions.csv` (137
+rows → 965), which `scripts/build_loc_key_map.py` merges into
+`overrides/loc_keys.csv` for the `loc` step to apply.
+
+Nine Faerûn cultures (`cat`, `horse`, `lich`, `mouther`, `red_panda`,
+`undead_dwarf`, `undeadgiant`, `vampire`, `wight`) have **no CK2 localisation
+row at all**, so there is nothing to copy and CK3 shows the raw id. Open:
+whether a title-cased id is an acceptable mechanical fallback or human input.
 
 ## Faith doctrines
 
