@@ -98,7 +98,7 @@ Validation chain: `pytest` (919) → `ck3-tiger` (fatal 0; 218 accepted errors, 
 
 Tracked in `STATUS.md` (Next 3) and `docs/integration_backlog.md`. In order:
 
-1. **Events and decisions** (13,058 events, ~101 decisions, 100 CBs) — see §5.
+1. **Events and decisions** (13,457 event ids: 1762 new, 5543 kept, 2911 modified, 3241 deleted vs CK2 vanilla; 959 decisions; 197 on_actions) — provenance pass and file-level bridge table done (`docs/events_provenance.md`, `mappings/events_ck2_ck3_vanilla.csv`, 56 % coverage); next is §5 step 3, the syntactic port of `new` events.
 2. Buildings (345) and wonders (59) → CK3 building chains and special buildings; on_actions; laws table.
 3. Traits backlog: 175 unclassified vanilla-origin traits, 25 non-race `race_trait` rows, `lifespan_<N>` as
    `life_expectancy`; culture gfx chain order (1383 cosmetic warnings); island regions (83); one oversized
@@ -106,8 +106,12 @@ Tracked in `STATUS.md` (Next 3) and `docs/integration_backlog.md`. In order:
 4. The 7 failing generated tests (6 bookmark characters' titles, 1 ruler-capital invariant) and a per-class
    triage of the In Game error log by owning step (`culture trigger [Failed context switch]` in vanilla pool
    templates is the biggest).
-5. Second-order fidelity: CK2 `technology` history → innovations; artifacts (546); flags → CoA emblems;
-   positions for cities from CK2 `positions.txt`.
+5. Second-order fidelity: CK2 `technology` history → innovations; artifacts (546); flags → CoA emblems.
+6. Map look, remaining research items of `docs/map_fidelity.md`: trees and colour map (§4.3), the terrain-paint
+   file size (2 × 226 MB uncompressed TGA; RLE or half-resolution to be tested in game), an art pass on
+   `mappings/terrain_paint.csv`, eyeballing the 758 counties whose barony borders moved with the CK2 port seeds.
+7. Characters' looks: one CK3 ethnicity per race and per-race body-shape portrait modifiers, zero new art
+   (`docs/research_dna_races.md` §4); elf ears, tusks, horns, tails are asset-library meshes.
 
 ## 5. Events: the plan
 
