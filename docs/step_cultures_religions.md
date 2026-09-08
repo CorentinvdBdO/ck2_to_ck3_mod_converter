@@ -97,10 +97,8 @@ culture (a blank cell falls back to the derived value).
 | `head_determination` | `horde` → `head_determination_herd`, else `head_determination_domain` | all domain: `verified` 0 `horde` uses; the government-derived herd variant belongs to the governments lane |
 | `ethnicities` | `overrides/ethnicity_of_culture_group.csv`, weight 10 | human groups → nearest vanilla ethnicity, others → `fae_placeholder_<race>` |
 
-`traditions` is only emitted when a CK2 flag justifies it —
-`seafarer` → `tradition_seafaring`, `allow_looting` →
-`tradition_practiced_pirates` (97 lines over 419 cultures). Nothing else in a
-Faerûn culture maps onto a vanilla tradition, and inventing one is forbidden.
+`traditions` is derived, not converted: see **Placeholder culture traditions**
+below.
 
 The four gfx axes are a fallback chain: the CK2 culture's own
 `graphical_cultures` (or `unit_graphical_cultures` for `unit_gfx`), then its
@@ -108,6 +106,124 @@ group's, then the `western_*` default. `overrides/gfx_of_culture_group.csv` maps
 the 49 CK2 values that have a real-world CK3 analogue; Faerûn uses **320**
 distinct values, and the ~270 fantasy ones (`drowgfx`, `beholdergfx`, …) have no
 CK3 counterpart and fall through to the default.
+
+## Placeholder culture traditions
+
+**Every id in this section is `assumed`.** CK2 has no tradition concept, so
+nothing here is converted from Faerûn; it exists only so a culture screen is not
+blank, and a submod is expected to replace the whole table.
+
+### The problem
+
+Only two CK2 flags map onto a vanilla CK3 tradition — `seafarer` →
+`tradition_seafaring` and `allow_looting` → `tradition_practiced_pirates`
+(`ck2ck3.steps.cultures.TRADITION_OF_FLAG`). `verified` over the Faerûn clone:
+22 cultures set `seafarer`, 75 set `allow_looting`, and **no** culture or group
+sets `horde`, `castes` or a nomad flag. That left 322 of 419 cultures with no
+`traditions` block at all.
+
+### The table
+
+`overrides/traditions_of_culture_group.csv` — human input, one row per CK2
+culture group, columns `ck2_culture_group,traditions,race,derivation`.
+`traditions` is a space-separated list of **vanilla** CK3 tradition ids; an
+empty cell means *deliberately none*, and a group with **no row** makes the step
+warn once (`missing_tradition_overrides`). Seeded by
+`uv run scripts/seed_culture_traditions.py`, which keys on the `race` column of
+`overrides/race_of_culture_group.csv` (`docs/design_races.md` item 1):
+
+| race | traditions |
+|---|---|
+| `human` (22 groups) | `tradition_hereditary_hierarchy` `tradition_martial_admiration` |
+| `elf`, `fey`, `plant` | `tradition_forest_folk` `tradition_sacred_groves` |
+| `dwarf` | `tradition_mountain_homes` `tradition_ancient_miners` `tradition_metal_craftsmanship` |
+| `gnome` | `tradition_hidden_cities` `tradition_metal_craftsmanship` |
+| `giant` | `tradition_mountain_homes` `tradition_only_the_strong` |
+| `halfling` | `tradition_esteemed_hospitality` `tradition_storytellers` |
+| `orc` | `tradition_warrior_culture` `tradition_only_the_strong` |
+| `goblinoid` | `tradition_warrior_culture` `tradition_strength_in_numbers` |
+| `dragon` | `tradition_hereditary_hierarchy` `tradition_isolationist` |
+| `beastfolk` | `tradition_hunters` `tradition_tribe_unity` |
+| `centaur` | `tradition_horse_lords` `tradition_pastoralists` |
+| `minotaur` | `tradition_hidden_cities` `tradition_only_the_strong` |
+| `avian` | `tradition_mountaineers` `tradition_hunters` |
+| `fish` | `tradition_fishermen` `tradition_seafaring` |
+| `serpent` | `tradition_mystical_ancestors` `tradition_ruling_caste` |
+| `scaly` | `tradition_jungle_dwellers` `tradition_hunters` |
+| `aberration` | `tradition_hidden_cities` `tradition_isolationist` |
+| `celestial` | `tradition_hereditary_hierarchy` `tradition_philosopher_culture` |
+| `fiendish` | `tradition_ruling_caste` `tradition_only_the_strong` |
+| `gith` | `tradition_warrior_culture` `tradition_isolationist` |
+| `planetouched` | `tradition_diasporic` `tradition_astute_diplomats` |
+| `genie` | `tradition_ruling_caste` `tradition_hereditary_hierarchy` |
+| `outsider` | `tradition_mystical_ancestors` `tradition_isolationist` |
+| `outworlder` | `tradition_diasporic` `tradition_xenophilic` |
+| `slaad` | `tradition_strength_in_numbers` `tradition_only_the_strong` |
+
+**The "no traditions" list** — races whose row is deliberately empty, because
+they are not societies with customs to model: `horse`, `cat`, `bear`,
+`hedgehog`, `duck`, `dog`, `elephant`, `panda` (Faerûn's `99_animals.txt` beast
+cultures), `undead`, `construct`, and `monster` (the province-filler culture).
+That is **11 of 67 groups / 29 of 419 cultures**. An empty `traditions` block is
+legal CK3: 1 of 233 vanilla culture blocks defines none.
+
+Fourteen groups take a per-group row instead of their race default, where the
+Forgotten Realms identity is unmistakable and the race default would be wrong:
+the four elf groups (only `sylvan_elf_group` is woodland; `dark_elf_group` gets
+`tradition_hidden_cities` `tradition_ruling_caste` `tradition_only_the_strong`),
+and the human groups with a distinct biome or society — `taan_group` (steppe),
+`zakharan_group` / `old_zakharan_group` (desert), `ulutiun_group` (arctic),
+`malatran_group` / `maztican_group` (jungle), `lapal_group` (swamp),
+`shou_group`, `imaskari_group`, `netherese_group`.
+
+### Merge and cap
+
+`derive_traditions(culture, traditions_of_group)` emits the CK2-flag traditions
+**first** (declaration order of `TRADITION_OF_FLAG`), then the group's override
+row in file order, deduped, truncated to `MAX_TRADITIONS = 5`. The flags come
+first on purpose: they are the only evidence-backed entries, so they survive the
+truncation. Deterministic, so the output is byte-stable.
+
+`MAX_TRADITIONS = 5` is `DEFAULT_MAX_TRADITIONS` from
+`common/defines/00_defines.txt:1163`. `verified`: 232 of vanilla's 233 defined
+`traditions` blocks hold 5 or fewer (one holds 6), so the engine tolerates more
+in script, but 5 is what the UI budgets for. Seed rows are ≤ 3 so that ≤ 3 + 2
+flags never truncates for Faerûn.
+
+### Id verification
+
+`uv run scripts/verify_culture_traditions.py` checks every id in the CSV and in
+`TRADITION_OF_FLAG` against `<ck3_game>/common/culture/traditions/*.txt` and
+exits non-zero on a miss, on a DLC-only id, or on a row over `MAX_TRADITIONS`.
+Evidence: `docs/evidence/culture_traditions_check.txt` — **32 distinct ids,
+MISSES: 0, DLC-ONLY: 0** against CK3 1.19. Ids are restricted to the base-game
+`00_*.txt` files so the mod loads for a player who owns no DLC; a miss would be
+a ck3-tiger `error(missing-item)` and an empty slot in the culture screen.
+`tradition_caste_system` and `tradition_druidism` **do not exist** in 1.19 — the
+real ids are `tradition_ruling_caste` and `tradition_sacred_groves`.
+
+### Counts (`verified`, Faerûn, 2026-09-08)
+
+| count | value |
+|---|---|
+| `cultures_with_traditions` | 392 of 419 (was 97) |
+| `cultures_without_traditions` | 27, all in the 11 no-traditions groups |
+| `groups_no_traditions_by_design` | 11 |
+| `missing_tradition_overrides` | 0 |
+| `traditions_emitted` | 916 lines |
+
+Per-culture distribution: 27 cultures with 0, 276 with 2, 100 with 3, 16 with 4.
+Two of the 29 cultures in a no-traditions group still get the two CK2-flag
+traditions, which is why 27 ≠ 29.
+
+### What a submod replaces
+
+The whole CSV. A submod that wants real traditions either (a) hand-edits
+`overrides/traditions_of_culture_group.csv` and re-runs the `cultures` step, or
+(b) ships its own `common/culture/cultures` files — that folder **is** a
+`replace_path` for the generated mod, so a submod loading after it overrides a
+culture wholesale. Nothing else in the converter reads the table.
+
 
 ## Name lists
 
@@ -307,7 +423,9 @@ because there is nothing to generate: `default_culture_modifier` is **empty**
 (403 of 406 users), and the other two — `monster_culture_modifier`
 (`levy_size`/`local_tax_modifier`) and `lythari_culture_modifier`
 (`elven_pantheon_opinion = 20`) — cover 3 cultures. All three are emitted as
-comments. `common/culture/traditions` is left to whichever lane needs it.
+comments. `common/culture/traditions` is left to whichever lane needs it: the
+step only *references* vanilla tradition ids (see **Placeholder culture
+traditions**), it never defines one.
 
 Likewise `character_modifier` on a culture is **not** emitted: `_cultures.info`
 documents it, but `verified` ck3-tiger rejects it (`unknown field
@@ -327,6 +445,10 @@ character_modifier`) and 0/244 vanilla cultures use it. Faerûn's 9 uses (all in
 | every `.yml` | localisation lane | this lane writes **no** localisation, only the rename rows above |
 
 ## Validation
+
+`uv run scripts/verify_culture_traditions.py` — every tradition id the step can
+emit against the CK3 1.19 install; exits 1 on a miss. Evidence:
+`docs/evidence/culture_traditions_check.txt`.
 
 `docs/evidence/tiger_cultures_religions.txt`, regenerated by
 `uv run scripts/validate_cultures_religions.py`. Current result (`verified`,
