@@ -13,7 +13,7 @@ from ..context import Context, StepResult
 from ..pdx import Block, Item, Node
 
 DESCRIPTION = "write descriptor.mod (name, version, tags, replace_path list)"
-OUTPUTS: tuple[str, ...] = ("descriptor.mod",)
+OUTPUTS: tuple[str, ...] = ("descriptor.mod", "credit_portraits.txt")
 
 
 def build(ctx: Context) -> Block:
@@ -52,6 +52,17 @@ def run(ctx: Context) -> StepResult:
     # launcher, not the script engine, parses this file) - which the path rule
     # in ck2ck3.pdx.encoding already gives it, descriptor.mod being top level.
     path = ctx.write_script("descriptor.mod", block, header=False)
+    # Vanilla's root credit_portraits.txt names vanilla characters
+    # (historical_export_easteregg_*) that this mod deletes; the game logs a
+    # failed key reference per line and crashed right after (bisected
+    # 2026-09-08, `verified`). Atlantis ships an empty file and Elder Kings 2
+    # a one-line comment; same-name override, no replace_path needed.
+    credits = ctx.write_text(
+        "credit_portraits.txt",
+        "# Intentionally empty: shadows vanilla credit_portraits.txt, whose\n"
+        "# bookmark-portrait keys name vanilla characters this mod does not have.\n",
+        encoding="utf-8-sig",
+    )
     return StepResult(
         summary=(
             f"descriptor.mod: {ctx.config.name!r} {ctx.config.version} "
@@ -62,5 +73,5 @@ def run(ctx: Context) -> StepResult:
             "tags": len(ctx.config.tags),
             "replace_paths": len(ctx.config.replace_paths),
         },
-        written=[path],
+        written=[path, credits],
     )

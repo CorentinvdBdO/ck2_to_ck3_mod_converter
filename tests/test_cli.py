@@ -262,7 +262,7 @@ def test_run_steps_reports_each_step(config):
     ctx, runs = run_steps(config, ["clean", "descriptor"])
     assert [r.name for r in runs] == ["clean", "descriptor"]
     assert all(r.error is None for r in runs)
-    assert runs[1].files == 1
+    assert runs[1].files == 2  # descriptor.mod + credit_portraits.txt shadow
 
 
 def test_run_steps_reraises_and_records(config, monkeypatch):
