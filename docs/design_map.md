@@ -27,8 +27,16 @@ Decisions here are converter defaults. Everything human-judged enters through ov
    `0 → 0`, `95 → 4883`, `255 → 49205`. Both sea levels are measured, not
    assumed: CK2's topology has a zero-pixel dead band at 93–96, and the CK3
    water surface is `WATERLEVEL / WORLD_EXTENTS_Y × 65535` (`docs/map_scale.md`
-   §4). **Then pack it**: the game loads `heightmap.heightmap`, not
-   `heightmap.png`, and the converter now writes the packed pair itself
+   §4). **Then detail it**: the 8-bit source through that curve leaves land
+   with only ~212 distinct 16-bit values 277 apart, which reads as terraced
+   contour lines rather than terrain (vanilla has 31,516). `[map]
+   heightmap_detail = true` runs a deterministic, seeded four-pass synthesis
+   — de-terrace, spectral fill to vanilla's own `f^-2.0` land spectrum per
+   CK3 terrain class, river-valley carving, coast smoothing — that preserves
+   the sea-level pin and every coastline exactly (`ck2ck3.map.heightmap_detail`,
+   `docs/map_fidelity.md` §4.2, `docs/step_map_heightmap.md`). **Then pack
+   it**: the game loads `heightmap.heightmap`, not `heightmap.png`, and the
+   converter now writes the packed pair itself
    (`docs/formats_packed_heightmap.md`) — the map editor is not needed.
 4. Rivers: keep the vector follow/redraw approach; fix SPLIT (yellow) and WATER (magenta) handling; add a unit test on a synthetic river.
 5. Write `default.map` (sea_zones from CK2 `sea_zones`, lakes from `ocean_region` "Lakes", impassable from CK2 wasteland), `definition.csv` (barony-keyed, see B), `adjacencies.csv` (straits from CK2 file, ids remapped), `climate.txt` (CK2 winter → CK3 `mild_winter/normal_winter/severe_winter` lists), `island_region.txt`, `geographical_regions/` (from CK2 `geographical_region.txt`, duchy lists remapped), `common/province_terrain/` (CK2 `terrain.bmp` majority colour per barony → CK3 terrain key via a mapping table).

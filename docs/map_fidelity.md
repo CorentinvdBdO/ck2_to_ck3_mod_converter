@@ -1,5 +1,15 @@
 # Map fidelity: how far our CK3 map is from a vanilla-looking one
 
+**Status, §4.2 (heightmap detail).** **Implemented**, lane
+`map-heightmap-detail`, 2026-09-08: `ck2ck3.map.heightmap_detail`, wired into
+the `map` step behind `[map] heightmap_detail = true` (on in
+`configs/faerun.toml`). Faerûn's land went from 212 distinct 16-bit values to
+44,390 (vanilla 31,516), sea pin and every coastline verified unchanged
+(`scripts/verify_heightmap_detail_invariants.py`), pass runtime 10.9 s.
+`docs/step_map_heightmap.md`, `docs/evidence/HANDOFF_map_heightmap_detail.md`.
+Everything else below (§1.1, §1.3–§1.6, §2, §3, §4.1, §4.3) is still research
+only, no converter code.
+
 **Question this answers.** Our map loads and plays, and it is ugly
 (`docs/playtest_2026-09-08.md` item 13). *Why* is it ugly, in measurable terms,
 and what would it cost to fix each cause? Research only — this lane writes no

@@ -75,6 +75,21 @@ curve = []
 
 tile_size = 33  # both reference total conversions use 33; vanilla uses 65
 
+[heightmap_detail]
+# Vanilla-matched detail synthesis on top of the plain rescaled heightmap
+# above: de-terrace, spectral fill to vanilla's f^-2.0 land spectrum (per
+# CK3 terrain class), river valleys, coast smoothing. docs/map_fidelity.md
+# §4.2; prototyped in scripts/prototype_heightmap_detail.py. Off here since
+# this standalone entry point is for iterating on the plain heightmap format;
+# configs/faerun.toml (the CLI path) turns it on.
+enabled = false
+seed = 1357
+# deterrace_sigma_px = 1.6
+# spectral_slope = -2.0
+# gain_blur_px = 6.0
+# river_depth = 900.0
+# coast_smooth_px = 4.0
+
 [provinces]
 # A CK2 colour with fewer than this many target pixels is reported, and
 # re-grown inside its own CK2 footprint if it can be.

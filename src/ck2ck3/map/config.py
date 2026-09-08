@@ -161,6 +161,116 @@ class HeightmapConfig:
     tile_size: int = 33
 
 
+#: vanilla per-CK3-terrain high-frequency RMS (16-bit levels, land only),
+#: measured off the real 1.19 heightmap: scripts/map_fidelity_heightmap.py ->
+#: docs/evidence/map_fidelity/hf_by_terrain.csv, quoted in docs/map_fidelity.md
+#: §1.2. Baked in so a normal conversion run has no runtime dependency on a
+#: research evidence file; override with `heightmap_detail_hf_targets` in
+#: `[map]` (an inline TOML table) to load a different one.
+DEFAULT_HF_TARGETS: dict[str, float] = {
+    "desert": 91.2,
+    "desert_mountains": 322.6,
+    "drylands": 96.9,
+    "farmlands": 96.7,
+    "floodplains": 106.0,
+    "forest": 110.7,
+    "hills": 213.3,
+    "jungle": 120.7,
+    "mountains": 311.4,
+    "oasis": 121.8,
+    "plains": 86.3,
+    "steppe": 97.2,
+    "taiga": 70.1,
+    "terraced_hills": 253.2,
+    "wetlands": 70.4,
+}
+
+
+@dataclass(frozen=True)
+class HeightmapDetailConfig:
+    """``[map]`` flat keys ``heightmap_detail*`` -- vanilla-matched detail
+    synthesis on the rescaled heightmap (``docs/map_fidelity.md`` §4.2,
+    prototyped in ``scripts/prototype_heightmap_detail.py``).
+
+    Flat under ``[map]``, like the ``scale`` keys above: a TOML table named
+    ``heightmap_detail`` would collide with the boolean flag of that name.
+
+    Off by default: the plain rescaled heightmap (``heightmap.py``) still
+    boots a playable, coastline-correct map on its own; this only fixes how
+    it looks.
+    """
+
+    enabled: bool = False
+    #: deterministic RNG seed for the synthetic noise field
+    seed: int = 1357
+    #: pass 1 (de-terrace): Gaussian sigma, canvas px
+    deterrace_sigma_px: float = 1.6
+    #: pass 2 (spectral fill): vanilla's land elevation spectrum is
+    #: amplitude ~ f**slope
+    spectral_slope: float = -2.0
+    #: pass 2: Gaussian blur (canvas px) on the per-pixel noise-gain field, so
+    #: terrain-class borders leave no amplitude seam
+    gain_blur_px: float = 6.0
+    #: pass 2: per-CK3-terrain target high-frequency RMS (16-bit levels); a
+    #: terrain key missing from this table falls back to its "plains" entry
+    hf_targets: dict[str, float] = field(default_factory=lambda: dict(DEFAULT_HF_TARGETS))
+    #: pass 3 (river valleys): depth in 16-bit levels at the centreline
+    river_depth: float = 900.0
+    #: pass 4 (coast smoothing): land within this many canvas px of the coast
+    #: is blended toward the water level so beaches stay flat
+    coast_smooth_px: float = 4.0
+
+
+def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
+    """Build a :class:`HeightmapDetailConfig` from the flat ``[map]`` keys."""
+    d = HeightmapDetailConfig()
+    hf_raw = raw.get("heightmap_detail_hf_targets")
+    hf_targets = (
+        {str(k): float(v) for k, v in hf_raw.items()} if hf_raw else dict(d.hf_targets)
+    )
+    return HeightmapDetailConfig(
+        enabled=bool(raw.get("heightmap_detail", d.enabled)),
+        seed=int(raw.get("heightmap_detail_seed", d.seed)),
+        deterrace_sigma_px=float(
+            raw.get("heightmap_detail_deterrace_sigma_px", d.deterrace_sigma_px)
+        ),
+        spectral_slope=float(
+            raw.get("heightmap_detail_spectral_slope", d.spectral_slope)
+        ),
+        gain_blur_px=float(raw.get("heightmap_detail_gain_blur_px", d.gain_blur_px)),
+        hf_targets=hf_targets,
+        river_depth=float(raw.get("heightmap_detail_river_depth", d.river_depth)),
+        coast_smooth_px=float(
+            raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
+        ),
+    )
+
+
+def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
+    """Same fields as :func:`heightmap_detail_config`, from a nested table.
+
+    Only the standalone ``configs/faerun_map.toml`` entry point uses this: it
+    has no ``[map]`` wrapper to collide with, so ``[heightmap_detail]`` is a
+    normal sub-table there instead of the CLI's flat ``heightmap_detail*``
+    keys.
+    """
+    d = HeightmapDetailConfig()
+    hf_raw = hmd.get("hf_targets")
+    hf_targets = (
+        {str(k): float(v) for k, v in hf_raw.items()} if hf_raw else dict(d.hf_targets)
+    )
+    return HeightmapDetailConfig(
+        enabled=bool(hmd.get("enabled", d.enabled)),
+        seed=int(hmd.get("seed", d.seed)),
+        deterrace_sigma_px=float(hmd.get("deterrace_sigma_px", d.deterrace_sigma_px)),
+        spectral_slope=float(hmd.get("spectral_slope", d.spectral_slope)),
+        gain_blur_px=float(hmd.get("gain_blur_px", d.gain_blur_px)),
+        hf_targets=hf_targets,
+        river_depth=float(hmd.get("river_depth", d.river_depth)),
+        coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
+    )
+
+
 @dataclass(frozen=True)
 class BaronyConfig:
     """How CK2 counties are split into physical baronies.
@@ -241,6 +351,7 @@ class MapConfig:
     out_mod_dir: Path
     scale: ScaleConfig
     heightmap: HeightmapConfig = field(default_factory=HeightmapConfig)
+    heightmap_detail: HeightmapDetailConfig = field(default_factory=HeightmapDetailConfig)
     provinces: ProvincesConfig = field(default_factory=ProvincesConfig)
     baronies: BaronyConfig = field(default_factory=BaronyConfig)
     #: CK2 mod root, for common/landed_titles, history/provinces, localisation
@@ -320,6 +431,10 @@ def load(path: str | Path) -> MapConfig:
             curve=[(int(a), int(b)) for a, b in hm.get("curve", [])],
             tile_size=int(hm.get("tile_size", 33)),
         ),
+        # standalone TOML nests this as its own [heightmap_detail] table
+        # (the CLI's [map] uses flat heightmap_detail* keys instead -- see
+        # heightmap_detail_config()).
+        heightmap_detail=_heightmap_detail_from_table(raw.get("heightmap_detail", {})),
         provinces=ProvincesConfig(
             min_pixels=int(pr.get("min_pixels", 16)),
             ocean_rgb=tuple(int(v) for v in pr.get("ocean_rgb", (0, 0, 96))),  # type: ignore[arg-type]
