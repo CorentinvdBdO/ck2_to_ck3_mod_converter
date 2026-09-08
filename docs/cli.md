@@ -135,6 +135,7 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 |---|---|---|
 | `clean` | `*` | deletes every top-level entry of the output mod that is not protected |
 | `descriptor` | `descriptor.mod` | writes `descriptor.mod` from the config |
+| `tc_template` | 60 vanilla folders, from `mappings/tc_template.csv` | blanks the vanilla content that names vanilla titles/provinces/characters (`docs/tc_template.md`) |
 | `loc` | `localization` | every CK2 localisation CSV → one CK3 `.yml` per language |
 | `map` | `map_data`, `common/province_terrain`, `common/defines` | the physical map (`docs/design_map.md` §A) |
 | `titles` | `common/landed_titles`, `common/coat_of_arms/coat_of_arms` | the Faerûn de jure tree + placeholder coats of arms (`docs/step_titles.md`) |
@@ -174,6 +175,22 @@ against this map and fail en masse (they hard-code 1066 ids); the step warns
 if it is missing. The grammar and how the game runs these files are in
 `../claudespace/docs/ck3_test_framework.md`; run them with
 `../claudespace/scripts/ck3_test.sh`.
+
+### `tc_template` — the blank total-conversion layer
+
+`tc_template` is the one step whose `OUTPUTS` is not a literal: it is read from
+`mappings/tc_template.csv` at import time, so `--list-steps` and the
+no-two-steps-share-an-output test see the real set. Each row is a vanilla
+folder — or a folder plus a filename glob — and a mode: `shadow` (empty
+same-name override of every file), `shadow_dirty` (only the files that name a
+vanilla map object), `neutralise` (keep the top-level keys, drop the bodies) or
+`keep` (a documented decision to leave vanilla live). A fifth mode,
+`replace_path`, writes nothing and warns when `[mod] replace_paths` does not
+list the folder, so the table and the descriptor cannot drift apart.
+
+It runs straight after `descriptor` and before every content step: it only
+writes empty shadows of vanilla files, and a later step that really fills one
+of those folders must win.
 
 ### `loc` key map
 

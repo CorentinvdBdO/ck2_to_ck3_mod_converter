@@ -1,0 +1,102 @@
+file,title_refs,distinct_tags,as_title_scope,county_or_barony_refs,example_tags
+events/factions/faction_demands.txt,173,14,173,0,e_byzantium e_ilkhanate e_golden_horde e_chagatai e_red_horde e_white_horde
+events/dlc/ep3/ep3_laamp_events.txt,159,146,16,150,c_zichia k_england e_byzantium b_london b_southwark b_woxbrigge
+events/dlc/ep3/ep3_frankokratia_events.txt,151,21,151,35,e_byzantium e_latin_empire c_byzantion c_euboea e_carpathia b_constantinople
+events/artifacts/historical_artifacts_events.txt,110,30,110,27,e_byzantium d_shiite e_hre k_chrysanthemum_throne k_pagan c_nf_taira_kanmu
+events/dlc/ep3/ep3_emperor_yearly_2.txt,83,21,83,80,c_antiocheia c_jerusalem c_alexandria c_edessa c_abbadan c_bari
+events/bookmark_events.txt,61,22,61,29,c_cordoba e_byzantium d_meissen d_lausitz e_hre c_cabra
+events/dlc/fp2/fp2_yearly_events.txt,46,19,46,46,c_valencia c_santiago c_astorga c_leon c_burgos c_amaya
+events/dlc/ep3/ep3_story_cycle_harrying_of_the_north_events.txt,35,10,35,17,k_england c_cambridgeshire c_middlesex c_hertfordshire c_bedford c_northamptonshire
+events/activities/coronation_activity/coronation_events_6.txt,32,10,32,15,c_byzantion e_byzantium e_japan d_sunni b_vaticano e_mongol_empire
+events/dlc/tgp/tgp_dynastic_cycle_events.txt,32,10,32,0,h_china e_minister_chancellor e_minister_censor e_minister_grand_marshal e_minister_of_personnel e_minister_of_revenue
+events/dlc/ce1/epidemic_events.txt,30,10,30,30,b_santiago b_london b_roma b_paris b_constantinople b_praha
+events/dlc/fp3/fp3_story_cycle_zanj_rebellion_events.txt,25,3,25,23,c_basra c_baghdad e_arabia
+events/religion_events/great_holy_war_events.txt,25,19,25,22,c_jerusalem e_byzantium c_roma c_byzantion c_paphlagonia c_attica
+events/activities/pilgrimage_activity/pilgrimage_events.txt,23,20,23,23,b_makka b_jerusalem c_varanasi c_roma c_jerusalem c_byzantion
+events/dlc/ep1/ep1_fund_inspiration_events.txt,22,21,22,0,e_italy h_roman_empire k_cornwall e_france e_hre e_slavia
+events/dlc/ep3/ep3_travel_events_3.txt,22,19,22,12,b_kaisereia b_maab b_jarash b_irbid b_zurra b_baniyas
+events/game_rule_events.txt,22,8,20,1,k_england k_hungary k_scotland k_wales k_norway d_normandy
+events/dlc/ep3/ep3_emperor_yearly_8.txt,20,8,20,6,e_byzantium c_byzantion d_thrace d_optimatoi d_opsikion c_abydos
+events/religion_events/local_shrine_events.txt,18,2,18,10,b_qianfeng h_china
+events/dlc/tgp/tgp_silk_road_events.txt,16,6,16,16,c_jingzhao c_shazhou c_lhasa c_dvin c_lahur c_khiva
+events/dlc/ach/ach_coronation_events.txt,15,4,15,1,e_byzantium e_hre k_ireland c_byzantion
+events/varangian_events.txt,14,2,14,2,e_byzantium c_byzantion
+events/title_events.txt,13,6,13,0,k_france k_east_francia k_asturias k_castille d_leon k_leon
+events/activities/coronation_activity/coronation_events.txt,10,10,10,8,c_byzantion b_constantinople b_paris k_france e_france b_krakow
+events/activities/imperial_examination_activity/imperial_examination_events.txt,10,1,10,0,e_minister_of_rites
+events/dlc/fp1/fp1_major_decision_events.txt,10,3,10,8,c_kiev e_russia e_north_sea
+events/dlc/fp2/fp2_other_decision_events.txt,10,3,10,6,c_toledo k_toledo k_papal_state
+events/religion_events/head_of_faith_events.txt,10,2,10,0,d_sunni d_shiite
+events/situation_events/tgp_natural_disaster_events.txt,10,10,10,0,h_china e_minister_chancellor e_minister_censor e_minister_grand_marshal e_minister_of_personnel e_minister_of_revenue
+events/activities/imperial_examination_activity/emperor_prep_phase_imperial_examination_events.txt,9,3,9,9,c_bamian c_tsushima c_chalkidike
+events/dlc/fp3/fp3_struggle_events.txt,9,3,9,0,d_sunni e_arabia e_persia
+events/dlc/tgp/tgp_china_ministry_events.txt,9,9,9,0,e_minister_chancellor e_minister_censor e_minister_grand_marshal e_minister_of_personnel e_minister_of_revenue e_minister_of_rites
+events/dlc/fp3/fp3_heritage_events.txt,8,5,8,5,k_mesopotamia c_rayy c_ardabil k_jazira c_baghdad
+events/education_and_childhood/chinese_disciple_events.txt,8,1,8,0,h_china
+events/activities/coronation_activity/coronation_events_klank.txt,7,1,7,0,d_sunni
+events/scheme_events/scheme_critical_moments_events.txt,7,4,7,2,h_china e_byzantium c_byzantion e_minister_censor
+events/activities/pilgrimage_activity/hajj_events.txt,6,1,6,6,b_makka
+events/birth_events.txt,6,2,6,6,c_byzantion c_roma
+events/dlc/ep3/ep3_governor_yearly_3.txt,6,2,6,4,c_byzantion e_byzantium
+events/dlc/fp2/fp2_struggle_events.txt,6,4,6,5,b_toledo e_spain c_toledo c_napoli
+events/dlc/fp3/fp3_religious_decision_events.txt,6,1,6,0,d_sunni
+events/religion_events/religious_interaction_events.txt,6,1,6,0,e_minister_of_rites
+events/secret_events/secrets_events.txt,5,2,5,0,e_minister_of_rites h_china
+events/yearly_events/yearly_events_4.txt,5,1,5,5,c_baghdad
+events/activities/pilgrimage_activity/pilgrimage_events_seasia.txt,4,2,4,4,c_mecca c_magadha
+events/court_events/court_events_general.txt,4,4,4,0,k_italy k_romagna k_sardinia e_italy
+events/dlc/ep3/ep3_decisions_events.txt,4,2,4,0,d_laamp_asen e_byzantium
+events/dlc/ep3/ep3_interactions_events.txt,4,1,4,0,e_byzantium
+events/dlc/ep3/ep3_story_cycle_grand_ambitions_events.txt,4,2,4,3,c_byzantion e_byzantium
+events/dlc/tgp/tgp_genpei_character_events.txt,4,1,4,0,k_chrysanthemum_throne
+events/dlc/tgp/tgp_japan_career_events.txt,4,2,4,0,k_chrysanthemum_throne e_japan
+events/dlc/tgp/tgp_japan_general_events.txt,4,2,4,0,e_japan k_chrysanthemum_throne
+events/scheme_events/murder_scheme/murder_save_events.txt,4,2,4,0,e_byzantium k_france
+events/dlc/ep3/ep3_emperor_yearly_3.txt,3,1,3,3,c_byzantion
+events/dlc/ep3/ep3_story_cycle_admin_eunuch_events.txt,3,2,3,1,e_byzantium c_byzantion
+events/dlc/fp1/fp1_yearly_events.txt,3,2,3,0,e_byzantium d_iceland
+events/dlc/fp2/fp2_lyonese_monk_events.txt,3,2,3,1,k_papal_state b_roma
+events/dlc/fp2/neutral_struggle_events.txt,3,3,3,1,e_arabia d_sunni c_jingzhao
+events/dlc/tgp/tgp_japan_decision_events.txt,3,2,3,2,c_yamashiro e_japan
+events/dlc/tgp/tgp_japan_yearly_events.txt,3,2,3,0,k_chrysanthemum_throne e_japan
+events/dlc/tgp/tgp_japan_yearly_events_ariana.txt,3,1,3,0,e_japan
+events/activities/coronation_activity/coronation_events_1.txt,2,2,2,1,c_byzantion h_china
+events/court_events/introduce_court_fashion_events.txt,2,1,2,0,k_fashion
+events/dlc/ce1/epidemic_events_2.txt,2,2,2,1,c_aachen d_thuringia
+events/dlc/ep1/ep1_flavor_events.txt,2,1,2,0,e_persia
+events/dlc/ep3/ep3_story_cycle_violet_poet_events.txt,2,1,2,2,c_toledo
+events/dlc/mpo/mpo_migration_travel_events.txt,2,1,0,2,b_bad
+events/dlc/tgp/tgp_movement_events.txt,2,1,2,0,h_china
+events/dlc/tgp/tgp_tribute_mission_events.txt,2,1,2,0,h_china
+events/error_suppression_events.txt,2,2,2,0,e_japan e_goryeo
+events/lifestyles/warfare_lifestyle/warhorse_events.txt,2,1,0,2,b_bad
+events/religion_events/fervor_events.txt,2,1,2,0,h_china
+events/single_combat_events.txt,2,1,2,0,e_byzantium
+events/tutorial_events.txt,2,1,2,2,c_ennis
+events/yearly_events/yearly_events_sahara.txt,2,2,2,0,d_kawar d_tibesti
+events/activities/feast_activity/feast_default_events_axel.txt,1,1,1,0,h_china
+events/activities/petition_liege_activity/petition_liege_events.txt,1,1,1,0,h_china
+events/culture_events/culture_emergence_events.txt,1,1,1,0,e_byzantium
+events/dlc/ce1/legend_spread_events_8.txt,1,1,1,0,k_sweden
+events/dlc/ce1/legend_spread_events_veronica.txt,1,1,1,0,k_england
+events/dlc/ep3/ep3_laamp_decision_events.txt,1,1,1,1,b_constantinople
+events/dlc/ep3/ep3_roman_restoration_events.txt,1,1,1,1,c_byzantion
+events/dlc/fp1/fp1_scandinavian_adventurer_events.txt,1,1,1,1,b_lister
+events/dlc/fp3/fp3_misc_decision_events.txt,1,1,1,0,d_sunni
+events/dlc/fp3/fp3_yearly_events_ola_batch_1.txt,1,1,1,0,h_china
+events/dlc/tgp/tgp_ceremonial_liege_events.txt,1,1,0,1,c_liege
+events/dlc/tgp/tgp_faction_events.txt,1,1,1,0,e_japan
+events/dlc/tgp/tgp_korea_decision_events.txt,1,1,1,0,e_goryeo
+events/interaction_events/character_interaction_events.txt,1,1,1,0,h_china
+events/realm_maintenance_events.txt,1,1,1,0,e_japan
+events/religion_events/faith_conversion_events.txt,1,1,1,0,d_sunni
+events/scheme_events/governor_contract_events.txt,1,1,1,0,e_byzantium
+events/scheme_events/intrigue_scheme_ongoing_events.txt,1,1,0,1,c_man
+events/scheme_events/laamp_base_contract_scheme_events.txt,1,1,1,1,c_byzantion
+events/scheme_events/murder_scheme/murder_scheme_maintenance_events.txt,1,1,1,0,d_sunni
+events/scheme_events/seduce_scheme/seduce_scheme_outcome_events.txt,1,1,1,0,k_papal_state
+events/test_events/debug.txt,1,1,1,1,c_kandy
+events/trait_specific_events/trait_specific_ongoing_events.txt,1,1,0,1,b_man
+events/travel_events/travel_events_bp3.txt,1,1,1,0,h_china
+events/travel_events/travel_events_cities.txt,1,1,1,0,e_byzantium
+events/travel_events/travel_start_events.txt,1,1,1,0,h_china

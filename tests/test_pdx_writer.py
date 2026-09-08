@@ -114,6 +114,9 @@ def test_the_bom_rule_is_by_path_not_content(tmp_path):
     assert encoding_for("common/traits/fae_traits.txt") == "utf-8-sig"
     assert encoding_for("history/titles/fae_counties.txt") == "utf-8-sig"
     assert encoding_for("tests/fae_generated_tests.txt") == "utf-8-sig"
+    # All 536 vanilla event files carry one (`verified` 2026-09-08); the
+    # tc_template step shadows some of them.
+    assert encoding_for("events/decisions_events/british_isles_events.txt") == "utf-8-sig"
     assert encoding_for("map_data/geographical_regions/fae.txt") == "utf-8-sig"
     # The flat map_data files and descriptor.mod must NOT have one.
     assert encoding_for("map_data/definition.csv") == "utf-8"
