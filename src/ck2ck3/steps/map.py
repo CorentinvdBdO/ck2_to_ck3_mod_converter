@@ -30,6 +30,10 @@ OUTPUTS: tuple[str, ...] = (
     "map_data",
     "common/province_terrain",
     "common/defines",
+    # locators, the 3D map table and the flat map: everything that has to
+    # follow a non-vanilla canvas (docs/evidence/map_ui_research.md)
+    "gfx/map/map_object_data",
+    "gfx/map/terrain/flat_maps",
 )
 
 
@@ -174,6 +178,7 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,
         title_scaffolding=bool(raw.get("title_scaffolding", False)),
+        strip_vanilla_foliage=bool(raw.get("strip_vanilla_foliage", True)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

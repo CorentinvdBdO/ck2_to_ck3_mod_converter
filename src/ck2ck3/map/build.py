@@ -36,12 +36,15 @@ from . import (
     bootstrap,
     ck2read,
     ck2titles,
+    flatmap,
     graphical,
     heightmap,
     holdings,
     idmap,
+    locators,
     provinces,
     rivers,
+    table,
     terrain,
     writers,
 )
@@ -327,7 +330,17 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             "water_level": cfg.heightmap.ck3_water_level,
             **{k: v for k, v in meta.items() if isinstance(v, (int, float, str))},
         }
-        del heights
+        log("painting the flat (paper) map")
+        paper = flatmap.render(
+            water_mask, heights, water_level=cfg.heightmap.ck3_water_level
+        )
+        sink.binary(flatmap.FLATMAP_PATH, lambda p: flatmap.save(paper, p))
+        report["flatmap"] = {
+            "width": int(paper.shape[1]),
+            "height": int(paper.shape[0]),
+            "format": "DXT1",
+        }
+        del paper, heights
 
         log("tracing and redrawing rivers")
         riv = rivers.render(src / "rivers.bmp", canvas, water_mask)
@@ -358,6 +371,60 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     sink.text("map_data/adjacencies.csv", adj_text)
     for message in dropped_adj:
         sink.warn(message)
+    # ------------------------------------------------- map object locators
+    # Without these the game keeps vanilla's coordinates for every id vanilla
+    # also defines, and 3179 of Faerun's 3694 holdings drew a median 3040 px
+    # from their own land (docs/evidence/map_ui_research.md §1.3).  The engine
+    # only fills *gaps*, so a partial override is worse than none.
+    locator_land = {
+        p.id for p in ids.provinces if not p.is_water and not p.is_impassable
+    }
+    locator_passable = {p.id for p in ids.provinces if not p.is_impassable}
+    locator_xy = {pid: (x, y) for pid, (y, x) in centroids.items()}
+    for rel, text in locators.render_all(
+        locator_xy,
+        canvas.height,
+        land_ids=locator_land,
+        passable_ids=locator_passable,
+    ).items():
+        sink.text(rel, text)
+    log(
+        f"locators: {len(locators.LOCATOR_SPECS)} files, "
+        f"{len(locator_land)} land / {len(locator_passable)} passable provinces"
+    )
+    foliage = (
+        locators.render_foliage_stubs(cfg.ck3_game_dir)
+        if cfg.strip_vanilla_foliage
+        else {}
+    )
+    for rel, text in foliage.items():
+        sink.text(rel, text)
+    if foliage:
+        log(f"{len(foliage)} vanilla foliage generators emptied")
+    report["locators"] = {
+        "files": len(locators.LOCATOR_SPECS),
+        "land": len(locator_land),
+        "passable": len(locator_passable),
+        "foliage_stubs": len(foliage),
+    }
+
+    # ------------------------------------------------------ the 3D map table
+    tables = table.render_all(
+        cfg.ck3_game_dir, width=canvas.width, height=canvas.height
+    )
+    if not tables:
+        sink.warn(
+            "no vanilla gfx/map/map_object_data/map_table_*.txt found at "
+            f"{cfg.ck3_game_dir}: the map table keeps vanilla's size and a map "
+            "taller than 4608 px overhangs it (docs/evidence/map_ui_research.md §3)"
+        )
+    for rel, text in tables.items():
+        sink.text(rel, text)
+    report["map_table"] = {
+        "files": len(tables),
+        "scale": round(table.scale_factor(canvas.width, canvas.height), 4),
+    }
+
     sink.text("map_data/climate.txt", writers.render_climate(climate, ids))
     sink.text("map_data/island_region.txt", writers.render_island_region(islands, ids))
     graphical_buckets = graphical.assign(
@@ -411,6 +478,10 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     sink.text(
         f"common/defines/{prefix}_defines.txt",
         bootstrap.render_defines(width=canvas.width, height=canvas.height),
+    )
+    sink.text(
+        f"common/defines/graphic/{prefix}_graphics.txt",
+        bootstrap.render_camera_defines(width=canvas.width, height=canvas.height),
     )
     for rel, text in bootstrap.render_empty_replacements().items():
         sink.text(rel, text)

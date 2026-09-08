@@ -75,6 +75,15 @@ source_dimensions = [4096, 3328]
 # true = write the text files only, skipping the four PNGs (30 s, ~45 MB).
 skip_images = false
 
+# Blank out vanilla's gfx/map/map_object_data/generated/*.txt. Those hold ~52 MB
+# of tree/rock instances at coordinates inside vanilla's own 9216x4608 sheet,
+# and nothing stops them loading over a custom map - trees in our ocean, props
+# against the map table. Elder Kings 2 and Godherja both ship empty
+# `instances={ }` stubs for generators they do not want; this does it for every
+# file vanilla ships. Set false to keep vanilla's foliage.
+# docs/evidence/map_ui_research.md
+strip_vanilla_foliage = true
+
 # CK2 labels its lakes only by the ocean_region comment text in default.map.
 lake_names = ["Lakes"]
 

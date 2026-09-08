@@ -266,6 +266,13 @@ class MapConfig:
     #: and history/provinces.  Turn it on ([map] title_scaffolding = true) to
     #: boot a map-only mod without running the `titles` step.
     title_scaffolding: bool = False
+    #: blank out vanilla's `gfx/map/map_object_data/generated/*.txt` foliage.
+    #: Those files hold ~52 MB of tree instances at *European* coordinates and
+    #: nothing stops them loading over a custom map, so on our canvas they are
+    #: trees in the wrong ocean.  Elder Kings 2 and Godherja both ship empty
+    #: `instances={}` stubs for the generators they do not want; this does the
+    #: same for every one vanilla ships.  Set false to keep vanilla's foliage.
+    strip_vanilla_foliage: bool = True
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
