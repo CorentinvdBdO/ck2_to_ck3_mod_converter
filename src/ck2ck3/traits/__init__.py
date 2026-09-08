@@ -5,6 +5,7 @@ CLI. Nothing here touches the filesystem except to read the input tables and
 the CK2 mod.
 """
 
+from .conflicts import TraitConflicts, read_trait_conflicts
 from .convert import (
     CK3_BASE_LIFE_EXPECTANCY,
     GROUP_PREFIX,
@@ -38,6 +39,7 @@ __all__ = [
     "RaceLifespan",
     "Rename",
     "Tables",
+    "TraitConflicts",
     "TraitConverter",
     "UnmappedKey",
     "Unported",
@@ -49,6 +51,7 @@ __all__ = [
     "opposites_cliques",
     "read_ck2_traits",
     "read_ck3_trait_ids",
+    "read_trait_conflicts",
     "trait_groups",
     "unported",
 ]

@@ -311,6 +311,14 @@ class BaronyConfig:
     max_regrow_passes: int = 3
     #: CK2 positions.txt slot that holds the city coordinate
     city_slot: int = 0
+    #: CK2 positions.txt slot that holds the port/harbour coordinate
+    #: (`verified`, docs/map_fidelity.md §1.6: the CK2 binary itself logs
+    #: "Invalid port location for province %d" against slot 4)
+    port_slot: int = 4
+    #: use the CK2 positions.txt city/port slots as barony seeds at all.
+    #: ``[map] ck2_position_seeds`` (default on); false reproduces the seed
+    #: priority before this lane (capital only, no slot-4 port seeding).
+    ck2_position_seeds: bool = True
     #: human override files, relative to the converter repo root
     seeds_csv: Path = Path("overrides/barony_seeds.csv")
     gazetteer_csv: Path = Path("overrides/gazetteer.csv")
@@ -384,6 +392,18 @@ class MapConfig:
     #: `instances={}` stubs for the generators they do not want; this does the
     #: same for every one vanilla ships.  Set false to keep vanilla's foliage.
     strip_vanilla_foliage: bool = True
+    #: write gfx/map/terrain/detail_index.tga + detail_intensity.tga, the pair
+    #: CK3's renderer actually reads (docs/step_map_paint.md). ``[map]
+    #: terrain_paint`` (default on). Ships nothing when false, same as before
+    #: this lane, and CK3 falls back to sampling vanilla's own pair in UV
+    #: space across the canvas.
+    terrain_paint: bool = True
+    #: CK3 terrain key -> (primary, secondary) vanilla material id
+    terrain_paint_csv: Path = Path("mappings/terrain_paint.csv")
+    #: blend-weight quantisation step for detail_intensity.tga (1 = none;
+    #: docs/map_fidelity.md §4.1 measures 16 as visually invisible and much
+    #: more compressible than the full 256 steps)
+    terrain_paint_quantize: int = 16
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -451,6 +471,11 @@ def load(path: str | Path) -> MapConfig:
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
         title_scaffolding=bool(out.get("title_scaffolding", False)),
+        terrain_paint=bool(raw.get("terrain_paint", True)),
+        terrain_paint_csv=Path(
+            str(raw.get("terrain_paint_csv", "mappings/terrain_paint.csv"))
+        ),
+        terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),
@@ -487,6 +512,8 @@ def barony_config(raw: dict) -> BaronyConfig:
         relax_passes=int(raw.get("relax_passes", d.relax_passes)),
         max_regrow_passes=int(raw.get("max_regrow_passes", d.max_regrow_passes)),
         city_slot=int(raw.get("city_slot", d.city_slot)),
+        port_slot=int(raw.get("port_slot", d.port_slot)),
+        ck2_position_seeds=bool(raw.get("ck2_position_seeds", d.ck2_position_seeds)),
         seeds_csv=Path(str(raw.get("seeds_csv", d.seeds_csv))),
         gazetteer_csv=Path(str(raw.get("gazetteer_csv", d.gazetteer_csv))),
         review_sheets=bool(raw.get("review_sheets", d.review_sheets)),

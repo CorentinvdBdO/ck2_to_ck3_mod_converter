@@ -24,6 +24,7 @@ from ..port import integrity
 from ..port.characters import CharacterPort, convert_character_file, output_name
 from ..port.evidence import write_csv
 from ..port.tables import load_tables
+from ..traits import read_trait_conflicts
 
 DESCRIPTION = "convert history/characters (18k Faerun characters, field by field)"
 OUTPUTS: tuple[str, ...] = ("history/characters",)
@@ -43,10 +44,12 @@ def run(ctx: Context) -> StepResult:
     tables = load_tables()
     _adopt_trait_set(ctx, tables)
     tables.adopt_ck3_modifiers(_ck3_modifier_ids(ctx))
+    conflicts = read_trait_conflicts(ctx.ck3("common", "traits"))
     port = CharacterPort(
         tables=tables,
         prefix=ctx.config.prefix,
         landed=ctx.data.get("titles", {}).get("landed"),
+        conflicts=conflicts,
     )
     if port.landed is None:
         ctx.warn("no titles hand-off (run history_titles first): every employer kept")

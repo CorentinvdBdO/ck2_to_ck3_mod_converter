@@ -14,7 +14,7 @@ learning,history,learning,same,exact,1:1
 combat_rating,history,prowess,scale_0_1,approx,CK2 combat_rating x0.1 per mappings/modifiers.csv; 0 uses in Faerun
 health,history,health,same,exact,1:1
 fertility,history,fertility,same,exact,1:1
-trait,history,trait,trait,exact,"value remapped through mappings/trait_id_map.csv when present, skipping its status=approx rows (a near-equivalent pair where both traits exist, not a dedupe)"
+trait,history,trait,trait,exact,"value remapped through mappings/trait_ck2_to_ck3.csv; a vanilla_traits.csv status=drop trait becomes a comment, status=sexuality becomes sexuality = <value>, and a conflict with an already-held trait (dup/opposite/leveled sibling) keeps the CK2-first-listed one and comments the rest (docs/step_traits.md rules 1-3)"
 add_trait,history,add_trait,trait,exact,1:1
 remove_trait,history,remove_trait,trait,exact,1:1
 disallow_random_traits,history,disallow_random_traits,same,exact,1:1

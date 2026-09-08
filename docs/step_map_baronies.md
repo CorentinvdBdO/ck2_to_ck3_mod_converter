@@ -7,11 +7,15 @@ wrong?
 
 **Answer.** The baronies are the holdings CK2 actually *built* in
 `history/provinces`. Each gets one seed pixel — from a human override, a
-gazetteer, the CK2 `positions.txt` city slot, or farthest-point sampling — and
-the county is then partitioned by multi-source geodesic Voronoi. A county too
-small for all its holdings demotes the last ones declared in `landed_titles`;
-they stay in `docs/evidence/barony_set.csv` for the `titles-history` lane to
-emit as commented-out baronies.
+gazetteer, the CK2 `positions.txt` city/port slots, or farthest-point sampling
+— and the county is then partitioned by multi-source geodesic Voronoi. A
+county too small for all its holdings demotes the last ones declared in
+`landed_titles`; they stay in `docs/evidence/barony_set.csv` for the
+`titles-history` lane to emit as commented-out baronies.
+
+Numbers below are the current (`[map] ck2_position_seeds = true`, lane
+`map-paint-seeds`) figures; the row for each superseded by that lane keeps its
+pre-lane value in parentheses for comparison.
 
 | quantity | value (Faerûn, 1357.1.1) | label |
 |---|---|---|
@@ -20,15 +24,17 @@ emit as commented-out baronies.
 | **defined** baronies | 15,356 (15,195 inside a county) | `verified` |
 | **built** holdings at 1357.1.1 ∪ 1501.1.1 | **3857** | `verified` |
 | of those, built only by a later bookmark | 79 | `verified` |
-| baronies placed as CK3 provinces | **3694** | `verified` |
-| baronies demoted to comments | **163**, in 128 of 2125 counties | `verified` |
-| CK3 provinces total | 4265 = 3694 baronies + 210 county-less land + 361 water (the padding ocean included) | `verified` |
-| seeds from `positions.txt` city slot | 2110 | `verified` |
-| seeds farthest-point sampled | 1584 | `verified` |
+| baronies placed as CK3 provinces | **3705** (was 3694) | `verified` |
+| baronies demoted to comments | **152** (was 163), in fewer of 2125 counties | `verified` |
+| CK3 provinces total | 4276 = 3705 baronies + county-less land + water (padding ocean included) | `verified` |
+| seeds from `positions.txt` **city** slot (capital) | 2112 | `verified` |
+| seeds from `positions.txt` **port** slot (§3, new) | 758 | `verified` |
+| seeds farthest-point sampled | 835 (was 1584) | `verified` |
 | seeds from overrides / gazetteer | 0 (the files ship empty) | `verified` |
 | median barony area | 2554 px ≈ 5,600 km² | `verified` |
 | smallest placed barony | 128 px (a county whose only holding it is) | `verified` |
-| run time, whole `map` step | ~60 s (46 s without the barony split) | `verified` |
+| run time, whole `map` step | ~60 s (46 s without the barony split, +5 s for terrain paint — `docs/step_map_paint.md`) | `verified` |
+| two runs → identical `provinces.png` sha256 | yes | `verified` |
 
 Reproduce: `uv run ck2ck3 --config configs/faerun.toml --steps map`.
 Evidence: `docs/evidence/barony_set.csv`, `docs/evidence/province_id_map.csv`,
@@ -105,12 +111,26 @@ km per pixel by construction (`docs/map_scale.md`). Left unset the code derives
    the file a lore search or an LLM pass fills in. `space = ck2` coordinates are
    put through the map transform, so those rows survive a change of canvas size;
    `space = ck3` rows do not.
-3. **the county capital at the CK2 `positions.txt` city slot** — slot **0** of
-   the seven pairs (`verified`, `docs/map_scale.md` §2b: slot 0 is inside its
-   own province 91.9 % of the time). `positions.txt` y is measured from the
-   **bottom** of the CK2 bitmap, so `y_top = source_height - y`. The capital is
-   the first barony declared in the county (CK2 has no `capital = b_x` inside a
-   county). 2110 of 2125 counties get a seed this way.
+3. **the CK2 `positions.txt` city/port slots** (`[map] ck2_position_seeds`,
+   default on; `false` reproduces the seed priority before lane
+   `map-paint-seeds` — capital only, no slot-4 port seeding):
+   * the county **capital** at the **city** slot, slot **0** of the seven pairs
+     (`verified`, `docs/map_scale.md` §2b: slot 0 is inside its own province
+     91.9 % of the time). The capital is the first barony declared in the
+     county (CK2 has no `capital = b_x` inside a county). 2112 of 2125
+     counties get a seed this way.
+   * the county's **non-capital `city_holding`**, when one exists, at the
+     **port** slot, slot **4** (`verified`, `docs/map_fidelity.md` §1.6: the
+     CK2 binary itself logs "Invalid port location for province %d" against
+     it — 36.1 % of slot 4s sit on water, i.e. the author placed them on the
+     harbour). 758 baronies are seeded this way. If the snapped port
+     coordinate collides with a seed already taken (a degenerate
+     `positions.txt` block where every slot equals slot 0, which is most of
+     Faerûn's) the barony falls through to sampling instead of duplicating a
+     seed pixel.
+   `positions.txt` y is measured from the **bottom** of the CK2 bitmap, so
+   `y_top = source_height - y`, for both slots. `[map.baronies] city_slot` /
+   `port_slot` (default 0 / 4) pick the indices.
 4. **farthest-point sampling**, biased by holding type: a `city_holding` prefers
    coast or river pixels, a `castle_holding` prefers hills/mountains, church and
    tribal prefer neither. A biased pixel's distance counts `1 + bias_gain`
@@ -143,8 +163,9 @@ O(pixels), not O(area × radius): 10 s for Faerûn's 26 M land pixels.
 
 A farthest-point seed sits in a *corner* of its county by construction, which
 makes the partition lopsided and demotes holdings that would have fitted.
-`relax_passes` (4) repeats: grow → move each **sampled** seed to the pixel of
-its own region nearest that region's centroid → regrow. Measured on Faerûn:
+`relax_passes` (4) repeats: grow → move each **relaxable** seed to the pixel
+of its own region nearest that region's centroid → regrow. Measured on
+Faerûn (capital-only seeding, pre lane `map-paint-seeds`):
 
 | relax_passes | demoted |
 |---|---|
@@ -153,10 +174,16 @@ its own region nearest that region's centroid → regrow. Measured on Faerûn:
 | **4** | **163** |
 | 6 | 164 (converged) |
 
-Seeds from an override, the gazetteer or `positions.txt` are **pinned** and
-never move — the whole point of an override is that it stays where it was put.
-Lloyd converges to *a* centroidal partition, not an equal-area one, so a small
-county can still come out lopsided; that is what the demotion pass is for.
+Seeds from an override, the gazetteer or the capital `positions.txt` slot are
+**pinned** and never move — the whole point of an override is that it stays
+where it was put. The port `positions.txt` slot (§3) is **relaxable**, not
+pinned: it is a snapped, clamped coordinate from the source data, not a human
+decision, and pinning it exactly like an override measurably demoted *more*
+baronies than farthest-point sampling did for the same holdings (`verified`
+on Faerûn: 205 demoted with it pinned, 152 with it relaxable, against the 163
+baseline above). Lloyd converges to *a* centroidal partition, not an
+equal-area one, so a small county can still come out lopsided; that is what
+the demotion pass is for.
 
 ### Stragglers, and detached county pieces
 
@@ -230,7 +257,10 @@ columns beside every CK3 id.
 ## 7. Config keys
 
 All under `[map.baronies]` in `configs/faerun.toml` (and `[baronies]` in
-`configs/faerun_map.toml` for the standalone entry point).
+`configs/faerun_map.toml` for the standalone entry point), except
+`ck2_position_seeds` itself, which is the documented top-level `[map]` flag
+(`[map.baronies] ck2_position_seeds` still works too — a value there wins,
+since `steps/map.py` merges it under the `[map]` default).
 
 | key | default | meaning |
 |---|---|---|
@@ -242,7 +272,9 @@ All under `[map.baronies]` in `configs/faerun.toml` (and `[baronies]` in
 | `snap_radius_px` | `48` | how far an imported seed may be snapped |
 | `relax_passes` | `4` | Lloyd passes on sampled seeds |
 | `max_regrow_passes` | `3` | "demote the worst straggler and regrow" rounds |
+| `ck2_position_seeds` | `true` | use the `positions.txt` city/port slots as seeds at all |
 | `city_slot` | `0` | `positions.txt` slot holding the city coordinate |
+| `port_slot` | `4` | `positions.txt` slot holding the port coordinate |
 | `seeds_csv` | `overrides/barony_seeds.csv` | human seed overrides |
 | `gazetteer_csv` | `overrides/gazetteer.csv` | place-name coordinates |
 | `review_sheets` | `false` | write the duchy PNGs during the run |
@@ -280,21 +312,26 @@ All under `[map.baronies]` in `configs/faerun.toml` (and `[baronies]` in
 
 ## 9. Known limitations
 
-* **The 163 demoted holdings are a real loss of content**, not a rendering
-  choice: those CK2 holdings have no CK3 province. Waterdeep collapses from 6
-  built holdings to 4 (`b_castle_waterdeep`, `b_castle_ward`, `b_sea_ward`,
-  `b_north_ward`; `b_the_plinth` and `b_trades_ward` are demoted) — the county
-  is 2053 canvas pixels, so it cannot carry six. That is the collapse
-  `docs/design_map.md` §B.4 predicted for Baldur's Gate, arriving on its own.
-  The names survive as comments; making them special buildings is submod work.
-  The worst-hit duchies are `d_menzoberranzan` (8 demoted),
-  `d_the_stormstars` (6) and `d_sargauth` (5) — the Underdark, where CK2 packs
-  many holdings into one small cavern province.
+* **The demoted holdings (152 with `ck2_position_seeds` on, was 163 before
+  this lane) are a real loss of content**, not a rendering choice: those CK2
+  holdings have no CK3 province. Waterdeep still collapses from 6 built
+  holdings to 4, though which two lose out shifted with the port-slot seeding
+  (`b_castle_waterdeep`, `b_castle_ward`, `b_north_ward`, `b_the_plinth`
+  placed; `b_sea_ward` and `b_trades_ward` demoted, `verified` in
+  `docs/evidence/barony_set.csv`) — the county is 2053 canvas pixels, so it
+  cannot carry six. That is the collapse `docs/design_map.md` §B.4 predicted
+  for Baldur's Gate, arriving on its own. The names survive as comments;
+  making them special buildings is submod work. The worst-hit counties are
+  `c_menzoberranzan` (4 demoted), `c_undermountain` and `c_sargauth` (3 each)
+  — the Underdark, where CK2 packs many holdings into one small cavern
+  province; `docs/evidence/barony_set.csv` has the current per-county list.
 * **Non-contiguous baronies** where a county has a detached piece with no seed
   (§4).
-* **`positions.txt` seeds are the CK2 city coordinate for the whole county**, so
-  the capital barony's seed is right and every other seed is derived. CK2 has no
-  barony coordinates to import (CLAUDE.md invariant).
+* **`positions.txt` seeds are per county, not per barony.** CK2 has no barony
+  coordinates to import (CLAUDE.md invariant). Slots 0 and 4 (§3) are the only
+  two the CK2 binary itself names, so they seed the capital and the
+  non-capital port/city holding directly; every other barony in the county is
+  still derived (sampled, then relaxed toward its region's centroid).
 * **The gazetteer ships empty.** Every named place in Faerûn whose location is
   known from lore is a row nobody has written yet; that is the highest-value
   human input this step can take.

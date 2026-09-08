@@ -30,6 +30,7 @@ from pathlib import Path
 
 from ..pdx import Block, Document, Item, Node
 from ..pdx.tokens import Date
+from ..traits import TraitConflicts
 from .common import (
     BlockBuilder,
     PortReport,
@@ -88,6 +89,10 @@ class CharacterPort:
     #: CK2 id -> landed date ranges (titles.history.landed_intervals); None =
     #: unknown, keep every employer.
     landed: Mapping[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]] | None = None
+    #: CK3's own opposites/group/level rules, used to keep a character from
+    #: ending up with a conflicting pair after a vanilla-table dedupe
+    #: (docs/step_traits.md rule 3). ``None`` disables the check.
+    conflicts: TraitConflicts | None = None
     _current_date: tuple[int, int, int] | None = None
     _current_ck2_id: str | None = None
 
@@ -235,6 +240,14 @@ class CharacterPort:
             self._drop(out, node, level, rule.note)
             return
 
+        if node.key == "trait":
+            # The plain `trait = x` grant: sexuality/drop vanilla-table rows
+            # and the character-level conflict rule (docs/step_traits.md
+            # rules 2-3) apply only here, not to `add_trait`/`remove_trait`
+            # (still the generic `_shape_trait` path below).
+            self._convert_trait_key(node, out, facts, level)
+            return
+
         if rule.form == "effect_block":
             self._convert_effect_block(node, out, rule, facts)
             return
@@ -368,6 +381,58 @@ class CharacterPort:
         if rule.relation_reason:
             return self._shape_relation(node, key, rule.relation_reason)
         raise AssertionError(f"unknown form {form!r} for CK2 key {node.key!r}")
+
+    def _convert_trait_key(
+        self, node: Node, out: BlockBuilder, facts: CharacterFacts, level: str
+    ) -> None:
+        """The plain ``trait = x`` grant: sexuality, drop and the
+        one-per-character conflict rule (docs/step_traits.md rules 2-3)."""
+        ck2_trait = str(node.value)
+
+        sexuality = self.tables.trait_sexuality_value(ck2_trait)
+        if sexuality is not None:
+            result = Node(key="sexuality", value=sexuality)
+            carry_comments(node, result)
+            out.add(result)
+            self.report.counts["traits_sexuality"] += 1
+            return
+
+        drop_note = self.tables.trait_drop_note(ck2_trait)
+        if drop_note is not None:
+            out.comments(strip_ck2_markers(node.leading_comments))
+            out.comment(f"CK2 trait {ck2_trait}: no CK3 counterpart")
+            self.report.drop(node.key, level, "vanilla_traits.csv status=drop")
+            self.report.counts["traits_dropped_no_ck3"] += 1
+            return
+
+        ck3_trait = self.tables.trait(ck2_trait)
+        if ck3_trait is None:
+            self._drop(out, node, level, VALUE_REASONS["trait"])
+            self.report.counts["traits_dropped"] += 1
+            return
+
+        conflict = (
+            self.conflicts.conflict(facts.traits, ck3_trait)
+            if self.conflicts is not None
+            else None
+        )
+        if conflict is not None:
+            out.comments(strip_ck2_markers(node.leading_comments))
+            out.comment(
+                f"CK2: trait = {ck2_trait} -> {ck3_trait} (conflicts with "
+                f"already-held {conflict}; kept the CK2-first-listed trait)"
+            )
+            self.report.drop(node.key, level, f"conflicts with {conflict}")
+            self.report.counts["traits_conflict_dropped"] += 1
+            return
+
+        result = Node(key="trait", value=ck3_trait)
+        carry_comments(node, result)
+        out.add(result)
+        self.report.counts["traits"] += 1
+        if ck3_trait != ck2_trait:
+            self.report.counts["traits_renamed"] += 1
+        facts.traits.append(ck3_trait)
 
     def _shape_trait(self, node: Node, key: str) -> Node | None:
         ck2_trait = str(node.value)

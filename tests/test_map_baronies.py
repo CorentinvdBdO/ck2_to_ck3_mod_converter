@@ -222,6 +222,33 @@ def test_only_the_capital_takes_the_positions_txt_coordinate(tree):
     assert {b.seed_source for b in others} == {"sampled"}
 
 
+def test_seed_priority_port_position_for_the_city_holding(tree):
+    """slot 4 seeds the county's non-capital city_holding (docs/map_fidelity.md §1.6)."""
+    raster, sels = _two_counties()
+    slots = [(10.0, 12.0)] * 7
+    slots[4] = (25.0, 30.0)  # distinct port slot
+    p = _plan(raster, sels, tree, positions={1: slots}, source_height=64)
+    alpha = next(b for b in p.placed if b.key == "b_alpha")
+    beta = next(b for b in p.placed if b.key == "b_beta")
+    gamma = next(b for b in p.placed if b.key == "b_gamma")
+    assert alpha.seed_source == "capital_position"
+    assert beta.holding == "city_holding"
+    assert beta.seed_source == "port_position"
+    # positions.txt y is measured from the bottom: 64 - 30 = 34
+    assert (beta.seed_y, beta.seed_x) == (34, 25)
+    assert gamma.seed_source == "sampled"  # not a city_holding: no port slot
+
+
+def test_ck2_position_seeds_false_disables_both_slots(tree):
+    raster, sels = _two_counties()
+    slots = [(10.0, 12.0)] * 7
+    slots[4] = (25.0, 30.0)
+    cfg = BaronyConfig(min_barony_pixels=1, relax_passes=0, ck2_position_seeds=False)
+    p = _plan(raster, sels, tree, cfg=cfg, positions={1: slots}, source_height=64)
+    county1 = [b for b in p.placed if b.ck2_province == 1]
+    assert {b.seed_source for b in county1} == {"sampled"}
+
+
 def test_a_seed_outside_its_county_is_snapped_within_the_radius(tree):
     raster, sels = _two_counties()
     # x=40 is in county 2; county 1 ends at x=31, so the snap is 9 px

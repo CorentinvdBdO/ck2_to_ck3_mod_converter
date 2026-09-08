@@ -1,11 +1,11 @@
 ck2_key,level,reason,occurrences
 trait,history,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),8308
-add_trait,dated,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),1177
+add_trait,dated,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),1192
 give_nickname,dated,nickname has no CK3 id in mappings/nicknames.csv; Faerun defines it in its own common/nicknames,814
 death_reason,history,approx,671
 death_reason,history,exact,613
 effect_even_if_dead,history,renamed to effect,407
-remove_trait,dated,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),405
+remove_trait,dated,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),406
 easter_egg,history,CK2 random-generation exclusion flag; no CK3 equivalent,336
 join_society,effect,CK3 has no societies (docs/mechanics_inventory.md),324
 death_reason,history,fallback,272
@@ -14,6 +14,7 @@ set_graphical_culture,effect,CK3 portraits come from ethnicity/genes not a graph
 trait,dated,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),192
 add_artifact,effect,CK3 artifacts are history/artifacts plus common/artifacts; the artifacts lane owns them,176
 secret_religion,history,CK3 models a hidden faith as a secret; the concealed faith itself cannot be stored,171
+trait,history,vanilla_traits.csv status=drop,138
 set_special_character_title,effect,as the history-level key,134
 give_job_title,effect,as the history-level key,114
 society_rank_up,effect,CK3 has no societies,95
@@ -46,6 +47,7 @@ remove_title,effect,as give_job_title / give_minor_title,4
 destroy_artifact,effect,as add_artifact,3
 disband_event_forces,effect,as spawn_unit,3
 employer,dated,3 holds no title on 1368.11.19; CK3 requires a landed employer,3
+trait,dated,conflicts with absent,3
 create_bloodline,effect,CK3 has no bloodlines,2
 employer,dated,3 holds no title on 1368.11.20; CK3 requires a landed employer,2
 employer,dated,3 holds no title on 1368.11.21; CK3 requires a landed employer,2
@@ -53,6 +55,7 @@ employer,dated,3 holds no title on 1368.12.19; CK3 requires a landed employer,2
 employer,dated,3 holds no title on 1451.1.1; CK3 requires a landed employer,2
 employer,dated,20175 holds no title on 1371.6.1; CK3 requires a landed employer,2
 prisoner,effect,as imprison,2
+trait,dated,vanilla_traits.csv status=drop,2
 add_ambition,effect,CK3 has no ambitions (objectives were cut),1
 add_trait,history,the traits step does not declare this trait in the generated mod (mappings/trait_ck2_to_ck3.csv; the reason per trait is in docs/evidence/traits_unported.csv),1
 c_66230,effect,CK2 scope change; CK3 history effects run in the character's scope,1
@@ -485,4 +488,7 @@ religion,effect,changing faith mid-history needs set_character_faith with a fait
 set_dynasty_name,effect,CK3 dynasty names are loc keys on common/dynasties not a runtime string,1
 set_special_character_title,dated,CK2 offmap/flavour title; CK3 has set_title_name on a title not a character,1
 spawn_fleet,effect,as spawn_unit,1
+trait,dated,conflicts with bastard,1
+trait,dated,conflicts with creature_human,1
+trait,history,conflicts with strategist,1
 unsafe_destroy_artifact,effect,as add_artifact,1

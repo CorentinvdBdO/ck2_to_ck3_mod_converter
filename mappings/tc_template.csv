@@ -20,7 +20,7 @@ common/legends/chronicles,shadow,32 title_links plus vanilla dynasty references.
 common/legends/legend_seeds,shadow,"4411 ""Failed to fetch a valid dynasty"" script errors and 47 title_links: seeds are historical legends about vanilla dynasties and titles."
 common/on_action/story_cycles,neutralise,"The on_action hooks of the shadowed story cycles. Neutralised, not blanked: common/on_action/yearly_on_actions.txt and three DLC event files call six of these hooks by name (scripts/tc_check_shadow_callers.py). EK2 stubs 2 files here."
 common/situation/catalysts,shadow,Catalysts exist only to advance the situations shadowed below.
-common/situation/situations,shadow,"40 title_links. tgp_dynastic_cycle.txt and the Silk Road situation crashed the game on click (playtest 2026-09-08). Godherja stubs 5 of 10 files; the brief requires situations fully neutral."
+common/situation/situations,shadow,40 title_links. tgp_dynastic_cycle.txt and the Silk Road situation crashed the game on click (playtest 2026-09-08). Godherja stubs 5 of 10 files; the brief requires situations fully neutral.
 common/story_cycles,shadow,"45 title_links over 9 of 52 files; the rest are vanilla historical narratives with no place on this map. EK2 stubs 13, Godherja 10."
 common/struggle/catalysts,shadow,Catalysts of the struggles shadowed below.
 common/struggle/struggles,shadow,"history/struggles is already replace_path-ed and empty, so the three vanilla struggles are unreachable content; the brief requires them fully neutral."
@@ -55,13 +55,15 @@ common/script_values/tgp_tribute_mission_values.txt,neutralise,30 title_links; r
 common/script_values/00_decision_values.txt,neutralise,Read only by common/decisions.
 common/script_values/00_mongol_values.txt,neutralise,Read only by the Mongol invasion effects shadowed above.
 common/script_values/00_invasion_values.txt,neutralise,Read only by the Mongol invasion effects shadowed above.
-gfx/portraits/portrait_modifiers,shadow_dirty,"507 character: references to vanilla developer easter-egg characters, in 8 of 33 files; 2105 history.cpp ""non-existent character"" errors. EK2 replace_paths the folder and stubs 15 files. shadow_dirty keeps the 25 clothing/rank files that are pure mechanics."
-gfx/court_scene/scene_cultures,shadow_dirty,18 title_links in 1 of 2 files; the other is the culture-to-scene mechanic.
-gfx/interface/illustrations/scripted_illustrations,shadow_dirty,40 title_links in 1 of 8 files.
+gfx/portraits/portrait_modifiers/02_all_developer_characters.txt,shadow,"233 character: references to vanilla developer easter-egg characters (history.cpp ""non-existent character""). Only this file and the next name vanilla characters in a way that matters."
+gfx/portraits/portrait_modifiers/02_all_historical_characters.txt,shadow,624 character: references to vanilla historical characters (bespoke portraits for Charlemagne etc.).
+gfx/portraits/portrait_modifiers,keep,"Was shadow_dirty until 2026-09-08: it emptied 01_clothes_base, 01_headgear_base, 01_beards_base, 00_custom_hair, 05_headgear_situational, 06_clothes_special, 99_special because they test title:h_china / k_chrysanthemum_throne - every character was naked and bald in playtest 2. A dangling title in a portrait trigger is an error-log line; a missing clothes file undresses the world. Load-bearing gfx folders are never shadow_dirty."
+gfx/court_scene/scene_cultures,keep,Was shadow_dirty (18 title_links in 00_default_cultures.txt). Same lesson as portrait_modifiers: the file is the culture-to-court-scene mechanic; a dangling title:... in a trigger only logs.
+gfx/interface/illustrations/scripted_illustrations,keep,Was shadow_dirty (40 title_links in ingame.txt). ingame.txt defines character_view_bg and every in-game window illustration; shadowing it blanks them. Dangling title triggers only log.
 common/scripted_character_templates/00_mongol_templates.txt,shadow,"The only pool template that names vanilla titles and is not called by name from a file this mod keeps. 04_ep2_accolade_character_templates.txt also names one, but common/scripted_effects/00_accolades_scripted_effects.txt looks its 30 templates up by id (scripts/tc_check_shadow_callers.py), and a character template with no body cannot generate a character - so it stays."
 common/coat_of_arms/template_lists,keep,"3636 script errors, but all of class ""scope:culture Failed context switch"", not dangling titles; only 7 title references. Emptying color_lists/colored_emblem_lists would leave dynamic coat-of-arms generation with no palette. EK2 and Godherja both ship full replacements, never stubs."
 common/scripted_triggers,keep,"3450 title_links, but 00_realm_laws/00_title_triggers/00_war_and_peace_triggers are core mechanics every kept file calls. Only the named DLC files above are shadowed; the rest need per-reference rewriting, not deletion."
-common/scripted_effects,keep,"3038 title_links; same reasoning as scripted_triggers. Only the named content files above are shadowed."
+common/scripted_effects,keep,3038 title_links; same reasoning as scripted_triggers. Only the named content files above are shadowed.
 common/on_action,keep,"614 title_links, 427 of them in game_start.txt. on_action is the hook table the whole game runs on; deleting an entry silently disables a mechanic. Needs rewriting, not shadowing."
 common/laws,keep,29 title_links in 4 of 5 files - 00_realm_laws and 00_succession_laws are load-bearing mechanics.
 common/character_interactions,keep,179 title_links in 22 of 57 files - grant/revoke title and vassal interactions are core mechanics.
@@ -70,4 +72,4 @@ common/council_tasks,keep,54 title_links in 6 of 9 files - the council is a core
 common/customizable_localization,keep,"360 title_links, but the folder is read by vanilla localisation everywhere; deleting an entry turns a live string into a raw key."
 common/factions,keep,21 title_links - factions are a core mechanic.
 common/pool_character_selectors,keep,"7959 script errors, none of them title_links: the class is ""culture trigger [Failed context switch]"" on a scope with no culture, which is a characters/cultures data problem, not vanilla map content."
-events,keep,"Every events/ folder except decisions_events and story_cycles is left live and listed in docs/evidence/vanilla_events_naming_titles.csv for the events lane; shadowing an event file whose on_action entry survives is worse than a dangling title (docs/output_bootstrap.md §4)."
+events,keep,Every events/ folder except decisions_events and story_cycles is left live and listed in docs/evidence/vanilla_events_naming_titles.csv for the events lane; shadowing an event file whose on_action entry survives is worse than a dangling title (docs/output_bootstrap.md §4).

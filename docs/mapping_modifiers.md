@@ -15,11 +15,14 @@ Status counts (`verified`, from the generators):
 
 - `modifiers.csv` — exact 33, approx 122, none 141
 - `trait_fields.csv` — exact 36, approx 17, none 35
-- `vanilla_traits.csv` — exact 83, approx 16, none 13 (2026-09-08: 6 `approx`
-  rows were re-read and downgraded, see `docs/step_traits.md` rule 1). The
-  three statuses now mean three *actions*, not three confidence levels:
-  `exact` dedupes, `approx` ports **and** records the CK3 near-equivalent,
-  `none` ports. The file's own header states it.
+- `vanilla_traits.csv` — exact 83, approx 16, nearest 5, sexuality 1, drop 7
+  (2026-09-08, second entry: "replace" means map to the EXISTING CK3 trait,
+  never port a new one — the earlier `none` status and its "6 downgrades from
+  approx" no longer exist, see `docs/step_traits.md` rule 1). The five
+  statuses are *actions*, not confidence levels: `exact`/`approx`/`nearest`
+  all **dedupe** to the CK3 id (no CK2 trait definition is ever emitted),
+  `sexuality` gives the character a CK3 `sexuality` history key, `drop` has
+  no CK3 landing place at all. The file's own header states it.
 - `faerun_custom_traits.csv` — port 108, race_trait 117, comment 867
 
 ## Method

@@ -128,25 +128,24 @@ def test_the_known_set_comes_from_the_traits_step_output() -> None:
     assert tables.trait("creature_elf") == "creature_elf"
     assert tables.trait("wounded") == "wounded_1"
     assert tables.trait("no_such_trait") is None
-    # The 38 traits the step dedupes by exact CK3 id match, and the 13 `none` +
-    # 16 `approx` vanilla ones it now ports as new traits, were the classes the
-    # old two-table derivation silently dropped.
+    # The 38 traits the step dedupes by exact CK3 id match.
     assert tables.trait("administrator") == "administrator"
-    assert tables.trait("cavalry_leader") == "cavalry_leader"
-    # `approx` is a near-equivalent, not a dedupe: the trait keeps its CK2 id
-    # and the pair only lives in mappings/trait_id_map.csv with status approx
-    # (docs/step_traits.md rule 1).
-    assert tables.trait("wroth") == "wroth"
+    # `approx`/`nearest` now dedupe exactly like `exact` (2026-09-08 second
+    # entry, docs/DECISIONS.md): no CK2 trait is ever redefined.
+    assert tables.trait("wroth") == "wrathful"
+    assert tables.trait("harelip") == "beauty_bad_1"
+    # `drop`/`sexuality` never enter the known-trait set at all.
+    assert tables.trait("cavalry_leader") is None
+    assert tables.trait("homosexual") is None
+    assert tables.trait_drop_note("cavalry_leader")
+    assert tables.trait_sexuality_value("homosexual") == "homosexual"
 
 
-def test_approx_rows_of_trait_id_map_are_never_applied_as_renames() -> None:
-    """`mappings/trait_id_map.csv` mixes dedupes with near-equivalents.
-
-    `exact`/`exact_id` rows are dedupes (the CK2 trait is not redefined, so the
-    CK3 id is the only one that exists); `approx` rows record a CK3 trait that
-    merely resembles a trait we ported under its own id. Applying one as a
-    rename would silently swap the ported trait for a vanilla one
-    (`docs/step_traits.md` rule 1).
+def test_approx_and_nearest_rows_of_trait_id_map_are_applied_as_renames() -> None:
+    """`mappings/trait_id_map.csv` is now a pure dedupe table (docs/DECISIONS.md
+    2026-09-08 second entry): `exact`/`exact_id`/`approx`/`nearest` rows all
+    apply the same way. Only `drop`/`sexuality` rows are excluded (no CK3
+    trait id to remap onto).
     """
     import csv
 
@@ -155,10 +154,13 @@ def test_approx_rows_of_trait_id_map_are_never_applied_as_renames() -> None:
     with (REPO_ROOT / TRAIT_ID_MAP).open(encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
     approx = {r["ck2_trait"] for r in rows if r["status"] == "approx"}
+    excluded = {r["ck2_trait"] for r in rows if r["status"] in ("drop", "sexuality")}
     assert approx, "no approx pairs: run scripts/build_trait_tables.py"
+    assert excluded, "no drop/sexuality pairs: run scripts/build_trait_tables.py"
     tables = load_tables()
-    assert not approx & set(tables.trait_id_map)
-    assert {r["ck2_trait"] for r in rows} - approx == set(tables.trait_id_map)
+    assert approx <= set(tables.trait_id_map)
+    assert not excluded & set(tables.trait_id_map)
+    assert {r["ck2_trait"] for r in rows} - excluded == set(tables.trait_id_map)
 
 
 def test_fallback_set_is_read_when_the_traits_output_is_absent(tmp_path) -> None:
@@ -180,14 +182,19 @@ def test_fallback_set_is_read_when_the_traits_output_is_absent(tmp_path) -> None
     tables = load_tables(tmp_path)
     assert not tables.traits_authoritative
     assert set(tables.trait_origin.values()) == {
-        "vanilla",
-        "vanilla_new",
+        "exact",
+        "approx",
+        "nearest",
         "faerun",
         "race",
     }
-    # `status = none` in vanilla_traits.csv means the traits step ports it as a
-    # new trait under the CK2 id, so it must resolve, not drop.
-    assert tables.trait("cavalry_leader") == "cavalry_leader"
+    # `status = drop`/`sexuality` never enter the known-trait set; they are
+    # only in `trait_drop_reason`/`trait_sexuality` (docs/step_traits.md rule 2).
+    assert tables.trait("cavalry_leader") is None
+    assert tables.trait_drop_note("cavalry_leader")
+    assert tables.trait("homosexual") is None
+    assert tables.trait_sexuality_value("homosexual") == "homosexual"
+    assert tables.trait("wroth") == "wrathful"
 
 
 def test_adopt_traits_step_is_exactly_what_the_step_wrote() -> None:

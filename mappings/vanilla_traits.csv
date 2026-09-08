@@ -1,17 +1,28 @@
 # CK2 vanilla traits (common/traits/00_traits.txt, 112 rows) -> CK3 1.19.
-# `status` drives what the traits step does; the policy is REPLACE, NEVER DROP
-# (docs/DECISIONS.md 2026-09-08, docs/step_traits.md rule 1):
-#   exact  (83) - same concept, CK3 already has it: deduped, NOT redefined.
-#                 39 of the 83 share the CK2 id verbatim.
-#   approx (16) - same concept but only a near-equivalent in CK3: the CK2 trait
-#                 is PORTED as a new trait AND the pair is recorded in
-#                 mappings/trait_id_map.csv with status approx, so a ported
-#                 event can choose either side. The CK3 trait is left untouched.
-#   none   (13) - CK3 has no counterpart at all (or the candidate is a
-#                 different concept): ported as a new trait, modifiers through
-#                 mappings/modifiers.csv, CK2 `opposites` preserved.
+# `status` drives what the traits step does. The user's rule (docs/DECISIONS.md
+# 2026-09-08, second entry, superseding the first): a CK2 trait CK3 removed
+# must be MAPPED TO AN EXISTING CK3 TRAIT, never ported as a new one and never
+# dropped silently. docs/step_traits.md rule 1 has the full table.
+#   exact     (83) - same concept, CK3 already has it under a close id:
+#                    dedupe, do not redefine. 39 of the 83 share the CK2 id
+#                    verbatim.
+#   approx    (16) - same concept, CK3's id/wording differs: dedupe exactly
+#                    like `exact` (no CK2 trait definition is emitted, a
+#                    character gets the CK3 trait). The pair is kept in
+#                    mappings/trait_id_map.csv (status approx) so the events
+#                    lane can rewrite a `trait = <ck2 id>` reference.
+#   nearest   (5)  - no real CK3 counterpart, but one CK3 trait covers the
+#                    same gameplay niche well enough: dedupe to it like
+#                    `approx`.
+#   sexuality (1)  - not a trait in CK3 at all: the character gets
+#                    `sexuality = <ck3_trait>` in its history instead of a
+#                    trait.
+#   drop      (7)  - no CK3 landing place, not even a near miss: the
+#                    character loses it. The characters port leaves a
+#                    `# CK2 trait <id>: no CK3 counterpart` comment behind.
 # A row whose ck2_trait equals its ck3_trait is `exact` by definition.
-# `approx` and `none` rows are never emitted as comments.
+# ck3_trait is blank for `drop`; for `sexuality` it holds the CK3 sexuality
+# value. No status here ever results in a new CK2-named trait definition.
 ck2_trait,ck3_trait,status,note
 aggressive_leader,aggressive_attacker,approx,"CK2 commander trait -> CK3 commander trait, both favour attacking"
 amateurish_plotter,education_intrigue_1,exact,CK2 intrigue education tier 1 of 4 -> CK3 tier 1 of 5
@@ -20,7 +31,7 @@ arbitrary,arbitrary,exact,same name and concept
 bastard,bastard,exact,same name; CK3 also has bastard=illegitimate/legitimate as a trait property
 brave,brave,exact,"same name; martial 2 on both sides (CK2 00_traits.txt:1727, CK3 00_traits.txt:3264)"
 brilliant_strategist,education_martial_4,exact,CK2 martial education tier 4 of 4 -> CK3 tier 4 of 5
-cavalry_leader,,none,CK3 has no per-unit commander traits; ported as a new trait
+cavalry_leader,,drop,"CK3 has no per-unit commander traits and no close substitute; character loses it"
 celibate,celibate,exact,same name and concept
 charismatic_negotiator,education_diplomacy_3,exact,CK2 diplomacy education tier 3 of 4
 charitable,generous,approx,"same concept, renamed in CK3"
@@ -29,7 +40,7 @@ clubfooted,clubfooted,exact,same name and concept
 content,content,exact,same name and concept
 craven,craven,exact,same name and concept
 cruel,sadistic,approx,"same concept, renamed in CK3; CK3 opposite is compassionate"
-crusader,,none,"CK2 crusader marks a character who returned from a crusade (a fame marker); CK3 holy_warrior is a commander trait and crusader_king a fame trait - neither is the same concept, so port crusader as a new trait"
+crusader,,drop,"CK2 crusader marks a character who returned from a crusade (a fame marker); CK3 holy_warrior is a commander trait and crusader_king a fame trait - neither is close enough to dedupe to, character loses it"
 cynical,cynical,exact,same name and concept
 deceitful,deceitful,exact,same name and concept
 defensive_leader,unyielding_defender,approx,"CK2 commander trait -> CK3 commander trait, both favour defending"
@@ -40,13 +51,13 @@ drunkard,drunkard,exact,same name and concept
 duelist,lifestyle_blademaster,approx,CK2 duelist -> CK3 blademaster lifestyle trait (level tracks)
 dwarf,dwarf,exact,same name and concept
 elusive_shadow,education_intrigue_4,exact,CK2 intrigue education tier 4 of 4
-envious,,none,CK3 has no envy trait; ported as a new trait
+envious,,drop,"CK3 has no envy trait and no close substitute; character loses it"
 excommunicated,excommunicated,exact,same name and concept
-experimenter,,none,"CK2 Way of Life commander/lifestyle trait; no CK3 equivalent, ported as a new trait"
+experimenter,,drop,"CK2 Way of Life commander/lifestyle trait; no CK3 equivalent and no close substitute, character loses it"
 fair,beauty_good_3,exact,"attraction matches exactly: CK2 sex_appeal_opinion 30 (00_traits.txt:884) = CK3 attraction_opinion 30 (00_traits.txt:7053). CK2 has one tier, CK3 three; beauty_good_1 matches the diplomacy 1 instead"
 falconer,lifestyle_hunter,approx,CK2 falconer -> CK3 hunter lifestyle; CK3 has no separate falconry trait
 flamboyant_schemer,education_intrigue_2,exact,CK2 intrigue education tier 2 of 4
-flanker,,none,"CK3 has no battle flanks at all; flexible_leader is a different concept (adapting to terrain), so port flanker as a new trait"
+flanker,flexible_leader,nearest,"CK3 has no battle flanks at all; flexible_leader (adapting to terrain) is the nearest commander trait covering the same battlefield-adaptability niche"
 fortune_builder,education_stewardship_3,exact,CK2 stewardship education tier 3 of 4
 gardener,lifestyle_gardener,exact,"same concept, CK3 prefixes lifestyle traits"
 genius,intellect_good_3,exact,"all five attributes +5 on both sides (CK2 00_traits.txt:949, CK3 00_traits.txt:7364)"
@@ -54,16 +65,16 @@ gluttonous,gluttonous,exact,same name and concept
 greedy,greedy,exact,same name and concept
 gregarious,gregarious,exact,same name and concept
 grey_eminence,education_diplomacy_4,exact,CK2 diplomacy education tier 4 of 4
-harelip,,none,"CK3 has no harelip trait; beauty_bad_1 and disfigured are different concepts, so ported as a new trait"
+harelip,beauty_bad_1,nearest,"CK3 has no harelip trait; beauty_bad_1 is the nearest cosmetic-penalty trait"
 has_bubonic_plague,bubonic_plague,exact,"same disease, CK3 drops the has_ prefix"
 has_measles,measles,exact,"same disease, CK3 drops the has_ prefix"
 has_small_pox,smallpox,exact,"same disease, CK3 spells it as one word"
 has_tuberculosis,consumption,approx,CK3 names tuberculosis 'consumption'
-has_typhoid_fever,,none,"typhoid fever and typhus are different diseases; CK3 typhus is not the same illness, so port has_typhoid_fever as a new trait"
+has_typhoid_fever,typhus,nearest,"typhoid fever and typhus are different diseases, but typhus is the nearest CK3 illness and no CK3 typhoid exists"
 has_typhus,typhus,exact,same disease
-heavy_infantry_leader,,none,CK3 has no per-unit commander traits; ported as a new trait
+heavy_infantry_leader,,drop,"CK3 has no per-unit commander traits and no close substitute; character loses it"
 hedonist,lifestyle_reveler,approx,CK2 hedonist (Way of Life) -> CK3 reveler lifestyle trait
-homosexual,,none,"CK3 models sexual orientation as a character sexuality, not a trait, and sodomite is an acquired secret about acts - not the same concept, so port homosexual as a new trait"
+homosexual,homosexual,sexuality,"CK3 models sexual orientation as a character sexuality (history key sexuality = <value>), not a trait; character gets sexuality = homosexual instead of a trait"
 honest,honest,exact,same name and concept
 humble,humble,exact,same name and concept
 hunchback,hunchbacked,exact,"same concept, CK3 spells it hunchbacked"
@@ -75,14 +86,14 @@ inbred,inbred,exact,same name and concept
 incapable,incapable,exact,same name; incapacitating = yes on both sides
 indulgent_wastrel,education_stewardship_1,exact,CK2 stewardship education tier 1 of 4
 infirm,infirm,exact,same name and concept
-inspiring_leader,,none,"CK2 inspiring_leader raised army morale, which CK3 removed entirely; gallant is a different commander concept, so port inspiring_leader as a new trait"
+inspiring_leader,gallant,nearest,"CK2 inspiring_leader raised army morale, which CK3 removed entirely; gallant is the nearest commander trait with similar troop-facing appeal"
 intricate_webweaver,education_intrigue_3,exact,CK2 intrigue education tier 3 of 4
 just,just,exact,same name and concept
 kind,compassionate,approx,"same concept, renamed in CK3"
 kinslayer,kinslayer_1,exact,CK3 tiers it kinslayer_1..3 by how close the victim was
 legit_bastard,legitimized_bastard,exact,"same concept, spelled out in CK3"
 leper,leper,exact,same name and concept
-light_foot_leader,,none,CK3 has no per-unit commander traits; ported as a new trait
+light_foot_leader,,drop,"CK3 has no per-unit commander traits and no close substitute; character loses it"
 lisp,lisping,exact,"same concept, CK3 spells it lisping"
 lunatic,lunatic_1,exact,CK3 splits it into lunatic_1 (acquired) and lunatic_genetic
 lustful,lustful,exact,same name and concept
@@ -109,14 +120,14 @@ siege_leader,military_engineer,approx,CK2 siege commander -> CK3 military_engine
 skilled_tactician,education_martial_3,exact,CK2 martial education tier 3 of 4
 slothful,lazy,approx,"same concept, renamed in CK3"
 slow,intellect_bad_2,approx,CK2 attributes -3 sits between CK3 intellect_bad_1 and intellect_bad_2 (-4)
-stressed,,none,"CK3 models stress as a character value with stress levels, not a trait; ported as a new trait"
+stressed,,drop,"CK3 models stress as a character value with stress levels, not a trait, and has no comparable trait; character loses it"
 strong,physique_good_3,exact,"health 1 on both sides (CK2 00_traits.txt:1082, CK3 00_traits.txt:7649); CK3 also has a non-genetic trait literally named strong (00_traits.txt:7754, health 0.5)"
 stutter,stuttering,exact,"same concept, CK3 spells it stuttering"
 syphilitic,great_pox,approx,CK3 names syphilis 'great pox' (early_great_pox and lovers_pox are the other stages)
 temperate,temperate,exact,same name and concept
 thrifty_clerk,education_stewardship_2,exact,CK2 stewardship education tier 2 of 4
 tough_soldier,education_martial_2,exact,CK2 martial education tier 2 of 4
-trickster,,none,"CK2 trickster is an ambush commander; CK3 strategist is general tactical advantage - not the same concept, so port trickster as a new trait"
+trickster,strategist,nearest,"CK2 trickster is an ambush commander; strategist (general tactical advantage) is the nearest CK3 commander trait"
 trusting,trusting,exact,same name and concept
 twin,twin,exact,same name; twin_opinion on both sides
 ugly,beauty_bad_2,exact,attraction matches exactly: CK2 sex_appeal_opinion -20 (00_traits.txt:902) = CK3 attraction_opinion -20 (00_traits.txt:6876)

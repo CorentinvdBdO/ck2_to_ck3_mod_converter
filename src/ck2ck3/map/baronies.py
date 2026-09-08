@@ -15,9 +15,12 @@ The four steps, and the reason each exists:
    ``demoted`` so the titles lane can emit them as commented-out baronies.
 2. **Seeds**, first match wins: ``overrides/barony_seeds.csv`` ->
    ``overrides/gazetteer.csv`` (matched on the CK2 localised barony name) ->
-   the county capital at the CK2 ``positions.txt`` **city** slot (slot 0,
-   `verified` ``docs/map_scale.md`` §2b) -> farthest-point sampling biased by
-   holding type.
+   the CK2 ``positions.txt`` slots (``[map] ck2_position_seeds``, default on):
+   the county capital at the **city** slot (slot 0, `verified`
+   ``docs/map_scale.md`` §2b) and the county's non-capital ``city_holding`` at
+   the **port** slot (slot 4, `verified` ``docs/map_fidelity.md`` §1.6 - the
+   CK2 binary itself logs "Invalid port location for province %d" against it)
+   -> farthest-point sampling biased by holding type.
 3. **Growth**: :func:`ck2ck3.map.growth.geodesic_voronoi`, so a barony only
    takes pixels reachable through its own county.
 4. **Straggler demotion**: a barony that still ends under ``min_barony_pixels``
@@ -47,7 +50,14 @@ from .growth import farthest_point, geodesic_voronoi, snap_to_mask
 from .holdings import BaronySelection, Date
 
 #: seed source labels, in priority order; they appear in barony_set.csv
-SEED_SOURCES = ("override", "gazetteer", "capital_position", "sampled", "fallback")
+SEED_SOURCES = (
+    "override",
+    "gazetteer",
+    "capital_position",
+    "port_position",
+    "sampled",
+    "fallback",
+)
 
 #: CK3 holding type -> which pixels its seed should prefer
 #: (``docs/design_map.md`` §B.2).  A city wants water access, a castle wants
@@ -363,10 +373,21 @@ def plan(
 _EMPTY = np.zeros(0, dtype=np.int64)
 
 
+#: seed sources Lloyd relaxation is allowed to nudge. ``sampled`` is the
+#: reason relaxation exists (a farthest-point seed sits in a corner by
+#: construction). ``port_position`` joins it because it is a snapped, clamped
+#: CK2 positions.txt coordinate, not a human override: pinning it exactly the
+#: way an override or a gazetteer hit is pinned measurably demoted more
+#: baronies than farthest-point sampling did for the same holdings
+#: (docs/step_map_paint.md; `verified` on Faerun, +42 demotions with it
+#: pinned). ``capital_position`` and ``override``/``gazetteer`` stay pinned.
+_RELAXABLE_SOURCES = ("sampled", "port_position")
+
+
 def _relax(
     candidates: Sequence[Barony], labels: np.ndarray, width: int
 ) -> bool:
-    """Move every ``sampled`` seed to the centroid of the region it grew.
+    """Move a relaxable seed to the centroid of the region it grew.
 
     Returns True if any seed moved.  The new seed is the region pixel *nearest*
     the centroid, never the centroid itself: a crescent-shaped barony's centre
@@ -379,7 +400,7 @@ def _relax(
     bounds = np.searchsorted(sorted_labels, np.arange(len(candidates) + 2))
     moved = False
     for i, b in enumerate(candidates):
-        if b.seed_source != "sampled":
+        if b.seed_source not in _RELAXABLE_SOURCES:
             continue
         start, stop = int(bounds[i + 1]), int(bounds[i + 2])
         if stop <= start:
@@ -512,9 +533,9 @@ def _seed_one(
         if flat is not None:
             return flat, "gazetteer"
 
-    if b.is_capital:
+    if cfg.ck2_position_seeds:
         slot = positions.get(b.ck2_province)
-        if slot:
+        if slot and b.is_capital:
             cx, cy = slot[cfg.city_slot] if len(slot) > cfg.city_slot else slot[0]
             # positions.txt y is measured from the BOTTOM of the CK2 bitmap
             # (`verified`, docs/map_scale.md §2b)
@@ -522,6 +543,21 @@ def _seed_one(
             flat = _snap(y, x, pixels, canvas, cfg)
             if flat is not None:
                 return flat, "capital_position"
+        elif slot and not b.is_capital and b.holding == "city_holding":
+            # slot 4: the CK2 binary itself logs "Invalid port location for
+            # province %d" against it (`verified`, docs/map_fidelity.md §1.6).
+            # Only for the county's non-capital port/city barony, when one
+            # exists; every other slot is unnamed geometry, not semantics.
+            if len(slot) > cfg.port_slot:
+                cx, cy = slot[cfg.port_slot]
+                x, y = canvas.to_target(cx, source_height - cy)
+                flat = _snap(y, x, pixels, canvas, cfg)
+                # a degenerate positions.txt (all slots equal, as CK2 leaves
+                # most Faerun blocks) can collide with a seed already taken;
+                # falling through to sampling beats two baronies sharing one
+                # seed pixel.
+                if flat is not None and flat not in chosen:
+                    return flat, "port_position"
 
     want = HOLDING_BIAS.get(b.holding, "")
     bias = None
