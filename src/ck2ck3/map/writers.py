@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import csv
 import io
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 
 
 
@@ -212,6 +212,7 @@ def render_adjacencies_csv(
     idmap: IdMap,
     *,
     dropped_log: list[str] | None = None,
+    endpoint: Callable[[int, int], int | None] | None = None,
 ) -> tuple[str, int]:
     """CK3 ``map_data/adjacencies.csv``.
 
@@ -220,12 +221,22 @@ def render_adjacencies_csv(
     the game picks the province centres (vanilla uses real values but ``-1`` is
     accepted, `assumed`).  Rows whose From/To/Through did not survive the id
     remap are dropped and logged.
+
+    ``endpoint(ck2_id, toward_ck2_id)`` picks *which* CK3 province a CK2
+    province's end of the crossing attaches to.  It matters because a CK2
+    county is several CK3 baronies: a strait must land on the barony that faces
+    the water, not on whichever one happens to be the county capital.  Without
+    it the primary (capital) province is used.
     """
     rows = [["From", "To", "Type", "Through", "start_x", "start_y", "stop_x", "stop_y", "Comment"]]
     kept = 0
+    pick = endpoint or (lambda ck2_id, _toward: idmap.ck3(ck2_id))
     for a in adjacencies:
-        f, t = idmap.ck3(a.from_id), idmap.ck3(a.to_id)
         through = idmap.ck3(a.through) if a.through > 0 else -1
+        # the crossing goes from -> through -> to, so each end aims at the
+        # water in the middle; with no `through`, at the other end
+        f = pick(a.from_id, a.through if a.through > 0 else a.to_id)
+        t = pick(a.to_id, a.through if a.through > 0 else a.from_id)
         if f is None or t is None:
             if dropped_log is not None:
                 dropped_log.append(

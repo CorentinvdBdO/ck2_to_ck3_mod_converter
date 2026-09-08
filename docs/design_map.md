@@ -45,7 +45,15 @@ Decisions here are converter defaults. Everything human-judged enters through ov
 - `max_settlements` median 3.
 - Commented-out baronies are irrelevant (1 in the whole mod). "Unused" = defined but never built in history.
 
-### Recommended method: "built holdings as physical baronies, seeded Voronoi, override CSV"
+### Method: "built holdings as physical baronies, seeded Voronoi, override CSV"
+
+**IMPLEMENTED 2026-09-07 by lane `baronies`.** The reference for what the code
+actually does, with the measured counts, is `docs/step_map_baronies.md`; the
+design below is what it was built from. The two places reality differed:
+`min_barony_pixels` needs no rescaling (this canvas is at vanilla's km per
+pixel by construction), and the seeds need Lloyd relaxation before the size
+guard — a farthest-point seed sits in a corner, which demoted 313 holdings
+instead of 163.
 Better than pizza slices or one-per-county, and scales with human input:
 1. **Barony set per county** = holdings built at the chosen bookmark date (default: earliest bookmark 1357.1.1 ∪ any holding built by the latest bookmark, so later bookmarks still have their provinces). Unbuilt defined baronies are emitted **as comments** in `landed_titles` (kept for the submod to promote). Result: ~3.8–4.5k land baronies, comparable to Godherja.
 2. **Seeds**. Priority order, first match wins:
@@ -65,12 +73,18 @@ Better than pizza slices or one-per-county, and scales with human input:
 - All 7 defined baronies as physical: 15k baronies of ~8×8 px, unreadable. Rejected.
 
 ## C. Open items (human decisions, not blocking the converter)
-1. ~~Target dimensions~~ **SETTLED 2026-09-07 by lane `map-physical`**: canvas
-   **8192×6656**, scale factor **1.9543**, derived from measured km-per-pixel on
-   both maps rather than chosen (`docs/map_scale.md`). The one judgement call
-   left inside it is which vanilla figure to scale against: the core-Europe
-   latitude fit (1.4839 km/px, used) or the whole-map fit (1.7426 km/px, which
-   would give a 28% smaller canvas at the same province count). One config line,
-   `[map] vanilla_km_per_px`.
-2. Bookmark date driving the barony set (default 1357.1.1 ∪ later).
+1. ~~Target dimensions~~ **RESOLVED 2026-09-07**. Scale factor **1.9543**,
+   derived from measured km-per-pixel on both maps rather than chosen
+   (`docs/map_scale.md`). The judgement call inside it — which vanilla figure to
+   scale against — was settled the same day: the **core-Europe latitude fit,
+   1.4839 km/px**, because gameplay density is tuned there and it is the tightest
+   fit available (R² 0.9962); the whole-map 1.7426 would give a 28 % smaller
+   canvas at the same province count (`docs/DECISIONS.md`). Canvas is
+   **8320×6784**: the painted-extent crop plus a 128 px sea margin, rounded to
+   64. The crop turned out to be a no-op on Faerûn — see `docs/map_scale.md` §7,
+   which is the one number still worth a second look.
+2. ~~Bookmark date driving the barony set~~ **RESOLVED**: `[mod]
+   bookmark_date` = 1357.1.1, union everything built by `latest_bookmark`
+   1501.1.1. 3857 holdings, 3694 placed. Implemented in lane `baronies`:
+   `docs/step_map_baronies.md`.
 3. How far to align the CK2 political map to the atlas 1371 canon: converter only reports diffs (county → atlas nation colour sampled at centroid) in `docs/evidence/canon_diff.csv`; edits are submod work.

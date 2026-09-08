@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import math
 import tomllib
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -43,7 +44,13 @@ class ScaleConfig:
 
 @dataclass(frozen=True)
 class Canvas:
-    """Target ``map_data`` geometry."""
+    """Target ``map_data`` geometry, including which part of the source is used.
+
+    ``crop_*`` is the rectangle of the CK2 bitmap that gets scaled onto the
+    canvas (half-open, top-left origin).  Default is the whole bitmap; a
+    smaller rectangle is how the converter throws away unpainted source border
+    instead of paying for it in every output file (``docs/map_scale.md`` §7).
+    """
 
     width: int
     height: int
@@ -54,26 +61,61 @@ class Canvas:
     offset_x: int
     offset_y: int
     factor: float
+    #: source rectangle that is scaled onto the canvas (half-open)
+    crop_x0: int = 0
+    crop_y0: int = 0
+    crop_x1: int = 0
+    crop_y1: int = 0
+
+    @property
+    def crop_width(self) -> int:
+        return self.crop_x1 - self.crop_x0
+
+    @property
+    def crop_height(self) -> int:
+        return self.crop_y1 - self.crop_y0
+
+    @property
+    def is_cropped(self) -> bool:
+        return (self.crop_x0, self.crop_y0) != (0, 0) or self.crop_x1 == 0
 
     def to_target(self, x: float, y: float) -> tuple[int, int]:
-        """CK2 pixel (top-left origin) -> target pixel."""
+        """CK2 pixel (top-left origin) -> target pixel.
+
+        A source pixel outside the crop maps outside the canvas; callers that
+        can be handed one (rivers, positions) already bounds-check.
+        """
         return (
-            int(round(x * self.factor)) + self.offset_x,
-            int(round(y * self.factor)) + self.offset_y,
+            int(round((x - self.crop_x0) * self.factor)) + self.offset_x,
+            int(round((y - self.crop_y0) * self.factor)) + self.offset_y,
         )
 
 
-def plan_canvas(src_w: int, src_h: int, scale: ScaleConfig) -> Canvas:
+def plan_canvas(
+    src_w: int,
+    src_h: int,
+    scale: ScaleConfig,
+    crop: tuple[int, int, int, int] | None = None,
+) -> Canvas:
     """Smallest canvas that fits the scaled source plus a sea margin.
 
     Rounded up to ``canvas_multiple`` on both axes and the source is centred in
     the slack, so the margin is never smaller than requested on any side.
+
+    ``crop`` is ``(x0, y0, x1, y1)`` in source pixels, half-open: only that
+    rectangle is scaled onto the canvas.  Pass the bounding box of the source's
+    *painted* pixels to stop unpainted border from becoming padding ocean.
     """
     factor = scale.factor
     if factor <= 0:
         raise ValueError(f"scale factor must be positive, got {factor}")
-    sw = int(math.ceil(src_w * factor))
-    sh = int(math.ceil(src_h * factor))
+    x0, y0, x1, y1 = crop or (0, 0, src_w, src_h)
+    if not (0 <= x0 < x1 <= src_w and 0 <= y0 < y1 <= src_h):
+        raise ValueError(
+            f"crop {(x0, y0, x1, y1)} is not inside the {src_w}x{src_h} source"
+        )
+    sw = int(math.ceil((x1 - x0) * factor))
+    sh = int(math.ceil((y1 - y0) * factor))
     m = scale.canvas_multiple
     if m <= 0:
         raise ValueError(f"canvas_multiple must be positive, got {m}")
@@ -92,6 +134,10 @@ def plan_canvas(src_w: int, src_h: int, scale: ScaleConfig) -> Canvas:
         offset_x=(w - sw) // 2,
         offset_y=(h - sh) // 2,
         factor=factor,
+        crop_x0=x0,
+        crop_y0=y0,
+        crop_x1=x1,
+        crop_y1=y1,
     )
 
 
@@ -116,6 +162,67 @@ class HeightmapConfig:
 
 
 @dataclass(frozen=True)
+class BaronyConfig:
+    """How CK2 counties are split into physical baronies.
+
+    ``docs/step_map_baronies.md`` is the reference; the numbers that matter:
+
+    * ``min_barony_pixels`` — the smallest barony the map may carry. 400 px is
+      the vanilla-scale figure (a 20x20 blob at 9216x4608). Our canvas is at
+      the *same* km per pixel as vanilla by construction
+      (``docs/map_scale.md``), so 400 needs no rescaling; when the key is left
+      out it is scaled by canvas area against the 9216-wide reference anyway,
+      so a deliberately denser or coarser map still gets a sane default.
+    * ``city_slot`` — index into the 7 pairs of a CK2 ``positions.txt``
+      ``position={...}`` block. 0 is the city (`verified`, docs/map_scale.md
+      §2b: slot 0 is inside its own province 91.9 % of the time).
+    """
+
+    #: bookmark the barony set is taken at, as (y, m, d)
+    bookmark: tuple[int, int, int] = (1357, 1, 1)
+    #: latest bookmark; holdings built by then are baronies too (design §B.1)
+    latest_bookmark: tuple[int, int, int] = (1501, 1, 1)
+    #: smallest barony in canvas pixels; 0 = derive from the canvas area
+    min_barony_pixels: int = 0
+    #: reference for the derived default: 400 px on a 9216-wide canvas
+    reference_min_pixels: int = 400
+    reference_width: int = 9216
+    #: weight of the county capital's seed vs the others (design §B.3: 1.0 all)
+    capital_weight: float = 1.0
+    other_weight: float = 1.0
+    #: how much a terrain-biased pixel is favoured in farthest-point sampling
+    bias_gain: float = 0.5
+    #: how far an imported seed coordinate may be snapped onto its county
+    snap_radius_px: int = 48
+    #: Lloyd relaxation passes on the seeds the converter sampled itself
+    #: (overrides, gazetteer and positions.txt seeds are never moved)
+    relax_passes: int = 4
+    #: passes of "demote the worst straggler and regrow"
+    max_regrow_passes: int = 3
+    #: CK2 positions.txt slot that holds the city coordinate
+    city_slot: int = 0
+    #: human override files, relative to the converter repo root
+    seeds_csv: Path = Path("overrides/barony_seeds.csv")
+    gazetteer_csv: Path = Path("overrides/gazetteer.csv")
+    #: write the per-duchy review PNGs during the run (slow; usually a script)
+    review_sheets: bool = False
+
+    def min_pixels(self, canvas_width: int, canvas_height: int = 0) -> int:
+        """``min_barony_pixels``, derived from the canvas width when not set.
+
+        The derived value scales the 400 px reference by the *square* of the
+        width ratio, because it is an area.  It is only a fallback: on a map
+        built at vanilla's km per pixel (which ours is, by construction —
+        ``docs/map_scale.md``) the honest value is the reference itself, and
+        ``configs/faerun.toml`` pins it to 400 for exactly that reason.
+        """
+        if self.min_barony_pixels > 0:
+            return self.min_barony_pixels
+        ratio = canvas_width / self.reference_width
+        return max(1, int(round(self.reference_min_pixels * ratio * ratio)))
+
+
+@dataclass(frozen=True)
 class ProvincesConfig:
     #: a CK2 colour that ends up with fewer pixels than this is reported lost
     min_pixels: int = 16
@@ -124,6 +231,8 @@ class ProvincesConfig:
     ocean_name: str = "Padding Ocean"
     #: try one dilation pass inside the CK2 footprint to rescue tiny provinces
     regrow_lost: bool = True
+    #: crop the canvas to the bounding box of the source's painted pixels
+    crop_to_painted: bool = True
 
 
 @dataclass(frozen=True)
@@ -133,6 +242,11 @@ class MapConfig:
     scale: ScaleConfig
     heightmap: HeightmapConfig = field(default_factory=HeightmapConfig)
     provinces: ProvincesConfig = field(default_factory=ProvincesConfig)
+    baronies: BaronyConfig = field(default_factory=BaronyConfig)
+    #: CK2 mod root, for common/landed_titles, history/provinces, localisation
+    ck2_mod_dir: Path | None = None
+    #: converter repo root, for overrides/*.csv
+    repo_dir: Path | None = None
     #: CK2 terrain category -> CK3 terrain key
     terrain_map: dict[str, str] = field(default_factory=dict)
     #: CK3 terrain key used when nothing else matches
@@ -195,7 +309,11 @@ def load(path: str | Path) -> MapConfig:
             ocean_rgb=tuple(int(v) for v in pr.get("ocean_rgb", (0, 0, 96))),  # type: ignore[arg-type]
             ocean_name=str(pr.get("ocean_name", "Padding Ocean")),
             regrow_lost=bool(pr.get("regrow_lost", True)),
+            crop_to_painted=bool(pr.get("crop_to_painted", True)),
         ),
+        baronies=barony_config(raw.get("baronies", {})),
+        ck2_mod_dir=_path(inp["ck2_mod_dir"]) if inp.get("ck2_mod_dir") else None,
+        repo_dir=base,
         terrain_map=dict(tr.get("map", {})),
         terrain_default=str(tr.get("default", "plains")),
         lake_region_names=tuple(raw.get("regions", {}).get("lake_names", ("Lakes",))),
@@ -205,4 +323,39 @@ def load(path: str | Path) -> MapConfig:
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),
         supported_version=str(out.get("supported_version", "1.19.*")),
+    )
+
+
+def parse_date(value: str | Sequence[int]) -> tuple[int, int, int]:
+    """``"1357.1.1"`` or ``[1357, 1, 1]`` -> ``(1357, 1, 1)``."""
+    if isinstance(value, str):
+        parts = value.split(".")
+    else:
+        parts = list(value)  # type: ignore[arg-type]
+    if len(parts) != 3:
+        raise ValueError(f"expected a Y.M.D date, got {value!r}")
+    return (int(parts[0]), int(parts[1]), int(parts[2]))
+
+
+def barony_config(raw: dict) -> BaronyConfig:
+    """Build a :class:`BaronyConfig` from a ``[map.baronies]`` TOML table."""
+    d = BaronyConfig()
+    return BaronyConfig(
+        bookmark=parse_date(raw.get("bookmark", d.bookmark)),
+        latest_bookmark=parse_date(raw.get("latest_bookmark", d.latest_bookmark)),
+        min_barony_pixels=int(raw.get("min_barony_pixels", d.min_barony_pixels)),
+        reference_min_pixels=int(
+            raw.get("reference_min_pixels", d.reference_min_pixels)
+        ),
+        reference_width=int(raw.get("reference_width", d.reference_width)),
+        capital_weight=float(raw.get("capital_weight", d.capital_weight)),
+        other_weight=float(raw.get("other_weight", d.other_weight)),
+        bias_gain=float(raw.get("bias_gain", d.bias_gain)),
+        snap_radius_px=int(raw.get("snap_radius_px", d.snap_radius_px)),
+        relax_passes=int(raw.get("relax_passes", d.relax_passes)),
+        max_regrow_passes=int(raw.get("max_regrow_passes", d.max_regrow_passes)),
+        city_slot=int(raw.get("city_slot", d.city_slot)),
+        seeds_csv=Path(str(raw.get("seeds_csv", d.seeds_csv))),
+        gazetteer_csv=Path(str(raw.get("gazetteer_csv", d.gazetteer_csv))),
+        review_sheets=bool(raw.get("review_sheets", d.review_sheets)),
     )
