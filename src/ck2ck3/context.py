@@ -17,7 +17,12 @@ from typing import Any, Iterable, Mapping
 from . import ck2mod, csvloc
 from .config import Config
 from .pdx import Block, Document, parse_file, write, write_file
-from .pdx.encoding import CK2_ENCODING, CK3_ENCODING, write_text
+from .pdx.encoding import (
+    CK2_ENCODING,
+    CK3_ENCODING,
+    encoding_for,
+    write_text,
+)
 
 
 @dataclass
@@ -151,13 +156,18 @@ class Context:
         source: str | Path | None = None,
         canonical: bool = False,
         header: bool = True,
+        encoding: str | None = None,
     ) -> Path:
         """Write a parse tree as UTF-8 script under the output mod.
 
         ``header=False`` omits the generated-by banner, for a file whose reader
         is not the game script engine (``descriptor.mod``, read by the
-        launcher).
+        launcher). ``encoding`` defaults to whatever ``rel`` calls for —
+        UTF-8 with a BOM in a script database, plain UTF-8 for a flat
+        ``map_data`` file (``ck2ck3.pdx.encoding``) — and is only passed
+        explicitly to override that.
         """
+        encoding = encoding or encoding_for(str(rel))
         path = self.out_path(str(rel))
         if not self.dry_run:
             write_file(
@@ -165,6 +175,7 @@ class Context:
                 path,
                 header=self.header(source) if header else None,
                 canonical=canonical,
+                encoding=encoding,
             )
         self._record(path, len(write(block, canonical=canonical)))
         return path
@@ -205,11 +216,21 @@ class Context:
         self._record(path, source.stat().st_size)
         return path
 
-    def write_text(self, rel: str | Path, text: str) -> Path:
-        """Write raw text (CSV, `.mod`, anything not a parse tree) as UTF-8."""
+    def write_text(
+        self, rel: str | Path, text: str, *, encoding: str | None = None
+    ) -> Path:
+        """Write raw text (CSV, `.mod`, anything not a parse tree) as UTF-8.
+
+        The BOM follows ``rel``: present in a script database, absent for a
+        flat ``map_data`` file or ``descriptor.mod``
+        (``ck2ck3.pdx.encoding.encoding_for``). A literal leading ``U+FEFF``
+        already in ``text`` is consumed rather than written twice, so a caller
+        that prepends its own BOM still gets exactly one.
+        """
+        encoding = encoding or encoding_for(str(rel))
         path = self.out_path(str(rel))
         if not self.dry_run:
-            write_text(path, text)
+            write_text(path, text, encoding)
         self._record(path, len(text))
         return path
 

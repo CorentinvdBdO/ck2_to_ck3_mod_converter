@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 
 from ck2ck3 import pdx
+from ck2ck3.pdx import encoding as pdx_encoding
 from ck2ck3.pdx import parse, structurally_equal, write
 
 SAMPLES = {
@@ -88,16 +89,55 @@ def test_indent_can_be_spaces():
     assert write(parse("a = { b = 1 }"), indent="    ") == "a = {\n    b = 1\n}\n"
 
 
-def test_write_file_is_utf8_without_bom(tmp_path):
+def test_write_file_boms_non_ascii_script(tmp_path):
+    """Vanilla CK3 puts a BOM on non-ASCII script; ck3-tiger warns without it."""
     path = tmp_path / "out.txt"
     pdx.write_file(parse('name = "Bjørn"'), path)
+    assert path.read_bytes() == 'name = "Bjørn"\n'.encode("utf-8-sig")
+
+
+def test_write_file_boms_pure_ascii_script_too(tmp_path):
+    """ck3-tiger warns on a BOM-less pure-ASCII file in a script database.
+
+    `verified` 2026-09-08: 98 generated pure-ASCII files under `common/` drew
+    `warning(encoding): Expected UTF-8 BOM encoding`. Vanilla's BOM-less
+    `history/titles/k_france.txt` is laxity in one folder, not a rule.
+    """
+    path = tmp_path / "out.txt"
+    pdx.write_file(parse('name = "Bjorn"'), path)
+    assert path.read_bytes() == b'\xef\xbb\xbfname = "Bjorn"\n'
+
+
+def test_the_bom_rule_is_by_path_not_content(tmp_path):
+    from ck2ck3.pdx.encoding import encoding_for
+
+    assert encoding_for("common/traits/fae_traits.txt") == "utf-8-sig"
+    assert encoding_for("history/titles/fae_counties.txt") == "utf-8-sig"
+    assert encoding_for("tests/fae_generated_tests.txt") == "utf-8-sig"
+    assert encoding_for("map_data/geographical_regions/fae.txt") == "utf-8-sig"
+    # The flat map_data files and descriptor.mod must NOT have one.
+    assert encoding_for("map_data/definition.csv") == "utf-8"
+    assert encoding_for("map_data/default.map") == "utf-8"
+    assert encoding_for("descriptor.mod") == "utf-8"
+
+
+def test_write_file_can_be_forced_bom_free(tmp_path):
+    path = tmp_path / "out.txt"
+    pdx.write_file(parse('name = "Bjørn"'), path, encoding=pdx.OUT_PLAIN_ENCODING)
     assert path.read_bytes() == 'name = "Bjørn"\n'.encode("utf-8")
+
+
+def test_a_literal_leading_bom_is_not_written_twice(tmp_path):
+    """The titles/bookmarks/map lanes prepend U+FEFF to the string themselves."""
+    path = tmp_path / "out.txt"
+    pdx_encoding.write_text(path, "\ufeffname = \"Bjørn\"\n")
+    assert path.read_bytes() == 'name = "Bjørn"\n'.encode("utf-8-sig")
 
 
 def test_write_file_header(tmp_path):
     path = tmp_path / "out.txt"
     pdx.write_file(parse("a = 1"), path, header="# generated")
-    assert path.read_text(encoding="utf-8") == "# generated\na = 1\n"
+    assert path.read_text(encoding="utf-8-sig") == "# generated\na = 1\n"
 
 
 def test_structurally_equal_can_ignore_comments():

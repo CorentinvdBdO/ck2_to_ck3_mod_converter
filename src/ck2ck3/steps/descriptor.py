@@ -47,7 +47,10 @@ def build(ctx: Context) -> Block:
 def run(ctx: Context) -> StepResult:
     block = build(ctx)
     # No generated-by banner: descriptor.mod is read by the launcher and
-    # vanilla / Elder Kings 2 keep it free of comments.
+    # vanilla / Elder Kings 2 keep it free of comments. No BOM either
+    # (`verified`: none of the four installed workshop mods has one, and the
+    # launcher, not the script engine, parses this file) - which the path rule
+    # in ck2ck3.pdx.encoding already gives it, descriptor.mod being top level.
     path = ctx.write_script("descriptor.mod", block, header=False)
     return StepResult(
         summary=(
