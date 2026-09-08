@@ -574,7 +574,10 @@ def test_bookmark_grammar(bookmark_result):
     assert str(character["title"]) == "k_waterdeep"
     assert str(character["government"]) == "tribal_government"
     assert str(character["history_id"]) == "fae_52101"
-    assert str(character["dynasty"]) == "fae_dyn_7743"
+    # `fae_<ck2 id>`, no `dyn_` infix: the `dynasties` step owns the id
+    # (ck2ck3.ids.fae_id) and a mismatch here is 80 ck3-tiger
+    # `error(missing-item): dynasty fae_dyn_N not defined`.
+    assert str(character["dynasty"]) == "fae_7743"
 
 
 def test_the_config_bookmark_date_is_the_default(bookmark_result):

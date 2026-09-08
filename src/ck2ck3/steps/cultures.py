@@ -21,7 +21,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .. import overrides
+from .. import ids, overrides
 from ..context import Context, StepResult
 from ..pdx import Block, Color, Item, Node, parse_file
 from ..pdx.encoding import CK3_ENCODING
@@ -202,16 +202,18 @@ def read_ck2_cultures(ck2_mod: Path) -> list[CK2CultureGroup]:
 
 
 # -- naming -----------------------------------------------------------------
+# The three id shapes another step also has to know are defined in
+# `ck2ck3.ids`; these wrappers only unpack the CK2 object.
 def heritage_id(prefix: str, group: CK2CultureGroup) -> str:
-    return f"heritage_{prefix}_{group.slug}"
+    return ids.heritage_id(prefix, group.slug)
 
 
 def language_id(prefix: str, group: CK2CultureGroup) -> str:
-    return f"language_{prefix}_{group.slug}"
+    return ids.language_id(prefix, group.slug)
 
 
 def name_list_id(prefix: str, culture: CK2Culture) -> str:
-    return f"name_list_{prefix}_{culture.id}"
+    return ids.name_list_id(prefix, culture.id)
 
 
 def culture_id(culture: CK2Culture) -> str:
