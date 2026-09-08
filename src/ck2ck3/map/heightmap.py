@@ -74,6 +74,15 @@ def build(
 
     with Image.open(ck2_topology_bmp) as im:
         src = im.convert("L")
+        if canvas.crop_width and (
+            (canvas.crop_x0, canvas.crop_y0) != (0, 0)
+            or (canvas.crop_width, canvas.crop_height) != src.size
+        ):
+            # the same source rectangle provinces.png is built from, or the
+            # heightmap and the province map would disagree about the coastline
+            src = src.crop(
+                (canvas.crop_x0, canvas.crop_y0, canvas.crop_x1, canvas.crop_y1)
+            )
         scaled = src.resize(
             (canvas.scaled_width * f, canvas.scaled_height * f), Image.LANCZOS
         )

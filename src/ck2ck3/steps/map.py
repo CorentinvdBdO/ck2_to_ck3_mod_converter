@@ -1,7 +1,10 @@
 """Convert the physical map: CK2 ``map/`` -> CK3 ``map_data/``.
 
-One CK3 province per CK2 province, at the same physical km-per-pixel as the
-vanilla CK3 map.  Barony subdivision is a later lane (``docs/design_map.md`` §B).
+One CK3 province per **built CK2 holding**, at the same physical km-per-pixel
+as the vanilla CK3 map: each CK2 county is split into its built baronies by
+seeded geodesic Voronoi (``docs/step_map_baronies.md``, ``docs/design_map.md``
+§B).  Human overrides come from ``overrides/barony_seeds.csv`` and
+``overrides/gazetteer.csv``.
 
 Reads the ``[map]`` table of the CLI config; the derivation of every number is
 in ``docs/map_scale.md`` and the CK3 formats in ``docs/formats_map.md`` and
@@ -20,7 +23,7 @@ from ..map import build as map_build
 from ..map import config as map_config
 from ..map.sink import ContextSink
 
-DESCRIPTION = "provinces/heightmap/rivers + definition.csv, default.map, terrain"
+DESCRIPTION = "provinces/heightmap/rivers, baronies, definition.csv, default.map"
 
 OUTPUTS: tuple[str, ...] = (
     "map_data",
@@ -55,6 +58,8 @@ def run(ctx: Context) -> StepResult:
     sink = ContextSink(ctx)
     report = map_build.run(cfg, sink, skip_images=_skip_images(ctx))
 
+    private = {k: report.pop(k) for k in list(report) if k.startswith("_") and k != "_evidence"}
+
     # localisation goes through ctx.write_loc, which owns the BOM and the CRLF
     loc = report.pop("localisation", {})
     if loc:
@@ -71,25 +76,44 @@ def run(ctx: Context) -> StepResult:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8", newline="")
 
+    if cfg.baronies.review_sheets and not ctx.dry_run:
+        from ..map import review
+
+        n = review.write_all(
+            out_dir=ctx.config.path.parent.parent / "docs" / "evidence" / "baronies",
+            plan=private["_plan"],
+            ids=private["_ids"],
+            raster=private["_raster"],
+            tree=review.load_tree(cfg),
+            log=ctx.info,
+        )
+        ctx.info(f"{n} duchy review sheets written")
+
     canvas = report["canvas"]
     prov = report["provinces"]
+    bar = report["baronies"]
     return StepResult(
         summary=(
             f"map {canvas['width']}x{canvas['height']} at scale "
             f"{canvas['factor']:.4f} ({cfg.scale.source_km_per_px} -> "
             f"{cfg.scale.vanilla_km_per_px} km/px): "
-            f"{prov['ck3_total']} provinces, {prov['lost']} lost"
+            f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
+            f"{bar['counties']} counties, {bar['demoted']} demoted, "
+            f"{prov['lost']} lost"
         ),
         counts={
             "provinces": prov["ck3_total"],
             "land": prov["land"],
+            "baronies": prov["baronies"],
+            "baronies_demoted": bar["demoted"],
+            "counties": bar["counties"],
             "sea": prov["sea"],
             "lakes": prov["lake"],
             "river_provinces": prov["river"],
+            "impassable": prov["impassable"],
             "lost": prov["lost"],
             "regrown": prov["regrown"],
             "adjacencies": report["adjacencies"]["kept"],
-            "baronies_placeholder": report["bootstrap"]["baronies"],
         },
         warnings=list(sink.warnings),
         written=list(sink.written),
@@ -116,6 +140,8 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
 
     return map_config.MapConfig(
         ck2_map_dir=ctx.ck2("map"),
+        ck2_mod_dir=ctx.ck2(),
+        repo_dir=ctx.config.path.parent.parent,
         out_mod_dir=ctx.config.out,
         scale=map_config.ScaleConfig(
             vanilla_km_per_px=float(raw["vanilla_km_per_px"]),
@@ -140,6 +166,9 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             ocean_rgb=tuple(int(v) for v in pr.get("ocean_rgb", (0, 0, 96))),  # type: ignore[arg-type]
             ocean_name=str(pr.get("ocean_name", "Padding Ocean")),
             regrow_lost=bool(pr.get("regrow_lost", True)),
+        ),
+        baronies=map_config.barony_config(
+            {"bookmark": ctx.config.bookmark_date, **dict(raw.get("baronies", {}))}
         ),
         terrain_map=dict(tr.get("map", {})),
         terrain_default=str(tr.get("default", "plains")),

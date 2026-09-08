@@ -6,8 +6,9 @@ vanilla CK3? Everything downstream — canvas size, barony density, army travel
 time, how big Waterdeep looks next to Constantinople — falls out of this one
 number.
 
-**Answer.** `factor = 2.90 / 1.4839 = 1.9543`, canvas **8192 × 6656**,
-heightmap 1× at 8192 × 6656.
+**Answer.** `factor = 2.90 / 1.4839 = 1.9543`, canvas **8320 × 6784**,
+heightmap 1× at 8320 × 6784. (§3 derives 8192 × 6656 from a 64 px sea margin;
+§7 explains why the shipped margin is 128 and what that costs.)
 
 | quantity | value | how | label |
 |---|---|---|---|
@@ -332,3 +333,36 @@ Fixes, in increasing effort, for whoever picks this up:
 
 Option 1 is the one to do first, and it is a change to `plan_canvas` plus a
 "painted extent" pass over the source bitmap, not a redesign.
+
+### Option 1 was done, and it does nothing for Faerûn `verified` 2026-09-07
+
+Lane `baronies` implemented the crop: `provinces.painted_extent` returns the
+bounding box of every pixel `definition.csv` claims, `plan_canvas(..., crop=)`
+scales only that rectangle, and `[map.provinces] crop_to_painted = true` turns
+it on. Both `provinces.png` and the heightmap are built from the same
+rectangle, so the coastline cannot drift between them.
+
+**On Faerûn the box is the whole bitmap: `(0, 0, 4096, 3328)`.** Not one row and
+not one column of the source is entirely unpainted — the least-painted row is
+still 47.6 % assigned, the least-painted column 85 %. The 21 % of white is
+*interior*: the southern and western ocean **between** painted sea provinces.
+A bounding box cannot reach it, and neither can any crop.
+
+So the padding ocean stays at ~25 % of the canvas and the remedy is option 2
+(subdivide the padding, e.g. a Voronoi over the coastal sea provinces) or
+option 3 (fix it upstream). Both are still open.
+
+The same decision raised `sea_margin_px` from 64 to 128, which — with the crop
+inert — is the only thing that changed:
+
+```
+4096 × 1.9543 = 8005  →  + 2×128 margin = 8261  →  round up to 64  →  8320
+3328 × 1.9543 = 6504  →  + 2×128 margin = 6760  →  round up to 64  →  6784
+```
+
+Canvas **8320 × 6784** (128 × 106 blocks of 64), offsets (157, 140), 56.4 Mpx
+against the previous 54.5. `WORLD_EXTENTS_X = 8319`, `WORLD_EXTENTS_Z = 6783`
+follow automatically. §3's 8192 × 6656 is what `sea_margin_px = 64` gives and
+is one config line away. **This is the open call for the coordinator**: the
+wider margin was decided to reduce waste and, on this mod, adds 3.4 % of ocean
+instead.

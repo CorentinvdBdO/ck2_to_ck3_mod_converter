@@ -67,9 +67,9 @@ out = "/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted
 # Legacy fields kept for anything that still reads them. They are DERIVED from
 # [map.scale] below, not inputs: the canvas is planned from the CK2 source size
 # and the scale factor, so these mirror the result.
-dimensions = [8192, 6656]
+dimensions = [8320, 6784]
 scale = 1.9543095896
-offset = [93, 76]
+offset = [157, 140]
 source_dimensions = [4096, 3328]
 
 # true = write the text files only, skipping the four PNGs (30 s, ~45 MB).
@@ -99,7 +99,12 @@ source_km_per_px = 2.90
 # The deleted convert.py used 5918/4096 = 1.4448242187, which implies 2.144
 # km/px for Faerun - unmeasured, and 26% too small.
 # factor_override = 1.4448242187
-sea_margin_px = 64
+# 128, not 64: the coordinator's 2026-09-07 decision, together with
+# provinces.crop_to_painted below. NOTE the crop is a no-op on Faerun (its
+# painted extent IS the whole 4096x3328 bitmap; the 21% of unassigned white is
+# interior ocean, not border), so the wider margin only grows the canvas from
+# 8192x6656 to 8320x6784. docs/map_scale.md §7. Set back to 64 to undo.
+sea_margin_px = 128
 # Every shipping CK3 map is a multiple of 64 on both axes (vanilla 9216x4608,
 # Elder Kings 2 8256x5504, Godherja 8192x4096). No define states it, so the
 # requirement is `assumed`; obeying it costs at most 63 px of ocean.
@@ -128,11 +133,58 @@ curve = []
 # Both reference total conversions use 33; vanilla uses 65.
 tile_size = 33
 
+# Barony subdivision: one CK3 province per CK2 holding built in
+# history/provinces. Reference: docs/step_map_baronies.md.
+[map.baronies]
+# Left unset it follows [mod] bookmark_date. The set is the holdings built at
+# this date UNION anything built by latest_bookmark, so a later bookmark still
+# has provinces for its holdings (docs/design_map.md B.1).
+# bookmark = "1357.1.1"
+# Faerun's last bookmark in common/bookmarks/00_bookmarks.txt.
+latest_bookmark = "1501.1.1"
+# Smallest barony, in canvas pixels. 400 is the vanilla figure (a 20x20 blob at
+# 9216x4608) and it needs no rescaling here: this canvas is at vanilla's own
+# km per pixel by construction (docs/map_scale.md). Left unset, the code
+# derives 326 from the width ratio, which is the wrong argument; pinned.
+min_barony_pixels = 400
+# Seed weights. 1.0 both, per docs/design_map.md B.3: the capital gets its
+# position from CK2 positions.txt, which is enough of an advantage.
+capital_weight = 1.0
+other_weight = 1.0
+# How much a terrain-biased pixel is favoured when a seed is sampled: a city
+# seed prefers coast/river pixels, a castle seed hills/mountains, temples and
+# tribes neither. 0.5 = a biased pixel counts as 1.5x as far from its
+# neighbours as a plain one.
+bias_gain = 0.5
+# An imported seed coordinate (override, gazetteer, positions.txt) may be
+# snapped this far onto its own county; further than this the row is ignored
+# and the next seed source takes over, so a typo degrades instead of moving a
+# barony into the wrong county.
+snap_radius_px = 48
+# Lloyd relaxation on the seeds the converter sampled itself: grow, move each
+# sampled seed to its region centroid, regrow. Evens out the barony areas so
+# fewer holdings are demoted; measured on Faerun, 0 passes demotes 313
+# holdings, 2 demotes 176, 4 demotes 163 and 6 demotes 164 (converged).
+# Override, gazetteer and positions.txt seeds are never moved.
+relax_passes = 4
+max_regrow_passes = 3
+# Index into the 7 pairs of a CK2 positions.txt `position={...}` block. 0 is
+# the city slot (verified, docs/map_scale.md 2b).
+city_slot = 0
+seeds_csv = "overrides/barony_seeds.csv"
+gazetteer_csv = "overrides/gazetteer.csv"
+# Per-duchy review PNGs during the conversion. Off: 979 sheets is ~3 min and
+# ~40 MB, so it is a separate script (scripts/barony_review_sheets.py).
+review_sheets = false
+
 [map.provinces]
 # A CK2 colour with fewer than this many target pixels is reported, and re-grown
 # inside its own CK2 footprint if it can be.
 min_pixels = 16
 regrow_lost = true
+# Scale only the bounding box of the pixels CK2 actually assigned to a
+# province, so an unpainted source border never becomes padding ocean.
+crop_to_painted = true
 # Padding ocean, registered in definition.csv as a real sea province. Must not
 # be black, white, or any CK2 province colour - the converter checks.
 ocean_rgb = [0, 0, 96]

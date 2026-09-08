@@ -56,26 +56,49 @@ def slugify(name: str, fallback: str) -> str:
     return s or fallback
 
 
-def definition_names(keys: dict[int, str]) -> dict[int, str]:
+def definition_names(
+    provinces: Sequence[Ck3Province], keys: dict[int, str]
+) -> dict[int, str]:
     """CK3 province id -> the identifier that goes in definition.csv column 5.
 
-    Vanilla writes an uppercase identifier there (``VESTFIRDIR``,
-    ``REYKJAVIK``), not a display name, and ck3-tiger reads the column as a
-    localisation key. Faerun's CK2 names have spaces and apostrophes, so
-    writing them raw produced 2600 "missing localization key Trackless Sea"
-    warnings and then, once a key with a space was emitted, 1092 "Unexpected
-    character, expected `:`" parse warnings in the .yml. The slug is uppercased
-    instead and the display name lives in localisation, exactly as in vanilla.
+    **This column is the contract with the ``titles-history`` lane**: for a
+    barony province it is the CK3 barony title id, ``b_<ck2 barony name>``,
+    verbatim from CK2 ``landed_titles``, so the titles lane can read a province
+    id straight out of ``definition.csv`` instead of guessing one.
+
+    For everything else — sea, lake, river, impassable, and land the CK2 mod
+    gave no county — it stays what lane ``map-physical`` made it: the uppercase
+    slug of the CK2 province name.  Vanilla writes an uppercase identifier
+    there (``VESTFIRDIR``, ``REYKJAVIK``), not a display name, and ck3-tiger
+    reads the column as a localisation key; Faerûn's CK2 names have spaces and
+    apostrophes, so writing them raw produced 2600 "missing localization key
+    Trackless Sea" warnings and then 1092 .yml parse warnings.  Every value
+    this function returns gets a localisation entry (see
+    :func:`localisation_entries`).
     """
-    return {pid: slug.upper() for pid, slug in keys.items()}
+    by_id = {p.id: p for p in provinces}
+    out: dict[int, str] = {}
+    for pid, slug in keys.items():
+        p = by_id.get(pid)
+        out[pid] = p.barony if (p is not None and p.barony) else slug.upper()
+    return out
 
 
 def unique_keys(provinces: Sequence[Ck3Province]) -> dict[int, str]:
-    """CK3 province id -> unique slug, suffixed on collision."""
+    """CK3 province id -> unique title-key stem, suffixed on collision.
+
+    A barony province's stem is its **CK2 barony key minus the ``b_``**, so the
+    generated title is the CK2 title (`verified`: Faerûn declares 15,356
+    baronies and no key twice).  Everything else keeps the slug of its CK2
+    province name, as lane ``map-physical`` had it.
+    """
     out: dict[int, str] = {}
     used: dict[str, int] = {}
     for p in provinces:
-        base = slugify(p.name, f"province_{p.id}")
+        if p.barony:
+            base = p.barony[2:] if p.barony.startswith("b_") else p.barony
+        else:
+            base = slugify(p.name, f"province_{p.id}")
         n = used.get(base, 0)
         used[base] = n + 1
         out[p.id] = base if n == 0 else f"{base}_{n + 1}"
@@ -176,28 +199,40 @@ def render_landed_titles(
     kingdom_key: str = "k_placeholder",
     duchy_key: str = "d_placeholder",
 ) -> tuple[str, int]:
-    """One county per land province, one barony inside it, all under one kingdom.
+    """One county per CK2 county, its built baronies inside it, one kingdom.
 
     Grouping by the real CK2 duchies is deliberately *not* done here: the CK2
     duchy layer lives in ``common/landed_titles`` on the CK2 side and porting it
     is the titles-history lane's whole job.  A flat single-kingdom tree is the
     cheapest thing CK3 accepts, and it keeps this file obviously throwaway.
+
+    What *is* real is the county -> barony grouping, because the map depends on
+    it: several provinces now share a county, and a barony province with no
+    county over it is a hole in the map.  Land the CK2 mod gave no county
+    (Faerûn's 213 wasteland provinces) gets a one-barony county of its own.
     """
     land = [p for p in provinces if not p.is_water and not p.is_impassable]
+    counties: dict[str, list[Ck3Province]] = {}
+    for p in land:
+        counties.setdefault(p.county or f"c_{keys[p.id]}", []).append(p)
+
     out = [THROWAWAY, "", f"{empire_key} = {{", "\tcolor = { 120 120 160 }", ""]
     out += [f"\t{kingdom_key} = {{", "\t\tcolor = { 130 130 170 }", ""]
     out += [f"\t\t{duchy_key} = {{", "\t\t\tcolor = { 140 140 180 }", ""]
-    for p in land:
-        key = keys[p.id]
+    for county, members in counties.items():
+        seat = members[0]
         out += [
-            f"\t\t\tc_{key} = {{",
-            "\t\t\t\tcolor = { %d %d %d }" % p.rgb,
-            f"\t\t\t\tb_{key} = {{",
-            "\t\t\t\t\tcolor = { %d %d %d }" % p.rgb,
-            f"\t\t\t\t\tprovince = {p.id}",
-            "\t\t\t\t}",
-            "\t\t\t}",
+            f"\t\t\t{county} = {{",
+            "\t\t\t\tcolor = { %d %d %d }" % seat.rgb,
         ]
+        for p in members:
+            out += [
+                f"\t\t\t\tb_{keys[p.id]} = {{",
+                "\t\t\t\t\tcolor = { %d %d %d }" % p.rgb,
+                f"\t\t\t\t\tprovince = {p.id}",
+                "\t\t\t\t}",
+            ]
+        out += ["\t\t\t}"]
     out += ["\t\t}", "\t}", "}"]
     return "\n".join(out) + "\n", len(land)
 
@@ -218,6 +253,8 @@ def render_province_history(
         THROWAWAY,
         f"# Placeholder culture/faith are the vanilla ids {defaults.culture!r} /"
         f" {defaults.faith!r}; the cultures-religions lane replaces them.",
+        "# The `holding` line is NOT placeholder: it is the CK3 equivalent of the",
+        "# CK2 holding actually built in history/provinces (docs/step_map_baronies.md).",
         "",
     ]
     for p in land:
@@ -225,7 +262,7 @@ def render_province_history(
             f"{p.id} = {{",
             f"\tculture = {defaults.culture}",
             f"\tfaith = {defaults.faith}",
-            f"\tholding = {defaults.holding}",
+            f"\tholding = {p.holding or defaults.holding}",
             "}",
         ]
     return "\n".join(out) + "\n", len(land)
@@ -289,31 +326,58 @@ def render_empty_replacements(
     return out
 
 
+def humanise(key: str) -> str:
+    """``b_castle_waterdeep`` -> ``Castle Waterdeep``, for an unlocalised title.
+
+    Only used when the CK2 mod has no localisation for the key. It is a
+    presentation fallback, not invented content: the words are the CK2 id's own.
+    """
+    stem = key.split("_", 1)[1] if key[:2] in ("b_", "c_", "d_", "k_", "e_") else key
+    return " ".join(w.capitalize() for w in stem.split("_")) or key
+
+
 def localisation_entries(
-    provinces: Sequence[Ck3Province], keys: dict[int, str]
+    provinces: Sequence[Ck3Province],
+    keys: dict[int, str],
+    *,
+    loc_names: dict[str, str] | None = None,
 ) -> dict[str, str]:
-    """Localisation keys for the placeholder titles.
+    """Localisation keys for the generated titles and definition.csv names.
 
     Returned as a dict, not a file, so the caller writes them with
     ``ctx.write_loc`` -- which owns the UTF-8 BOM, the CRLF line endings and
     the ``l_english:`` first line that CK3 requires.
+
+    ``loc_names`` is the CK2 barony localisation (``b_x -> "Castle Waterdeep"``);
+    a barony that has it keeps its CK2 name, so the generated map reads in
+    Faerûnian rather than in slugs.  A barony without it falls back to
+    :func:`humanise` of its own id.
     """
+    names = loc_names or {}
     out: dict[str, str] = {}
     for p in provinces:
         # A province NAME needs a key even for water and impassable provinces:
         # ck3-tiger reads map_data/definition.csv column 5 as a localisation key
         # and warns for every one that is missing, which was 2600 warnings from
         # the sea provinces alone ("Trackless Sea", "Crowded Sea", ...).
-        out.setdefault(keys[p.id].upper(), p.name or keys[p.id])
+        if p.barony:
+            out.setdefault(p.barony, names.get(p.barony) or humanise(p.barony))
+        else:
+            out.setdefault(keys[p.id].upper(), p.name or keys[p.id])
         if p.is_water or p.is_impassable:
             continue
-        out[f"c_{keys[p.id]}"] = p.name
-        out[f"b_{keys[p.id]}"] = p.name
+        barony_key = f"b_{keys[p.id]}"
+        out[barony_key] = (
+            names.get(p.barony or "") or (p.name if not p.barony else "")
+            or humanise(barony_key)
+        )
+        county = p.county or f"c_{keys[p.id]}"
+        out.setdefault(county, names.get(county) or humanise(county))
     for tier, label in (("e", "Empire"), ("k", "Kingdom"), ("d", "Duchy")):
         out[f"{tier}_placeholder"] = f"Converter Placeholder {label}"
         out[f"{tier}_placeholder_adj"] = f"Converter Placeholder {label}"
     for key in [k for k in out if k.startswith(("c_", "b_"))]:
         adj = f"{key}_adj"
-        if adj not in LOC_KEY_COLLISIONS:
+        if adj not in LOC_KEY_COLLISIONS and adj not in out:
             out[adj] = out[key]
     return out

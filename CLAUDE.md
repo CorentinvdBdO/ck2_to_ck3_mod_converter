@@ -10,6 +10,8 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 ## Commands
 - `uv sync --group dev` — env. `uv run pytest` — tests (must be green before `/ship`).
 - `uv run scripts/faerun_barony_stats.py` — barony/holding statistics (writes `docs/evidence/barony_stats.csv`).
+- `nohup uv run scripts/barony_review_sheets.py > docs/evidence/barony_sheets.log 2>&1 &` — per-duchy barony review PNGs (`docs/evidence/baronies/`, 622 sheets, ~90 s).
+- `scripts/validate_output_mod.sh "" docs/evidence/tiger_<tag>.txt` — ck3-tiger over the generated mod, with a by-kind summary appended.
 - `uv run scripts/collect_ck2_modifier_keys.py` → `uv run scripts/build_modifiers_csv.py` → `uv run scripts/classify_faerun_traits.py` → `uv run scripts/verify_ck3_keys.py` — regenerate the mapping tables in `mappings/` and verify every CK3 key against the 1.19 install (must report `MISSES: 0`).
 - `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
 - Convert: `uv run ck2ck3 --config configs/faerun.toml [--steps a,b] [--dry-run]` (`uv run -m ck2ck3` works too). `--list-steps` lists the registry. See `docs/cli.md`.
@@ -28,17 +30,19 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - Long runs (full conversion, image work > 2 min) under nohup with a log in `docs/evidence/`.
 
 ## Invariants (bite once, write here)
-- CK3 1.19 vanilla map is 9216×4608, heightmap 16-bit at 2×. Custom dims allowed, any multiple of 64 (`assumed`); Elder Kings 2 8256×5504 and Godherja 8192×4096 both ship a **1×** heightmap, so 2× is a vanilla choice, not a rule. Ours: 8192×6656 (`docs/map_scale.md`).
+- CK3 1.19 vanilla map is 9216×4608, heightmap 16-bit at 2×. Custom dims allowed, any multiple of 64 (`assumed`); Elder Kings 2 8256×5504 and Godherja 8192×4096 both ship a **1×** heightmap, so 2× is a vanilla choice, not a rule. Ours: 8320×6784 — painted-extent crop plus a 128 px sea margin (`docs/map_scale.md` §7; `sea_margin_px = 64` gives the older 8192×6656).
 - `positions.txt` is optional; `default.map` comments it out in vanilla and major TCs.
 - `map_data/default.map` loads the heightmap via `topology = "heightmap.heightmap"`, which points at `packed_heightmap.png` + `indirection_heightmap.png`. **`heightmap.png` alone is not what the game reads.** The converter writes the packed pair itself (`ck2ck3.map.packed_heightmap`, format in `docs/formats_packed_heightmap.md`); no map editor needed.
 - Any custom map size needs a `common/defines` override: `WORLD_EXTENTS_X` = width−1, `WORLD_EXTENTS_Z` = height−1. The 16-bit water level is `WATERLEVEL / WORLD_EXTENTS_Y * 65535` (we write 3.8/51 → 4883). Get this wrong and the coastline moves silently.
 - `replace_path` is **not** recursive: `history` does nothing for `history/provinces`. `map_data` needs none at all (same-filename override is enough). See `docs/output_bootstrap.md`.
 - All three shipped CK3 heightmap/atlas PNGs are stored **bottom-up**.
-- Faerûn defines ~15k baronies but builds ~3.8k holdings; barony set = built holdings, never the defined list.
 - Faerûn has **67 culture groups / 419 cultures** and **15 religion groups / 94 religions** (`verified`; the survey's "~495 cultures" and "~130–184 religions" were upper bounds).
 - A CK2 culture *group* carries only `graphical_cultures` and `alternate_start` — **no colour**. A CK3 language pillar requires one.
 - `common/culture/pillars`, `common/culture/traditions`, `common/ethnicities` and `common/modifier_definition_formats` are **not** `replace_path`s: an id emitted there must not collide with vanilla (Faerûn's `gur` and `mari` cultures do).
 - ck3-tiger wants a **UTF-8 BOM on script files**, not just localisation; `pdx.encoding.OUT_ENCODING` writes plain UTF-8 (open, see `docs/step_cultures_religions.md`).
+- Faerûn defines 15,356 baronies but builds 3857 holdings at 1357; barony set = built holdings, never the defined list. 3694 become CK3 provinces, 163 are demoted to comments (`docs/step_map_baronies.md`).
+- `map_data/definition.csv` column 5 of a barony row **is** the CK3 barony title id `b_<ck2 name>` — the contract lane `titles-history` reads province ids from. Other rows keep the uppercase CK2 province slug.
+- CK2 `history/provinces` `b_x = ct_something` builds a *building*, not a holding: resolving a holding type must skip any value that is not one of the nine CK2 holding types, or the barony vanishes.
 - CK2 `positions.txt` is per province; there are no barony coordinates to import.
 - CK3 localisation has no `FROM` scope; CK2 `From…` codes need a saved scope (`docs/loc_codes.md`).
 - CK3 text formats are named in `game/gui/preload/textformatting.gui`; there is no `#Y`, yellow is `#M`.
@@ -50,5 +54,6 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
 - `docs/formats_loc.md` — CK2 localisation CSV quirks and the CK3 `.yml` rules. `docs/loc_codes.md` — CK2 text code → CK3 data function table, evidence and coverage (94.0 %).
 - `docs/step_cultures_religions.md` — the `cultures` + `religions` steps: id scheme, every derived default, the CK2-flag→doctrine table, what the neighbouring lanes own. Tables: `mappings/culture_fields.csv`, `mappings/religion_fields.csv`, `mappings/opinion_modifier_map.csv`, `mappings/loc_key_renames_cultures_religions.csv`. Human input: `overrides/*.csv`.
+- `docs/step_map_baronies.md` — how CK2 counties become CK3 baronies (seeds, growth, override workflow) · `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.

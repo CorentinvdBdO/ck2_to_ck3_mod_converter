@@ -1,53 +1,87 @@
 {
   "adjacencies": {
-    "dropped": 0,
-    "kept": 323
+    "dropped": 4,
+    "kept": 319
+  },
+  "baronies": {
+    "bookmark": "1357.1.1",
+    "counties": 2125,
+    "counties_with_demotions": 128,
+    "demoted": 163,
+    "latest_bookmark": "1501.1.1",
+    "min_barony_pixels": 400,
+    "orphan_pixels": 79338,
+    "placed": 3694,
+    "seed_capital_position": 2110,
+    "seed_sampled": 1584
   },
   "bootstrap": {
-    "baronies": 2335,
-    "province_history": 2335
+    "baronies": 3904,
+    "province_history": 3904
   },
   "canvas": {
+    "crop": [
+      0,
+      0,
+      4096,
+      3328
+    ],
     "factor": 1.954309589594986,
-    "height": 6656,
-    "offset_x": 93,
-    "offset_y": 76,
+    "height": 6784,
+    "offset_x": 157,
+    "offset_y": 140,
     "source_km_per_px": 2.9,
     "vanilla_km_per_px": 1.4839,
-    "width": 8192
+    "width": 8320
   },
   "heightmap": {
     "distinct_tiles": 46613,
-    "height": 6656,
+    "exact_fraction": 0.36607214231449564,
+    "height": 6784,
     "heightmap_file": "map_data/packed_heightmap.png",
-    "indirection_bytes": 62441,
+    "indirection_bytes": 62336,
     "indirection_file": "map_data/indirection_heightmap.png",
     "max_abs_error": 885,
     "max_compress_level": 4,
-    "packed_bytes": 4277083,
+    "mean_abs_error": 57.956572237277754,
+    "packed_bytes": 4284497,
     "resolution_factor": 1,
     "should_wrap_x": false,
     "tile_size": 33,
     "water_level": 4883,
-    "width": 8192
+    "width": 8320
   },
   "impassable": 0,
   "provinces": {
-    "ck3_total": 2696,
+    "baronies": 3694,
+    "ck3_total": 4265,
+    "impassable": 0,
     "lake": 95,
-    "land": 2335,
+    "land": 3904,
     "lost": 3,
     "regrown": 1,
     "river": 86,
     "sea": 180
   },
   "rivers": {
-    "body": 87636,
-    "land": 26359521,
-    "merges": 279,
-    "sources": 327,
+    "body": 87854,
+    "land": 26359292,
+    "merges": 286,
+    "sources": 331,
     "splits": 9,
-    "water": 28078180
+    "water": 29995108
+  },
+  "rivers_specials": {
+    "ck2": {
+      "merges": 308,
+      "sources": 350,
+      "splits": 9
+    },
+    "ck3": {
+      "merges": 286,
+      "sources": 331,
+      "splits": 9
+    }
   },
   "source": {
     "height": 3328,
@@ -55,18 +89,18 @@
     "width": 4096
   },
   "terrain": {
-    "desert": 217,
+    "desert": 329,
     "drylands": 1,
-    "farmlands": 2,
-    "forest": 115,
-    "hills": 358,
-    "jungle": 66,
-    "mountains": 235,
-    "plains": 917,
-    "steppe": 216,
-    "taiga": 170,
-    "wetlands": 38
+    "farmlands": 15,
+    "forest": 172,
+    "hills": 643,
+    "jungle": 92,
+    "mountains": 318,
+    "plains": 1751,
+    "steppe": 306,
+    "taiga": 228,
+    "wetlands": 49
   },
   "terrain_fallbacks": 0,
-  "terrain_no_ck3_equivalent": 170
+  "terrain_no_ck3_equivalent": 228
 }

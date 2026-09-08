@@ -145,16 +145,49 @@ def _counts(ids: np.ndarray) -> dict[int, int]:
 
 
 def _resize_ids(src_ids: np.ndarray, canvas: Canvas) -> np.ndarray:
-    """NEAREST resize of the id array, pasted on a PADDING canvas."""
-    sh, sw = src_ids.shape
+    """NEAREST resize of the id array, pasted on a PADDING canvas.
+
+    Only ``canvas.crop_*`` of the source is used, so unpainted source border
+    never becomes padding ocean on the target.
+    """
+    sh, sw = crop_size(src_ids, canvas)
     rows = (np.arange(canvas.scaled_height) * sh // canvas.scaled_height).clip(0, sh - 1)
     cols = (np.arange(canvas.scaled_width) * sw // canvas.scaled_width).clip(0, sw - 1)
-    scaled = src_ids[rows[:, None], cols[None, :]]
+    scaled = src_ids[canvas.crop_y0 + rows[:, None], canvas.crop_x0 + cols[None, :]]
 
     out = np.full((canvas.height, canvas.width), PADDING, dtype=np.int32)
     y0, x0 = canvas.offset_y, canvas.offset_x
     out[y0 : y0 + canvas.scaled_height, x0 : x0 + canvas.scaled_width] = scaled
     return out
+
+
+def crop_size(src: np.ndarray, canvas: Canvas) -> tuple[int, int]:
+    """``(height, width)`` of the source rectangle the canvas is built from."""
+    sh, sw = src.shape[:2]
+    ch = canvas.crop_height or sh
+    cw = canvas.crop_width or sw
+    return ch, cw
+
+
+def painted_extent(src_ids: np.ndarray) -> tuple[int, int, int, int]:
+    """Bounding box ``(x0, y0, x1, y1)`` of pixels CK2 assigned to a province.
+
+    Half-open, so it can be handed straight to
+    :func:`ck2ck3.map.config.plan_canvas`.  A bitmap with no painted pixel at
+    all is a broken input and raises.
+
+    `verified` on Faerûn 2026-09-07: this returns the whole 4096x3328 bitmap.
+    The mod's 21 % of unassigned white pixels are *interior* — the southern and
+    western ocean between painted sea provinces — not a border, so the crop
+    saves nothing there.  It is still the right pass to run: it costs one
+    boolean reduction and it is what stops a mod that *does* have an unpainted
+    margin from paying for it in every output file.  See docs/map_scale.md §7.
+    """
+    rows = np.flatnonzero((src_ids != PADDING).any(axis=1))
+    cols = np.flatnonzero((src_ids != PADDING).any(axis=0))
+    if rows.size == 0 or cols.size == 0:
+        raise ValueError("provinces.bmp has no pixel that definition.csv defines")
+    return int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1
 
 
 def _regrow(
@@ -178,15 +211,22 @@ def _regrow(
     from whichever neighbour currently owns them, cheapest-first (padding
     ocean, then provinces that are themselves comfortably above the threshold).
     """
-    sh, sw = src_ids.shape
     f = canvas.factor
     regrown: list[int] = []
     for pid in sorted(weak):
         sy, sx = np.nonzero(src_ids == pid)
         if len(sy) == 0:
             continue
-        ty = np.clip((sy * f).astype(np.int64) + canvas.offset_y, 0, canvas.height - 1)
-        tx = np.clip((sx * f).astype(np.int64) + canvas.offset_x, 0, canvas.width - 1)
+        ty = np.clip(
+            ((sy - canvas.crop_y0) * f).astype(np.int64) + canvas.offset_y,
+            0,
+            canvas.height - 1,
+        )
+        tx = np.clip(
+            ((sx - canvas.crop_x0) * f).astype(np.int64) + canvas.offset_x,
+            0,
+            canvas.width - 1,
+        )
         # deduplicate target pixels, keep them in a stable order
         flat = np.unique(ty * canvas.width + tx)
         cand_y, cand_x = flat // canvas.width, flat % canvas.width

@@ -24,6 +24,7 @@ How CK2 stores terrain (`verified` on Faerûn):
 from __future__ import annotations
 
 from collections import Counter
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 import numpy as np
@@ -69,6 +70,12 @@ NO_CK3_EQUIVALENT = {
 
 #: CK3 terrain keys that are water, so a land province must never get one.
 CK3_WATER_TERRAIN = {"sea", "coastal_sea"}
+
+#: CK2 terrain categories a castle seed prefers: defensible high ground.
+#: Used only as a *bias* when a barony seed is sampled
+#: (``docs/step_map_baronies.md``), never to decide a province's terrain, so a
+#: county with no high ground simply gets an unbiased seed.
+CK2_HIGH_GROUND = {"hills", "mountain", "impassable_mountains"}
 
 #: CK2 categories that mean "blocks movement". CK3 has no terrain key for this;
 #: it is expressed by listing the province under `impassable_mountains` in
@@ -131,6 +138,92 @@ def ck2_category_grid(
     return cats
 
 
+def category_codes(categories: np.ndarray) -> tuple[np.ndarray, list[str]]:
+    """Factorise a string/object category grid into ``(uint16 codes, names)``.
+
+    Code 0 always means "no category" (an empty string), so callers can test a
+    pixel with ``codes != 0`` without consulting ``names``.
+    """
+    names_arr, inverse = np.unique(categories.reshape(-1), return_inverse=True)
+    names = ["" if n in ("", None) else str(n) for n in names_arr.tolist()]
+    codes = inverse.astype(np.uint16).reshape(categories.shape)
+    if "" not in names:
+        names = [""] + names
+        codes = codes + 1
+    elif names.index("") != 0:
+        zero = names.index("")
+        perm = np.arange(len(names), dtype=np.uint16)
+        perm[zero], perm[0] = 0, zero
+        names[zero], names[0] = names[0], names[zero]
+        codes = perm[codes]
+    return codes, names
+
+
+def ck2_category_codes(
+    terrain_idx: np.ndarray,
+    texture_map: dict[int, str],
+    *,
+    trees: np.ndarray | None = None,
+    tree_indices: tuple[int, ...] = (),
+) -> tuple[np.ndarray, list[str]]:
+    """:func:`ck2_category_grid` as integer codes, for a 55 M-pixel canvas.
+
+    The object-dtype grid is 8 bytes a pixel and cannot be resized with integer
+    indexing without copying Python objects; the code grid is 2 bytes and
+    resizes and votes like any other array.  Same result, same order of
+    ``names`` (sorted, with ``""`` first).
+    """
+    lut_names = [""] + sorted({c for c in texture_map.values() if c})
+    if tree_indices and "forest" not in lut_names:
+        lut_names.append("forest")
+    code_of = {n: i for i, n in enumerate(lut_names)}
+    lut = np.zeros(256, dtype=np.uint16)
+    for idx, cat in texture_map.items():
+        if 0 <= idx < 256:
+            lut[idx] = code_of.get(cat, 0)
+    codes = lut[terrain_idx]
+    if trees is not None and tree_indices:
+        tree_grid = expand_trees(trees, terrain_idx.shape)
+        codes = np.where(
+            np.isin(tree_grid, list(tree_indices)), code_of["forest"], codes
+        ).astype(np.uint16)
+    return codes, lut_names
+
+
+def majority_terrain_codes(
+    province_ids: np.ndarray,
+    codes: np.ndarray,
+    names: Sequence[str],
+    *,
+    land_ids: set[int],
+    mapping: dict[str, str] | None = None,
+    default: str = "plains",
+) -> TerrainResult:
+    """:func:`majority_terrain` on an integer code grid.
+
+    One ``np.bincount`` over ``province_id * ncat + code`` instead of a sort and
+    a per-province ``np.unique``: O(pixels) with no 55 M-element argsort, which
+    is what makes a per-barony vote on the target canvas affordable.
+    """
+    flat_ids = province_ids.reshape(-1).astype(np.int64, copy=False)
+    flat_codes = codes.reshape(-1).astype(np.int64, copy=False)
+    ncat = len(names)
+    max_id = int(flat_ids.max()) if flat_ids.size else 0
+    hist = np.bincount(
+        flat_ids * ncat + flat_codes, minlength=(max_id + 1) * ncat
+    ).reshape(max_id + 1, ncat)
+    counts: dict[int, Counter[str]] = {}
+    for pid in sorted(land_ids):
+        if pid > max_id:
+            continue
+        row = hist[pid]
+        nz = np.flatnonzero(row)
+        counts[pid] = Counter(
+            {names[int(c)]: int(row[c]) for c in nz.tolist() if names[int(c)]}
+        )
+    return _resolve(counts, land_ids, mapping=mapping, default=default)
+
+
 def majority_terrain(
     province_ids: np.ndarray,
     categories: np.ndarray,
@@ -146,26 +239,26 @@ def majority_terrain(
     categories never win: a coastal province whose pixels are mostly the ocean
     texture would otherwise come out as ``sea``.
     """
-    table = dict(CK2_TO_CK3_TERRAIN if mapping is None else mapping)
-    counts: dict[int, Counter[str]] = {}
-    flat_ids = province_ids.reshape(-1)
-    flat_cats = categories.reshape(-1)
-
-    # one pass, grouped by province id
-    order = np.argsort(flat_ids, kind="stable")
-    sorted_ids = flat_ids[order]
-    bounds = np.flatnonzero(np.diff(sorted_ids)) + 1
-    for start, stop in zip(
-        np.concatenate(([0], bounds)), np.concatenate((bounds, [len(sorted_ids)]))
-    ):
-        pid = int(sorted_ids[start])
-        if pid not in land_ids:
-            continue
-        cats, n = np.unique(flat_cats[order[start:stop]], return_counts=True)
-        counts[pid] = Counter(
-            {str(c): int(k) for c, k in zip(cats, n) if c not in ("", None)}
+    if categories.dtype.kind in "iu":
+        raise TypeError(
+            "majority_terrain wants a category-name grid; use "
+            "majority_terrain_codes for an integer code grid"
         )
+    codes, names = category_codes(categories)
+    return majority_terrain_codes(
+        province_ids, codes, names, land_ids=land_ids, mapping=mapping, default=default
+    )
 
+
+def _resolve(
+    counts: dict[int, "Counter[str]"],
+    land_ids: set[int],
+    *,
+    mapping: dict[str, str] | None,
+    default: str,
+) -> TerrainResult:
+    """Winning non-water category per province -> CK3 key, plus the bookkeeping."""
+    table = dict(CK2_TO_CK3_TERRAIN if mapping is None else mapping)
     by_province: dict[int, str] = {}
     category: dict[int, str] = {}
     notes: dict[int, str] = {}

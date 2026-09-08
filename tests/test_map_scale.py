@@ -124,3 +124,83 @@ def test_canvas_to_target_is_monotonic():
     )
     assert c.to_target(0, 0) == (62, 62)
     assert c.to_target(10, 20) == (82, 102)
+
+
+# --------------------------------------------------------------------------- #
+# painted-extent crop (docs/map_scale.md §7)
+# --------------------------------------------------------------------------- #
+def test_a_crop_shrinks_the_canvas_to_the_painted_rectangle():
+    s = _scale()
+    full = plan_canvas(4096, 3328, s)
+    cropped = plan_canvas(4096, 3328, s, (1000, 500, 3000, 2500))
+    assert cropped.crop_width == 2000
+    assert cropped.crop_height == 2000
+    assert cropped.width < full.width
+    assert cropped.height < full.height
+    assert cropped.width % 64 == 0 and cropped.height % 64 == 0
+
+
+def test_a_crop_shifts_the_origin_of_to_target():
+    s = _scale()
+    c = plan_canvas(4096, 3328, s, (1000, 500, 3000, 2500))
+    # the crop's top-left corner is what lands on the canvas offset
+    assert c.to_target(1000, 500) == (c.offset_x, c.offset_y)
+    assert c.to_target(0, 0)[0] < c.offset_x
+
+
+def test_no_crop_means_the_whole_source():
+    c = plan_canvas(4096, 3328, _scale())
+    assert (c.crop_x0, c.crop_y0, c.crop_x1, c.crop_y1) == (0, 0, 4096, 3328)
+    assert c.to_target(0, 0) == (c.offset_x, c.offset_y)
+
+
+def test_a_crop_outside_the_source_is_rejected():
+    with pytest.raises(ValueError, match="crop"):
+        plan_canvas(100, 100, _scale(), (0, 0, 200, 50))
+    with pytest.raises(ValueError, match="crop"):
+        plan_canvas(100, 100, _scale(), (50, 0, 50, 100))
+
+
+def test_the_shipped_128_px_margin_gives_the_documented_canvas():
+    """Regression pin for the 2026-09-07 crop/margin decision."""
+    c = plan_canvas(4096, 3328, _scale(sea_margin_px=128))
+    assert (c.width, c.height) == (8320, 6784)
+    assert (c.offset_x, c.offset_y) == (157, 140)
+
+
+def test_painted_extent_is_the_bounding_box_of_defined_pixels():
+    import numpy as np
+
+    from ck2ck3.map.provinces import painted_extent
+
+    ids = np.zeros((10, 20), dtype=np.int32)
+    ids[3:7, 5:15] = 42
+    assert painted_extent(ids) == (5, 3, 15, 7)
+
+
+def test_painted_extent_rejects_a_bitmap_with_no_defined_pixel():
+    import numpy as np
+
+    from ck2ck3.map.provinces import painted_extent
+
+    with pytest.raises(ValueError, match="no pixel"):
+        painted_extent(np.zeros((4, 4), dtype=np.int32))
+
+
+def test_the_faerun_source_is_painted_edge_to_edge():
+    """`verified`: the crop is a no-op on Faerûn, which is docs/map_scale.md §7.
+
+    Pinned as a synthetic case so the *shape* of the finding is a test: a
+    bitmap whose border row is only partly painted must not be cropped.
+    """
+    import numpy as np
+
+    from ck2ck3.map.provinces import painted_extent
+
+    ids = np.zeros((8, 8), dtype=np.int32)
+    ids[1:7, 1:7] = 1
+    ids[0, 3] = 1  # one painted pixel on the top row
+    ids[7, 4] = 1  # one on the bottom row
+    ids[3, 0] = 1
+    ids[4, 7] = 1
+    assert painted_extent(ids) == (0, 0, 8, 8)

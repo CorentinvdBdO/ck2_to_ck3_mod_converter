@@ -8,6 +8,9 @@
 
 [input]
 ck2_map_dir = "Faerun/Faerun/map"
+# The CK2 mod root: common/landed_titles, history/provinces and localisation,
+# which the barony split reads (docs/step_map_baronies.md).
+ck2_mod_dir = "Faerun/Faerun"
 
 [output]
 mod_dir = "../claudespace/mods/faerun_ck2_to_ck3_converted"
@@ -40,7 +43,10 @@ source_km_per_px = 2.90
 # The legacy convert.py value was 5918/4096 = 1.4448.
 # factor_override = 1.4448
 
-sea_margin_px = 64
+# 128 with provinces.crop_to_painted, per the 2026-09-07 decision. On Faerun
+# the crop is a no-op (its painted extent is the whole bitmap), so this only
+# grows the canvas from 8192x6656 to 8320x6784. docs/map_scale.md §7.
+sea_margin_px = 128
 canvas_multiple = 64
 max_canvas_px = 32768
 
@@ -74,11 +80,33 @@ tile_size = 33  # both reference total conversions use 33; vanilla uses 65
 # re-grown inside its own CK2 footprint if it can be.
 min_pixels = 16
 regrow_lost = true
+# Only scale the bounding box of the pixels CK2 assigned to a province.
+crop_to_painted = true
 
 # Padding ocean, registered in definition.csv as a real sea province.
 # Must not be black, white, or any CK2 province colour - the converter checks.
 ocean_rgb = [0, 0, 96]
 ocean_name = "Trackless Deep"
+
+# Barony subdivision; see configs/faerun.toml [map.baronies] for the
+# per-key rationale and docs/step_map_baronies.md for the algorithm.
+[baronies]
+bookmark = "1357.1.1"
+latest_bookmark = "1501.1.1"
+min_barony_pixels = 400
+bias_gain = 0.5
+snap_radius_px = 48
+# Lloyd relaxation on the seeds the converter sampled itself: grow, move each
+# sampled seed to its region centroid, regrow. Evens out the barony areas so
+# fewer holdings are demoted; measured on Faerun, 0 passes demotes 313
+# holdings, 2 demotes 176, 4 demotes 163 and 6 demotes 164 (converged).
+# Override, gazetteer and positions.txt seeds are never moved.
+relax_passes = 4
+max_regrow_passes = 3
+city_slot = 0
+seeds_csv = "overrides/barony_seeds.csv"
+gazetteer_csv = "overrides/gazetteer.csv"
+review_sheets = false
 
 [regions]
 # CK2 labels its lakes only by the ocean_region comment text in default.map.

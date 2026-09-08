@@ -1,0 +1,19 @@
+# barony_id,x,y,note
+#
+# Human override for where a barony's seed pixel goes. Highest priority of all
+# seed sources: a row here wins over the gazetteer, over the CK2 positions.txt
+# city slot and over farthest-point sampling.
+#
+# x,y are CANVAS pixels of the generated map_data/provinces.png, top-left
+# origin. Read them off that PNG, or off docs/evidence/baronies/<d_id>.png,
+# which is cropped to the duchy and labelled.
+#
+# A seed that lands outside its own county is snapped to the nearest county
+# pixel; if the nearest one is further than [map.baronies] snap_radius_px the
+# row is ignored and the converter falls through to the next source, so a
+# typo degrades instead of moving a barony to another county.
+#
+# Uncomment and edit. The barony id is the CK2 one, with or without `b_`.
+#b_castle_waterdeep,1543,1102,county seat, keep it on the harbour
+#b_sea_ward,1520,1090,north-west of the castle
+#b_the_plinth,1556,1121,inland, on the temple hill

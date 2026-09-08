@@ -1,0 +1,18 @@
+# place_name,x,y,space,source
+#
+# Place-name gazetteer: coordinates for named settlements, matched against the
+# CK2 localised barony name (Faerun/Faerun/localisation/*.csv, English column).
+# Matching folds accents, case and punctuation, so "Wyrm's Crossing" matches
+# `wyrmscrossing`.
+#
+# Second priority, below overrides/barony_seeds.csv and above everything the
+# converter derives. This is the file a lore search or an LLM pass fills in.
+#
+# space: `ck3` (default) = canvas pixels of the generated provinces.png;
+#        `ck2` = pixels of Faerun/Faerun/map/provinces.bmp, which is what a
+#        coordinate measured on the CK2 map or the atlas overlay is in. `ck2`
+#        rows survive a change of canvas size, `ck3` rows do not.
+# source: where the coordinate came from, for review. Free text.
+#
+#Wyrm's Crossing,2087,2464,ck2,atlas 1371 guide map
+#Amphail,1901,1183,ck3,measured on provinces.png
