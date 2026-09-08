@@ -77,6 +77,23 @@ def run(ctx: Context) -> StepResult:
         )
     )
 
+    # Vanilla dynasty houses name vanilla dynasty ids that no longer exist once
+    # common/dynasties is replaced (558 `invalid dynasty` errors at load, and the
+    # game-setup crash bisected 2026-09-08). Elder Kings 2 solves it the same way:
+    # shadow every vanilla file of common/dynasty_houses with an empty file of
+    # the same name. No replace_path needed, nothing invented.
+    houses_dir = ctx.ck3("common", "dynasty_houses")
+    shadowed = 0
+    for vanilla in sorted(houses_dir.glob("*.txt")) if houses_dir.is_dir() else []:
+        ctx.write_text(
+            f"common/dynasty_houses/{vanilla.name}",
+            "# Intentionally empty: shadows the vanilla file of the same name.\n"
+            "# Vanilla houses reference vanilla dynasties, which this mod replaces.\n"
+            "# CK2 has no cadet houses, so the converter defines none.\n",
+        )
+        shadowed += 1
+    ctx.info(f"dynasty_houses: {shadowed} vanilla files shadowed with empty files")
+
     write_csv(
         ctx,
         COA_EVIDENCE,
