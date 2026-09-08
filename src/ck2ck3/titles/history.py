@@ -438,3 +438,33 @@ def render(
         "files": len(result.files),
     }
     return result
+
+
+def landed_intervals(spans: Spans) -> dict[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]]:
+    """CK2 character id -> the date ranges during which it holds any title.
+
+    Built from :func:`holder_spans`; the end of a range is the next holder
+    change of that title (``None`` = open-ended). The characters step uses it
+    to keep ``employer = X`` only while X is landed: CK3 logs "X is not landed
+    and cannot be set as employer" and crashed in powerful-vassal setup
+    (bisected 2026-09-08: removing every employer line reached In Game).
+    """
+    out: dict[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]] = {}
+    for title, entries in spans.items():
+        for index, (start, holder) in enumerate(entries):
+            if holder is None:
+                continue
+            end = entries[index + 1][0] if index + 1 < len(entries) else None
+            out.setdefault(holder, []).append((start, end))
+    return out
+
+
+def is_landed_at(
+    landed: Mapping[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]],
+    character: str,
+    date: tuple[int, int, int],
+) -> bool:
+    for start, end in landed.get(character, ()):
+        if start <= date and (end is None or date < end):
+            return True
+    return False

@@ -32,6 +32,9 @@ def run(ctx: Context) -> StepResult:
         )
     prefix = ctx.config.prefix
 
+    spans = history.holder_spans(data.title_history)
+    # hand-off to the characters step: who is landed when (employer validity)
+    ctx.data["titles"] = {"landed": history.landed_intervals(spans)}
     titles = history.render(
         data.title_history,
         history.HistoryConfig(
@@ -39,7 +42,7 @@ def run(ctx: Context) -> StepResult:
             characters=data.characters,
             live_titles=data.live_titles,
             dead_titles=data.dead_titles,
-            spans=history.holder_spans(data.title_history),
+            spans=spans,
             prefix=prefix,
             capital_baronies=frozenset(
                 baronies[0]

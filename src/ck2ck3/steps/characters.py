@@ -43,7 +43,13 @@ def run(ctx: Context) -> StepResult:
     tables = load_tables()
     _adopt_trait_set(ctx, tables)
     tables.adopt_ck3_modifiers(_ck3_modifier_ids(ctx))
-    port = CharacterPort(tables=tables, prefix=ctx.config.prefix)
+    port = CharacterPort(
+        tables=tables,
+        prefix=ctx.config.prefix,
+        landed=ctx.data.get("titles", {}).get("landed"),
+    )
+    if port.landed is None:
+        ctx.warn("no titles hand-off (run history_titles first): every employer kept")
 
     written = []
     for path in files:

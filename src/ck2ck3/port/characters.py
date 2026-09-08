@@ -85,6 +85,10 @@ class CharacterPort:
     facts: dict[str, CharacterFacts] = field(default_factory=dict)
     #: CK2 id -> CK3 id, handed to the titles-history lane through ``ctx.data``.
     id_map: dict[str, str] = field(default_factory=dict)
+    #: CK2 id -> landed date ranges (titles.history.landed_intervals); None =
+    #: unknown, keep every employer.
+    landed: Mapping[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]] | None = None
+    _current_date: tuple[int, int, int] | None = None
 
     # -- helpers -----------------------------------------------------------
     def _ref(self, value: object) -> str:
@@ -153,8 +157,10 @@ class CharacterPort:
     def _convert_dated(self, node: Node, out: BlockBuilder, facts: CharacterFacts) -> None:
         body = node.value if isinstance(node.value, Block) else Block()
         inner = BlockBuilder()
-        self._convert_body(body, inner, facts, dated=True)
         date = Date.parse(node.key)
+        self._current_date = (date.year, date.month, date.day)
+        self._convert_body(body, inner, facts, dated=True)
+        self._current_date = None
         result = Node(key=str(date), value=inner.finish())
         carry_comments(node, result)
         out.add(result)
@@ -190,6 +196,18 @@ class CharacterPort:
         dated: bool = False,
     ) -> None:
         level = DATED if dated else "history"
+        if node.key == "employer" and self.landed is not None:
+            raw = str(node.value)
+            when = self._current_date
+            if raw in ("0", "-1"):
+                self._drop(out, node, level, "employer = 0: CK3 has no 'no employer' history key")
+                return
+            if when is not None and not _landed_at(self.landed, raw, when):
+                self._drop(
+                    out, node, level,
+                    f"{raw} holds no title on {when[0]}.{when[1]}.{when[2]}; CK3 requires a landed employer",
+                )
+                return
         rule = self.tables.rule(node.key, DATED) if dated else None
         if rule is None:
             rule = self.tables.rule(node.key, "history")
@@ -517,3 +535,10 @@ def output_name(ck2_name: str, prefix: str = "fae") -> str:
     while "__" in safe:
         safe = safe.replace("__", "_")
     return f"{prefix}_{safe.strip('_')}.txt"
+
+
+def _landed_at(landed, character: str, date: tuple[int, int, int]) -> bool:
+    for start, end in landed.get(character, ()):
+        if start <= date and (end is None or date < end):
+            return True
+    return False
