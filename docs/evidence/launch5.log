@@ -1,0 +1,12 @@
+started weston (--renderer=gl, pid 392904) on :2, 1920x1080
+headless display :2 (ours, will be torn down)
+launched (wrapper pid 392974); waiting for: Setting idler 'In Game'
+=== summary ===
+marker    NOT reached after 900s
+display   :2 (headless weston)
+process   started=yes alive_now=no
+errors    16336 lines matching 'fae' / 32780 total in error.log
+warnings  0 lines in gui_warnings.log
+evidence  /home/cvdbdo/git/paradox/ck3/claudespace/docs/evidence/launch_faerun_ck2_to_ck3_converted_2026-09-08_051423.log
+stopped weston (pid 392904, display :2)
+restored /home/cvdbdo/.local/share/Steam/steamapps/compatdata/1158310/pfx/drive_c/users/steamuser/Documents/Paradox Interactive/Crusader Kings III/dlc_load.json

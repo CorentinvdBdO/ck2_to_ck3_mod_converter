@@ -1,0 +1,11 @@
+started weston (--renderer=gl, pid 452062) on :2, 1920x1080
+headless display :2 (ours, will be torn down)
+launched (wrapper pid 452112); waiting for: Setting idler 'In Game'
+=== summary ===
+marker    REACHED after ~54s
+display   :2 (headless weston)
+process   started=yes alive_now=yes
+errors    0 lines matching 'n/a' / 229 total in error.log
+warnings  0 lines in gui_warnings.log
+evidence  /home/cvdbdo/git/paradox/ck3/claudespace/docs/evidence/launch_vanilla_2026-09-08_060136.log
+stopped weston (pid 452062, display :2)
