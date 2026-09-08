@@ -1,0 +1,18 @@
+# ck3-tiger on the titles-history lane output
+# mod: /tmp/claude-1000/-home-cvdbdo-git/cca1f4a7-19e7-4fe8-b641-7e1441b73fa2/scratchpad/titles_out
+# steps: as built
+# stub history/characters: yes, 18124 characters
+# owner = the lane that has to fix the class; titles-history is ours.
+
+  count  class                            owner                        example
+  15809  untidy(missing-localization)     characters           missing english localization for name Bhaal  [history/characters/zz_stub_characters.txt]
+  12079  error(missing-item)              cultures-religions   name list name_list_arctic_dwarf not defined in common/culture/name_lists/  [common/landed_title
+   3525  warning(missing-localization)    loc                  missing english localization key e_laerakond  [common/landed_titles/fae_landed_titles.txt]
+    319  warning(rivers)                  map-physical         (1026, 2734) river pixel has 3 neighbors  [map_data/rivers.png]
+    126  tips(suggest-localization)       loc                  you can define localization `e_calim_empire_article`  [common/landed_titles/fae_landed_titles.tx
+     27  warning(missing-localization)    characters           missing english localization for name Bladen'Kerst  [history/characters/zz_stub_characters.txt]
+     19  warning(history)                 titles-history       fae_68048 is not alive on 1504.1.1  [history/titles/fae_counties.txt]
+      1  error(history)                   titles-history       holder of d_highreach is not alive at 657.1.1  [history/titles/fae_counties.txt]
+      1  warning(encoding)                characters           Expected UTF-8 BOM encoding  [history/characters/zz_stub_characters.txt]
+
+total diagnostics: 31906, ours: 20

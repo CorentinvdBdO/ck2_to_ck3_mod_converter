@@ -10,10 +10,11 @@ Reads the ``[map]`` table of the CLI config; the derivation of every number is
 in ``docs/map_scale.md`` and the CK3 formats in ``docs/formats_map.md`` and
 ``docs/formats_packed_heightmap.md``.
 
-The step also emits **throwaway** title scaffolding (one barony per province,
-placeholder culture and faith) because CK3 will not boot a map with no title
-layer over it, and a map that cannot be booted cannot be checked.  The
-``titles-history`` lane replaces all of it; every file says so in its header.
+``common/landed_titles``, ``history/titles`` and ``history/provinces`` belong
+to lane ``titles-history`` (steps ``titles`` and ``history_titles``).  This
+step can still emit its throwaway one-barony-per-province layer there for a
+map-only boot, but only when ``[map] title_scaffolding = true`` is set, and
+then the two steps must not be run together.
 """
 
 from __future__ import annotations
@@ -29,10 +30,6 @@ OUTPUTS: tuple[str, ...] = (
     "map_data",
     "common/province_terrain",
     "common/defines",
-    # throwaway scaffolding, replaced by lane titles-history
-    "common/landed_titles",
-    "history/provinces",
-    "history/titles",
 )
 
 
@@ -175,6 +172,7 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         lake_region_names=tuple(raw.get("lake_names", ("Lakes",))),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,
+        title_scaffolding=bool(raw.get("title_scaffolding", False)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

@@ -177,10 +177,15 @@ prefixes so a later grep can find and delete every one of them.
    CK2 `assimilate = yes` (the default) → emit nothing.
 7. **Landless titular titles still want a `capital`.** EK2 writes
    `capital = c_imperial_city #Placeholder for less errors` on five landless titles for exactly this reason.
-8. **`common/bookmark_portraits` is not authorable.** Every file starts
-   `# Auto generated file, do not edit manually. Created using console command dump_bookmark_portraits`.
-   The converter must leave the folder empty; bookmark faces stay randomised until someone runs the
-   dump in-game. Filename = the bookmark character's `name` value.
+8. **`common/bookmark_portraits` is not authorable — but must not be empty either.**
+   Every file starts `# Auto generated file, do not edit manually. Created using console command
+   dump_bookmark_portraits`, and the filename is the bookmark character's `name` value.
+   **CORRECTED 2026-09-07 (lane `titles-history`):** the folder may *not* be left empty.
+   `ck3-tiger` reports `fatal(crash): bookmark portrait for <name> not found in
+   common/bookmark_portraits` — "This causes a crash in CK3 1.13" — for every bookmark character
+   without a file. The converter writes a minimal placeholder (block key, `type`, `id`,
+   `random_seed`, `age`, empty `genes = { }`) per character, to be replaced by a real in-game dump.
+   See `docs/formats_titles.md` §5.
 9. **CK2 `dna` / `properties` cannot be converted.** They are 2D sprite-layer indices. `docs/design_races.md`
    item 6 already decides: emit no `dna =` and let the ethnicity randomise.
 10. **`nomadic_government` is a dead stub in Faerûn** (`potential = { always = no }`, `verified`).

@@ -123,6 +123,17 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 | `clean` | `*` | deletes every top-level entry of the output mod that is not protected |
 | `descriptor` | `descriptor.mod` | writes `descriptor.mod` from the config |
 | `loc` | `localization` | every CK2 localisation CSV → one CK3 `.yml` per language |
+| `map` | `map_data`, `common/province_terrain`, `common/defines` | the physical map (`docs/design_map.md` §A) |
+| `titles` | `common/landed_titles`, `common/coat_of_arms/coat_of_arms` | the Faerûn de jure tree + placeholder coats of arms (`docs/step_titles.md`) |
+| `history_titles` | `history/titles`, `history/provinces` | holders, lieges, laws, governments, holdings |
+| `bookmarks` | `common/bookmarks`, `common/bookmark_portraits` | bookmarks, their group and their portrait placeholders |
+| `traits` | `common/traits` | CK2 traits ported to CK3 (`docs/step_traits.md`) |
+
+`[map] title_scaffolding = true` re-enables the throwaway one-barony-per-province
+title layer the `map` step used to write into `common/landed_titles`,
+`history/titles` and `history/provinces`. It is **off** by default because the
+`titles` and `history_titles` steps own those folders; turning it on and running
+either step in the same pass makes two steps write one subtree.
 
 `clean` protects `.git`, `.gitattributes`, `.gitignore`, `LICENSE`,
 `README.md`, `descriptor.mod`, `docs`, `thumbnail.png`

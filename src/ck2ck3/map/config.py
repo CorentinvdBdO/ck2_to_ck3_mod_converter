@@ -257,6 +257,11 @@ class MapConfig:
     tree_indices: tuple[int, ...] = ()
     #: file prefix for generated CK3 files
     prefix: str = "fae"
+    #: write the throwaway one-barony-per-province title layer.  Off by
+    #: default: lane `titles-history` owns common/landed_titles, history/titles
+    #: and history/provinces.  Turn it on ([map] title_scaffolding = true) to
+    #: boot a map-only mod without running the `titles` step.
+    title_scaffolding: bool = False
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -319,6 +324,7 @@ def load(path: str | Path) -> MapConfig:
         lake_region_names=tuple(raw.get("regions", {}).get("lake_names", ("Lakes",))),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
+        title_scaffolding=bool(out.get("title_scaffolding", False)),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),

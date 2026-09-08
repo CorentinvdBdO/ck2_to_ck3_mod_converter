@@ -12,6 +12,9 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `uv run scripts/faerun_barony_stats.py` — barony/holding statistics (writes `docs/evidence/barony_stats.csv`).
 - `nohup uv run scripts/barony_review_sheets.py > docs/evidence/barony_sheets.log 2>&1 &` — per-duchy barony review PNGs (`docs/evidence/baronies/`, 622 sheets, ~90 s).
 - `scripts/validate_output_mod.sh "" docs/evidence/tiger_<tag>.txt` — ck3-tiger over the generated mod, with a by-kind summary appended.
+- `uv run scripts/survey_ck2_titles.py` — CK2 title-side tallies (every count quoted in `docs/step_titles.md`).
+- `uv run scripts/tiger_titles_check.py` — ck3-tiger over the titles/history output, per diagnostic class and owning lane (writes `docs/evidence/tiger_titles.txt`).
+- `uv run scripts/build_loc_key_renames_titles.py` — regenerate `mappings/loc_key_renames_titles.csv` (the hand-off to lane `loc`).
 - `uv run scripts/collect_ck2_modifier_keys.py` → `uv run scripts/build_modifiers_csv.py` → `uv run scripts/classify_faerun_traits.py` → `uv run scripts/verify_ck3_keys.py` — regenerate the mapping tables in `mappings/` and verify every CK3 key against the 1.19 install (must report `MISSES: 0`).
 - `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
 - Convert: `uv run ck2ck3 --config configs/faerun.toml [--steps a,b] [--dry-run]` (`uv run -m ck2ck3` works too). `--list-steps` lists the registry. See `docs/cli.md`.
@@ -47,6 +50,11 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - CK3 localisation has no `FROM` scope; CK2 `From…` codes need a saved scope (`docs/loc_codes.md`).
 - CK3 text formats are named in `game/gui/preload/textformatting.gui`; there is no `#Y`, yellow is `#M`.
 - The PyPI package `jomini` is unrelated to Paradox parsing (battle simulator). Do not add it.
+- **`common/bookmark_portraits` must not be empty.** A bookmark character with no file there crashes CK3 (ck3-tiger `fatal(crash)`, "This causes a crash in CK3 1.13"). Write a placeholder named after the character's `name` value.
+- A CK3 script file with **non-ASCII content needs a UTF-8 BOM** (ck3-tiger `warning(encoding)`); vanilla `common/landed_titles` and `common/bookmarks` files have one, pure-ASCII `history/titles` files do not.
+- **`ck3-tiger` reads the `.mod` file you pass it, not `descriptor.mod`** — without the `replace_path` lines in that file every replaced vanilla file loads and you get thousands of phantom "redefined" diagnostics. `--game` wants the install dir, not its `game/` subfolder.
+- CK3 `history/titles` allows **no top-level keys**; `liege` must be a strictly higher tier and must have a **living** holder at that date or the line is ignored.
+- CK2 `landed_titles` `capital` is a **province id**, not a title. The province→county link is `title = c_x` inside the province-history file.
 
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
@@ -55,5 +63,6 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `docs/formats_loc.md` — CK2 localisation CSV quirks and the CK3 `.yml` rules. `docs/loc_codes.md` — CK2 text code → CK3 data function table, evidence and coverage (94.0 %).
 - `docs/step_cultures_religions.md` — the `cultures` + `religions` steps: id scheme, every derived default, the CK2-flag→doctrine table, what the neighbouring lanes own. Tables: `mappings/culture_fields.csv`, `mappings/religion_fields.csv`, `mappings/opinion_modifier_map.csv`, `mappings/loc_key_renames_cultures_religions.csv`. Human input: `overrides/*.csv`.
 - `docs/step_map_baronies.md` — how CK2 counties become CK3 baronies (seeds, growth, override workflow) · `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
+- `docs/step_titles.md` — steps `titles` / `history_titles` / `bookmarks`: rules, derivations, counts, open questions · `docs/formats_titles.md` — CK3 title/history/bookmark facts with file:line · `docs/mapping_world.md` — the field tables (`mappings/title_fields.csv`, `government_map.csv`)
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
 - `docs/evidence/` — script outputs, review sheets.

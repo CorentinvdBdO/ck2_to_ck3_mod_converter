@@ -1,9 +1,10 @@
 # CK2 `common/landed_titles` — keys, and how cultural names are spotted
 
-Evidence for `src/titles/all_titles.py`. Measured on the Faerûn clone
-(`Faerun/Faerun/common/landed_titles/*.txt`, 7 files) on 2026-09-07,
-`verified` unless marked otherwise. Reproduce by parsing the folder with
-`titles.all_titles.read_all_titles` and counting.
+Evidence for `src/ck2ck3/titles/ck2read.py` (the reader was
+`src/titles/all_titles.py` until lane `titles-history` replaced it). Measured
+on the Faerûn clone (`Faerun/Faerun/common/landed_titles/*.txt`, 7 files) on
+2026-09-07, `verified` unless marked otherwise. Reproduce with
+`uv run scripts/survey_ck2_titles.py`.
 
 ## Shape
 
@@ -38,7 +39,7 @@ is interesting:
 `religion` (183), `short_name` (133), `strength_growth_per_century` (154),
 `title` (346), `title_female` (343), `title_prefix`, `tribe`.
 
-This is the list in `all_titles._SCALAR_KEYWORDS`.
+This is the list in `ck2ck3.titles.ck2read.SCALAR_KEYWORDS`.
 
 ## Cultural names
 
@@ -61,8 +62,13 @@ The previous regex-parser-based reader collected cultural names only from
 
 ## What the reader keeps
 
-`LandedTitle` has fields for the keys the converter needs; everything else
-(including the keywords above that have no field, and any non-cultural block)
-goes into `LandedTitle.extra` verbatim, so nothing is dropped silently and lane
-`titles-history` can decide per key. `capital`'s trailing comment is kept in
-`capital_comment` — in Faerûn it usually names the province.
+`Ck2Title` has fields for the keys with a CK3 home; every other scalar keyword
+lands in `Ck2Title.keywords` and every non-cultural block in `Ck2Title.blocks`
+verbatim, so nothing is dropped silently and the writer can decide per key
+(`docs/step_titles.md`, "Nothing is dropped silently"). `capital`'s trailing
+comment is kept in `capital_comment` — in Faerûn it usually names the province,
+and the value itself is a **province id**, not a title.
+
+Counts re-measured with this reader: 65 e_, 267 k_, 979 d_, 2132 c_, 15356 b_
+= 18799, and 3314 cultural-name lines over 226 distinct keys, 7 of which are
+culture *groups* (`docs/formats_titles.md` §7).
