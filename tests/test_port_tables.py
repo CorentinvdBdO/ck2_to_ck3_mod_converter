@@ -118,14 +118,57 @@ def test_no_duplicate_nickname_rows() -> None:
     assert len(keys) == len(set(keys))
 
 
-def test_loaded_tables_expose_the_three_trait_origins() -> None:
+def test_the_known_set_comes_from_the_traits_step_output() -> None:
+    """`mappings/trait_ck2_to_ck3.csv` is authoritative when it exists."""
     tables = load_tables()
-    assert set(tables.trait_origin.values()) == {"vanilla", "faerun", "race"}
+    assert tables.traits_authoritative, "run scripts/build_trait_tables.py"
+    assert set(tables.trait_origin.values()) == {"traits_step"}
     assert tables.known_traits, "no traits loaded"
-    # A race trait keeps its CK2 id; a vanilla trait is renamed.
+    # A race trait keeps its CK2 id; a deduped vanilla trait is renamed.
     assert tables.trait("creature_elf") == "creature_elf"
     assert tables.trait("wroth") == "wrathful"
     assert tables.trait("no_such_trait") is None
+    # The 38 traits the step dedupes by exact CK3 id match, and the 7
+    # `status = none` vanilla ones it ports as new traits, were the classes the
+    # old two-table derivation silently dropped.
+    assert tables.trait("administrator") == "administrator"
+    assert tables.trait("cavalry_leader") == "cavalry_leader"
+
+
+def test_fallback_set_is_read_when_the_traits_output_is_absent(tmp_path) -> None:
+    """An old checkout still gets a set, from the two classification tables."""
+    import shutil
+
+    from ck2ck3.port import tables as tables_mod
+
+    for rel in (
+        tables_mod.CHARACTER_EFFECTS,
+        tables_mod.DEATH_REASONS,
+        tables_mod.NICKNAMES,
+        tables_mod.VANILLA_TRAITS,
+        tables_mod.FAERUN_TRAITS,
+    ):
+        dest = tmp_path / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(tables_mod.REPO_ROOT / rel, dest)
+    tables = load_tables(tmp_path)
+    assert not tables.traits_authoritative
+    assert set(tables.trait_origin.values()) == {
+        "vanilla",
+        "vanilla_new",
+        "faerun",
+        "race",
+    }
+    # `status = none` in vanilla_traits.csv means the traits step ports it as a
+    # new trait under the CK2 id, so it must resolve, not drop.
+    assert tables.trait("cavalry_leader") == "cavalry_leader"
+
+
+def test_adopt_traits_step_is_exactly_what_the_step_wrote() -> None:
+    tables = load_tables()
+    tables.adopt_traits_step(["a", "b"], {"c": "vanilla_c"})
+    assert tables.known_traits == {"a": "a", "b": "b", "c": "vanilla_c"}
+    assert tables.trait("creature_elf") is None
 
 
 def test_trait_id_map_is_optional_and_absent_means_identity() -> None:

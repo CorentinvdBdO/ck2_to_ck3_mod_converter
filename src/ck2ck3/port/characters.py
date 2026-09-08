@@ -65,8 +65,14 @@ class CharacterFacts:
     birth: Date | None = None
     death: Date | None = None
     #: ``(kind, target_id)`` for every character this one points at.
+    #: ``(kind, target_id)``; ``kind`` is the CK3 key, so a spouse ref is
+    #: ``add_spouse`` / ``add_matrilineal_spouse``.
     refs: list[tuple[str, str]] = field(default_factory=list)
     traits: list[str] = field(default_factory=list)
+    #: CK2 ``female = yes``. Needed by the integrity check, because CK3 1.19
+    #: refuses ``add_spouse`` between two characters of the same gender
+    #: (``error(wrong-gender)``) and CK2 allowed it.
+    female: bool = False
 
 
 @dataclass
@@ -278,13 +284,6 @@ class CharacterPort:
         value = node.value
         key = rule.ck3_key
 
-        if form == "nonempty":
-            # `change_first_name = ""` makes ck3-tiger 1.19.0 panic
-            # (src/trigger.rs:1454, see docs/formats_characters.md s10) and an
-            # empty name is not content either way.
-            if isinstance(value, str) and not value.strip():
-                return None
-            return Node(key=key, value=value, quoted_value=node.quoted_value)
         if form == "same":
             if key == "name" and isinstance(value, str) and not value.strip():
                 # 54 Faerûn characters have a blank name: 52 write `name = " "`
@@ -361,7 +360,12 @@ class CharacterPort:
         name = node.value.get("name")
         if name is None:
             return None
-        entries = [Node(key="modifier", value=str(name))]
+        ck3_modifier = self.tables.modifier(str(name))
+        if ck3_modifier is None:
+            self.report.counts["modifiers_dropped"] += 1
+            return None
+        self.report.counts["modifiers"] += 1
+        entries = [Node(key="modifier", value=ck3_modifier)]
         duration = node.value.get("duration")
         if isinstance(duration, (int, float)) and duration > 0:
             # CK2 duration is in days, CK3 add_character_modifier takes years.
@@ -408,7 +412,9 @@ class CharacterPort:
     # -- facts for the integrity checks ------------------------------------
     def _note_fact(self, node: Node, rule: KeyRule, facts: CharacterFacts) -> None:
         key = rule.ck3_key
-        if key == "dynasty":
+        if key == "female":
+            facts.female = str(node.value).lower() in ("yes", "true")
+        elif key == "dynasty":
             facts.dynasty = self._ref(node.value)
         elif key == "father":
             facts.father = self._ref(node.value)
@@ -427,15 +433,19 @@ class CharacterPort:
 #: Why a value, rather than a key, could not be converted.
 VALUE_REASONS = {
     "trait": (
-        "trait is in neither the Faerun port set "
-        "(docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv"
+        "the traits step does not declare this trait in the generated mod "
+        "(mappings/trait_ck2_to_ck3.csv; the reason per trait is in "
+        "docs/evidence/traits_unported.csv)"
+    ),
+    "char_modifier": (
+        "CK3 1.19 declares no such modifier in common/modifiers and no step "
+        "converts the CK2 common/event_modifiers it comes from"
     ),
     "nickname": (
         "nickname has no CK3 id in mappings/nicknames.csv; "
         "Faerun defines it in its own common/nicknames"
     ),
     "char_modifier": "CK2 modifier block has no `name`",
-    "nonempty": "CK2 value is an empty string; nothing to convert",
 }
 
 

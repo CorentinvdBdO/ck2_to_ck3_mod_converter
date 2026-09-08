@@ -82,6 +82,20 @@ def check(
                 "death before birth",
                 f"{char.ck3_id} born {char.birth} died {char.death}",
             )
+        for kind, target in char.refs:
+            # CK3 1.19 has no same-gender marriage: `add_spouse` between two
+            # characters of one gender is `error(wrong-gender)` and the line is
+            # ignored. Faerûn has a handful, flagged in CK2 itself with
+            # `Audax Validator "." Ignore_NEXT`. Reported, not rewritten: the
+            # port is one pass per file and the partner may live in another.
+            if kind not in ("add_spouse", "add_matrilineal_spouse", "marry"):
+                continue
+            other = facts.get(target)
+            if other is not None and other.female == char.female:
+                result.add(
+                    "same-sex spouse",
+                    f"{char.ck3_id} ({char.source}) {kind} {target}",
+                )
         if char.father is not None and char.father == char.ck3_id:
             result.add("self as father", char.ck3_id)
         if char.mother is not None and char.mother == char.ck3_id:

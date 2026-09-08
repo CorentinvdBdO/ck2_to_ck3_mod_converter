@@ -9,6 +9,11 @@ Runs after ``dynasties``: it reads ``ctx.data["dynasties"]["ck3_ids"]`` for the
 referential check. When it runs alone (``--steps characters``) the dynasty set
 is read straight from the CK2 files instead, so the check never silently
 degrades into a pass.
+
+Runs after ``traits`` for the same reason: ``ctx.data["traits"]`` says exactly
+which trait ids ``common/traits/fae_traits.txt`` declares this run, so a
+``trait = x`` is commented out only when the traits step really dropped it.
+Alone, the committed ``mappings/trait_ck2_to_ck3.csv`` stands in.
 """
 
 from __future__ import annotations
@@ -36,11 +41,8 @@ def run(ctx: Context) -> StepResult:
         )
 
     tables = load_tables()
-    if not tables.trait_id_map_present:
-        ctx.info(
-            "mappings/trait_id_map.csv absent (traits lane not landed): "
-            "trait ids are passed through unchanged"
-        )
+    _adopt_trait_set(ctx, tables)
+    tables.adopt_ck3_modifiers(_ck3_modifier_ids(ctx))
     port = CharacterPort(tables=tables, prefix=ctx.config.prefix)
 
     written = []
@@ -108,6 +110,50 @@ def run(ctx: Context) -> StepResult:
         counts=counts,
         warnings=step_warnings,
         written=written,
+    )
+
+
+def _ck3_modifier_ids(ctx: Context) -> set[str]:
+    """Every id CK3 1.19 declares in `common/modifiers` (~130 files, 0.1 s)."""
+    folder = ctx.ck3("common", "modifiers")
+    if not folder.is_dir():
+        ctx.warn(
+            f"no {folder}: add_character_modifier values are not checked and "
+            "may be error(missing-item) in the generated mod"
+        )
+        return set()
+    ids: set[str] = set()
+    for path in sorted(folder.glob("*.txt")):
+        ids.update(
+            node.key
+            for node in ctx.parse_path(path, lenient=True).entries
+            if isinstance(node, Node) and isinstance(node.value, Block)
+        )
+    ctx.info(f"{len(ids)} CK3 modifier ids read from {folder}")
+    return ids
+
+
+def _adopt_trait_set(ctx: Context, tables) -> None:
+    """Point the port at the freshest known-trait set available."""
+    handoff = ctx.data.get("traits")
+    if handoff and handoff.get("live"):
+        tables.adopt_traits_step(handoff["live"], handoff.get("renames", {}))
+        ctx.info(
+            f"trait set from this run's traits step: "
+            f"{len(tables.known_traits)} ids"
+        )
+        return
+    if tables.traits_authoritative:
+        ctx.info(
+            f"trait set from mappings/trait_ck2_to_ck3.csv: "
+            f"{len(tables.known_traits)} ids (traits step did not run)"
+        )
+        return
+    ctx.warn(
+        "mappings/trait_ck2_to_ck3.csv absent and the traits step did not run: "
+        "the known-trait set is the vanilla_traits/faerun_custom_traits "
+        "fallback and will drop traits the traits step keeps; run "
+        "scripts/build_trait_tables.py"
     )
 
 

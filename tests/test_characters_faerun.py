@@ -129,7 +129,32 @@ def test_faerun_history_has_no_dangling_references(characters, dynasties) -> Non
     result = integrity.check(
         port.facts, set(dyn_port.id_map.values()), set(tables.known_traits.values())
     )
-    assert result.clean, "\n".join(result.summary_lines())
+    # Every class is a converter bug except one: CK3 1.19 has no same-gender
+    # marriage, so Faerûn's 8 same-sex `add_spouse` lines cannot be converted,
+    # only reported (see ck2ck3.port.integrity). Excluded here so a real
+    # regression in the other classes is not masked by it.
+    other = {k: n for k, n in result.counts.items() if k != "same-sex spouse"}
+    assert not other, "\n".join(result.summary_lines())
+
+
+def test_faerun_same_sex_spouses_are_reported_not_silently_kept(
+    characters, dynasties
+) -> None:
+    """CK3 1.19 rejects `add_spouse` between two characters of one gender.
+
+    `verified` 2026-09-08: 8 in Faerûn, which is what ck3-tiger reports as
+    `error(wrong-gender): character is not female` (14 diagnostics -- it counts
+    the dated-block copies too). CK2 allowed it and flags them itself with
+    `Audax Validator "." Ignore_NEXT`.
+    """
+    port, _, _ = characters
+    dyn_port, _ = dynasties
+    result = integrity.check(
+        port.facts,
+        set(dyn_port.id_map.values()),
+        set(port.tables.known_traits.values()),
+    )
+    assert result.counts["same-sex spouse"] == 8
 
 
 def test_every_character_has_a_birth_date(characters) -> None:

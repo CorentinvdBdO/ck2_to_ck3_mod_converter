@@ -3,7 +3,12 @@
 
 Other lanes need these without running the converter:
 
-* `mappings/trait_id_map.csv`          — CK2 trait id -> CK3 trait id (characters, events)
+* `mappings/trait_ck2_to_ck3.csv`      — EVERY CK2 trait id that survives, and its
+  final CK3 id. This is the authoritative known-trait set: the `characters` port
+  drops a `trait = x` that is not in it, so deriving the set from
+  `vanilla_traits.csv` + `faerun_custom_traits.csv` instead (which is what it did
+  before) dropped every trait the traits step keeps by exact CK3 id match.
+* `mappings/trait_id_map.csv`          — the dedupe subset, CK2 id -> CK3 vanilla id
 * `mappings/loc_key_renames_traits.csv` — CK2 loc key -> CK3 loc key (localisation)
 * `docs/evidence/traits_unported.csv`   — every trait kept only as dead script
 * `docs/evidence/traits_groups.csv`     — the group/level families the heuristic found
@@ -41,6 +46,28 @@ def write_csv(path: Path, fields: list[str], rows: list[dict[str, object]]) -> N
     print(f"{path.relative_to(ROOT)}: {len(rows)} rows")
 
 
+def known_trait_rows(plan) -> list[dict[str, object]]:
+    """Every CK2 trait id that resolves in the generated mod, with its CK3 id.
+
+    Two kinds of survivor, and both have to be in the table or the character
+    port comments the trait out:
+
+    * ``port`` / ``race_trait`` — redefined in `common/traits/fae_traits.txt`
+      under the CK2 id verbatim, so ck3 id == ck2 id.
+    * ``rename`` — deduped to a CK3 vanilla trait and deliberately *not*
+      redefined, so the ck3 id is the vanilla one.
+    """
+    rows = [
+        {"ck2_trait": name, "ck3_trait": name, "decision": plan.decision[name]}
+        for name in sorted(plan.live())
+    ]
+    rows += [
+        {"ck2_trait": r.ck2_trait, "ck3_trait": r.ck3_trait, "decision": "rename"}
+        for r in sorted(plan.renames, key=lambda r: r.ck2_trait)
+    ]
+    return sorted(rows, key=lambda r: r["ck2_trait"])
+
+
 def main(argv: list[str]) -> int:
     config = Config.load(ROOT / "configs" / "faerun.toml")
     mod = Path(argv[1]).resolve() if len(argv) > 1 else config.ck2_mod
@@ -50,6 +77,11 @@ def main(argv: list[str]) -> int:
     plan = build_plan(mod, tables)
     converted, converter = convert_plan(plan, tables)
 
+    write_csv(
+        ROOT / "mappings" / "trait_ck2_to_ck3.csv",
+        ["ck2_trait", "ck3_trait", "decision"],
+        known_trait_rows(plan),
+    )
     write_csv(
         ROOT / "mappings" / "trait_id_map.csv",
         ["ck2_trait", "ck3_trait", "status", "source", "note"],
