@@ -89,6 +89,7 @@ class CharacterPort:
     #: unknown, keep every employer.
     landed: Mapping[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]] | None = None
     _current_date: tuple[int, int, int] | None = None
+    _current_ck2_id: str | None = None
 
     # -- helpers -----------------------------------------------------------
     def _ref(self, value: object) -> str:
@@ -115,6 +116,7 @@ class CharacterPort:
             )
             self.report.counts["duplicate_ids"] += 1
         self.id_map[ck2_id] = ck3_id
+        self._current_ck2_id = ck2_id
         facts = CharacterFacts(ck3_id=ck3_id, ck2_id=ck2_id, source=source)
         self.facts[ck3_id] = facts
 
@@ -206,6 +208,18 @@ class CharacterPort:
                 self._drop(
                     out, node, level,
                     f"{raw} holds no title on {when[0]}.{when[1]}.{when[2]}; CK3 requires a landed employer",
+                )
+                return
+            # A ruler must not sit in someone's court: 62 employer lines on
+            # characters holding a title at the 1357 start crashed CK3 in
+            # powerful-vassal setup (bisected 2026-09-08: removing exactly
+            # those reached In Game). Landed at or after the entry date =
+            # the employer would still be set when the title arrives.
+            me = self._current_ck2_id
+            if when is not None and me is not None and _landed_at_or_after(self.landed, me, when):
+                self._drop(
+                    out, node, level,
+                    f"{me} holds a title on or after {when[0]}.{when[1]}.{when[2]}; a CK3 ruler cannot have an employer",
                 )
                 return
         rule = self.tables.rule(node.key, DATED) if dated else None
@@ -540,5 +554,12 @@ def output_name(ck2_name: str, prefix: str = "fae") -> str:
 def _landed_at(landed, character: str, date: tuple[int, int, int]) -> bool:
     for start, end in landed.get(character, ()):
         if start <= date and (end is None or date < end):
+            return True
+    return False
+
+
+def _landed_at_or_after(landed, character: str, date: tuple[int, int, int]) -> bool:
+    for start, end in landed.get(character, ()):
+        if end is None or end > date:
             return True
     return False
