@@ -15,6 +15,8 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `uv run scripts/survey_ck2_titles.py` — CK2 title-side tallies (every count quoted in `docs/step_titles.md`).
 - `uv run scripts/tiger_titles_check.py` — ck3-tiger over the titles/history output, per diagnostic class and owning lane (writes `docs/evidence/tiger_titles.txt`).
 - `uv run scripts/build_loc_key_renames_titles.py` — regenerate `mappings/loc_key_renames_titles.csv` (the hand-off to lane `loc`).
+- `uv run scripts/build_loc_key_map.py [--check]` — merge every `mappings/loc_key_renames_*.csv` into `overrides/loc_keys.csv`, which the `loc` step reads as `[loc] key_map`. `--check` is in `ci/checks.sh`.
+- Regenerate + validate the whole mod in five commands: `docs/integration_run.md`.
 - `uv run scripts/collect_ck2_modifier_keys.py` → `uv run scripts/build_modifiers_csv.py` → `uv run scripts/classify_faerun_traits.py` → `uv run scripts/verify_ck3_keys.py` — regenerate the mapping tables in `mappings/` and verify every CK3 key against the 1.19 install (must report `MISSES: 0`).
 - `ci/checks.sh` — pytest + syntax + docs present. `/ship` runs it. `ck3-tiger <mod>.mod --game ../claudespace/game_files/..` validates generated mods.
 - Convert: `uv run ck2ck3 --config configs/faerun.toml [--steps a,b] [--dry-run]` (`uv run -m ck2ck3` works too). `--list-steps` lists the registry. See `docs/cli.md`.
@@ -28,7 +30,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - Base branch is `main`. Lanes `lane/<name>`. Never commit on main.
 - Converter never invents content. No CK3 equivalent → emit a comment next to the nearest construct. Human input → `overrides/*.csv`, read by the converter.
 - Every reader/writer gets a pytest with a fixture snippet. Parser changes need a round-trip test (parse → write → parse equal, comments kept).
-- CK2 input encoding is Windows-1252; CK3 output is UTF-8 with BOM for localisation, UTF-8 for script.
+- CK2 input encoding is Windows-1252; CK3 output is UTF-8 **with a BOM, decided by path not by content**: `pdx.encoding.encoding_for(rel)` gives one to everything under `common/`, `history/`, `localization/`, `gfx/`, `tests/` and `map_data/geographical_regions/`, and none to the flat `map_data` files or `descriptor.mod`. `ctx.write_script`/`write_text` apply it; a literal leading `U+FEFF` in the text is consumed rather than written twice.
 - Facts about CK2/CK3 formats go to `docs/` in the same commit (`docs/formats_*.md`), with file:line evidence from `Faerun/` or `game_files/`.
 - Long runs (full conversion, image work > 2 min) under nohup with a log in `docs/evidence/`.
 
@@ -42,7 +44,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - Faerûn has **67 culture groups / 419 cultures** and **15 religion groups / 94 religions** (`verified`; the survey's "~495 cultures" and "~130–184 religions" were upper bounds).
 - A CK2 culture *group* carries only `graphical_cultures` and `alternate_start` — **no colour**. A CK3 language pillar requires one.
 - `common/culture/pillars`, `common/culture/traditions`, `common/ethnicities` and `common/modifier_definition_formats` are **not** `replace_path`s: an id emitted there must not collide with vanilla (Faerûn's `gur` and `mari` cultures do).
-- ck3-tiger wants a **UTF-8 BOM on script files**, not just localisation; `pdx.encoding.OUT_ENCODING` writes plain UTF-8 (open, see `docs/step_cultures_religions.md`).
+- ck3-tiger wants a **UTF-8 BOM on every script file under `common/` or `history/`, pure ASCII or not** (`verified` 2026-09-08: 98 generated ASCII files drew `warning(encoding)`). Vanilla agrees everywhere except `history/titles` (56 of 183) and `history/provinces` (91 of 177), which ship BOM-less ASCII files — laxity in two folders, not a rule. All 18 `game/tests/*.txt` have one and 17 are ASCII.
 - Faerûn defines 15,356 baronies but builds 3857 holdings at 1357; barony set = built holdings, never the defined list. 3694 become CK3 provinces, 163 are demoted to comments (`docs/step_map_baronies.md`).
 - `map_data/definition.csv` column 5 of a barony row **is** the CK3 barony title id `b_<ck2 name>` — the contract lane `titles-history` reads province ids from. Other rows keep the uppercase CK2 province slug.
 - CK2 `history/provinces` `b_x = ct_something` builds a *building*, not a holding: resolving a holding type must skip any value that is not one of the nine CK2 holding types, or the barony vanishes.
@@ -51,10 +53,13 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - CK3 text formats are named in `game/gui/preload/textformatting.gui`; there is no `#Y`, yellow is `#M`.
 - The PyPI package `jomini` is unrelated to Paradox parsing (battle simulator). Do not add it.
 - **`common/bookmark_portraits` must not be empty.** A bookmark character with no file there crashes CK3 (ck3-tiger `fatal(crash)`, "This causes a crash in CK3 1.13"). Write a placeholder named after the character's `name` value.
-- A CK3 script file with **non-ASCII content needs a UTF-8 BOM** (ck3-tiger `warning(encoding)`); vanilla `common/landed_titles` and `common/bookmarks` files have one, pure-ASCII `history/titles` files do not.
 - **`ck3-tiger` reads the `.mod` file you pass it, not `descriptor.mod`** — without the `replace_path` lines in that file every replaced vanilla file loads and you get thousands of phantom "redefined" diagnostics. `--game` wants the install dir, not its `game/` subfolder.
 - CK3 `history/titles` allows **no top-level keys**; `liege` must be a strictly higher tier and must have a **living** holder at that date or the line is ignored.
 - CK2 `landed_titles` `capital` is a **province id**, not a title. The province→county link is `title = c_x` inside the province-history file.
+- **Any id two steps derive independently belongs in `ck2ck3.ids`.** Both halves look internally consistent, so the failure only shows up in ck3-tiger or the game: `titles` writing `name_list_sun_elf` while `cultures` writes `name_list_fae_sun_elf` was 2848 `error(missing-item)`, and `bookmarks` writing `fae_dyn_7743` while `dynasties` writes `fae_7743` was another 80.
+- The **known-trait set** the `characters` port filters by is `mappings/trait_ck2_to_ck3.csv` — the `traits` step's own output — never a re-derivation from `vanilla_traits.csv` + `faerun_custom_traits.csv`, which miss the 38 traits deduped by exact CK3 id match and the 7 `status = none` ones ported as new (8308 wrongly commented `trait` lines).
+- CK3 1.19 has **no `set_dynasty` effect** (`set_house = dynasty_house:<id>` is the runtime form, and CK2 has no cadet houses to mint one from), **no same-gender marriage** (`add_spouse` between two of one gender is `error(wrong-gender)` and ignored), and `change_first_name` takes a **localisation key**, never a literal name. `add_spouse`/`remove_spouse`/`add_concubine` are dated-**history** keys; as effects they are `marry`/`divorce`/`make_concubine`, each taking a `character:<id>` scope.
+- `replace_path = "tests"` is **mandatory** for a total conversion: vanilla's 18 `tests/*.txt` hard-code 1066 ids (character `122`, `k_croatia`) and fail en masse otherwise.
 
 ## Docs
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
@@ -65,4 +70,6 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `docs/step_map_baronies.md` — how CK2 counties become CK3 baronies (seeds, growth, override workflow) · `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
 - `docs/step_titles.md` — steps `titles` / `history_titles` / `bookmarks`: rules, derivations, counts, open questions · `docs/formats_titles.md` — CK3 title/history/bookmark facts with file:line · `docs/mapping_world.md` — the field tables (`mappings/title_fields.csv`, `government_map.csv`)
 - `docs/mapping_modifiers.md` — CK2→CK3 modifier/trait mapping method, scale derivations, CK3 modifier grammar. Tables: `mappings/modifiers.csv`, `mappings/trait_fields.csv`, `mappings/vanilla_traits.csv`.
+- `docs/integration_run.md` — regenerate and validate the whole mod in five commands; which steps depend on which.
+- `docs/evidence/full_run_2026-09-08.md` — the reference full run, per step · `docs/evidence/tiger_full_2026-09-08.md` — every ck3-tiger class with its justification, and the cross-step bugs it found
 - `docs/evidence/` — script outputs, review sheets.
