@@ -1,0 +1,5 @@
+mod,race_carrier,custom_gene_files,custom_ethnicity_files,custom_portrait_modifier_files,custom_trait_portrait_modifier_files,mesh_count,license_status,citation
+Vanilla CK3,none (no race concept),0,25,33,1 (00_trait_modifiers.txt),n/a,Paradox-owned,common/genes;common/ethnicities;gfx/portraits
+Elder Kings 2,culture heritage pillar species_x parameter + inherited character flags,17,50,~50 of 132,not itemized,2227,not reusable - sole property of original artist no license file,docs/races_research.md sect 2
+Godherja,culture heritage pillar only mostly cosmetic,25 (accessories/tattoos only no body morphs),5 of 2795 (1 real body: skeleton),0 of 49,0,0 own (borrows EK2 assets),not reusable - attribution only no license file,docs/races_research.md sect 3
+Princes of Darkness,trait (splat mutually-exclusive group),6 non-empty of 9 declared,0 (same 25 as vanilla),15 of 28,0 separate (vanilla file extended in place),463 total / 373 under dedicated POD creature folder,reusable - Unlicense/public domain (POD_license.info); WoD brand names still restricted by Dark Pack agreement,POD_license.info;common/genes/POD_morph_genes.txt;common/genes/POD_accessory_genes.txt
