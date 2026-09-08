@@ -128,6 +128,12 @@ def test_round_trip_walk_of_a_written_block():
 # --------------------------------------------------------------------------- #
 
 STATUSES = {"exact", "approx", "none"}
+#: `vanilla_traits.csv` has its own action vocabulary (docs/step_traits.md
+#: rule 1): `exact`/`approx`/`nearest` all dedupe (ck3_trait required),
+#: `sexuality` gives a CK3 sexuality value (ck3_trait required), `drop` has no
+#: CK3 id at all (ck3_trait must be blank).
+VANILLA_TRAITS_STATUSES = {"exact", "approx", "nearest", "sexuality", "drop"}
+VANILLA_TRAITS_BLANK_STATUSES = {"drop"}
 
 
 def rows(name: str) -> list[dict[str, str]]:
@@ -149,9 +155,13 @@ def rows(name: str) -> list[dict[str, str]]:
 def test_status_column_is_valid_and_consistent(name, key_col):
     data = rows(name)
     assert data, f"{name} is empty"
+    statuses = VANILLA_TRAITS_STATUSES if name == "vanilla_traits.csv" else STATUSES
+    blank_statuses = (
+        VANILLA_TRAITS_BLANK_STATUSES if name == "vanilla_traits.csv" else {"none"}
+    )
     for r in data:
-        assert r["status"] in STATUSES, r
-        if r["status"] == "none":
+        assert r["status"] in statuses, r
+        if r["status"] in blank_statuses:
             assert r[key_col] == "", r
         else:
             assert r[key_col], r

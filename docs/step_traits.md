@@ -5,43 +5,48 @@ Code: `src/ck2ck3/traits/` (decisions) + `src/ck2ck3/steps/traits.py` (wiring).
 Run: `uv run ck2ck3 --config configs/faerun.toml --steps traits`.
 Tables for other lanes: `uv run scripts/build_trait_tables.py`.
 
-## Counts (`verified` 2026-09-08, Faerûn @ current clone)
+## Counts (`verified` 2026-09-08, Faerûn @ current clone, after the traits-remap lane)
 
 | | traits |
 |---|---|
 | CK2 trait blocks read (`common/traits/*.txt`, 16 files) | **1417** |
-| ported as live CK3 traits | **429** |
+| ported as live CK3 traits | **400** |
 | — of which race traits | 117 |
-| — of which also have a CK3 near-equivalent (`approx`) | 16 |
-| deduped to an existing CK3 trait, **not** redefined | **121** |
+| deduped/mapped to an existing CK3 trait, **not** redefined | **142** |
+| dropped: no CK3 landing place at all | **7** |
+| became a CK3 `sexuality` history key, not a trait | **1** |
 | kept only as commented blocks | **867** |
 
-1417 = 429 + 121 + 867 exactly; a test asserts it
+1417 = 400 + 142 + 7 + 1 + 867 exactly; a test asserts it
 (`tests/test_traits.py::test_faerun_dedupe_and_classification`).
 
-Before the 2026-09-08 policy change it was 407 ported / 143 deduped / 867
-commented: the 22 `approx` rows of `mappings/vanilla_traits.csv` were deduped
-away. 6 of those 22 were then re-read and downgraded to `none` (see rule 1), so
-the table is now exact 83 / approx 16 / none 13 and all 29 `approx`+`none`
-traits are ported. **Nothing moved into or out of the commented set.**
+**Second policy change, 2026-09-08 (superseding the first the same day,
+`docs/DECISIONS.md`):** the user clarified that "replace, never drop" means
+*map to the existing CK3 trait*, not *port a new CK2-named trait* — players
+kept seeing `cruel`, `envious`, … in the trait list. The 16 `approx` rows now
+dedupe exactly like `exact` (rule 1); the 13 `none` rows split into three new
+actions instead of being ported as new traits (rule 1). Net change from the
+first 2026-09-08 policy: 429 → 400 ported, 121 → 142 deduped, +7 dropped, +1
+sexuality. **Nothing moved into or out of the commented set**, and the vanilla
+first-policy history (407 → 429 ported / 143 → 121 deduped) still applies
+before this second change.
 
-Inside the 429: 742 CK2 property keys and 95 modifier keys became comments,
-93 more wait on the cultures/religions name map, 68 CK2 trigger blocks were
-commented whole, 126 keys were dropped for a CK3 genetic-vs-inheritance rule,
+Inside the 400: 678 CK2 property keys and 87 modifier keys became comments,
+93 more wait on the cultures/religions name map, 66 CK2 trigger blocks were
+commented whole, 124 keys were dropped for a CK3 genetic-vs-inheritance rule,
 81 duplicate keys were collapsed, 69 traits got a `group`/`level`, 3 became a
-`compatibility` entry, 170 got an icon. (Was 684 / 88 / 93 / 66 / 125 / 81 /
-69 / 3 / 168 over 407 traits before the 2026-09-08 policy change.)
+`compatibility` entry, 168 got an icon.
 
 ## Outputs
 
 | path | what |
 |---|---|
-| `common/traits/fae_traits.txt` | the 429 live traits; header lists all 121 dedupes and the 16 near-equivalents |
+| `common/traits/fae_traits.txt` | the 400 live traits; header lists all 142 dedupes, the 1 sexuality mapping and the 7 drops |
 | `common/traits/fae_traits_unported.txt` | the 867 as commented-out blocks |
 | `gfx/interface/icons/traits/<trait>.dds` | 168 CK2 icons, copied unchanged |
-| `mappings/trait_ck2_to_ck3.csv` | **550 rows, every CK2 trait that resolves in the mod → its CK3 id.** The authoritative known-trait set the `characters` port filters by; deriving it from the classification tables instead wrongly commented out 8308 `trait` lines (`docs/step_characters.md`) |
-| `mappings/trait_id_map.csv` | 137 rows, CK2 id → CK3 id with a `status`: 121 dedupes (`exact`/`exact_id`, the CK2 trait does **not** exist) and 16 near-equivalents (`approx`, **both** traits exist). A consumer must never apply an `approx` row as a rename — `ck2ck3.port.tables` skips them |
-| `mappings/loc_key_renames_traits.csv` | 1100 rows, CK2 loc key → CK3 loc key, for `loc` |
+| `mappings/trait_ck2_to_ck3.csv` | **542 rows, every CK2 trait that resolves in the mod → its CK3 id.** The authoritative known-trait set the `characters` port filters by; deriving it from the classification tables instead wrongly commented out 8308 `trait` lines (`docs/step_characters.md`). A `drop`/`sexuality` vanilla-table trait is never in this table |
+| `mappings/trait_id_map.csv` | 150 rows, CK2 id → CK3 id with a `status`: 142 dedupes (`exact`/`exact_id`/`approx`/`nearest`, the CK2 trait does **not** exist), 7 `drop` rows (blank `ck3_trait`) and 1 `sexuality` row (`ck3_trait` holds the sexuality value). All rows apply the same way to `mappings/trait_id_map.csv` consumers **except** `drop`/`sexuality`, which have no trait id to remap onto |
+| `mappings/loc_key_renames_traits.csv` | 1084 rows, CK2 loc key → CK3 loc key, for `loc` |
 | `docs/evidence/traits_unported.csv` | 867 rows with the reason |
 | `docs/evidence/traits_groups.csv` | the 69 `group`/`level` assignments |
 | `docs/evidence/tiger_traits.txt` | the ck3-tiger report |
@@ -54,55 +59,53 @@ CK3 already uses `kinslayer`, `wounded`, `beauty_good` as group names
 
 ## Rules
 
-### 1. Replace, never drop — and dedupe only on exact evidence
-**The policy (`docs/DECISIONS.md` 2026-09-08): vanilla CK2 content that CK3
-removed must be *replaced* — ported as a new trait — never dropped and never
-silently swapped for something that merely resembles it.** A CK2 trait CK3
-genuinely has is still never redefined, because redefining it would replace
-vanilla behaviour. Two sources of evidence, in this order:
+### 1. Map to the existing CK3 trait — never port a new CK2-named one
+**The policy (`docs/DECISIONS.md` 2026-09-08, second entry, superseding the
+first the same day): a CK2 trait CK3 removed is mapped to an EXISTING CK3
+trait, never ported as a new trait and never silently dropped.** The user's
+correction: the first 2026-09-08 policy ("replace, never drop") still let a
+CK2 player see `cruel`, `envious`, … in the converted mod's trait list, which
+was not the point — the *concept* must survive, under a CK3 id the game
+already knows. A CK2 trait CK3 genuinely has is still never redefined
+(redefining it would replace vanilla behaviour). Two sources of evidence, in
+this order:
 
 * `mappings/vanilla_traits.csv` (the 112 traits of CK2 `00_traits.txt`), whose
-  `status` column now means three different actions:
+  `status` column is an *action*:
 
   | status | count | what the step does |
   |---|---|---|
-  | `exact` | 83 | same concept: **dedupe** to the CK3 id, do not redefine. 39 of the 83 share the CK2 id verbatim |
-  | `approx` | 16 | same concept, but CK3 only has a *near*-equivalent: **port the CK2 trait under its own id** and record the pair in `mappings/trait_id_map.csv` with `status = approx`. The CK3 trait is left untouched, both exist, and a ported event picks whichever it means |
-  | `none` | 13 | CK3 has no counterpart at all: **port as a new trait**, modifiers through `mappings/modifiers.csv`, CK2 `opposites` preserved |
+  | `exact` | 83 | same concept, CK3 already has it: **dedupe** to the CK3 id, do not redefine. 39 of the 83 share the CK2 id verbatim |
+  | `approx` | 16 | same concept, CK3's id/wording differs: **dedupe exactly like `exact`** — no CK2 trait definition is emitted, a character gets the CK3 id. The pair is still recorded in `mappings/trait_id_map.csv` with `status = approx` so the events lane can rewrite a `trait = <ck2 id>` reference |
+  | `nearest` | 5 | no real CK3 counterpart, but one CK3 trait covers the same gameplay niche well enough: **dedupe to it**, same as `approx` |
+  | `sexuality` | 1 | not a trait in CK3 at all: the character gets `sexuality = <ck3_trait>` in its history instead of a trait (rule 2) |
+  | `drop` | 7 | no CK3 landing place, not even a near miss: the character loses it, with a `# CK2 trait x: no CK3 counterpart` comment (rule 2) |
 
-  A row whose two ids are equal is `exact` by definition, so `approx` can never
-  name the id it is attached to. A `none` or `approx` row whose CK2 id CK3 1.19
-  *does* declare is deduped anyway with a warning — porting it would override
-  vanilla (`tests/test_traits.py::test_a_vanilla_row_never_overrides_a_ck3_trait_of_the_same_id`;
-  no Faerûn row hits it today).
+  A row whose two ids are equal is `exact` by definition. No status here ever
+  results in a new CK2-named trait definition — `ck2ck3.traits.port.Plan.classify_vanilla`
+  raises on any other status, so a future typo fails loudly instead of quietly
+  porting a trait (`tests/test_traits.py::test_an_unknown_vanilla_status_raises`).
 
-  The 16 `approx` pairs: `aggressive_leader ~ aggressive_attacker`,
+  The 21 `approx`/`nearest` pairs: `aggressive_leader ~ aggressive_attacker`,
   `charitable ~ generous`, `cruel ~ sadistic`,
   `defensive_leader ~ unyielding_defender`, `duelist ~ lifestyle_blademaster`,
-  `falconer ~ lifestyle_hunter`, `has_tuberculosis ~ consumption`,
-  `hedonist ~ lifestyle_reveler`, `impaler ~ torturer`, `kind ~ compassionate`,
+  `falconer ~ lifestyle_hunter`, `flanker ~ flexible_leader`,
+  `harelip ~ beauty_bad_1`, `has_tuberculosis ~ consumption`,
+  `has_typhoid_fever ~ typhus`, `hedonist ~ lifestyle_reveler`,
+  `impaler ~ torturer`, `inspiring_leader ~ gallant`, `kind ~ compassionate`,
   `proud ~ arrogant`, `siege_leader ~ military_engineer`, `slothful ~ lazy`,
-  `slow ~ intellect_bad_2`, `syphilitic ~ great_pox`, `wroth ~ wrathful`.
+  `slow ~ intellect_bad_2`, `syphilitic ~ great_pox`, `trickster ~ strategist`,
+  `wroth ~ wrathful`.
 
-  The 13 `none`: `cavalry_leader`, `crusader`, `envious`, `experimenter`,
-  `flanker`, `harelip`, `has_typhoid_fever`, `heavy_infantry_leader`,
-  `homosexual`, `inspiring_leader`, `light_foot_leader`, `stressed`,
-  `trickster`.
+  The 7 `drop`: `cavalry_leader`, `crusader`, `envious`, `experimenter`,
+  `heavy_infantry_leader`, `light_foot_leader`, `stressed` — CK3 has no
+  per-unit commander traits, no envy trait, no stress trait, and no crusader
+  fame-marker equivalent close enough to dedupe to (each row's `note` has the
+  full rationale). The 1 `sexuality`: `homosexual` (CK3 models orientation as
+  a character *sexuality*, not a trait).
 
-  **The 6 downgrades from `approx` to `none` (`assumed`, 2026-09-08 re-read of
-  every rationale; the rejected CK3 candidate is kept in the row's `note`):**
-
-  | CK2 | rejected CK3 candidate | why it is not the same concept |
-  |---|---|---|
-  | `crusader` | `holy_warrior` | CK2 marks a character who *returned from* a crusade (a fame marker); CK3 `holy_warrior` is a commander trait and `crusader_king` a fame trait |
-  | `flanker` | `flexible_leader` | CK3 battles have no flanks at all; `flexible_leader` is about terrain |
-  | `has_typhoid_fever` | `typhus` | typhoid fever and typhus are different diseases |
-  | `homosexual` | `sodomite` | CK3 models orientation as a character *sexuality*, not a trait; `sodomite` is an acquired secret about acts |
-  | `inspiring_leader` | `gallant` | CK2 raised army morale, which CK3 removed entirely |
-  | `trickster` | `strategist` | CK2 is an ambush commander; CK3 `strategist` is general tactical advantage |
-
-  `fair ~ beauty_good_3` stays where it is: it is `exact`, on measured
-  evidence (CK2 `sex_appeal_opinion 30` = CK3 `attraction_opinion 30`).
+  `fair ~ beauty_good_3` stays `exact`, on measured evidence (CK2
+  `sex_appeal_opinion 30` = CK3 `attraction_opinion 30`).
 * **exact id match** against CK3 1.19 `common/traits/00_traits.txt` for the 213
   Faerûn traits that neither `vanilla_traits.csv` nor
   `docs/evidence/faerun_custom_traits.csv` classifies — CK2-vanilla traits that
@@ -116,14 +119,67 @@ The same guard applies to a trait classified `port`/`race_trait`: if CK3 1.19
 declares that id, it is deduped and a warning is logged rather than overriding
 vanilla.
 
-### 2. Classification
+### 2. `sexuality` and `drop`: no trait at all
+The `characters` port (`ck2ck3.port.characters.CharacterPort._convert_trait_key`)
+resolves a `trait = x` line in this order, before falling back to the generic
+"not declared" comment:
+
+1. **`sexuality`** (`mappings/vanilla_traits.csv` `status = sexuality`,
+   `homosexual` today) — CK3 has no trait for it; verified against vanilla
+   `history/characters/persian.txt:5760` (`sexuality = homosexual` sits at the
+   same level as `trait = x`). The port emits `sexuality = <value>` instead of
+   the `trait` line, counted `traits_sexuality`.
+2. **`drop`** (`status = drop`) — no CK3 landing place at all. The port emits
+   a `# CK2 trait <id>: no CK3 counterpart` comment and nothing else, counted
+   `traits_dropped_no_ck3`. This is a different, more specific comment than
+   the generic "the traits step does not declare this trait" one an ordinary
+   unknown trait gets.
+3. Otherwise the CK2 id is looked up as usual (`Tables.trait`); an unresolved
+   id still falls back to the generic comment.
+
+`add_trait`/`remove_trait` (history or `effect` level) are **not** covered by
+this special-casing — they still go through the plain rename/comment lookup
+(`CharacterPort._shape_trait`), since they are a scripted grant/removal rather
+than the character's static trait list the user was looking at.
+
+### 3. A dedupe must not give a character a conflicting pair
+Two different CK2 traits can now dedupe to CK3 traits that were never in
+conflict as CK2 ids but are as CK3 ones — e.g. a character with both `cruel`
+and `kind` (unlikely, but not forbidden in CK2) would get `sadistic` and
+`compassionate`, which CK3 declares mutual `opposites`. `ck2ck3.traits.conflicts`
+reads CK3's own `opposites`/`group`/`level` fields from
+`common/traits/*.txt` of the install named by `configs/faerun.toml`
+`ck3_game`, and `CharacterPort._convert_trait_key` checks every accepted
+trait against the character's traits so far, in CK2 declaration order:
+
+* the exact same CK3 trait twice (two different CK2 ids deduping to one CK3
+  id, or the same CK2 id twice);
+* two CK3 traits that name each other in `opposites` (either direction) — a
+  bare group name in an `opposites` list (CK3's own convention, e.g.
+  `beauty_bad_1` opposes the group token `beauty_good`) matches any trait of
+  that group;
+* two different `level`s of the same `group` (the `education_*` ladders,
+  which rely on `group`/`level` alone with no explicit `opposites` between
+  tiers).
+
+The first-held trait (CK2 declaration order) is kept; the later one becomes a
+`# CK2: trait = x -> y (conflicts with already-held z; kept the CK2-first-listed
+trait)` comment, counted `traits_conflict_dropped`. A full run resolves **6**
+conflicts over 18,124 characters (`verified` 2026-09-08): 4 plain duplicates
+(a character already listing the same trait, or two CK2 ids deduping to one
+CK3 id — `absent`×2, `creature_human`×2, `trickster`+another id both →
+`strategist`) and 1 real CK3 `opposites` collision (`legit_bastard` →
+`legitimized_bastard` conflicting with an already-held `bastard`, which CK3
+lists as its opposite).
+
+### 4. Classification
 `docs/evidence/faerun_custom_traits.csv` (from
 `scripts/classify_faerun_traits.py`) says `port` (108), `race_trait` (117) or
 `comment` (867). `comment` traits are written to
 `common/traits/fae_traits_unported.txt` through the writer's comment mode, so
 nothing is lost and a submod revives a block by stripping the `# ` prefixes.
 
-### 3. Every key goes through a table
+### 5. Every key goes through a table
 Trait properties through `mappings/trait_fields.csv`, everything else through
 `mappings/modifiers.csv` with its `scale`. A key in neither table raises
 `UnmappedKey` — coverage cannot silently regress. All 294 keys Faerûn's trait
@@ -152,7 +208,7 @@ Non-obvious cases, each driven by the `note` column of the tables:
 | `province`/`opinions` blocks | comment | a CK3 trait is character scope only |
 | `<trait>_opinion` / `opinion_of_<trait>` | `compatibility = { <trait> = X }` | `_traits.info:157`; emitted only when the named trait is one we keep (3 of 78 — the rest name traits that ended up commented), comment always |
 
-### 4. CK2 trigger blocks are commented out
+### 6. CK2 trigger blocks are commented out
 `potential`, `trigger` and `is_visible` map onto CK3 `potential`, but their
 *contents* are CK2 trigger script: `religion_group`, `has_landed_title`,
 `has_dlc = "Holy Fury"`, CK2 culture names. CK3 knows none of it — ck3-tiger
@@ -160,14 +216,14 @@ reported 147 `unknown-field` errors when they were ported verbatim. All 66
 blocks are emitted as commented script; translating CK2 triggers belongs to the
 events lane.
 
-### 5. Genetic vs inheritance
+### 7. Genetic vs inheritance
 `_traits.info:107-118` makes two CK3 rules that CK2 does not have:
 `birth` needs `genetic = yes`, while `random_creation_weight`, `inherit_chance`
 and `both_parent_has_trait_inherit_chance` need `genetic = no`. 125 CK2 keys
 break one of them; each is removed **with a comment saying which rule**, after
 the race fields are added (a race trait becomes genetic late).
 
-### 6. Group / level heuristic
+### 8. Group / level heuristic
 CK2 has no trait group: a family is expressed by every member listing every
 other member in `opposites`. That mutual closure is the only machine-checkable
 signal, so the rule is:
@@ -198,7 +254,7 @@ never groups (`brave`/`craven`).
 (4), `fae_creature` (3), `fae_bloodthirsty_gods` (3). The class ladders are
 *not* there: `character_class_traits.txt` is classified `comment` in full.
 
-### 7. Race traits (`docs/design_races.md` §2)
+### 9. Race traits (`docs/design_races.md` §2)
 Each of the 117 gets `genetic = yes`, `physical = yes`, CK2 `opposites`
 preserved (remapped through the dedupe map), and its
 `overrides/race_lifespan.csv` row: `immortal = yes` when that row says so
@@ -214,7 +270,7 @@ age has to be turned into a delta. **60 = the CK3 base life expectancy is
 `localization/english/modifiers/modifiers_l_english.yml:1158`. Both columns are
 in the CSV so a reviewer can change the baseline in one place.
 
-### 8. Icons
+### 10. Icons
 CK2 wires a trait icon through an `interface/*.gfx` sprite named
 `GFX_trait_<trait>` whose `texturefile` is the real path (`verified`,
 `Faerun/Faerun/interface/fr_traits.gfx`) — that sprite table is the source, not
@@ -237,13 +293,13 @@ a CK2-vanilla texture the mod does not ship.
 Validated against a throwaway mod folder holding only `common/traits` and
 `gfx/interface/icons/traits`, CK3 1.19.0.6:
 
-Re-run `verified` 2026-09-08 after the replace-never-drop policy (429 traits):
+Re-run `verified` 2026-09-08 after the map-to-existing-trait policy (400 traits):
 
 | | count | who owns it |
 |---|---|---|
 | `fatal(...)` / `error(...)` | **0** | — |
-| `warning(missing-file)` | 255 | missing icon art: the 259 ported traits with no CK2 `.dds`. CK3 looks for the default `gfx/interface/icons/traits/<trait>.dds`. Needs art, not code (was 236 over 407 traits) |
-| `tips(suggest-localization)` | 31 | `TRAIT_FLAG_DESC_<flag>` strings — lane `loc` (was 21) |
+| `warning(missing-file)` | 229 | missing icon art: ported traits with no CK2 `.dds` (168 of the 400 got one). CK3 looks for the default `gfx/interface/icons/traits/<trait>.dds`. Needs art, not code (was 255 over 429 traits before this lane) |
+| `tips(suggest-localization)` | 20 | `TRAIT_FLAG_DESC_<flag>` strings — lane `loc` (was 31) |
 | `warning(encoding)` | 0 | fixed since: the writer now BOMs every `common/` file |
 
 Reproduce: run the step into a throwaway folder, drop a two-line
@@ -252,9 +308,9 @@ Reproduce: run the step into a throwaway folder, drop a two-line
 `scripts/validate_output_mod.sh /tmp/t docs/evidence/tiger_traits.txt`.
 
 Errors that earlier iterations produced and how they were removed: 147
-`unknown-field` (CK2 triggers → rule 4), 125 `validation` (genetic rules →
-rule 5), 83 `duplicate-field` (→ rule 3), 2 `missing-item` (`has_dlc "Holy
-Fury"` → rule 4), 1 `modifiers` (see open question 2).
+`unknown-field` (CK2 triggers → rule 6), 125 `validation` (genetic rules →
+rule 7), 83 `duplicate-field` (→ rule 5), 2 `missing-item` (`has_dlc "Holy
+Fury"` → rule 6), 1 `modifiers` (see open question 2).
 
 ## Open questions (coordinator)
 
@@ -301,3 +357,12 @@ Fury"` → rule 4), 1 `modifiers` (see open question 2).
    `creature_ulitharid` / `creature_elder_brain` — the shared token rule picked
    `creature`, which reads as if it covered all 117 creature traits. Harmless
    to the engine; rename if it bothers a reader.
+10. **ck3-tiger 1.19.0 does not recognise the CK3 `sexuality` character-history
+    key** (`error(unknown-field): unknown token 'sexuality'`, 2 blocks shown in
+    `docs/evidence/tiger_traits_remap.txt`), even though vanilla itself uses it
+    20+ times (`verified`, `game/history/characters/persian.txt:5760`
+    `sexuality = homosexual`, at the same block level as `trait = x`; `strings
+    ~/.local/bin/ck3-tiger` has no `sexuality` at all). A tiger tool gap
+    (`assumed`, its known-fields schema is missing the key), not a converter
+    bug — rule 2's output is correct CK3 syntax the engine already accepts
+    from its own files.

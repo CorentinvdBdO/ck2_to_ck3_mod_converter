@@ -75,6 +75,14 @@ class Tables:
     known_traits: dict[str, str] = field(default_factory=dict)
     #: Why a trait id is known: "vanilla", "faerun" or "race".
     trait_origin: dict[str, str] = field(default_factory=dict)
+    #: CK2 trait id -> note, for a `mappings/vanilla_traits.csv` `status =
+    #: drop` row: no CK3 landing place at all. `trait = x` becomes a
+    #: `# CK2 trait x: no CK3 counterpart` comment, never the generic
+    #: "not declared" one (docs/step_traits.md rule 2).
+    trait_drop_reason: dict[str, str] = field(default_factory=dict)
+    #: CK2 trait id -> the CK3 `sexuality` value, for a `status = sexuality`
+    #: row (`homosexual` today): `trait = x` becomes `sexuality = <value>`.
+    trait_sexuality: dict[str, str] = field(default_factory=dict)
     #: Every id CK3 1.19 declares in ``common/modifiers`` (6011 of them),
     #: filled by :meth:`adopt_ck3_modifiers`. Empty means "unknown", and an
     #: ``add_character_modifier`` is then passed through unchecked.
@@ -150,6 +158,16 @@ class Tables:
             return ck3
         return self.trait_id_map.get(ck3, ck3)
 
+    def trait_drop_note(self, ck2_trait: str) -> str | None:
+        """The `vanilla_traits.csv` note for a `status = drop` row, or
+        ``None`` when ``ck2_trait`` is not one."""
+        return self.trait_drop_reason.get(ck2_trait)
+
+    def trait_sexuality_value(self, ck2_trait: str) -> str | None:
+        """The CK3 `sexuality` value for a `status = sexuality` row, or
+        ``None`` when ``ck2_trait`` is not one."""
+        return self.trait_sexuality.get(ck2_trait)
+
 
 def _read(root: Path, rel: str) -> list[dict[str, str]]:
     """One `mappings/` table, `#` comment lines skipped.
@@ -192,19 +210,23 @@ def load_tables(root: Path | None = None) -> Tables:
     # -- the known-trait set ------------------------------------------------
     # Fallback first, so the authoritative table can overwrite it wholesale.
     #
-    # Vanilla CK2 traits: `status = none` means "CK3 has no counterpart", and
-    # the traits step ports those seven (`cavalry_leader`, `envious`,
-    # `experimenter`, `harelip`, `heavy_infantry_leader`, `light_foot_leader`,
-    # `stressed`) as NEW traits under the CK2 id -- so they are known, mapped
-    # to themselves, not dropped.
+    # `mappings/vanilla_traits.csv` status is an action (docs/step_traits.md
+    # rule 1): `exact`/`approx`/`nearest` all dedupe to the CK3 id, no CK2
+    # trait is ever defined for them. `drop`/`sexuality` never enter the
+    # known-trait set at all -- `trait_drop_reason`/`trait_sexuality` (always
+    # populated, independent of `traits_authoritative`) is how the characters
+    # port tells them apart from an ordinary unknown trait.
     for row in _read(root, VANILLA_TRAITS):
         ck2 = row["ck2_trait"]
-        if row["status"] == "none" or not row["ck3_trait"]:
-            tables.known_traits[ck2] = ck2
-            tables.trait_origin[ck2] = "vanilla_new"
+        status = row["status"]
+        if status == "drop":
+            tables.trait_drop_reason[ck2] = row["note"]
+            continue
+        if status == "sexuality":
+            tables.trait_sexuality[ck2] = row["ck3_trait"] or ck2
             continue
         tables.known_traits[ck2] = row["ck3_trait"]
-        tables.trait_origin[ck2] = "vanilla"
+        tables.trait_origin[ck2] = status
 
     # Faerûn's own traits: the ones the mod ports keep their CK2 id.
     for row in _read(root, FAERUN_TRAITS):
@@ -234,11 +256,14 @@ def load_tables(root: Path | None = None) -> Tables:
     if trait_map.exists():
         tables.trait_id_map_present = True
         for row in _read(root, TRAIT_ID_MAP):
-            if (row.get("status") or "").strip() == "approx":
-                # A near-equivalent, not a dedupe: the traits lane ported the
-                # CK2 trait under its own id and BOTH traits exist, so
-                # remapping the CK2 id onto the CK3 one would silently drop
-                # the ported trait (docs/step_traits.md rule 1).
+            # `exact`/`exact_id`/`approx`/`nearest` are all dedupes now (no
+            # CK2 trait definition is ever emitted for a vanilla_traits.csv
+            # row, docs/step_traits.md rule 1): every row with a `ck3_trait`
+            # applies, `approx` included. `drop`/`sexuality` rows carry no
+            # `ck3_trait` (or a sexuality value, not a trait id) and are
+            # skipped here on their own merits.
+            status = (row.get("status") or "").strip()
+            if status in ("drop", "sexuality"):
                 continue
             source = row.get("ck2_trait") or row.get("from") or ""
             target = row.get("ck3_trait") or row.get("to") or ""

@@ -109,6 +109,12 @@ def main() -> None:
             for row in csv.DictReader(lines):
                 if status_col and row[status_col] == "none":
                     continue
+                if status_col and row[status_col] == "sexuality":
+                    # vanilla_traits.csv only: ck3_trait holds a CK3
+                    # `sexuality` value (heterosexual/homosexual/bisexual/
+                    # asexual), not a trait id -- nothing in 00_traits.txt to
+                    # check it against (docs/step_traits.md rule 2).
+                    continue
                 key = row[key_col].strip()
                 if not key:
                     continue

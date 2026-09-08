@@ -335,66 +335,57 @@ def test_race_lifespan_csv_is_consistent():
 
 # --------------------------------------------------------- vanilla dedupe
 @needs_ck3
-def test_vanilla_traits_are_not_redefined(tables, tmp_path):
-    """Only an `exact` row dedupes; `approx` and `none` are ported (rule 1).
+def test_vanilla_traits_are_never_redefined(tables, tmp_path):
+    """No `mappings/vanilla_traits.csv` row is ever ported as a new trait
+    (rule 1, `docs/DECISIONS.md` 2026-09-08 second entry): a CK2 trait CK3
+    removed is mapped to an EXISTING CK3 trait, never a new one.
 
-    "Vanilla CK2 content that CK3 removed must be replaced, not dropped"
-    (`docs/DECISIONS.md` 2026-09-08). Four cases in one fixture: an `exact`
-    row of `mappings/vanilla_traits.csv`, an `approx` row (ported *and*
-    recorded as a near-equivalent), a `none` row (ported, no pair), and a
-    CK2-vanilla trait from outside `00_traits.txt` whose id CK3 declares
-    verbatim.
+    Five cases in one fixture: `exact` (brave), `approx` (charitable, CK3 id
+    differs), `nearest` (harelip, no real counterpart but a near one),
+    `sexuality` (homosexual, not a trait at all), `drop` (envious, no CK3
+    landing place), plus a CK2-vanilla trait from outside `00_traits.txt`
+    whose id CK3 declares verbatim (giant).
     """
     traits = tmp_path / "common" / "traits"
     traits.mkdir(parents=True)
     (traits / "00_traits.txt").write_text(
-        "brave = { martial = 2 }\n"          # exact  -> deduped to brave
-        "charitable = { diplomacy = 1 }\n"   # approx -> ported, ~ generous
-        "envious = { intrigue = 2 }\n"       # none   -> ported
-        "giant = { health = 1 }\n",          # exact id in CK3 00_traits.txt
+        "brave = { martial = 2 }\n"
+        "charitable = { diplomacy = 1 }\n"
+        "harelip = { diplomacy = -1 }\n"
+        "homosexual = { intrigue = 1 }\n"
+        "envious = { intrigue = 2 }\n"
+        "giant = { health = 1 }\n",
         encoding="utf-8",
     )
     plan = build_plan(tmp_path, tables)
     assert plan.decision == {
         "brave": "rename",
-        "charitable": "port",
-        "envious": "port",
+        "charitable": "rename",
+        "harelip": "rename",
+        "homosexual": "sexuality",
+        "envious": "drop",
         "giant": "rename",
     }
-    assert plan.rename_map == {"brave": "brave", "giant": "giant"}
+    # no CK2 trait definition is ever emitted for a vanilla_traits.csv row
+    assert plan.live() == []
+    assert plan.rename_map == {
+        "brave": "brave",
+        "charitable": "generous",
+        "harelip": "beauty_bad_1",
+        "giant": "giant",
+    }
     assert {r.ck2_trait: r.status for r in plan.renames} == {
         "brave": "exact",
+        "charitable": "approx",
+        "harelip": "nearest",
         "giant": "exact_id",
     }
-    # the CK3 near-equivalent is recorded, but it is NOT a rename: both traits
-    # exist and a ported event chooses.
-    assert [(n.ck2_trait, n.ck3_trait, n.status) for n in plan.near_equivalents] == [
-        ("charitable", "generous", "approx")
+    assert [(s.ck2_trait, s.ck3_trait) for s in plan.sexualities] == [
+        ("homosexual", "homosexual")
     ]
+    assert [d.ck2_trait for d in plan.drops] == ["envious"]
     converted, _ = convert_plan(plan, tables)
-    assert [c.ck2_trait for c in converted] == ["charitable", "envious"]
-
-
-@needs_ck3
-def test_a_vanilla_row_never_overrides_a_ck3_trait_of_the_same_id(tables, tmp_path):
-    """An `approx`/`none` row whose CK2 id CK3 1.19 declares is still deduped.
-
-    Porting it would silently replace vanilla behaviour, and an identical id is
-    `exact` evidence anyway. No Faerûn row hits this today; the guard is what
-    keeps a future table edit from doing it.
-    """
-    import dataclasses
-
-    traits = tmp_path / "common" / "traits"
-    traits.mkdir(parents=True)
-    (traits / "00_traits.txt").write_text("brave = { martial = 2 }\n", encoding="utf-8")
-    patched = dataclasses.replace(tables.vanilla["brave"], status="none", ck3_key="")
-    tables = dataclasses.replace(tables, vanilla={**tables.vanilla, "brave": patched})
-    plan = build_plan(tmp_path, tables)
-    assert plan.decision == {"brave": "rename"}
-    assert plan.renames[0].status == "exact_id"
-    assert plan.live() == []
-    assert any("already declares that id" in w for w in plan.warnings)
+    assert converted == []
 
 
 @needs_ck3
@@ -403,11 +394,26 @@ def test_opposites_that_all_vanish_emit_no_empty_block(tables, tmp_path):
     traits = tmp_path / "common" / "traits"
     traits.mkdir(parents=True)
     (traits / "00_traits.txt").write_text(
-        "envious = { opposites = { no_such_trait } }\n", encoding="utf-8"
+        "custom_test_trait = { opposites = { no_such_trait } }\n", encoding="utf-8"
     )
     plan = build_plan(tmp_path, tables)
     converted, _ = convert_plan(plan, tables)
     assert converted[0].block.get("opposites") is None
+
+
+@needs_ck3
+def test_an_unknown_vanilla_status_raises(tables, tmp_path):
+    """A future `mappings/vanilla_traits.csv` typo must fail loudly, not
+    silently fall through to porting a new trait (rule 1)."""
+    import dataclasses
+
+    traits = tmp_path / "common" / "traits"
+    traits.mkdir(parents=True)
+    (traits / "00_traits.txt").write_text("brave = { martial = 2 }\n", encoding="utf-8")
+    patched = dataclasses.replace(tables.vanilla["brave"], status="typo")
+    tables = dataclasses.replace(tables, vanilla={**tables.vanilla, "brave": patched})
+    with pytest.raises(ValueError, match="typo"):
+        build_plan(tmp_path, tables)
 
 
 @needs_ck3
@@ -416,16 +422,21 @@ def test_opposites_that_all_vanish_emit_no_empty_block(tables, tmp_path):
 def test_faerun_dedupe_and_classification(tables):
     plan = build_plan(FAERUN, tables)
     assert len(plan.traits) == 1417
-    assert len(plan.renames) == 121
-    assert len(plan.near_equivalents) == 16
-    assert len(plan.live()) == 429
+    assert len(plan.renames) == 142  # 121 exact/exact_id + 16 approx + 5 nearest
+    assert len(plan.drops) == 7
+    assert len(plan.sexualities) == 1
+    assert len(plan.live()) == 400
     assert len(plan.commented()) == 867
-    # a near-equivalent is ported, never deduped
-    assert set(n.ck2_trait for n in plan.near_equivalents) <= set(plan.live())
-    assert not set(n.ck2_trait for n in plan.near_equivalents) & set(plan.rename_map)
+    # no vanilla_traits.csv row is ever live: all 29 non-exact rows dedupe,
+    # drop or become a sexuality instead of being ported (rule 1)
+    assert not set(tables.vanilla) & set(plan.live())
     # nothing is lost and nothing is counted twice
     assert (
-        len(plan.renames) + len(plan.live()) + len(plan.commented())
+        len(plan.renames)
+        + len(plan.drops)
+        + len(plan.sexualities)
+        + len(plan.live())
+        + len(plan.commented())
         == len(plan.traits)
     )
     # a deduped trait is never in the live set
@@ -440,14 +451,14 @@ def test_faerun_dedupe_and_classification(tables):
 def test_faerun_conversion_is_reparsable_and_complete(tables):
     plan = build_plan(FAERUN, tables)
     converted, converter = convert_plan(plan, tables)
-    assert len(converted) == 429
+    assert len(converted) == 400
     assert sum(1 for c in converted if c.kind == "race_trait") == 117
     block = pdx.Block(multiline=True)
     for item in converted:
         block.append(pdx.Node(key=item.ck2_trait, value=item.block, blank_before=True))
     text = pdx.write(block)
     reparsed = pdx.parse(text)
-    assert len(reparsed.nodes()) == 429
+    assert len(reparsed.nodes()) == 400
     # every CK2 key that produced nothing left a comment behind
     assert converter.counts["field_comments"] > 0
     assert converter.counts["modifier_comments"] > 0
@@ -499,11 +510,14 @@ def test_loc_key_renames_cover_every_kept_trait(tables):
     # CK2 localises a trait bare, CK3 as trait_<id> (both `verified`).
     assert rows["creature_elf"] == "trait_creature_elf"
     assert rows["creature_elf_desc"] == "trait_creature_elf_desc"
-    # a deduped trait points at the CK3 id
+    # a deduped trait points at the CK3 id, `approx`/`nearest` included
     assert rows["brave"] == "trait_brave"
     assert rows["detached_priest"] == "trait_education_learning_1"
-    # an `approx` trait is ported under its own id, so its loc key stays its own
-    assert rows["charitable"] == "trait_charitable"
+    assert rows["charitable"] == "trait_generous"
+    assert rows["harelip"] == "trait_beauty_bad_1"
+    # a `drop`/`sexuality` trait has no live CK3 trait to point loc at
+    assert "envious" not in rows
+    assert "homosexual" not in rows
     assert len(rows) == 2 * (len(plan.live()) + len(plan.rename_map))
 
 
@@ -522,24 +536,28 @@ def test_step_writes_both_files_and_the_icons(tmp_path):
     result = step.run(ctx)
 
     assert result.counts["ck2_traits"] == 1417
-    assert result.counts["ported"] == 429
-    assert result.counts["deduped"] == 121
-    assert result.counts["near_equivalents"] == 16
+    assert result.counts["ported"] == 400
+    assert result.counts["deduped"] == 142
+    assert result.counts["dropped"] == 7
+    assert result.counts["sexuality"] == 1
     assert result.counts["commented"] == 867
 
     live = tmp_path / step.LIVE_FILE
     dead = tmp_path / step.UNPORTED_FILE
     assert live.exists() and dead.exists()
     doc = pdx.parse_file(live, encoding="utf-8")
-    assert len(doc.nodes()) == 429
+    assert len(doc.nodes()) == 400
     # the header lists the dedupes so a reader of the mod alone can see them
-    head = live.read_text(encoding="utf-8")[:6000]
+    head = live.read_text(encoding="utf-8")[:7000]
     assert "Deduped - NOT redefined here" in head
     assert "brave -> brave (exact)" in head
-    # and the near-equivalents, which are NOT dedupes
-    assert "charitable ~ generous" in head
-    # a `none` row is a live trait, not a comment
-    assert doc.get("envious") is not None
+    assert "charitable -> generous (approx)" in head
+    assert "harelip -> beauty_bad_1 (nearest)" in head
+    assert "homosexual -> sexuality = homosexual" in head
+    assert "envious" in head  # listed under the drop section
+    # a vanilla_traits.csv row is never a live trait, whatever its status
+    assert doc.get("envious") is None
+    assert doc.get("charitable") is None
     # the unported file is inert
     assert pdx.parse_file(dead, encoding="utf-8").nodes() == []
 
@@ -564,5 +582,5 @@ def test_step_dry_run_writes_nothing(tmp_path):
     config = Config.load(REPO / "configs" / "faerun.toml", out=tmp_path)
     ctx = Context(config, dry_run=True)
     result = step.run(ctx)
-    assert result.counts["ported"] == 429
+    assert result.counts["ported"] == 400
     assert list(tmp_path.iterdir()) == []

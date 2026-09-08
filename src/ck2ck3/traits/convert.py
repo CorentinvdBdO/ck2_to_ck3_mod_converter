@@ -594,9 +594,11 @@ class TraitConverter:
 
         if key == "opposites" and isinstance(value, Block):
             remapped = self._remap_trait_list(value, out)
-            # Every entry was dropped (each is a commented-out CK2 trait): emit
-            # nothing rather than `opposites = { }`. `homosexual` hits this
-            # since the 2026-09-08 policy ports it instead of deduping it.
+            # Every entry was dropped (each is a commented-out CK2 trait, or a
+            # `sexuality`/`drop` vanilla-table row with no CK3 trait id at
+            # all): emit nothing rather than `opposites = { }`. `homosexual`
+            # hits this since the 2026-09-08 policy makes it a CK3 sexuality,
+            # not a trait.
             if not remapped.entries:
                 return []
             return [Node(key="opposites", value=remapped)]
