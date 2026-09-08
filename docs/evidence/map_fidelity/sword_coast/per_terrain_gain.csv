@@ -1,0 +1,10 @@
+terrain,px,vanilla_hf_rms,our_hf_rms_before,noise_gain_levels
+desert,1840,91.2,67.4,160.0
+drylands,629,96.9,72.2,168.0
+farmlands,14082,96.7,49.0,221.2
+forest,21565,110.7,59.8,246.8
+hills,110246,213.3,127.8,453.6
+mountains,17749,311.4,267.7,424.2
+plains,226817,86.3,60.3,163.5
+taiga,13414,70.1,75.0,0.0
+wetlands,16233,70.4,82.2,0.0

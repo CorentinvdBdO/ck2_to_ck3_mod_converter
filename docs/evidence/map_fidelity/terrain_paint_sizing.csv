@@ -1,0 +1,3 @@
+file,tile,raw_MB,tga_rle_MB,png_MB,full_canvas_raw_MB,full_canvas_tga_rle_MB,full_canvas_png_MB
+detail_index.tga,2048x2048,16.8,0.58,0.13,226,8,2
+detail_intensity.tga,2048x2048,16.8,12.82,1.88,226,173,25

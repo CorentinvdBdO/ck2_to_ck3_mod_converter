@@ -1,0 +1,4 @@
+stage,distinct_levels,land_p50,land_p95,hf_rms_land,grad_mean_levels_per_km
+before,125,8484.0,15686.0,200.9,144.3
+after,17675,8519.0,15652.0,149.7,126.5
+vanilla_reference,31516,9008.0,26140.0,see hf_by_terrain.csv,140.8
