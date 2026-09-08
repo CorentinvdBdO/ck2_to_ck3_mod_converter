@@ -214,6 +214,20 @@ class CharacterPort:
             if emitted is None:
                 self._drop(out, node, level, _value_reason(rule))
                 return
+            if emitted.key == "set_immortal_age":
+                # CK2 `immortal_age = N` makes the character immortal with the
+                # apparent age N. CK3 keeps the two apart: `set_immortal_age`
+                # is only legal on a character carrying the vanilla `immortal`
+                # trait ("Scope character is not immortal", 1429 times on the
+                # first In Game run) and without it a deity born in year 3 is a
+                # 1354-year-old mortal at 1357.
+                wrapped.append(
+                    Node(
+                        key="add_trait",
+                        value="immortal",
+                        trailing_comment="# CK2 immortal_age implies immortality",
+                    )
+                )
             # The CK2 comments belong with the value, which moved.
             wrapped.append(carry_comments(node, emitted))
             self._note_fact(node, rule, facts)
