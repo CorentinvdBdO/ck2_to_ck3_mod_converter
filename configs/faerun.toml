@@ -17,7 +17,6 @@ bookmark_date = "1357.1.1"
 # the folders it takes over.
 replace_paths = [
     "common/bookmark_portraits",
-    "common/dna_data",
     "common/dynasties",
     "common/landed_titles",
     "common/province_terrain",
@@ -29,8 +28,6 @@ replace_paths = [
     # Replacing them dropped the vanilla definitions and produced 2338 "terrain
     # not defined", 2336 "culture not defined" and 2335 "faith not defined"
     # errors. Each lane adds its folder back when it ships content for it.
-    "gfx/interface/illustrations/loading_screens",
-    "gfx/portraits/portrait_modifiers",
     # `replace_path` is NOT recursive: replacing "history" does nothing for
     # history/provinces (verified, ck3-tiger diagnostic: "replace_path only
     # replaces the specific directory, not any directories below it"), so every
