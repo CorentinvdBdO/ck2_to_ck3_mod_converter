@@ -1,0 +1,66 @@
+ck3-tiger 2026-09-08T22:27:32+02:00
+mod:  /home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted
+game: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+---
+Using CK3 directory: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+That does not look like a CK3 directory.
+Trying: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/..
+Ok.
+Tiger was made for Crusader Kings 3 version 1.19.0 (Scribe),
+which matches the detected game version 1.19.0.6.
+Using mod directory: /home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted
+
+error(localization-key-collision): localization keys 'laamp_legitimist_support_contract_success and Dobsoka' have same MURMUR3A hash '0x1093A066'
+     --> [CK3] localization/english/dlc/ep3/ep3_laamps_8_l_english.yml
+  234 | laamp_legitimist_support_contract_success: "After accepting this [task_contract|E] and traveling to [recipient.GetCurrentLocation.GetName], you will be able to negotiate up to #color_yellow 1800 gold#! and #color_yellow 3000 elite troops#!, in exchange for sizable payments afterwards."
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+     --> [MOD] localization/english/fae_names_l_english.yml
+15685 |  Dobsoka:0 "Dobsoka"
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'fp2_yearly.4004.c.tt and Koart' have same MURMUR3A hash '0xF36D8684'
+     --> [CK3] localization/english/dlc/fp2/dlc_fp2_events_amalgamated_l_english.yml
+  931 |  fp2_yearly.4004.c.tt:0 "[mozarab_wanderer.GetName] returns to wandering"
+      |  ^^^^^^^^^^^^^^^^^^^^ 
+     --> [MOD] localization/english/fae_names_l_english.yml
+33378 |  Koart:0 "Koart"
+      |  ^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'stewardship_domain_special.8012.desc and EVTOPTC_ZE_12112' have same MURMUR3A hash '0x9573CEE7'
+    --> [CK3] localization/english/event_localization/lifestyle/governance/stewardship_domain_events_l_english.yml
+ 547 |  stewardship_domain_special.8012.desc:0 "Are there no competent architects in my realm?! My new assistant architect, overseeing the aqueduct construction in [county.GetNameNoTier], has also been running over budget!\n\nI am tired of nonsense excuses such as "it cannot be done, [ROOT.Char.Custom('FormOfAddressForLiege')]"!"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_v2_50b_l_english.yml
+1044 |  EVTOPTC_ZE_12112:0 "<!CK2:From.GetSheHeCap!> is a joy to have around."
+     |  ^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'PROV1421 and d_sunni_turkic_company_adj' have same MURMUR3A hash '0xCD2FF86C'
+     --> [MOD] localization/english/fae_0000_province_names_l_english.yml
+ 1424 |  PROV1421:0 "Batiriland"
+      |  ^^^^^^^^ 
+     --> [CK3] localization/english/titles_l_english.yml
+16019 |  d_sunni_turkic_company_adj:0 "Turkmen"
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'b_lonefang_adj and court.6070.b' have same MURMUR3A hash '0x89D63247'
+    --> [MOD] localization/english/fae_0000_titles_baronies_l_english.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ 
+    --> [CK3] localization/english/event_localization/court_events/court_events_claudia_l_english.yml
+ 146 |  court.6070.b:0 "Pen-wiggling is for losers and weaklings!"
+     |  ^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'k_rashemen and diplomacy_generic.0014.withhold_information.desc' have same MURMUR3A hash '0x3ADB342D'
+    --> [MOD] localization/english/fae_0000_titles_l_english.yml
+7245 |  k_rashemen:0 "Rashemen"
+...
+[truncated: full report 15 MB; regenerate with scripts/validate_output_mod.sh]
+     41 error(localization-key-collision)
+     14 error(wrong-gender)
+      2 error(unknown-field)
+      1 error(history)

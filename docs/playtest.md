@@ -5,17 +5,25 @@ The generated mod lives in `/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun
 It is registered with the launcher by `claudespace/scripts/push_mod.sh` (a `.mod` file with `path=`
 inside the live user dir, see below).
 
-## What to expect (2026-09-08 build)
+## What to expect (build 3, 2026-09-08 evening)
 
-- Map of Faerûn at vanilla scale, 3694 baronies / 2127 counties, 1357 DR bookmark "Before the Storm",
+- Map of Faerûn at vanilla scale, 3705 baronies / 2127 counties, 1357 DR bookmark "Before the Storm",
   17 bookmarks total (1357–1501). Start as any of the 82 bookmark characters or pick a ruler on the map.
+- New since your playtest 2: characters are dressed again (portrait base files were shadowed by mistake);
+  removed CK2 traits (`cruel`, `envious`…) no longer exist — they map to CK3 traits (`sadistic`,
+  `compassionate`, `arrogant`…) or are dropped; baronies are seeded from CK2 city/port positions; the terrain
+  is painted from CK2 terrain classes (`assumed` correct until you look: check the Sword Coast and Anauroch);
+  the heightmap has vanilla-like relief detail instead of flat terraces (`assumed`: look at the Spine of the
+  World and river valleys).
 - Vanilla mechanics only. No Faerûn events, decisions, buildings, wonders, societies (not converted yet).
 - Placeholders you will see: coats of arms are solid colours; every faith icon and most trait icons are
   missing (missing-file warnings, harmless); non-human cultures use a vanilla ethnicity look
-  (`# TODO real ethnicity`); heritage pillars have no audio; no bookmark art.
-- Known rough edges: 6 bookmark-character tests fail (title held vs bookmark claim), ~20 per-run error
-  classes accepted and documented in `docs/evidence/tiger_full_2026-09-08.md` and
-  `claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-08_165318.md`.
+  (`# TODO real ethnicity`); heritage pillars have no audio; no bookmark art; placeholder traditions.
+- Known rough edges: 1 generated test fails (ruler-holds-capital, 3 rulers); ck3-tiger error classes
+  accepted and listed in `docs/evidence/tiger_build3_2026-09-08.txt`.
+- Things to report on this build: does the terrain paint render (or is the ground uniform/garbled)? Does
+  relief look right at province borders and coasts? Any character still naked or bald? Any CK2-named trait
+  left in a trait list?
 
 ## Way 1 — official launcher
 
