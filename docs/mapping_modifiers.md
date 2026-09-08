@@ -6,16 +6,20 @@ exists on both sides, or a `none` row saying what comment to emit.
 
 | file | rows | what it maps |
 |---|---|---|
-| `mappings/modifiers.csv` | 295 | every modifier key the Faerûn CK2 mod uses in `common/traits/` or `common/buildings/` → CK3 modifier key |
+| `mappings/modifiers.csv` | 296 | every modifier key the Faerûn CK2 mod uses in `common/traits/` or `common/buildings/` → CK3 modifier key |
 | `mappings/trait_fields.csv` | 88 | CK2 trait-block property → CK3 trait property |
 | `mappings/vanilla_traits.csv` | 112 | CK2 `common/traits/00_traits.txt` trait → CK3 `common/traits/00_traits.txt` trait |
 | `docs/evidence/faerun_custom_traits.csv` | 1092 | Faerûn-specific traits classified by file of origin |
 
 Status counts (`verified`, from the generators):
 
-- `modifiers.csv` — exact 33, approx 122, none 140
+- `modifiers.csv` — exact 33, approx 122, none 141
 - `trait_fields.csv` — exact 36, approx 17, none 35
-- `vanilla_traits.csv` — exact 83, approx 22, none 7
+- `vanilla_traits.csv` — exact 83, approx 16, none 13 (2026-09-08: 6 `approx`
+  rows were re-read and downgraded, see `docs/step_traits.md` rule 1). The
+  three statuses now mean three *actions*, not three confidence levels:
+  `exact` dedupes, `approx` ports **and** records the CK3 near-equivalent,
+  `none` ports. The file's own header states it.
 - `faerun_custom_traits.csv` — port 108, race_trait 117, comment 867
 
 ## Method

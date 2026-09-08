@@ -21,7 +21,6 @@ clubfooted,clubfooted,exact,mappings/vanilla_traits.csv,same name and concept
 content,content,exact,mappings/vanilla_traits.csv,same name and concept
 craven,craven,exact,mappings/vanilla_traits.csv,same name and concept
 cruel,sadistic,approx,mappings/vanilla_traits.csv,"same concept, renamed in CK3; CK3 opposite is compassionate"
-crusader,holy_warrior,approx,mappings/vanilla_traits.csv,"CK2 crusader marks a returned crusader; CK3 holy_warrior is the commander trait for holy wars. crusader_king is a different, fame trait"
 curious,curious,exact_id,CK3 common/traits/00_traits.txt,CK2 vanilla trait outside 00_traits.txt whose id CK3 1.19 declares verbatim
 cynical,cynical,exact,mappings/vanilla_traits.csv,same name and concept
 decadent,decadent,exact_id,CK3 common/traits/00_traits.txt,CK2 vanilla trait outside 00_traits.txt whose id CK3 1.19 declares verbatim
@@ -42,7 +41,6 @@ excommunicated,excommunicated,exact,mappings/vanilla_traits.csv,same name and co
 fair,beauty_good_3,exact,mappings/vanilla_traits.csv,"attraction matches exactly: CK2 sex_appeal_opinion 30 (00_traits.txt:884) = CK3 attraction_opinion 30 (00_traits.txt:7053). CK2 has one tier, CK3 three; beauty_good_1 matches the diplomacy 1 instead"
 falconer,lifestyle_hunter,approx,mappings/vanilla_traits.csv,CK2 falconer -> CK3 hunter lifestyle; CK3 has no separate falconry trait
 flamboyant_schemer,education_intrigue_2,exact,mappings/vanilla_traits.csv,CK2 intrigue education tier 2 of 4
-flanker,flexible_leader,approx,mappings/vanilla_traits.csv,CK3 has no battle flanks; flexible_leader is the nearest commander trait
 fortune_builder,education_stewardship_3,exact,mappings/vanilla_traits.csv,CK2 stewardship education tier 3 of 4
 gardener,lifestyle_gardener,exact,mappings/vanilla_traits.csv,"same concept, CK3 prefixes lifestyle traits"
 genius,intellect_good_3,exact,mappings/vanilla_traits.csv,"all five attributes +5 on both sides (CK2 00_traits.txt:949, CK3 00_traits.txt:7364)"
@@ -55,12 +53,10 @@ has_bubonic_plague,bubonic_plague,exact,mappings/vanilla_traits.csv,"same diseas
 has_measles,measles,exact,mappings/vanilla_traits.csv,"same disease, CK3 drops the has_ prefix"
 has_small_pox,smallpox,exact,mappings/vanilla_traits.csv,"same disease, CK3 spells it as one word"
 has_tuberculosis,consumption,approx,mappings/vanilla_traits.csv,CK3 names tuberculosis 'consumption'
-has_typhoid_fever,typhus,approx,mappings/vanilla_traits.csv,CK3 has no typhoid fever; typhus is the closest disease trait
 has_typhus,typhus,exact,mappings/vanilla_traits.csv,same disease
 hedonist,lifestyle_reveler,approx,mappings/vanilla_traits.csv,CK2 hedonist (Way of Life) -> CK3 reveler lifestyle trait
 heresiarch,heresiarch,exact_id,CK3 common/traits/00_traits.txt,CK2 vanilla trait outside 00_traits.txt whose id CK3 1.19 declares verbatim
 holy_warrior,holy_warrior,exact_id,CK3 common/traits/00_traits.txt,CK2 vanilla trait outside 00_traits.txt whose id CK3 1.19 declares verbatim
-homosexual,sodomite,approx,mappings/vanilla_traits.csv,CK3 models sexual orientation outside traits; sodomite is the acquired secret trait
 honest,honest,exact,mappings/vanilla_traits.csv,same name and concept
 humble,humble,exact,mappings/vanilla_traits.csv,same name and concept
 hunchback,hunchbacked,exact,mappings/vanilla_traits.csv,"same concept, CK3 spells it hunchbacked"
@@ -73,7 +69,6 @@ inbred,inbred,exact,mappings/vanilla_traits.csv,same name and concept
 incapable,incapable,exact,mappings/vanilla_traits.csv,same name; incapacitating = yes on both sides
 indulgent_wastrel,education_stewardship_1,exact,mappings/vanilla_traits.csv,CK2 stewardship education tier 1 of 4
 infirm,infirm,exact,mappings/vanilla_traits.csv,same name and concept
-inspiring_leader,gallant,approx,mappings/vanilla_traits.csv,"CK2 inspiring_leader raised morale, which CK3 removed; gallant is the nearest commander trait"
 intricate_webweaver,education_intrigue_3,exact,mappings/vanilla_traits.csv,CK2 intrigue education tier 3 of 4
 just,just,exact,mappings/vanilla_traits.csv,same name and concept
 kind,compassionate,approx,mappings/vanilla_traits.csv,"same concept, renamed in CK3"
@@ -130,7 +125,6 @@ temperate,temperate,exact,mappings/vanilla_traits.csv,same name and concept
 theologian,theologian,exact_id,CK3 common/traits/00_traits.txt,CK2 vanilla trait outside 00_traits.txt whose id CK3 1.19 declares verbatim
 thrifty_clerk,education_stewardship_2,exact,mappings/vanilla_traits.csv,CK2 stewardship education tier 2 of 4
 tough_soldier,education_martial_2,exact,mappings/vanilla_traits.csv,CK2 martial education tier 2 of 4
-trickster,strategist,approx,mappings/vanilla_traits.csv,CK2 trickster (ambush) -> CK3 strategist commander trait
 trusting,trusting,exact,mappings/vanilla_traits.csv,same name and concept
 twin,twin,exact,mappings/vanilla_traits.csv,same name; twin_opinion on both sides
 ugly,beauty_bad_2,exact,mappings/vanilla_traits.csv,attraction matches exactly: CK2 sex_appeal_opinion -20 (00_traits.txt:902) = CK3 attraction_opinion -20 (00_traits.txt:6876)

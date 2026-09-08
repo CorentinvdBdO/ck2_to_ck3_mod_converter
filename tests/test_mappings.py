@@ -131,8 +131,14 @@ STATUSES = {"exact", "approx", "none"}
 
 
 def rows(name: str) -> list[dict[str, str]]:
+    """A `mappings/` table, `#` comment lines skipped like every repo reader.
+
+    `vanilla_traits.csv` opens with a comment block stating the exact/approx/
+    none policy, so the header is not necessarily line 1.
+    """
     with (REPO / "mappings" / name).open(encoding="utf-8") as fh:
-        return list(csv.DictReader(fh))
+        lines = [line for line in fh if not line.lstrip().startswith("#")]
+    return list(csv.DictReader(lines))
 
 
 @pytest.mark.parametrize("name,key_col", [

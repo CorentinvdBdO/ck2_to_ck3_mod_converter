@@ -219,6 +219,7 @@ plot_power_modifier,owned_hostile_scheme_success_chance_add,100,CK2 fraction of 
 pursue,army_pursuit_mult,1,CK2 pursue -> CK3 pursuit multiplier,approx
 qismaite_group_opinion,<ck3_religion>_religion_opinion,1,CK2 <religion_group>_opinion -> CK3 <religion>_religion_opinion (00_religion_definitions.txt:1); must be declared in common/modifier_definition_formats/,approx
 rel_head_opinion,religious_head_opinion,1,same concept and range,exact
+random,,,"CK2 command_modifier random: the only use in either CK2 vanilla (common/traits/00_traits.txt:2018) or Faerun is trickster = 0.3. CK3 battles have no random combat events, so there is nothing to scale - emit as comment. Not the trait-level `random` boolean, which is mappings/trait_fields.csv:61",none
 religion_flex,,,CK2 willingness to change religion; CK3 has no equivalent - emit as comment,none
 religious_enemy,,,"CK2 flag modifier used by triggers, not a value; emit as comment",none
 retinuesize,men_at_arms_limit,1,CK2 retinue cap -> CK3 men-at-arms regiment limit; units differ (troops vs regiments),approx

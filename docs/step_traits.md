@@ -5,34 +5,42 @@ Code: `src/ck2ck3/traits/` (decisions) + `src/ck2ck3/steps/traits.py` (wiring).
 Run: `uv run ck2ck3 --config configs/faerun.toml --steps traits`.
 Tables for other lanes: `uv run scripts/build_trait_tables.py`.
 
-## Counts (`verified` 2026-09-07, Faerûn @ current clone)
+## Counts (`verified` 2026-09-08, Faerûn @ current clone)
 
 | | traits |
 |---|---|
 | CK2 trait blocks read (`common/traits/*.txt`, 16 files) | **1417** |
-| ported as live CK3 traits | **407** |
+| ported as live CK3 traits | **429** |
 | — of which race traits | 117 |
-| deduped to an existing CK3 trait, **not** redefined | **143** |
+| — of which also have a CK3 near-equivalent (`approx`) | 16 |
+| deduped to an existing CK3 trait, **not** redefined | **121** |
 | kept only as commented blocks | **867** |
 
-1417 = 407 + 143 + 867 exactly; a test asserts it
+1417 = 429 + 121 + 867 exactly; a test asserts it
 (`tests/test_traits.py::test_faerun_dedupe_and_classification`).
 
-Inside the 407: 684 CK2 property keys and 88 modifier keys became comments,
-93 more wait on the cultures/religions name map, 66 CK2 trigger blocks were
-commented whole, 125 keys were dropped for a CK3 genetic-vs-inheritance rule,
+Before the 2026-09-08 policy change it was 407 ported / 143 deduped / 867
+commented: the 22 `approx` rows of `mappings/vanilla_traits.csv` were deduped
+away. 6 of those 22 were then re-read and downgraded to `none` (see rule 1), so
+the table is now exact 83 / approx 16 / none 13 and all 29 `approx`+`none`
+traits are ported. **Nothing moved into or out of the commented set.**
+
+Inside the 429: 742 CK2 property keys and 95 modifier keys became comments,
+93 more wait on the cultures/religions name map, 68 CK2 trigger blocks were
+commented whole, 126 keys were dropped for a CK3 genetic-vs-inheritance rule,
 81 duplicate keys were collapsed, 69 traits got a `group`/`level`, 3 became a
-`compatibility` entry, 168 got an icon.
+`compatibility` entry, 170 got an icon. (Was 684 / 88 / 93 / 66 / 125 / 81 /
+69 / 3 / 168 over 407 traits before the 2026-09-08 policy change.)
 
 ## Outputs
 
 | path | what |
 |---|---|
-| `common/traits/fae_traits.txt` | the 407 live traits; header lists all 143 dedupes |
+| `common/traits/fae_traits.txt` | the 429 live traits; header lists all 121 dedupes and the 16 near-equivalents |
 | `common/traits/fae_traits_unported.txt` | the 867 as commented-out blocks |
 | `gfx/interface/icons/traits/<trait>.dds` | 168 CK2 icons, copied unchanged |
 | `mappings/trait_ck2_to_ck3.csv` | **550 rows, every CK2 trait that resolves in the mod → its CK3 id.** The authoritative known-trait set the `characters` port filters by; deriving it from the classification tables instead wrongly commented out 8308 `trait` lines (`docs/step_characters.md`) |
-| `mappings/trait_id_map.csv` | 143 rows, CK2 id → CK3 id (the dedupe subset), for events |
+| `mappings/trait_id_map.csv` | 137 rows, CK2 id → CK3 id with a `status`: 121 dedupes (`exact`/`exact_id`, the CK2 trait does **not** exist) and 16 near-equivalents (`approx`, **both** traits exist). A consumer must never apply an `approx` row as a rename — `ck2ck3.port.tables` skips them |
 | `mappings/loc_key_renames_traits.csv` | 1100 rows, CK2 loc key → CK3 loc key, for `loc` |
 | `docs/evidence/traits_unported.csv` | 867 rows with the reason |
 | `docs/evidence/traits_groups.csv` | the 69 `group`/`level` assignments |
@@ -46,14 +54,55 @@ CK3 already uses `kinslayer`, `wounded`, `beauty_good` as group names
 
 ## Rules
 
-### 1. Dedupe before porting
-A CK2 trait CK3 already has is never redefined — redefining it would silently
-replace vanilla behaviour. Two sources of evidence, in this order:
+### 1. Replace, never drop — and dedupe only on exact evidence
+**The policy (`docs/DECISIONS.md` 2026-09-08): vanilla CK2 content that CK3
+removed must be *replaced* — ported as a new trait — never dropped and never
+silently swapped for something that merely resembles it.** A CK2 trait CK3
+genuinely has is still never redefined, because redefining it would replace
+vanilla behaviour. Two sources of evidence, in this order:
 
-* `mappings/vanilla_traits.csv` (the 112 traits of CK2 `00_traits.txt`):
-  `exact` (83) and `approx` (22) → rename to the CK3 id; `none` (7) → port as a
-  new trait (`cavalry_leader`, `envious`, `experimenter`, `harelip`,
-  `heavy_infantry_leader`, `light_foot_leader`, `stressed`).
+* `mappings/vanilla_traits.csv` (the 112 traits of CK2 `00_traits.txt`), whose
+  `status` column now means three different actions:
+
+  | status | count | what the step does |
+  |---|---|---|
+  | `exact` | 83 | same concept: **dedupe** to the CK3 id, do not redefine. 39 of the 83 share the CK2 id verbatim |
+  | `approx` | 16 | same concept, but CK3 only has a *near*-equivalent: **port the CK2 trait under its own id** and record the pair in `mappings/trait_id_map.csv` with `status = approx`. The CK3 trait is left untouched, both exist, and a ported event picks whichever it means |
+  | `none` | 13 | CK3 has no counterpart at all: **port as a new trait**, modifiers through `mappings/modifiers.csv`, CK2 `opposites` preserved |
+
+  A row whose two ids are equal is `exact` by definition, so `approx` can never
+  name the id it is attached to. A `none` or `approx` row whose CK2 id CK3 1.19
+  *does* declare is deduped anyway with a warning — porting it would override
+  vanilla (`tests/test_traits.py::test_a_vanilla_row_never_overrides_a_ck3_trait_of_the_same_id`;
+  no Faerûn row hits it today).
+
+  The 16 `approx` pairs: `aggressive_leader ~ aggressive_attacker`,
+  `charitable ~ generous`, `cruel ~ sadistic`,
+  `defensive_leader ~ unyielding_defender`, `duelist ~ lifestyle_blademaster`,
+  `falconer ~ lifestyle_hunter`, `has_tuberculosis ~ consumption`,
+  `hedonist ~ lifestyle_reveler`, `impaler ~ torturer`, `kind ~ compassionate`,
+  `proud ~ arrogant`, `siege_leader ~ military_engineer`, `slothful ~ lazy`,
+  `slow ~ intellect_bad_2`, `syphilitic ~ great_pox`, `wroth ~ wrathful`.
+
+  The 13 `none`: `cavalry_leader`, `crusader`, `envious`, `experimenter`,
+  `flanker`, `harelip`, `has_typhoid_fever`, `heavy_infantry_leader`,
+  `homosexual`, `inspiring_leader`, `light_foot_leader`, `stressed`,
+  `trickster`.
+
+  **The 6 downgrades from `approx` to `none` (`assumed`, 2026-09-08 re-read of
+  every rationale; the rejected CK3 candidate is kept in the row's `note`):**
+
+  | CK2 | rejected CK3 candidate | why it is not the same concept |
+  |---|---|---|
+  | `crusader` | `holy_warrior` | CK2 marks a character who *returned from* a crusade (a fame marker); CK3 `holy_warrior` is a commander trait and `crusader_king` a fame trait |
+  | `flanker` | `flexible_leader` | CK3 battles have no flanks at all; `flexible_leader` is about terrain |
+  | `has_typhoid_fever` | `typhus` | typhoid fever and typhus are different diseases |
+  | `homosexual` | `sodomite` | CK3 models orientation as a character *sexuality*, not a trait; `sodomite` is an acquired secret about acts |
+  | `inspiring_leader` | `gallant` | CK2 raised army morale, which CK3 removed entirely |
+  | `trickster` | `strategist` | CK2 is an ambush commander; CK3 `strategist` is general tactical advantage |
+
+  `fair ~ beauty_good_3` stays where it is: it is `exact`, on measured
+  evidence (CK2 `sex_appeal_opinion 30` = CK3 `attraction_opinion 30`).
 * **exact id match** against CK3 1.19 `common/traits/00_traits.txt` for the 213
   Faerûn traits that neither `vanilla_traits.csv` nor
   `docs/evidence/faerun_custom_traits.csv` classifies — CK2-vanilla traits that
@@ -188,12 +237,19 @@ a CK2-vanilla texture the mod does not ship.
 Validated against a throwaway mod folder holding only `common/traits` and
 `gfx/interface/icons/traits`, CK3 1.19.0.6:
 
+Re-run `verified` 2026-09-08 after the replace-never-drop policy (429 traits):
+
 | | count | who owns it |
 |---|---|---|
-| `error(...)` | **0** | — |
-| `warning(missing-file)` | 236 | missing icon art: the 239 ported traits with no CK2 `.dds`. CK3 looks for the default `gfx/interface/icons/traits/<trait>.dds`. Needs art, not code |
-| `tips(suggest-localization)` | 21 | `TRAIT_FLAG_DESC_<flag>` strings — lane `loc` |
-| `warning(encoding)` | 1 | see open question 1 |
+| `fatal(...)` / `error(...)` | **0** | — |
+| `warning(missing-file)` | 255 | missing icon art: the 259 ported traits with no CK2 `.dds`. CK3 looks for the default `gfx/interface/icons/traits/<trait>.dds`. Needs art, not code (was 236 over 407 traits) |
+| `tips(suggest-localization)` | 31 | `TRAIT_FLAG_DESC_<flag>` strings — lane `loc` (was 21) |
+| `warning(encoding)` | 0 | fixed since: the writer now BOMs every `common/` file |
+
+Reproduce: run the step into a throwaway folder, drop a two-line
+`descriptor.mod` in it and point the validator at it —
+`uv run ck2ck3 --config configs/faerun.toml --steps traits --out /tmp/t` then
+`scripts/validate_output_mod.sh /tmp/t docs/evidence/tiger_traits.txt`.
 
 Errors that earlier iterations produced and how they were removed: 147
 `unknown-field` (CK2 triggers → rule 4), 125 `validation` (genetic rules →

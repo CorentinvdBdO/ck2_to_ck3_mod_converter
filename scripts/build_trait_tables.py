@@ -8,7 +8,10 @@ Other lanes need these without running the converter:
   drops a `trait = x` that is not in it, so deriving the set from
   `vanilla_traits.csv` + `faerun_custom_traits.csv` instead (which is what it did
   before) dropped every trait the traits step keeps by exact CK3 id match.
-* `mappings/trait_id_map.csv`          — the dedupe subset, CK2 id -> CK3 vanilla id
+* `mappings/trait_id_map.csv`          — CK2 id -> CK3 id, with a `status`:
+  `exact`/`exact_id` rows are dedupes (the CK2 trait is NOT redefined, use the
+  CK3 id); `approx` rows are near-equivalents where BOTH traits exist, so an
+  event can choose. A consumer must never apply an `approx` row as a rename.
 * `mappings/loc_key_renames_traits.csv` — CK2 loc key -> CK3 loc key (localisation)
 * `docs/evidence/traits_unported.csv`   — every trait kept only as dead script
 * `docs/evidence/traits_groups.csv`     — the group/level families the heuristic found
@@ -93,7 +96,9 @@ def main(argv: list[str]) -> int:
                 "source": r.source,
                 "note": r.note,
             }
-            for r in sorted(plan.renames, key=lambda r: r.ck2_trait)
+            for r in sorted(
+                plan.renames + plan.near_equivalents, key=lambda r: r.ck2_trait
+            )
         ],
     )
     write_csv(
@@ -122,7 +127,9 @@ def main(argv: list[str]) -> int:
     print(
         f"ck2 traits {len(plan.traits)}: ported {len(converted)} "
         f"({sum(1 for c in converted if c.kind == 'race_trait')} race), "
-        f"deduped {len(plan.renames)}, commented {len(plan.commented())}"
+        f"deduped {len(plan.renames)}, "
+        f"near-equivalents {len(plan.near_equivalents)}, "
+        f"commented {len(plan.commented())}"
     )
     print("counts: " + ", ".join(f"{k}={v}" for k, v in sorted(converter.counts.items())))
     return 0

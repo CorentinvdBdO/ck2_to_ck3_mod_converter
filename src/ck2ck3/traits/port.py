@@ -35,6 +35,11 @@ class Plan:
     #: CK2 trait id -> "port" | "race_trait" | "comment" | "rename".
     decision: dict[str, str] = field(default_factory=dict)
     renames: list[Rename] = field(default_factory=list)
+    #: `approx` rows of `mappings/vanilla_traits.csv`: the CK2 trait is ported
+    #: as a new trait (so it is in :meth:`live`, never in :attr:`renames`) and
+    #: the CK3 near-equivalent is recorded here so a ported event can pick
+    #: either side. Never a dedupe — the two traits coexist.
+    near_equivalents: list[Rename] = field(default_factory=list)
     #: CK2 trait id -> the CK2 icon file to copy (absolute path).
     icon_source: dict[str, Path] = field(default_factory=dict)
     #: CK2 trait id -> the CK3 `icon = ` value.
@@ -50,6 +55,68 @@ class Plan:
 
     def commented(self) -> list[str]:
         return [n for n, d in self.decision.items() if d == "comment"]
+
+    def classify_vanilla(self, name: str, vanilla, tables: Tables) -> None:
+        """Apply the CK2-vanilla trait policy to one row of `vanilla_traits.csv`.
+
+        "Vanilla CK2 content that CK3 removed must be **replaced**, not
+        dropped" (`docs/DECISIONS.md` 2026-09-08), so only `exact` still
+        dedupes:
+
+        * ``exact`` — same concept, CK3 already has it: rename to the CK3 id
+          and do **not** redefine it (redefining would replace vanilla
+          behaviour).
+        * ``approx`` — a near-equivalent, not the same trait: port the CK2
+          trait under its own id *and* record the pair in
+          :attr:`near_equivalents`. Both traits then exist and a ported event
+          can choose. A row whose two ids are equal is ``exact`` by definition
+          and can never reach this branch.
+        * ``none`` — no CK3 counterpart: port it, modifiers through
+          `mappings/modifiers.csv`, CK2 ``opposites`` preserved.
+        """
+        if vanilla.status == "exact" and vanilla.mapped:
+            self.decision[name] = "rename"
+            self.renames.append(
+                Rename(
+                    ck2_trait=name,
+                    ck3_trait=vanilla.ck3_key,
+                    status=vanilla.status,
+                    source="mappings/vanilla_traits.csv",
+                    note=vanilla.note,
+                )
+            )
+            return
+        if name in tables.ck3_trait_ids:
+            # Porting it would silently override a CK3 vanilla trait, which is
+            # never allowed; an identical id is `exact` evidence anyway.
+            self.decision[name] = "rename"
+            self.renames.append(
+                Rename(
+                    ck2_trait=name,
+                    ck3_trait=name,
+                    status="exact_id",
+                    source="CK3 common/traits/00_traits.txt",
+                    note=f"mappings/vanilla_traits.csv says {vanilla.status}, but "
+                    "CK3 1.19 declares this id verbatim: deduped rather than "
+                    "overriding vanilla",
+                )
+            )
+            self.warnings.append(
+                f"{name}: vanilla_traits.csv status {vanilla.status} would port it, "
+                "but CK3 1.19 already declares that id; deduped instead"
+            )
+            return
+        self.decision[name] = "port"
+        if vanilla.status == "approx" and vanilla.mapped:
+            self.near_equivalents.append(
+                Rename(
+                    ck2_trait=name,
+                    ck3_trait=vanilla.ck3_key,
+                    status="approx",
+                    source="mappings/vanilla_traits.csv",
+                    note=vanilla.note,
+                )
+            )
 
 
 def read_ck2_traits(traits_dir: Path) -> tuple[dict[str, Block], dict[str, str]]:
@@ -101,20 +168,7 @@ def build_plan(mod_dir: Path, tables: Tables) -> Plan:
     for name in plan.traits:
         vanilla = tables.vanilla.get(name)
         if vanilla is not None:
-            if vanilla.mapped:
-                plan.decision[name] = "rename"
-                plan.renames.append(
-                    Rename(
-                        ck2_trait=name,
-                        ck3_trait=vanilla.ck3_key,
-                        status=vanilla.status,
-                        source="mappings/vanilla_traits.csv",
-                        note=vanilla.note,
-                    )
-                )
-            else:
-                # `none`: CK3 has no counterpart, so port it as a new trait.
-                plan.decision[name] = "port"
+            plan.classify_vanilla(name, vanilla, tables)
             continue
 
         treatment = tables.treatment.get(name)

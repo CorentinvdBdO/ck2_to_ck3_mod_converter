@@ -104,6 +104,9 @@ def run(ctx: Context) -> StepResult:
     renames = plan.rename_map
     ctx.data["traits"] = {
         "renames": renames,
+        # `approx` pairs are NOT renames: both traits exist. Handed over
+        # separately so a consumer cannot mistake one for a dedupe.
+        "near_equivalents": {n.ck2_trait: n.ck3_trait for n in plan.near_equivalents},
         "live": sorted(plan.live()),
         "unported": [u.ck2_trait for u in unported(plan)],
     }
@@ -113,13 +116,15 @@ def run(ctx: Context) -> StepResult:
         "ported": len(converted),
         "race": sum(1 for c in converted if c.kind == "race_trait"),
         "deduped": len(renames),
+        "near_equivalents": len(plan.near_equivalents),
         "commented": len(plan.commented()),
         "icons": copied,
         **converter.counts,
     }
     return StepResult(
         summary=(
-            f"{len(converted)} traits ported ({counts['race']} race), "
+            f"{len(converted)} traits ported ({counts['race']} race, "
+            f"{len(plan.near_equivalents)} with a CK3 near-equivalent), "
             f"{len(renames)} deduped to CK3 vanilla, "
             f"{len(plan.commented())} commented out"
         ),
@@ -145,5 +150,16 @@ def _live_header(plan, converted) -> list[str]:
     ]
     for rename in sorted(plan.renames, key=lambda r: r.ck2_trait):
         lines.append(f"#   {rename.ck2_trait} -> {rename.ck3_trait} ({rename.status})")
+    if plan.near_equivalents:
+        lines += [
+            "#",
+            f"# {len(plan.near_equivalents)} CK2 traits are ported here AND have a "
+            "CK3 near-equivalent.",
+            "# Both traits exist; mappings/trait_id_map.csv records the pair with "
+            "status",
+            "# approx so a ported event can choose (docs/step_traits.md rule 1):",
+        ]
+        for near in sorted(plan.near_equivalents, key=lambda r: r.ck2_trait):
+            lines.append(f"#   {near.ck2_trait} ~ {near.ck3_trait}")
     lines.append("#")
     return lines
