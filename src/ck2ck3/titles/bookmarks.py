@@ -142,6 +142,7 @@ def render(
     out.raw("")
     written = 0
     chars = 0
+    marked_default = False
     for bookmark in bookmarks:
         if bookmark.date is None:
             result.warnings.append(f"{bookmark.id}: CK2 bookmark has no date")
@@ -184,6 +185,14 @@ def render(
         out.line(0, f"{bookmark.id} = {{")
         out.line(1, f"start_date = {stamp}")
         out.line(1, "is_playable = yes")
+        if stamp == default_date and not marked_default:
+            # `-test` (and the scripted-test harness) starts the bookmark with
+            # test_default = yes (vanilla: bm_1066_rags_to_riches). Without one
+            # the game state is generated at date -1.1.1: no holder ever
+            # applies and every bookmark character is unborn (verified
+            # 2026-09-08, first In Game run: 46 of 46 holder tests failed).
+            out.line(1, "test_default = yes")
+            marked_default = True
         out.line(1, f"group = {group}")
         out.line(1, "weight = {")
         out.line(2, f"value = {100 if stamp == default_date else (10 if bookmark.era else 0)}")

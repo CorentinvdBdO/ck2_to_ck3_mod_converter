@@ -278,6 +278,28 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             ],
         )
 
+    # CK3 demands that every land province either carries a barony title or is
+    # impassable ("Province N has no associated title in common/landed_titles.
+    # FIX THIS. Game will probably crash", 210 of them on the first In Game run,
+    # 2026-09-08). CK2 wasteland (no title, any terrain: highlands, deserts,
+    # islands) therefore becomes impassable_mountains whatever its terrain.
+    untitled_land = {
+        p.id for p in ids.provinces if not p.is_water and not p.is_barony
+    }
+    if untitled_land - impassable_ck3:
+        log(
+            f"{len(untitled_land - impassable_ck3)} untitled land provinces "
+            "(CK2 wasteland) forced impassable_mountains"
+        )
+    impassable_ck3 |= untitled_land
+    ids = replace(
+        ids,
+        provinces=[
+            replace(p, is_impassable=p.id in impassable_ck3) for p in ids.provinces
+        ],
+    )
+    report["impassable"] = len(impassable_ck3)
+
     water_ck3 = {p.id for p in ids.provinces if p.is_water}
     land_ck3 = {
         p.id for p in ids.provinces if not p.is_water and p.ck2_id is not None
