@@ -1,0 +1,8 @@
+building_locators.txt: n=11297 dx=3.4 bottom_up=3.9 top_down=1360.9
+special_building_locators.txt: n=11297 dx=4.5 bottom_up=3.5 top_down=1359.4
+player_stack_locators.txt: n=12062 dx=5.4 bottom_up=3.2 top_down=1383.8
+other_stack_locators.txt: n=8904 dx=5.8 bottom_up=3.1 top_down=1457.1
+siege_locators.txt: n=11297 dx=6.1 bottom_up=6.4 top_down=1358.2
+combat_locators.txt: n=12062 dx=7.1 bottom_up=6.2 top_down=1383.7
+activities.txt: n=11297 dx=6.5 bottom_up=4.6 top_down=1359.8
+wrote /home/cvdbdo/git/paradox/ck3/wt/map-ui/docs/evidence/locator_frame.md
