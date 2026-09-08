@@ -1,0 +1,8 @@
+integrity same-sex spouse: 8 - fae_200 (1-1000 Miscellaneous.txt) add_spouse fae_190; fae_403 (1-1000 Miscellaneous.txt) marry fae_402; fae_20847 (20001-23000 Cormyr.txt) add_spouse fae_20848; fae_2282 (2001-3000 Baldurs gate.txt) add_spouse fae_2281; fae_33274 (33001-35000 Amn.txt) add_spouse fae_33275 (+3 more)
+CK2 character has a blank name; kept verbatim because CK3 requires the field (needs a human or an overrides row)
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted
+  history_titles 3229 title histories, 191 commented out, 3694 province blocks in 166 files [2.09s]
+  characters     18124 characters in 80 files, 47107 dated blocks, 15763 CK2 entries commented out, 8 integrity problems [2.15s]
+  tests          107 scripted tests at 1357.1.1 (6 bookmark characters, 50/2640 title holders, 50/3694 provinces) -> tests/fae_generated_tests.txt [1.53s]
+254 files written, 189 warnings
+run log: /home/cvdbdo/git/paradox/ck3/ck2_to_ck3_mod_converter/docs/evidence/last_run.md

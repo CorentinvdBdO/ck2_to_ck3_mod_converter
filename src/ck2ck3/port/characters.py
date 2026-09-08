@@ -85,6 +85,11 @@ class CharacterPort:
     facts: dict[str, CharacterFacts] = field(default_factory=dict)
     #: CK2 id -> CK3 id, handed to the titles-history lane through ``ctx.data``.
     id_map: dict[str, str] = field(default_factory=dict)
+    #: CK2 id -> landed date ranges (titles.history.landed_intervals); None =
+    #: unknown, keep every employer.
+    landed: Mapping[str, list[tuple[tuple[int, int, int], tuple[int, int, int] | None]]] | None = None
+    _current_date: tuple[int, int, int] | None = None
+    _current_ck2_id: str | None = None
 
     # -- helpers -----------------------------------------------------------
     def _ref(self, value: object) -> str:
@@ -111,6 +116,7 @@ class CharacterPort:
             )
             self.report.counts["duplicate_ids"] += 1
         self.id_map[ck2_id] = ck3_id
+        self._current_ck2_id = ck2_id
         facts = CharacterFacts(ck3_id=ck3_id, ck2_id=ck2_id, source=source)
         self.facts[ck3_id] = facts
 
@@ -153,8 +159,10 @@ class CharacterPort:
     def _convert_dated(self, node: Node, out: BlockBuilder, facts: CharacterFacts) -> None:
         body = node.value if isinstance(node.value, Block) else Block()
         inner = BlockBuilder()
-        self._convert_body(body, inner, facts, dated=True)
         date = Date.parse(node.key)
+        self._current_date = (date.year, date.month, date.day)
+        self._convert_body(body, inner, facts, dated=True)
+        self._current_date = None
         result = Node(key=str(date), value=inner.finish())
         carry_comments(node, result)
         out.add(result)
@@ -190,6 +198,30 @@ class CharacterPort:
         dated: bool = False,
     ) -> None:
         level = DATED if dated else "history"
+        if node.key == "employer" and self.landed is not None:
+            raw = str(node.value)
+            when = self._current_date
+            if raw in ("0", "-1"):
+                self._drop(out, node, level, "employer = 0: CK3 has no 'no employer' history key")
+                return
+            if when is not None and not _landed_at(self.landed, raw, when):
+                self._drop(
+                    out, node, level,
+                    f"{raw} holds no title on {when[0]}.{when[1]}.{when[2]}; CK3 requires a landed employer",
+                )
+                return
+            # A ruler must not sit in someone's court: 62 employer lines on
+            # characters holding a title at the 1357 start crashed CK3 in
+            # powerful-vassal setup (bisected 2026-09-08: removing exactly
+            # those reached In Game). Landed at or after the entry date =
+            # the employer would still be set when the title arrives.
+            me = self._current_ck2_id
+            if when is not None and me is not None and _landed_at_or_after(self.landed, me, when):
+                self._drop(
+                    out, node, level,
+                    f"{me} holds a title on or after {when[0]}.{when[1]}.{when[2]}; a CK3 ruler cannot have an employer",
+                )
+                return
         rule = self.tables.rule(node.key, DATED) if dated else None
         if rule is None:
             rule = self.tables.rule(node.key, "history")
@@ -214,6 +246,20 @@ class CharacterPort:
             if emitted is None:
                 self._drop(out, node, level, _value_reason(rule))
                 return
+            if emitted.key == "set_immortal_age":
+                # CK2 `immortal_age = N` makes the character immortal with the
+                # apparent age N. CK3 keeps the two apart: `set_immortal_age`
+                # is only legal on a character carrying the vanilla `immortal`
+                # trait ("Scope character is not immortal", 1429 times on the
+                # first In Game run) and without it a deity born in year 3 is a
+                # 1354-year-old mortal at 1357.
+                wrapped.append(
+                    Node(
+                        key="add_trait",
+                        value="immortal",
+                        trailing_comment="# CK2 immortal_age implies immortality",
+                    )
+                )
             # The CK2 comments belong with the value, which moved.
             wrapped.append(carry_comments(node, emitted))
             self._note_fact(node, rule, facts)
@@ -503,3 +549,17 @@ def output_name(ck2_name: str, prefix: str = "fae") -> str:
     while "__" in safe:
         safe = safe.replace("__", "_")
     return f"{prefix}_{safe.strip('_')}.txt"
+
+
+def _landed_at(landed, character: str, date: tuple[int, int, int]) -> bool:
+    for start, end in landed.get(character, ()):
+        if start <= date and (end is None or date < end):
+            return True
+    return False
+
+
+def _landed_at_or_after(landed, character: str, date: tuple[int, int, int]) -> bool:
+    for start, end in landed.get(character, ()):
+        if end is None or end > date:
+            return True
+    return False

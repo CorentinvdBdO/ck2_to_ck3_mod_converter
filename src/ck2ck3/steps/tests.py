@@ -425,7 +425,10 @@ def build(
         if character.title:
             # "holds this title" without guessing a trigger name: switch to the
             # title's scope and compare its holder with ROOT.
-            expect.append(f"title:{character.title} = {{ holder = this }}")
+            # inside the title scope `this` is the title; ROOT stays the
+            # character_target (first In Game run: "left was 'character',
+            # right was 'landed_title'" on every bookmark test)
+            expect.append(f"title:{character.title} = {{ holder = root }}")
         held = f" and holds {character.title}" if character.title else ""
         lines += render_test(
             f"{prefix}_bookmark_char_{character.history_id}",

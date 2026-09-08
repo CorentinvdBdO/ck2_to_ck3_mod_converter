@@ -203,7 +203,7 @@ def test_the_whole_file_is_the_expected_grammar(tmp_path):
         '\n'
         '\texpect = {\n'
         '\t\tis_alive = yes\n'
-        '\t\ttitle:k_high = { holder = this }\n'
+        '\t\ttitle:k_high = { holder = root }\n'
         '\t}\n'
         '}\n'
         '\n'
