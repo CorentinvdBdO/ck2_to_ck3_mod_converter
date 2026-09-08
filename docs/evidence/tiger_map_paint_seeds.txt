@@ -1,0 +1,47 @@
+ck3-tiger 2026-09-08T22:02:49+02:00
+mod:  /home/cvdbdo/git/paradox/ck3/wt/_out/map-paint-seeds
+game: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+---
+Using CK3 directory: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+That does not look like a CK3 directory.
+Trying: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/..
+Ok.
+Tiger was made for Crusader Kings 3 version 1.19.0 (Scribe),
+which matches the detected game version 1.19.0.6.
+Using mod directory: /home/cvdbdo/git/paradox/ck3/wt/_out/map-paint-seeds
+
+error(localization-key-collision): localization keys 'court.6070.b and b_lonefang_adj' have same MURMUR3A hash '0x89D63247'
+    --> [CK3] localization/english/event_localization/court_events/court_events_claudia_l_english.yml
+ 146 |  court.6070.b:0 "Pen-wiggling is for losers and weaklings!"
+     |  ^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_0000_titles_baronies_l_english.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'diplomacy_generic.0014.withhold_information.desc and k_rashemen' have same MURMUR3A hash '0x3ADB342D'
+    --> [CK3] localization/english/event_localization/lifestyle/statecraft/diplomacy_generic_events_l_english.yml
+  53 |  diplomacy_generic.0014.withhold_information.desc:0 "Since I began to withhold information from [disobedient_subject.GetTitledFirstName], [disobedient_subject.GetSheHe] has made a damn fool of [disobedient_subject.GetHerselfHimself] on more occasions than I can count. Dismissing [disobedient_subject.GetHerHis] hopelessly outdated suggestions has been easier than outwitting a dog."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_0000_titles_l_english.yml
+7245 |  k_rashemen:0 "Rashemen"
+     |  ^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'dynn_fae_14595 and emperor_oigur' have same MURMUR3A hash '0x54EDAA1E'
+    --> [MOD] localization/english/fae_dynasties_l_english.yml
+1713 |  dynn_fae_14595:0 "Harcantel"
+     |  ^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_culturesnreligions_l_english.yml
+4693 |  emperor_oigur:0 "Khahan"
+     |  ^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'retinue_warpriests_3 and Bo_jang' have same MURMUR3A hash '0x7FB4FD88'
+...
+[truncated by coordinator: full report was 15 MB / 307,605 lines; regenerate with scripts/validate_output_mod.sh]
+     52 warning(localization): The substitution parameter $ENEMY$ is not defined anywhere as a key.
+     52 untidy(missing-localization): missing english, spanish, french and german localization for name  
+     48 warning(localization): The substitution parameter $TECH$ is not defined anywhere as a key.
+     48 warning(localization): The substitution parameter $JOB$ is not defined anywhere as a key.
+     44 warning(localization): The substitution parameter $VAR$ is not defined anywhere as a key.

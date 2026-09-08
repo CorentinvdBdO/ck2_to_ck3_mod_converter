@@ -1,5 +1,16 @@
 # Map fidelity: how far our CK3 map is from a vanilla-looking one
 
+**Status, 2026-09-08: §2 and §4.1 are wired in.** Lane `map-paint-seeds` took
+the two recommendations this research lane flagged as ready to ship — the
+slot-4 port barony seed (§2) and the `detail_index`/`detail_intensity`
+terrain-paint pipeline (§4.1) — from prototype script to converter code,
+behind `[map] ck2_position_seeds` and `[map] terrain_paint` (both default
+on). See `docs/step_map_baronies.md` §3 and `docs/step_map_paint.md` for the
+shipped behaviour, counts and format decisions; `docs/evidence/HANDOFF_map_paint_seeds.md`
+for what is still open. Everything else below (§1.2/§4.2 heightmap detail,
+§1.4/§4.3 trees and colour, §3 locators/assets beyond the seed a barony
+already gets) is still research only, as this paragraph originally said.
+
 **Question this answers.** Our map loads and plays, and it is ugly
 (`docs/playtest_2026-09-08.md` item 13). *Why* is it ugly, in measurable terms,
 and what would it cost to fix each cause? Research only — this lane writes no
@@ -267,6 +278,12 @@ while CK2 vanilla's equivalents are 8.5 % and 14 %.
 
 ## 2. Barony barycentres from the CK2 slots
 
+**Wired in** by lane `map-paint-seeds`: the slot-4 recommendation below now
+ships as `[map] ck2_position_seeds` (`docs/step_map_baronies.md` §3). This
+section is kept as the original research record; the shipped counts differ
+slightly (758 slot-4 seeds, 152 demoted after Lloyd-relaxing the port slot —
+see the linked doc).
+
 `scripts/barony_seeds_from_ck2_positions.py` →
 `overrides/barony_seeds_ck2positions.csv` (review only, **not wired in**),
 `county_slot_spread.csv`, `seed_shift.csv`.
@@ -354,6 +371,12 @@ reviewer can copy the rows they like across.
 ## 4. Painting a vanilla-style map from CK2 data
 
 ### 4.1 Terrain paint — the pipeline
+
+**Wired in** by lane `map-paint-seeds` as `ck2ck3.map.terrain_paint`, behind
+`[map] terrain_paint` (default on) — see `docs/step_map_paint.md` for the
+shipped format decisions (full canvas size, uncompressed TGA, both settled
+without a game test by reading the vanilla files directly) and what is still
+open (a game test that the files actually render, and the ~452 MB size call).
 
 The output is **not** a set of masks; it is the `detail_index.tga` /
 `detail_intensity.tga` pair (§1.3). Proposed passes:
