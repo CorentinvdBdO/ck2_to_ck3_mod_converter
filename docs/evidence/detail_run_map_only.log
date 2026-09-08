@@ -1,0 +1,44 @@
+clean        cleaned /home/cvdbdo/git/paradox/ck3/wt/_out/map-heightmap-detail-detail: removed 0 entries, kept nothing
+reading CK2 map from /home/cvdbdo/git/paradox/ck3/wt/map-heightmap-detail/Faerun/Faerun/map
+reading CK2 titles and province history from /home/cvdbdo/git/paradox/ck3/wt/map-heightmap-detail/Faerun/Faerun
+2132 CK2 counties, 15195 defined baronies, 2125 province history files
+scale factor 1.954310 -> canvas 8320x6784 (scaled 8005x6504, offset 157,140, crop 0,0-4096,3328)
+painted extent is the whole source bitmap, so the crop is a no-op (docs/map_scale.md §7)
+rasterising provinces (NEAREST on the id array)
+2695 provinces survived, 3 lost, 1 regrown, 2 undefined colours in the bitmap
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+reading CK2 terrain
+barony set at 1357.1.1 (union to 1501.1.1): 3857 holdings in 2125 counties, min_barony_pixels=400
+79338 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+3694 baronies placed, 163 demoted, seeds {'capital_position': 2110, 'sampled': 1584}
+4265 CK3 provinces (padding ocean is id 4265)
+terrain majority vote (per CK3 province, target resolution)
+terrain: {'plains': 1751, 'hills': 643, 'desert': 329, 'mountains': 318, 'steppe': 306, 'taiga': 228, 'forest': 172, 'jungle': 92, 'wetlands': 49, 'farmlands': 15, 'drylands': 1}
+0 CK3 provinces are impassable_mountains
+210 untitled land provinces (CK2 wasteland) forced impassable_mountains
+writing provinces.png
+tracing and redrawing rivers
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 22 of 308 merges did not survive (they fall on a pixel the province map says is water)
+rivers: {'sources': 331, 'merges': 286, 'splits': 9, 'body': 87854, 'water': 29995108, 'land': 26359292}
+building heightmap
+synthesising heightmap detail (seed 1357, docs/map_fidelity.md §4.2)
+heightmap detail: 212 -> 44390 distinct values (10.9s)
+packing heightmap
+painting the flat (paper) map
+writing map_data text files
+adjacency 1691->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1687->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1687 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+locators: 7 files, 3694 land / 4055 passable provinces
+18 vanilla foliage generators emptied
+graphical regions: graphical_western=3273, graphical_mena=365, graphical_india=143, graphical_mediterranean=65, graphical_steppe=24, graphical_siberia=0, graphical_east_asia=34
+map          map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4265 provinces, 3694 baronies in 2125 counties, 163 demoted, 3 lost
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/map-heightmap-detail-detail
+  clean          cleaned /home/cvdbdo/git/paradox/ck3/wt/_out/map-heightmap-detail-detail: removed 0 entries, kept nothing [0.00s]
+  map            map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4265 provinces, 3694 baronies in 2125 counties, 163 demoted, 3 lost [61.49s]
+52 files written, 10 warnings
+run log: /home/cvdbdo/git/paradox/ck3/wt/map-heightmap-detail/docs/evidence/last_run.md

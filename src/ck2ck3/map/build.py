@@ -322,8 +322,48 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         sink.binary("map_data/provinces.png", lambda p: provinces.save_png(rgb, p))
         del rgb
 
+        # traced before the heightmap: the detail pass below carves river
+        # valleys along the same body pixels, so the (canvas-resolution) trace
+        # is computed once here and reused for map_data/rivers.png later
+        # rather than tracing twice.
+        log("tracing and redrawing rivers")
+        riv = rivers.render(src / "rivers.bmp", canvas, water_mask)
+        report["rivers"] = rivers.stats(riv)
+        _check_river_survival(sink, src / "rivers.bmp", riv, report)
+        log(f"rivers: {report['rivers']}")
+
         log("building heightmap")
         heights = heightmap.build(src / "topology.bmp", canvas, cfg.heightmap)
+
+        if cfg.heightmap_detail.enabled:
+            from . import heightmap_detail
+
+            log(f"synthesising heightmap detail (seed {cfg.heightmap_detail.seed}, "
+                "docs/map_fidelity.md §4.2)")
+            f = cfg.heightmap.resolution_factor
+            terrain_code, terrain_keys = _terrain_code_grid(
+                ck3_raster, terrain_ck3, cfg.terrain_default
+            )
+            river_body = (riv >= rivers.BODY_MIN) & (riv <= rivers.BODY_MAX)
+            heights, detail_stats = heightmap_detail.apply(
+                heights,
+                land_mask=_nn_upsample(~water_mask, f),
+                terrain_code=_nn_upsample(terrain_code, f),
+                terrain_keys=terrain_keys,
+                river_body=_nn_upsample(river_body, f),
+                river_width_index=_nn_upsample(riv.astype(np.float32), f),
+                km_per_px=cfg.scale.vanilla_km_per_px / f,
+                water_level=cfg.heightmap.ck3_water_level,
+                max_level=cfg.heightmap.ck3_max_level,
+                cfg=cfg.heightmap_detail,
+            )
+            report["heightmap_detail"] = detail_stats
+            log(
+                f"heightmap detail: {detail_stats['distinct_values_before']} -> "
+                f"{detail_stats['distinct_values_after']} distinct values "
+                f"({detail_stats['elapsed_s']}s)"
+            )
+
         sink.binary("map_data/heightmap.png", lambda p: heightmap.save_png(heights, p))
 
         log("packing heightmap")
@@ -384,12 +424,7 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         if keep_codes_tgt:
             del codes_tgt
 
-        log("tracing and redrawing rivers")
-        riv = rivers.render(src / "rivers.bmp", canvas, water_mask)
         sink.binary("map_data/rivers.png", lambda p: rivers.save_png(riv, p))
-        report["rivers"] = rivers.stats(riv)
-        _check_river_survival(sink, src / "rivers.bmp", riv, report)
-        log(f"rivers: {report['rivers']}")
         del riv
 
     # -------------------------------------------------------- text map files
@@ -751,6 +786,38 @@ def _endpoint_picker(ids: idmap.IdMap, centroids: dict[int, tuple[float, float]]
         return best
 
     return pick
+
+
+def _terrain_code_grid(
+    ck3_raster: np.ndarray, terrain_ck3: dict[int, str], default: str
+) -> tuple[np.ndarray, list[str]]:
+    """Per-pixel CK3 terrain-key index, for the heightmap detail pass's gain.
+
+    Reuses the per-province majority-vote result (``terrain_ck3``) rather than
+    reclassifying pixels from ``terrain.bmp`` itself, so this stays consistent
+    with ``common/province_terrain`` by construction and never touches the
+    terrain-paint/vote code lane ``map-terrain-paint`` owns.
+    """
+    keys = sorted(set(terrain_ck3.values()) | {default})
+    index = {k: i for i, k in enumerate(keys)}
+    max_id = int(ck3_raster.max()) if ck3_raster.size else 0
+    lut = np.full(max_id + 1, index[default], dtype=np.uint8)
+    for pid, key in terrain_ck3.items():
+        if 0 <= pid <= max_id:
+            lut[pid] = index.get(key, index[default])
+    return lut[np.clip(ck3_raster, 0, max_id)], keys
+
+
+def _nn_upsample(a: np.ndarray, factor: int) -> np.ndarray:
+    """Nearest-neighbour upsample, for ``[map.heightmap] resolution_factor``.
+
+    The province raster (and everything derived from it) is always at canvas
+    resolution; the heightmap is canvas resolution times ``resolution_factor``
+    (1 by default, 2 for a vanilla-sized heightmap). A no-op at 1.
+    """
+    if factor == 1:
+        return a
+    return np.repeat(np.repeat(a, factor, axis=0), factor, axis=1)
 
 
 def _write_packed(sink: Sink, heights: np.ndarray, cfg: MapConfig) -> dict:

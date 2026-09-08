@@ -1,0 +1,3 @@
+stage,distinct_levels,land_p50,land_p95,hf_rms_land,grad_mean_levels_per_km
+before,125,8484.0,15686.0,200.9,144.3
+after,22544,8382.0,18680.3,269.1,204.4

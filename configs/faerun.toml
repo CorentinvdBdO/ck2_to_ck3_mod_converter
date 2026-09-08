@@ -142,6 +142,26 @@ sea_margin_px = 128
 canvas_multiple = 64
 max_canvas_px = 32768
 
+# Vanilla-matched detail synthesis on the rescaled heightmap ([map.heightmap]
+# below): the plain curve leaves land with only ~212 distinct 16-bit values
+# (vanilla has 31,516), which reads as terraced contour lines rather than
+# terrain (docs/map_fidelity.md §1.2). Four passes -- de-terrace, spectral
+# fill to vanilla's f^-2.0 land spectrum per CK3 terrain class, river-valley
+# carving, coast smoothing -- prototyped in
+# scripts/prototype_heightmap_detail.py and documented in
+# docs/map_fidelity.md §4.2 / docs/step_map_heightmap.md. Flat keys, like the
+# scale block above: a [map.heightmap_detail] table would collide with the
+# boolean flag of that name.
+heightmap_detail = true
+heightmap_detail_seed = 1357
+# The rest default to the prototype's own numbers (docs/map_fidelity.md §4.2)
+# and are only worth overriding for an experiment:
+# heightmap_detail_deterrace_sigma_px = 1.6
+# heightmap_detail_spectral_slope = -2.0
+# heightmap_detail_gain_blur_px = 6.0
+# heightmap_detail_river_depth = 900.0
+# heightmap_detail_coast_smooth_px = 4.0
+
 [map.heightmap]
 # 1 = heightmap.png the same size as provinces.png. Both Elder Kings 2 and
 # Godherja do this and declare original_heightmap_size equal to their provinces

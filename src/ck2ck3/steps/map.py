@@ -168,6 +168,7 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             curve=[(int(a), int(b)) for a, b in hm.get("curve", [])],
             tile_size=int(hm.get("tile_size", 33)),
         ),
+        heightmap_detail=map_config.heightmap_detail_config(raw),
         provinces=map_config.ProvincesConfig(
             min_pixels=int(pr.get("min_pixels", 16)),
             ocean_rgb=tuple(int(v) for v in pr.get("ocean_rgb", (0, 0, 96))),  # type: ignore[arg-type]
