@@ -104,11 +104,13 @@ def run(ctx: Context) -> StepResult:
     renames = plan.rename_map
     ctx.data["traits"] = {
         "renames": renames,
-        # `approx` pairs are NOT renames: both traits exist. Handed over
-        # separately so a consumer cannot mistake one for a dedupe.
-        "near_equivalents": {n.ck2_trait: n.ck3_trait for n in plan.near_equivalents},
         "live": sorted(plan.live()),
         "unported": [u.ck2_trait for u in unported(plan)],
+        # `drop`/`sexuality` vanilla-table rows: never live, never a rename.
+        # The characters port needs these to emit the right comment/key
+        # (docs/step_traits.md rule 2).
+        "drop_notes": {d.ck2_trait: d.note for d in plan.drops},
+        "sexuality": {s.ck2_trait: s.ck3_trait for s in plan.sexualities},
     }
 
     counts = {
@@ -116,16 +118,18 @@ def run(ctx: Context) -> StepResult:
         "ported": len(converted),
         "race": sum(1 for c in converted if c.kind == "race_trait"),
         "deduped": len(renames),
-        "near_equivalents": len(plan.near_equivalents),
+        "dropped": len(plan.drops),
+        "sexuality": len(plan.sexualities),
         "commented": len(plan.commented()),
         "icons": copied,
         **converter.counts,
     }
     return StepResult(
         summary=(
-            f"{len(converted)} traits ported ({counts['race']} race, "
-            f"{len(plan.near_equivalents)} with a CK3 near-equivalent), "
+            f"{len(converted)} traits ported ({counts['race']} race), "
             f"{len(renames)} deduped to CK3 vanilla, "
+            f"{len(plan.drops)} dropped (no CK3 counterpart), "
+            f"{len(plan.sexualities)} became a CK3 sexuality, "
             f"{len(plan.commented())} commented out"
         ),
         counts=counts,
@@ -150,16 +154,25 @@ def _live_header(plan, converted) -> list[str]:
     ]
     for rename in sorted(plan.renames, key=lambda r: r.ck2_trait):
         lines.append(f"#   {rename.ck2_trait} -> {rename.ck3_trait} ({rename.status})")
-    if plan.near_equivalents:
+    if plan.sexualities:
         lines += [
             "#",
-            f"# {len(plan.near_equivalents)} CK2 traits are ported here AND have a "
-            "CK3 near-equivalent.",
-            "# Both traits exist; mappings/trait_id_map.csv records the pair with "
-            "status",
-            "# approx so a ported event can choose (docs/step_traits.md rule 1):",
+            f"# {len(plan.sexualities)} CK2 trait(s) are not a CK3 trait at all; a",
+            "# character gets a CK3 `sexuality` history key instead "
+            "(docs/step_traits.md rule 2):",
         ]
-        for near in sorted(plan.near_equivalents, key=lambda r: r.ck2_trait):
-            lines.append(f"#   {near.ck2_trait} ~ {near.ck3_trait}")
+        for s in sorted(plan.sexualities, key=lambda r: r.ck2_trait):
+            lines.append(f"#   {s.ck2_trait} -> sexuality = {s.ck3_trait}")
+    if plan.drops:
+        lines += [
+            "#",
+            f"# {len(plan.drops)} CK2 vanilla traits have no CK3 landing place at all",
+            "# (not even a near miss): a character loses the trait, with a "
+            "'# CK2 trait",
+            "# x: no CK3 counterpart' comment in its history "
+            "(docs/step_traits.md rule 2):",
+        ]
+        for d in sorted(plan.drops, key=lambda r: r.ck2_trait):
+            lines.append(f"#   {d.ck2_trait}")
     lines.append("#")
     return lines

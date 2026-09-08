@@ -7,12 +7,22 @@ counts live in ``tests/test_characters_faerun.py``.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from ck2ck3.pdx import Block, Node, parse, write
 from ck2ck3.port.characters import CharacterPort, output_name
 from ck2ck3.port.common import fae_id, strip_ck2_markers
 from ck2ck3.port.tables import Tables, load_tables
+
+CK3_GAME = Path(
+    "/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game"
+)
+needs_ck3 = pytest.mark.skipif(
+    not (CK3_GAME / "common" / "traits" / "00_traits.txt").exists(),
+    reason="CK3 1.19 install not present",
+)
 
 
 @pytest.fixture(scope="module")
@@ -192,16 +202,41 @@ def test_vanilla_trait_is_renamed_to_its_ck3_id(tables: Tables) -> None:
     assert port.report.counts["traits_renamed"] == 1
 
 
-def test_approx_vanilla_trait_keeps_its_ck2_id(tables: Tables) -> None:
-    """An `approx` row is ported as a new trait, so it is NOT renamed.
-
-    Policy 2026-09-08 (`docs/DECISIONS.md`): CK3 `wrathful` is only a
-    near-equivalent of CK2 `wroth`, so both exist and the character keeps the
-    CK2 one.
-    """
+def test_approx_vanilla_trait_is_renamed_just_like_exact(tables: Tables) -> None:
+    """Policy 2026-09-08 second entry (`docs/DECISIONS.md`): `approx` dedupes
+    exactly like `exact` — no CK2 trait definition is ever emitted. CK3
+    `wrathful` is only a near-equivalent of CK2 `wroth`, but the character
+    still gets the CK3 id, not the CK2 one."""
     out, port = convert("1 = { trait = wroth }", tables)
-    assert "trait = wroth" in out
-    assert port.report.counts.get("traits_renamed", 0) == 0
+    assert "trait = wrathful" in out
+    assert "trait = wroth" not in out
+    assert port.report.counts["traits_renamed"] == 1
+
+
+def test_nearest_vanilla_trait_is_renamed(tables: Tables) -> None:
+    """`nearest` (no real counterpart, but a gameplay-adjacent CK3 trait)
+    dedupes the same way as `exact`/`approx`."""
+    out, port = convert("1 = { trait = harelip }", tables)
+    assert "trait = beauty_bad_1" in out
+    assert "trait = harelip" not in out
+
+
+def test_sexuality_vanilla_trait_becomes_a_sexuality_key(tables: Tables) -> None:
+    """`homosexual` is not a CK3 trait at all; the character gets the CK3
+    `sexuality` history key instead (docs/step_traits.md rule 2)."""
+    out, port = convert("1 = { trait = homosexual }", tables)
+    assert "sexuality = homosexual" in out
+    assert "trait = homosexual" not in out
+    assert port.report.counts["traits_sexuality"] == 1
+
+
+def test_drop_vanilla_trait_leaves_a_specific_comment(tables: Tables) -> None:
+    """`envious` has no CK3 landing place at all; the character loses it with
+    the exact comment the user asked for (docs/step_traits.md rule 2)."""
+    out, port = convert("1 = { trait = envious }", tables)
+    assert "trait = envious" not in out
+    assert "# CK2 trait envious: no CK3 counterpart" in out
+    assert port.report.counts["traits_dropped_no_ck3"] == 1
 
 
 def test_faerun_race_trait_keeps_its_id(tables: Tables) -> None:
@@ -260,6 +295,61 @@ def test_add_and_remove_trait_go_through_the_same_table(tables: Tables) -> None:
     )
     assert "add_trait = wounded_1" in out
     assert "remove_trait = brave" in out
+
+
+# -- rule 3: a dedupe must not give a character a conflicting pair ---------
+def test_two_ck2_traits_deduping_to_one_ck3_trait_conflict(tables: Tables) -> None:
+    """`hunter` (exact) and `falconer` (approx) both dedupe to
+    `lifestyle_hunter`: the second is commented, not redefined twice."""
+    from ck2ck3.traits import TraitConflicts
+
+    port = CharacterPort(tables=tables, conflicts=TraitConflicts())
+    doc = parse("1 = { trait = hunter trait = falconer }")
+    out = write(Block(entries=[port.convert_character(doc.entries[0])]))
+    assert out.count("trait = lifestyle_hunter") == 1
+    assert "conflicts with already-held lifestyle_hunter" in out
+    assert port.report.counts["traits_conflict_dropped"] == 1
+    assert port.facts["fae_1"].traits == ["lifestyle_hunter"]
+
+
+def test_opposite_ck3_traits_after_a_dedupe_conflict(tables: Tables) -> None:
+    """`cruel` -> `sadistic` and `kind` -> `compassionate` never conflicted as
+    CK2 ids, but CK3 declares the two traits mutual opposites."""
+    from ck2ck3.traits import TraitConflicts
+
+    conflicts = TraitConflicts(opposites={"sadistic": frozenset({"compassionate"})})
+    port = CharacterPort(tables=tables, conflicts=conflicts)
+    doc = parse("1 = { trait = cruel trait = kind }")
+    out = write(Block(entries=[port.convert_character(doc.entries[0])]))
+    assert "trait = sadistic" in out
+    assert "trait = compassionate" not in out
+    assert "conflicts with already-held sadistic" in out
+    assert port.report.counts["traits_conflict_dropped"] == 1
+
+
+def test_no_conflict_check_when_conflicts_is_none(tables: Tables) -> None:
+    """``conflicts=None`` (the dataclass default) disables the check."""
+    port = CharacterPort(tables=tables)
+    doc = parse("1 = { trait = hunter trait = falconer }")
+    out = write(Block(entries=[port.convert_character(doc.entries[0])]))
+    assert out.count("trait = lifestyle_hunter") == 2
+
+
+@needs_ck3
+def test_leveled_trait_conflict_from_real_ck3_opposites(tables: Tables) -> None:
+    """`slow` (approx -> intellect_bad_2) and `imbecile` (exact ->
+    intellect_bad_3) never conflicted in CK2, but CK3 1.19 lists every
+    intellect_bad tier as each other's `opposites`
+    (`common/traits/00_traits.txt`, `verified`)."""
+    from ck2ck3.traits import read_trait_conflicts
+
+    conflicts = read_trait_conflicts(CK3_GAME / "common" / "traits")
+    port = CharacterPort(tables=tables, conflicts=conflicts)
+    doc = parse("1 = { trait = slow trait = imbecile }")
+    out = write(Block(entries=[port.convert_character(doc.entries[0])]))
+    assert "trait = intellect_bad_2" in out
+    assert "trait = intellect_bad_3" not in out
+    assert "conflicts with already-held intellect_bad_2" in out
 
 
 # -- effects that must be wrapped -----------------------------------------
