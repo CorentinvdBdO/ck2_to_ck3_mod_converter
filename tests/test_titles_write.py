@@ -409,10 +409,18 @@ def test_history_of_a_dead_title_is_kept_commented(title_history):
     assert "\nc_nowhere = {" not in text
 
 
-def test_a_live_title_with_no_ck2_history_gets_a_stub(title_history):
-    text = title_history.files["history/titles/fae_baronies.txt"]
-    assert str(parse(text)["b_castle_waterdeep"]["1.1.1"]["holder"]) == "0"
-    assert title_history.counts["history_stubs"] >= 1
+def test_a_live_barony_with_no_ck2_history_gets_no_stub(title_history):
+    # vanilla baronies have no history; `holder = 0` would mark the barony
+    # "set to be destroyed" (titlehistory.cpp:325, first In Game run 2026-09-08)
+    text = title_history.files.get("history/titles/fae_baronies.txt", "")
+    assert "b_castle_waterdeep = {" not in text
+
+
+def test_land_titles_never_get_a_null_holder(title_history):
+    for rel, text in title_history.files.items():
+        if rel.endswith(("fae_counties.txt", "fae_baronies.txt")):
+            for line in text.splitlines():
+                assert not line.strip().startswith("holder = 0"), (rel, line)
 
 
 def test_held_at_needs_a_living_holder():

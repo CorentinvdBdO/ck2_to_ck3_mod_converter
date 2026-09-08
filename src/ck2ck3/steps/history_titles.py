@@ -41,6 +41,11 @@ def run(ctx: Context) -> StepResult:
             dead_titles=data.dead_titles,
             spans=history.holder_spans(data.title_history),
             prefix=prefix,
+            capital_baronies=frozenset(
+                baronies[0]
+                for baronies in data.plan.by_county.values()
+                if baronies
+            ),
         ),
     )
     for rel, text in sorted(titles.files.items()):
