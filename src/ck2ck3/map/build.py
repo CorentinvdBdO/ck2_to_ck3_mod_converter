@@ -46,6 +46,7 @@ from . import (
     rivers,
     table,
     terrain,
+    terrain_paint,
     writers,
 )
 from .config import MapConfig, load, plan_canvas
@@ -247,7 +248,11 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         mapping=cfg.terrain_map or None,
         default=cfg.terrain_default,
     )
-    del codes_tgt
+    # kept for the terrain-paint pass below (same code grid, no second resize);
+    # freed immediately when that pass will not run
+    keep_codes_tgt = cfg.terrain_paint and not skip_images
+    if not keep_codes_tgt:
+        del codes_tgt
     impassable_ck3 = {
         pid
         for pid, cat in tres.category.items()
@@ -341,6 +346,43 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             "format": "DXT1",
         }
         del paper, heights
+
+        if cfg.terrain_paint:
+            log("painting terrain (gfx/map/terrain/detail_index.tga + "
+                "detail_intensity.tga)")
+            paint = terrain_paint.build_layers(
+                codes_tgt,
+                code_names,
+                material_map=terrain_paint.read_material_map(
+                    _repo_path(cfg, cfg.terrain_paint_csv)
+                ),
+                ordinals=terrain_paint.material_ordinals(
+                    (cfg.ck3_game_dir or Path())
+                    / "gfx" / "map" / "terrain" / "materials.settings"
+                ),
+                mapping=cfg.terrain_map or None,
+                default=cfg.terrain_default,
+                quantize=cfg.terrain_paint_quantize,
+                warn=sink.warn,
+            )
+            sink.binary(
+                terrain_paint.DETAIL_INDEX_PATH,
+                lambda p: terrain_paint.save_tga(paint.index, p),
+            )
+            sink.binary(
+                terrain_paint.DETAIL_INTENSITY_PATH,
+                lambda p: terrain_paint.save_tga(paint.intensity, p),
+            )
+            report["terrain_paint"] = {
+                "classes": paint.classes,
+                "missing_material": paint.missing_material,
+                "missing_ordinal": paint.missing_ordinal,
+                "quantize": paint.quantize,
+            }
+            log(f"terrain paint: {dict(sorted(paint.classes.items()))}")
+            del paint
+        if keep_codes_tgt:
+            del codes_tgt
 
         log("tracing and redrawing rivers")
         riv = rivers.render(src / "rivers.bmp", canvas, water_mask)

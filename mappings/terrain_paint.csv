@@ -1,0 +1,18 @@
+ck3_terrain,primary_material,secondary_material,note
+plains,plains_01,plains_01_noisy,
+farmlands,farmland_01,plains_01,
+hills,hills_01,hills_01_rocks,
+terraced_hills,hills_01_rocks_medi,hills_01,no vanilla "terraced" material; a rockier hills variant reads closest
+mountains,mountain_02,mountain_02_c,
+desert_mountains,mountain_02_desert_c,desert_rocky,
+desert,desert_02,desert_wavy_01,
+drylands,drylands_01,drylands_01_grassy,
+oasis,oasis,medi_grass_01,
+jungle,forest_jungle_01,forestfloor,
+forest,forest_pine_01,forestfloor,
+taiga,forest_pine_01,snow,CK2 arctic/glacier also fold to taiga (ck2ck3.map.terrain); snow as the secondary reads colder than plain forest
+wetlands,wetlands_02,wetlands_02_mud,
+steppe,steppe_grass,steppe_bushes,
+floodplains,floodplains_01,mud_wet_01,
+sea,beach_02,beach_02_pebbles,water provinces still get a code (CK2 terrain.bmp index 19 = ocean); harmless since the game does not sample detail_index/intensity under open water
+coastal_sea,beach_02,beach_02_pebbles,

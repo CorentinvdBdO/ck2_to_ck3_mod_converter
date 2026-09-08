@@ -19,6 +19,8 @@ then the two steps must not be run together.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from ..context import Context, StepResult
 from ..map import build as map_build
 from ..map import config as map_config
@@ -34,6 +36,9 @@ OUTPUTS: tuple[str, ...] = (
     # follow a non-vanilla canvas (docs/evidence/map_ui_research.md)
     "gfx/map/map_object_data",
     "gfx/map/terrain/flat_maps",
+    # detail_index.tga / detail_intensity.tga, the runtime terrain paint pair
+    # (docs/step_map_paint.md); same-filename override, no replace_path needed
+    "gfx/map/terrain",
 )
 
 
@@ -170,7 +175,13 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             regrow_lost=bool(pr.get("regrow_lost", True)),
         ),
         baronies=map_config.barony_config(
-            {"bookmark": ctx.config.bookmark_date, **dict(raw.get("baronies", {}))}
+            {
+                "bookmark": ctx.config.bookmark_date,
+                # [map] ck2_position_seeds is the documented flag (§A); a
+                # [map.baronies] table may still override it explicitly.
+                "ck2_position_seeds": raw.get("ck2_position_seeds", True),
+                **dict(raw.get("baronies", {})),
+            }
         ),
         terrain_map=dict(tr.get("map", {})),
         terrain_default=str(tr.get("default", "plains")),
@@ -179,6 +190,11 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         prefix=ctx.config.prefix,
         title_scaffolding=bool(raw.get("title_scaffolding", False)),
         strip_vanilla_foliage=bool(raw.get("strip_vanilla_foliage", True)),
+        terrain_paint=bool(raw.get("terrain_paint", True)),
+        terrain_paint_csv=Path(
+            str(raw.get("terrain_paint_csv", "mappings/terrain_paint.csv"))
+        ),
+        terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

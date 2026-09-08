@@ -87,6 +87,28 @@ strip_vanilla_foliage = true
 # CK2 labels its lakes only by the ocean_region comment text in default.map.
 lake_names = ["Lakes"]
 
+# Seed the county capital barony from CK2 positions.txt slot 0 and the
+# county's non-capital city_holding (the port) from slot 4, ahead of
+# farthest-point sampling. docs/step_map_baronies.md §3, docs/map_fidelity.md
+# §1.6/§2. false reproduces the seed priority before lane map-paint-seeds
+# (capital only). [map.baronies] city_slot / port_slot pick the slot indices.
+ck2_position_seeds = true
+
+# Write gfx/map/terrain/detail_index.tga + detail_intensity.tga, the pair CK3's
+# renderer actually reads (docs/step_map_paint.md). Ship neither and CK3
+# samples vanilla's own pair in UV space across the canvas - Faerun wears
+# Europe's terrain textures. false skips both (also skipped whenever
+# skip_images is true: they are ~226 MB each, uncompressed, provinces.png-sized).
+terrain_paint = true
+# CK3 terrain key -> (primary, secondary) vanilla material id.
+terrain_paint_csv = "mappings/terrain_paint.csv"
+# detail_intensity.tga blend-weight quantisation step (1 = none). 16 steps is
+# visually invisible and keeps the file far more compressible than 256 would
+# be (docs/map_fidelity.md §4.1); this converter still writes uncompressed
+# TGA either way (`verified` against vanilla: its own pair is image type 2,
+# not RLE), so the quantisation only helps if a future pass adds RLE.
+terrain_paint_quantize = 16
+
 # --- measured scale inputs (flat keys: `scale` under [map] is already the
 # --- derived float above, so a [map.scale] table would collide with it)
 #
@@ -170,16 +192,22 @@ bias_gain = 0.5
 # and the next seed source takes over, so a typo degrades instead of moving a
 # barony into the wrong county.
 snap_radius_px = 48
-# Lloyd relaxation on the seeds the converter sampled itself: grow, move each
-# sampled seed to its region centroid, regrow. Evens out the barony areas so
-# fewer holdings are demoted; measured on Faerun, 0 passes demotes 313
-# holdings, 2 demotes 176, 4 demotes 163 and 6 demotes 164 (converged).
-# Override, gazetteer and positions.txt seeds are never moved.
+# Lloyd relaxation: grow, move each relaxable seed to its region centroid,
+# regrow. Evens out the barony areas so fewer holdings are demoted; measured
+# on Faerun (capital-only seeding, pre lane map-paint-seeds), 0 passes demotes
+# 313 holdings, 2 demotes 176, 4 demotes 163 and 6 demotes 164 (converged).
+# Relaxable: seeds the converter sampled itself, and port_position (the CK2
+# positions.txt slot-4 seed, a clamped/snapped coordinate, not a human
+# decision - pinning it exactly like an override measurably demoted MORE
+# baronies than sampling did for the same holdings). Override, gazetteer and
+# capital_position seeds are never moved.
 relax_passes = 4
 max_regrow_passes = 3
 # Index into the 7 pairs of a CK2 positions.txt `position={...}` block. 0 is
-# the city slot (verified, docs/map_scale.md 2b).
+# the city slot (verified, docs/map_scale.md 2b), 4 is the port slot
+# (verified, docs/map_fidelity.md 1.6).
 city_slot = 0
+port_slot = 4
 seeds_csv = "overrides/barony_seeds.csv"
 gazetteer_csv = "overrides/gazetteer.csv"
 # Per-duchy review PNGs during the conversion. Off: 979 sheets is ~3 min and
