@@ -1,0 +1,14 @@
+115 materials with a mask
+detail_index (4608, 9216, 4) uint8; intensity (4608, 9216, 4)
+sampled 400 pixels with non-zero first intensity
+  read 0/115
+  read 20/115
+  read 40/115
+  read 60/115
+  read 80/115
+  read 100/115
+
+samples                          400
+all four index channels in top-4 7 (1.8 %)
+intensity == mask value exactly  5 (1.2 %)
+mean channels in top-4           1.44 / 4

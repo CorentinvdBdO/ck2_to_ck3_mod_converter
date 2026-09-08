@@ -1,0 +1,89 @@
+set,name,width,height,mode,bytes,path
+ck2_vanilla,provinces.bmp,3072,2048,RGB,18874424,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/provinces.bmp
+ck2_vanilla,topology.bmp,3072,2048,L,6292536,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/topology.bmp
+ck2_vanilla,terrain.bmp,3072,2048,P(255 colours),6292532,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/terrain.bmp
+ck2_vanilla,trees.bmp,382,293,P(256 colours),113592,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/trees.bmp
+ck2_vanilla,rivers.bmp,3072,2048,P(256 colours),6292536,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/rivers.bmp
+ck2_vanilla,world_normal_height.bmp,3072,2048,RGB,18874424,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings II/map/world_normal_height.bmp
+ck2_faerun,provinces.bmp,4096,3328,RGB,40894518,Faerun/Faerun/map/provinces.bmp
+ck2_faerun,topology.bmp,4096,3328,L,13632568,Faerun/Faerun/map/topology.bmp
+ck2_faerun,terrain.bmp,4096,3328,P(255 colours),13632564,Faerun/Faerun/map/terrain.bmp
+ck2_faerun,trees.bmp,512,416,P(256 colours),214070,Faerun/Faerun/map/trees.bmp
+ck2_faerun,rivers.bmp,4096,3328,P(256 colours),13632568,Faerun/Faerun/map/rivers.bmp
+ck2_faerun,world_normal_height.bmp,3686,2995,RGB,33124756,Faerun/Faerun/map/world_normal_height.bmp
+ck3_vanilla,provinces.png,9216,4608,RGB,2488311,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/map_data/provinces.png
+ck3_vanilla,heightmap.png,18432,9216,I;16,122165778,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/map_data/heightmap.png
+ck3_vanilla,rivers.png,9216,4608,P(256 colours),601095,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/map_data/rivers.png
+ck3_vanilla,packed_heightmap.png,3185,4061,I;16,16829933,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/map_data/packed_heightmap.png
+ck3_vanilla,indirection_heightmap.png,288,144,RGBA,40357,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/map_data/indirection_heightmap.png
+ck3_vanilla,detail_index.tga,9216,4608,tga type2 32bpp,169869356,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/detail_index.tga
+ck3_vanilla,detail_intensity.tga,9216,4608,tga type2 32bpp,169869356,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/detail_intensity.tga
+ck3_vanilla,colormap.dds,9216,4608,DXT5,56623424,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/colormap.dds
+ck3_mask,_debug_mask.png,9216,4608,L,7343018,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/_debug_mask.png
+ck3_mask,beach_02_mask.png,9216,4608,L,4093444,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/beach_02_mask.png
+ck3_mask,beach_02_mediterranean_mask.png,9216,4608,L,1496336,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/beach_02_mediterranean_mask.png
+ck3_mask,beach_02_pebbles_mask.png,9216,4608,L,830307,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/beach_02_pebbles_mask.png
+ck3_mask,central_lowlands_02_mask.png,9216,4608,L,300659,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/central_lowlands_02_mask.png
+ck3_mask,central_lowlands_03_mask.png,9216,4608,L,297505,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/central_lowlands_03_mask.png
+ck3_mask,central_mountain_mask.png,9216,4608,L,366799,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/central_mountain_mask.png
+ck3_mask,coastline_cliff_desert_mask.png,9216,4608,L,1057546,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/coastline_cliff_desert_mask.png
+ck3_mask,coastline_cliff_grey_mask.png,9216,4608,L,934327,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/coastline_cliff_grey_mask.png
+ck3_mask,desert_01_mask.png,9216,4608,L,335679,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_01_mask.png
+ck3_mask,desert_02_mask.png,9216,4608,L,1391316,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_02_mask.png
+ck3_mask,desert_cracked_mask.png,9216,4608,L,989125,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_cracked_mask.png
+ck3_mask,desert_flat_01_mask.png,9216,4608,L,353542,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_flat_01_mask.png
+ck3_mask,desert_rocky_mask.png,9216,4608,L,2430660,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_rocky_mask.png
+ck3_mask,desert_wavy_01_larger_mask.png,9216,4608,L,1391648,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_wavy_01_larger_mask.png
+ck3_mask,desert_wavy_01_mask.png,9216,4608,L,2748480,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/desert_wavy_01_mask.png
+ck3_mask,drought_cracks_mask.png,9216,4608,L,185697,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/drought_cracks_mask.png
+ck3_mask,drought_mask.png,9216,4608,L,185697,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/drought_mask.png
+ck3_mask,drylands_01_cracked_mask.png,9216,4608,L,815209,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/drylands_01_cracked_mask.png
+ck3_mask,drylands_01_grassy_mask.png,9216,4608,L,3355274,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/drylands_01_grassy_mask.png
+ck3_mask,drylands_01_mask.png,9216,4608,L,2077582,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/drylands_01_mask.png
+ck3_mask,farm_paddy_01_mask.png,9216,4608,L,373039,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/farm_paddy_01_mask.png
+ck3_mask,farmland_01_mask.png,9216,4608,L,300120,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/farmland_01_mask.png
+ck3_mask,flood_mask.png,9216,4608,L,185697,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/flood_mask.png
+ck3_mask,floodplains_01_mask.png,9216,4608,L,443381,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/floodplains_01_mask.png
+ck3_mask,forest_jungle_01_mask.png,9216,4608,L,2214184,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/forest_jungle_01_mask.png
+ck3_mask,forest_leaf_01_mask.png,9216,4608,L,1378332,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/forest_leaf_01_mask.png
+ck3_mask,forest_pine_01_mask.png,9216,4608,L,2235771,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/forest_pine_01_mask.png
+ck3_mask,forestfloor_mask.png,9216,4608,L,1729622,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/forestfloor_mask.png
+ck3_mask,hills_01_mask.png,9216,4608,L,2769527,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/hills_01_mask.png
+ck3_mask,hills_01_rocks_mask.png,9216,4608,L,1938024,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/hills_01_rocks_mask.png
+ck3_mask,hills_01_rocks_medi_mask.png,9216,4608,L,1752048,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/hills_01_rocks_medi_mask.png
+ck3_mask,hills_01_rocks_small_mask.png,9216,4608,L,1508992,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/hills_01_rocks_small_mask.png
+ck3_mask,india_farmlands_mask.png,9216,4608,L,308361,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/india_farmlands_mask.png
+ck3_mask,medi_dry_mud_mask.png,9216,4608,L,1006546,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/medi_dry_mud_mask.png
+ck3_mask,medi_farmlands_mask.png,9216,4608,L,258721,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/medi_farmlands_mask.png
+ck3_mask,medi_grass_01_mask.png,9216,4608,L,1217763,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/medi_grass_01_mask.png
+ck3_mask,medi_lumpy_grass_mask.png,9216,4608,L,217032,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/medi_lumpy_grass_mask.png
+ck3_mask,medi_noisy_grass_mask.png,9216,4608,L,329333,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/medi_noisy_grass_mask.png
+ck3_mask,mountain_02_b_mask.png,9216,4608,L,413432,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_b_mask.png
+ck3_mask,mountain_02_c_mask.png,9216,4608,L,85676,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_c_mask.png
+ck3_mask,mountain_02_c_snow_mask.png,9216,4608,L,292395,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_c_snow_mask.png
+ck3_mask,mountain_02_d_desert_mask.png,9216,4608,L,1046074,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_d_desert_mask.png
+ck3_mask,mountain_02_d_mask.png,9216,4608,L,172501,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_d_mask.png
+ck3_mask,mountain_02_d_snow_mask.png,9216,4608,L,116730,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_d_snow_mask.png
+ck3_mask,mountain_02_d_valleys_mask.png,9216,4608,L,115905,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_d_valleys_mask.png
+ck3_mask,mountain_02_desert_c_mask.png,9216,4608,L,437461,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_desert_c_mask.png
+ck3_mask,mountain_02_mask.png,9216,4608,L,519624,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_mask.png
+ck3_mask,mountain_02_snow_mask.png,9216,4608,L,197908,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_02_snow_mask.png
+ck3_mask,mountain_03_mask.png,9216,4608,L,246623,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mountain_03_mask.png
+ck3_mask,mud_wet_01_mask.png,9216,4608,L,431285,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/mud_wet_01_mask.png
+ck3_mask,northern_hills_01_mask.png,9216,4608,L,46147,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/northern_hills_01_mask.png
+ck3_mask,northern_plains_01_mask.png,9216,4608,L,711296,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/northern_plains_01_mask.png
+ck3_mask,oasis_mask.png,9216,4608,L,291599,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/oasis_mask.png
+ck3_mask,plains_01_dry_mask.png,9216,4608,L,2025222,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/plains_01_dry_mask.png
+ck3_mask,plains_01_dry_mud_mask.png,9216,4608,L,2066310,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/plains_01_dry_mud_mask.png
+ck3_mask,plains_01_mask.png,9216,4608,L,3332140,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/plains_01_mask.png
+ck3_mask,plains_01_noisy_mask.png,9216,4608,L,1626237,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/plains_01_noisy_mask.png
+ck3_mask,plains_01_rough_mask.png,9216,4608,L,3104865,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/plains_01_rough_mask.png
+ck3_mask,snow_mask.png,9216,4608,L,921719,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/snow_mask.png
+ck3_mask,steppe_01_mask.png,9216,4608,L,3443703,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/steppe_01_mask.png
+ck3_mask,steppe_bushes_mask.png,9216,4608,L,2643776,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/steppe_bushes_mask.png
+ck3_mask,steppe_grass_mask.png,9216,4608,L,1381612,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/steppe_grass_mask.png
+ck3_mask,steppe_rocks_mask.png,9216,4608,L,1035647,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/steppe_rocks_mask.png
+ck3_mask,summer_grass_mask.png,9216,4608,L,186272,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/summer_grass_mask.png
+ck3_mask,wetlands_02_mask.png,9216,4608,L,635601,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/wetlands_02_mask.png
+ck3_mask,wetlands_02_mud_mask.png,9216,4608,L,289673,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/wetlands_02_mud_mask.png
+ck3_mask,winter_effect_mask.png,9216,4608,L,185697,/home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/gfx/map/terrain/masks/winter_effect_mask.png

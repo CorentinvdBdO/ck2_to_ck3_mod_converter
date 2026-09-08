@@ -1,0 +1,8 @@
+slot,note,blocks,pct_equal_to_slot0,pct_rotation_nonzero,pct_on_water,median_dist_from_slot0_ck2px,median_dist_from_slot0_ck3px
+0,capital/city (named by the CK2 binary),2660,100.0,0.0,9.2,0.0,0.0
+1,"unnamed; always distinct from slot 0, almost always inside the province",2660,0.2,0.0,12.0,11.66,22.8
+2,unnamed; equal to slot 0 in 46 % of Faerun blocks,2660,46.1,9.6,12.3,5.39,10.5
+3,unnamed; height = 20.000 in every block of both maps,2660,58.1,0.0,13.1,0.0,0.0
+4,port (named by the CK2 binary); most often on water,2660,0.0,19.1,36.1,13.04,25.5
+5,unnamed; rotation non-zero in 99 % of vanilla blocks (an oriented model),2660,21.2,0.1,13.8,14.42,28.2
+6,unnamed; rotation non-zero in 99 % of vanilla blocks (an oriented model),2660,24.7,1.4,16.8,20.52,40.1

@@ -85,4 +85,8 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `docs/integration_run.md` — regenerate and validate the whole mod in five commands; which steps depend on which.
 - `docs/evidence/game_load_2026-09-08.md` — getting the mod to boot in the real game: every launch attempt, what error.log said, what was fixed
 - `docs/evidence/full_run_2026-09-08.md` — the reference full run, per step · `docs/evidence/tiger_full_2026-09-08.md` — every ck3-tiger class with its justification, and the cross-step bugs it found
+- `docs/map_fidelity.md` — why the map looks wrong and what each fix costs: CK2 vs CK3 raster
+  comparison, vanilla's `f^-2.0` height spectrum and per-terrain detail amplitudes, the
+  `detail_index.tga`/`detail_intensity.tga` runtime terrain format, locator coordinate frame,
+  CK2 `positions.txt` slot signatures. Hand-off: `docs/evidence/HANDOFF_map_fidelity.md`.
 - `docs/evidence/` — script outputs, review sheets.
