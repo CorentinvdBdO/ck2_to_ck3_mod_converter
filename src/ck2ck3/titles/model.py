@@ -148,6 +148,8 @@ class TitleModel:
     #: county id -> its CK2 province history
     county_history: dict[str, Ck2ProvinceHistory]
     county_of_province: dict[int, str]
+    #: county id -> its CK2 province id (what map/positions.txt is keyed by)
+    ck2_of_county: dict[str, int]
     kingdom_of_county: dict[str, str]
     plan: PlacementPlan
     live_titles: frozenset[str]
@@ -278,6 +280,7 @@ def build(
         province_history=province_history,
         county_history=county_history,
         county_of_province=county_of_province,
+        ck2_of_county=ck2_of_county,
         kingdom_of_county=kingdoms_of_counties(roots),
         plan=plan,
         live_titles=live,
