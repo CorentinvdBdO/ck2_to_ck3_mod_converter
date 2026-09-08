@@ -1,3 +1,14 @@
+# CK2 pydantic schema, kept only for the readers that still use it
+# (games/ck2/read/{modifiers,traits}.py -> Trait, CustomModifier, Modifiers).
+#
+# Removed by lane titles-history, 2026-09-07: Definition, OceanRegion,
+# DefaultDotMap, Terrain, LandedTitle + Empire/Kingdom/Duchy/County/Barony,
+# TitleChangeKeys, TitleChange, TitleHistory, CountyProvinceHistory and
+# title_from_id. They were an unused second model hierarchy for the title and
+# map world (docs/converter_code_assessment.md "two divergent model
+# hierarchies"); ck2ck3.titles.ck2read and ck2ck3.map.ck2read replace them.
+# Character/Culture/Religion* are left for lanes characters and
+# cultures-religions to decide on.
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, GetJsonSchemaHandler
 from typing import Optional, Dict, List, Tuple, Union, Any
 from enum import Enum
@@ -35,169 +46,12 @@ class ParadoxList(List[Any]):
     ) -> JsonSchemaValue:
         return {"type": "array"}
     
-class Definition(BaseModel):
-    id: int
-    r: Optional[int] = None
-    g: Optional[int] = None
-    b: Optional[int] = None
-    name: str
-
-class OceanRegion(BaseModel):
-    sea_zones:List[int] = []
-
-class DefaultDotMap(BaseModel):
-    max_provinces:int
-    definitions:str = "definition.csv"
-    provinces:str = "provinces.bmp"
-    positions:str = "positions.txt"
-    terrain:str = "terrain.bmp"
-    rivers:str = "rivers.bmp"
-    terrain_definition:str = "terrain.txt"
-    heightmap:str = "topology.bmp"
-    tree_definition:str = "trees.bmp"
-    continent:str = "continent.txt"
-    adjacencies:str = "adjacencies.csv"
-    climate:str = "climate.txt"
-    region:str = "island_region.txt"
-    geographical_region:str = "geographical_region.txt"
-    static:str = "statics"
-    seasons:str = "seasons.txt"
-
-    externals:ParadoxList[int] = []
-    sea_zones:Dict[int, ParadoxList[int]] = {}
-    ocean_regions:Dict[int, OceanRegion] = {}
-    major_rivers: ParadoxList[int] = []
-
-    tree: ParadoxList[int] = []
-
-class Terrain(BaseModel):
-    name: str
-    color: Tuple[int, int, int]
-    is_water: Optional[bool] = None
-    movement_cost: Optional[float] = None
-    supply_limit: Optional[int] = None
-    bottleneck_chance: Optional[int] = None
-    max_attrition: Optional[float] = None
-    defence: Optional[float] = None
-
-
-class LandedTitle(BaseModel):
-    """
-    Completed from list: https://ck2.paradoxwikis.com/Title_modding
-    """
-    rank: int
-    title_name: str
-    capital: Optional[int] = None
-    color: Optional[Tuple[int, int, int]] = None
-    color2: Optional[Tuple[int, int, int]] = None
-    cultural_names: Optional[Dict[str, str]] = {}    
-    has_top_de_jure_capital: Optional[bool] = None
-    top_de_jure_capital: Optional[bool] = None
-    allow: Optional[Dict] = None
-    religion: Optional[str] = None
-    culture: Optional[str] = None
-    graphical_culture: Optional[str] = None
-    landless: Optional[bool] = None
-    primary: Optional[bool] = None
-    title: Optional[str] = None
-    title_female: Optional[str] = None
-    foa: Optional[str] = None
-    title_prefix: Optional[str] = None
-    short_name: Optional[bool] = None
-    name_tier: Optional[str] = None
-    coat_of_arms: Optional[Dict] = None
-    pagan_coat_of_arms: Optional[Dict] = None
-    mercenary: Optional[bool] = None
-    mercenary_type: Optional[str] = None
-    independent: Optional[bool] = None
-    holy_order: Optional[bool] = None
-    modifiers: Optional[ParadoxList[str]] = None
-    strength_growth_per_century: Optional[float] = None
-    religion_crusade_target: Optional[Dict[str, int]] = None
-    religion_group_crusade_target: Optional[Dict[str, int]] = None
-    male_names: Optional[ParadoxList[str]] = None
-    female_names: Optional[ParadoxList[str]] = None
-    controls_religion: Optional[str] = None
-    tribe: Optional[bool] = None
-    creation_requires_capital: Optional[bool] = None
-    caliphate: Optional[bool] = None
-    dynasty_title_names: Optional[bool] = None
-    used_for_dynasty_names: Optional[bool] = None
-    purple_born_heirs: Optional[bool] = None
-    cultural_names: Optional[Dict[str, str]] = None
-    location_ruler_title: Optional[bool] = None
-    dignity: Optional[int] = None
-    holy_site_for: Optional[ParadoxList[str]] = None
-    pentarchy: Optional[Union[bool, str]] = None
-    assimilate: Optional[bool] = None
-    duchy_revocation: Optional[bool] = None
-    gain_effect: Optional[str] = None
-    monthly_income: Optional[int] = None
-    can_be_claimed: Optional[bool] = None
-    can_be_usurped: Optional[bool] = None
-    extra_ai_eval_troops: Optional[int] = None
-    hire_range: Optional[int] = None
-
-    children: Optional[ParadoxList["LandedTitle"]] = []
-
-
-class Empire(LandedTitle):
-    rank: int = 1
-    pass
-
-class Kingdom(LandedTitle):
-    rank: int = 2
-    pass
-
-class Duchy(LandedTitle):
-    rank: int = 3
-    pass
-
-class County(LandedTitle):
-    rank: int = 4
-    pass
-
-class Barony(LandedTitle):
-    rank: int = 5
-    pass
-
-# TODO: Offmap powers
-
 class Change(BaseModel):
     key: str
     value: Union[Any]
 
 class History(BaseModel):
     history: Dict[str, ParadoxList[Change]] = Field(default_factory=dict) # date: changes
-
-class TitleChangeKeys(Enum):
-    HOLDER = "holder"
-    LIEGE = "liege"
-    LAWS = "laws"
-    HOLDING_DYNASTY = "holding_dynasty"
-    ACTIVE = "active"
-
-class TitleChange(Change):
-    key: TitleChangeKeys
-    value: Optional[Union[int, str, bool]] = None
-
-class TitleHistory(History):
-    changes: Dict[str, ParadoxList[TitleChange]] = Field(default_factory=dict)
-
-class CountyProvinceHistory(History):
-    """
-    Completed from list: https://ck2.paradoxwikis.com/Province_modding
-    Ignore non active baronies
-    """
-    id: int
-    definition_name: str
-    title: Optional[str] = None
-    max_settlements: Optional[int] = None
-    culture: Optional[str] = None
-    religion: Optional[str] = None
-    terrain: Optional[str] = None
-    # title, culture, religion, b_name
-    # history: Dict[str, List[CountyProvinceChange]] = Field(default_factory=dict) # Changes in culture and religion
 
 class CharacterChangeKeys(Enum):
     """
@@ -939,11 +793,4 @@ class CommandModifier(BaseModel):
 class Event(BaseModel):
     name: str
 
-title_from_id = {
-    "e": Empire,
-    "k": Kingdom,
-    "d": Duchy,
-    "c": County,
-    "b": Barony
-}
 

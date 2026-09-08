@@ -240,18 +240,27 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     report["adjacencies"] = {"kept": kept_adj, "dropped": len(dropped_adj)}
 
     # ------------------------------------------------------------ bootstrap
-    log("writing throwaway title scaffolding")
     sink.text(
         f"common/defines/{prefix}_defines.txt",
         bootstrap.render_defines(width=canvas.width, height=canvas.height),
     )
-    titles_text, n_titles = bootstrap.render_landed_titles(ids.provinces, keys)
-    sink.text(f"common/landed_titles/{prefix}_landed_titles.txt", titles_text)
-    hist_text, n_hist = bootstrap.render_province_history(ids.provinces)
-    sink.text(f"history/provinces/{prefix}_provinces.txt", hist_text)
-    sink.text(f"history/titles/{prefix}_titles.txt", bootstrap.render_title_history())
     for rel, text in bootstrap.render_empty_replacements().items():
         sink.text(rel, text)
+    # The throwaway one-barony-per-province title scaffolding this step used to
+    # write is gone: lane `titles-history` owns common/landed_titles,
+    # history/titles and history/provinces and writes the real Faerun tree
+    # there (steps `titles` and `history_titles`).  `cfg.title_scaffolding`
+    # brings it back for a map-only run - see docs/step_titles.md.
+    n_titles = n_hist = 0
+    if cfg.title_scaffolding:
+        log("writing throwaway title scaffolding")
+        titles_text, n_titles = bootstrap.render_landed_titles(ids.provinces, keys)
+        sink.text(f"common/landed_titles/{prefix}_landed_titles.txt", titles_text)
+        hist_text, n_hist = bootstrap.render_province_history(ids.provinces)
+        sink.text(f"history/provinces/{prefix}_provinces.txt", hist_text)
+        sink.text(
+            f"history/titles/{prefix}_titles.txt", bootstrap.render_title_history()
+        )
     report["bootstrap"] = {"baronies": n_titles, "province_history": n_hist}
     report["localisation"] = bootstrap.localisation_entries(ids.provinces, keys)
 

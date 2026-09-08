@@ -12,12 +12,12 @@ All items `verified` by reading the code unless marked `assumed`.
 - `src/map/heightmap.py` (129) — grayscale, LANCZOS resize, paste on black canvas at offset, hardcoded 12-point GIMP curve → 256 LUT via `np.interp`, saves 8-bit PNG. No 16-bit, no packed heightmap.
 - `src/map/province.py` (48) — RGB, NEAREST resize, paste on `(0,0,0)` canvas (invalid province colour). No lost-province detection.
 - `src/map/rivers.py` (249) — vector approach: follows rivers from SOURCE pixels, records tributaries with parent index, scales coordinates, re-snaps tributary heads, redraws with Bresenham, stamps special pixels last. Gaps: SPLIT (yellow) not followed, WATER (magenta) treated as river continuation, `deletion_rate` and `end_pixel_color_type` unused, `interp1d`/`random` imports unused.
-- `src/titles/all_titles.py` (357) — pydantic models `Definition`, `BaronyHistory`, `CountyProvinceHistory`, `LandedTitle` + rank subclasses (duplicates of `games/ck2/classes.py` with drift). Reads CK2 `definition.csv` (custom parser, keeps `#` lines), `history/provinces/*`, `map/climate.txt`, `landed_titles`. `convert_titles()` ends in `pass`; `new_mod_folder` unused. Writes nothing.
-- `src/titles/definitions.py` (17) — `convert_definitions()` stub with a good docstring on county→barony remap. Never called.
-- `src/games/ck2/classes.py` (949) — thorough pydantic schema of CK2 (default.map, terrain, titles, histories, characters, cultures, religions, exhaustive `Modifiers` enum, traits, event/opinion modifiers). Only `Trait` and `CustomModifier` are instantiated anywhere.
+- **DELETED 2026-09-07 (lane `titles-history`)**, replaced by `src/ck2ck3/titles/ck2read.py`: `src/titles/all_titles.py` (357) — pydantic models `Definition`, `BaronyHistory`, `CountyProvinceHistory`, `LandedTitle` + rank subclasses (duplicates of `games/ck2/classes.py` with drift). Reads CK2 `definition.csv` (custom parser, keeps `#` lines), `history/provinces/*`, `map/climate.txt`, `landed_titles`. `convert_titles()` ends in `pass`; `new_mod_folder` unused. Writes nothing.
+- **DELETED 2026-09-07**, superseded by `src/ck2ck3/titles/place.py`: `src/titles/definitions.py` (17) — `convert_definitions()` stub with a good docstring on county→barony remap. Never called.
+- `src/games/ck2/classes.py` — **the title and map models were removed 2026-09-07** (Definition, OceanRegion, DefaultDotMap, Terrain, LandedTitle + rank subclasses, TitleChange*, TitleHistory, CountyProvinceHistory, title_from_id); the rest is unchanged. Originally (949 lines) — thorough pydantic schema of CK2 (default.map, terrain, titles, histories, characters, cultures, religions, exhaustive `Modifiers` enum, traits, event/opinion modifiers). Only `Trait` and `CustomModifier` are instantiated anywhere.
 - `src/games/ck2/read/modifiers.py` (25), `read/traits.py` (46) — the only working readers. Traits reader raises `ValueError` on any unknown key (brittle). `modifiers.py` has a `__main__` block with a hardcoded path from another machine.
 - `src/games/ck2/keywords.py`, `src/games/ck3/classes.py` — empty. No CK3 model, reader or writer exists.
-- `src/titles/`, `src/utils/` lack `__init__.py` (implicit namespace packages).
+- `src/utils/` lacks `__init__.py` (implicit namespace package); `src/titles/` did too, and is gone.
 - No tests anywhere. `pyproject.toml` lacked `pillow`/`numpy` and `requires-python` (fixed 2026-09-07).
 
 ## 2. Parser (`paradox_file_parser.py`)
@@ -40,7 +40,7 @@ All items `verified` by reading the code unless marked `assumed`.
 
 ## 4. Titles / games
 
-- Two divergent model hierarchies (`titles/all_titles.py` vs `games/ck2/classes.py`).
+- ~~Two divergent model hierarchies (`titles/all_titles.py` vs `games/ck2/classes.py`).~~ Resolved 2026-09-07: `src/titles/` deleted, the duplicate models removed from `classes.py`.
 - Everything is read-side, CK2-side. No CK3 schema, no writer, no validation.
 
 ## 5. Orchestration
