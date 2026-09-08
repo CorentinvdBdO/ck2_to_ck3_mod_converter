@@ -47,7 +47,6 @@ replace_paths = [
     # subfolder does need one, since vanilla ships three files there that
     # reference vanilla duchies.
     "map_data/geographical_regions",
-    "common/defines",
     # Mandatory for a total conversion: vanilla ships 18 tests/*.txt that
     # hard-code 1066 ids (character 122, k_croatia) and would fail en masse on
     # this map. Step `tests` owns the folder.
