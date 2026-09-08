@@ -1,0 +1,73 @@
+path,mode,note
+common/achievements,shadow,Achievements name vanilla titles and provinces (49 title_links). Godherja replace_paths the folder; Atlantis overrides 9 of the 10 files and EK2 all 11 of its own.
+common/coat_of_arms/dynamic_definitions,shadow,124 bare vanilla title tags keyed to dynasty/house heraldry. Atlantis ships 3 files here that are a BOM and nothing else; EK2 stubs 2 and Godherja 3.
+common/culture/creation_names,shadow,"409 title_links: the names a created empire/kingdom gets (""k_france"" -> Kingdom of France). Pure vanilla-map content."
+common/decisions,shadow,"717 title_links over 23 of 34 files (found kingdoms, restore the Roman Empire). Godherja declares replace_path=""common/decisions""; EK2 stubs 7 files."
+common/decisions/dlc_decisions,shadow,208 title_links. Same class as the parent folder; replace_path is not recursive so every subfolder is its own row.
+common/decisions/dlc_decisions/bp3,shadow,DLC decisions naming vanilla titles (22 title_links).
+common/decisions/dlc_decisions/bp_2,shadow,DLC decisions folder; shadowed with its siblings so no decision survives that names a vanilla title.
+common/decisions/dlc_decisions/ce_1,shadow,DLC decisions naming vanilla titles (1 title_links).
+common/decisions/dlc_decisions/ep_1,shadow,DLC decisions naming vanilla titles (6 title_links).
+common/decisions/dlc_decisions/ep_2,shadow,DLC decisions folder; shadowed with its siblings.
+common/decisions/dlc_decisions/ep_3,shadow,DLC decisions naming vanilla titles (6 title_links).
+common/decisions/dlc_decisions/fp_1,shadow,DLC decisions naming vanilla titles (24 title_links).
+common/decisions/dlc_decisions/fp_3,shadow,DLC decisions naming vanilla titles (21 title_links).
+common/decisions/dlc_decisions/mpo,shadow,DLC decisions naming vanilla titles (12 title_links).
+common/decisions/dlc_decisions/tgp,shadow,"206 title_links, including tgp_silk_road_decisions.txt - the Silk Road situation the playtest crashed on."
+common/flavorization,shadow,"1783 pdx_persistent_reader ""Failed to read key reference"" at load, all naming vanilla titles (e_japan, k_chrysanthemum_throne). EK2 stubs 6 of 8 files, Godherja 3."
+common/great_projects/types,shadow,341 title_links: wonders pinned to vanilla counties and provinces.
+common/legends/chronicles,shadow,32 title_links plus vanilla dynasty references.
+common/legends/legend_seeds,shadow,"4411 ""Failed to fetch a valid dynasty"" script errors and 47 title_links: seeds are historical legends about vanilla dynasties and titles."
+common/on_action/story_cycles,neutralise,"The on_action hooks of the shadowed story cycles. Neutralised, not blanked: common/on_action/yearly_on_actions.txt and three DLC event files call six of these hooks by name (scripts/tc_check_shadow_callers.py). EK2 stubs 2 files here."
+common/situation/catalysts,shadow,Catalysts exist only to advance the situations shadowed below.
+common/situation/situations,shadow,"40 title_links. tgp_dynastic_cycle.txt and the Silk Road situation crashed the game on click (playtest 2026-09-08). Godherja stubs 5 of 10 files; the brief requires situations fully neutral."
+common/story_cycles,shadow,"45 title_links over 9 of 52 files; the rest are vanilla historical narratives with no place on this map. EK2 stubs 13, Godherja 10."
+common/struggle/catalysts,shadow,Catalysts of the struggles shadowed below.
+common/struggle/struggles,shadow,"history/struggles is already replace_path-ed and empty, so the three vanilla struggles are unreachable content; the brief requires them fully neutral."
+common/travel/point_of_interest_types,shadow,51 province: references to vanilla provinces.
+common/tutorial_lesson_chains,shadow,Chains of the tutorial lessons shadowed below.
+common/tutorial_lessons,shadow,27 title_links: the tutorial walks the player through 1066 Ireland.
+events/decisions_events,shadow,"337 title_links. Fired only by the decisions shadowed above, so shadowing both keeps the set closed. EK2 stubs 5 files, Godherja 9."
+events/story_cycles,shadow,"26 title_links. Fired only by common/story_cycles, shadowed above. Godherja stubs 4."
+common/scripted_effects/00_decisions_effects.txt,neutralise,251 title_links; called only from common/decisions.
+common/scripted_effects/00_ep3_decision_effects.txt,neutralise,32 title_links; called only from the ep3 decisions.
+common/scripted_effects/00_historical_characters_scripted_effects.txt,neutralise,151 title_links; spawns named vanilla historical characters.
+common/scripted_effects/00_major_decisions_scripted_effects.txt,neutralise,933 title_links - the single worst vanilla file. Called only from the major decisions.
+common/scripted_effects/00_major_decisions_scripted_effects_2.txt,neutralise,Continuation of the file above; same callers.
+common/scripted_effects/00_major_decisions_scripted_effects_3.txt,neutralise,50 title_links; same callers.
+common/scripted_effects/00_mongol_invasion_effects.txt,neutralise,121 title_links: the Mongol invasion scripts vanilla titles and characters directly.
+common/scripted_effects/00_tributary_setup_effects.txt,neutralise,105 title_links: sets up the 1066/867 tributary web by title tag.
+common/scripted_effects/01_exp1_historical_artifacts_creation_effect.txt,neutralise,77 title_links; creates artefacts owned by vanilla characters.
+common/scripted_effects/06_dlc_ce1_legend_effects.txt,neutralise,146 title_links; the legend seeds that call it are shadowed above.
+common/scripted_effects/07_frankokratia_scripted_effects.txt,neutralise,258 title_links: the Frankokratia is a Byzantine map event chain.
+common/scripted_effects/10_dlc_tgp_scripted_effects.txt,neutralise,314 title_links (East Asia content).
+common/scripted_effects/10_dlc_tgp_dynastic_cycle_scripted_effects.txt,neutralise,107 title_links (East Asia content).
+common/scripted_effects/tgp_tribute_mission_scripted_effects.txt,neutralise,66 title_links (East Asia content).
+common/scripted_triggers/07_frankokratia_triggers.txt,neutralise,89 title_links; paired with the Frankokratia effects.
+common/scripted_triggers/10_tgp_japan_triggers.txt,neutralise,2965 title_links - the largest single class in the log. Every trigger tests a vanilla Japanese title.
+common/scripted_triggers/10_tgp_triggers.txt,neutralise,45 title_links (East Asia content).
+common/scripted_triggers/10_tgp_dynastic_cycle_triggers.txt,neutralise,20 title_links (East Asia content).
+common/scripted_triggers/tgp_tribute_mission_triggers.txt,neutralise,60 title_links (East Asia content).
+common/scripted_modifiers/10_tgp_japan_modifiers.txt,neutralise,331 title_links (East Asia content).
+common/script_values/10_tgp_japan_values.txt,neutralise,Values read only by the shadowed Japanese triggers and modifiers.
+common/script_values/tgp_japan_values.txt,neutralise,Values read only by the shadowed Japanese content.
+common/script_values/tgp_tribute_mission_values.txt,neutralise,30 title_links; read only by the shadowed tribute-mission scripts.
+common/script_values/00_decision_values.txt,neutralise,Read only by common/decisions.
+common/script_values/00_mongol_values.txt,neutralise,Read only by the Mongol invasion effects shadowed above.
+common/script_values/00_invasion_values.txt,neutralise,Read only by the Mongol invasion effects shadowed above.
+gfx/portraits/portrait_modifiers,shadow_dirty,"507 character: references to vanilla developer easter-egg characters, in 8 of 33 files; 2105 history.cpp ""non-existent character"" errors. EK2 replace_paths the folder and stubs 15 files. shadow_dirty keeps the 25 clothing/rank files that are pure mechanics."
+gfx/court_scene/scene_cultures,shadow_dirty,18 title_links in 1 of 2 files; the other is the culture-to-scene mechanic.
+gfx/interface/illustrations/scripted_illustrations,shadow_dirty,40 title_links in 1 of 8 files.
+common/scripted_character_templates/00_mongol_templates.txt,shadow,"The only pool template that names vanilla titles and is not called by name from a file this mod keeps. 04_ep2_accolade_character_templates.txt also names one, but common/scripted_effects/00_accolades_scripted_effects.txt looks its 30 templates up by id (scripts/tc_check_shadow_callers.py), and a character template with no body cannot generate a character - so it stays."
+common/coat_of_arms/template_lists,keep,"3636 script errors, but all of class ""scope:culture Failed context switch"", not dangling titles; only 7 title references. Emptying color_lists/colored_emblem_lists would leave dynamic coat-of-arms generation with no palette. EK2 and Godherja both ship full replacements, never stubs."
+common/scripted_triggers,keep,"3450 title_links, but 00_realm_laws/00_title_triggers/00_war_and_peace_triggers are core mechanics every kept file calls. Only the named DLC files above are shadowed; the rest need per-reference rewriting, not deletion."
+common/scripted_effects,keep,"3038 title_links; same reasoning as scripted_triggers. Only the named content files above are shadowed."
+common/on_action,keep,"614 title_links, 427 of them in game_start.txt. on_action is the hook table the whole game runs on; deleting an entry silently disables a mechanic. Needs rewriting, not shadowing."
+common/laws,keep,29 title_links in 4 of 5 files - 00_realm_laws and 00_succession_laws are load-bearing mechanics.
+common/character_interactions,keep,179 title_links in 22 of 57 files - grant/revoke title and vassal interactions are core mechanics.
+common/casus_belli_types,keep,177 title_links in 10 of 26 files - de jure and event wars are core mechanics.
+common/council_tasks,keep,54 title_links in 6 of 9 files - the council is a core mechanic.
+common/customizable_localization,keep,"360 title_links, but the folder is read by vanilla localisation everywhere; deleting an entry turns a live string into a raw key."
+common/factions,keep,21 title_links - factions are a core mechanic.
+common/pool_character_selectors,keep,"7959 script errors, none of them title_links: the class is ""culture trigger [Failed context switch]"" on a scope with no culture, which is a characters/cultures data problem, not vanilla map content."
+events,keep,"Every events/ folder except decisions_events and story_cycles is left live and listed in docs/evidence/vanilla_events_naming_titles.csv for the events lane; shadowing an event file whose on_action entry survives is worse than a dangling title (docs/output_bootstrap.md §4)."

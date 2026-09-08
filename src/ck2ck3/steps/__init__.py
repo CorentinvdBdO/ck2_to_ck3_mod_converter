@@ -24,6 +24,9 @@ from types import ModuleType
 DEFAULT_ORDER: tuple[str, ...] = (
     "clean",
     "descriptor",
+    # Before every content step: it only writes empty shadows of vanilla files,
+    # and a later step that really fills one of those folders must win.
+    "tc_template",
     "map",
     # Before `cultures`: a CK3 name list needs `dynasty_names`, CK2 keeps
     # dynasty names globally in common/dynasties rather than per culture, and a
