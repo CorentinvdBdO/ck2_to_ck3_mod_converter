@@ -80,6 +80,16 @@ def test_escape_yml():
     assert escape_yml("trail\\") == "trail\\\\"
 
 
+def test_escape_yml_doubles_an_illegal_escape():
+    """CK3 has four escapes; anything else is an "Illegal localization break
+    character" and truncates the string (`verified` 2026-09-08, two Faerun
+    lines: `trait.\\b#M` and `\\n\\Death to humans!`)."""
+    assert escape_yml("trait.\\b#M *#!") == "trait.\\\\b#M *#!"
+    assert escape_yml("able.\\n\\Death to humans!") == "able.\\n\\\\Death to humans!"
+    assert escape_yml("a\\tb") == "a\\tb"
+    assert escape_yml("a\\\\b") == "a\\\\b"  # already a literal backslash
+
+
 def test_write_ck3_yml_bytes(tmp_path):
     path = tmp_path / "fae_titles_l_english.yml"
     count = write_ck3_yml(path, {"c_abaltrer": "Abaltrer", "b_tower": "Bjørn's Tower"})
