@@ -13,7 +13,11 @@ from ..titles import history, model, provinces
 
 DESCRIPTION = "history/titles + history/provinces from CK2 history"
 
-OUTPUTS: tuple[str, ...] = ("history/titles", "history/provinces")
+OUTPUTS: tuple[str, ...] = (
+    "history/titles",
+    "history/provinces",
+    "history/province_mapping",
+)
 
 
 def run(ctx: Context) -> StepResult:
@@ -57,6 +61,29 @@ def run(ctx: Context) -> StepResult:
     for rel, text in sorted(provs.files.items()):
         ctx.write_text(rel, with_bom(ctx.header("CK2 history/provinces") + text))
 
+    # history/province_mapping must not be empty. The province-history loader
+    # binary-searches this table and dereferences its begin pointer even when
+    # the count is zero (ck3.exe 1.19.0.6 @0x14207f7b1, bisected 2026-09-08:
+    # any province block crashed the game until one mapping line existed;
+    # Godherja ships a single `6 = 20` for the same reason). One entry between
+    # two placed baronies of the same county is the least intrusive content.
+    mapping = _province_mapping_entry(data.plan)
+    if mapping is not None:
+        target, source, county = mapping
+        ctx.write_text(
+            f"history/province_mapping/{prefix}_province_mapping.txt",
+            with_bom(
+                ctx.header("engine requirement, not CK2 data")
+                + "# The CK3 province-history loader crashes on an EMPTY province_mapping\n"
+                + "# table (null begin pointer, verified 2026-09-08 against 1.19.0.6).\n"
+                + "# Vanilla, Elder Kings 2 and Godherja all ship at least one entry.\n"
+                + f"# Two placed baronies of {county}; both keep their own history.\n"
+                + f"{target} = {source}\n"
+            ),
+        )
+    else:
+        ctx.warn("province_mapping: no county with two placed baronies; table left empty (game will crash on load)")
+
     counts = dict(titles.counts)
     counts.update(provs.counts)
     warnings = titles.warnings + provs.warnings
@@ -70,3 +97,19 @@ def run(ctx: Context) -> StepResult:
         counts=counts,
         warnings=warnings[:200],
     )
+
+
+def _province_mapping_entry(plan) -> tuple[int, int, str] | None:
+    """Two placed baronies of one county, as ``(target, source, county)``.
+
+    Deterministic: the first county in plan order with two placed baronies.
+    """
+    for county, baronies in plan.by_county.items():
+        provinces = [
+            plan.by_barony[b].province
+            for b in baronies
+            if plan.by_barony.get(b) is not None and plan.by_barony[b].province is not None
+        ]
+        if len(provinces) >= 2:
+            return provinces[1], provinces[0], county
+    return None
