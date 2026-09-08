@@ -697,6 +697,80 @@ Ordered by how much time each costs.
 
 ---
 
+## 11. Outside `map_data/` — the four things a custom canvas also has to move
+
+Full derivation, per-file evidence and the playtest that found them:
+`docs/evidence/map_ui_research.md`.  Summary, all `verified`:
+
+### 11a. `gfx/map/map_object_data/*_locators.txt` — where icons are drawn
+
+Holding models, coats of arms, unit stacks, sieges and activity icons are
+placed per province id by these files, **not** by `positions.txt` (whose string
+does not appear in the 1.19 binary at all: `strings ck3.exe | grep -c positions.txt`
+→ 0).  Vanilla ships seven; EK2 and GH ship the same seven.
+
+```
+game_object_locator={ name="buildings" render_pass=Map clamp_to_water_level=yes
+	generated_content=no layer="building_layer"
+	instances={ { id=1
+		position={ 271.799835 0.000000 4462.883301 }
+		rotation={ -0.000000 -0.960029 -0.000000 0.279900 }
+		scale={ 1.000000 1.000000 1.000000 } } } }
+```
+
+* `position` is `{ x y z }` in **`provinces.png` pixels**; **`z` is bottom-up**
+  (`z = height − y_top_down`).  Measured over 11 297–12 062 vanilla instances
+  per file: median error 3–7 px read bottom-up, ~1360 px read top-down
+  (`scripts/check_locator_frame.py` → `docs/evidence/locator_frame.md`).
+* `y = 0`, `scale = { 1 1 1 }`, `rotation` is a yaw-only quaternion;
+  `activities` uses the identity for every instance.
+* **The engine fills gaps, it does not notice wrong ones.**
+  `interface/gameobjectlocators.cpp:126` logs *"map object locator "X" is
+  incomplete. A new file with locator data has been generated"* and writes one
+  to `Documents/Paradox Interactive/Crusader Kings III/generated/`, but only
+  for ids the loaded files lack.  Every id vanilla also defines keeps vanilla's
+  European coordinate — 3179 of Faerûn's 3694 holdings, a median **3040 px**
+  from their own land.  **A mod with a custom province set must override all
+  seven files.**
+* The engine's own answer for a fresh id is the **province colour centroid**
+  (1.6 px median, max 2.2).
+* Id sets, from what the engine demanded: `buildings`, `special_building`,
+  `siege`, `activities` → **land only**; `unit_stack_player_owned`, `combat`
+  (and `unit_stack_other_owner`) → **everything except impassable**, plus a
+  constant `id=0` sentinel.
+* `stack_locators.txt` (`name="unit_stack"`) is legacy — vanilla 1.19 ships
+  none.  GH proves an empty `instances={}` block is legal.
+
+### 11b. `NCamera` — the camera bound
+
+`V common/defines/graphic/00_graphics.txt:193-194` `PANNING_WIDTH = 9090`,
+`PANNING_HEIGHT = 4696`.  **There is no `MAX_ZOOM` and no `MAP_BOUNDS`.**  A map
+taller than 4696 px has its north simply unreachable.  EK2 sets both to its
+canvas (`ek_graphics.txt:13-14`, 8256/5504); GH sets the height
+(`00_graphics.txt:194`, 4096).  `START_LOOK_AT` (`:171`) is in the same frame
+and must move too.  Neither TC touches `ZOOM_STEPS`, `FOV` or `MAPTABLE_*`.
+
+### 11c. `gfx/map/map_object_data/map_table_<style>.txt` — the 3D table
+
+Four `object={}` entries per style (western default, ce1/ep3/tgp DLC-gated in
+`gfx/map/table_styles/table_styles.txt`), each with
+`transform="x y z  qx qy qz qw  sx sy sz"` in the same pixel frame.  Vanilla's
+western table is at `4500 -15 2560` scale `5 5 5`; **neither EK2 nor GH
+rescales the mesh**, they only move it (EK2 `3100 -1 2400`, GH `3100 -1 2048`).
+A sheet much taller than 4608 px overhangs the table.
+
+### 11d. `gfx/map/terrain/flat_maps/flatmap.dds` — the zoomed-out paper map
+
+Selected by `gfx/map/flat_map_styles/flat_map_styles.txt`
+(`paper_map_style_western`, `default = yes`) and shown above
+`NGraphics.FLAT_MAP_ZOOM_STEP` (21 vanilla, 16 in EK2).  **Exactly the canvas
+size, DXT1 (BC1), no alpha**: V 9216×4608 with `mipMapCount = 0`, EK2
+8256×5504, GH 8192×4096 (written by GIMP).  Ship none and the game stretches
+vanilla's Earth over your continent.  `V gfx/map/flat_map_styles/_flat_map_styles.info`:
+*"Be sure to leave a default flatmap.dds file in the folder anyway."*
+
+---
+
 ## Final fact table
 
 | fact | value | evidence |
@@ -751,3 +825,11 @@ Ordered by how much time each costs.
 | `continent.txt` | declared live, **file absent** in all three | `ls map_data/continent.txt` → No such file |
 | `positions.txt` | optional; commented out in all three; GH ships a "FILE REMOVED" stub | `V map_data/default.map:4`; `GH map_data/positions.txt` (97 B) |
 | `nodes.dat` | editor-generated, unreferenced, shipped by all three (V 44.7 MB) | directory listing |
+| locator `position` frame | `provinces.png` pixels, **z bottom-up** (`z = h − y`) | `docs/evidence/locator_frame.md`: 3–7 px vs 1360 px |
+| locator placement rule | province colour **centroid** | engine's own generated entries, 1.6 px median |
+| locator files a TC must override | all **7** (`building` `special_building` `siege` `activities` `player_stack` `other_stack` `combat`) | V/EK2/GH all ship the set |
+| missing locator ids | engine generates them and logs `gameobjectlocators.cpp:126`; **wrong** ids are never noticed | our own `debug.log`, 744 × `:263` |
+| camera bound | `NCamera.PANNING_WIDTH` / `PANNING_HEIGHT`; no `MAX_ZOOM`, no `MAP_BOUNDS` | `V …/graphic/00_graphics.txt:193-194`; `EK2 ek_graphics.txt:13-14` |
+| 3D map table | 4 `object={}` per style, `transform="x y z qx qy qz qw sx sy sz"`, vanilla scale 5 | `V gfx/map/map_object_data/map_table_western.txt` |
+| flat (paper) map | `gfx/map/terrain/flat_maps/flatmap.dds`, canvas-sized **DXT1**, mips optional | V 9216×4608 mips 0; EK2 8256×5504; GH 8192×4096 |
+| `positions.txt` in the 1.19 binary | **absent** — 0 occurrences of the string | `strings ck3.exe \| grep -c positions.txt` |
