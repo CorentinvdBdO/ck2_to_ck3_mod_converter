@@ -73,6 +73,7 @@ Read `STATUS.md` first (state). This file: invariants, commands, pointers. Chart
 - `history/province_mapping` must never be empty when `history/provinces` has any block: the 1.19 loader crashes (null deref) on an empty table. `history_titles` writes one entry (`docs/DECISIONS.md` 2026-09-08). A `replace_path` that leaves a folder empty is only safe when the engine tolerates an empty table; test with a game launch, not just ck3-tiger.
 
 ## Docs
+- `docs/playtest.md` — deploy and play the generated mod (launcher or direct launch) · `docs/integration_run.md` — regenerate, validate, test
 - `docs/PROJECT.md` charter · `docs/DECISIONS.md` · `docs/design_map.md` · `docs/design_races.md` · `docs/mechanics_inventory.md`
 - `docs/faerun_ck2_survey.md` · `docs/converter_code_assessment.md` · `docs/races_research.md`
 - `docs/map_scale.md` — how the scale factor and canvas were measured · `docs/formats_map.md` — CK3 `map_data/` reference · `docs/formats_packed_heightmap.md` — the packed-heightmap format · `docs/output_bootstrap.md` — what makes a custom map boot
