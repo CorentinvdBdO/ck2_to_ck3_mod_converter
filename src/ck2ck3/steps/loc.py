@@ -14,7 +14,7 @@ Config (``[loc]``, all optional)::
     languages = ["english", "french"]   # default: english + every column
                                         # whose fill share reaches min_share
     min_share = 0.05
-    key_map = "overrides/loc_keys.csv"  # ck2_key,ck3_key — applied last
+    key_map = "overrides/loc_keys.csv"  # ck2_key,ck3_key[,rename|copy]
     skip_vanilla_collisions = false
     vanilla_keys = "docs/evidence/ck3_vanilla_loc_keys.txt"
     unknown_codes = "custom"            # or "marker"
@@ -117,22 +117,75 @@ def language_shares(files: list[LocFile]) -> dict[str, float]:
     return {lang: count / rows for lang, count in filled.items()} if rows else {}
 
 
-def read_key_map(path: Path) -> dict[str, str]:
-    """``ck2_key,ck3_key`` pairs, applied after everything else.
+@dataclass
+class KeyMap:
+    """The ``[loc] key_map`` table: which CK3 keys a CK2 key is emitted under.
 
-    A rename table exists so a later lane can change a generated id and still
-    resolve the CK2 text (``docs/DECISIONS.md``). A header row is optional.
+    Two modes, because the lanes hand over two different things:
+
+    * ``rename`` — the CK2 key is *replaced*. The ``traits`` lane's
+      ``abdominal_pain -> trait_abdominal_pain``: CK3 never reads the bare id
+      as a loc key, so keeping it would be 1100 dead strings.
+    * ``copy`` — the CK3 key is emitted **in addition to** the CK2 key. The
+      ``titles`` lane's ``k_neverwinter -> k_neverwinter_adj`` and the
+      ``religions`` lane's ``ADEPT -> ADEPT_plural``: CK3 needs both, and a
+      rename would leave the title with no name at all.
+
+    A CK2 key may carry several rows; the text is emitted under every target.
     """
-    mapping: dict[str, str] = {}
+
+    #: ck2 key -> the CK3 keys to emit it under, in table order.
+    targets: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    #: ck2 keys that keep their own name as well (any row said ``copy``).
+    keep_source: set[str] = field(default_factory=set)
+
+    def keys_for(self, key: str) -> tuple[str, ...]:
+        """Every CK3 key ``key``'s text goes to (``(key,)`` when unmapped)."""
+        targets = self.targets.get(key)
+        if not targets:
+            return (key,)
+        if key in self.keep_source:
+            return (key, *(t for t in targets if t != key))
+        return targets
+
+    def __len__(self) -> int:
+        return len(self.targets)
+
+
+#: ``mode`` column values. Default is ``rename`` so the pre-existing
+#: two-column tables keep behaving as they did.
+KEY_MAP_MODES = ("rename", "copy")
+
+
+def read_key_map(path: Path) -> KeyMap:
+    """``ck2_key,ck3_key[,mode]`` rows; header and ``#`` comments optional.
+
+    Regenerate the Faerûn table with ``scripts/build_loc_key_map.py``, which
+    concatenates every ``mappings/loc_key_renames_*.csv`` with the right mode
+    per source lane.
+    """
+    key_map = KeyMap()
     with open(path, encoding="utf-8-sig", newline="") as handle:
         for row in csv.reader(handle):
-            if len(row) < 2:
+            if len(row) < 2 or row[0].lstrip().startswith("#"):
                 continue
             source, target = row[0].strip(), row[1].strip()
             if not source or not target or source.lower() == "ck2_key":
                 continue
-            mapping[source] = target
-    return mapping
+            mode = (row[2].strip().lower() if len(row) > 2 and row[2].strip()
+                    else "rename")
+            if mode not in KEY_MAP_MODES:
+                raise ValueError(
+                    f"{path}: {source} -> {target}: mode must be one of "
+                    f"{', '.join(KEY_MAP_MODES)}, not {mode!r}"
+                )
+            if target != source:
+                existing = key_map.targets.get(source, ())
+                if target not in existing:
+                    key_map.targets[source] = (*existing, target)
+            if mode == "copy":
+                key_map.keep_source.add(source)
+    return key_map
 
 
 def read_vanilla_keys(path: Path) -> set[str]:
@@ -156,6 +209,8 @@ class Plan:
     duplicates: list[tuple[str, str, str]] = field(default_factory=list)
     #: ``(file, line, key)`` for a key CK3 could never reference.
     invalid_keys: list[tuple[str, int, str]] = field(default_factory=list)
+    #: Lines written under a ``[loc] key_map`` target rather than the CK2
+    #: key: renames plus the extra ``copy`` targets.
     renamed: int = 0
     vanilla_skipped: int = 0
     report: loc_codes.Report = field(default_factory=loc_codes.Report)
@@ -194,7 +249,7 @@ def build(ctx: Context, config: LocConfig) -> Plan:
                 plan.duplicates.append((entry.key, owner[entry.key], path.name))
             owner[entry.key] = path.name
 
-    key_map = read_key_map(config.key_map) if config.key_map else {}
+    key_map = read_key_map(config.key_map) if config.key_map else KeyMap()
     vanilla: set[str] = set()
     if config.skip_vanilla_collisions and config.vanilla_keys:
         if config.vanilla_keys.is_file():
@@ -222,18 +277,19 @@ def build(ctx: Context, config: LocConfig) -> Plan:
                 )
                 if not text:
                     continue
-                key = key_map.get(key, key)
-                if key != entry.key:
-                    plan.renamed += 1
-                if key in vanilla:
-                    plan.vanilla_skipped += 1
-                    continue
-                entries[key] = loc_codes.convert_text(
+                converted = loc_codes.convert_text(
                     text,
                     custom_loc=custom_loc,
                     unknown=config.unknown_codes,
                     report=plan.report,
                 )
+                for target in key_map.keys_for(key):
+                    if target != entry.key:
+                        plan.renamed += 1
+                    if target in vanilla:
+                        plan.vanilla_skipped += 1
+                        continue
+                    entries[target] = converted
             if entries:
                 per_file.append((path.stem, entries))
         plan.per_language[language] = per_file
@@ -275,7 +331,7 @@ def run(ctx: Context) -> StepResult:
     counts["duplicate_keys"] = len(plan.duplicates)
     counts["invalid_keys"] = len(plan.invalid_keys)
     if plan.renamed:
-        counts["renamed_keys"] = plan.renamed
+        counts["key_map_keys"] = plan.renamed
     if plan.vanilla_skipped:
         counts["vanilla_collisions_skipped"] = plan.vanilla_skipped
 
