@@ -105,13 +105,80 @@ def test_martial_custom_and_head_determination_take_the_ck3_default(groups):
     assert step.derive_head_determination(farmer) == "head_determination_domain"
 
 
-def test_traditions_come_only_from_ck2_flags(groups):
+def test_traditions_without_the_override_table_are_the_ck2_flags(groups):
     raider, farmer = groups[0].cultures
     assert step.derive_traditions(raider) == [
         "tradition_seafaring",
         "tradition_practiced_pirates",
     ]
+    # the gap the override table exists to close: no flag, no tradition
     assert step.derive_traditions(farmer) == []
+
+
+@pytest.mark.parametrize(
+    "index,row,expected",
+    [
+        # no flags: the group row is the whole answer
+        (1, ["tradition_forest_folk", "tradition_sacred_groves"],
+         ["tradition_forest_folk", "tradition_sacred_groves"]),
+        # flags first, then the row, in file order
+        (0, ["tradition_mountain_homes"],
+         ["tradition_seafaring", "tradition_practiced_pirates",
+          "tradition_mountain_homes"]),
+        # deduped against the flag traditions, not repeated
+        (0, ["tradition_seafaring", "tradition_hunters"],
+         ["tradition_seafaring", "tradition_practiced_pirates",
+          "tradition_hunters"]),
+        # a deliberate empty row leaves only the flags
+        (0, [], ["tradition_seafaring", "tradition_practiced_pirates"]),
+        (1, [], []),
+    ],
+)
+def test_traditions_merge_the_flags_with_the_group_override(
+    groups, index, row, expected
+):
+    culture = groups[0].cultures[index]
+    assert step.derive_traditions(culture, {"test_group": row}) == expected
+
+
+def test_traditions_are_truncated_to_the_ck3_maximum(groups):
+    row = [f"tradition_x{i}" for i in range(step.MAX_TRADITIONS + 3)]
+    out = step.derive_traditions(groups[0].cultures[0], {"test_group": row})
+    assert len(out) == step.MAX_TRADITIONS
+    # the CK2-flag traditions are the ones that survive the cut
+    assert out[:2] == ["tradition_seafaring", "tradition_practiced_pirates"]
+
+
+def test_traditions_block_names_the_override_file(groups):
+    node = _culture_node(
+        groups,
+        1,
+        traditions_of_group={"test_group": ["tradition_forest_folk"]},
+    )
+    text = write(Block(entries=[node]))
+    assert "tradition_forest_folk" in text
+    assert "assumed placeholders, submod to replace" in text
+
+
+def test_override_table_separators_and_dedupe(tmp_path: Path):
+    config = Config.load(REFERENCE_CONFIG, out=tmp_path)
+    table = step.read_traditions_of_group(config)
+    assert table, "overrides/traditions_of_culture_group.csv did not parse"
+    for group_id, traditions in table.items():
+        assert len(set(traditions)) == len(traditions), group_id
+        assert len(traditions) <= step.MAX_TRADITIONS, group_id
+        for tradition in traditions:
+            assert tradition.startswith("tradition_"), (group_id, tradition)
+
+
+def test_override_table_distinguishes_empty_from_missing(tmp_path: Path):
+    config = Config.load(REFERENCE_CONFIG, out=tmp_path)
+    table = step.read_traditions_of_group(config)
+    # the documented "no traditions" groups: a row that is present and empty
+    assert table.get("undead_group") == []
+    assert table.get("construct_group") == []
+    assert table.get("cat_group") == []
+    assert "not_a_culture_group" not in table
 
 
 # -- pillars ----------------------------------------------------------------
@@ -141,7 +208,9 @@ def test_language_pillar_borrows_its_first_culture_colour(groups):
 
 # -- culture ----------------------------------------------------------------
 def _culture_node(groups, index=0, **kwargs):
-    defaults = dict(gfx_map={}, ethnicities={}, culture_defaults={})
+    defaults = dict(
+        gfx_map={}, ethnicities={}, culture_defaults={}, traditions_of_group={}
+    )
     defaults.update(kwargs)
     return step.build_culture("fae", groups[0].cultures[index], **defaults)
 
@@ -337,6 +406,9 @@ def test_every_ck3_id_the_step_emits_exists_in_the_game():
     assert set(step.HEAD_DETERMINATION_IDS) <= pillars
     traditions = _ck3_ids(game, "common/culture/traditions")
     assert set(step.TRADITION_OF_FLAG.values()) <= traditions
+    table = step.read_traditions_of_group(Config.load(REFERENCE_CONFIG))
+    emitted = {t for row in table.values() for t in row}
+    assert emitted <= traditions, sorted(emitted - traditions)
     ethnicities = _ck3_ids(game, "common/ethnicities")
     assert {step.DEFAULT_ETHNICITY, step.PLACEHOLDER_ETHNICITY_BASE} <= ethnicities
     cultures = _ck3_ids(game, "common/culture/cultures")
@@ -383,6 +455,42 @@ def test_every_faerun_culture_gets_a_complete_ck3_block(tmp_path: Path):
     assert result.counts["name_lists"] == 419
     assert result.counts["missing_race_overrides"] == 0
     assert result.counts["missing_ethnicity_overrides"] == 0
+    assert result.counts["missing_tradition_overrides"] == 0
+    assert (
+        result.counts["cultures_with_traditions"]
+        + result.counts["cultures_without_traditions"]
+        == 419
+    )
+
+
+@pytest.mark.slow
+def test_every_faerun_culture_has_two_traditions_unless_deliberately_none():
+    """The invariant the placeholder table exists for.
+
+    A culture may end up with no traditions only when its CK2 group carries a
+    deliberately empty row (animals, undead, constructs, the monster filler);
+    every other culture gets at least two, so the CK3 culture screen is never
+    blank. `docs/step_cultures_religions.md`, `Placeholder culture traditions`.
+    """
+    if not FAERUN.is_dir():
+        pytest.skip("Faerun/ not cloned")
+    config = Config.load(REFERENCE_CONFIG)
+    table = step.read_traditions_of_group(config)
+    groups = step.read_ck2_cultures(FAERUN)
+    no_traditions = {g for g, row in table.items() if not row}
+    thin: list[str] = []
+    for group in groups:
+        assert group.id in table, group.id
+        for culture in group.cultures:
+            got = step.derive_traditions(culture, table)
+            if group.id in no_traditions:
+                # only the CK2-flag traditions may still appear
+                assert set(got) <= set(step.TRADITION_OF_FLAG.values()), culture.id
+                continue
+            if len(got) < 2:
+                thin.append(f"{group.id}/{culture.id}")
+            assert len(got) <= step.MAX_TRADITIONS, culture.id
+    assert thin == []
 
 
 @pytest.mark.slow

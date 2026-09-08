@@ -102,7 +102,11 @@ def main() -> None:
         fp = args.mappings / csv_name
         n_ok = 0
         with fp.open(encoding="utf-8") as fh:
-            for row in csv.DictReader(fh):
+            # `mappings/*.csv` may open with a `#` header block explaining the
+            # columns (vanilla_traits.csv does); skip it like every other
+            # reader in the repo (`ck2ck3.overrides`, `ck2ck3.traits.tables`).
+            lines = [l for l in fh if not l.lstrip().startswith("#")]
+            for row in csv.DictReader(lines):
                 if status_col and row[status_col] == "none":
                     continue
                 key = row[key_col].strip()

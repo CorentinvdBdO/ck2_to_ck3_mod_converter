@@ -48,7 +48,7 @@ lines from there.
 | baronies placed on the map | 2120 (one per county; see *Barony placement*) |
 | title histories converted | 3193 live + 227 kept commented + 2358 stubs |
 | province history blocks | 2120 in 166 files |
-| bookmarks | 17 with 82 characters, default `1357.1.1` |
+| bookmarks | 17 with 82 characters, default `1357.1.1`; 63 positions from the CK2 map, 19 on the fallback grid |
 | coats of arms | 3431 placeholders; 3410 CK2 flag files recorded, 0 converted |
 | cultural-name loc keys | 718 from 3314 CK2 cultural-name lines |
 | holder / liege integrity failures | 0 missing holders, 0 unmapped CK2 keys |
@@ -229,6 +229,116 @@ Vanilla's three bookmark files name vanilla titles and characters, so the step
 also writes an **empty file at each of their paths** (`00_bookmarks.txt`,
 `00_bookmark_groups.txt`, `00_challenge_characters.txt`) to shadow them by
 filename — no `replace_path` needed (`docs/output_bootstrap.md` fact 0.2).
+
+#### Character positions on the bookmark screen
+
+`position = { x y }` is mandatory on every vanilla bookmark character and it is
+a **screen** coordinate, not a map one. Until 2026-09-08 the converter wrote
+`{ 0 0 }` for all 82 characters, which stacks them in the top-left corner and
+makes every one of them unclickable.
+
+**The canvas is measured, not guessed.**
+`scripts/survey_vanilla_bookmark_positions.py` reads
+`<ck3_game>/common/bookmarks/bookmarks/00_bookmarks.txt` (the only vanilla
+bookmark file; no DLC adds one) and reports, `verified` 2026-09-08 against
+CK3 1.19:
+
+| measurement | value |
+| --- | --- |
+| `position` values in the file | 111 |
+| of those, `display = no` animation dummies | 18, all on `{ 1130 480 }` (`00_bookmarks.txt:1920-2120`) |
+| displayed positions | 93 |
+| x range | 290 … 1220 |
+| y range | 150 … 820 |
+| most characters in one bookmark | 6 (`bm_1066_laamps`) |
+| smallest pairwise distance inside a bookmark | **251.6 px** (`bm_867_persia`, `{ 830 200 }` and `{ 920 435 }`) |
+| distinct `animation` ids | 55 |
+
+So `ck2ck3.titles.bookmarks.CANVAS = (290, 150, 1220, 820)`. The 18 dummies are
+excluded on purpose: they are never drawn, and counting them would report a
+minimum distance of 0 and a maximum of 18 characters per bookmark.
+
+**Where the coordinates come from.** CK2 `map/positions.txt` gives seven
+coordinate pairs per CK2 *province*; slot 0 is the city slot (`ck2ck3.map.config`
+`city_slot`, `docs/map_scale.md` §2b: inside its own province 91.9 % of the
+time). `ck2ck3.titles.bookmarks.county_positions()` turns that into
+`CK2 title → coordinate`:
+
+- a county uses its own CK2 province, via `TitleModel.ck2_of_county`
+  (`title = c_x` inside the province-history file is CK2's only province→county
+  link);
+- a duchy / kingdom / empire uses the coordinate of the live county
+  `model.own_counties()` already picked for it;
+- **only live counties** are included.
+
+`TitleModel` gained one field for this, `ck2_of_county` — `model.build()`
+already computed it and threw it away.
+
+**Projection.** The bounding box is taken over *every* live county
+(2947 titles, box `x 1…4079`, `y 1…3310` for Faerûn), never over the handful of
+characters in one bookmark, so the same capital lands on the same pixel in
+every bookmark and two bookmarks stay comparable. The normalised coordinate is
+scaled into `CANVAS` inset by `CANVAS_MARGIN = 40`, and **y is flipped**:
+Paradox y grows north (`verified`: Waterdeep is province 1 at y=2838, Amphail
+province 2 at y=2893, and Amphail is north of Waterdeep), screen y grows down.
+
+**Repulsion.** Faerûn's bookmarks group rulers who are geographic neighbours,
+so the projection alone puts several portraits on top of each other.
+`place_characters()` then runs `REPULSION_ITERATIONS = 60` fixed passes: any
+pair closer than `MIN_DISTANCE = 120` px is pushed apart along the line between
+them and everything is clamped back inside the canvas. `MIN_DISTANCE` is half
+of vanilla's measured 251.6 px minimum — vanilla hand-places at most 6
+characters on an empty screen, while ours are projected from real geography, and
+a 250 px floor would push every character to a canvas edge and erase the
+geographic signal altogether. `effective_min_distance()` lowers the floor when a
+bookmark holds more characters than the canvas can hold at 120 px; Faerûn's
+fullest bookmark holds 6, so it never bites today.
+
+There is **no randomness and no convergence test** anywhere in the pass, so two
+runs are byte-identical (`verified`: two `--steps bookmarks` runs, `cmp` clean).
+Two characters on the exact same capital are separated along a direction derived
+from their indices.
+
+**Fallback.** A character whose title resolves to no CK2 province gets the next
+slot of an evenly spread grid (`ceil(sqrt(n))` columns across the inset canvas),
+assigned after the geographic ones and then subject to the same repulsion pass.
+`verified` 2026-09-08 on the Faerûn run: **63 of 82 characters are placed from
+the CK2 map, 19 on the grid**. All 19 hold a *titular* title with no live county
+anywhere in its de jure subtree — `e_zhentarim`, `k_red_wizards`, `d_bahamut`,
+`k_many_arrows`, `e_okoth` and 12 more; `own_counties()` has no entry for them
+by construction. Each one also raises a warning naming the title.
+
+**Animation.** The constant `animation = personality_bold` is replaced by a
+`crc32(name_key) % 8` pick — the same deterministic pattern the portrait
+`random_seed` uses, because `hash()` is salted per process — from the eight most
+frequent vanilla ids. Each is `verified` twice: declared in
+`gfx/portraits/portrait_animations/animations.txt` and used by a vanilla
+bookmark character.
+
+| animation | `animations.txt` | `00_bookmarks.txt` |
+| --- | --- | --- |
+| `personality_bold` | 3135 | 37 |
+| `personality_cynical` | 4011 | 608 |
+| `personality_zealous` | 3938 | 738 |
+| `personality_honorable` | 2968 | 169 |
+| `personality_greedy` | 3304 | 50 |
+| `personality_rational` | 3621 | 332 |
+| `personality_content` | 3389 | 1414 |
+| `personality_compassionate` | 3768 | 188 |
+
+`scripts/check_bookmark_positions.py <mod dir>` re-validates a generated
+bookmark file (inside the canvas, no `{ 0 0 }`, no pair under the floor) and
+exits 1 on a violation.
+
+**`assumed`, not verified:**
+
+- That `CANVAS` is the *whole* usable area. It is the envelope vanilla actually
+  uses; the widget may well accept more. Nothing has been rendered in game yet.
+- That the eight animations all look sane on a non-human portrait (Faerûn has
+  dragon, lich and beholder rulers).
+- That the grid fallback is better for a titular-title ruler than his actual
+  in-game capital. The holder's realm capital is `characters`-lane data this
+  step does not read; using it is the obvious follow-up.
 
 ### What moved out of this lane
 

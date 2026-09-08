@@ -28,6 +28,15 @@ Every run overwrites `docs/evidence/last_run.md` in *this* repository (not in
 the generated mod): what ran, per-step seconds, files written, counts, and the
 warnings, so a review never depends on scrollback.
 
+**`--out` does not redirect `docs/evidence/`.** A step that writes an evidence
+table writes it into this repository whatever `--out` says, and `--no-evidence`
+only suppresses `last_run.md`. So a *partial* run into a throwaway folder can
+still overwrite a committed evidence file with a thinner version:
+`--steps traits,characters` rewrote `docs/evidence/characters_dropped_keys.csv`
+427 rows shorter, because without the `titles` step there is no landed-title
+hand-off (`verified` 2026-09-08). Check `git status docs/evidence` after a
+partial run and restore what you did not mean to regenerate.
+
 ## Config keys
 
 Reference file: `configs/faerun.toml`. Relative paths resolve against the

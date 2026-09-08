@@ -126,6 +126,16 @@ TRADITION_OF_FLAG = {
     "allow_looting": "tradition_practiced_pirates",
 }
 
+#: `common/defines/00_defines.txt:1163` `DEFAULT_MAX_TRADITIONS = 5`. Vanilla
+#: keeps to it in script too: 232 of 233 defined `traditions` blocks hold 5 or
+#: fewer (`verified`, one holds 6), so 5 is the ceiling this step writes.
+MAX_TRADITIONS = 5
+
+#: Human-input table: one row per CK2 culture group, a space/`;`-separated list
+#: of vanilla CK3 tradition ids. Seeded by `scripts/seed_culture_traditions.py`,
+#: every id checked by `scripts/verify_culture_traditions.py`.
+TRADITIONS_OVERRIDE = "traditions_of_culture_group.csv"
+
 DEFAULT_GFX = {
     "coa_gfx": "western_coa_gfx",
     "building_gfx": "western_building_gfx",
@@ -260,12 +270,49 @@ def derive_head_determination(culture: CK2Culture) -> str:
     return "head_determination_domain"
 
 
-def derive_traditions(culture: CK2Culture) -> list[str]:
-    return [
+def read_traditions_of_group(config) -> dict[str, list[str]]:
+    """`overrides/traditions_of_culture_group.csv` → {group id: tradition ids}.
+
+    A row with an empty `traditions` cell is a *deliberate* "no traditions"
+    decision and still appears in the mapping, as `[]`; a group with no row at
+    all is missing input and is warned about. Values may be separated by
+    spaces, `;` or `,`.
+    """
+    out: dict[str, list[str]] = {}
+    for row in overrides.read_rows(config, TRADITIONS_OVERRIDE):
+        key = (row.get("ck2_culture_group") or "").strip()
+        if not key:
+            continue
+        raw = (row.get("traditions") or "").replace(";", " ").replace(",", " ")
+        seen: list[str] = []
+        for token in raw.split():
+            if token not in seen:
+                seen.append(token)
+        out[key] = seen
+    return out
+
+
+def derive_traditions(
+    culture: CK2Culture,
+    traditions_of_group: dict[str, list[str]] | None = None,
+) -> list[str]:
+    """CK2-flag traditions first, then the culture group's override row.
+
+    Deterministic: `TRADITION_OF_FLAG` is iterated in declaration order and the
+    override row in file order. Deduped, and truncated to `MAX_TRADITIONS`.
+    Without the override table this is the old CK2-flag-only behaviour, which
+    left 322 of Faerûn's 419 cultures with an empty culture screen.
+    """
+    out = [
         tradition
         for flag, tradition in TRADITION_OF_FLAG.items()
         if culture.flag(flag)
     ]
+    group_id = culture.group.id if culture.group is not None else ""
+    for tradition in (traditions_of_group or {}).get(group_id, ()):
+        if tradition not in out:
+            out.append(tradition)
+    return out[:MAX_TRADITIONS]
 
 
 def _gfx_chain(
@@ -408,6 +455,7 @@ def build_culture(
     gfx_map: dict[str, dict[str, str]],
     ethnicities: dict[str, str],
     culture_defaults: dict[str, dict[str, str]],
+    traditions_of_group: dict[str, list[str]] | None = None,
 ) -> Node:
     """One CK3 culture, field by field through `mappings/culture_fields.csv`."""
     group = culture.group
@@ -430,21 +478,25 @@ def build_culture(
         Node(key="name_list", value=name_list_id(prefix, culture), blank_before=True)
     )
 
-    traditions = derive_traditions(culture)
+    traditions = derive_traditions(culture, traditions_of_group)
     if traditions:
+        flags = [flag for flag in TRADITION_OF_FLAG if culture.flag(flag)]
+        comments = []
+        if flags:
+            comments.append(
+                "# from CK2 flags: " + ", ".join(f"{f} = yes" for f in flags)
+            )
+        if (traditions_of_group or {}).get(group.id):
+            comments.append(
+                f"# and overrides/{TRADITIONS_OVERRIDE} for {group.id}: assumed "
+                "placeholders, submod to replace"
+            )
         entries.append(
             Node(
                 key="traditions",
                 value=Block(entries=[Item(value=t) for t in traditions]),
                 blank_before=True,
-                leading_comments=[
-                    "# from CK2 flags: "
-                    + ", ".join(
-                        f"{flag} = yes"
-                        for flag in TRADITION_OF_FLAG
-                        if culture.flag(flag)
-                    )
-                ],
+                leading_comments=comments,
             )
         )
 
@@ -779,6 +831,24 @@ def run(ctx: Context) -> StepResult:
         for row in overrides.read_rows(ctx.config, "culture_defaults.csv")
         if (row.get("ck2_culture") or "").strip()
     }
+    traditions_of_group = read_traditions_of_group(ctx.config)
+    missing_traditions = sorted(
+        {g.id for g in groups if g.id not in traditions_of_group}
+    )
+    if missing_traditions:
+        ctx.warn(
+            f"{len(missing_traditions)} culture groups have no row in "
+            f"overrides/{TRADITIONS_OVERRIDE}; their cultures get only the "
+            "CK2-flag traditions, which for most of them is none at all and an "
+            "empty culture screen in game: "
+            + ", ".join(missing_traditions[:12])
+            + (
+                f" ... (+{len(missing_traditions) - 12})"
+                if len(missing_traditions) > 12
+                else ""
+            )
+            + ". Re-run scripts/seed_culture_traditions.py"
+        )
 
     written: list[Path] = []
     heritages, warnings = build_heritages(prefix, groups, race_of_group)
@@ -854,6 +924,7 @@ def run(ctx: Context) -> StepResult:
                     gfx_map=gfx_map,
                     ethnicities=ethnicity_of_group,
                     culture_defaults=culture_defaults,
+                    traditions_of_group=traditions_of_group,
                 )
                 node.blank_before = bool(culture_block.entries)
                 culture_block.append(node)
@@ -943,7 +1014,23 @@ def run(ctx: Context) -> StepResult:
                 < MINIMUM_DYNASTY_NAMES
             ),
             "placeholder_ethnicities": len(races),
-            "traditions_emitted": sum(len(derive_traditions(c)) for c in cultures),
+            "traditions_emitted": sum(
+                len(derive_traditions(c, traditions_of_group)) for c in cultures
+            ),
+            "cultures_with_traditions": sum(
+                1 for c in cultures if derive_traditions(c, traditions_of_group)
+            ),
+            "cultures_without_traditions": sum(
+                1
+                for c in cultures
+                if not derive_traditions(c, traditions_of_group)
+            ),
+            "groups_no_traditions_by_design": sum(
+                1
+                for g in groups
+                if g.id in traditions_of_group and not traditions_of_group[g.id]
+            ),
+            "missing_tradition_overrides": len(missing_traditions),
             "opinion_formats": len(opinion_keys) - len(skipped),
             "opinion_formats_vanilla_already": len(skipped),
             "missing_race_overrides": sum(

@@ -593,7 +593,13 @@ class TraitConverter:
             return [Node(key="birth", value=_scaled(value, 0.01))]
 
         if key == "opposites" and isinstance(value, Block):
-            return [Node(key="opposites", value=self._remap_trait_list(value, out))]
+            remapped = self._remap_trait_list(value, out)
+            # Every entry was dropped (each is a commented-out CK2 trait): emit
+            # nothing rather than `opposites = { }`. `homosexual` hits this
+            # since the 2026-09-08 policy ports it instead of deduping it.
+            if not remapped.entries:
+                return []
+            return [Node(key="opposites", value=remapped)]
 
         if key == "leadership_traits" and isinstance(value, Block):
             self._pending.append(_comment(key, value, mapping.note))

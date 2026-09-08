@@ -124,15 +124,41 @@ def test_the_known_set_comes_from_the_traits_step_output() -> None:
     assert tables.traits_authoritative, "run scripts/build_trait_tables.py"
     assert set(tables.trait_origin.values()) == {"traits_step"}
     assert tables.known_traits, "no traits loaded"
-    # A race trait keeps its CK2 id; a deduped vanilla trait is renamed.
+    # A race trait keeps its CK2 id; an `exact` vanilla trait is renamed.
     assert tables.trait("creature_elf") == "creature_elf"
-    assert tables.trait("wroth") == "wrathful"
+    assert tables.trait("wounded") == "wounded_1"
     assert tables.trait("no_such_trait") is None
-    # The 38 traits the step dedupes by exact CK3 id match, and the 7
-    # `status = none` vanilla ones it ports as new traits, were the classes the
+    # The 38 traits the step dedupes by exact CK3 id match, and the 13 `none` +
+    # 16 `approx` vanilla ones it now ports as new traits, were the classes the
     # old two-table derivation silently dropped.
     assert tables.trait("administrator") == "administrator"
     assert tables.trait("cavalry_leader") == "cavalry_leader"
+    # `approx` is a near-equivalent, not a dedupe: the trait keeps its CK2 id
+    # and the pair only lives in mappings/trait_id_map.csv with status approx
+    # (docs/step_traits.md rule 1).
+    assert tables.trait("wroth") == "wroth"
+
+
+def test_approx_rows_of_trait_id_map_are_never_applied_as_renames() -> None:
+    """`mappings/trait_id_map.csv` mixes dedupes with near-equivalents.
+
+    `exact`/`exact_id` rows are dedupes (the CK2 trait is not redefined, so the
+    CK3 id is the only one that exists); `approx` rows record a CK3 trait that
+    merely resembles a trait we ported under its own id. Applying one as a
+    rename would silently swap the ported trait for a vanilla one
+    (`docs/step_traits.md` rule 1).
+    """
+    import csv
+
+    from ck2ck3.port.tables import REPO_ROOT, TRAIT_ID_MAP
+
+    with (REPO_ROOT / TRAIT_ID_MAP).open(encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh))
+    approx = {r["ck2_trait"] for r in rows if r["status"] == "approx"}
+    assert approx, "no approx pairs: run scripts/build_trait_tables.py"
+    tables = load_tables()
+    assert not approx & set(tables.trait_id_map)
+    assert {r["ck2_trait"] for r in rows} - approx == set(tables.trait_id_map)
 
 
 def test_fallback_set_is_read_when_the_traits_output_is_absent(tmp_path) -> None:

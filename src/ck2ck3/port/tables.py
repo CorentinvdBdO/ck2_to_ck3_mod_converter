@@ -152,9 +152,17 @@ class Tables:
 
 
 def _read(root: Path, rel: str) -> list[dict[str, str]]:
+    """One `mappings/` table, `#` comment lines skipped.
+
+    A table may open with a comment block explaining its columns
+    (`mappings/vanilla_traits.csv` documents the exact/approx/none policy that
+    way), so every reader in the repo skips them - `ck2ck3.overrides._rows`
+    and `ck2ck3.traits.tables._read` do the same.
+    """
     path = root / rel
     with path.open(encoding="utf-8", newline="") as fh:
-        return list(csv.DictReader(fh))
+        lines = [line for line in fh if not line.lstrip().startswith("#")]
+    return list(csv.DictReader(lines))
 
 
 def load_tables(root: Path | None = None) -> Tables:
@@ -226,6 +234,12 @@ def load_tables(root: Path | None = None) -> Tables:
     if trait_map.exists():
         tables.trait_id_map_present = True
         for row in _read(root, TRAIT_ID_MAP):
+            if (row.get("status") or "").strip() == "approx":
+                # A near-equivalent, not a dedupe: the traits lane ported the
+                # CK2 trait under its own id and BOTH traits exist, so
+                # remapping the CK2 id onto the CK3 one would silently drop
+                # the ported trait (docs/step_traits.md rule 1).
+                continue
             source = row.get("ck2_trait") or row.get("from") or ""
             target = row.get("ck3_trait") or row.get("to") or ""
             if source and target:

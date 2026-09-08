@@ -1,0 +1,42 @@
+CK3 install: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+198 tradition ids in common/culture/traditions/*.txt
+
+overrides/traditions_of_culture_group.csv: 67 rows, 11 deliberately empty
+32 distinct tradition ids used
+
+OK   tradition_ancient_miners                 00_realm_traditions.txt  <- 1 source(s)
+OK   tradition_astute_diplomats               00_realm_traditions.txt  <- 1 source(s)
+OK   tradition_desert_nomads                  00_regional_traditions.txt  <- 2 source(s)
+OK   tradition_diasporic                      00_societal_traditions.txt  <- 2 source(s)
+OK   tradition_esteemed_hospitality           00_realm_traditions.txt  <- 4 source(s)
+OK   tradition_fishermen                      00_societal_traditions.txt  <- 1 source(s)
+OK   tradition_forest_folk                    00_realm_traditions.txt  <- 3 source(s)
+OK   tradition_hereditary_hierarchy           00_realm_traditions.txt  <- 20 source(s)
+OK   tradition_hidden_cities                  00_realm_traditions.txt  <- 5 source(s)
+OK   tradition_horse_lords                    00_regional_traditions.txt  <- 2 source(s)
+OK   tradition_hunters                        00_societal_traditions.txt  <- 6 source(s)
+OK   tradition_isolationist                   00_realm_traditions.txt  <- 7 source(s)
+OK   tradition_jungle_dwellers                00_realm_traditions.txt  <- 4 source(s)
+OK   tradition_language_scholars              00_ritual_traditions.txt  <- 1 source(s)
+OK   tradition_martial_admiration             00_societal_traditions.txt  <- 12 source(s)
+OK   tradition_metal_craftsmanship            00_realm_traditions.txt  <- 2 source(s)
+OK   tradition_mountain_homes                 00_realm_traditions.txt  <- 5 source(s)
+OK   tradition_mountaineers                   00_combat_traditions.txt  <- 1 source(s)
+OK   tradition_mystical_ancestors             00_ritual_traditions.txt  <- 4 source(s)
+OK   tradition_only_the_strong                00_combat_traditions.txt  <- 9 source(s)
+OK   tradition_pastoralists                   00_realm_traditions.txt  <- 2 source(s)
+OK   tradition_philosopher_culture            00_societal_traditions.txt  <- 3 source(s)
+OK   tradition_practiced_pirates              00_societal_traditions.txt  <- 1 source(s)
+OK   tradition_ruling_caste                   00_realm_traditions.txt  <- 4 source(s)
+OK   tradition_sacred_groves                  00_ritual_traditions.txt  <- 5 source(s)
+OK   tradition_seafaring                      00_societal_traditions.txt  <- 2 source(s)
+OK   tradition_storytellers                   00_societal_traditions.txt  <- 1 source(s)
+OK   tradition_strength_in_numbers            00_combat_traditions.txt  <- 2 source(s)
+OK   tradition_tribe_unity                    00_realm_traditions.txt  <- 1 source(s)
+OK   tradition_warrior_culture                00_societal_traditions.txt  <- 4 source(s)
+OK   tradition_wetlanders                     00_realm_traditions.txt  <- 1 source(s)
+OK   tradition_xenophilic                     00_societal_traditions.txt  <- 1 source(s)
+
+MISSES: 0
+DLC-ONLY: 0
+ROWS OVER MAX_TRADITIONS=5: 0

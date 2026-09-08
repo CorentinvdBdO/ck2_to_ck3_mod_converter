@@ -4,9 +4,6 @@
 # trait properties (from _traits.info + 00_traits.txt): 687
 # trait names in 00_traits.txt: 301
 
-modifiers.csv: 95 keys verified against modifier_definition_formats/ or any common/ assignment
-trait_fields.csv: 53 keys verified against _traits.info or 00_traits.txt
-vanilla_traits.csv: 105 keys verified against 00_traits.txt trait names
 
 modifiers.csv keys found only as a common/ assignment and not declared in modifier_definition_formats/ (4) - these are CK3 core modifiers/trait fields that need no declaration:
   health

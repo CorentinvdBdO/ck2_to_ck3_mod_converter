@@ -185,9 +185,23 @@ def test_faerun_only_nickname_becomes_a_comment(tables: Tables) -> None:
 
 # -- traits ----------------------------------------------------------------
 def test_vanilla_trait_is_renamed_to_its_ck3_id(tables: Tables) -> None:
-    out, port = convert("1 = { trait = wroth }", tables)
-    assert "trait = wrathful" in out
+    # `wounded` is an `exact` row of mappings/vanilla_traits.csv, so the traits
+    # step dedupes it to CK3 `wounded_1` and does not redefine it.
+    out, port = convert("1 = { trait = wounded }", tables)
+    assert "trait = wounded_1" in out
     assert port.report.counts["traits_renamed"] == 1
+
+
+def test_approx_vanilla_trait_keeps_its_ck2_id(tables: Tables) -> None:
+    """An `approx` row is ported as a new trait, so it is NOT renamed.
+
+    Policy 2026-09-08 (`docs/DECISIONS.md`): CK3 `wrathful` is only a
+    near-equivalent of CK2 `wroth`, so both exist and the character keeps the
+    CK2 one.
+    """
+    out, port = convert("1 = { trait = wroth }", tables)
+    assert "trait = wroth" in out
+    assert port.report.counts.get("traits_renamed", 0) == 0
 
 
 def test_faerun_race_trait_keeps_its_id(tables: Tables) -> None:
@@ -230,21 +244,21 @@ def test_the_authoritative_set_is_not_remapped_again() -> None:
 def test_traits_step_handoff_replaces_the_known_set() -> None:
     """Only what the traits step wrote this run resolves."""
     tables = load_tables()
-    tables.adopt_traits_step(["creature_elf"], {"wroth": "wrathful"})
+    tables.adopt_traits_step(["creature_elf"], {"wounded": "wounded_1"})
     out, port = convert(
-        "1 = { trait = creature_elf trait = wroth trait = brave }", tables
+        "1 = { trait = creature_elf trait = wounded trait = brave }", tables
     )
     assert "trait = creature_elf" in out
-    assert "trait = wrathful" in out
+    assert "trait = wounded_1" in out
     assert "# CK2: trait = brave" in out
     assert port.report.counts["traits_dropped"] == 1
 
 
 def test_add_and_remove_trait_go_through_the_same_table(tables: Tables) -> None:
     out, _ = convert(
-        "1 = { 1300.1.1 = { add_trait = wroth remove_trait = brave } }", tables
+        "1 = { 1300.1.1 = { add_trait = wounded remove_trait = brave } }", tables
     )
-    assert "add_trait = wrathful" in out
+    assert "add_trait = wounded_1" in out
     assert "remove_trait = brave" in out
 
 
@@ -271,11 +285,11 @@ def test_wealth_becomes_an_add_gold_effect(tables: Tables) -> None:
 # -- effect blocks ---------------------------------------------------------
 def test_effect_even_if_dead_is_ported_as_effect_with_a_note(tables: Tables) -> None:
     out, port = convert(
-        "1 = { 1300.1.1 = { effect_even_if_dead = { add_trait = wroth } } }", tables
+        "1 = { 1300.1.1 = { effect_even_if_dead = { add_trait = wounded } } }", tables
     )
     assert "effect_even_if_dead =" not in out.replace("# CK2: effect_even_if_dead", "")
     assert "effect = {" in out
-    assert "add_trait = wrathful" in out
+    assert "add_trait = wounded_1" in out
     assert "CK3 has no effect_even_if_dead" in out
     assert port.report.dropped[("effect_even_if_dead", "history", "renamed to effect")] == 1
 
