@@ -51,7 +51,6 @@ def text(code: str, **kwargs) -> str:
         ("[Root.RelHead.GetName]", "[ROOT.Char.GetFaith.GetReligiousHead.GetName]"),
         # CK2 spells capitalisation with Cap, CK3 with |U
         ("[Root.GetSheHeCap]", "[ROOT.Char.GetSheHe|U]"),
-        ("[From.GetHerHisCap]", "[ck2_from.GetHerHis|U]"),
         # gendered words: CK3 only ships the female-first form
         ("[Root.GetManWoman]", "[ROOT.Char.GetWomanMan]"),
         ("[Root.GetLordLady]", "[ROOT.Char.GetLadyLord]"),
@@ -68,7 +67,7 @@ def test_maps_the_frequent_codes(ck2, ck3):
 
 
 def test_from_becomes_a_saved_scope_and_says_so():
-    result = convert_code("[From.GetFirstName]")
+    result = convert_code("[From.GetFirstName]", named_scope_policy="reference")
     assert result.text == "[ck2_from.GetFirstName]"
     assert result.status == "mapped"
     assert "saved scope" in result.note
@@ -79,16 +78,42 @@ def test_from_becomes_a_saved_scope_and_says_so():
     [
         ("[FromFrom.GetName]", "[ck2_fromfrom.GetName]"),
         ("[FromFromFrom.GetName]", "[ck2_fromfromfrom.GetName]"),
+        ("[From.GetHerHisCap]", "[ck2_from.GetHerHis|U]"),
     ],
 )
 def test_from_chains_get_their_own_scope_name(ck2, ck3):
-    assert text(ck2) == ck3
+    assert text(ck2, named_scope_policy="reference") == ck3
+
+
+def test_a_from_code_is_a_marker_under_the_default_policy():
+    """`[ck2_from.…]` is a saved scope too: nothing runs
+    `save_scope_as = ck2_from` until the event port ships, and an unresolvable
+    scope is a data error in the loc string, not a blank."""
+    result = convert_code("[From.GetFirstName]")
+    assert result.text == MARKER.format("From.GetFirstName")
+    assert "saved scope" in result.note
 
 
 def test_a_ck2_event_target_is_kept_as_a_ck3_saved_scope():
-    result = convert_code("[relic_hunter.GetTitledFirstName]")
+    result = convert_code(
+        "[relic_hunter.GetTitledFirstName]", named_scope_policy="reference"
+    )
     assert result.text == "[relic_hunter.GetTitledFirstName]"
     assert result.status == "named_scope"
+
+
+def test_a_saved_scope_is_a_marker_until_something_saves_it():
+    """CK3 references saved scopes the same way CK2 does, but only an event,
+    decision or on_action that ran `save_scope_as` puts the scope there, and
+    nothing ports CK2's events yet. `verified` 2026-09-08:
+    `pdx_data_factory.cpp: Failed to find type 'christian' in
+    'christian.GetReligion.GetName'` + `pdx_data_localize.cpp: Data error in
+    loc string '<key>'` were the last log lines before an access violation in
+    game setup (docs/evidence/game_load_2026-09-08.md)."""
+    result = convert_code("[relic_hunter.GetTitledFirstName]")
+    assert result.text == MARKER.format("relic_hunter.GetTitledFirstName")
+    assert result.status == "named_scope"
+    assert "saved scope" in result.note
 
 
 # -- what has no CK3 equivalent -------------------------------------------
@@ -126,15 +151,31 @@ def test_language_helpers_are_marked():
 
 # -- customizable localisation --------------------------------------------
 def test_a_mod_custom_loc_becomes_a_ck3_custom_call():
-    result = convert_code("[Root.TalosLoc]", custom_loc={"TalosLoc"})
+    result = convert_code(
+        "[Root.TalosLoc]", custom_loc={"TalosLoc"}, custom_loc_policy="call"
+    )
     assert result.text == "[ROOT.Char.Custom('TalosLoc')]"
     assert result.status == "custom"
 
 
-def test_an_unknown_getter_is_a_custom_call_by_default():
-    result = convert_code("[Root.GetChancellorName]")
+def test_a_custom_call_is_a_marker_until_the_custom_loc_port_ships():
+    """`Custom('X')` for an X CK3 does not know is not inert: `verified`
+    2026-09-08, 795 such names produced `jomini_custom_text.h:94: Object of
+    type 'character' is not valid for 'VampName'` and the game died in game
+    setup. Nothing emits common/customizable_localization yet, so `marker` is
+    the default (docs/evidence/game_load_2026-09-08.md)."""
+    result = convert_code("[Root.TalosLoc]", custom_loc={"TalosLoc"})
+    assert result.text == MARKER.format("Root.TalosLoc")
+    assert result.status == "custom"
+    assert "Custom(" not in result.text
+
+
+def test_an_unknown_getter_is_a_custom_call_only_under_the_call_policy():
+    result = convert_code("[Root.GetChancellorName]", custom_loc_policy="call")
     assert result.text == "[ROOT.Char.Custom('GetChancellorName')]"
     assert result.status == "custom_unverified"
+    # default policy: no call to a name nothing defines
+    assert "Custom(" not in convert_code("[Root.GetChancellorName]").text
 
 
 def test_the_marker_policy_switches_it_off():

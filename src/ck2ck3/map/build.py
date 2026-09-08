@@ -18,6 +18,7 @@ CK2 bitmaps are 40 MB files that no parse-tree reader covers.
 from __future__ import annotations
 
 import argparse
+import csv
 import io
 import json
 import sys
@@ -35,6 +36,7 @@ from . import (
     bootstrap,
     ck2read,
     ck2titles,
+    graphical,
     heightmap,
     holdings,
     idmap,
@@ -336,9 +338,40 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         sink.warn(message)
     sink.text("map_data/climate.txt", writers.render_climate(climate, ids))
     sink.text("map_data/island_region.txt", writers.render_island_region(islands, ids))
+    graphical_buckets = graphical.assign(
+        history=province_history,
+        idmap=ids,
+        land_ck3=land_ck3,
+        graphical_culture_of_culture=ck2read.read_graphical_culture_of_culture(
+            mod / "common" / "cultures"
+        ),
+        region_of_gfx=graphical.region_of_ck2_gfx(
+            _building_gfx_of_ck2_gfx(_repo_path(cfg, Path("overrides") / "gfx_of_culture_group.csv"))
+        ),
+        bookmark=cfg.baronies.bookmark,
+    )
+    log(
+        "graphical regions: "
+        + ", ".join(
+            f"{name}={len(graphical_buckets.get(name, ()))}"
+            for name, _ in graphical.GRAPHICAL_REGIONS
+        )
+    )
+    vanilla_regions = ck2read.read_ck3_region_names(
+        (cfg.ck3_game_dir or Path()) / "map_data" / "geographical_regions"
+    )
+    if not vanilla_regions:
+        sink.warn(
+            "no CK3 map_data/geographical_regions found at "
+            f"{cfg.ck3_game_dir}: vanilla region names are not re-declared, and "
+            "a vanilla GUI lookup of one crashes the frontend "
+            "(docs/evidence/game_load_2026-09-08.md)"
+        )
     sink.text(
         f"map_data/geographical_regions/{prefix}_regions.txt",
-        writers.render_geographical_regions(geo, ids),
+        writers.render_geographical_regions(
+            geo, ids, graphical_buckets, vanilla_regions
+        ),
     )
     sink.text(
         "map_data/continent.txt",
@@ -427,6 +460,26 @@ def _barony_names(mod: Path, tree: ck2titles.Ck2TitleTree) -> dict[str, str]:
         for key in tree.titles
         if key.startswith("b_") and merged.get(key)
     }
+
+
+def _building_gfx_of_ck2_gfx(path: Path) -> dict[str, str]:
+    """The two columns of ``overrides/gfx_of_culture_group.csv`` the map needs.
+
+    The `cultures` step reads the same file through `ck2ck3.overrides`; the map
+    pipeline has no `Context`, so it reads the two columns itself rather than
+    growing a dependency on the step layer.
+    """
+    out: dict[str, str] = {}
+    if not path.is_file():
+        return out
+    with path.open("r", encoding="utf-8", newline="") as fh:
+        rows = csv.DictReader(line for line in fh if not line.lstrip().startswith("#"))
+        for row in rows:
+            key = (row.get("ck2_graphical_culture") or "").strip()
+            value = (row.get("building_gfx") or "").strip()
+            if key and value:
+                out[key] = value
+    return out
 
 
 def _repo_path(cfg: MapConfig, rel: Path) -> Path:

@@ -192,3 +192,63 @@ def test_read_positions_returns_seven_slots(tmp_path):
     assert len(pos[1]) == 7
     assert pos[1][0] == (1119.0, 2838.0)
     assert r.CK2_POSITION_SLOTS[0] == "city"
+
+
+CULTURES = """\
+shou_group = {
+\tgraphical_cultures = { chinesegfx orientalgfx }
+\talternate_start = { }
+\tshou = {
+\t\tmale_names = { Chen Li }
+\t\tfemale_names = { Mei }
+\t}
+\tkozakura = {
+\t\tgraphical_cultures = { japanesegfx }
+\t\tmale_names = { Taro }
+\t\tfemale_names = { Hana }
+\t}
+}
+nogfx_group = {
+\tplain = {
+\t\tmale_names = { A }
+\t\tfemale_names = { B }
+\t}
+}
+"""
+
+
+def test_read_graphical_culture_of_culture(tmp_path):
+    """The group carries `graphical_cultures`, a culture may override it, and
+    the first entry is the one CK2 draws with (CLAUDE.md invariant). The map
+    step needs it to put every land province in a CK3 graphical region."""
+    (tmp_path / "00_cultures.txt").write_text(CULTURES, encoding="cp1252")
+    got = r.read_graphical_culture_of_culture(tmp_path)
+    assert got == {"shou": "chinesegfx", "kozakura": "japanesegfx"}
+    # `graphical_cultures` and `alternate_start` are not cultures
+    assert "graphical_cultures" not in got and "alternate_start" not in got
+    # a group with no graphical culture contributes nothing, it does not crash
+    assert "plain" not in got
+
+
+def test_read_graphical_culture_of_culture_tolerates_a_missing_folder(tmp_path):
+    assert r.read_graphical_culture_of_culture(tmp_path / "nope") == {}
+
+
+def test_read_ck3_region_names_carries_generate_modifiers(tmp_path):
+    """map_data/geographical_regions is a replace_path, so every vanilla region
+    name has to be re-declared; the eight with `generate_modifiers = yes` mint
+    the `<region>_development_growth_factor` modifiers vanilla traits use."""
+    (tmp_path / "geographical_region.txt").write_text(
+        "﻿world_steppe = {\n"
+        "\tgenerate_modifiers = yes\n"
+        "\tregions = { world_steppe_west }\n"
+        "}\n"
+        "world_steppe_west = { duchies = { d_x } }\n",
+        encoding="utf-8",
+    )
+    got = r.read_ck3_region_names(tmp_path)
+    assert got == {"world_steppe": True, "world_steppe_west": False}
+
+
+def test_read_ck3_region_names_tolerates_a_missing_folder(tmp_path):
+    assert r.read_ck3_region_names(tmp_path / "nope") == {}

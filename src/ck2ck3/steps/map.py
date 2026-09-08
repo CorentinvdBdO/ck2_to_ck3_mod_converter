@@ -138,6 +138,7 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
     return map_config.MapConfig(
         ck2_map_dir=ctx.ck2("map"),
         ck2_mod_dir=ctx.ck2(),
+        ck3_game_dir=ctx.ck3(),
         repo_dir=ctx.config.path.parent.parent,
         out_mod_dir=ctx.config.out,
         scale=map_config.ScaleConfig(

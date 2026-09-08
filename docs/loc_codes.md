@@ -34,12 +34,56 @@ machine (`curl` returns a JavaScript interstitial), so nothing here rests on it.
 | status | occurrences | share | what it means |
 |---|---|---|---|
 | `mapped` | 61,369 | 43.4 % | in the table below |
-| `custom` | 41,554 | 29.4 % | a `customizable_localisation` Faerûn itself defines → `Custom('name')` |
+| `custom` | 41,554 | 29.4 % | a `customizable_localisation` Faerûn itself defines |
 | `named_scope` | 25,893 | 18.3 % | a CK2 event target; CK3 references saved scopes the same way |
-| `custom_unverified` | 3,996 | 2.8 % | a `Get*` that is neither a CK2 engine built-in nor defined by the mod, so in CK2 it is a *vanilla* custom localisation → emitted as `Custom('name')` and warned |
-| **converted** | **132,812** | **94.0 %** | |
+| `custom_unverified` | 3,996 | 2.8 % | a `Get*` that is neither a CK2 engine built-in nor defined by the mod, so in CK2 it is a *vanilla* custom localisation |
+| **converted, `[loc] custom_loc = "call"`** | **132,812** | **94.0 %** | |
+| **converted, `[loc] custom_loc = "marker"` (default)** | **134,472** | **91.0 %** | the 3,996 `custom_unverified` rows become `<!CK2:…!>`. The 41,554 `custom` rows still count as converted — the *code* is mapped onto CK3's own feature — but their **text** is a marker until the port lands, and the run log reports them as `custom_loc_markered` |
 | `unmapped` | 8,017 | 5.7 % | a CK2 mechanic CK3 does not have → `<!CK2:…!>` |
 | `language_helper` | 516 | 0.4 % | a CK2 French/German/Spanish inflection built-in → `<!CK2:…!>` |
+
+### `[loc] named_scope` — why the default is `marker`, not `reference`
+
+Same shape as `custom_loc` below. Everything the converter resolves itself
+starts the CK3 chain with a scope word it chose (`ROOT.Char`, `THIS.Char`,
+`PREV.Char`, `GetPlayer`). Any **other** head is a saved scope, and there are
+three sources of them:
+
+| source | example in | example out |
+|---|---|---|
+| a CK2 event target | `[relic_hunter.GetTitledFirstName]` | `[relic_hunter.GetTitledFirstName]` |
+| a CK2 `From` chain (CK3 has no `FROM` loc scope) | `[From.GetFirstName]` | `[ck2_from.GetFirstName]` |
+| a CK2 chain word used as the head | `[Culture.GetName]` | `[Culture.GetName]` |
+
+All three need an event, decision or on_action that ran `save_scope_as`, and
+**nothing ports CK2's events yet**. An unresolvable one is not a blank:
+`verified` 2026-09-08, `pdx_data_factory.cpp:1364: Failed to find type
+'christian' in 'christian.GetReligion.GetName'` followed by
+`pdx_data_localize.cpp:146: Data error in loc string 'trait_crowned_by_bishop_desc'`,
+and `pdx_data_localize.cpp:161: Data error in loc string
+'trait_tribal_kinslayer_desc'` was the last line in the log before an
+`EXCEPTION_ACCESS_VIOLATION` in game setup
+(`docs/evidence/game_load_2026-09-08.md` §9). So the default emits the marker
+and the run log reports the count as `named_scope_markered` — **64,803**
+occurrences over **2,566** distinct codes on Faerûn (the event targets *and*
+every `From` chain), which is the size of the debt the event port clears. Set `named_scope = "reference"` in the commit that ships
+it.
+
+### `[loc] custom_loc` — why the default is `marker`, not `call`
+
+`Custom('name')` is the correct CK3 spelling of a CK2 customizable
+localisation, but the **name has to exist** in
+`common/customizable_localization`, and nothing in the converter emits that
+folder yet. A call to a name CK3 does not know is not a blank: `verified`
+2026-09-08 in the game, 795 distinct names across 4,068 generated lines
+produced `jomini_custom_text.h:94: Object of type 'character' is not valid for
+'VampName'`, and 34 of those were the last lines before an
+`EXCEPTION_ACCESS_VIOLATION` in game setup
+(`docs/evidence/game_load_2026-09-08.md` §7). So the default emits the visible
+`<!CK2:…!>` marker instead — the same thing the converter does for every other
+CK2 construct with no CK3 home — and the run log says how many. Set
+`custom_loc = "call"` in the same commit that ships the custom-loc port; the
+coverage figure returns to 94.0 % with it.
 
 **94.0 %, not 95 %** — and the missing point is not reachable without
 inventing content, which the charter forbids (`docs/PROJECT.md`). The whole

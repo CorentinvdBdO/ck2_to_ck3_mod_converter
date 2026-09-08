@@ -238,6 +238,24 @@ def test_name_list_copies_names_and_chances_verbatim(groups):
     assert body["dynasty_name_first"] is True
 
 
+def test_names_become_loc_keys_and_the_literals_are_collected(groups):
+    """A CK3 name-list entry is a localisation key, not a display string:
+    copying CK2's literals through was 77 736 "Missing loc X" errors in one
+    boot (`verified` 2026-09-08, docs/evidence/game_load_2026-09-08.md)."""
+    culture = groups[0].cultures[0]
+    culture.block.get_node("male_names").value = parse(
+        'x = { "Sergeant Reckless" 2BD71SF2 Ari Ari }'
+    ).entries[0].value
+    loc: dict[str, str] = {}
+    body = step.build_name_list("fae", culture, loc).block
+    tokens = [str(v) for v in body["male_names"].list_values()]
+    assert tokens == ["Sergeant_Reckless", "name_2BD71SF2", "Ari"]
+    assert loc["Sergeant_Reckless"] == "Sergeant Reckless"
+    assert loc["name_2BD71SF2"] == "2BD71SF2"
+    # every token is a bare, parser-safe word: no quotes, no leading digit
+    assert '"' not in write(body["male_names"])
+
+
 def test_patronym_literal_becomes_a_loc_key_with_always_use_patronym(groups):
     body = step.build_name_list("fae", groups[0].cultures[0]).block
     # prefix = no in the fixture, so the suffix keys are the target
@@ -378,3 +396,41 @@ def test_generated_culture_files_round_trip(tmp_path: Path):
         first = parse_file(path, encoding=CK3_ENCODING)
         again = parse(write(first))
         assert len(first.entries) == len(again.entries), path
+
+
+# -- dynasty names ----------------------------------------------------------
+def test_dynasty_names_come_from_the_cultures_own_dynasties(groups):
+    """CK2 keeps dynasty names in common/dynasties with a `culture` each; CK3
+    keeps them per name list, and fewer than MINIMUM_DYNASTY_NAMES is
+    `culture_name_lists.cpp:169` plus no name to mint a generated character's
+    dynasty from (`verified` 2026-09-08, 838 of them)."""
+    table = {"test_raider": ["dynn_fae_1", "dynn_fae_2", "dynn_fae_3"]}
+    body = step.build_name_list(
+        "fae", groups[0].cultures[0], {}, table
+    ).block
+    assert [str(v) for v in body["dynasty_names"].list_values()] == [
+        "dynn_fae_1",
+        "dynn_fae_2",
+        "dynn_fae_3",
+    ]
+    assert '"dynn_fae_1"' in write(body)  # vanilla quotes them
+
+
+def test_the_culture_group_tops_up_a_culture_below_the_minimum(groups):
+    """Vanilla's own define says so: "Dynasty names from the culture group will
+    count" (common/defines/00_defines.txt:1145)."""
+    table = {"test_raider": ["dynn_fae_1"], "test_farmer": ["dynn_fae_9"]}
+    keys, source = step.dynasty_names_for(groups[0].cultures[0], table)
+    assert keys == ["dynn_fae_1", "dynn_fae_9"]
+    assert "culture group" in source
+    # a culture already at the minimum is left alone
+    keys, source = step.dynasty_names_for(
+        groups[0].cultures[0], {"test_raider": ["a", "b"], "test_farmer": ["c"]}
+    )
+    assert keys == ["a", "b"] and source == "own culture"
+
+
+def test_no_dynasty_anywhere_in_the_group_invents_nothing(groups):
+    keys, source = step.dynasty_names_for(groups[0].cultures[0], {})
+    assert keys == []
+    assert "CK2 defines no dynasty" in source

@@ -21,7 +21,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .. import ids, overrides
+from .. import ids, nametokens, overrides
 from ..context import Context, StepResult
 from ..pdx import Block, Color, Item, Node, parse_file
 from ..pdx.encoding import CK3_ENCODING
@@ -44,6 +44,10 @@ OUTPUTS: tuple[str, ...] = (
 #: `female_names`, and no group-level key does (see
 #: `scripts/survey_cultures_religions.py`).
 CULTURE_MARKERS = ("male_names", "female_names")
+
+#: The two name-list keys whose values are person names, i.e. loc keys in CK3.
+#: Everything else in :data:`NAME_LIST_VERBATIM` really is copied verbatim.
+NAME_KEYS = frozenset(CULTURE_MARKERS)
 
 #: Keys copied verbatim onto the CK3 **name list** (same key, same shape).
 NAME_LIST_VERBATIM = (
@@ -311,6 +315,21 @@ def _copy(block: Block, key: str) -> Node | None:
     return Node(key=node.key, value=node.value, quoted_value=node.quoted_value)
 
 
+def _name_node(block: Block, key: str, loc: dict[str, str] | None) -> Node | None:
+    """``male_names = { ... }`` with every literal replaced by its loc key.
+
+    The literals are collected into ``loc`` so one localisation file can say
+    what each token means (:mod:`ck2ck3.nametokens`).
+    """
+    value = block.get(key)
+    if not isinstance(value, Block):
+        return _copy(block, key)
+    tokens = nametokens.tokenise(
+        [str(v) for v in value.list_values()], {} if loc is None else loc
+    )
+    return Node(key=key, value=Block(entries=[Item(value=t) for t in tokens]))
+
+
 def build_heritages(
     prefix: str, groups: list[CK2CultureGroup], race_of_group: dict[str, str]
 ) -> tuple[Block, list[str]]:
@@ -494,11 +513,61 @@ def _unmapped_comments(block: Block, *, handled: frozenset[str]) -> list[str]:
     return out
 
 
-def build_name_list(prefix: str, culture: CK2Culture) -> Node:
-    """One `name_list` object: CK2 keeps names per culture, CK3 per name list."""
+#: `MINIMUM_DYNASTY_NAMES` in CK3 `common/defines/00_defines.txt:1145`, with
+#: the comment "We'll log an error for any culture with less dynasty names than
+#: this. Dynasty names from the culture group will count".
+MINIMUM_DYNASTY_NAMES = 2
+
+
+def dynasty_names_for(
+    culture: CK2Culture, names_by_culture: dict[str, list[str]]
+) -> tuple[list[str], str]:
+    """``(loc keys, where they came from)`` for one culture's `dynasty_names`.
+
+    CK2 keeps dynasty names globally in ``common/dynasties``, each carrying a
+    ``culture``; CK3 keeps them per name list.  So the keys are the culture's
+    own dynasties, and — exactly as vanilla's define comment allows — the
+    culture **group**'s dynasties top it up when the culture alone has fewer
+    than :data:`MINIMUM_DYNASTY_NAMES`.
+
+    Nothing is invented: a culture whose group has no dynasties at all gets an
+    empty list and the caller says so.
+    """
+    own = list(names_by_culture.get(culture.id, ()))
+    if len(own) >= MINIMUM_DYNASTY_NAMES:
+        return own, "own culture"
+    pooled = list(own)
+    seen = set(own)
+    for sibling in culture.group.cultures:
+        for key in names_by_culture.get(sibling.id, ()):
+            if key not in seen:
+                seen.add(key)
+                pooled.append(key)
+    if pooled:
+        return pooled, f"culture group {culture.group.id}"
+    return [], "nothing: CK2 defines no dynasty of this culture group"
+
+
+def build_name_list(
+    prefix: str,
+    culture: CK2Culture,
+    loc: dict[str, str] | None = None,
+    names_by_culture: dict[str, list[str]] | None = None,
+) -> Node:
+    """One `name_list` object: CK2 keeps names per culture, CK3 per name list.
+
+    `male_names` / `female_names` are **not** copied verbatim: a CK3 name is a
+    localisation key, so each CK2 literal becomes a parser-safe token and the
+    literal is recorded in ``loc`` for the ``<prefix>_names_l_<lang>.yml`` this
+    step writes.  Why, with the error counts it cost, is in
+    :mod:`ck2ck3.nametokens`.
+    """
     entries: list[object] = []
     for key in NAME_LIST_VERBATIM:
-        node = _copy(culture.block, key)
+        if key in NAME_KEYS:
+            node = _name_node(culture.block, key, loc)
+        else:
+            node = _copy(culture.block, key)
         if node is not None:
             entries.append(node)
 
@@ -551,6 +620,35 @@ def build_name_list(prefix: str, culture: CK2Culture) -> Node:
             )
         )
 
+    end_comments: list[str] = []
+    if names_by_culture is not None:
+        keys, source = dynasty_names_for(culture, names_by_culture)
+        if keys:
+            entries.append(
+                Node(
+                    key="dynasty_names",
+                    value=Block(
+                        entries=[Item(value=k, quoted=True) for k in keys],
+                        multiline=len(keys) > 1,
+                    ),
+                    blank_before=True,
+                    leading_comments=[
+                        "# CK2 keeps dynasty names in common/dynasties, one "
+                        "`culture` each; CK3 keeps them per name list.",
+                        f"# {len(keys)} from {source}. Fewer than "
+                        f"{MINIMUM_DYNASTY_NAMES} is culture_name_lists.cpp:169.",
+                    ],
+                )
+            )
+        else:
+            # An **empty** block is its own error (`culture_name_lists.cpp:
+            # Cultural dynasty name list has no names`), so the key is omitted
+            # and only a comment records why.
+            end_comments.append(
+                f"# no dynasty_names: {source}. Human input, not a derivation "
+                "(docs/step_cultures_religions.md)"
+            )
+
     if culture.block.get("dynasty_name_first") is True:
         entries.append(
             Node(
@@ -561,9 +659,12 @@ def build_name_list(prefix: str, culture: CK2Culture) -> Node:
             )
         )
 
+    body = Block(entries=entries)
+    if end_comments:
+        body.end_comments = end_comments
     return Node(
         key=name_list_id(prefix, culture),
-        value=Block(entries=entries),
+        value=body,
         leading_comments=[f"# CK2 culture {culture.id} of group {culture.group.id}"],
     )
 
@@ -711,6 +812,37 @@ def run(ctx: Context) -> StepResult:
     for group in groups:
         by_source.setdefault(Path(group.source).stem, []).append(group)
 
+    # The `dynasties` step runs first for this: see steps/__init__.py.
+    names_by_culture: dict[str, list[str]] = dict(
+        ctx.data.get("dynasties", {}).get("names_by_culture", {})
+    )
+    if not names_by_culture:
+        ctx.warn(
+            "no dynasty names from step `dynasties` in this pass; every name "
+            "list gets an empty dynasty_names, which is "
+            "culture_name_lists.cpp:169 for all of them and leaves CK3 with no "
+            "name to mint a generated character's dynasty from (run "
+            "`dynasties` in the same pass)"
+        )
+
+    starved = [
+        c.id
+        for c in cultures
+        if len(dynasty_names_for(c, names_by_culture)[0]) < MINIMUM_DYNASTY_NAMES
+    ]
+    if starved:
+        ctx.warn(
+            f"{len(starved)} cultures have fewer than {MINIMUM_DYNASTY_NAMES} "
+            "dynasty names even after pooling their culture group, because CK2 "
+            "defines no dynasty of that group: "
+            + ", ".join(starved[:12])
+            + (f" ... (+{len(starved) - 12})" if len(starved) > 12 else "")
+            + ". Each is one culture_name_lists.cpp:169, and CK3 has no name to "
+            "mint a generated character's dynasty from. Needs human input "
+            "(overrides), not a derivation"
+        )
+
+    name_loc: dict[str, str] = {}
     for stem, file_groups in sorted(by_source.items()):
         culture_block = Block()
         name_block = Block()
@@ -725,7 +857,9 @@ def run(ctx: Context) -> StepResult:
                 )
                 node.blank_before = bool(culture_block.entries)
                 culture_block.append(node)
-                name_node = build_name_list(prefix, culture)
+                name_node = build_name_list(
+                    prefix, culture, name_loc, names_by_culture
+                )
                 name_node.blank_before = bool(name_block.entries)
                 name_block.append(name_node)
         written.append(
@@ -780,6 +914,11 @@ def run(ctx: Context) -> StepResult:
         "heritages": {g.id: heritage_id(prefix, g) for g in groups},
         "languages": {g.id: language_id(prefix, g) for g in groups},
         "opinion_keys": opinion_keys,
+        # {name-list token: the CK2 literal}. The `loc` step owns
+        # `localization/` and writes this as <prefix>_names_l_<lang>.yml: a CK3
+        # male_names/female_names entry is a localisation key, not a display
+        # string (ck2ck3.nametokens).
+        "name_loc": name_loc,
     }
     return StepResult(
         summary=(
@@ -791,6 +930,18 @@ def run(ctx: Context) -> StepResult:
             "culture_groups": len(groups),
             "cultures": len(cultures),
             "name_lists": len(cultures),
+            "name_loc_keys": len(name_loc),
+            "dynasty_names_cultures": sum(
+                1
+                for c in cultures
+                if dynasty_names_for(c, names_by_culture)[0]
+            ),
+            "dynasty_names_below_minimum": sum(
+                1
+                for c in cultures
+                if len(dynasty_names_for(c, names_by_culture)[0])
+                < MINIMUM_DYNASTY_NAMES
+            ),
             "placeholder_ethnicities": len(races),
             "traditions_emitted": sum(len(derive_traditions(c)) for c in cultures),
             "opinion_formats": len(opinion_keys) - len(skipped),

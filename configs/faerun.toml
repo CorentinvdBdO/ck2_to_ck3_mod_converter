@@ -242,6 +242,24 @@ vanilla_keys = "docs/evidence/ck3_vanilla_loc_keys.txt"
 # `Custom('GetFoo')` (that is what it is in CK2) and is warned about.
 # "marker": leave a visible <!CK2:...!> instead. See docs/loc_codes.md.
 unknown_codes = "custom"
+# What a CK2 customizable-localisation code becomes. "call" emits the CK3
+# spelling of the same feature, Custom('name') — but the name has to exist in
+# common/customizable_localization and nothing emits that folder yet, so all
+# 795 of them are dangling and CK3 answers each evaluation with
+# jomini_custom_text.h "Object of type 'character' is not valid for 'X'".
+# 34 of those were the last log lines before an access violation in game setup
+# (docs/evidence/game_load_2026-09-08.md). "marker" leaves a visible
+# <!CK2:...!> instead. Switch to "call" with the custom-loc port.
+custom_loc = "marker"
+# What a reference to a CK2 saved scope becomes ([christian.GetReligion.GetName],
+# [saint_person.GetTitledFirstName]). CK3 references saved scopes the same way,
+# so "reference" emits the chain unchanged — but only an event, decision or
+# on_action that ran `save_scope_as = christian` puts the scope there, and
+# nothing ports CK2's events yet. CK3 answers an unresolvable one with
+# pdx_data_factory "Failed to find type 'christian'" and pdx_data_localize
+# "Data error in loc string '<key>'", the last log lines before an access
+# violation in game setup (docs/evidence/game_load_2026-09-08.md).
+named_scope = "marker"
 
 # Scripted tests written into the mod by step `tests`, asserting the generated
 # mod's own claims. Grammar and how the game runs them:

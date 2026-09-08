@@ -74,12 +74,16 @@ _ID_FROM_FILENAME = re.compile(r"^\s*(\d+)")
 _COMMENT = re.compile(r"#[^\n]*")
 _TITLE = re.compile(r"\btitle\s*=\s*(c_[A-Za-z0-9_]+)")
 _MAX_SETTLEMENTS = re.compile(r"\bmax_settlements\s*=\s*(\d+)")
-#: a dated block header, an opening/closing brace, or a `b_x = y` assignment
+#: a dated block header, an opening/closing brace, a `b_x = y` assignment, or a
+#: `culture = x` line. The culture is read only to pick a **graphical** region
+#: for the province's CK3 baronies (`map_data/geographical_regions`); the real
+#: culture of the CK3 province is written by the `history_titles` step.
 _EVENT = re.compile(
     r"(?P<date>(\d+)\.(\d+)\.(\d+))\s*=\s*\{"
     r"|(?P<open>\{)"
     r"|(?P<close>\})"
     r"|(?P<barony>b_[A-Za-z0-9_]+)\s*=\s*(?P<value>[A-Za-z0-9_]+)"
+    r"|culture\s*=\s*(?P<culture>[A-Za-z0-9_]+)"
 )
 
 
@@ -111,6 +115,16 @@ class ProvinceHistory:
     max_settlements: int | None = None
     #: barony key -> [(date, ck2 holding type)] in file order
     assignments: dict[str, list[tuple[Date, str]]] = field(default_factory=dict)
+    #: [(date, ck2 culture)] in file order; CK2 lets a province change culture
+    cultures: list[tuple[Date, str]] = field(default_factory=list)
+
+    def culture_at(self, date: Date) -> str | None:
+        """The CK2 culture in effect at ``date`` (last assignment wins)."""
+        best: tuple[Date, str] | None = None
+        for when, value in self.cultures:
+            if when <= date and (best is None or when >= best[0]):
+                best = (when, value)
+        return best[1] if best else None
 
     def at(self, date: Date) -> dict[str, str]:
         """Holding type per barony as of ``date`` (last holding assignment wins).
@@ -179,6 +193,8 @@ def read_province_file(path: str | Path) -> ProvinceHistory | None:
             depth = max(0, depth - 1)
             if len(dates) > 1:
                 dates.pop()
+        elif tok.group("culture"):
+            hist.cultures.append((dates[-1], tok.group("culture")))
         else:
             hist.assignments.setdefault(tok.group("barony"), []).append(
                 (dates[-1], tok.group("value"))

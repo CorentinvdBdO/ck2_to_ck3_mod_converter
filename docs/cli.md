@@ -56,6 +56,8 @@ converter repository root, so the CLI behaves the same from any directory.
 | `loc.skip_vanilla_collisions` | bool | drop keys that already exist in CK3 vanilla, default `false` |
 | `loc.vanilla_keys` | path | the cached vanilla key set, `docs/evidence/ck3_vanilla_loc_keys.txt` |
 | `loc.unknown_codes` | str | `custom` (default) or `marker`, see `docs/loc_codes.md` |
+| `loc.named_scope` | str | what a reference to a CK2 saved scope becomes: `marker` (default) or `reference` (the chain unchanged). `reference` needs something to run `save_scope_as`, and nothing ports CK2's events yet; an unresolvable scope is a data error in the loc string that crashed game setup (`docs/evidence/game_load_2026-09-08.md`) |
+| `loc.custom_loc` | str | what a CK2 customizable-localisation code becomes: `marker` (default, a visible `<!CK2:…!>`) or `call` (`Custom('name')`). `call` needs `common/customizable_localization`, which nothing emits yet, and a call to a name CK3 does not know is an error per evaluation — it crashed game setup (`docs/evidence/game_load_2026-09-08.md`) |
 | `tests.sample` | int | history title holders and land provinces the `tests` step asserts, spread evenly. `0` = every one (3694 provinces) |
 | `tests.bookmark` | str | bookmark key to anchor the tests to; unset = the highest-weight one, which is what the game's `-test` starts |
 
@@ -132,7 +134,7 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 | `traits` | `common/traits`, `gfx/interface/icons/traits` | CK2 traits ported to CK3 (`docs/step_traits.md`) |
 | `dynasties` | `common/dynasties`, `common/dynasty_houses`, one loc file | dynasties, and the only place CK2's literal dynasty names survive |
 | `characters` | `history/characters` | all 18124 Faerûn characters, field by field (`docs/step_characters.md`) |
-| `cultures` | `common/culture/*`, `common/ethnicities`, … | CK2 culture groups/cultures → pillars, cultures, name lists |
+| `cultures` | `common/culture/*`, `common/ethnicities`, … | CK2 culture groups/cultures → pillars, cultures, name lists. **Runs after `dynasties`**: a name list's `dynasty_names` comes from `ctx.data["dynasties"]["names_by_culture"]` |
 | `religions` | `common/religion/*` | CK2 religion groups/religions → families, religions, faiths, holy sites |
 | `tests` | `tests` | CK3 scripted tests asserting the generated mod's own claims; **runs last**, see below |
 
@@ -194,11 +196,16 @@ by the launcher, and neither vanilla nor EK2 puts comments in it.
 
 `loc` writes `localization/<language>/<prefix>_<csv stem>_l_<language>.yml`,
 one file per source CSV per language, keys keeping their CK2 name
-(`docs/DECISIONS.md`). On Faerûn: 480 files, 108,986 keys per language, 94 % of
-147,711 text codes converted, ~1 s. The formats and every CSV quirk are in
-`docs/formats_loc.md`, the text-code table and its coverage in
-`docs/loc_codes.md`. Its warnings are the lane hand-off: the codes with no CK3
-equivalent, and the `save_scope_as = ck2_from` the event port owes it.
+(`docs/DECISIONS.md`), plus `<prefix>_names_l_<language>.yml` — the `cultures`
+step's name-list tokens, handed over through `ctx.data["cultures"]["name_loc"]`
+because a CK3 name-list entry is a **loc key** and CK2 keeps the literals in
+`common/cultures`, not in a CSV. On Faerûn: 484 files, 155,554 keys per
+language (44,231 of them name tokens), 91.0 % of 147,711 text codes converted
+with the default `[loc] custom_loc = "marker"` (94.0 % with `"call"`), ~2 s.
+The formats and every CSV quirk are in `docs/formats_loc.md`, the text-code
+table and its coverage in `docs/loc_codes.md`. Its warnings are the lane
+hand-off: the codes with no CK3 equivalent, the customizable localisations
+nothing ports, and the `save_scope_as = ck2_from` the event port owes it.
 
 ## What happened to `convert.py` and `src/converter.py`
 

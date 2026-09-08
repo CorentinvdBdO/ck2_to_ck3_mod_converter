@@ -162,18 +162,43 @@ def read_ck2_loc(
     return merged, overridden
 
 
+#: The escape sequences CK3's localisation reader accepts.  `verified` 2026-09-08
+#: by counting every ``\\x`` in the 1.19 english localisation: ``\\n`` 47 430,
+#: ``\\t`` 224, ``\\"`` 97, ``\\\\`` 5 — and three ``\\ `` plus one ``\\T``,
+#: which are vanilla typos, not a fifth escape.  Anything else is
+#: ``localization_reader.cpp:111: Illegal localization break character (`x`)``
+#: and the rest of the line is dropped.
+LEGAL_YML_ESCAPES = frozenset('nt"\\')
+
+
 def escape_yml(text: str) -> str:
     """Escape a localisation value for a CK3 ``.yml`` file.
 
-    Only the double quote is escaped: a backslash is meaningful in CK2 and CK3
-    text (``\\n`` is a line break in both), so backslashes are passed through —
-    except a trailing one, which would otherwise escape the closing quote.
+    The double quote is escaped, and so is any backslash CK3 would read as the
+    start of an escape sequence it does not have: Faerûn's text contains
+    ``\\b`` (``…Berserker trait.\\b#M …``) and ``\\D``
+    (``…\\n\\Death to humans!…``), each of which cost one
+    ``Illegal localization break character`` error and truncated the string
+    (`verified` 2026-09-08).  A legal ``\\n`` / ``\\t`` / ``\\"`` / ``\\\\``
+    passes through untouched, so a CK2 line break stays a line break.
     """
-    escaped = text.replace('"', '\\"')
-    trailing = len(escaped) - len(escaped.rstrip("\\"))
-    if trailing % 2:
-        escaped += "\\"
-    return escaped
+    out: list[str] = []
+    i = 0
+    while i < len(text):
+        ch = text[i]
+        if ch == '"':
+            out.append('\\"')
+        elif ch == "\\":
+            nxt = text[i + 1] if i + 1 < len(text) else ""
+            if nxt in LEGAL_YML_ESCAPES:
+                out.append(ch + nxt)
+                i += 2
+                continue
+            out.append("\\\\")  # a literal backslash, not an escape
+        else:
+            out.append(ch)
+        i += 1
+    return "".join(out)
 
 
 def write_ck3_yml(

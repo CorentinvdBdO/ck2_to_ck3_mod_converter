@@ -360,6 +360,54 @@ STATUSES: tuple[str, ...] = (
 #: and warns; ``"marker"`` leaves a visible ``<!CK2:…!>`` instead.
 UNKNOWN_POLICIES: tuple[str, ...] = ("custom", "marker")
 
+#: What to do with a CK2 code that names a **defined** CK2 customizable
+#: localisation. ``call`` emits the CK3 spelling of the same feature,
+#: ``Custom('name')``; ``marker`` leaves the visible ``<!CK2:...!>`` instead.
+#:
+#: ``marker`` is the default because nothing ports
+#: ``localisation/customizable_localisation`` yet, and a ``Custom()`` call to a
+#: name CK3 does not know is not inert: `verified` 2026-09-08, 795 distinct
+#: names in 4068 generated lines produced
+#: ``jomini_custom_text.h:94: Object of type 'character' is not valid for
+#: 'VampName'`` (`docs/evidence/game_load_2026-09-08.md`). Switch to ``call``
+#: in the same commit that emits ``common/customizable_localization``.
+CUSTOM_LOC_POLICIES: tuple[str, ...] = ("marker", "call")
+
+#: What to do with a code whose first chain step is a **CK2 saved scope**
+#: (``[christian.GetReligion.GetName]``, ``[saint_person.GetTitledFirstName]``).
+#: CK3 references saved scopes the same way, so ``reference`` emits the chain
+#: unchanged — but only an event, decision or on_action that ran
+#: ``save_scope_as = christian`` puts the scope there, and nothing ports CK2's
+#: events yet. CK3 answers an unresolvable one with
+#: ``pdx_data_factory.cpp: Failed to find type 'christian' in
+#: 'christian.GetReligion.GetName'`` and ``pdx_data_localize.cpp: Data error in
+#: loc string '<key>'`` (`verified` 2026-09-08). ``marker`` leaves the visible
+#: ``<!CK2:...!>`` until the event port ships.
+NAMED_SCOPE_POLICIES: tuple[str, ...] = ("marker", "reference")
+
+#: The chain heads the converter emits for a scope it resolved itself. Anything
+#: else at the head of a generated chain is a saved scope.
+CK3_CHAIN_HEADS: frozenset[str] = frozenset(
+    {v.split(".")[0] for v in ROOT_SCOPES.values()}
+)
+
+#: The CK3 **vanilla** customizable localisations the mapping table above
+#: targets. These resolve with no port of our own: `verified` 2026-09-08, all
+#: six are declared in `game/common/customizable_localization/`
+#: (`00_generic_character_words.txt`, `00_relations.txt`). Any other name in a
+#: generated ``Custom('...')`` call is a name CK3 does not know, and every
+#: evaluation of it is a ``jomini_custom_text.h`` error.
+CK3_VANILLA_CUSTOM_LOC: frozenset[str] = frozenset(
+    {
+        "DaughterSon",
+        "SisterBrother",
+        "MotherFather",
+        "MistressMaster",
+        "QueenKing",
+        "LassLad",
+    }
+)
+
 
 @dataclass(frozen=True)
 class CodeResult:
@@ -387,6 +435,16 @@ class Report:
     needs_scope: dict[str, int] = field(default_factory=dict)
     #: ``code → occurrences`` for a ``Custom()`` call nothing defines yet.
     needs_custom_loc: dict[str, int] = field(default_factory=dict)
+    #: ``code → occurrences`` for a CK2 customizable localisation that became a
+    #: marker because ``[loc] custom_loc = "marker"``. Counted separately from
+    #: :attr:`unconverted`: the *code* is mapped (CK3 has the same feature,
+    #: spelled ``Custom('name')``), only the target folder is missing, so this
+    #: is the size of the custom-loc port, not a coverage gap.
+    custom_loc_markered: dict[str, int] = field(default_factory=dict)
+    #: ``code → occurrences`` for a CK2 saved-scope reference that became a
+    #: marker because ``[loc] named_scope = "marker"``. Same reasoning: the
+    #: *code* is mapped, only the `save_scope_as` is missing.
+    named_scope_markered: dict[str, int] = field(default_factory=dict)
     colours: dict[str, int] = field(default_factory=dict)
     icons: int = 0
     #: Square brackets the CK2 text left unbalanced (36 rows in Faerûn).
@@ -398,6 +456,18 @@ class Report:
         self.statuses[result.status] = self.statuses.get(result.status, 0) + 1
         if result.status == "custom_unverified":
             self.needs_custom_loc[code] = self.needs_custom_loc.get(code, 0) + 1
+        if result.status == "custom" and result.text.startswith("<!CK2:"):
+            self.custom_loc_markered[code] = (
+                self.custom_loc_markered.get(code, 0) + 1
+            )
+        if (
+            result.status in ("named_scope", "mapped")
+            and result.text.startswith("<!CK2:")
+            and "saved scope" in result.note
+        ):
+            self.named_scope_markered[code] = (
+                self.named_scope_markered.get(code, 0) + 1
+            )
         if not result.converted:
             self.unconverted[code] = self.unconverted.get(code, 0) + 1
         elif result.status == "mapped" and "saved scope" in result.note:
@@ -430,6 +500,8 @@ def convert_code(
     *,
     custom_loc: frozenset[str] | set[str] = frozenset(),
     unknown: str = "custom",
+    custom_loc_policy: str = "marker",
+    named_scope_policy: str = "marker",
 ) -> CodeResult:
     """Convert one CK2 text code, brackets included, to its CK3 form.
 
@@ -505,13 +577,24 @@ def convert_code(
 
     # -- the terminal function --------------------------------------------
     if function in custom_loc:
-        chain.append(f"Custom('{function}')")
+        if custom_loc_policy == "call":
+            chain.append(f"Custom('{function}')")
+            return CodeResult(
+                f"[{'.'.join(chain)}{suffix}]",
+                "custom",
+                scope_chain,
+                function,
+                note or "CK2 customizable localisation; needs the custom-loc port",
+            )
         return CodeResult(
-            f"[{'.'.join(chain)}{suffix}]",
+            MARKER.format(inner + suffix),
             "custom",
             scope_chain,
             function,
-            note or "CK2 customizable localisation; needs the custom-loc port",
+            note
+            or "CK2 customizable localisation, and nothing emits "
+            "common/customizable_localization: a Custom() call to a name CK3 "
+            "does not know is an error, not a blank",
         )
     if is_language_helper(function):
         return CodeResult(
@@ -525,7 +608,11 @@ def convert_code(
     if entry is None:
         # Not a CK2 engine built-in: in CK2 that means a customizable
         # localisation, which CK3 spells Custom('name').
-        if unknown == "custom" and function.startswith("Get"):
+        if (
+            unknown == "custom"
+            and custom_loc_policy == "call"
+            and function.startswith("Get")
+        ):
             chain.append(f"Custom('{function}')")
             return CodeResult(
                 f"[{'.'.join(chain)}{suffix}]",
@@ -548,6 +635,34 @@ def convert_code(
             scope_chain,
             function,
             entry.note,
+        )
+    # Everything the converter can resolve on its own starts the chain with a
+    # CK3 scope word it chose itself (`ROOT.Char`, `PREV.Char`, `GetPlayer`).
+    # Any other head is a **saved scope**: a CK2 event target (`relic_hunter`),
+    # the `ck2_from` a `From` code needs, or a CK2 chain word used as a head
+    # (`[Culture.GetName]`). All three need a `save_scope_as` that nothing runs
+    # yet, so all three take the same policy.
+    if (
+        named_scope_policy == "marker"
+        and chain
+        and chain[0].split(".")[0] not in CK3_CHAIN_HEADS
+    ):
+        return CodeResult(
+            MARKER.format(inner + suffix),
+            status,
+            scope_chain,
+            function,
+            "; ".join(
+                x
+                for x in (
+                    note,
+                    entry.note,
+                    f"CK2 saved scope {chain[0]!r}, and nothing saves it yet: "
+                    "an unresolvable scope reference is a data error in the loc "
+                    "string, not a blank",
+                )
+                if x
+            ),
         )
     if entry.prefix and (not chain or chain[-1] != entry.prefix):
         chain.append(entry.prefix)
@@ -598,6 +713,8 @@ def convert_text(
     *,
     custom_loc: frozenset[str] | set[str] = frozenset(),
     unknown: str = "custom",
+    custom_loc_policy: str = "marker",
+    named_scope_policy: str = "marker",
     report: Report | None = None,
 ) -> str:
     """Convert one localisation value: codes, colours and icons.
@@ -610,7 +727,13 @@ def convert_text(
     cursor = 0
     for match in CODE_RE.finditer(text):
         out.append(_drop_stray_brackets(text[cursor : match.start()], report))
-        result = convert_code(match.group(0), custom_loc=custom_loc, unknown=unknown)
+        result = convert_code(
+            match.group(0),
+            custom_loc=custom_loc,
+            unknown=unknown,
+            custom_loc_policy=custom_loc_policy,
+            named_scope_policy=named_scope_policy,
+        )
         if report is not None:
             report.add(result, match.group(0))
         out.append(result.text)

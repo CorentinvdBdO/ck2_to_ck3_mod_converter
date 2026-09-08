@@ -88,10 +88,25 @@ l_english:
   breaking a mod).
 - One leading space before the key, then `:<version>`, then a quoted value. The
   version number is ignored for mod files; the converter writes `0`.
-- Only `"` needs escaping (`\"`); a backslash is meaningful in both games, so
-  it passes through — `escape_yml` in `csvloc.py` only doubles a *trailing*
-  backslash, which would otherwise escape the closing quote. Evidence:
-  `game/localization/english/debug_story_test_event_l_english.yml:24`.
+- **Exactly four escape sequences exist**, counted over the whole 1.19 english
+  localisation: `\n` 47,430, `\t` 224, `\"` 97, `\\` 5 (plus three `\ ` and one
+  `\T`, which are vanilla typos). A backslash before anything else is
+  `localization_reader.cpp:111: Illegal localization break character (\`x\`) at
+  line N and column M` and **the rest of the string is dropped** — `verified`
+  2026-09-08 on two Faerûn lines, `…Berserker trait.\b#M …` and
+  `…\n\Death to humans!…`. `escape_yml` in `csvloc.py` therefore doubles any
+  backslash that does not start one of the four, and still doubles a trailing
+  one (which would escape the closing quote).
+- **A key must be ASCII.** `localization_reader.cpp:445: Invalid character
+  '<x>' in key name '<key>'`, 251 of them from a generated name file
+  (`verified` 2026-09-08). Vanilla agrees: **0** of the 55,948 keys in
+  `localization/english/names/*.yml` holds a non-ASCII byte, and the characters
+  they do use besides letters and digits are `_` (31,537) and `-` (997); an
+  apostrophe also passes (571 of ours drew no complaint). Vanilla spells the
+  accented names in the *value* only, and disambiguates the key with a trailing
+  underscore: `common/culture/name_lists/00_north_germanic.txt` lists `BjO_rn`
+  (Björn), `AndrE_s` (Andrés), `A__ke` (Åke). `ck2ck3.nametokens` does the same
+  job by ASCII-folding and adding a `_` per collision.
 - `#` lines are comments. The converter writes the source CSV name and the
   generated-by banner under the `l_<language>:` header.
 - A leftover `[` makes CK3 try to parse a data function and print an error in
@@ -101,5 +116,10 @@ l_english:
 
 `localization/<language>/<prefix>_<source csv stem>_l_<language>.yml` — one
 file per source CSV per language, so a diff of the generated mod points at the
-CK2 file that produced it. Faerûn produces **480 files** (120 × 4 languages)
-and **108,986 keys per language** in about 1 s.
+CK2 file that produced it. Plus two files with no source CSV:
+`<prefix>_names_l_<language>.yml` (the `cultures` step's name-list tokens, handed
+over through `ctx.data["cultures"]["name_loc"]` because CK2 keeps person names in
+`common/cultures`, not in a CSV) and `<prefix>_titles_l_english.yml` (the `map`
+step's barony names). Faerûn produces **484 files** (120 CSVs × 4 languages plus
+the name file per language) and **155,554 keys per language** — 44,231 of them
+name-list tokens — in about 2 s.
