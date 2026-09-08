@@ -19,6 +19,9 @@ runs, so the evidence in full:
   (56 of 183) and ``history/provinces`` (91 of 177) ship BOM-less pure-ASCII
   files. So a content-conditional BOM is *vanilla laxity in two folders*, never
   a requirement -- writing one always is safe and quiet.
+* ``events/`` is the same: all 536 vanilla event files start ``ef bb bf``
+  (`verified` 2026-09-08), and tiger warns about a BOM-less one. Lane
+  `tc-template` was the first step to write there and drew the warning.
 * The flat ``map_data`` files (``definition.csv``, ``default.map``,
   ``adjacencies.csv``, ...) must **not** have one; vanilla's do not, and the
   map loader is not the script parser. Nor does ``descriptor.mod`` (`verified`:
@@ -51,6 +54,7 @@ OUT_LOC_ENCODING = "utf-8-sig"
 #: evidence a step drops next to the mod.
 BOM_PREFIXES: tuple[str, ...] = (
     "common/",
+    "events/",
     "history/",
     "localization/",
     "map_data/geographical_regions/",
