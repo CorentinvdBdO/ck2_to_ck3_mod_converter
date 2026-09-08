@@ -168,6 +168,97 @@ def read_geographical_regions(path: str | Path) -> list[Ck2GeoRegion]:
 
 
 # --------------------------------------------------------------------------- #
+# the CK3 side: which region names vanilla declares
+# --------------------------------------------------------------------------- #
+def read_ck3_region_names(folder: str | Path) -> dict[str, bool]:
+    """CK3 ``map_data/geographical_regions`` region name → ``generate_modifiers``.
+
+    ``map_data/geographical_regions`` is a ``replace_path`` for a converted
+    mod, so **none** of vanilla's 589 regions load, and every vanilla script,
+    GUI and achievement that names one gets a null back.  One of those killed
+    the game right after the main menu appeared (`verified` 2026-09-08:
+    ``databases.h:36: Key dlc_fp1_region_core_mainland_scandinavia not found at
+    Database: map_data/geographical_regions``, then
+    ``EXCEPTION_ACCESS_VIOLATION``), and eight more produce the
+    ``<region>_development_growth_factor`` modifiers vanilla's traits and
+    innovations reference — hence the ``generate_modifiers`` flag is carried
+    over too.
+
+    Vanilla files are UTF-8 (with BOM) rather than cp1252, so this reader
+    cannot go through :func:`parse_file`'s CK2 encoding.
+    """
+    out: dict[str, bool] = {}
+    directory = Path(folder)
+    if not directory.is_dir():
+        return out
+    for path in sorted(directory.glob("*.txt")):
+        root = parse_file(path, encoding="utf-8-sig")
+        for name, values in root.children.items():
+            if not name:
+                continue
+            for block in values:
+                if isinstance(block, Block):
+                    out[name] = out.get(name, False) or bool(
+                        block.first("generate_modifiers")
+                    )
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# common/cultures  (only the graphical culture; the `cultures` step owns the rest)
+# --------------------------------------------------------------------------- #
+def read_graphical_culture_of_culture(folder: str | Path) -> dict[str, str]:
+    """CK2 culture id → its first ``graphical_cultures`` value.
+
+    `verified` (CLAUDE.md invariant): a CK2 culture *group* carries
+    ``graphical_cultures``; a culture may override it.  The first entry of the
+    list is the one CK2 draws with, so that is the one taken.  Cultures with no
+    value anywhere are absent from the mapping and fall through to the caller's
+    default.
+
+    Only the graphical culture is read here.  The full culture-group model
+    belongs to the ``cultures`` step; the ``map`` step needs this one field to
+    put every land province in a CK3 ``graphical_*`` geographical region.
+    """
+    out: dict[str, str] = {}
+    directory = Path(folder)
+    if not directory.is_dir():
+        return out
+    for path in sorted(directory.glob("*.txt")):
+        if path.stat().st_size == 0:
+            continue
+        root = parse_file(path)
+        for _group, values in root.children.items():
+            for group_block in values:
+                if not isinstance(group_block, Block):
+                    continue
+                group_gfx = _first_graphical_culture(group_block)
+                for culture, culture_values in group_block.children.items():
+                    for block in culture_values:
+                        if not isinstance(block, Block):
+                            continue
+                        if not any(m in block.children for m in _CULTURE_MARKERS):
+                            continue  # `graphical_cultures`, `alternate_start`, …
+                        gfx = _first_graphical_culture(block) or group_gfx
+                        if gfx:
+                            out.setdefault(culture, gfx)
+    return out
+
+
+#: What tells a culture block apart from any other child of a culture group.
+#: Same test the `cultures` step uses (`verified`: 419/419 Faerûn cultures
+#: define both, and no group-level key does).
+_CULTURE_MARKERS = ("male_names", "female_names")
+
+
+def _first_graphical_culture(block: Block) -> str | None:
+    for value in block.all("graphical_cultures"):
+        if isinstance(value, Block) and value.tokens:
+            return str(value.tokens[0])
+    return None
+
+
+# --------------------------------------------------------------------------- #
 # adjacencies.csv
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)

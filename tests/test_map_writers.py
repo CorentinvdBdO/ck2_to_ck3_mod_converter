@@ -373,3 +373,92 @@ def test_empty_replacement_banners_are_not_script_files():
     assert files, "there must be a banner in every replaced directory"
     assert not any(rel.endswith(".txt") for rel in files)
     assert "history/cultures/zz_emptied_by_converter.md" in files
+
+
+# --------------------------------------------------------------------------- #
+# geographical_regions: what CK3 rejects and CK2 tolerated
+# --------------------------------------------------------------------------- #
+def test_a_parent_with_overlapping_subregions_is_flattened():
+    """CK2's `yehimal_region` shares eight duchies with `tabot_region` and
+    friends, and both are children of `kara_tur_region`; CK3 answered with 130
+    "Region 'kara_tur_region' have multiple entries for the province 'N'"
+    (`verified` 2026-09-08). The parent is emitted flat instead."""
+    m = make_idmap([prov(1)])
+    regions = [
+        Ck2GeoRegion(name="parent", regions=["a", "b"]),
+        Ck2GeoRegion(name="a", duchies=["d_shared", "d_a"]),
+        Ck2GeoRegion(name="b", duchies=["d_shared", "d_b"]),
+    ]
+    text = writers.render_geographical_regions(regions, m)
+    parent = text[text.index("parent = {") :]
+    assert "regions = {" not in parent
+    assert "duchies = { d_shared d_a d_b }" in parent
+    assert "# flattened" in parent
+    # the children keep their own blocks unchanged
+    assert "duchies = { d_shared d_a }" in text
+
+
+def test_a_parent_with_disjoint_subregions_keeps_its_nesting():
+    m = make_idmap([prov(1)])
+    regions = [
+        Ck2GeoRegion(name="parent", regions=["a", "b"]),
+        Ck2GeoRegion(name="a", duchies=["d_a"]),
+        Ck2GeoRegion(name="b", duchies=["d_b"]),
+    ]
+    text = writers.render_geographical_regions(regions, m)
+    assert "regions = { a b }" in text
+    assert "# flattened" not in text
+
+
+def test_the_seven_vanilla_graphical_regions_are_emitted():
+    """map_data/geographical_regions is a replace_path, so vanilla's file — the
+    only definition of graphical_western and friends — does not load, and every
+    vanilla building asset's `graphical_regions` filter fails to resolve (2611
+    deferred_database_lookup errors, `verified` 2026-09-08)."""
+    m = make_idmap([prov(1)])
+    text = writers.render_geographical_regions(
+        [], m, {"graphical_western": [1, 2, 3], "graphical_mena": []}
+    )
+    for name in (
+        "graphical_western",
+        "graphical_mena",
+        "graphical_india",
+        "graphical_mediterranean",
+        "graphical_steppe",
+        "graphical_siberia",
+        "graphical_east_asia",
+    ):
+        assert f"{name} = {{" in text
+    assert text.count("graphical = yes") == 7
+    assert "color = { 255 0 0 }" in text  # vanilla's own graphical_western red
+    # plain `provinces = { ... }`; RANGE/LIST is default.map syntax, not this
+    assert "provinces = {" in text and "RANGE" not in text
+    assert "1 2 3" in text
+
+
+def test_vanilla_region_names_are_redeclared_empty():
+    """This folder is a replace_path, so none of vanilla's 592 regions load and
+    a vanilla script/GUI/achievement that names one gets a null: the frontend
+    died on `dlc_fp1_region_core_mainland_scandinavia` with an access violation
+    one second after the main menu appeared (`verified` 2026-09-08)."""
+    m = make_idmap([prov(1)])
+    text = writers.render_geographical_regions(
+        [Ck2GeoRegion(name="world_steppe", duchies=["d_ours"])],
+        m,
+        {"graphical_western": [1]},
+        {
+            "dlc_fp1_region_core_mainland_scandinavia": False,
+            "world_innovation_elephants": True,
+            "world_steppe": True,
+            "graphical_western": False,
+        },
+    )
+    assert "dlc_fp1_region_core_mainland_scandinavia = { regions = { } }" in text
+    # generate_modifiers is kept: vanilla traits reference the modifiers it mints
+    assert (
+        "world_innovation_elephants = { generate_modifiers = yes regions = { } }"
+        in text
+    )
+    # a name the mod already defines is not stubbed a second time
+    assert text.count("world_steppe = {") == 1
+    assert text.count("graphical_western = {") == 1

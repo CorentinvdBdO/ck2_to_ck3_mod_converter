@@ -556,6 +556,56 @@ Concrete examples, all `verified`:
 - Vanilla ships 3 files (`geographical_region.txt`, `10_natural_disaster_regions.txt`, `tgp_chinesenaming_regions.txt`); EK2 4; GH 10. Load order is filename-alphabetical. `assumed`.
 - UTF-8 BOM present in `V map_data/geographical_regions/geographical_region.txt` (`ef bb bf`), CRLF. `verified`.
 
+#### What a `replace_path` on this folder costs — three things, all `verified` 2026-09-08 in the game
+
+The folder needs a `replace_path` (vanilla's three files name vanilla duchies),
+and that deletes **all 592** vanilla region names. They are not decoration:
+
+1. **Vanilla scripts, GUI and achievements look them up.** 7,992
+   `jomini_trigger.cpp:243: PostValidate of trigger 'geographical_region'
+   returned false` from vanilla `common/dynasty_legacies`,
+   `common/scripted_effects`, `common/scripted_triggers`,
+   `common/customizable_localization`, … and one lookup returned a null that
+   became an `EXCEPTION_ACCESS_VIOLATION` **one second after the main menu
+   appeared**: `databases.h:36: Key
+   dlc_fp1_region_core_mainland_scandinavia not found at Database:
+   map_data/geographical_regions`, twice, then the crash. So every vanilla
+   region name must be re-declared. `<name> = { regions = { } }` is enough,
+   and it is the truth: no province of the new map is in it. Elder Kings 2 does
+   this by hand for the handful it hit
+   (`EK2 map_data/geographical_regions/geographical_region.txt:1896-1954`,
+   "Empty right now, but setting this up for vanilla replacement purposes").
+2. **Eight of them mint modifiers vanilla content references.** The eight with
+   `generate_modifiers = yes` (`world_steppe`, `world_persian_empire`,
+   `custom_ireland`, `custom_carthaginian_empire`, `custom_cumbria`,
+   `world_innovation_elephants`, `world_innovation_camels`,
+   `black_sea_coast_region`) produce `<key>_development_growth[_factor]`, and
+   vanilla's `common/traits/00_traits.txt` and `common/culture/innovations/*`
+   name them: without the region the game reports `Unexpected token:
+   world_innovation_elephants_development_growth_factor`. So the flag has to be
+   carried over with the name.
+3. **The seven `graphical_*` regions must exist and cover every land province.**
+   Every vanilla building asset lists all seven in its `graphical_regions = { }`
+   filter (`common/buildings/00_castle_buildings.txt:99`); missing, that is
+   2,611 `deferred_database_lookup: '<name>' in field 'geographical region' …
+   could not be found in the database`, and a land province in no
+   `graphical = yes` region is another 3,904 `geographical_region.cpp: Province
+   N b_x has no visual geographical region assigned`. Godherja lists members of
+   a graphical region as plain `provinces = { … }`
+   (`GH map_data/geographical_regions/gh_biozone_geographical_region.txt:20`),
+   which is what a converted map can produce with no duchy layer of its own.
+   `RANGE`/`LIST` is `default.map` syntax and does **not** belong here.
+
+#### One thing CK2 tolerates and CK3 rejects
+
+`geographical_region.cpp: Region 'X' have multiple entries for the province
+'N'` — a region may not reach one duchy or province through **two** of its
+sub-regions. Faerûn's `yehimal_region` (a mountain range) shares 8 duchies with
+`tabot_region`, `shou_lung_region` and `katakoro_plateau_region`, and all four
+are children of `kara_tur_region`: 130 errors. The fix is to emit such a parent
+**flat** — the deduplicated union of its subtree — which leaves membership
+unchanged.
+
 ---
 
 ## 9. `map_data/adjacencies.csv`

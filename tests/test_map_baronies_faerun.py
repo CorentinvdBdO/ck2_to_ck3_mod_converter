@@ -129,6 +129,11 @@ def report(tmp_path_factory):
         def ck2(self, *parts):
             return (REPO / cfg_cli.ck2_mod).joinpath(*parts)
 
+        def ck3(self, *parts):
+            # read-only: the map step needs vanilla's geographical_regions to
+            # re-declare every region name its replace_path removes
+            return cfg_cli.ck3_game.joinpath(*parts)
+
     cfg = map_step._map_config(Ctx())
     sink = DirectorySink(tmp_path_factory.mktemp("mod"), dry_run=True, verbose=False)
     return map_build.run(cfg, sink, skip_images=True)

@@ -245,6 +245,10 @@ class MapConfig:
     baronies: BaronyConfig = field(default_factory=BaronyConfig)
     #: CK2 mod root, for common/landed_titles, history/provinces, localisation
     ck2_mod_dir: Path | None = None
+    #: CK3 install `game/` dir, read-only. Needed because
+    #: `map_data/geographical_regions` is a replace_path: every vanilla region
+    #: name has to be re-declared or a vanilla script/GUI lookup of it fails.
+    ck3_game_dir: Path | None = None
     #: converter repo root, for overrides/*.csv
     repo_dir: Path | None = None
     #: CK2 terrain category -> CK3 terrain key
