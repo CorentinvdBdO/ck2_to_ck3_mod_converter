@@ -34,6 +34,9 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "dynasties",
     "characters",
     "loc",
+    # Last on purpose: `tests` asserts what the earlier steps wrote, by
+    # reading the generated mod back.
+    "tests",
 )
 
 

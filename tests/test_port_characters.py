@@ -202,13 +202,42 @@ def test_unknown_trait_becomes_a_comment(tables: Tables) -> None:
     assert port.report.counts["traits_dropped"] == 1
 
 
-def test_trait_id_map_post_pass_is_applied_after_the_port_set() -> None:
-    """The traits lane's dedupe table renames a trait the port set kept."""
+def test_trait_id_map_post_pass_is_applied_to_the_fallback_set() -> None:
+    """The dedupe table renames a trait the *fallback* port set kept.
+
+    Only the fallback: `mappings/trait_ck2_to_ck3.csv` already carries the
+    final CK3 id, and re-applying a ck2-keyed map on top of it would rename a
+    ck3 id by a ck2 key.
+    """
     tables = load_tables()
+    tables.traits_authoritative = False
+    tables.known_traits["creature_elf"] = "creature_elf"
     tables.trait_id_map_present = True
     tables.trait_id_map["creature_elf"] = "creature_elf_dedup"
     out, _ = convert("1 = { trait = creature_elf }", tables)
     assert "trait = creature_elf_dedup" in out
+
+
+def test_the_authoritative_set_is_not_remapped_again() -> None:
+    """A ck2-keyed dedupe entry must not touch an already-final ck3 id."""
+    tables = load_tables()
+    assert tables.traits_authoritative, "run scripts/build_trait_tables.py"
+    tables.trait_id_map["creature_elf"] = "creature_elf_dedup"
+    out, _ = convert("1 = { trait = creature_elf }", tables)
+    assert "trait = creature_elf\n" in out
+
+
+def test_traits_step_handoff_replaces_the_known_set() -> None:
+    """Only what the traits step wrote this run resolves."""
+    tables = load_tables()
+    tables.adopt_traits_step(["creature_elf"], {"wroth": "wrathful"})
+    out, port = convert(
+        "1 = { trait = creature_elf trait = wroth trait = brave }", tables
+    )
+    assert "trait = creature_elf" in out
+    assert "trait = wrathful" in out
+    assert "# CK2: trait = brave" in out
+    assert port.report.counts["traits_dropped"] == 1
 
 
 def test_add_and_remove_trait_go_through_the_same_table(tables: Tables) -> None:
@@ -422,11 +451,54 @@ def test_top_level_fertility_is_kept(tables: Tables) -> None:
     assert "# CK2: fertility" not in out
 
 
-def test_empty_change_first_name_is_refused(tables: Tables) -> None:
-    """`change_first_name = ""` makes ck3-tiger 1.19.0 panic (formats s10)."""
-    out, _ = convert('1 = { 1300.1.1 = { effect = { set_name = "" } } }', tables)
-    assert "change_first_name" not in out
-    assert "# CK2: set_name = " in out
+def test_set_name_becomes_a_comment(tables: Tables) -> None:
+    """CK3 `change_first_name` takes a loc key, never a literal name.
+
+    `error(unknown-field): unknown token `Obould`` (4x, `verified`
+    2026-09-08). And `change_first_name = ""` makes ck3-tiger 1.19.0 panic
+    (src/trigger.rs:1454, `docs/formats_characters.md` s10), so neither shape
+    may be emitted.
+    """
+    for value in ('"Obould"', '""'):
+        out, _ = convert(
+            "1 = { 1300.1.1 = { effect = { set_name = %s } } }" % value, tables
+        )
+        assert "change_first_name" not in out.split("# CK2:")[0]
+        assert "# CK2: set_name = " in out
+
+
+def test_spouse_effects_use_marry_and_divorce(tables: Tables) -> None:
+    """`add_spouse` is a dated-history key; the effect is `marry`."""
+    out, _ = convert(
+        "1 = { 1300.1.1 = { effect = { add_spouse = 2 remove_spouse = 3 } } }",
+        tables,
+    )
+    # A scope, not a bare history id: `marry = fae_2` is
+    # `error(unknown-field): unknown token \`fae_2\``.
+    assert "marry = character:fae_2" in out
+    assert "divorce = character:fae_3" in out
+    assert "add_spouse" not in out
+
+
+def test_a_modifier_ck3_does_not_declare_becomes_a_comment(tables: Tables) -> None:
+    """No step converts CK2 common/event_modifiers, so its ids cannot resolve."""
+    tables.adopt_ck3_modifiers({"stressed_modifier"})
+    out, port = convert(
+        "1 = { 1300.1.1 = { effect = { add_character_modifier = "
+        "{ name = known_vamp_modifier duration = 730 } } } }",
+        tables,
+    )
+    assert "known_vamp_modifier" not in out.split("# CK2:")[0]
+    assert "# CK2: add_character_modifier" in out
+    assert port.report.counts["modifiers_dropped"] == 1
+
+    out, port = convert(
+        "1 = { 1300.1.1 = { effect = { add_character_modifier = "
+        "{ name = stressed_modifier duration = 730 } } } }",
+        tables,
+    )
+    assert "modifier = stressed_modifier" in out
+    assert "years = 2" in out
 
 
 def test_empty_character_name_is_kept_but_flagged(tables: Tables) -> None:

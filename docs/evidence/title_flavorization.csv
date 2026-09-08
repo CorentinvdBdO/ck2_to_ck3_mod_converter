@@ -1,4 +1,9 @@
 title,ck2_key,value
+b_crossroad_keep,title,"MASTER"
+b_crossroad_keep,title_female,"MISTRESS"
+b_crossroad_keep,title_prefix,"FORTOF"
+b_helms_cathedral,title,"FIRST_GUARDIAN"
+b_helms_cathedral,title_female,"FIRST_GUARDIAN"
 c_berdusk,title,"HIGHLORD"
 c_berdusk,title_female,"HIGHLADY"
 c_candlekeep,title,"HIGH_READER"

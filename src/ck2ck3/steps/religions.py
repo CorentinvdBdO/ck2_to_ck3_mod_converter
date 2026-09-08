@@ -19,10 +19,12 @@ CK2 keys with no CK3 equivalent become a comment inside the block, shaped
 
 from __future__ import annotations
 
+import csv
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from .. import overrides
+from ..config import REPO_ROOT
 from ..context import Context, StepResult
 from ..pdx import Block, Item, Node, parse_file
 from ..pdx.encoding import CK3_ENCODING
@@ -288,17 +290,56 @@ def read_ck2_religions(ck2_mod: Path) -> list[CK2ReligionGroup]:
     return groups
 
 
-def read_holy_sites(ck2_mod: Path) -> dict[str, list[str]]:
+#: Where the `map` step records which counties actually got a barony. This
+#: step runs before `titles`, so it cannot ask the title model which counties
+#: survived; this CSV is the same evidence `titles` places baronies from.
+BARONY_SET_CSV = "docs/evidence/barony_set.csv"
+
+
+def read_live_counties(root: Path) -> set[str]:
+    """Counties the `map` step placed at least one barony in.
+
+    A county with no barony is dropped by the `titles` step, so a holy site on
+    it is `error(missing-item): title c_x not defined in
+    common/landed_titles/` -- one such in Faerûn, `c_barakuir` (`verified`
+    2026-09-08). Empty set means "unknown" and nothing is filtered, so a run
+    before the map step degrades to the old behaviour rather than emitting
+    nothing.
+    """
+    path = root / BARONY_SET_CSV
+    if not path.is_file():
+        return set()
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        return {
+            row["county"]
+            for row in csv.DictReader(handle)
+            if row.get("county") and row.get("status") == "placed"
+        }
+
+
+def read_holy_sites(
+    ck2_mod: Path, live_counties: set[str] | None = None
+) -> tuple[dict[str, list[str]], list[str]]:
     """CK2 religion → the county titles marked `holy_site = <religion>`.
 
     `verified`: all 470 Faerûn marks sit on `c_*` titles, 5 per religion, so the
     relation is complete and the 5-per-faith CK3 cap is never exceeded.
+
+    Returns `(marks, dropped)`; `dropped` names the `(religion, county)` pairs
+    whose county did not survive the map step.
     """
     out: dict[str, list[str]] = {}
     folder = ck2_mod / "common" / "landed_titles"
     for path in sorted(folder.glob("*.txt")):
         _walk_titles(parse_file(path, lenient=True), [], out)
-    return out
+    if not live_counties:
+        return out, []
+    dropped: list[str] = []
+    for religion, counties in list(out.items()):
+        kept = [c for c in counties if c in live_counties]
+        dropped += [f"{religion} -> {c}" for c in counties if c not in live_counties]
+        out[religion] = kept
+    return out, dropped
 
 
 def _walk_titles(block: Block, path: list[str], out: dict[str, list[str]]) -> None:
@@ -893,7 +934,13 @@ def run(ctx: Context) -> StepResult:
             skipped=True,
         )
     religions = [r for g in groups for r in g.religions]
-    sites = read_holy_sites(ctx.config.ck2_mod)
+    live_counties = read_live_counties(REPO_ROOT)
+    sites, dropped_sites = read_holy_sites(ctx.config.ck2_mod, live_counties)
+    for pair in dropped_sites:
+        ctx.warn(
+            f"religions: holy site {pair} dropped: the map step placed no "
+            f"barony in that county, so the titles step does not declare it"
+        )
     tenet_overrides = {
         (row.get("ck2_religion") or "").strip(): [
             (row.get(f"tenet_{n}") or "").strip() for n in (1, 2, 3)
@@ -1007,6 +1054,7 @@ def run(ctx: Context) -> StepResult:
             "holy_site_types": len(counties),
             "holy_site_links": counts_sites,
             "faiths_without_holy_site": len(without_sites),
+            "holy_sites_dropped_dead_county": len(dropped_sites),
             "pagan_roots_religions": len(reformable | {"pagan_group"} & {g.id for g in groups}),
             "loc_rename_rows": len(renames),
             "opinion_formats": len(keys) - len(skipped),

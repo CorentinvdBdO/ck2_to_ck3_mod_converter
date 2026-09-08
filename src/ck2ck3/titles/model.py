@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from ..ids import name_list_id
 from ..pdx import Date
 from . import ck2read, place, tables
 from .ck2read import Ck2Bookmark, Ck2CharacterStub, Ck2ProvinceHistory, Ck2Title
@@ -237,8 +238,14 @@ def build(
     title_history = ck2read.read_title_histories(ck2_mod / "history" / "titles")
     characters = ck2read.read_character_index(ck2_mod / "history" / "characters")
     culture_groups = ck2read.read_culture_groups(ck2_mod / "common" / "cultures")
+    # `name_list_{prefix}_{ck2 culture}`, NOT `name_list_{ck2 culture}`: the
+    # `cultures` step is the owner of the id and prefixes it
+    # (ck2ck3.steps.cultures.name_list_id). Dropping the prefix here produced
+    # 2848 ck3-tiger `error(missing-item): name list name_list_sun_elf not
+    # defined` against this file (`verified` 2026-09-08); a test asserts the
+    # two agree (tests/test_titles_write.py).
     name_list_of_culture = {
-        culture: f"name_list_{culture}"
+        culture: name_list_id(prefix, culture)
         for members in culture_groups.values()
         for culture in members
     }

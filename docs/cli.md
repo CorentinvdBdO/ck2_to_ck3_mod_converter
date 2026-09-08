@@ -52,10 +52,12 @@ converter repository root, so the CLI behaves the same from any directory.
 | `map.source_dimensions` | [int, int] | optional; CK2 source size, filled by lane `map-physical` |
 | `loc.languages` | list[str] | languages to write; omit to auto-pick english + every column over `loc.min_share` |
 | `loc.min_share` | float | how full a language column must be to earn a file, default `0.05` |
-| `loc.key_map` | path | optional `ck2_key,ck3_key` rename table, applied last |
+| `loc.key_map` | path | optional `ck2_key,ck3_key[,mode]` table, applied last. `mode` is `rename` (default, the CK2 key is gone) or `copy` (the text is emitted under **both** keys). Built by `scripts/build_loc_key_map.py`; see below |
 | `loc.skip_vanilla_collisions` | bool | drop keys that already exist in CK3 vanilla, default `false` |
 | `loc.vanilla_keys` | path | the cached vanilla key set, `docs/evidence/ck3_vanilla_loc_keys.txt` |
 | `loc.unknown_codes` | str | `custom` (default) or `marker`, see `docs/loc_codes.md` |
+| `tests.sample` | int | history title holders and land provinces the `tests` step asserts, spread evenly. `0` = every one (3694 provinces) |
+| `tests.bookmark` | str | bookmark key to anchor the tests to; unset = the highest-weight one, which is what the game's `-test` starts |
 
 The `[map]` values are placeholders carried over from the deleted `convert.py`
 (see below). Lane `map-physical` owns them.
@@ -127,13 +129,57 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 | `titles` | `common/landed_titles`, `common/coat_of_arms/coat_of_arms` | the Faerûn de jure tree + placeholder coats of arms (`docs/step_titles.md`) |
 | `history_titles` | `history/titles`, `history/provinces` | holders, lieges, laws, governments, holdings |
 | `bookmarks` | `common/bookmarks`, `common/bookmark_portraits` | bookmarks, their group and their portrait placeholders |
-| `traits` | `common/traits` | CK2 traits ported to CK3 (`docs/step_traits.md`) |
+| `traits` | `common/traits`, `gfx/interface/icons/traits` | CK2 traits ported to CK3 (`docs/step_traits.md`) |
+| `dynasties` | `common/dynasties`, `common/dynasty_houses`, one loc file | dynasties, and the only place CK2's literal dynasty names survive |
+| `characters` | `history/characters` | all 18124 Faerûn characters, field by field (`docs/step_characters.md`) |
+| `cultures` | `common/culture/*`, `common/ethnicities`, … | CK2 culture groups/cultures → pillars, cultures, name lists |
+| `religions` | `common/religion/*` | CK2 religion groups/religions → families, religions, faiths, holy sites |
+| `tests` | `tests` | CK3 scripted tests asserting the generated mod's own claims; **runs last**, see below |
 
 `[map] title_scaffolding = true` re-enables the throwaway one-barony-per-province
 title layer the `map` step used to write into `common/landed_titles`,
 `history/titles` and `history/provinces`. It is **off** by default because the
 `titles` and `history_titles` steps own those folders; turning it on and running
 either step in the same pass makes two steps write one subtree.
+
+### `tests` — the mod asserting its own claims
+
+`tests` is the last step in `DEFAULT_ORDER` because it **reads the generated
+mod back**: `common/bookmarks`, `history/titles`, `history/provinces`,
+`history/characters` and `map_data/`. So every assertion it writes is
+something the earlier steps actually said, and a test file can never claim
+something the mod does not. On Faerûn: 107 tests in
+`tests/fae_generated_tests.txt`, 1.6 s.
+
+| family | source | assertion |
+|---|---|---|
+| bookmark characters | `common/bookmarks` ∩ `history/characters` | alive at the bookmark date, and `title:<x> = { holder = this }` |
+| title holders | `history/titles`, holder in effect at that date | `holder = character:<id>`, `[tests] sample` of them |
+| land provinces | `history/provinces` ∩ non-water `definition.csv` | `is_sea_province = no`, `exists = county/culture/faith` |
+| one aggregate | — | every playable ruler of county tier or higher holds its capital barony |
+
+`[mod] replace_paths` must list `tests`, or vanilla's 18 test files run
+against this map and fail en masse (they hard-code 1066 ids); the step warns
+if it is missing. The grammar and how the game runs these files are in
+`../claudespace/docs/ck3_test_framework.md`; run them with
+`../claudespace/scripts/ck3_test.sh`.
+
+### `loc` key map
+
+`[loc] key_map` is one table, built from the per-lane hand-offs by
+`uv run scripts/build_loc_key_map.py` (checked for freshness by
+`ci/checks.sh`):
+
+| source table | mode | why |
+|---|---|---|
+| `mappings/loc_key_renames_traits.csv` | `rename` | CK3 reads a trait's text from `trait_<id>` only; the bare CK2 id is never a loc key |
+| `mappings/loc_key_renames_titles.csv` | `copy` | CK3 needs **both** `k_neverwinter` and `k_neverwinter_adj`, and CK2 wrote zero `_adj` keys — a rename would leave every title nameless |
+| `mappings/loc_key_renames_cultures_religions.csv` | `copy` | same shape: `ADEPT` stays, `ADEPT_plural` is derived from its text |
+
+`mappings/loc_key_renames_characters.csv` is deliberately **not** merged:
+despite the name it is a `ck3_loc_key,ck2_source,ck2_value` record of the
+literal dynasty names, and the `dynasties` step writes those strings itself.
+On Faerûn the merged table is 6891 rows and adds 25 676 loc lines.
 
 `clean` protects `.git`, `.gitattributes`, `.gitignore`, `LICENSE`,
 `README.md`, `descriptor.mod`, `docs`, `thumbnail.png`

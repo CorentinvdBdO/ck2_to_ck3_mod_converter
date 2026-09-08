@@ -207,6 +207,47 @@ def test_the_key_map_is_applied_last(tmp_path, ck2_mod):
     assert plan.renamed == 1
 
 
+def test_key_map_copy_mode_emits_both_keys(tmp_path, ck2_mod):
+    """A title needs `c_plain` AND `c_plain_adj`; a rename would lose the name."""
+    table = tmp_path / "keys.csv"
+    table.write_text("ck2_key,ck3_key,mode\nc_plain,c_plain_adj,copy\n")
+    ctx = make_context(tmp_path, ck2_mod)
+    plan = loc_step.build(ctx, LocConfig(languages=("english",), key_map=table))
+    entries = dict(plan.per_language["english"])["00_quirks"]
+    assert entries["c_plain"] == entries["c_plain_adj"]
+    assert plan.renamed == 1
+
+
+def test_key_map_takes_several_targets_for_one_key(tmp_path, ck2_mod):
+    table = tmp_path / "keys.csv"
+    table.write_text(
+        "ck2_key,ck3_key,mode\n"
+        "c_plain,c_plain_adj,copy\n"
+        "c_plain,c_plain_plural,copy\n"
+    )
+    ctx = make_context(tmp_path, ck2_mod)
+    plan = loc_step.build(ctx, LocConfig(languages=("english",), key_map=table))
+    entries = dict(plan.per_language["english"])["00_quirks"]
+    assert {"c_plain", "c_plain_adj", "c_plain_plural"} <= set(entries)
+
+
+def test_key_map_comments_and_missing_mode_column(tmp_path, ck2_mod):
+    """A bare two-column table still means `rename`, and `#` lines are skipped."""
+    table = tmp_path / "keys.csv"
+    table.write_text("# generated\nck2_key,ck3_key\nc_plain,fae_c_plain\n")
+    key_map = loc_step.read_key_map(table)
+    assert key_map.keys_for("c_plain") == ("fae_c_plain",)
+    assert key_map.keys_for("untouched") == ("untouched",)
+    assert len(key_map) == 1
+
+
+def test_key_map_rejects_an_unknown_mode(tmp_path):
+    table = tmp_path / "keys.csv"
+    table.write_text("ck2_key,ck3_key,mode\na,b,duplicate\n")
+    with pytest.raises(ValueError, match="mode must be one of"):
+        loc_step.read_key_map(table)
+
+
 def test_vanilla_collisions_are_kept_unless_asked(tmp_path, ck2_mod):
     keys = tmp_path / "vanilla.txt"
     keys.write_text("# header\nc_plain\n")

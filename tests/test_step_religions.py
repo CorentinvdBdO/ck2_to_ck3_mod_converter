@@ -409,11 +409,33 @@ def test_faerun_counts():
 def test_faerun_holy_sites_are_all_counties_and_within_the_cap():
     if not FAERUN.is_dir():
         pytest.skip("Faerun/ not cloned")
-    sites = step.read_holy_sites(FAERUN)
+    sites, dropped = step.read_holy_sites(FAERUN)
+    assert not dropped, "no county set given, so nothing may be filtered"
     assert sum(len(v) for v in sites.values()) == 470
     assert len(sites) == 94
     assert max(len(v) for v in sites.values()) == 5
     assert all(c.startswith("c_") for marks in sites.values() for c in marks)
+
+
+@pytest.mark.slow
+def test_a_holy_site_on_a_county_the_map_dropped_is_not_emitted():
+    """Otherwise: `error(missing-item): title c_x not defined`.
+
+    `verified` 2026-09-08: Faerûn marks a holy site on `c_barakuir`, which the
+    map step places no barony in, so the titles step never declares it. One
+    ck3-tiger error, and the only one of its class.
+    """
+    if not FAERUN.is_dir():
+        pytest.skip("Faerun/ not cloned")
+    live = step.read_live_counties(step.REPO_ROOT)
+    if not live:
+        pytest.skip("docs/evidence/barony_set.csv not built")
+    sites, dropped = step.read_holy_sites(FAERUN, live)
+    assert sum(len(v) for v in sites.values()) == 469
+    assert dropped == ["laduguer -> c_barakuir"]
+    assert all(
+        c in live for marks in sites.values() for c in marks
+    ), "every emitted holy site sits on a county the titles step declares"
 
 
 @pytest.mark.slow
@@ -425,8 +447,11 @@ def test_faerun_run_counts(tmp_path: Path):
     assert result.counts["religion_groups"] == 15
     assert result.counts["families"] == 15
     assert result.counts["faiths"] == 94
-    assert result.counts["holy_site_links"] == 470
-    assert result.counts["holy_site_types"] == 255
+    # 470 CK2 marks minus the one on a county the map step dropped.
+    assert result.counts["holy_site_links"] == 469
+    assert result.counts["holy_sites_dropped_dead_county"] == 1
+    # One fewer than the 255 CK2 marked counties: c_barakuir got no barony.
+    assert result.counts["holy_site_types"] == 254
     assert result.counts["faiths_without_holy_site"] == 0
 
 

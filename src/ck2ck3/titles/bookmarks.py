@@ -37,6 +37,7 @@ import zlib
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 
+from ..ids import fae_id
 from ..pdx import Date
 from .ck2read import Ck2Bookmark, Ck2CharacterStub
 from .text import Lines
@@ -198,7 +199,12 @@ def render(
             )
             result.loc.setdefault(f"{name_key}_desc", result.loc[name_key])
             if character.dynasty:
-                out.line(2, f"dynasty = {prefix}_dyn_{character.dynasty}")
+                # `fae_<ck2 id>`, NOT `fae_dyn_<ck2 id>`: the `dynasties`
+                # step owns the id (ck2ck3.ids.fae_id) and mints no `dyn_`
+                # infix. The mismatch was 80 ck3-tiger
+                # `error(missing-item): dynasty fae_dyn_N not defined`
+                # (`verified` 2026-09-08).
+                out.line(2, f"dynasty = {fae_id(character.dynasty, prefix)}")
             out.line(2, "dynasty_splendor_level = 1")
             out.line(2, f"type = {'female' if stub and stub.female else 'male'}")
             out.line(2, f"birth = {birth.year}.{birth.month}.{birth.day}")

@@ -62,13 +62,13 @@ add_weak_pressed_claim,effect,add_unpressed_claim,title_scope,approx,CK3's weak 
 add_weak_claim,effect,add_unpressed_claim,title_scope,approx,as add_weak_pressed_claim
 give_nickname,effect,give_nickname,nickname,exact,1:1 key; the value goes through mappings/nicknames.csv
 remove_nickname,effect,remove_nickname,drop_value,exact,CK3 remove_nickname takes yes not a nickname id
-add_spouse,effect,add_spouse,char_ref,exact,1:1
-add_consort,effect,add_concubine,char_ref,approx,renamed
-remove_spouse,effect,remove_spouse,char_ref,exact,1:1
-dynasty,effect,set_dynasty,dynasty_scope,approx,CK3 effect wants dynasty:<id>
+add_spouse,effect,marry,char_scope,exact,"`add_spouse` is a dated-HISTORY key, not an effect (error(unknown-field): unknown token `add_spouse`). The effect is marry, and it takes a character: scope, not a bare history id."
+add_consort,effect,make_concubine,char_scope,exact,"`add_concubine` is a dated-HISTORY key only (error(unknown-field): unknown token `add_concubine`); the effect is make_concubine = character:<id> (24 vanilla uses)."
+remove_spouse,effect,divorce,char_scope,exact,"Same as add_spouse: the effect is divorce and it takes a character: scope."
+dynasty,effect,,comment,none,"CK3 1.19 has no set_dynasty effect (error(unknown-field): unknown token `set_dynasty`, 29x). The runtime equivalent is set_house = dynasty_house:<id>, and the dynasties step mints no houses (CK2 has no cadet houses); dynasty = <id> is history-top-level only."
 prestige,effect,add_prestige,same,approx,CK2 sets absolute; CK3 adds a delta
 wealth,effect,add_gold,same,approx,CK2 sets absolute; CK3 adds a delta
-set_name,effect,change_first_name,nonempty,approx,"CK3 has no set_name effect; change_first_name is the equivalent. An empty value is refused: change_first_name = """" makes ck3-tiger 1.19.0 panic"
+set_name,effect,,comment,none,"CK3 change_first_name takes a LOCALISATION KEY or a { template_character = x } block, never a literal name (error(unknown-field): unknown token `Obould`, 4x). Emitting a key would mean inventing one; no lane owns it yet. Note change_first_name = """" also makes ck3-tiger 1.19.0 panic (src/trigger.rs:1454, docs/formats_characters.md s10)."
 add_character_modifier,effect,add_character_modifier,char_modifier,approx,CK3 shape is { modifier = x years = n }; CK2 duration is in days
 add_betrothal,effect,create_betrothal,char_scope,approx,CK2 add_betrothal -> CK3 create_betrothal on the target character
 banish,effect,,comment,none,CK3 banish needs a target scope CK2 history does not supply

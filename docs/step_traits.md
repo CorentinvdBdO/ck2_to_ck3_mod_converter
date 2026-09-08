@@ -31,7 +31,8 @@ commented whole, 125 keys were dropped for a CK3 genetic-vs-inheritance rule,
 | `common/traits/fae_traits.txt` | the 407 live traits; header lists all 143 dedupes |
 | `common/traits/fae_traits_unported.txt` | the 867 as commented-out blocks |
 | `gfx/interface/icons/traits/<trait>.dds` | 168 CK2 icons, copied unchanged |
-| `mappings/trait_id_map.csv` | 143 rows, CK2 id → CK3 id, for characters/events |
+| `mappings/trait_ck2_to_ck3.csv` | **550 rows, every CK2 trait that resolves in the mod → its CK3 id.** The authoritative known-trait set the `characters` port filters by; deriving it from the classification tables instead wrongly commented out 8308 `trait` lines (`docs/step_characters.md`) |
+| `mappings/trait_id_map.csv` | 143 rows, CK2 id → CK3 id (the dedupe subset), for events |
 | `mappings/loc_key_renames_traits.csv` | 1100 rows, CK2 loc key → CK3 loc key, for `loc` |
 | `docs/evidence/traits_unported.csv` | 867 rows with the reason |
 | `docs/evidence/traits_groups.csv` | the 69 `group`/`level` assignments |
