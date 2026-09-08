@@ -108,6 +108,15 @@ def run(ctx: Context) -> StepResult:
         "id_map": dict(port.id_map),
         "loc": dict(port.loc),
         "ck3_ids": set(port.id_map.values()),
+        # CK2 culture -> its dynasty-name loc keys. The `cultures` step puts
+        # these in each name list's `dynasty_names`; without them CK3 logs
+        # `culture_name_lists.cpp:169 ... less than MINIMUM_DYNASTY_NAMES` for
+        # every one of the 419 name lists and has no name to mint a generated
+        # character's dynasty from.
+        "names_by_culture": {
+            culture: list(keys)
+            for culture, keys in port.names_by_culture.items()
+        },
     }
 
     return StepResult(

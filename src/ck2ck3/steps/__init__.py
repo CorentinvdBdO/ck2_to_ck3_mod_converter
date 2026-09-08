@@ -25,13 +25,18 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "clean",
     "descriptor",
     "map",
+    # Before `cultures`: a CK3 name list needs `dynasty_names`, CK2 keeps
+    # dynasty names globally in common/dynasties rather than per culture, and a
+    # name list with fewer than MINIMUM_DYNASTY_NAMES (2) of them is an error
+    # at load and leaves CK3 with no name to mint a generated character's
+    # dynasty from (docs/evidence/game_load_2026-09-08.md).
+    "dynasties",
     "cultures",
     "religions",
     "titles",
     "history_titles",
     "bookmarks",
     "traits",
-    "dynasties",
     "characters",
     "loc",
     # Last on purpose: `tests` asserts what the earlier steps wrote, by

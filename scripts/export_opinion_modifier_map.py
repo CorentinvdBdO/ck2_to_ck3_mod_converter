@@ -163,6 +163,24 @@ def main() -> int:
         for religion in group.religions:
             _, rows_ = religions_step.faith_localization(religion)
             renames += rows_
+    # CK3 asks a culture for three localisation keys, CK2 supplies one.
+    # `verified` 2026-09-08: vanilla
+    # localization/english/culture/cultures_l_english.yml:460-462 has
+    # `norse`, `norse_prefix` and `norse_collective_noun`, all three "Norse",
+    # and without the latter two the game logs
+    # `culture_template.cpp: Missing localization for <culture>_prefix` — 832
+    # of them on Faerun. `copy` mode emits both from the CK2 key's own text.
+    for cgroup in groups:
+        for culture in cgroup.cultures:
+            key = cultures_step.culture_id(culture)
+            renames.append((key, f"{key}_prefix"))
+            renames.append((key, f"{key}_collective_noun"))
+            # A name list needs its own loc key too: vanilla
+            # localization/english/culture/culture_name_lists_l_english.yml:4
+            # has ` name_list_ainu: "Ainu"`, 221 of them, and without it CK3
+            # logs `culture_name_lists.cpp: Missing loc for name_list_X` — 419
+            # of them on Faerun (`verified` 2026-09-08).
+            renames.append((key, cultures_step.name_list_id(prefix, culture)))
     seen: set[tuple[str, str]] = set()
     unique = [r for r in sorted(renames) if not (r in seen or seen.add(r))]
     buffer = io.StringIO()
@@ -176,6 +194,10 @@ def main() -> int:
         "Faith / religion / family base keys (<faith_id>, _adj, _adherent,",
         "_adherent_plural, _desc and holy_site_<id>_name) keep the CK2 names and are",
         "not listed: nothing renames.",
+        "<culture>_prefix and <culture>_collective_noun are here too: CK3 wants three",
+        "keys per culture (vanilla norse/norse_prefix/norse_collective_noun, all",
+        '"Norse") and CK2 has only the first. So is name_list_<prefix>_<culture>:',
+        'vanilla has ` name_list_ainu: "Ainu"` for every one of its 221 name lists.',
     ):
         buffer.write(f"# {line}\n")
     writer = csv.writer(buffer, lineterminator="\n")

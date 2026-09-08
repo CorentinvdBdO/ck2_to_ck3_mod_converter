@@ -29,8 +29,16 @@ Step 1 is skippable on an unchanged checkout: both outputs are committed, and
 `ci/checks.sh` fails if `overrides/loc_keys.csv` has drifted from the
 `mappings/loc_key_renames_*.csv` it is built from.
 
-Step 5 has never been run by this lane — see the open questions in
-`docs/evidence/HANDOFF_integration_A.md`.
+Step 5 needs the **`-test` launch argument** to reach `In Game`: a plain launch
+stops at `Setting idler 'Frontend'`, the main menu, and nothing starts a game,
+so a run waiting for `Setting idler 'In Game'` can only time out.
+`../claudespace/scripts/ck3_test.sh` passes it; a bare
+`ck3_launch.sh <mod> --marker ingame` does not.
+
+What the game has actually said about this mod, attempt by attempt, with the
+error counts each fix removed: **`docs/evidence/game_load_2026-09-08.md`**.
+Read it before touching the `map`, `cultures` or `loc` steps — six of its nine
+fixes are things ck3-tiger does not report.
 
 ## What each one is for
 
@@ -65,9 +73,15 @@ uv run ck2ck3 --config configs/faerun.toml --dry-run            # writes nothing
 uv run ck2ck3 --list-steps
 ```
 
-Three step dependencies are real, and each degrades loudly rather than
+Four step dependencies are real, and each degrades loudly rather than
 silently when the producer did not run in the same pass:
 
+- `cultures` after `dynasties` — CK2 keeps dynasty names globally in
+  `common/dynasties` with a `culture` on each; CK3 keeps them per name list, so
+  `dynasties` hands over `ctx.data["dynasties"]["names_by_culture"]` and
+  `cultures` fills each `dynasty_names` from it. Without it every one of the 419
+  name lists is empty there, which is `culture_name_lists.cpp:169` for all of
+  them and leaves CK3 with no name to mint a generated character's dynasty from.
 - `characters` after `traits` — the known-trait set (falls back to
   `mappings/trait_ck2_to_ck3.csv`, and warns if that is missing too).
 - `characters` after `dynasties` — the dynasty id set (falls back to reading

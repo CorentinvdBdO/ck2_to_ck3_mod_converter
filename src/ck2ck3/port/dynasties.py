@@ -55,6 +55,12 @@ class DynastyPort:
     #: ``dynn_fae_<id>`` -> a renamed key, for the few whose MURMUR3A hash
     #: collides with a vanilla loc key (see :mod:`ck2ck3.port.loc_hash`).
     loc_renames: dict[str, str] = field(default_factory=dict)
+    #: CK2 culture id -> the dynasty-name loc keys of that culture, in file
+    #: order. The `cultures` step needs it: a CK3 name list with fewer than
+    #: `MINIMUM_DYNASTY_NAMES` (2) dynasty names is an error at load
+    #: (`culture_name_lists.cpp:169`), and CK2 keeps dynasty names globally
+    #: rather than per culture, so grouping them is the only way to fill it.
+    names_by_culture: dict[str, list[str]] = field(default_factory=dict)
 
     def loc_key(self, ck2_id: str) -> str:
         key = f"{LOC_PREFIX}_{fae_id(ck2_id, self.prefix)}"
@@ -149,6 +155,8 @@ class DynastyPort:
         if culture is None:
             self.report.warn(f"CK2 dynasty {ck2_id} has no culture")
             self.report.counts["dynasties_without_culture"] += 1
+        elif key in self.loc:
+            self.names_by_culture.setdefault(str(culture), []).append(key)
 
         result = Node(key=ck3_id, value=out.finish())
         carry_comments(node, result)
