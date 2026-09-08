@@ -28,6 +28,8 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "cultures",
     "religions",
     "traits",
+    "dynasties",
+    "characters",
     "loc",
 )
 

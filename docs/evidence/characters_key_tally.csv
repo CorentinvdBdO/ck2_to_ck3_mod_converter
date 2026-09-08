@@ -1,0 +1,224 @@
+scope,key_path,uses,distinct_values,sample_values
+characters,<date>,47107,0,
+characters,trait,38473,634,creature_human | creature_orc | cruel | creature_dwarf | ambitious | creature_elf
+characters,name,18124,15038,  | Manshoon | Ali | Amahl | Jan | Darius
+characters,culture,18124,335,highcoaster | cormyrean | orc | amnian | tethyrian | draeven
+characters,religion,18124,81,triadic | mercantile | inventive | martial_faith | calishite_faith | arcane
+characters,<date>/birth,18124,1,True
+characters,<date>/death,18124,1,True
+characters,dynasty,17484,5735,500 | 6800 | 6500 | 504 | 509 | 518
+characters,father,9658,7657,2 | 49480 | 56001 | 45002 | 5310 | 61026
+characters,female,5134,2,True | False
+characters,mother,3834,2645,45001 | 5001 | 61430 | 69111 | 329 | 350
+characters,<date>/immortal_age,3421,53,30 | 50 | 40 | 60 | 20 | 16
+characters,<date>/death/death_reason,3108,80,death_battle | death_murder | death_duel | death_missing | death_natural | death_spellplague
+characters,<date>/employer,2833,916,7001 | 3 | 33002 | 15001 | 15122 | 2007
+characters,<date>/add_trait,2477,723,longevity | absent | adventurer | lich | avatar | lunatic
+characters,<date>/effect,2112,0,
+characters,<date>/death/killer,1307,828,3 | 53001 | 28031 | 28299 | 9047 | 56001
+characters,<date>/culture,1150,121,highcoaster | hadhar | yuanti | tethyrian | nelanthern | amnian
+characters,<date>/remove_trait,1070,178,absent | adventurer | creature_human | sahuagin_warrior | trained_fighter | trained_wizard
+characters,<date>/give_nickname,1032,832,nick_the_younger | nick_the_old | nick_the_red | nick_the_black | nick_the_great | nick_the_wise
+characters,<date>/add_spouse,857,830,49445 | 62200 | 20061 | 20205 | 66229 | 49480
+characters,<date>/trait,681,178,longevity | has_bubonic_plague | sahuagin_warrior | sahuagin_chief | dead_crown_fylkir | master_fighter
+characters,learning,633,24,8 | 7 | 9 | 10 | 6 | 4
+characters,<date>/effect/add_friend,587,339,3 | 4 | 50759 | 117 | 2043 | 2047
+characters,martial,547,18,8 | 7 | 6 | 5 | 4 | 9
+characters,intrigue,410,20,7 | 8 | 6 | 5 | 4 | 9
+characters,<date>/effect_even_if_dead,407,0,
+characters,<date>/effect/add_rival,380,260,2057 | 2052 | 53095 | 2058 | 231 | 2051
+characters,<date>/religion,375,50,shadow_gods | dead_three | blue_flame | church_of_cyric | uthgardt_faith | triadic
+characters,<date>/effect/set_character_flag,371,67,sorc_originrevealed | lycan_court | undead_court | local_court | secret_dragon | no_family
+characters,diplomacy,366,18,6 | 7 | 8 | 5 | 4 | 3
+characters,stewardship,342,15,7 | 8 | 6 | 4 | 5 | 3
+characters,easter_egg,336,2,True | False
+characters,<date>/effect/join_society,312,26,arcane_brotherhood | harpers | cult_of_the_dragon | knight_order_samular | black_network | eldreth_veluuthra
+characters,dna,220,212,calhgogcedd | nffmcpniplm | ikcokblnpka | bpjfoagnodc | kmiajmkccci | hgbjelgdffm
+characters,<date>/effect_even_if_dead/set_graphical_culture,202,51,lich | dracolich | vampire | wight | undeadelf | lichelf
+characters,secret_religion,171,18,shadow_gods | dead_three | loviatar | infernal | abyssal_cult | thasmudyanic
+characters,disallow_random_traits,163,1,True
+characters,<date>/add_matrilineal_spouse,156,156,47 | 105 | 104 | 196 | 305 | 339
+characters,<date>/effect/add_lover,146,132,9047 | 62200 | 23 | 15036 | 2029 | 56001
+characters,<date>/name,145,116,Obould | Shoon | Tyranthraxus | Helmont | Khelben | Leodom
+characters,<date>/effect_even_if_dead/set_special_character_title,131,58,HIGHMAGE | PALADINKING | DUKE | WARCAPTAIN | MEISARCH | AXE_M
+characters,<date>/effect/give_job_title,112,5,job_marshal | job_chancellor | job_spiritual | job_treasurer | job_spymaster
+characters,<date>/effect/add_artifact,91,43,lich_phylactery_artf | moonblade | flail_of_ages | githyanki_silver_sword | robe_of_archmagi | holy_avenger
+characters,<date>/effect/society_rank_up,91,1,4
+characters,<date>/effect/society_rank_up/society,90,15,cult_of_the_dragon | arcane_brotherhood | harpers | black_network | monastic_order_long_death | heralds
+characters,<date>/effect/society_rank_up/rank,90,3,4 | 3 | 2
+characters,<date>/effect_even_if_dead/add_artifact,85,2,lich_phylactery_artf | king_shadows_armor
+characters,<date>/effect/imprison,82,40,False | 28031 | 41284 | 33002 | 56001 | 9426
+characters,<date>/dynasty,76,53,9209 | 4104 | 6806 | 9204 | 2003 | 14610
+characters,<date>/effect/add_trait,70,31,bisexual | legit_bastard | renowned_wizard | asexual | absent | cruel
+characters,<date>/effect/give_minor_title,68,12,title_court_mage | title_regent | title_archendale_black_sword | title_neverwinter_nine | title_othlor | title_master_of_the_hunt
+characters,<date>/create_bloodline,65,0,
+characters,<date>/create_bloodline/type,65,61,tiamat_bloodline | fallen_angel_bloodline | bhaal_bloodline | tchazzar_bloodline | drizzt_bloodline | yvonnel_bloodline
+characters,<date>/effect/set_society_grandmaster,63,1,True
+characters,<date>/effect/spawn_unit/troops/light_infantry/<item>,60,0,
+characters,<date>/effect/spawn_unit/troops/archers/<item>,58,0,
+characters,<date>/effect_even_if_dead/set_character_flag,56,14,undead_court | secret_dragon | vampire_court | immune_to_conversion | is_silver_dragon | is_red_dragon
+characters,<date>/effect/spawn_unit/troops/heavy_infantry/<item>,52,0,
+characters,<date>/effect/add_pressed_claim,45,23,c_galenarr | c_hillsfar | k_aglarond | k_chessenta | c_eyegad | c_icespire_peak
+characters,<date>/effect_even_if_dead/add_character_modifier,45,0,
+characters,<date>/effect_even_if_dead/add_character_modifier/name,45,2,known_vamp_modifier | undead_realm_lord
+characters,<date>/effect_even_if_dead/add_character_modifier/duration,45,1,-1
+characters,<date>/effect/spawn_unit,37,0,
+characters,<date>/effect/spawn_unit/province,37,22,2426 | 1216 | 899 | 1108 | 1013 | 373
+characters,<date>/effect/spawn_unit/owner,37,3,ROOT | 56006 | 61026
+characters,<date>/effect/spawn_unit/troops,37,0,
+characters,<date>/effect/spawn_unit/cannot_inherit,36,1,True
+characters,<date>/effect/spawn_unit/troops/light_cavalry/<item>,36,0,
+characters,<date>/effect/remove_trait,35,19,absent | bastard | master_wizard | patron_lathander | blinded | greater_celestial
+characters,<date>/effect/spawn_unit/attrition,34,3,0 | 0.5 | 1.0
+characters,<date>/secret_religion,33,17,church_of_cyric | shadow_gods | abyssal_cult | dead_three | interloper | infernal
+characters,<date>/effect/spawn_unit/home,32,18,12 | 1216 | 1108 | 1013 | 373 | 826
+characters,<date>/effect/spawn_unit/troops/light_infantry,30,0,
+characters,<date>/effect/add_character_modifier,30,0,
+characters,<date>/effect/add_character_modifier/name,30,8,known_vamp_modifier | undead_realm_lord | known_lycan_modifier | demon_tiefling | uncertain_times | divine_aasimar
+characters,<date>/effect/add_character_modifier/duration,30,2,-1 | 1825
+characters,<date>/effect/spawn_unit/troops/archers,29,0,
+characters,<date>/effect/spawn_unit/troops/heavy_infantry,26,0,
+characters,properties,25,25,rkxiai0000000000b | f0nc0k0000000000b | vl0fdk0000 | rkvcnd00000000000 | vc0jhk00000000000 | sk0k00000000000
+characters,<date>/effect/spawn_unit/maintenance,24,1,False
+characters,<date>/effect/spawn_unit/can_toggle_looting,24,1,False
+characters,<date>/effect/spawn_unit/reinforces,24,2,False | True
+characters,<date>/effect/banish,23,1,True
+characters,<date>/effect/spawn_unit/troops/knights/<item>,22,0,
+characters,<date>/effect_even_if_dead/clr_character_flag,22,11,secret_dragon | is_red_dragon | is_blue_dragon | secret_fiend | is_pit_fiend | is_gold_dragon
+characters,<date>/effect/remove_lover,20,20,2156 | 190 | 4 | 11313 | 13112 | 15036
+characters,<date>/effect/add_weak_pressed_claim,19,19,c_westgate | d_westgate | k_sembia | k_chessenta | d_rawlinswood | e_anauroch
+characters,<date>/effect/leave_society,19,1,True
+characters,<date>/give_job_title,19,4,job_marshal | job_spymaster | job_treasurer | job_chancellor
+characters,<date>/effect/spawn_unit/troops/light_cavalry,18,0,
+characters,<date>/effect/add_claim,18,18,c_surkazar | d_ruathym | c_ascalhorn | d_black_lion | k_tethyr | d_mirkazar
+characters,<date>/effect/spawn_unit/troops/pikemen/<item>,14,0,
+characters,<date>/effect/remove_nickname,13,7,True | nick_the_night_king | nick_shadowheart | nick_xvim | nick_the_nameless_chosen | nick_the_old_witch
+characters,<date>/effect_even_if_dead/set_real_father,13,10,20081 | 41603 | 13107 | 15161 | 20520 | 9047
+characters,<date>/effect/dynasty,13,11,14610 | 1758 | 1001 | 6782 | 242 | 6216
+characters,<date>/remove_spouse,13,13,20205 | 20204 | 20434 | 41309 | 42318 | 49725
+characters,<date>/add_claim,13,12,c_baldurs_gate | c_kalathtyr | d_blue_bear | c_lake_weng | e_zhentarim | c_shadowdale
+characters,<date>/effect_even_if_dead/add_pressed_claim,13,12,c_szith_morcane | d_daggerdale | d_reghed_wolf | c_calimmon | d_eastings | c_innarlith
+characters,<date>/effect/spawn_unit/leader,12,4,ROOT | 15052 | 15055 | 15170
+characters,<date>/effect/spawn_unit/troops/mages_troops/<item>,12,0,
+characters,<date>/effect/set_graphical_culture,12,7,lich | wraith | hobgoblin | blue_dragon | shadovar | warforged
+characters,<date>/effect_even_if_dead/opinion,12,0,
+characters,<date>/effect_even_if_dead/opinion/modifier,12,1,vampiric_spawn
+characters,<date>/effect_even_if_dead/opinion/who,12,8,c_11103 | c_2255 | c_9084 | c_20876 | c_2349 | c_40536
+characters,<date>/effect_even_if_dead/opinion/years,12,1,9999
+characters,<date>/effect_even_if_dead/join_society,12,5,cult_of_the_dragon | twisted_rune | knight_order_radiant_heart | arcane_brotherhood | harpers
+characters,<date>/effect/spawn_unit/troops/knights,11,0,
+characters,<date>/effect/spawn_unit/troops/horse_archers/<item>,10,0,
+characters,<date>/effect_even_if_dead/add_trait,9,4,lich | undead | creature_fiend | construct
+characters,<date>/effect/spawn_unit/maintenance_multiplier,9,2,0.2 | 0.1
+characters,<date>/effect_even_if_dead/set_government_type,9,1,merchant_republic_government
+characters,<date>/effect_even_if_dead/set_reincarnation,8,6,c_1021 | c_436 | c_118 | c_1010 | 17001 | c_41027
+characters,<date>/effect/remove_rival,8,7,13060 | 11211 | 16205 | 2219 | 2256 | 51306
+characters,<date>/effect/prestige,8,7,1000 | 50 | 100 | 400 | 2000 | -300
+characters,<date>/effect/new_artifact,7,0,
+characters,<date>/effect/new_artifact/set_name,7,7,Belm | Shortbow of Gesen | Delryn Family Shield | Carsomyr | Corthala Family Blade | Delras
+characters,<date>/effect/spawn_unit/troops/pikemen,7,0,
+characters,<date>/effect_even_if_dead/set_gender,7,2,female | male
+characters,<date>/effect_even_if_dead/remove_special_character_title,7,1,True
+characters,<date>/effect/give_nickname,7,6,nick_the_returned | nick_the_invincible | nick_assuran | nick_the_serpent | nick_kossuth | nick_xvim
+characters,<date>/effect/spawn_unit/troops/large_monsters/<item>,6,0,
+characters,<date>/effect/spawn_unit/troops/mages_troops,6,0,
+characters,<date>/effect/set_secret_religion,5,3,church_of_cyric | abyssal_cult | dead_three
+characters,<date>/effect/set_father,5,3,17001 | 190 | 56001
+characters,<date>/effect/remove_friend,5,5,190 | 15036 | 2050 | 50765 | 5347
+characters,health,5,4,10.0 | 2 | 8 | 10
+characters,<date>/effect_even_if_dead/add_friend,5,5,2054 | 2283 | 63638 | 52125 | 9047
+characters,<date>/effect/spawn_unit/troops/horse_archers,5,0,
+characters,<date>/effect/remove_spouse,5,5,41603 | 44236 | 48544 | 62318 | 74011
+characters,<date>/effect_even_if_dead/dynasty,4,2,41 | 7070
+characters,<date>/effect/remove_title,4,2,title_regent | job_spymaster
+characters,<date>/effect_even_if_dead/society_rank_up,4,0,
+characters,<date>/effect_even_if_dead/society_rank_up/society,4,1,cult_of_the_dragon
+characters,<date>/effect_even_if_dead/society_rank_up/rank,4,3,2 | 3 | 4
+characters,<date>/effect_even_if_dead/add_rival,4,4,23014 | 28029 | 56420 | 56494
+characters,<date>/effect/spawn_unit/earmark,4,2,furifax_army | dama_army
+characters,<date>/effect/clear_secret_religion,4,1,True
+characters,<date>/effect/spawn_unit/troops/large_monsters,3,0,
+characters,<date>/effect/set_name,3,3, | Icasaracht | Tardaxal
+characters,<date>/effect_even_if_dead/set_father,3,3,41603 | 13085 | 26110
+characters,<date>/effect/clr_character_flag,3,3,vampire_court | is_tyranthraxus | undead_court
+characters,<date>/effect/destroy_artifact,3,2,githyanki_silver_sword | flail_of_ages
+characters,<date>/effect/add_weak_claim,3,2,k_cormyr | c_daggerdale
+characters,<date>/effect/set_special_character_title,3,1,KNIGHT
+characters,<date>/effect_even_if_dead/imprison,3,2,53001 | 28099
+characters,<date>/effect/spawn_unit/merge,3,1,True
+characters,<date>/effect/disband_event_forces,3,3,furifax_army | dama_army | True
+characters,<date>/effect_even_if_dead/remove_trait,3,3,creature_human | absent | immortal
+characters,<date>/effect/spawn_unit/disband_on_peace,3,1,True
+characters,<date>/add_consort,3,3,60015 | 60016 | 60023
+characters,<date>/effect/spawn_unit/troops/sohei/<item>,2,0,
+characters,<date>/effect/spawn_unit/troops/warpriests/<item>,2,0,
+characters,<date>/effect/spawn_unit/troops/giant_troops/<item>,2,0,
+characters,<date>/effect/add_spouse,2,2,402 | 396
+characters,<date>/effect/spawn_unit/troops/undead_troops/<item>,2,0,
+characters,<date>/effect/spawn_unit/troops/mob_troops/<item>,2,0,
+characters,<date>/effect_even_if_dead/give_job_title,2,1,job_marshal
+characters,<date>/effect_even_if_dead/set_name,2,2,Obould | Katelyn
+characters,<date>/effect_even_if_dead/remove_lover,2,2,47001 | 9047
+characters,<date>/effect/e_tan_shou_lung/set_title_flag,2,2,pretender_shou_lung_empire | uses_temple_names_by_script
+characters,<date>/effect/spawn_fleet/troops/galleys/<item>,2,0,
+characters,<date>/effect_even_if_dead/create_bloodline,2,0,
+characters,<date>/effect_even_if_dead/create_bloodline/type,2,2,soneillon_bloodline | eltab_bloodline
+characters,<date>/effect/prisoner,2,2,9307 | False
+characters,<date>/effect/spawn_unit/troops/sohei,1,0,
+characters,<date>/effect/spawn_unit/troops/warpriests,1,0,
+characters,<date>/effect/spawn_unit/troops/giant_troops,1,0,
+characters,fertility,1,1,0
+characters,<date>/effect_even_if_dead/remove_rival,1,1,11313
+characters,<date>/effect_even_if_dead/remove_friend,1,1,13057
+characters,<date>/effect/add_betrothal,1,1,13087
+characters,<date>/effect/spawn_unit/troops/undead_troops,1,0,
+characters,add_trait,1,1,atheist_trait
+characters,<date>/effect/spawn_unit/troops/mob_troops,1,0,
+characters,<date>/father,1,1,20202
+characters,<date>/mother,1,1,20205
+characters,<date>/effect_even_if_dead/add_weak_claim,1,1,k_cormyr
+characters,<date>/effect/new_artifact/set_creation_date,1,1,1004.1.1
+characters,<date>/wealth,1,1,500
+characters,<date>/effect_even_if_dead/c_66230,1,0,
+characters,<date>/effect_even_if_dead/c_66230/any_owned_bloodline,1,0,
+characters,<date>/effect_even_if_dead/c_66230/any_owned_bloodline/add_bloodline_member,1,1,ROOT
+characters,<date>/fertility,1,1,0
+characters,<date>/capital,1,1,c_narderwood
+characters,<date>/effect_even_if_dead/banish,1,1,True
+characters,<date>/effect/wealth,1,1,200
+characters,<date>/effect/c_kourmira,1,0,
+characters,<date>/effect/c_kourmira/ROOT,1,0,
+characters,<date>/effect/c_kourmira/ROOT/capital,1,1,PREV
+characters,<date>/effect/new_artifact/set_description,1,1,delras_desc
+characters,<date>/effect/set_mother,1,1,41556
+characters,<date>/effect/religion,1,1,joyful
+characters,<date>/set_special_character_title,1,1,WHIPMISTRESS
+characters,give_nickname,1,1,nick_the_conqueror
+characters,<date>/effect/unsafe_destroy_artifact,1,1,kossuth_ruby
+characters,<date>/effect/add_ambition,1,1,obj_get_married
+characters,<date>/effect/c_citadel_of_the_raven,1,0,
+characters,<date>/effect/c_citadel_of_the_raven/ROOT,1,0,
+characters,<date>/effect/c_citadel_of_the_raven/ROOT/capital,1,1,PREV
+characters,<date>/effect/add_consort,1,1,62473
+characters,<date>/effect/c_bloodstone,1,0,
+characters,<date>/effect/c_bloodstone/ROOT,1,0,
+characters,<date>/effect/c_bloodstone/ROOT/capital,1,1,PREV
+characters,<date>/effect/e_tan_shou_lung,1,0,
+characters,<date>/effect/spawn_fleet,1,0,
+characters,<date>/effect/spawn_fleet/province,1,1,805
+characters,<date>/effect/spawn_fleet/owner,1,1,ROOT
+characters,<date>/effect/spawn_fleet/disband_on_peace,1,1,True
+characters,<date>/effect/spawn_fleet/troops,1,0,
+characters,<date>/effect/spawn_fleet/troops/galleys,1,0,
+characters,<date>/effect/set_dynasty_name,1,1,Ulbrinter-Haventree
+dynasties,name,11952,11538,Ho | Horn | Rosznar | Cutter | Flint | Bloodaxe
+dynasties,culture,11951,341,highcoaster | thayan | hadhar | illuskan | djen | easting
+dynasties,used_for_random,754,2,False | True
+dynasties,coat_of_arms/layer/color,60,6,0 | 3 | 5 | 1 | 7 | 6
+dynasties,coat_of_arms,20,0,
+dynasties,coat_of_arms/template,20,1,0
+dynasties,coat_of_arms/layer,20,0,
+dynasties,coat_of_arms/layer/texture,20,3,10 | 11 | 1
+dynasties,coat_of_arms/layer/texture_internal,20,17,2 | 7 | 6 | 11 | 15 | 4
+dynasties,coat_of_arms/layer/emblem,20,2,0 | 3
+dynasties,religion,4,4,elven_pantheon | shadow_gods | arcane | faithless

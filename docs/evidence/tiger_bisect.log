@@ -1,0 +1,68 @@
+455 blocks in fae_1-1000_miscellaneous.txt
+  narrowed to 227 (probe 2)
+  narrowed to 113 (probe 3)
+  narrowed to 56 (probe 4)
+  narrowed to 28 (probe 5)
+  narrowed to 14 (probe 6)
+  narrowed to 7 (probe 8)
+  narrowed to 3 (probe 9)
+  narrowed to 2 (probe 11)
+  narrowed to 1 (probe 13)
+--- minimal panicking input (13 tiger runs) ---
+
+fae_11 = {
+	name = Amelyssan #the Blackhearted
+	dynasty = fae_5
+	culture = tethyrian
+	religion = dead_three
+	female = yes
+	disallow_random_traits = yes
+	trait = creature_human
+	# CK2: trait = shrewd (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	# CK2: trait = legendary_cleric (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	# CK2: trait = legendary_wizard (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	trait = deceitful
+	trait = sadistic
+	trait = ambitious
+	trait = diligent
+	# CK2: trait = schemer (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	trait = education_intrigue_4
+	# CK2: trait = patron_bhaal (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	# CK2: trait = bio_amelyssan (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+	#trait = bastard
+	#father = 2
+	1330.1.1 = {
+		birth = yes
+	}
+	1346.1.1 = {
+		# CK2: give_nickname = nick_the_blackhearted (nickname has no CK3 id in mappings/nicknames.csv; Faerun defines it in its own common/nicknames)
+	}
+	1358.9.16 = {
+		# CK2: remove_trait = patron_bhaal (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+		religion = mercantile
+		name = "Melyssan"
+		effect = {
+			# CK2: set_secret_religion = church_of_cyric (as the history-level secret_religion)
+			remove_nickname = yes
+		}
+	}
+	1365.1.1 = {
+		employer = fae_28102
+	}
+	1369.8.30 = {
+		effect = {
+			change_first_name = ""
+		}
+		religion = dead_three
+		# CK2: add_trait = patron_bhaal (trait is in neither the Faerun port set (docs/evidence/faerun_custom_traits.csv) nor mappings/vanilla_traits.csv)
+		add_trait = bhaalspawn
+		# CK2: give_nickname = nick_the_blackhearted (nickname has no CK3 id in mappings/nicknames.csv; Faerun defines it in its own common/nicknames)
+	}
+	1369.9.1 = {
+		death = {
+			death_reason = death_duel
+			killer = fae_3
+		}
+	}
+}
+

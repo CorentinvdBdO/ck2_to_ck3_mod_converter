@@ -1,0 +1,104 @@
+ck2_key,level,ck3_key,form,status,note
+name,history,name,same,exact,1:1
+female,history,female,same,exact,1:1
+culture,history,culture,same,exact,culture ids keep their CK2 names (lane cultures-religions)
+religion,history,religion,same,exact,faith ids keep their CK2 religion names; vanilla uses `religion` 69x more than `faith`
+dynasty,history,dynasty,char_ref,exact,value gets the fae_ prefix like every other converted id
+father,history,father,char_ref,exact,1:1
+mother,history,mother,char_ref,exact,1:1
+martial,history,martial,same,exact,1:1
+diplomacy,history,diplomacy,same,exact,1:1
+intrigue,history,intrigue,same,exact,1:1
+stewardship,history,stewardship,same,exact,1:1
+learning,history,learning,same,exact,1:1
+combat_rating,history,prowess,scale_0_1,approx,CK2 combat_rating x0.1 per mappings/modifiers.csv; 0 uses in Faerun
+health,history,health,same,exact,1:1
+fertility,history,fertility,same,exact,1:1
+trait,history,trait,trait,exact,value remapped through mappings/trait_id_map.csv when present
+add_trait,history,add_trait,trait,exact,1:1
+remove_trait,history,remove_trait,trait,exact,1:1
+disallow_random_traits,history,disallow_random_traits,same,exact,1:1
+birth,history,birth,same,exact,1:1
+death,history,death,death,exact,bare yes or block; death_reason remapped via mappings/death_reasons.csv
+give_nickname,history,give_nickname,nickname,exact,value remapped via mappings/nicknames.csv
+employer,history,employer,char_ref,exact,956 vanilla history uses
+add_spouse,history,add_spouse,char_ref,exact,1:1
+add_matrilineal_spouse,history,add_matrilineal_spouse,char_ref,exact,1:1
+remove_spouse,history,remove_spouse,char_ref,exact,1:1
+add_consort,history,add_concubine,char_ref,approx,renamed; needs doctrine_concubines or the culture consort parameter
+capital,history,capital,same,approx,1:1 key; a b_ value must become its parent county (Faerun's single use is already a c_)
+add_claim,history,add_pressed_claim,title_scope_effect,approx,CK3 splits pressed/unpressed and wants the title: scope; wrapped in effect = { }
+immortal_age,history,set_immortal_age,int_effect,approx,CK3 effect (common/effect_localization/00_additional_effects.txt); wrapped in effect = { }
+wealth,history,add_gold,int_effect,approx,CK2 sets an absolute value; CK3 adds a delta
+secret_religion,history,,comment,none,CK3 models a hidden faith as a secret; the concealed faith itself cannot be stored
+dna,history,,comment,none,CK2 11-char 2D sprite index; CK3 dna references common/dna_data gene templates
+properties,history,,comment,none,CK2 2D accessory layer indices; CK3 accessories come from portrait_modifiers
+easter_egg,history,,comment,none,CK2 random-generation exclusion flag; no CK3 equivalent
+create_bloodline,history,,comment,none,CK3 has no bloodlines (docs/mechanics_inventory.md)
+give_job_title,history,,comment,none,CK3 council positions are give_council_position; the CK2 job ids need the government lane's table
+set_special_character_title,history,,comment,none,CK2 offmap/flavour title; CK3 has set_title_name on a title not a character
+effect,history,effect,effect_block,approx,syntactic port; unmapped tokens become comments
+effect_even_if_dead,history,effect,effect_block,approx,CK3 has NO effect_even_if_dead (0 uses in the 1.19 install); ported as effect = { } with a comment
+father,dated,set_father,char_scope_effect,approx,CK3 rejects a bare `father` inside a dated block (tiger: expected block); the effect form is the only way
+mother,dated,set_mother,char_scope_effect,approx,as the dated `father` row
+fertility,dated,,comment,none,"CK3 `fertility` is a trigger, not an effect (tiger: wrong-use); only the character-level key works"
+health,dated,,comment,none,as the dated `fertility` row; 0 uses in Faerun but the same CK3 rule applies
+add_friend,effect,set_relation_friend,relation:friend_generic_history,approx,CK3 relations are effects taking { reason target }
+add_rival,effect,set_relation_rival,relation:rival_historical,approx,as add_friend
+add_lover,effect,set_relation_lover,relation:lover_history,approx,as add_friend
+remove_friend,effect,remove_relation_friend,char_scope,exact,renamed; CK3 relation removal takes a character: scope
+remove_rival,effect,remove_relation_rival,char_scope,exact,renamed; CK3 relation removal takes a character: scope
+remove_lover,effect,remove_relation_lover,char_scope,exact,renamed; CK3 relation removal takes a character: scope
+set_character_flag,effect,add_character_flag,same,exact,renamed; 6221 uses in the 1.19 install
+clr_character_flag,effect,remove_character_flag,same,exact,renamed; 2389 uses
+set_real_father,effect,set_real_father,char_scope,exact,CK3 effect wants a character: scope
+set_father,effect,set_father,char_scope,exact,CK3 effect wants a character: scope
+set_mother,effect,set_mother,char_scope,exact,CK3 effect wants a character: scope
+add_trait,effect,add_trait,trait,exact,1:1 key; the value goes through the trait table
+remove_trait,effect,remove_trait,trait,exact,1:1 key; the value goes through the trait table
+add_pressed_claim,effect,add_pressed_claim,title_scope,exact,CK3 wants title:<id>
+add_claim,effect,add_pressed_claim,title_scope,approx,CK2 has one claim key; pressed is the reading Faerun's own add_pressed_claim uses
+add_weak_pressed_claim,effect,add_unpressed_claim,title_scope,approx,CK3's weak claim is add_unpressed_claim
+add_weak_claim,effect,add_unpressed_claim,title_scope,approx,as add_weak_pressed_claim
+give_nickname,effect,give_nickname,nickname,exact,1:1 key; the value goes through mappings/nicknames.csv
+remove_nickname,effect,remove_nickname,drop_value,exact,CK3 remove_nickname takes yes not a nickname id
+add_spouse,effect,add_spouse,char_ref,exact,1:1
+add_consort,effect,add_concubine,char_ref,approx,renamed
+remove_spouse,effect,remove_spouse,char_ref,exact,1:1
+dynasty,effect,set_dynasty,dynasty_scope,approx,CK3 effect wants dynasty:<id>
+prestige,effect,add_prestige,same,approx,CK2 sets absolute; CK3 adds a delta
+wealth,effect,add_gold,same,approx,CK2 sets absolute; CK3 adds a delta
+set_name,effect,change_first_name,nonempty,approx,"CK3 has no set_name effect; change_first_name is the equivalent. An empty value is refused: change_first_name = """" makes ck3-tiger 1.19.0 panic"
+add_character_modifier,effect,add_character_modifier,char_modifier,approx,CK3 shape is { modifier = x years = n }; CK2 duration is in days
+add_betrothal,effect,create_betrothal,char_scope,approx,CK2 add_betrothal -> CK3 create_betrothal on the target character
+banish,effect,,comment,none,CK3 banish needs a target scope CK2 history does not supply
+imprison,effect,,comment,none,CK2 imprison = <id> is ambiguous about who jails whom; CK3 wants { target imprisoner }
+prisoner,effect,,comment,none,as imprison
+religion,effect,,comment,none,changing faith mid-history needs set_character_faith with a faith: scope; the faith lane owns the ids
+set_secret_religion,effect,,comment,none,as the history-level secret_religion
+clear_secret_religion,effect,,comment,none,as the history-level secret_religion
+join_society,effect,,comment,none,CK3 has no societies (docs/mechanics_inventory.md)
+leave_society,effect,,comment,none,CK3 has no societies
+society_rank_up,effect,,comment,none,CK3 has no societies
+set_society_grandmaster,effect,,comment,none,CK3 has no societies
+create_bloodline,effect,,comment,none,CK3 has no bloodlines
+add_artifact,effect,,comment,none,CK3 artifacts are history/artifacts plus common/artifacts; the artifacts lane owns them
+new_artifact,effect,,comment,none,as add_artifact
+destroy_artifact,effect,,comment,none,as add_artifact
+unsafe_destroy_artifact,effect,,comment,none,as add_artifact
+spawn_unit,effect,,comment,none,CK3 spawns armies through create_army-style effects on a title; not portable from history
+spawn_fleet,effect,,comment,none,as spawn_unit
+disband_event_forces,effect,,comment,none,as spawn_unit
+set_graphical_culture,effect,,comment,none,CK3 portraits come from ethnicity/genes not a graphical culture string
+set_special_character_title,effect,,comment,none,as the history-level key
+remove_special_character_title,effect,,comment,none,as the history-level key
+give_minor_title,effect,,comment,none,CK3 has no minor titles; the nearest is a court position
+give_job_title,effect,,comment,none,as the history-level key
+remove_title,effect,,comment,none,as give_job_title / give_minor_title
+set_government_type,effect,,comment,none,government ids come from mappings/government_map.csv and belong to a title's history
+set_gender,effect,,comment,none,CK3 has no set_gender effect; the history-level female key is the only lever
+set_dynasty_name,effect,,comment,none,CK3 dynasty names are loc keys on common/dynasties not a runtime string
+set_reincarnation,effect,,comment,none,CK2 offmap/flavour mechanic; no CK3 equivalent
+add_ambition,effect,,comment,none,CK3 has no ambitions (objectives were cut)
+opinion,effect,,comment,none,CK3 opinion modifiers need add_opinion with a target scope CK2 history does not supply
+add_bloodline_member,effect,,comment,none,CK3 has no bloodlines
