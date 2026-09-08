@@ -1,0 +1,12 @@
+file,kind,gene_or_category_count,notes,citation
+00_genes_color.txt,color,3,"hair_color skin_color eye_color; palette is a texture (hair 512x512 dds, skin/eye 256x256 dds), value is a 2D coordinate not a discrete swatch",common/genes/00_genes_color.txt:1-19
+01_genes_morph.txt,morph,98,"groups: face 29, mouth 19, nose 15, eyes 13, head_neck 8, ears 5, body 5, hair 2 (some genes uncounted by simple grep, brace-depth parse used)",common/genes/01_genes_morph.txt
+02_genes_accessories_misc.txt,accessory,13,"3 categories: eye_accessory teeth_accessory eyelashes_accessory, 13 templates total, inheritable = no",common/genes/02_genes_accessories_misc.txt:1-179
+03_genes_special_accessories_hairstyles.txt,accessory,85,"1 category (hairstyles), 85 templates, weighted uniform-random asset picks",common/genes/03_genes_special_accessories_hairstyles.txt
+04_genes_special_accessories_beards.txt,accessory,47,1 category (beards) 47 templates,common/genes/04_genes_special_accessories_beards.txt
+05_genes_special_accessories_clothes.txt,accessory,199,1 category (clothes) 199 templates,common/genes/05_genes_special_accessories_clothes.txt
+06_genes_special_accessories_headgear.txt,accessory,245,"4 categories (headgear secondary_headgears additive_headgear clothes_hoods) 245 templates total",common/genes/06_genes_special_accessories_headgear.txt
+07_genes_special_accessories_misc.txt,accessory,295,"6 categories (legwear special_legwear cloaks props_left props_right animated_props) 295 templates total; only 'horn' hit is ep2_horn_left, a held prop not anatomy",common/genes/07_genes_special_accessories_misc.txt:916
+08_genes_special_visual_traits.txt,special,28,"engine-hardcoded, not part of DNA per file header comment; includes gene_scaly (reptile skin decal) and HSV hue-shift curves used for age-graying",common/genes/08_genes_special_visual_traits.txt:1-2
+09_genes_special_accessories_makeup.txt,accessory,7,1 gene (gene_makeup) 7 templates,common/genes/09_genes_special_accessories_makeup.txt
+10_genes_special_misc.txt,special,13,"balding seated-pose shrink cloak-offset etc",common/genes/10_genes_special_misc.txt
