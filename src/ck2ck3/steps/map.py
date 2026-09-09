@@ -98,6 +98,8 @@ def run(ctx: Context) -> StepResult:
     canvas = report["canvas"]
     prov = report["provinces"]
     bar = report["baronies"]
+    trees = report.get("trees", {})
+    colormap = report.get("colormap", {})
     return StepResult(
         summary=(
             f"map {canvas['width']}x{canvas['height']} at scale "
@@ -120,6 +122,10 @@ def run(ctx: Context) -> StepResult:
             "lost": prov["lost"],
             "regrown": prov["regrown"],
             "adjacencies": report["adjacencies"]["kept"],
+            **({"trees_placed": trees["placed"], "trees_dropped": trees["dropped_no_mesh"]}
+               if trees else {}),
+            **({"colormap_px": colormap["width"] * colormap["height"]}
+               if colormap else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),

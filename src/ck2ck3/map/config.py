@@ -417,6 +417,31 @@ class MapConfig:
     #: choice); ``0.5`` quarters the pixel count. docs/step_map_paint.md
     #: §size. Default unchanged until the coordinator's in-game check.
     terrain_paint_scale: float = 1.0
+    #: write gfx/map/terrain/colormap.dds, resampled from the CK2 mod's own
+    #: map/terrain/colormap.dds (docs/step_map_paint.md §9). Default on;
+    #: false ships neither this file nor a change to output_final_colormap.dds
+    #: (vanilla's own copy is 0 bytes and needs no override either way).
+    colormap: bool = True
+    #: downsample factor from canvas resolution, `verified` against two
+    #: shipped total conversions (Elder Kings 2, Godherja) which both ship
+    #: their own colormap.dds at exactly one-quarter of their province-map
+    #: resolution, uncompressed.
+    colormap_scale: float = 0.25
+    #: write the full mip chain to 1x1 (Godherja's shape) vs. base level only
+    #: (Elder Kings 2's shape); both load.
+    colormap_mips: bool = True
+    #: scatter tree instances into gfx/map/map_object_data/generated/*.txt
+    #: from CK2 trees.bmp (docs/step_map_paint.md §9). Default on; false
+    #: falls back to strip_vanilla_foliage's empty stubs.
+    trees: bool = True
+    #: CK3 terrain key -> vanilla generated file name
+    trees_csv: Path = Path("mappings/tree_meshes.csv")
+    #: deterministic RNG seed for the scatter and per-file yaw
+    trees_seed: int = 4242
+    #: instances per canvas pixel; default is vanilla 1.19's own measured
+    #: density, 549,126 instances over its 9216x4608 canvas (`verified`,
+    #: scripts/verify_tree_density.py)
+    trees_density_per_px: float = 549_126 / (9216 * 4608)
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -491,6 +516,15 @@ def load(path: str | Path) -> MapConfig:
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
         terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
+        colormap=bool(raw.get("colormap", True)),
+        colormap_scale=float(raw.get("colormap_scale", 0.25)),
+        colormap_mips=bool(raw.get("colormap_mips", True)),
+        trees=bool(raw.get("trees", True)),
+        trees_csv=Path(str(raw.get("trees_csv", "mappings/tree_meshes.csv"))),
+        trees_seed=int(raw.get("trees_seed", 4242)),
+        trees_density_per_px=float(
+            raw.get("trees_density_per_px", 549_126 / (9216 * 4608))
+        ),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),

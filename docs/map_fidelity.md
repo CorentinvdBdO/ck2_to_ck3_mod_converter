@@ -18,8 +18,19 @@ the `map` step behind `[map] heightmap_detail = true` (on in
 44,390 (vanilla 31,516), sea pin and every coastline verified unchanged
 (`scripts/verify_heightmap_detail_invariants.py`), pass runtime 10.9 s.
 `docs/step_map_heightmap.md`, `docs/evidence/HANDOFF_map_heightmap_detail.md`.
-Everything else below (§1.1, §1.3–§1.6, §2, §3, §4.1, §4.3) is still research
-only, no converter code.
+
+**Status, §4.3 (trees and colour) and the terrain-paint art pass.**
+**Implemented**, lane `map-colour`, 2026-09-09: `ck2ck3.map.colormap`
+(`[map] colormap`, default on) resamples the CK2 mod's own `colormap.dds`;
+`ck2ck3.map.tree_scatter` (`[map] trees`, default on) repopulates the 18
+vanilla `gfx/map/map_object_data/generated/*.txt` files lane `map-ui` emptied,
+711,875 of a 729,838-instance target placed; `mappings/terrain_paint.csv` had
+one real bug fixed (`forest` was painted with `taiga`'s own primary material)
+and two flagged judgement calls resolved against vanilla's own bake. See
+`docs/step_map_paint.md` §9 for the full account, format decisions and
+counts; `docs/evidence/HANDOFF_map_colour.md` for what is still open.
+Everything else below (§1.1, §1.5–§1.6, §2, §3) is still research only, no
+converter code.
 
 **Question this answers.** Our map loads and plays, and it is ugly
 (`docs/playtest_2026-09-08.md` item 13). *Why* is it ugly, in measurable terms,
