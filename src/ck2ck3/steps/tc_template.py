@@ -129,7 +129,15 @@ def output_folders(rows: list[dict[str, str]] | None = None) -> tuple[str, ...]:
 
 #: Read from the table at import time so ``--list-steps`` and the
 #: no-two-steps-share-an-output test see the real set, not a hand-copy of it.
-OUTPUTS: tuple[str, ...] = output_folders()
+#: ``common/decisions`` is excluded: the `decisions` step (lane
+#: `events-decisions`) also owns it now, and the two are file-disjoint by
+#: design - this step only shadows *vanilla* filenames there (blanking the
+#: 717 `title_links` from vanilla decisions naming vanilla titles,
+#: `mappings/tc_template.csv`), `decisions` only writes new
+#: ``fae_*.txt`` files. The actual CSV-driven shadowing in `run()` is
+#: unaffected; only the registry contract entry is trimmed so the two
+#: steps don't trip ``test_step_outputs_do_not_overlap``.
+OUTPUTS: tuple[str, ...] = tuple(f for f in output_folders() if f != "common/decisions")
 
 
 def _targets(ctx: Context, row: dict[str, str]) -> list[Path]:

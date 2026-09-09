@@ -39,6 +39,7 @@ Faerûn run of 2026-09-08 (`docs/evidence/full_run_2026-09-08.md`).
 | `dynasties` | `common/dynasties` (11,952) | `common/dynasties`, `dynasty_houses` shadows, dynasty-name yml | `fae_<id>` ids, names become loc keys (hash-collision checked against vanilla), CK2 CoAs dropped with a review sheet. |
 | `characters` | `history/characters` (18,124) | `history/characters` | Field by field (`mappings/character_fields.csv`, `character_effects.csv`), death reasons and nicknames by table, traits through the traits hand-off, `immortal_age` → immortal trait + `set_immortal_age`, `employer` kept only while the employer is landed and the character is not a ruler. Integrity report: `docs/evidence/characters_integrity.csv`. |
 | `loc` | 120 CSV, 113,755 lines, cp1252 | 480 yml, 4 languages, 111k keys each | Keys keep CK2 names; a `key_map` (built from every lane's rename table) copies/renames where CK3 wants other shapes; text codes converted by table (93.9 % of 147,711; `[From.X]` → saved scope `ck2_from`, unknown `Custom()` marked). `docs/formats_loc.md`, `docs/loc_codes.md`. |
+| `decisions` | `decisions/*.txt` (959, 3 character-scope groups emit) | `common/decisions/fae_*.txt` | Trigger/effect vocabulary through `mappings/{triggers,effects,event_targets}.csv` (built + verified against real CK3 1.19 usage, `docs/mapping_triggers_effects.md`); 396 of 410 `new`/239 `modified` are character-scope and emit (title/settlement/offmap/targeted/trade-post groups are evidence-only, CK3 has no landing place); unmapped keys become `# CK2:` comments; convertibility score below `[decisions] min_score` (0.6) forces `is_shown = { always = no }`, content stays inspectable. `docs/step_decisions.md`. |
 | `tests` | the generated mod itself | `tests/fae_generated_tests.txt` | 107 CK3 scripted-test assertions read back from the mod (bookmark characters alive and holding their title, 50 title holders, 50 provinces' culture/faith, ruler-holds-capital); run with `-test`. |
 | `descriptor`, `clean` | — | `descriptor.mod`, `credit_portraits.txt` | `replace_path` only for folders the mod actually fills; vanilla files that name vanilla objects are shadowed by same-name empty files. |
 
@@ -99,7 +100,7 @@ Validation chain: `pytest` (919) → `ck3-tiger` (fatal 0; 218 accepted errors, 
 
 Tracked in `STATUS.md` (Next 3) and `docs/integration_backlog.md`. In order:
 
-1. **Events and decisions** (13,457 event ids: 1762 new, 5543 kept, 2911 modified, 3241 deleted vs CK2 vanilla; 959 decisions; 197 on_actions) — provenance pass and file-level bridge table done (`docs/events_provenance.md`, `mappings/events_ck2_ck3_vanilla.csv`, 56 % coverage); next is §5 step 3, the syntactic port of `new` events.
+1. **Events and decisions** (13,457 event ids: 1762 new, 5543 kept, 2911 modified, 3241 deleted vs CK2 vanilla; 959 decisions; 197 on_actions) — provenance pass and file-level bridge table done (`docs/events_provenance.md`, `mappings/events_ck2_ck3_vanilla.csv`, 56 % coverage); **decisions ported** (step `decisions`, `docs/step_decisions.md`: 396 emit-eligible, 122 live, 274 below-threshold but inspectable); next is §5 step 3's remaining scope, the syntactic port of `new`/`modified` events (on_actions after that).
 2. Buildings (345) and wonders (59) → CK3 building chains and special buildings; on_actions; laws table.
 3. Traits backlog: 175 unclassified vanilla-origin traits, 25 non-race `race_trait` rows, `lifespan_<N>` as
    `life_expectancy`; culture gfx chain order (1383 cosmetic warnings); island regions (83); one oversized
@@ -144,7 +145,8 @@ computable, since the CK2 base game is installed:
    mechanic-specific block, so the submod re-implements the mechanic once and the events light up.
 
 Order of work: provenance pass and bridge table first (they decide everything else), then decisions
-(small, self-contained), then on_actions, then character events by convertibility score descending.
+(small, self-contained — **done**, step `decisions`, `docs/step_decisions.md`), then on_actions, then
+character events by convertibility score descending.
 
 ## 6. Repositories and layout
 

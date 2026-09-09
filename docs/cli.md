@@ -67,6 +67,10 @@ converter repository root, so the CLI behaves the same from any directory.
 | `loc.unknown_codes` | str | `custom` (default) or `marker`, see `docs/loc_codes.md` |
 | `loc.named_scope` | str | what a reference to a CK2 saved scope becomes: `marker` (default) or `reference` (the chain unchanged). `reference` needs something to run `save_scope_as`, and nothing ports CK2's events yet; an unresolvable scope is a data error in the loc string that crashed game setup (`docs/evidence/game_load_2026-09-08.md`) |
 | `loc.custom_loc` | str | what a CK2 customizable-localisation code becomes: `marker` (default, a visible `<!CK2:…!>`) or `call` (`Custom('name')`). `call` needs `common/customizable_localization`, which nothing emits yet, and a call to a name CK3 does not know is an error per evaluation — it crashed game setup (`docs/evidence/game_load_2026-09-08.md`) |
+| `decisions.provenance` | path | `docs/evidence/decisions_provenance.csv` (lane `events-provenance`'s per-id classification) |
+| `decisions.min_score` | float | a decision's converted keys mapped ÷ total below this get `is_shown = { always = no }`, default `0.6` |
+| `decisions.triggers` / `decisions.effects` | path | `mappings/triggers.csv` / `effects.csv`, overridable for tests |
+| `decisions.evidence` | path | `docs/evidence/decisions_convertibility.csv`, overridable for tests |
 | `tests.sample` | int | history title holders and land provinces the `tests` step asserts, spread evenly. `0` = every one (3694 provinces) |
 | `tests.bookmark` | str | bookmark key to anchor the tests to; unset = the highest-weight one, which is what the game's `-test` starts |
 
@@ -146,6 +150,7 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 | `characters` | `history/characters` | all 18124 Faerûn characters, field by field (`docs/step_characters.md`) |
 | `cultures` | `common/culture/*`, `common/ethnicities`, … | CK2 culture groups/cultures → pillars, cultures, name lists. **Runs after `dynasties`**: a name list's `dynasty_names` comes from `ctx.data["dynasties"]["names_by_culture"]` |
 | `religions` | `common/religion/*` | CK2 religion groups/religions → families, religions, faiths, holy sites |
+| `decisions` | `common/decisions` | character-scope CK2 decisions ported to CK3 syntax (`docs/step_decisions.md`). **Runs after `loc`/`traits`** |
 | `tests` | `tests` | CK3 scripted tests asserting the generated mod's own claims; **runs last**, see below |
 
 `[map] title_scaffolding = true` re-enables the throwaway one-barony-per-province

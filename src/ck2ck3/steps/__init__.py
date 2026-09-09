@@ -42,6 +42,10 @@ DEFAULT_ORDER: tuple[str, ...] = (
     "traits",
     "characters",
     "loc",
+    # After `loc` (decision text is already ported verbatim by that step)
+    # and `traits` (bare `<trait> = yes/no` shorthand needs the live/rename
+    # trait-id map).
+    "decisions",
     # Last on purpose: `tests` asserts what the earlier steps wrote, by
     # reading the generated mod back.
     "tests",
