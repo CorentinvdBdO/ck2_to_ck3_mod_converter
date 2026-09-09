@@ -250,9 +250,10 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         mapping=cfg.terrain_map or None,
         default=cfg.terrain_default,
     )
-    # kept for the terrain-paint pass below (same code grid, no second resize);
-    # freed immediately when that pass will not run
-    keep_codes_tgt = cfg.terrain_paint and not skip_images
+    # kept for the terrain-paint and colormap passes below (both want the
+    # same canvas-resolution CK2 code grid, no second resize); freed
+    # immediately when neither pass will run
+    keep_codes_tgt = (cfg.terrain_paint or cfg.colormap) and not skip_images
     if not keep_codes_tgt:
         del codes_tgt
     impassable_ck3 = {
@@ -389,31 +390,48 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         }
         del paper, heights
 
-        ck2_colormap = src / "terrain" / "colormap.dds"
-        if cfg.colormap and ck2_colormap.is_file():
-            log("painting gfx/map/terrain/colormap.dds (CK2 colour resample)")
-            cm = colormap.render(
-                ck2_colormap, canvas, source_size=(src_w, src_h)
+        if cfg.colormap:
+            tint_map = colormap.read_tint_map(_repo_path(cfg, cfg.colormap_tints_csv))
+            if not tint_map:
+                sink.warn(
+                    f"[map] colormap = true but {cfg.colormap_tints_csv} is "
+                    "missing or empty; shipping a flat default-grey colormap"
+                )
+            log("painting gfx/map/terrain/colormap.dds (measured terrain tint)")
+            cm = colormap.build_from_terrain(
+                codes_tgt,
+                code_names,
+                tint_map=tint_map,
+                water_mask=water_mask,
+                mapping=cfg.terrain_map or None,
+                default=cfg.terrain_default,
+                blur_sigma=cfg.colormap_blur_sigma,
+                warn=sink.warn,
             )
+            land_px = cm[~water_mask].astype(np.float64)
+            water_px = cm[water_mask].astype(np.float64)
+            report["colormap"] = {
+                "land_mean_rgb": [round(float(x), 1) for x in land_px.mean(axis=0)],
+                "land_std_rgb": [round(float(x), 1) for x in land_px.std(axis=0)],
+                "water_mean_rgb": [round(float(x), 1) for x in water_px.mean(axis=0)],
+                "water_std_rgb": [round(float(x), 1) for x in water_px.std(axis=0)],
+                "blur_sigma": cfg.colormap_blur_sigma,
+            }
             cm = colormap.downsample(cm, cfg.colormap_scale)
             sink.binary(
                 colormap.COLORMAP_PATH,
                 lambda p, cm=cm: colormap.save(cm, p, mips=cfg.colormap_mips),
             )
-            report["colormap"] = {
-                "width": int(cm.shape[1]),
-                "height": int(cm.shape[0]),
-                "scale": cfg.colormap_scale,
-                "mips": cfg.colormap_mips,
-            }
-            log(f"colormap: {cm.shape[1]}x{cm.shape[0]}, mips={cfg.colormap_mips}")
-            del cm
-        elif cfg.colormap:
-            sink.warn(
-                f"[map] colormap = true but no CK2 colormap.dds at {ck2_colormap}; "
-                "shipping none (CK3 falls back to vanilla's own, stretched over "
-                "our canvas)"
+            report["colormap"]["width"] = int(cm.shape[1])
+            report["colormap"]["height"] = int(cm.shape[0])
+            report["colormap"]["scale"] = cfg.colormap_scale
+            report["colormap"]["mips"] = cfg.colormap_mips
+            log(
+                f"colormap: {cm.shape[1]}x{cm.shape[0]}, land mean "
+                f"{report['colormap']['land_mean_rgb']}, water mean "
+                f"{report['colormap']['water_mean_rgb']}"
             )
+            del cm, land_px, water_px
 
         if cfg.terrain_paint:
             log("painting terrain (gfx/map/terrain/detail_index.tga + "

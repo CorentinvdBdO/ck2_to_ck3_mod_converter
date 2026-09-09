@@ -417,11 +417,24 @@ class MapConfig:
     #: choice); ``0.5`` quarters the pixel count. docs/step_map_paint.md
     #: §size. Default unchanged until the coordinator's in-game check.
     terrain_paint_scale: float = 1.0
-    #: write gfx/map/terrain/colormap.dds, resampled from the CK2 mod's own
-    #: map/terrain/colormap.dds (docs/step_map_paint.md §9). Default on;
-    #: false ships neither this file nor a change to output_final_colormap.dds
+    #: write gfx/map/terrain/colormap.dds — a measured tint per CK3 terrain
+    #: key, calibrated against vanilla's own per-material colormap means
+    #: (docs/step_map_paint.md §9.6/§9.7, lane `colormap-fix`; superseded the
+    #: CK2-colormap resample the coordinator found painted a saturated
+    #: satellite image with no sea/land distinction over the terrain).
+    #: False ships neither this file nor a change to output_final_colormap.dds
     #: (vanilla's own copy is 0 bytes and needs no override either way).
     colormap: bool = True
+    #: CK3 terrain key (+ "water") -> measured tint RGB
+    #: (docs/step_map_paint.md §9.7, mappings/colormap_tints.csv).
+    colormap_tints_csv: Path = Path("mappings/colormap_tints.csv")
+    #: Gaussian blur sigma, canvas pixels, applied after painting so
+    #: terrain-key boundaries do not read as flat colour blocks. Default is
+    #: `scripts/measure_vanilla_colormap_blur.py`'s measured 1/e
+    #: autocorrelation radius of vanilla's own colormap.dds (9 vanilla px),
+    #: used unconverted because our canvas matches vanilla's own km/px
+    #: (docs/map_scale.md).
+    colormap_blur_sigma: float = 9.0
     #: downsample factor from canvas resolution, `verified` against two
     #: shipped total conversions (Elder Kings 2, Godherja) which both ship
     #: their own colormap.dds at exactly one-quarter of their province-map
@@ -517,6 +530,10 @@ def load(path: str | Path) -> MapConfig:
         terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
         terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
         colormap=bool(raw.get("colormap", True)),
+        colormap_tints_csv=Path(
+            str(raw.get("colormap_tints_csv", "mappings/colormap_tints.csv"))
+        ),
+        colormap_blur_sigma=float(raw.get("colormap_blur_sigma", 9.0)),
         colormap_scale=float(raw.get("colormap_scale", 0.25)),
         colormap_mips=bool(raw.get("colormap_mips", True)),
         trees=bool(raw.get("trees", True)),

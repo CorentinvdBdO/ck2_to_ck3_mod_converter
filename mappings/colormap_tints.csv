@@ -1,0 +1,17 @@
+ck3_terrain,tint_r,tint_g,tint_b,sample_count,note
+desert,126,124,119,30423,vanilla's own mean colormap tint where it paints 'desert_02' (material id 12)
+desert_mountains,138,128,115,363439,vanilla's own mean colormap tint where it paints 'desert_rocky' (material id 15)
+drylands,140,131,117,320780,vanilla's own mean colormap tint where it paints 'drylands_01' (material id 18)
+farmlands,127,128,125,42592,vanilla's own mean colormap tint where it paints 'farmland_01' (material id 22)
+floodplains,134,132,127,42589,vanilla's own mean colormap tint where it paints 'floodplains_01' (material id 23)
+forest,128,128,125,649070,vanilla's own mean colormap tint where it paints 'forest_leaf_01' (material id 25)
+hills,126,126,123,253710,vanilla's own mean colormap tint where it paints 'hills_01' (material id 28)
+jungle,126,124,117,1476548,vanilla's own mean colormap tint where it paints 'forest_jungle_01' (material id 24)
+mountains,129,128,124,3197,vanilla's own mean colormap tint where it paints 'mountain_02' (material id 38)
+oasis,126,126,123,146916,vanilla's own mean colormap tint where it paints 'oasis' (material id 50)
+plains,127,127,126,13019,vanilla's own mean colormap tint where it paints 'plains_01' (material id 51)
+steppe,125,122,115,166526,vanilla's own mean colormap tint where it paints 'steppe_grass' (material id 58)
+taiga,129,129,128,1642278,vanilla's own mean colormap tint where it paints 'forest_pine_01' (material id 26)
+terraced_hills,126,126,122,55046,vanilla's own mean colormap tint where it paints 'farm_paddy_01' (material id 21)
+wetlands,124,123,116,134246,vanilla's own mean colormap tint where it paints 'wetlands_02' (material id 60)
+water,129,130,129,8041139,"vanilla's own measured sea_zones+lakes colormap tint; applied wherever the map step's own water_mask is true, not by terrain key"

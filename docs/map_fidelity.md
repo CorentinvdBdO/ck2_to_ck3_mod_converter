@@ -20,15 +20,36 @@ the `map` step behind `[map] heightmap_detail = true` (on in
 `docs/step_map_heightmap.md`, `docs/evidence/HANDOFF_map_heightmap_detail.md`.
 
 **Status, §4.3 (trees and colour) and the terrain-paint art pass.**
-**Implemented**, lane `map-colour`, 2026-09-09: `ck2ck3.map.colormap`
-(`[map] colormap`, default on) resamples the CK2 mod's own `colormap.dds`;
-`ck2ck3.map.tree_scatter` (`[map] trees`, default on) repopulates the 18
-vanilla `gfx/map/map_object_data/generated/*.txt` files lane `map-ui` emptied,
+**Implemented**, lane `map-colour`, 2026-09-09, **colour superseded by lane
+`colormap-fix`, 2026-09-10** (see below): `ck2ck3.map.tree_scatter`
+(`[map] trees`, default on) repopulates the 18 vanilla
+`gfx/map/map_object_data/generated/*.txt` files lane `map-ui` emptied,
 711,875 of a 729,838-instance target placed; `mappings/terrain_paint.csv` had
 one real bug fixed (`forest` was painted with `taiga`'s own primary material)
 and two flagged judgement calls resolved against vanilla's own bake. See
 `docs/step_map_paint.md` §9 for the full account, format decisions and
 counts; `docs/evidence/HANDOFF_map_colour.md` for what is still open.
+
+**Status, colour (superseded), lane `colormap-fix`, 2026-09-10.** The
+resample described in §4.3's "Colour" bullet below shipped, but the
+coordinator's in-game check found it painted a saturated satellite-image
+land texture (CK2's own colormap.dds) over CK3's terrain, with no sea/land
+distinction and CK2's own map geometry (its arctic patch landed on
+Waterdeep) — see `docs/step_map_paint.md` §9.6. **Implemented**:
+`ck2ck3.map.colormap.build_from_terrain` paints a **measured tint per CK3
+terrain key** instead — vanilla's own mean `colormap.dds` colour where it
+paints each key's primary material (`scripts/measure_vanilla_colormap_tints.py`,
+`docs/evidence/vanilla_colormap_tints.csv`), water pixels get vanilla's own
+measured sea/lake tint, blurred at vanilla's own measured colour
+autocorrelation length (`scripts/measure_vanilla_colormap_blur.py`). `[map]
+colormap` is back to `true`: our land saturation (4.18) sits under vanilla's
+own weighted mean (6.97), our water tint (1.02) sits within a point of
+vanilla's own (0.85). Also fixed: `[map] colormap`/`colormap_scale`/
+`colormap_mips` were never wired into the real CLI's `MapConfig` builder
+(`src/ck2ck3/steps/map.py`), so the toml toggle had been a no-op since
+lane `map-colour` shipped it. See `docs/step_map_paint.md` §9.7,
+`docs/evidence/HANDOFF_colormap_tint.md`.
+
 Everything else below (§1.1, §1.5–§1.6, §2, §3) is still research only, no
 converter code.
 
@@ -505,12 +526,19 @@ tiles, and 212 distinct values dedupe far better than 17,675 — expect
   so ~728 k for our 56.4 Mpx canvas at the same visual density. The file format is
   `object={ name=… count=N transform="x y z qx qy qz sx sy sz …" }` with the
   same bottom-origin frame as the locators.
-* **Colour.** `gfx/map/terrain/colormap.dds` (9216×4608 DXT5, 56 MB) is the
-  large-scale colour wash. CK2 has the exact analogue at
-  `map/terrain/colormap.dds` (25 MB) — so this one is a straight resample of an
-  existing CK2 asset, which is the cheapest way to make the map stop looking
-  like Europe. `flat_maps/flatmap.dds` (21 MB) is the zoomed-out paper map that
-  playtest item 5 complains about; it is one texture, not a pipeline.
+* **Colour (superseded, lane `colormap-fix`, 2026-09-10 — see the status note
+  above and `docs/step_map_paint.md` §9.6/§9.7).** This bullet originally
+  recommended resampling CK2's own `map/terrain/colormap.dds` (25 MB) onto
+  vanilla's `gfx/map/terrain/colormap.dds` (9216×4608 DXT5, 56 MB) as "the
+  cheapest way to make the map stop looking like Europe". That shipped, and
+  the coordinator's in-game check found it wrong: CK2's colormap is a
+  saturated, geography-specific land painting, not the near-neutral tint
+  vanilla's own file is, and its content is CK2's own map, not ours. The
+  shipped fix is a tint **measured** from vanilla's own `colormap.dds` per
+  CK3 terrain key, not a resample of any CK2 asset — see the status note
+  above for the numbers. `flat_maps/flatmap.dds` (21 MB) is the zoomed-out
+  paper map that playtest item 5 complains about; it is one texture, not a
+  pipeline, and is unaffected by this.
 
 ### 4.4 Effort
 
