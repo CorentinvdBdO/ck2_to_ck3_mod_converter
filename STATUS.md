@@ -51,5 +51,5 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 
 ## Next 3
 1. User playtest 3 of build 4 (`docs/playtest.md`): fresh game survives unpausing; clothes, traits, terrain paint, relief, CK2 port seeds.
-2. Events §5 step 3: syntactic port of `new` events (1762) — trigger/effect tables, scopes, MTTH → on_action pulses, convertibility score; decisions first (410 new).
+2. Events §5 step 3: decisions done (lane `events-decisions`: 101 live, 295 hidden below score, 253 out-of-scope groups; vocabulary tables `mappings/triggers.csv`/`effects.csv`/`event_targets.csv`). Next: `new` events (1762) — MTTH → on_action pulses, event types, then re-enable `trigger_event` rows.
 3. Map look follow-ups: terrain-paint size call (RLE/half-res test in game), trees/colour map (§4.3), art pass on `mappings/terrain_paint.csv`; characters' looks: per-race ethnicities (`docs/research_dna_races.md` §4).

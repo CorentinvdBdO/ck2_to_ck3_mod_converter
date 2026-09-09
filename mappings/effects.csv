@@ -1,0 +1,676 @@
+ck2_key,ck3_key,status,confidence,note,decision_uses
+id,id,exact,assumed,unchanged (trigger_event field),309
+character_event,,none,verified,"CK2 character_event fires a CK2 event id; no CK2 event is ported yet (README §5 step 3), and a trigger_event to an unknown id fails validation at load - commented out until the events step exists",274
+trait,add_trait,approx,verified,"CK2 explicit `trait = X` effect (add) -> CK3 `add_trait = X`; the argument X is re-resolved through the traits step's id map at conversion time (ck2ck3.steps.decisions), not a literal rename",267
+remove_trait,remove_trait,exact,verified,unchanged,265
+add_trait,add_trait,exact,verified,unchanged,264
+wealth,,none,verified,"not a CK3 effect key: `piety`/`prestige`/`gold` are trigger-only comparisons in CK3, changed only via add_gold/add_piety/add_prestige - no bare effect of this name",226
+religion,religion,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),225
+set_character_flag,add_character_flag,approx,verified,CK3 renamed set_character_flag -> add_character_flag,211
+has_province_modifier,has_county_modifier,approx,assumed,"CK3 merged province into county (trigger, kept for cross-listing)",168
+religion_group,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),161
+hidden_tooltip,,none,verified,"see triggers table: not real CK3 vocabulary, approximating it broke custom_tooltip's required text field",158
+any_demesne_province,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),143
+culture,culture,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),134
+add_character_modifier,add_character_modifier,exact,verified,unchanged,126
+name,,none,assumed,"context-dependent field name, not a single vocabulary key",117
+give_nickname,give_nickname,exact,verified,unchanged,113
+has_nickname,has_nickname,exact,assumed,"unchanged (this is a trigger, kept for the survey's cross-listing)",109
+society_member_of,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),107
+piety,,none,verified,"not a CK3 effect key: piety is trigger-only, changed only via add_piety - no bare effect of this name",103
+which,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),90
+custom_tooltip,custom_tooltip,exact,verified,unchanged,89
+text,text,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),89
+location,location,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),87
+remove_province_modifier,remove_county_modifier,approx,assumed,CK3 merged province into county,84
+years,years,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),83
+province,province,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),81
+troops,,none,assumed,"context-dependent field name (spawn_army composition), not a single vocabulary key",81
+owner,owner,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),80
+spawn_unit,,none,verified,"spawn_army exists in CK3 (verified) but its inner schema is fixed (location=/name=/army_composition=...) and does not match CK2 spawn_unit's body (province=/owner=/leader=/troops={}) field-by-field - approximating the outer key alone left the CK2 body inside it, error(unknown-field)/error(missing-item) per field; needs a human rewrite per call site, same limitation as create_character",77
+random_list,random_list,exact,verified,unchanged,76
+maintenance_multiplier,,none,assumed,not found in the CK3 1.19 vocabulary sample,75
+earmark,,none,assumed,CK3 regiments have no earmark mechanic,73
+days,days,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),69
+remove_character_modifier,remove_character_modifier,exact,verified,unchanged,69
+clr_character_flag,remove_character_flag,approx,verified,CK3 renamed clr_character_flag -> remove_character_flag,68
+add_building,add_building,exact,verified,unchanged,60
+can_toggle_looting,,none,assumed,not found in the CK3 1.19 vocabulary sample,59
+cannot_inherit,,none,assumed,not found in the CK3 1.19 vocabulary sample,58
+reinforces,,none,assumed,not found in the CK3 1.19 vocabulary sample,58
+save_event_target_as,save_scope_as,approx,verified,CK3 unified saved targets into scopes,57
+dynasty,dynasty,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),55
+disband_on_peace,,none,assumed,not found in the CK3 1.19 vocabulary sample,54
+flag,flag,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),54
+is_female,is_female,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),54
+is_looter,,none,assumed,not found in the CK3 1.19 vocabulary sample,53
+random_traits,random_traits,exact,assumed,unchanged (create_character field),53
+archers,archers,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),51
+prestige,,none,verified,"not a CK3 effect key: prestige is trigger-only, changed only via add_prestige - no bare effect of this name",51
+set_graphical_culture,,none,verified,"not found in the CK3 1.19 vocabulary sample; CK3 graphical culture is a culture-definition field, not a runtime effect (out of this lane's scope - the cultures lane)",50
+attrition,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,49
+female,gender,approx,assumed,CK2 create_character field `female = yes/no` -> CK3 `gender = female/male`,48
+holding_type,holding_type,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),48
+capital_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),47
+light_infantry,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),47
+home,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),46
+tier,tier,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),43
+any_vassal,any_vassal,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),40
+hidden,,none,assumed,"context-dependent field name, not a single vocabulary key",40
+any_liege,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),38
+intrigue,intrigue,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),38
+attributes,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),37
+hidden_effect,hidden_effect,exact,assumed,unchanged,37
+tooltip,,none,assumed,"context-dependent field name, not a single vocabulary key",37
+change_variable,change_variable,exact,verified,unchanged,36
+duration,duration,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),36
+learning,learning,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),36
+set_variable,set_variable,exact,verified,unchanged,36
+character,character,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),35
+heavy_infantry,heavy_infantry,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),35
+liege,liege,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),35
+months,months,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),35
+set_name,,none,verified,"not found in the CK3 1.19 vocabulary sample; needs a human check (CK3 renames a title via change_title_name, not a character)",35
+break,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),34
+martial,martial,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),34
+age,age,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),33
+create_character,,none,verified,"the key exists in CK3 but its inner schema is a fixed template (template=/faith=/culture=/gender=/age=/random_traits=), not an open effect body like CK2's - CK2's body (remove_trait=, attributes={}, flag=...) does not port field-by-field without a human rewrite; approximating it as a pass-through produced error(unknown-field)/error(wrong-use) inside it",33
+diplomacy,diplomacy,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),32
+new_character,,none,assumed,CK2 alias of create_character - see create_character,32
+stewardship,stewardship,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),32
+scaled_wealth,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),31
+shou_lung,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),29
+type,type,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),29
+wild_magic_recovery,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),29
+wild_magic_surge_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),29
+any_demesne_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),28
+grant_title,change_title_holder,approx,verified,CK3 title transfer effect is change_title_holder,27
+holder,holder,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),27
+set_title_flag,set_variable,approx,assumed,"CK3 titles carry variables, not flags",26
+has_offmap_name,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),24
+leader,leader,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),24
+ai,,none,verified,"context-dependent field; no single CK3 vocabulary meaning as a bare effect, needs a human check per call site",22
+has_landed_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),22
+letter_event,,none,verified,"CK2 letter_event fires a CK2 event id; same as character_event - commented out until the events step exists",22
+holder_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),21
+immortal_age,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),21
+set_government_type,change_government,approx,assumed,CK3 government-change effect is change_government,21
+add_artifact,add_artifact_title_history,approx,assumed,CK3 artifact-grant effects differ by source; needs a human check,20
+any_direct_de_jure_vassal_title,any_direct_de_jure_vassal_title,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),20
+build_holding,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,20
+dejure_liege_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),20
+has_dlc,has_dlc,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),20
+num_of_empty_holdings,,none,assumed,not found in the CK3 1.19 vocabulary sample,20
+detract_society_currency_major_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),19
+random,random,exact,verified,unchanged,19
+increase_visibility_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),18
+refresh_minion_culture_province_modifiers_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),18
+on_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),17
+trigger_switch,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),17
+min,min,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),16
+has_law,,none,verified,"not found in the CK3 1.19 vocabulary sample; CK3 checks a specific law group's value, not a bare has_law(trigger, kept for cross-listing)",15
+mob_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),15
+add_law,,none,verified,"not found in the CK3 1.19 vocabulary sample as a bare effect; CK3 law-grant effects are per-law-group, needs a human check per decision",14
+any_courtier_or_vassal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),14
+detract_society_currency_medium_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),14
+primary_title,primary_title,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),14
+any_neighbor_independent_ruler,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),13
+culture_group,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),13
+de_jure_liege,de_jure_liege,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+has_character_flag,has_character_flag,exact,verified,"unchanged (trigger, kept for cross-listing)",13
+has_character_modifier,has_character_modifier,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+has_religion_feature,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),13
+save_persistent_event_target,,none,assumed,CK3 has no persistent (cross-session) saved scope; nearest is a global variable,13
+scope,scope,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+spouse,spouse,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+who,who,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+chance,chance,exact,assumed,unchanged (random_list weight field),12
+convert_to,set_character_faith,approx,assumed,CK2 religion-convert effect -> CK3 set_character_faith,12
+government,government,approx,assumed,context-dependent; see mappings/government_map.csv from the titles lane,12
+max,max,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),12
+mult_modifier,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),12
+refill_holding_levy,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),12
+society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),12
+change_learning,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),11
+chronicle,chronicle,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),11
+entry,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),11
+law,law,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),11
+light_cavalry,light_cavalry,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),11
+opinion_effect,,none,assumed,not found in the CK3 1.19 vocabulary sample; use add_opinion,11
+count,count,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),10
+detract_society_currency_minor_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),10
+has_minor_title,,none,verified,"CK2 minor titles map to CK3 court positions, a different construct (docs/mechanics_inventory.md)",10
+higher_tier_than,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+join_society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),10
+opinion,,none,verified,"not a CK3 effect key: opinion is a trigger-only comparison block, changed only via add_opinion/remove_opinion - no bare effect of this name",10
+pick_culture_for_spawned_courtier_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+pikemen,pikemen,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),10
+sound_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+create_random_soldier,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+legendary_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+master_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+narrative_event,,none,verified,"fires a CK2 event id; commented out until the events step exists (see character_event)",9
+picture,picture,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),9
+renowned_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+set_defacto_liege,,none,assumed,not found in the CK3 1.19 vocabulary sample,9
+TECH_CASTLE_CONSTRUCTION,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+TECH_CITY_CONSTRUCTION,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+TECH_FORTIFICATIONS_CONSTRUCTION,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+TECH_NAVAL,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+activate_title,,none,assumed,not found in the CK3 1.19 vocabulary sample; CK3 titles that exist in the database are always active,8
+any_courtier,any_courtier,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+capital_holding,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+change_martial,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+change_stewardship,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+destroy_landed_title,destroy_title,approx,verified,CK3 renamed the destroy-title effect,8
+expert_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+is_coastal,is_coastal,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+is_councillor,is_councillor,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+is_liege_or_above,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+legendary_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+master_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+player_heir,player_heir,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+renowned_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+status,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+title,title,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+copy_title_laws,,none,assumed,not found in the CK3 1.19 vocabulary sample,7
+expert_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+journeyman_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+journeyman_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+set_secret_religion,,none,verified,secret religions do not exist in CK3 (docs/mechanics_inventory.md),7
+undead_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+activate_plot,,none,verified,CK2 plots have no CK3 counterpart (docs/mechanics_inventory.md),6
+any_title_under,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+artifact,,none,assumed,"context-dependent field name (add_artifact_title_history etc.), not a single vocabulary key",6
+change_intrigue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+create_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),6
+create_random_steward,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+has_alternate_start_parameter,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+high_magic_haywire_roll,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+inheritance,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+key,key,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),6
+prisoner,prisoner,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),6
+trained_warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+trained_wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+trigger_if,trigger_if,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),6
+warlock,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+while,while,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),6
+wizard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+animated_objects,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+any_province_holding,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+any_realm_character,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+cooldown,cooldown,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+create_random_priest,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+elemental_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+force_host,,none,assumed,CK3 has no travelling-court host mechanic,5
+has_holder,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+is_alive,is_alive,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+is_landed,is_landed,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+is_patrician,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+region,region,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+z_fighter,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",5
+any_child,any_child,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+any_owned_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),4
+attacker,attacker,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+can_apply_average_nickname_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+clr_flag,remove_character_flag,approx,assumed,CK2 generic clr_flag -> CK3 remove_character_flag in character scope,4
+controls_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+destroy_artifact,destroy_artifact,exact,assumed,unchanged,4
+duchy,duchy,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+export_to_variable,,none,assumed,CK3 has no direct localisation-export effect of this shape,4
+galleys,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+had_flag,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+has_artifact_flag,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+has_bloodline_flag,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),4
+has_game_rule,has_game_rule,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+has_regent,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+illusory_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_alternate_start,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_artifact_active,,none,assumed,not found in the CK3 1.19 vocabulary sample,4
+is_undead,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+kingdom,kingdom,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+make_capital_holding,set_capital_county,approx,assumed,CK3 capital is set at county level,4
+multiply_variable,,none,assumed,not found in the CK3 1.19 vocabulary sample; use change_variable multiply=,4
+new_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),4
+num_of_trade_posts,,none,verified,trade posts/routes do not exist in CK3 1.19 (docs/mechanics_inventory.md),4
+random_artifact,random_artifact,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+random_province_holding,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+remove_adopted_bloodline_members_effect,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),4
+remove_all_race_traits,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+remove_education_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+same_society_as,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),4
+set_artifact_flag,add_artifact_history,approx,assumed,"CK3 artifacts track history entries/variables, not flags",4
+set_religion_head,,none,assumed,"CK3 assigns the religious head via the faith's clergy/doctrine system, not a bare effect",4
+show_scope_change,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+society_rank,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),4
+spawn_fleet,,none,assumed,CK3 has no separate fleet-spawn effect (ships are part of army composition),4
+top_liege,top_liege,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+turn_lich_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+usurp_title,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,4
+base_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+bloodline_is_active_for,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),3
+change_society_currency,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+clear_persistent_event_target,,none,assumed,see save_persistent_event_target,3
+completely_controls,completely_controls,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+create_family_palace,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+create_title,,none,verified,"CK3 titles are a static database, not creatable at runtime (docs/mechanics_inventory.md)",3
+custom_created,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+de_jure_liege_or_above,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+defender,defender,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+empire,empire,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+give_minor_title,,none,verified,"CK2 minor titles map to CK3 court positions, a different construct (docs/mechanics_inventory.md)",3
+has_job_title,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",3
+increase_visibility_minor_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+inherit,inherit,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+is_active,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_adult,is_adult,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+is_strong_non_congenital_trait_upgradeable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_tribal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+landless,landless,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+leave_society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+merge,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+month,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+new_title,new_title,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+num_of_count_titles_in_realm,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+persistent_event_target:society_title_persist,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+player,player,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+prompt_name,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+propagate_bloodline_from,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),3
+random_realm_wonder_upgrade,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",3
+religion_authority,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+religion_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+remove_all_negative_congenital_traits_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+set_gender,,none,assumed,not found in the CK3 1.19 vocabulary sample as a runtime effect (gender is set at create_character time),3
+spawn_good_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+supported_claimant,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+temporary,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+update_hidden_modifiers,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+wonder,,none,verified,see has_wonder_upgrade,3
+abdicate,,none,verified,not found in the CK3 1.19 vocabulary sample as a bare effect; needs a human check,2
+add_province_modifier,add_county_modifier,approx,assumed,CK3 merged province into county,2
+add_society_currency_minor_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+add_trait_wounded_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+any_artifact,any_artifact,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+any_attacker,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+any_current_enemy,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+any_player,any_player,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+any_society_member,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+any_suzerain,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+any_war,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+arcane_class_gain_xp,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+band_creator,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+banish,banish,exact,verified,unchanged,2
+barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+beast_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_aristocrat_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_cleric_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_fighter_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_psion_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_rogue_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_sorcerer_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_warlock_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+become_wizard_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+change_diplomacy,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+change_title_army_size,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+check_variable,has_variable,approx,verified,"see triggers table: no check_variable key in CK3, needs restructuring",2
+clr_global_flag,remove_global_variable,approx,assumed,CK3 replaced global flags with global variables,2
+copy_title_history,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+divide_variable,,none,assumed,not found in the CK3 1.19 vocabulary sample; use change_variable divide=,2
+druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+employer,employer,exact,assumed,"unchanged (scope-link, kept for cross-listing)",2
+event_target:enemy_attacker,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+expert_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+expert_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+expert_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+gender_equality_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+governor,governor,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+has_injury_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+has_quest,,none,assumed,CK3 quest system differs; no direct trigger found,2
+has_secret_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+has_wonder_upgrade,,none,verified,"CK2 wonders map to CK3 special buildings, a different construct (docs/mechanics_inventory.md)",2
+has_wonder_upgrade_flag,,none,verified,see has_wonder_upgrade,2
+holy_order,holy_order,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+host,host,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+is_allowed_to_loot,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_close_relative,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_matriarchal_religion_or_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_member_of_any_alliance_society_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+is_nomadic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_patriarchal_religion_or_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_ruler,is_ruler,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+journeyman_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+journeyman_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+journeyman_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+legendary_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+legendary_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+legendary_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+legendary_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+legendary_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+long_character_event,,none,verified,"fires a CK2 event id; commented out until the events step exists (see character_event)",2
+master_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+master_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+master_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+master_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+master_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+mercenary,mercenary,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+move_character,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,2
+muhjari,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+num_of_trade_post_diff,,none,verified,trade posts/routes do not exist in CK3 1.19 (docs/mechanics_inventory.md),2
+pantheist_league,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+portrait,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+qisma,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+race_is_one_eyed,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+random_society_member,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+random_vassal,random_vassal,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+remove_guardian,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+remove_symptoms_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+remove_tributary,,none,assumed,see make_tributary,2
+renowned_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+renowned_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+renowned_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+renowned_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+renowned_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+set_dynasty_flag,set_variable,approx,assumed,"CK3 dynasties carry variables, not flags",2
+set_flag,add_character_flag,approx,assumed,CK2 generic set_flag -> CK3 add_character_flag in character scope,2
+set_offmap_flag,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),2
+set_society_progress,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+small_psi_stress,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+society_has_active_progress,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+spawn_fantastic_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+spawn_great_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+stacking,stacking,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+start_society_progress,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+ten_thousand_gods,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+to,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+trained_barbarian,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+trained_druid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+trained_rogue,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+unsafe_destroy_artifact,destroy_artifact,approx,assumed,CK3 has one destroy_artifact effect,2
+z_monk,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+abdicate_to,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,1
+abishai,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+aboleth,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+add_claim,add_pressed_claim,approx,verified,CK2 add_claim (weak claim) has no exact CK3 counterpart; nearest is add_pressed_claim (strong claim),1
+add_holding_slot,,none,assumed,CK3 has no dynamic holding-slot effect,1
+add_offmap_currency,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+add_pressed_claim,add_pressed_claim,exact,verified,unchanged,1
+add_rival,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+add_society_currency_large_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+add_society_currency_major_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+add_society_currency_massive_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+add_warrior_lodge_leader_trait_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+adjective,adjective,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+always,always,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+any_army,any_army,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+any_friend,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_playable_ruler,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_realm_lord,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_realm_wonder_upgrade,,none,verified,see has_wonder_upgrade,1
+any_sibling,any_sibling,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+any_spouse,any_spouse,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+any_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_unique_dynasty_vassal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_unit_leader,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+arctic_dwarf,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+at_location,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+baatezu,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+cambion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+can_be_given_away,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+celestial_summon_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+chessentan,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+clr_offmap_flag,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+clr_quest,,none,assumed,CK3 quest system differs; no direct effect found,1
+combat,combat,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+convert_to_secret_religion,,none,verified,secret religions do not exist in CK3 (docs/mechanics_inventory.md),1
+copy_traits_of_PREV,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+destroy_wonder_upgrade,,none,verified,see has_wonder_upgrade,1
+detract_grace_major_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+detract_grace_massive_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+dragon_breath_on_PREV_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+dragonspawn,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+enemy,enemy,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+event_target:combatant_2,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+event_target:enemy,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+event_target:the_wonder,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",1
+evilcat_remove_patrons,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+expert_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+expert_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+expert_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+fertility,fertility,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+fire_giant,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+firenewt,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+flip_secret_religious_community_provinces,,none,verified,secret religious societies/cults do not exist in CK3 (docs/mechanics_inventory.md),1
+genetic_father,father,approx,assumed,"CK3 has one father scope link, no separate genetic/social split as an effect target",1
+genetic_mother,mother,approx,assumed,CK3 has one mother scope link,1
+ghaunadan,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+give_this_warrior_lodge_religion_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+grant_title_no_opinion,change_title_holder,approx,assumed,"same effect, CK3 has no separate opinion-free variant found",1
+has_building,has_building,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_discardable_gendered_nickname,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_fair_trait_non_congenital_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_guardian,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+has_medium_disability_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_mental_disorder_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_minor_disability_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_negative_congenital_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_prevs_secret_religion_truly_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_severe_disability_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_sympathy_for_true_religion_of_prev_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_title_flag,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+health,health,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+horse_archers,horse_archers,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+in_faction,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,1
+is_abroad,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_building_wonder_upgrade,,none,verified,see has_wonder_upgrade,1
+is_capital,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_evil_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_fair_congenital_trait_upgradeable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_fair_non_congenital_trait_upgradeable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_incapable,is_incapable,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+is_maimed_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_married,is_married,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+is_member_of_any_assassin_guild_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_nomadic_tribal_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_playable,is_playable,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+is_reformed_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_republic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_smart_non_congenital_trait_upgradeable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_society_grandmaster,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+is_strong_non_congenital_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_strong_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_weak_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+job_chancellor,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",1
+join_prev_knight_order_society_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+join_prev_warrior_lodge_society_effect,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+journeyman_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+journeyman_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+journeyman_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+knights,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+kobold,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+kuo_toa,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+legendary_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+lifestyle_traits,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+lizardfolk,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+mages_troops,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+make_tributary,,none,assumed,CK3 tributaries use a different (situation-based) mechanic; no direct effect found,1
+malenti,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+marrashi,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+master_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+med_psi_stress,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+move,,none,assumed,"context-dependent field name (army movement), not a single vocabulary key",1
+num_of_government_vassals,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+num_of_max_settlements,,none,verified,CK3 has no settlement-count cap mechanic,1
+offmap,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+offmap_has_like,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+pay_back_assassins_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+percentage,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+persistent_event_target:minion_culture_1_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+persistent_event_target:minion_culture_2_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+persistent_event_target:minion_culture_3_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+pick_martial_class_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+plot_target_char,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",1
+province_event,,none,assumed,CK2 province events have no direct CK3 scope-typed equivalent; a decision cannot fire one from character scope without a scope change,1
+race,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+random_courtier_or_vassal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+random_demesne_province,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+random_demesne_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+random_landed_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+realm_wonder_or_upgrade_has_flag_inspires_learning_trigger,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",1
+recalc_succession,,none,assumed,not found in the CK3 1.19 vocabulary sample; CK3 recalculates automatically,1
+remove_assassins_debt_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+remove_friend,remove_relation_friend,approx,assumed,CK3 relations are typed via set/remove_relation_<type>,1
+remove_lifestyle_trait_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+remove_special_character_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+remove_spouse,divorce,approx,assumed,CK2 remove_spouse effect -> CK3 divorce (CLAUDE.md invariant on add/remove_spouse being history keys),1
+remove_title,change_title_holder,approx,assumed,"CK2 generic remove_title -> CK3 change_title_holder (to no one) / destroy_title depending on target, needs a human check",1
+remove_treatment_modifiers_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+renowned_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+repeat_event,,none,assumed,not found in the CK3 1.19 vocabulary sample; use an on_action pulse,1
+reverse_religion,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+rightful_religious_head_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+sahuagin,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+same_liege,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+scaled_prestige,,none,assumed,not found as a bare effect; use add_prestige with a scripted value,1
+secret_religion_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+secret_religious_society_abyssal_cult,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_adama,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ancestral_cult,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_animist,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_arcane,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_asathalfinare,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_bahamut,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_beholder_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_blue_flame,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_calishite_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_chessic,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_chung_tao,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_church_of_cyric,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_dead_three,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_deities_of_fury,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_draconic_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_dwarven_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_earthmother,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_earthmother_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_eilistraee,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_elven_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_enlil,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_entropy,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_faceless_god,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_faithless,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_geomancy,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ghaunadaur,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_giant_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_gnome_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_goblin_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_goblin_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_halfling_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_illithid_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_infernal,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_inventive,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_jaziri,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_jaziri_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_joyful,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_kahin,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_karontor,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_kiaransalee,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_kossuth,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_laduguer,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_lapal_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_lolth_cult,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_loviatar,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_martial_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_mercantile,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_muhjari,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_mulhorandi_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_natural,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_nine_travelers,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_nogari,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_nogari_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_orc_pantheon,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_orc_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_padhran,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_pantheist_league,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_primordial,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_qisma,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_qukoku,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_rasallesian,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_scale_cult,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_shadow_gods,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_solar,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_sylvan,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ten_thousand_gods,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_thasmudyanic,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_the_path,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_tiamat,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_toteteohuan,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_triadic,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_tuigan_shamanism,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ubtao_worship,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ulutiuan,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_ulutiuan_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_untheric_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_urdlen,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_uthgardt_faith,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_uthgardt_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_vaprak,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_vhaeraun,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_yuir,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+secret_religious_society_yuir_reformed,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+select_patron_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+set_father,set_father,exact,assumed,unchanged,1
+set_global_flag,set_global_variable,approx,assumed,CK3 replaced global flags with global variables,1
+set_mother,set_mother,exact,assumed,unchanged,1
+set_society_grandmaster,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+shield_dwarf,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+short_name,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+shou_lung_war_modify_variables_by_century_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+shou_lung_war_modify_variables_by_status_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+shou_lung_war_spawn_troops_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_fantastic_helm_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_fantastic_paladin_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_good_amaunatori_judge_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_good_deneir_scribe_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_good_helm_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_good_paladin_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_good_planewalker_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_great_helm_commander_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_great_paladin_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+spawn_mielikki_treant_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+storm_giant,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+strixiki,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+tanarri,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+trained_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+trained_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+transfer_artifact,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare effect,1
+transfer_scaled_wealth,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+tributary_type,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+turn_vampire_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+upgrade_fair_congenital_trait_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+upgrade_fair_non_congenital_trait_effect,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+using_cb,using_cb,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+uthgar_black_lion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_black_raven,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_blue_bear,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_elk,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_gray_wolf,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_great_worm,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_griffon,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_red_tiger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_sky_pony,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_thunderbeast,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+uthgar_tree_ghost,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+warpriests,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+z_artificer,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_barbarian,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_bard,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_cleric,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_druid,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_paladin,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_psion,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_ranger,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_sorcerer,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_warlock,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_wizard,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1

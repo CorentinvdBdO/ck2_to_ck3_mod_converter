@@ -1,0 +1,960 @@
+id,kind,status,emitted,score,reason
+DW_demonic_impregnation,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+DW_prolong_life,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+abandon_province,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+abandon_trade_post,trade_post_decisions,modified,no,,trade-post-scope; trade routes/posts do not exist in CK3 1.19 (docs/mechanics_inventory.md)
+aboleth_lay_egg,decisions,new,no,,not found in source file at run time
+acquire_society_title_decision,society_decisions,new,no,,not found in source file at run time
+adopt_chinese_imperialism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+adopt_faith,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+adopt_heir,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+adopt_heir_fake,decisions,new,no,,not found in source file at run time
+adopt_shou_lung_imperialism,decisions,new,no,,not found in source file at run time
+adopt_tribalism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+adventuring_quest,decisions,new,no,,not found in source file at run time
+african_tolerate_abrahamics,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+ai_claim_county_if_baron,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+ai_request_sponsored_baptism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+akadian_adaptability_decision,decisions,new,no,,not found in source file at run time
+alcohol_gift_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+alliance_diplomacy,society_decisions,new,no,,not found in source file at run time
+alliance_mediation,society_decisions,new,no,,not found in source file at run time
+alliance_raise_ships,society_decisions,new,no,,not found in source file at run time
+alliance_raise_troops,society_decisions,new,no,,not found in source file at run time
+ancestor_worship,decisions,modified,no,,not found in source file at run time
+animate_objects,decisions,new,no,,not found in source file at run time
+anti_host_adventuring,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+appease_spirits,society_decisions,new,no,,not found in source file at run time
+arcane_experiment,society_decisions,new,no,,not found in source file at run time
+ask_for_land,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_for_pardon,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_help_to_manage_titles,decisions,modified,no,,not found in source file at run time
+ask_teutonic_for_help_pagan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_teutonic_for_help_teutonic,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_to_leave_court,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_wards_liege_to_allow_culture_religion_swap,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ask_wards_liege_to_allow_faith_focus,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+assassins_borrow_money,society_decisions,modified,no,,not found in source file at run time
+assassins_clear_marked_for_death_target,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+assassins_donate,society_decisions,modified,no,,not found in source file at run time
+assassins_drug_effect,society_decisions,modified,no,,not found in source file at run time
+assassins_mark_for_death,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+assassins_pay_debt,society_decisions,modified,no,,not found in source file at run time
+assassins_raise_ships,society_decisions,modified,no,,not found in source file at run time
+assassins_raise_troops,society_decisions,modified,no,,not found in source file at run time
+assassins_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+assassins_scare_ruler,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+auril_embrace,decisions,new,no,,not found in source file at run time
+auril_winter_protection,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+bacchants_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+bahamut_attract_dragon,decisions,new,no,,not found in source file at run time
+become_genghis_khan,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+become_genghis_khan_tribal,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+become_kshatriya,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+become_samrat_chakravartin,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+become_saoshyant,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+become_vaishya,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+beholder_eye_sacrifice,decisions,new,no,,not found in source file at run time
+beshabas_boon,decisions,new,no,,not found in source file at run time
+bind_fiend,decisions,new,no,,not found in source file at run time
+bloodthirsty_games_decision,decisions,modified,no,,not found in source file at run time
+bloodthirsty_mass_sacrifice_decision,decisions,modified,no,,not found in source file at run time
+bon_tolerate_indians,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_assassins,decisions,modified,no,,not found in source file at run time
+borrow_money_bektashi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_gurs,decisions,new,no,,not found in source file at run time
+borrow_money_haruriyyah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_jewish_special,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_knights_templar,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+borrow_money_radhanites,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+break_non_aggression_pact,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+break_up_with_lover,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+breath_weapon,decisions,new,no,,not found in source file at run time
+brew_happiness_potion,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+brew_mood_drug,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+brotherhood_acquire_ingredients_decision,society_decisions,new,no,,not found in source file at run time
+brotherhood_laboratory,society_decisions,new,no,,not found in source file at run time
+build_hospital,title_decisions,kept,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+build_knight_bloodline,society_decisions,new,no,,not found in source file at run time
+build_laboratory,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+build_observatory,decisions,modified,no,,not found in source file at run time
+build_spelljammer_port,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+build_third_temple,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+buy_indulgence_for_sins,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+buy_instrument,decisions,new,no,,not found in source file at run time
+call_for_heroes,society_decisions,new,no,,not found in source file at run time
+carousing_with_the_men,decisions,modified,no,,not found in source file at run time
+catholic_pilgrimage,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+celebrate_bema,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+celebrate_jashan_e_sadah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+celebrate_passover,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+celibate_mom_dec,decisions,modified,no,,not found in source file at run time
+ceremony_of_honor_to_helm,decisions,new,no,,not found in source file at run time
+ceremorphosis,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+challenge_the_caliph,decisions,new,no,,not found in source file at run time
+change_composition_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+change_council_job,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+change_pagan_branch_decision,decisions,modified,no,,not found in source file at run time
+change_wards_focus_to_faith,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+change_wards_focus_to_heritage,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+chauntea_favor,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+china_force_to_open,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+china_invade_dragon_throne,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+china_raid,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+china_sends_reinforcements,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+china_stop_raid,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+china_tributary_break_free,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_administrator,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_artifact,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_become_tributary,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_doctor,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_offer_artifact,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_offer_commander,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_offer_concubine,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_offer_eunuch,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_offer_physician,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_peace_deal,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_send_gift,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_send_relief,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_stop_supply_horses,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_grace_supply_horses,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_imperial_marriage,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_kow_tow_pilgrimage,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_master_engineer,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_request_invasion,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_siege_engineers,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_silk_road_favored_status,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+chinese_strategist,offmap_decisions,deleted,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+choose_hermetic_art,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+choose_hindu_patron_deity,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+choose_military_aspect,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+choose_undeath,society_decisions,new,no,,not found in source file at run time
+choose_warhorse_nomad,decisions,modified,no,,not found in source file at run time
+christian_mercenary_against_reconquista_defender_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+christian_mercenary_against_reconquista_mercenary_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+claim_constantinople,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+claim_duel_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+close_gov_list,decisions,new,no,,not found in source file at run time
+close_psi_spellbook,decisions,new,no,,not found in source file at run time
+close_rituals,decisions,new,no,,not found in source file at run time
+close_sorc_spellbook,decisions,new,no,,not found in source file at run time
+cold_ones_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+come_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+commission_runestone,decisions,modified,no,,not found in source file at run time
+commit_suicide,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+commit_suicide_immortal,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+concord_brain_golem,society_decisions,new,no,,not found in source file at run time
+concord_thrall_army,society_decisions,new,no,,not found in source file at run time
+conscript_merchant_ships,decisions,modified,no,,not found in source file at run time
+convert_indian_branch,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_andalusian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_attacker_religion,decisions,modified,no,,not found in source file at run time
+convert_to_buddhism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_castillan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_catalan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_commonwealth_indep,decisions,new,no,,not found in source file at run time
+convert_to_commonwealth_vassal,decisions,new,no,,not found in source file at run time
+convert_to_danish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_divine_indep,decisions,new,no,,not found in source file at run time
+convert_to_divine_vassal,decisions,new,no,,not found in source file at run time
+convert_to_dutch,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_feudalism_indep,decisions,modified,no,,not found in source file at run time
+convert_to_feudalism_vassal,decisions,modified,no,,not found in source file at run time
+convert_to_french,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_hinduism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_italian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_jainism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_liege_culture,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_liege_culture_on_liege,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_liege_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_liege_religion_on_liege,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_local_culture,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_local_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_magocracy_indep,decisions,new,no,,not found in source file at run time
+convert_to_magocracy_vassal,decisions,new,no,,not found in source file at run time
+convert_to_nomadic_tribe,decisions,new,no,,not found in source file at run time
+convert_to_norman,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_norwegian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_occitan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_outremer,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_parent_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_portuguese,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_reformed,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_republic_ai,decisions,new,no,,not found in source file at run time
+convert_to_republic_indep,decisions,modified,no,,not found in source file at run time
+convert_to_russian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_scottish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_spouse_religion,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_swedish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+convert_to_tribal_indep,society_decisions,new,no,,not found in source file at run time
+convert_to_tribal_vassal,society_decisions,new,no,,not found in source file at run time
+convert_tribal_to_castle,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+convert_tribal_to_city,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+convert_tribal_to_temple,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+convince_to_straighten_up,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+court_exodus,decisions,modified,no,,not found in source file at run time
+create_antioch,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_aragon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_archduchy_of_austria,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_ashokas_chosen,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_bacchants,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_bosnia,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_bulls_rishabha,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_castille,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_cyprus,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_direguard,decisions,new,no,,not found in source file at run time
+create_dralhas_children,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_followers_arjuna,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_fraticelli_papacy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_grand_caliphate,decisions,new,no,,not found in source file at run time
+create_hungary,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_iconoclast_patriarchy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_israel,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_kingdom_amalfi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_kingdom_genoa,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_kingdom_pisa,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_kingdom_venice,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_leon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_many_arrows,decisions,new,no,,not found in source file at run time
+create_mercenary_company,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+create_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+create_myrmidons,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_portugal,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_powys,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_russian_empire,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_stoics,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_switzerland,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_the_hansa,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+create_treant,decisions,new,no,,not found in source file at run time
+create_warrior_lodge_hellenic,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+cult_of_kali_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+cure_disease_decision,decisions,new,no,,not found in source file at run time
+cure_wound_decision,decisions,new,no,,not found in source file at run time
+cyric_make_rival,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+death_cheese_ranch,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+decision_abduct,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+decision_break_free,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+decision_spy_on,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+declare_feud,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+delve_into_classics_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+delve_into_forbidden,society_decisions,new,no,,not found in source file at run time
+delve_into_heraldry,society_decisions,new,no,,not found in source file at run time
+demand_courtier_religious_conversion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+demand_gavelkind,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+demand_gavelkind_use_favor,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+demand_liege_title,decisions,modified,no,,not found in source file at run time
+demand_vassal_religious_conversion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+destroy_artifact,decisions,modified,no,,not found in source file at run time
+destroy_great_pillar,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+detect_thoughts_sorc,decisions,new,no,,not found in source file at run time
+determine_zodiac_sign_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+devil_worshiper_desecrate_temple_decision,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+devil_worshipers_corrupt_priest,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+devil_worshipers_dark_divorce,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+devil_worshipers_dark_healing,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+devil_worshipers_demonic_possession,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+devil_worshipers_induction,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+devil_worshipers_invite_disciple_of_devil,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+devil_worshipers_summon_familiar,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+discount_mercs,society_decisions,new,no,,not found in source file at run time
+dissolve_factions_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+dissolve_mercenary_company,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+dissolve_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+divine_bloodline,decisions,new,no,,not found in source file at run time
+dof_ravage_territory,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+dof_weak_abdicate,decisions,new,no,,not found in source file at run time
+dominate_person_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+dominate_person_sorc_fake,decisions,new,no,,not found in source file at run time
+donate_money_to_assassins,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_bektashi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_chosen_perkunas,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_haruriyyah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_huitzilopochtli,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_jomsvikings,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_knights_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_knights_hospitaler,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_knights_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_knights_templar,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_order_of_addai,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_saint_anthony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_sky_lords,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_sons_kaleva,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_spirit_guardians,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_teutonic_order,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_the_immortals,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_the_zealots,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_warriors_perun,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_money_to_zun_warriors,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+donate_to_liege,decisions,modified,no,,not found in source file at run time
+dragon_minor_gift,society_decisions,new,no,,not found in source file at run time
+dragon_transformation,decisions,new,no,,not found in source file at run time
+dragonborn_transformation,decisions,new,no,,not found in source file at run time
+drill_troops_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+drink_from_fountain_of_youth,decisions,modified,no,,not found in source file at run time
+duel_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+duel_for_society_leadership_decision,society_decisions,new,no,,not found in source file at run time
+dwarven_lodge_fighting_style,society_decisions,new,no,,not found in source file at run time
+dynamic_crusader_state,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+dynastic_meddling,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+eat_brain,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+elemental_transformation,decisions,new,no,,not found in source file at run time
+elven_lodge_fighting_style,society_decisions,new,no,,not found in source file at run time
+embrace_ashari,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+embrace_mutazila,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+embrace_roman_culture,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+empire_of_bulgaria_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+employ_a_smith,decisions,modified,no,,not found in source file at run time
+employ_court_physician,decisions,modified,no,,not found in source file at run time
+employ_priest,decisions,modified,no,,not found in source file at run time
+employ_priestess,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+employ_siamorphe_steward,decisions,new,no,,not found in source file at run time
+employ_soldier,decisions,modified,no,,not found in source file at run time
+employ_steward,decisions,modified,no,,not found in source file at run time
+employ_stewardess,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+empty_mind_dec,decisions,new,no,,not found in source file at run time
+endearing_noblemen_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+engage_in_training,decisions,new,no,,not found in source file at run time
+enlightened_schools,decisions,new,no,,not found in source file at run time
+establish_cell,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+establish_dwarfhold,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+establish_lycan_court,decisions,new,no,,not found in source file at run time
+establish_shadow_guild,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+establish_vampire_court,decisions,new,no,,not found in source file at run time
+establishing_habsburg,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+exchange_land_for_hospital,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+execute_eat,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+expel_assassins,decisions,new,no,,not found in source file at run time
+expel_chosen_perkunas,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_gurs,decisions,new,no,,not found in source file at run time
+expel_huitzilopochtli,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_immortals,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_knights_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_knights_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_order_of_addai,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_saint_anthony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_sky_lords,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_sons_kaleva,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_spirit_guardians,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_assassins,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_bektashi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_haruriyyah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_jomsvikings,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_knights_hospitaler,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_knights_templar,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_the_teutonic_order,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_warriors_perun,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_zealots,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+expel_zun_warriors,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+exploit_economy,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+extort_subjects,decisions,modified,no,,not found in source file at run time
+extract_secret,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+faction_antiking_ultimatum,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+faction_claimant_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_increase_council_power_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_independence_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_lower_crown_authority_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_lower_tribal_organization_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_overthrow_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_powerful_vassal_takeover_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_succ_feudal_elective_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_succ_gavelkind_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_succ_primogeniture_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_succ_seniority_ultimatum,plot_decisions,modified,no,,not found in source file at run time
+faction_succ_ultimogeniture_ultimatum,plot_decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_arctic_dwarf_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_chessentan_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_1_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_1_remove_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_2_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_2_remove_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_3_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_culture_3_remove_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_dragonspawn_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_fire_giant_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_firenewt_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_kobold_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_lizardfolk_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_pick_culture_settlement_decision,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+faerun_dragon_minion_pick_culture_title_decision,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+faerun_dragon_minion_pick_extra_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_shield_dwarf_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_show_management_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_storm_giant_decision,decisions,new,no,,not found in source file at run time
+faerun_dragon_minion_strixiki_decision,decisions,new,no,,not found in source file at run time
+faithless_branch,decisions,new,no,,not found in source file at run time
+faithless_hard_work,decisions,new,no,,not found in source file at run time
+feast_0,decisions,modified,no,,not found in source file at run time
+find_guru,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+find_runecaster,decisions,new,no,,not found in source file at run time
+fix_holding_with_dead_owner,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+form_great_wyrm_tribe,decisions,new,no,,not found in source file at run time
+form_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_knights_of_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_knights_of_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_lcr,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_mage_hunters,decisions,new,no,,not found in source file at run time
+form_new_empire,decisions,modified,no,,not found in source file at run time
+form_new_kingdom,decisions,modified,no,,not found in source file at run time
+form_st_addai,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_st_anthony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_teutonic_order,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_the_eastern_marches,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_the_hre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_the_hre_early,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+form_the_outremer,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+foster_child,decisions,new,no,,not found in source file at run time
+found_rhymanthiin,decisions,new,no,,not found in source file at run time
+fr_prepared_invasion,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+garagos_tactics,decisions,new,no,,not found in source file at run time
+gather_raiders,decisions,new,no,,not found in source file at run time
+gather_warriors,decisions,new,no,,not found in source file at run time
+gender_alteration,decisions,new,no,,not found in source file at run time
+get_animal_companion,decisions,new,no,,not found in source file at run time
+give_child_special_baptism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+glamour_dec,decisions,new,no,,not found in source file at run time
+go_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+go_on_hajj,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+go_raiding,decisions,new,no,,not found in source file at run time
+great_ritual,society_decisions,new,no,,not found in source file at run time
+grumbar_earth_stability_decision,decisions,new,no,,not found in source file at run time
+harper_prepared_invasion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+harper_training,society_decisions,new,no,,not found in source file at run time
+hathor_tend_poor,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+heal_mind,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+heal_mind_fake,decisions,new,no,,not found in source file at run time
+hellenic_dedicate_temple,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+help_liege_manage_titles,decisions,modified,no,,not found in source file at run time
+hermetic_grand_debate,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hermetics_acquire_ingredients_decision,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hermetics_make_horoscope,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+hermetics_perform_scrying,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+hermetics_write_magnum_opus,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+hermetics_write_theory_paper,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+highmagic_baelnorn,decisions,new,no,,not found in source file at run time
+highmagic_celestial_army,decisions,new,no,,not found in source file at run time
+highmagic_mythal,decisions,new,no,,not found in source file at run time
+highmagic_nymphs_aura,decisions,new,no,,not found in source file at run time
+highmagic_reverend_one,decisions,new,no,,not found in source file at run time
+highmagic_worldweave,decisions,new,no,,not found in source file at run time
+hire_brigands,decisions,new,no,,not found in source file at run time
+hire_helmite_bodyguards,decisions,new,no,,not found in source file at run time
+hire_planewalker,decisions,new,no,,not found in source file at run time
+hire_teutonic_honor_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hoar_declare_rival,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+hoar_impending_doom,decisions,new,no,,not found in source file at run time
+hoar_penultimate_thunder,decisions,new,no,,not found in source file at run time
+hold_a_epic_tournament,decisions,modified,no,,not found in source file at run time
+hold_a_furusiyya,decisions,modified,no,,not found in source file at run time
+hold_a_jousting_tournament,society_decisions,new,no,,not found in source file at run time
+hold_blot,decisions,modified,no,,not found in source file at run time
+hold_diwali_feast_buddhist,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hold_diwali_feast_hindu,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hold_diwali_feast_jain,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hold_diwali_feast_kali_puja,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+hold_grand_hunt,decisions,modified,no,,not found in source file at run time
+hold_great_tribal_festival,decisions,modified,no,,not found in source file at run time
+hold_jarilo,decisions,modified,no,,not found in source file at run time
+hold_magic_symposium,decisions,new,no,,not found in source file at run time
+hold_nerge,decisions,modified,no,,not found in source file at run time
+hold_nomad_wargames,decisions,modified,no,,not found in source file at run time
+hold_tiger_hunt,decisions,modified,no,,not found in source file at run time
+hold_ukon_juhla,decisions,modified,no,,not found in source file at run time
+hold_uthgar_season_feast,decisions,new,no,,not found in source file at run time
+hold_uzgavenes,decisions,modified,no,,not found in source file at run time
+hold_zun_feast,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+illithid_elder_brain,decisions,new,no,,not found in source file at run time
+ilmater_health,decisions,new,no,,not found in source file at run time
+ilmater_prov_health,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+ilsensine_awaken_psi,decisions,new,no,,not found in source file at run time
+ilsensine_dominate_mob,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+ilsensine_force_efficiency,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+immortal_retire,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+increase_alertness,decisions,new,no,,not found in source file at run time
+increase_mercenary_size,decisions,modified,no,,not found in source file at run time
+indian_pilgrimage,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+infect_with_lycanthropy,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+interfere_in_vassal_war_attacker,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+interfere_in_vassal_war_attacker_use_favor,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+interfere_in_vassal_war_defender,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+interfere_in_vassal_war_defender_use_favor,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+introduce_heir,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+invite_dracolich,society_decisions,new,no,,not found in source file at run time
+invite_druid,society_decisions,new,no,,not found in source file at run time
+invite_hermetic_to_stargazing,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+invite_high_mage,decisions,new,no,,not found in source file at run time
+invite_to_party,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+issue_declaration_of_repentance,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+join_retreat,decisions,new,no,,not found in source file at run time
+joyful_etiquette_lessons,decisions,new,no,,not found in source file at run time
+joyful_improve_appearance,decisions,new,no,,not found in source file at run time
+kaitotem,decisions,new,no,,not found in source file at run time
+kievan_rus_local_traditions,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+knight_order_inspire_warriors,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+knight_order_summon_commander,society_decisions,new,no,,not found in source file at run time
+knight_order_warrior_training,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+kossuth_burn_away_illness,decisions,new,no,,not found in source file at run time
+kossuth_cleanse_land,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+kraken_aqua_servant,society_decisions,new,no,,not found in source file at run time
+kraken_legendary_gathering,society_decisions,new,no,,not found in source file at run time
+kuo_tan_become_vassal,society_decisions,new,no,,not found in source file at run time
+launder_cash,decisions,new,no,,not found in source file at run time
+lay_on_hands,decisions,new,no,,not found in source file at run time
+legend_lore_sorc,decisions,new,no,,not found in source file at run time
+legitimize_bastard,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+long_live_the_brotherhood,society_decisions,new,no,,not found in source file at run time
+long_live_the_flame_brotherhood,society_decisions,new,no,,not found in source file at run time
+loyal_vassalage,decisions,new,no,,not found in source file at run time
+make_primary,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+make_rome_capital,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+make_shieldmaiden,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+malar_become_werebeast,decisions,new,no,,not found in source file at run time
+manifest_mindblade,decisions,new,no,,not found in source file at run time
+mend_great_schism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+mind_control_dec,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+monastic_order_convert_county,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+monastic_order_meditation,society_decisions,modified,no,,not found in source file at run time
+monastic_order_penance,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+monastic_order_rejoin_world,society_decisions,modified,no,,not found in source file at run time
+monastic_orders_donate_to_charity,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+monastic_orders_go_celibate,society_decisions,modified,no,,not found in source file at run time
+monastic_orders_invite_ascetic,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+monastic_orders_perfect_self,society_decisions,new,no,,not found in source file at run time
+monastic_orders_spiritual_guidance,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+monastic_orders_stop_celibate,society_decisions,modified,no,,not found in source file at run time
+monastic_orders_teach_virtue,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+money_to_piety,decisions,new,no,,not found in source file at run time
+monk_abandon_focus,decisions,new,no,,not found in source file at run time
+monk_contemplate,decisions,new,no,,not found in source file at run time
+monk_longevity,decisions,new,no,,not found in source file at run time
+monk_mob,decisions,new,no,,not found in source file at run time
+mound_burial_decision,decisions,new,no,,not found in source file at run time
+move_crown_focus,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+muhjari_cultivate_gardens,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+muhjari_syncretise,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+murder_deflection_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+muslim_mercenary_for_reconquista_attacker_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+muslim_mercenary_for_reconquista_mercenary_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+nature_favor,society_decisions,new,no,,not found in source file at run time
+negotiate_with_adventurer,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+nomad_adopt_feudalism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+nomad_adopt_republicanism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+nomadrule_duel_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+nomadrule_duel_out_of_court,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+observe_ramadan,decisions,modified,no,,not found in source file at run time
+onyx_conjure_servants,decisions,new,no,,not found in source file at run time
+open_gov_list,decisions,new,no,,not found in source file at run time
+open_psi_spellbook,decisions,new,no,,not found in source file at run time
+open_rituals,decisions,new,no,,not found in source file at run time
+open_sorc_spellbook,decisions,new,no,,not found in source file at run time
+open_the_gates,decisions,modified,no,,not found in source file at run time
+orc_claim,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+order_to_join_holy_order,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+order_to_take_vows,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+organize_army_light,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+organize_levy,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+organize_levy_reminder,decisions,new,no,,not found in source file at run time
+organize_varangian_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+overthrow_grandmaster_decision,society_decisions,new,no,,not found in source file at run time
+pagan_branch_decision,decisions,modified,no,,not found in source file at run time
+paladin_oaths,decisions,new,no,,not found in source file at run time
+patrons_bon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+patrons_fae_cf,decisions,new,no,,not found in source file at run time
+patrons_khu,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+petition_doge_for_tp,decisions,modified,no,,not found in source file at run time
+phantasmal_force,decisions,new,no,,not found in source file at run time
+phantasmal_force_sorc,decisions,new,no,,not found in source file at run time
+pick_beast_totem,decisions,new,no,,not found in source file at run time
+pick_main_deity,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+pick_wiz_spec,decisions,new,no,,not found in source file at run time
+pillage_settlement,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+plaguebringers_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+planar_binding_sorc_divine,decisions,new,no,,not found in source file at run time
+planar_binding_sorc_shadow,decisions,new,no,,not found in source file at run time
+planar_binding_sorc_storm,decisions,new,no,,not found in source file at run time
+plot_gain_fellow_vassal_title_decision_100,plot_decisions,modified,no,,not found in source file at run time
+plot_gain_fellow_vassal_title_decision_75,plot_decisions,modified,no,,not found in source file at run time
+plot_gain_liege_title_decision_100,plot_decisions,modified,no,,not found in source file at run time
+plot_gain_liege_title_decision_75,plot_decisions,modified,no,,not found in source file at run time
+plot_gain_title_decision,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+plot_gain_vassal_title_decision,plot_decisions,modified,no,,not found in source file at run time
+plot_seize_trade_post_decision,plot_decisions,modified,no,,not found in source file at run time
+plot_weaken_fellow_vassal_decision,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+plot_weaken_fellow_vassal_decision_liege,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+plunder_dragon_hoard,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+plunder_knowledge_wonder,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+possess_prisoner,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prepare_coronation_ceremony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+prepare_for_iurit,decisions,new,no,,not found in source file at run time
+prepare_reconquista,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+present_debutante,decisions,modified,no,,not found in source file at run time
+present_male_debutante,decisions,new,no,,not found in source file at run time
+primordial_summon_genie,decisions,new,no,,not found in source file at run time
+prisoner_brazen_bull,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_dark_sacrifice,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_dragon_burning,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_humiliation,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_macabre_banquet,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_mutilate,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_read_poetry,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_to_dungeon,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_to_oubilette,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_to_suite,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+prisoner_torture,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+promise_to_join_reconquista,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+purchase_spelljammer,decisions,new,no,,not found in source file at run time
+purge_spellplague,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+raiding_adventurer_buy_title,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+raise_chinese_honor_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+raise_chinese_regiment,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+raise_defensive_unit,decisions,modified,no,,not found in source file at run time
+raise_monster_units,decisions,new,no,,not found in source file at run time
+raise_shou_lung_honor_guard,decisions,new,no,,not found in source file at run time
+raise_shou_lung_regiment,decisions,new,no,,not found in source file at run time
+raise_tribal_units,decisions,modified,no,,not found in source file at run time
+raise_undead_units,decisions,new,no,,not found in source file at run time
+ranger_pick_terrain,decisions,new,no,,not found in source file at run time
+reckless_dweomer,decisions,new,no,,not found in source file at run time
+reclaim_nomad_province,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+reconquista_beneficiary_other,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+reconquista_beneficiary_self,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+recreate_the_papal_guards,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+recreate_waterdeep,decisions,new,no,,not found in source file at run time
+recruit_academy_hero,decisions,modified,no,,not found in source file at run time
+recruit_amaunatori_judge,decisions,new,no,,not found in source file at run time
+recruit_child_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+recruit_deneir_scribe,decisions,new,no,,not found in source file at run time
+recruit_helmite_commander,decisions,new,no,,not found in source file at run time
+recruit_prisoner,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+recruit_torm_paladin,decisions,new,no,,not found in source file at run time
+recruit_troops_nomad,decisions,modified,no,,not found in source file at run time
+recruit_troops_norse,decisions,modified,no,,not found in source file at run time
+recruit_wonder_guard,decisions,modified,no,,not found in source file at run time
+reforge_crown_of_narfell_decision,decisions,new,no,,not found in source file at run time
+reforge_regalia_of_impiltur_decision,decisions,new,no,,not found in source file at run time
+reform_anok_imaskar,decisions,new,no,,not found in source file at run time
+reform_athalantar,decisions,new,no,,not found in source file at run time
+reform_moradask_empire,decisions,new,no,,not found in source file at run time
+reform_moradask_kingdom,decisions,new,no,,not found in source file at run time
+reform_muluk_kingdom,decisions,new,no,,not found in source file at run time
+reform_shanatar,decisions,new,no,,not found in source file at run time
+reform_shoon,decisions,new,no,,not found in source file at run time
+reform_uthtower,decisions,new,no,,not found in source file at run time
+reform_yarlith,decisions,new,no,,not found in source file at run time
+regenerate_decision,decisions,new,no,,not found in source file at run time
+release_tributary,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+relieve_shieldmaiden,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+remove_reconquista_beneficiary_other,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+remove_reconquista_beneficiary_self,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+remove_vow_of_poverty,decisions,new,no,,not found in source file at run time
+rename_artifact,decisions,modified,no,,not found in source file at run time
+rename_wonder,decisions,modified,no,,not found in source file at run time
+renounce_iconoclasm,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+repair_peacock_throne,decisions,new,no,,not found in source file at run time
+repair_wonder_decision,decisions,modified,no,,not found in source file at run time
+repay_money_gurs,decisions,new,no,,not found in source file at run time
+repay_money_jewish_special,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+repay_money_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+repay_money_radhanites,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+request_council_position,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+request_sponsored_baptism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+request_to_rank_up_within_society,society_decisions,modified,no,,not found in source file at run time
+resplendent_youth,decisions,new,no,,not found in source file at run time
+restore_ammarindar,decisions,new,no,,not found in source file at run time
+restore_besilmer,decisions,new,no,,not found in source file at run time
+restore_black_altar,decisions,new,no,,not found in source file at run time
+restore_byzantine_empire,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_dareth,decisions,new,no,,not found in source file at run time
+restore_dwarfhold,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+restore_ecumenical_patriarchate,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_gharraghaur,decisions,new,no,,not found in source file at run time
+restore_haunghdannar,decisions,new,no,,not found in source file at run time
+restore_high_priesthood,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_ironstar,decisions,new,no,,not found in source file at run time
+restore_lotus_throne,decisions,new,no,,not found in source file at run time
+restore_magister,decisions,new,no,,not found in source file at run time
+restore_oghrann,decisions,new,no,,not found in source file at run time
+restore_pope_in_rome,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_priesthood,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_promenade_of_the_dark_maiden,decisions,new,no,,not found in source file at run time
+restore_roman_empire,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+restore_sarphil,decisions,new,no,,not found in source file at run time
+restore_tethyamar,decisions,new,no,,not found in source file at run time
+reveal_secret_identity,decisions,new,no,,not found in source file at run time
+revenance,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+revenge_waterdeep,society_decisions,new,no,,not found in source file at run time
+revoke_primary,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+ritual_animate_dead,decisions,new,no,,not found in source file at run time
+ritual_charm_person,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ritual_charm_person_fake,decisions,new,no,,not found in source file at run time
+ritual_dominate_person,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+ritual_dominate_person_fake,decisions,new,no,,not found in source file at run time
+ritual_of_the_border,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+ritual_summon_fiends,decisions,new,no,,not found in source file at run time
+rlg_chg_player_dec,decisions,new,no,,not found in source file at run time
+rogue_take_over_crime,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+roman_renaissance,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+ruby_summon_spectator,decisions,new,no,,not found in source file at run time
+ruthless_taxation,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+sacrifice_everyone_decision,decisions,new,no,,not found in source file at run time
+sadaqah_saddka,decisions,modified,no,,not found in source file at run time
+same_gender_consort,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+same_gender_marry,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+same_gender_marry_fake,decisions,new,no,,not found in source file at run time
+satanists_recruit,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+school_tao,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+search_for_artifact,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_blend_in,society_decisions,modified,no,,not found in source file at run time
+secret_religions_conduct_secret_ceremony,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_evoke_sympathy,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_falsely_confess_faith,decisions,modified,no,,not found in source file at run time
+secret_religions_found_secret_religious_society,decisions,modified,no,,not found in source file at run time
+secret_religions_induct_character,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_induct_child,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_openly_adopt_faith,society_decisions,modified,no,,not found in source file at run time
+secret_religions_personally_adopt_secret_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_prepare_grounds,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secret_religions_recruit,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secret_religions_renounce_secret_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secretly_convert_to_aztec_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_aztec_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_baltic_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_baltic_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_bon_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_bon_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_buddhist_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_calishite_faith_holy_site,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_catholic_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_close_relations_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+secretly_convert_to_finnish_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_finnish_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_hindu_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_ibadi_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_jain_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_jewish_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_miaphysite_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_mulhorandi_faith_holy_site,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_nestorian_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_norse_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_norse_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_orthodox_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_province_religion,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_shiite_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_slavic_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_slavic_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_sunni_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_taoist_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_tengri_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_tengri_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_tuigan_shamanism_holy_site,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_west_african_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_west_african_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_zoroastrian_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_zun_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+secretly_convert_to_zun_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+seduce_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+seek_treatment,decisions,modified,no,,not found in source file at run time
+seld_invite_fey,decisions,new,no,,not found in source file at run time
+select_crusade_beneficiary,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+send_child_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+send_spouse_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+send_troops_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+set_crown_focus,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+settle_iceland,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+settle_iceland_manually,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+shadow_arts,society_decisions,new,no,,not found in source file at run time
+shadow_sabotage,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+shadow_scare_ruler,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+shadow_telflamm_walker,society_decisions,new,no,,not found in source file at run time
+shatter_mind,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+shiite_caliphate_cairo_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+shou_lung_administrator,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_artifact,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_force_to_open,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_become_tributary,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_doctor,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_offer_artifact,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_offer_commander,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_offer_concubine,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_offer_eunuch,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_offer_physician,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_peace_deal,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_send_gift,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_send_relief,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_stop_supply_horses,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_grace_supply_horses,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_imperial_marriage,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_invade_dragon_throne,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_kow_tow_pilgrimage,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_master_engineer,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_raid,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_request_invasion,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_sends_reinforcements,decisions,new,no,,not found in source file at run time
+shou_lung_siege_engineers,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_silk_road_favored_status,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_stop_raid,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_strategist,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shou_lung_tributary_break_free,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
+shun_the_living,decisions,new,no,,not found in source file at run time
+shut_the_gates,decisions,modified,no,,not found in source file at run time
+sire_vampire,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+sire_vampire_spawn,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+sky_burial_decision,decisions,modified,no,,not found in source file at run time
+slaad_reproduction,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_animate_dead_sorc,decisions,new,no,,not found in source file at run time
+spell_blight_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_blight_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_charm_person_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_charm_person_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_conjure_elementals_sorc,decisions,new,no,,not found in source file at run time
+spell_conjure_natural_allies,decisions,new,no,,not found in source file at run time
+spell_controlweather_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_controlweather_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_create_homunculus_sorc,decisions,new,no,,not found in source file at run time
+spell_fabricate_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_fabricate_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_find_familiar_sorc,decisions,new,no,,not found in source file at run time
+spell_forget_past_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_forget_past_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_greater_restoration,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_greater_restoration_cleric_fake,decisions,new,no,,not found in source file at run time
+spell_greater_restoration_druid_fake,decisions,new,no,,not found in source file at run time
+spell_greater_restoration_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_greater_restoration_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_heal,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_heal_cleric_fake,decisions,new,no,,not found in source file at run time
+spell_heal_druid_fake,decisions,new,no,,not found in source file at run time
+spell_heal_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_heal_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_lesser_restoration,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_lesser_restoration_cleric_fake,decisions,new,no,,not found in source file at run time
+spell_lesser_restoration_druid_fake,decisions,new,no,,not found in source file at run time
+spell_lesser_restoration_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_lesser_restoration_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_longstrider_sorc,decisions,new,no,,not found in source file at run time
+spell_rage_sorc,decisions,new,no,,not found in source file at run time
+spell_regenerate,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_regenerate_cleric_fake,decisions,new,no,,not found in source file at run time
+spell_regenerate_druid_fake,decisions,new,no,,not found in source file at run time
+spell_regenerate_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spell_regenerate_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_restoration_prov,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_restoration_prov_druid_fake,decisions,new,no,,not found in source file at run time
+spell_restoration_prov_fake,decisions,new,no,,not found in source file at run time
+spell_restoration_prov_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_summon_lesser_demons_sorc,decisions,new,no,,not found in source file at run time
+spell_wall_of_stone_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+spell_wall_of_stone_sorc_fake,decisions,new,no,,not found in source file at run time
+sponsor_arts,society_decisions,new,no,,not found in source file at run time
+sponsor_merchant_republic_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+spread_madness,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stable_attribute_improvement_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stable_attribute_improvement_self_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+start_antagonize,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+start_sway,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+steal_knowledge,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stem_duchy_of_franconia,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+stem_duchy_of_saxony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+stem_duchy_of_swabia,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+stoic_order_culture_convert_county,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+stop_abduct_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_abduct_decision_target,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_antagonize,targetted_decisions,kept,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_artifact_search,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_pillage_settlement,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+stop_seduce_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_seduce_decision_target,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_spy_on_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_spy_on_decision_target,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+stop_sway,targetted_decisions,kept,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+store_relic_in_wonder,decisions,modified,no,,not found in source file at run time
+summer_fair,decisions,modified,no,,not found in source file at run time
+summon_divine_minion,decisions,new,no,,not found in source file at run time
+summon_fiend_army,decisions,new,no,,not found in source file at run time
+summon_spectator,decisions,new,no,,not found in source file at run time
+summon_zhent_servant,society_decisions,new,no,,not found in source file at run time
+support_people,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
+syncretic_sympathy_decision,decisions,modified,no,,not found in source file at run time
+take_child_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+take_on_pain,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+take_spouse_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+take_vow_of_poverty,decisions,new,no,,not found in source file at run time
+talisman_evil_destruction,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+talisman_good_destruction,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+tell_a_story_decision,decisions,modified,no,,not found in source file at run time
+the_devil_worshipers_tainted_touch,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+torm_tactics,decisions,new,no,,not found in source file at run time
+train_assassin_protege,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+tribal_build_great_pillar,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+tributary_independence_china,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+tributary_independence_normal,decisions,modified,no,,not found in source file at run time
+tributary_independence_shou_lung,decisions,new,no,,not found in source file at run time
+trollcrafters_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+twisted_blackmail,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+twisted_turn_vassal,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+twisted_undead_servant,society_decisions,new,no,,not found in source file at run time
+ulutiu_offering_to_spirit_beast,decisions,new,no,,not found in source file at run time
+ulutiu_winter_soldier,decisions,new,no,,not found in source file at run time
+undeath_after_death,decisions,new,no,,not found in source file at run time
+use_scary_upgrade,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+use_secluded_upgrade,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+usurp_tp,decisions,modified,no,,not found in source file at run time
+uthgar_emulate_beast,decisions,new,no,,not found in source file at run time
+uthgar_runemeet,decisions,new,no,,not found in source file at run time
+uthgardt_ancestral_champion,decisions,new,no,,not found in source file at run time
+uthgardt_ancestral_host,decisions,new,no,,not found in source file at run time
+uthgardt_great_beast,decisions,new,no,,not found in source file at run time
+vampire_feed,decisions,new,no,,not found in source file at run time
+vassal_blinding_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_castrate_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_evil_sacrifice_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_fatwa_decision,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_generic_sacrifice_decision,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_sacrifice_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassal_zun_judgement_decision,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vassalize_flaming_fist,decisions,new,no,,not found in source file at run time
+vassalize_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vassalize_knights_hospitaler,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vassalize_knights_of_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vassalize_knights_of_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vassalize_knights_templar,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vassalize_sun_soul,society_decisions,new,no,,not found in source file at run time
+vassalize_teutonic_knights,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+vecna_forbidden_knowledge,decisions,new,no,,not found in source file at run time
+velsharoon_ascend,decisions,new,no,,not found in source file at run time
+velsharoon_sacrifice,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vergadain_court_merchants,decisions,new,no,,not found in source file at run time
+vodouns_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+vushmgir_brothers_legacy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warlock_pact_boon,decisions,new,no,,not found in source file at run time
+warlock_patron_pick,decisions,new,no,,not found in source file at run time
+warrior_lodge_call_to_glory,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+warrior_lodge_inspire_warriors,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+warrior_lodge_legendary_gathering,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_norse_go_berserk,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+warrior_lodge_romuva_baltic_holds,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
+warrior_lodge_slavic_stand_together,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warrior_lodge_summon_commander,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_suomenusko_summon_warriors,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warrior_lodge_tengri_call_of_the_steppe,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warrior_lodge_war_sacrifice,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_west_african_create_fetish,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warrior_lodge_zun_battle_trance,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+warrior_toughness,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+warrior_training,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+welcome_gurs,decisions,new,no,,not found in source file at run time
+welcome_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
+wiz_clone,decisions,new,no,,not found in source file at run time
+wiz_craft_homunculus,decisions,new,no,,not found in source file at run time
+wiz_divine_threat,decisions,new,no,,not found in source file at run time
+wiz_lichdom,decisions,new,no,,not found in source file at run time
+wiz_longevity,decisions,new,no,,not found in source file at run time
+wiz_planar_binding,decisions,new,no,,not found in source file at run time
+wiz_summon_elementals,decisions,new,no,,not found in source file at run time
+write_a_book,decisions,modified,no,,not found in source file at run time
+write_about_ruler,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
+zhent_become_tributary,society_decisions,new,no,,not found in source file at run time
+zhent_trade_route,society_decisions,new,no,,not found in source file at run time

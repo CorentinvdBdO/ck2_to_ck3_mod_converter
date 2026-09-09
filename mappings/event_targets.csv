@@ -1,0 +1,58 @@
+ck2_key,ck3_key,status,confidence,note,decision_uses
+any_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),0
+any_child,any_child,exact,verified,"list iterator, unchanged",0
+any_consort,,none,assumed,CK3 has no separate consort iterator from spouse,0
+any_courtier,any_courtier,exact,verified,"list iterator, unchanged",0
+any_courtier_or_vassal,any_courtier_or_guest,approx,verified,CK3 renamed the courtier iterator family to courtier_or_guest,0
+any_de_jure_vassal_title,any_in_de_jure_hierarchy,approx,assumed,"guessed rename, needs a human check",0
+any_demesne_province,any_held_title,approx,assumed,CK3 merged province into county/barony titles,0
+any_demesne_title,any_held_title,approx,assumed,"guessed rename, needs a human check",0
+any_dynasty_member,any_dynasty_member,exact,verified,unchanged,0
+any_friend,,none,assumed,not found in the CK3 1.19 vocabulary sample; use any relation-typed iterator,0
+any_liege,,none,assumed,"CK3 has a single liege scope link, not a de jure chain iterator; use liege directly or de_jure_liege",0
+any_neighbor_independent_ruler,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+any_neighbor_province,any_neighboring_county,approx,verified,CK3 merged province into county,0
+any_owned_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),0
+any_realm_character,any_in_de_facto_hierarchy,approx,assumed,"guessed rename, needs a human check",0
+any_realm_lord,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+any_realm_province,any_in_de_facto_hierarchy,approx,assumed,no bare province iterator; needs a human check,0
+any_realm_title,any_in_de_facto_hierarchy,approx,assumed,"guessed rename, needs a human check",0
+any_society_member,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),0
+any_vassal,every_vassal,approx,verified,"CK3 spells the any/every pair every_/any_ the same way; any_ used inside triggers, every_ inside effects",0
+base_title,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+capital_holding,capital_barony,approx,assumed,CK3 splits capital_county/capital_barony,0
+capital_scope,capital_county,approx,assumed,CK3 splits capital_county/capital_barony,0
+current_heir,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare scope link,0
+de_jure_liege,de_jure_liege,exact,verified,"scope link, unchanged (title scope)",0
+de_jure_liege_or_above,,none,verified,"not found in the CK3 1.19 vocabulary sample; needs a human check (chain de_jure_liege repeatedly, or a scripted list)",0
+dejure_liege_title,de_jure_liege,approx,assumed,"same construct, different CK2 alias",0
+employer,employer,exact,verified,"scope link, unchanged",0
+genetic_father,father,approx,assumed,CK3 has one father scope link,0
+genetic_mother,mother,approx,assumed,CK3 has one mother scope link,0
+governor,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),0
+holder,holder,exact,verified,"title -> holder character, unchanged",0
+host,,none,assumed,CK3 dropped the CK2 'host' (travelling court) concept as a scope word,0
+job_chancellor,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",0
+job_spymaster,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",0
+liege,liege,exact,verified,"scope link, unchanged",0
+location,,none,assumed,no CK3 character->province scope link (character has no bare location),0
+offmap_ruler,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),0
+owner,holder,approx,assumed,CK2 province owner -> CK3 county/barony holder,0
+player_heir,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+plot_target_char,,none,verified,CK2 plots have no CK3 counterpart (docs/mechanics_inventory.md),0
+primary_title,primary_title,exact,verified,"scope link, unchanged",0
+random_courtier,random_courtier,exact,assumed,unchanged,0
+random_courtier_or_vassal,random_courtier_or_guest,approx,verified,CK3 renamed the courtier iterator family to courtier_or_guest,0
+random_demesne_province,random_held_title,approx,assumed,CK3 merged province into county/barony titles,0
+random_demesne_title,random_held_title,approx,assumed,"guessed rename, needs a human check",0
+random_landed_title,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+random_province_holding,,none,assumed,not found in the CK3 1.19 vocabulary sample,0
+random_realm_wonder_upgrade,,none,verified,wonders do not exist in this form in CK3 (docs/mechanics_inventory.md),0
+random_society_member,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),0
+random_vassal,random_vassal,exact,assumed,unchanged,0
+religion_head,faith.religious_head,approx,assumed,"guessed chain, needs a human check against 1.19 event_targets",0
+society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),0
+spouse,primary_spouse,approx,assumed,CK2 spouse (first spouse) -> CK3 primary_spouse; every_spouse for the full list,0
+suzerain,,none,assumed,not found in the CK3 1.19 vocabulary sample; use liege,0
+thirdparty_title_scope,,none,verified,"third-party/targeted decisions map to CK3 character interactions, out of this lane's scope",0
+top_liege,top_liege,exact,verified,"scope link, unchanged",0

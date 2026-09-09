@@ -337,6 +337,16 @@ custom_loc = "marker"
 # violation in game setup (docs/evidence/game_load_2026-09-08.md).
 named_scope = "marker"
 
+# Decisions port (step `decisions`, docs/step_decisions.md). Character-scope
+# CK2 decisions (`decisions`/`society_decisions`/`plot_decisions` groups) with
+# provenance status new/modified.
+[decisions]
+provenance = "docs/evidence/decisions_provenance.csv"
+# A decision whose converted trigger/effect keys score below this (mapped ÷
+# total) keeps its converted content but gets `is_shown = { always = no }`
+# plus a `fae_unported = yes` comment, so it exists and is inspectable.
+min_score = 0.6
+
 # Scripted tests written into the mod by step `tests`, asserting the generated
 # mod's own claims. Grammar and how the game runs them:
 # ../claudespace/docs/ck3_test_framework.md.

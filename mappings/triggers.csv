@@ -1,0 +1,450 @@
+ck2_key,ck3_key,status,confidence,note,decision_uses
+trait,has_trait,approx,verified,"CK2 explicit trait check `trait = X` -> CK3 `has_trait = X`; the argument X is re-resolved through the traits step's id map at conversion time (ck2ck3.steps.decisions), not a literal rename",1169
+has_character_flag,has_character_flag,exact,verified,unchanged,337
+custom_tooltip,custom_tooltip,exact,verified,unchanged,330
+text,text,exact,assumed,unchanged (custom_tooltip field),330
+religion,faith,approx,verified,CK2 specific religion -> CK3 faith (faith = faith:<id>),296
+not_casting,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),275
+has_character_modifier,has_character_modifier,exact,verified,unchanged,261
+wealth,gold,approx,verified,CK2 wealth (total gold) -> CK3 gold,203
+character,this,approx,assumed,"CK2 `character = X` compares the current scope to X; CK3 compares scopes directly, no wrapper key",189
+hidden_tooltip,,none,verified,"not a real CK3 vocabulary key at all (its ground-truth hits were the `text`-shaped custom_tooltip field, not a trigger keyword); wrapping content as custom_tooltip without the required `text=` field caused error(field-missing) - do not approximate, needs a human check per call site",154
+flag,,none,assumed,"context-dependent field name, not a single vocabulary key",125
+liege,liege,exact,verified,unchanged (scope-link comparison),121
+had_character_flag,,none,assumed,CK3 has no 'had' (once-set) flag history trigger; needs a variable set alongside the flag,119
+ai,,none,verified,"context-dependent field (e.g. custom_tooltip's audience filter); no single CK3 vocabulary meaning as a bare trigger, needs a human check per call site",118
+war,is_at_war,approx,verified,CK2 war = yes/no -> CK3 is_at_war,116
+using_cb,,none,assumed,CK3 war/CB structure differs; no direct trigger equivalent found,105
+mult_modifier,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),100
+always,always,exact,verified,unchanged,96
+culture,culture,exact,verified,unchanged (scope-link comparison),95
+prisoner,is_imprisoned,approx,assumed,CK2 prisoner = yes/no trigger -> CK3 is_imprisoned,95
+piety,piety,exact,verified,unchanged,94
+is_adult,is_adult,exact,verified,unchanged,90
+trigger_if,trigger_if,exact,verified,unchanged,89
+independent,,none,assumed,not found in the CK3 1.19 vocabulary sample; check `is_independent_ruler`,87
+is_inaccessible_or_incapable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),85
+religion_group,,none,assumed,"CK3 groups faiths by `faith.religion`, not a bare scope word; needs the religions lane's religion-group id map, out of this lane's scope",78
+culture_group,,none,assumed,"CK3 has no culture-group scope word; nearest is the culture's heritage/language pillar - needs the cultures lane's group->pillar map, out of this lane's scope",77
+government,government,approx,assumed,CK2 government id -> CK3 government_type id via mappings/government_map.csv (titles lane); this lane emits the CK2 id verbatim as a `# CK2:` comment when not a literal match,73
+prestige,prestige,exact,verified,unchanged,70
+society_rank,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),66
+has_landed_title,has_title,approx,assumed,CK3 renamed has_landed_title -> has_title,62
+years,years,exact,assumed,unchanged (duration field),62
+higher_tier_than,,none,verified,"not a CK3 key: CK3 restructures the comparison as `highest_held_title_tier > <value>` (a scripted value with an inline operator), not a bare trigger key - needs per-decision restructuring, not a table rename",59
+any_war,,none,verified,not found in the CK3 1.19 vocabulary sample as a bare iterator; use is_at_war for the yes/no check,53
+is_playable,is_playable,exact,verified,unchanged,52
+attacker,attacker,exact,assumed,unchanged (war scope link),50
+tier,tier,exact,verified,unchanged as a key; CK2 COUNT/DUKE/KING/EMPEROR values become CK3 tier_county/tier_duchy/tier_kingdom/tier_empire (verified: game/common/decisions),50
+has_dlc,has_dlc,exact,verified,unchanged,47
+owner,holder,approx,assumed,CK2 province owner -> CK3 county/barony holder,44
+count,count,exact,assumed,unchanged (list-iterator limiter),42
+is_inaccessible_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),42
+society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),42
+any_liege,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),41
+days,days,exact,verified,unchanged (duration field),41
+location,,none,assumed,CK2 character-current-province scope link has no direct CK3 equivalent (character has no bare province location); use capital_county or the title scope,40
+society_member_of,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),39
+is_landed,is_landed,exact,verified,unchanged,38
+defender,defender,exact,assumed,unchanged (war scope link),36
+z_sorcerer,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",35
+faction,,none,verified,CK3 factions exist but with a different scripting surface; no per-key match attempted,34
+faction_power,,none,verified,CK3 factions exist but with a different scripting surface; no per-key match attempted,34
+power,,none,assumed,"context-dependent field name, not a single vocabulary key",34
+rank,,none,assumed,"context-dependent field name, not a single vocabulary key",34
+conditional_tooltip,,none,assumed,not found in the CK3 1.19 vocabulary sample,33
+has_artifact,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),33
+has_holder,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),33
+is_tribal,,none,verified,see is_theocracy: needs key+value rewritten together,33
+scaled_wealth,gold,approx,assumed,"CK2 wealth scaled by realm size; CK3 has no scaling variant, compares raw gold",33
+age,age,exact,verified,"same key, same meaning",31
+holding_type,holding_type,exact,assumed,unchanged,29
+wild_magic_recovery,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),29
+is_incapable,is_incapable,exact,verified,unchanged,28
+is_occupied,is_occupied,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),25
+month,,none,assumed,not found as a bare current-month trigger in the CK3 1.19 sample,25
+any_realm_character,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),24
+capital_scope,capital_county,approx,assumed,CK3 splits capital_county/capital_barony scope links,24
+has_minor_title,,none,verified,"CK2 minor titles map to CK3 court positions, a different construct (docs/mechanics_inventory.md)",24
+z_warlock,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",24
+same_society_as,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),23
+which,,none,assumed,"context-dependent field name (check_variable), not a vocabulary key",23
+any_demesne_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),22
+has_alternate_start_parameter,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),22
+key,,none,assumed,"context-dependent field name (custom_tooltip key), not a vocabulary key",22
+months,months,exact,assumed,unchanged (duration field),22
+primary_title,primary_title,exact,verified,unchanged (scope-link comparison),22
+has_society_currency_major_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),20
+top_liege,top_liege,exact,verified,unchanged (scope-link comparison),20
+year,,none,assumed,not found as a bare current-year trigger in the CK3 1.19 sample,20
+z_cleric,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",20
+region,geographical_region,approx,assumed,CK3 renamed region -> geographical_region for the check,19
+has_liege_enforced_peace,,none,assumed,CK3 has no liege-enforced-peace mechanic,18
+health,health,exact,verified,unchanged,18
+is_primary_war_defender,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),18
+trigger_else,trigger_else,exact,verified,unchanged,18
+will_liege_enforce_peace,,none,assumed,CK3 has no liege-enforced-peace mechanic,18
+z_paladin,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",18
+check_variable,has_variable,approx,verified,"CK3 has no check_variable key; existence is has_variable, value comparison is a direct `var:<name> ></=/< value` expression - needs per-decision restructuring, not a pure rename",17
+holder_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),17
+is_nomadic,,none,verified,see is_theocracy: needs key+value rewritten together,17
+z_wizard,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",17
+any_realm_province,any_in_de_facto_hierarchy,approx,assumed,"CK3 has no bare province scope; nearest iterator is over the realm's counties/holders, needs a human check",16
+capital_holding,capital_barony,approx,assumed,CK3 splits capital_county/capital_barony scope links,16
+free_court_slots,,none,assumed,CK3 court has no fixed slot count,16
+has_law,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),16
+min,min,exact,assumed,unchanged (scripted-value clamp),16
+persistent_event_target:minion_culture_primary_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),16
+title,title,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),16
+war_score,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,16
+any_artifact,any_artifact,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),15
+any_child,any_child,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),15
+has_bloodline_flag,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),15
+is_openly_of_prevs_secret_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),15
+uthgardt_faith_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),15
+has_building,has_building,exact,verified,unchanged,14
+has_society_currency_medium_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),14
+has_status,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),14
+in_revolt,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),14
+z_bard,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",14
+z_druid,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",14
+NAND,NAND,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+any_vassal,any_vassal,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),13
+has_earmarked_regiments,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),13
+is_female,is_female,exact,verified,unchanged,13
+leads_faction,,none,verified,CK3 factions exist but with a different scripting surface; no per-key match attempted,13
+war_with,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),13
+any_defender,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare iterator,12
+has_artifact_flag,has_variable,approx,assumed,"CK3 artifacts carry variables, not flags",12
+has_game_rule,has_game_rule,exact,verified,unchanged,12
+is_alive,is_alive,exact,verified,unchanged,12
+is_ruler,is_ruler,exact,verified,unchanged,12
+is_tributary,is_tributary,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),12
+max,max,exact,assumed,unchanged (scripted-value clamp),12
+name,,none,assumed,"context-dependent field name, not a single vocabulary key",12
+reverse_has_truce,,none,assumed,not found in the CK3 1.19 vocabulary sample,12
+who,who,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),12
+any_realm_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),11
+is_not_unreformed_pagan_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),11
+is_primary_war_attacker,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),11
+realm_levies,,none,assumed,CK3 replaced levies with men-at-arms/levy size scripted values,11
+realm_size,realm_size,exact,assumed,unchanged,11
+z_fighter,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",11
+z_psion,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",11
+any_attacker,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare iterator,10
+any_courtier,any_courtier,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),10
+any_owned_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),10
+can_grant_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+has_society_currency_minor_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),10
+is_patrician,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+is_undead,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),10
+plot_power,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",10
+diplomacy,diplomacy,exact,verified,unchanged,9
+in_command,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+realm_character_percent,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),9
+target,,none,assumed,"context-dependent field name, not a single vocabulary key",9
+type,,none,assumed,"context-dependent field name, not a single vocabulary key",9
+any_spouse,any_spouse,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+controls_religion,,none,assumed,no direct CK3 equivalent found (CK3 has no religion-territory control trigger),8
+has_religion_feature,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+higher_real_tier_than,,none,verified,see higher_tier_than: CK3 has no bare comparison key for this,8
+holy_order,holy_order,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+intrigue,intrigue,exact,verified,unchanged,8
+is_alternate_start,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+is_married,is_married,exact,verified,unchanged,8
+is_republic,,none,verified,see is_theocracy: needs key+value rewritten together,8
+martial,martial,exact,verified,unchanged,8
+mercenary,mercenary,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),8
+religion_authority,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),8
+dynasty,dynasty,exact,verified,unchanged (scope-link comparison),7
+faerun_immortal_race_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+has_injury_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+has_job_title,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",7
+has_plot,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",7
+num_of_vassals,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,7
+opinion,opinion,exact,verified,unchanged (scope-link comparison block),7
+persistent_event_target:minion_culture_1_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+persistent_event_target:minion_culture_2_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+persistent_event_target:minion_culture_3_persist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),7
+any_demesne_province,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+any_province_holding,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+has_assigned_minor_title,,none,verified,"CK2 minor titles map to CK3 court positions, a different construct (docs/mechanics_inventory.md)",6
+has_epidemic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+hidden_trigger,,none,assumed,not found as a bare wrapper in the CK3 1.19 sample,6
+immortal,immortal,exact,verified,"CK3 1.19 has a bare `immortal = yes/no` character trigger (CLAUDE.md immortal-trait invariant refers to the effect side, `immortal_age`, which is a separate field)",6
+is_feudal,,none,verified,see is_theocracy: needs key+value rewritten together,6
+is_member_of_any_assassin_guild_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+is_merchant_republic,,none,verified,see is_theocracy: needs key+value rewritten together,6
+is_plot_active,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",6
+is_society_grandmaster,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),6
+is_title_active,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+is_variable_equal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+lower_real_tier_than,,none,verified,see higher_tier_than: CK3 has no bare comparison key for this,6
+num_of_plot_backers,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",6
+plot_target_char,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",6
+race_has_aberrant_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+race_has_divine_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+race_has_draconic_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+race_has_shadow_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+race_has_storm_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+race_has_wild_magic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),6
+z_ranger,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",6
+any_realm_lord,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+any_realm_wonder_upgrade,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",5
+any_society_member,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),5
+character_disease_trigger,,none,verified,"CK2 disease maps to CK3 epidemics, a different construct (docs/mechanics_inventory.md)",5
+evilcat_is_chosen,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+has_focus,has_focus,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+has_global_flag,has_global_variable,approx,assumed,CK3 replaced global flags with global variables,5
+has_opinion_modifier,has_opinion_modifier,exact,assumed,unchanged,5
+has_quest,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+has_secret_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+is_active,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+is_member_of_any_alliance_society_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),5
+is_openly_of_roots_secret_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+is_pregnant,is_pregnant,exact,assumed,not individually greped,5
+learning,learning,exact,verified,unchanged,5
+num_of_children,,none,assumed,not found in the CK3 1.19 vocabulary sample; use num_children,5
+num_of_symptoms,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+real_tier,,none,verified,not found in the CK3 1.19 vocabulary sample; nearest is the scripted value highest_held_title_tier,5
+shou_lung,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),5
+supported_claimant,,none,assumed,not found in the CK3 1.19 vocabulary sample,5
+suzerain,suzerain,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),5
+z_barbarian,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",5
+z_monk,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",5
+any_dynasty_member,any_dynasty_member,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),4
+band_creator,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+bloodline_is_active_for,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),4
+can_have_more_leadership_traits,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+fertility,fertility,exact,assumed,unchanged,4
+had_flag,,none,assumed,see had_character_flag,4
+has_ambition,,none,verified,CK2 ambitions have no CK3 counterpart (docs/mechanics_inventory.md),4
+has_truce,has_truce,exact,assumed,unchanged,4
+has_uthgardt_totem,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+important_character_to_root_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_councillor,has_council_position,approx,assumed,CK3 renamed councillor -> council position,4
+is_generic_sacrifice_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_heir,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger; check is_heir_of,4
+is_member_of_any_warrior_lodge_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_reformed_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+is_theocracy,,none,verified,"CK3 government checks are flag-based (government_has_flag = government_is_theocratic) - needs the value rewritten too, not just the key; see comment above CURATED_TRIGGERS is_theocracy",4
+num_of_trade_posts,,none,verified,trade posts/routes do not exist in CK3 1.19 (docs/mechanics_inventory.md),4
+persistent_event_target:society_title_persist,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),4
+practical_age,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),4
+any_close_relative,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+any_courtier_or_vassal,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+any_neighbor_independent_ruler,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+artifact_type,artifact_type,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+completely_controls,completely_controls,exact,assumed,unchanged (de jure control check),3
+has_any_sympathy_trait_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+has_flag,has_character_flag,approx,assumed,CK2 generic has_flag -> CK3 has_character_flag in character scope,3
+has_living_children,,none,assumed,not found in the CK3 1.19 vocabulary sample,3
+has_province_modifier,has_province_modifier,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),3
+has_severe_disability_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+has_temple,,none,assumed,CK3 building system differs (special_building_slot); no bare trigger found,3
+has_wonder_upgrade,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",3
+has_wonder_upgrade_flag,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",3
+is_allowed_to_loot,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_dharmic_monastic_member_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_dragon,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_evil_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_ill,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_lowborn,is_lowborn,exact,assumed,unchanged,3
+is_member_of_any_knight_order_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_member_of_any_zhent_like_society_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+is_monastic_member_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+is_sick_or_injured_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+monthly_income,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,3
+orc_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+over_max_demesne_size,,none,assumed,compare domain_limit vs held counts instead; no single trigger found,3
+society_currency,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+society_has_linked_title_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),3
+thirdparty_title_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+trigger_else_if,trigger_else_if,exact,verified,unchanged,3
+undead_incompatible_race,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),3
+z_artificer,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",3
+ai_ambition,,none,verified,CK2 ambitions have no CK3 counterpart (docs/mechanics_inventory.md),2
+any_bloodline,,none,verified,bloodlines do not exist in CK3 (docs/mechanics_inventory.md),2
+any_consort,any_consort,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+any_current_enemy,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+any_neighbor_province,any_neighboring_county,approx,assumed,CK3 merged province into county,2
+block_general_event_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+can_change_faith_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+demesne_size,domain_limit,approx,assumed,CK3 renamed demesne -> domain,2
+disease,,none,verified,"CK2 disease maps to CK3 epidemics, a different construct (docs/mechanics_inventory.md)",2
+dof_is_weak_ruler,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+faction_claimant,,none,verified,CK3 factions exist but with a different scripting surface; no per-key match attempted,2
+gender_equality_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+goblin_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+governor,governor,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+graphical_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+had_offmap_tmp_flag,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),2
+has_disease,,none,verified,"CK2 disease maps to CK3 epidemics, a different construct (docs/mechanics_inventory.md)",2
+has_full_court,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+has_symptom_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+has_title_flag,has_variable,approx,assumed,"CK3 titles carry variables, not flags",2
+has_warlock_patron,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+holder,holder,exact,verified,unchanged (scope-link comparison),2
+host,,none,assumed,CK3 dropped the CK2 'host' (travelling court) concept as a scope word,2
+is_allied_with,,none,assumed,"CK3 alliance mechanic differs (through pacts/friends), no direct trigger found",2
+is_artifact_active,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_child_of,is_child_of,exact,verified,unchanged,2
+is_coastal,is_coastal,exact,verified,unchanged (province/county trigger),2
+is_devil_worshiper_trigger,,none,verified,"Faerûn-specific custom scripted_trigger, not core CK2/CK3 vocabulary; converted 1:1 only if the effects lane later ports common/scripted_triggers (out of scope here)",2
+is_dumb_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_friend,,none,assumed,not found in the CK3 1.19 vocabulary sample; check has_relation_friend,2
+is_government_potential,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_heretic,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_in_society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+is_island,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+is_learned_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_strong_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_syncretic_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_true_outsider,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+is_within_diplo_range,,none,assumed,CK3 has no diplomatic-range mechanic (distance-based diplomacy was removed),2
+job_chancellor,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",2
+job_spymaster,,none,verified,"CK2 council jobs are CK3 court positions, a different construct (docs/mechanics_inventory.md)",2
+lifestyle_traits,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+num_of_claims,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+num_of_count_titles,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+num_of_government_vassals,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+num_of_spouses,,none,assumed,CK3 does not track spouse count as a trigger the same way,2
+num_of_trade_post_diff,,none,verified,trade posts/routes do not exist in CK3 1.19 (docs/mechanics_inventory.md),2
+olrox_is_good_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+player_heir,player_heir,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),2
+port,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,2
+race_is_dwarven,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+raiding_ruler_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+ruled_years,,none,assumed,not found in the CK3 1.19 vocabulary sample,2
+show_scope_change,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),2
+society_has_active_progress,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),2
+spouse,spouse,exact,assumed,unchanged (scope-link comparison),2
+stewardship,stewardship,exact,verified,unchanged,2
+z_legendary_arcane,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+z_master_arcane,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+z_renowned_arcane,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+z_rogue,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+z_shadow,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",2
+adventurer,adventurer,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+ai_rationality,ai_rationality,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+amount,,none,assumed,"context-dependent field name, not a single vocabulary key",1
+any_de_jure_vassal_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_friend,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+any_player,any_player,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+any_province_lord,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+barred_from_adopting_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+calc_true_if,calc_true_if,exact,verified,unchanged,1
+can_be_given_away,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+can_marry,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+claimed_by,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+combat_rating,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+conquest_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+court_is_max_crowded_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+court_is_mid_crowded_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+court_is_min_crowded_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+current_heir,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare scope link,1
+days_at_current_society_rank,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+days_in_society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+developing_epidemic_disease_trigger,,none,verified,"CK2 disease maps to CK3 epidemics, a different construct (docs/mechanics_inventory.md)",1
+diplomatic_immunity,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+duelist_skill_is_high_group_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+event_target:current_caliph,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+female_can_hold_minor_title_trigger,,none,verified,"CK2 minor titles map to CK3 court positions, a different construct (docs/mechanics_inventory.md)",1
+gfx_culture_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_any_opinion_modifier,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+has_bottom_tier_education_trait_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_children,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+has_dharmic_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_education_diplomacy_trigger,has_education_diplomacy_trigger,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_education_intrigue_trigger,has_education_intrigue_trigger,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_education_learning_trigger,has_education_learning_trigger,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_education_martial_trigger,has_education_martial_trigger,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_education_stewardship_trigger,has_education_stewardship_trigger,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+has_offmap_flag,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+has_overseas_holdings,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_patron_god,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_regent,,none,verified,"not found in the CK3 1.19 vocabulary sample; CK3 regency is exposed via the council/court position system, no bare trigger found",1
+has_religion_matching_joined_warrior_lodge_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_scarred_trait_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_secret_religion_trait_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_society_currency_massive_trigger,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+has_society_landed_title,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+has_top_tier_education_trait_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+has_wiz_spec,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+have_all_armorsmith_artifacts_all_flags_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+have_all_weaponsmith_artifacts_all_flags_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+have_duplicate_goldsmith_artifacts_flag_amazing_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+have_duplicate_goldsmith_artifacts_flag_expensive_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+have_duplicate_goldsmith_artifacts_flag_good_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+have_duplicate_goldsmith_artifacts_flag_okay_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+health_traits,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+in_battle,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_a_mammal_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_allowed_to_sacrifice_true_believers,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_artifact_equipped,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_betrothed,is_betrothed,exact,assumed,not individually greped,1
+is_building_wonder_upgrade,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",1
+is_capital,,none,assumed,"CK2 checks a province is a capital; CK3 splits capital_county/capital_barony are scope links, not a trigger on the province itself",1
+is_conquered,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_consort,,none,assumed,CK3 has no separate consort concept from spouse,1
+is_dumb_congenital_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_fair_non_congenital_trait_upgradeable_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_hard_to_convert,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_immune_to_conversion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_indestructible,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_arctic_dwarf_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_chessentan_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_dragonspawn_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_fire_giant_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_shield_dwarf_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_storm_giant_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_innate_master_for_strixiki_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_landless_type_title,,none,verified,not found in the CK3 1.19 vocabulary sample; needs a human check of the landless-title trigger,1
+is_liege_or_above,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_lover,,none,assumed,not found in the CK3 1.19 vocabulary sample; check has_relation_lover,1
+is_lycanthrope_compatible,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_maimed_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_married_matrilineally,,none,verified,not found in the CK3 1.19 vocabulary sample; needs a human check of the matrilineal-marriage trigger,1
+is_member_of_any_thieves_guild_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_nomadic_tribal_culture,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_powerful_vassal,is_powerful_vassal,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+is_pro_death_religion,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_rival,,none,assumed,not found in the CK3 1.19 vocabulary sample; check has_relation_rival,1
+is_society,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+is_vassal_or_below,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+is_weak_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+leader,leader,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+liege_before_war,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+male_can_hold_minor_commander_title_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+num_of_baron_titles_in_realm,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+num_of_count_titles_in_realm,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+num_of_max_settlements,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+num_of_prisoners,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+offmap_ruler,,none,verified,offmap powers do not exist in CK3 (docs/mechanics_inventory.md),1
+owes_favor_to,,none,assumed,CK3 hooks are not modelled as favors owed,1
+pacifist,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+plot_is_known_by,,none,verified,"CK2 plots have no CK3 counterpart (schemes are structurally different, docs/mechanics_inventory.md)",1
+race_is_aberrant,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+race_is_illithid,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+relative_realm_size,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+religion_has_patrons,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+reverse_opinion,reverse_opinion,exact,assumed,unchanged,1
+rightful_religious_head_scope,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+same_realm,same_realm_as,approx,assumed,CK3 renamed same_realm -> same_realm_as,1
+secret_religious_cult,,none,verified,secret religious societies/cults do not exist in CK3 (docs/mechanics_inventory.md),1
+shares_prevs_secret_religion_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+show_only_failed_conditions,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+size,,none,assumed,"context-dependent field name, not a single vocabulary key",1
+smart_2x_score,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+society_can_rank_up,,none,verified,societies do not exist in CK3 (docs/mechanics_inventory.md),1
+supported_claimant_title,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
+total_years_played,,none,assumed,not found in the CK3 1.19 vocabulary sample,1
+wonder,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",1
+wonder_owner,,none,verified,"CK2 wonders map to CK3 special buildings, not this trigger/effect surface (docs/mechanics_inventory.md)",1
+z_expert_arcane,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_expert_martial,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_journeyman_arcane,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_legendary_martial,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_master_martial,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_multiclass,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1
+z_renowned_martial,,none,assumed,"Faerûn custom scripted_trigger (common/scripted_triggers/faerun_class_triggers.txt), not core CK2/CK3 vocabulary - porting Faerûn's own scripted_effects/scripted_triggers is out of this lane's scope",1

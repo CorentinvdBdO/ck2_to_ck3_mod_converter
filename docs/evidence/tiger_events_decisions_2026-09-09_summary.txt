@@ -1,0 +1,668 @@
+ck3-tiger 2026-09-09 events-decisions lane, full mod
+======================================================================
+ck3-tiger 2026-09-09T13:41:54+02:00
+mod:  /home/cvdbdo/git/paradox/ck3/wt/_out/events-decisions
+game: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+---
+Using CK3 directory: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+That does not look like a CK3 directory.
+Trying: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/..
+Ok.
+...
+
+=== whole-mod summary (by kind, by message; ck3-tiger's own tally) ===
+--- by kind
+  38952 warning(missing-localization)
+  10336 untidy(missing-localization)
+   6788 warning(localization)
+   1834 warning(duplicate-item)
+   1634 warning(datafunctions)
+    521 error(missing-item)
+    474 warning(logic)
+    455 warning(missing-file)
+    440 error(unknown-field)
+    396 warning(field-missing)
+    319 warning(rivers)
+    177 warning(missing-item)
+    172 warning(scopes)
+    142 tips(suggest-localization)
+    101 error(field-missing)
+     65 tips(performance)
+     64 error(structure)
+     41 error(localization-key-collision)
+     21 warning(history)
+     15 warning(bookmarks)
+     14 error(wrong-gender)
+      8 error(validation)
+      7 warning(unknown-field)
+      4 warning(markup)
+      3 error(strict-scopes)
+      1 warning(exact-duplicate-item)
+      1 error(history)
+--- by message
+  32854 warning(missing-localization): missing spanish, french and german localization key dynn_fae_N
+   1834 warning(duplicate-item): localization is redefined by another localization
+    884 warning(datafunctions): GetLocation cannot follow a Character promote
+    396 warning(field-missing): required field `picture` missing
+    315 warning(datafunctions): unknown datafunction EvilGodName
+    284 warning(localization): The substitution parameter $CHAR$ is not defined anywhere as a key.
+    248 warning(rivers): (N, N) river tributary (red) not joining another river
+    233 warning(localization): The substitution parameter $FIRST_ADJ$ is not defined anywhere as a key.
+    228 warning(localization): The substitution parameter $DIRECTION$ is not defined anywhere as a key.
+    212 warning(localization): The substitution parameter $SOCIETY$ is not defined anywhere as a key.
+    198 warning(logic): `gold =` means exactly equal to that amount, which is usually not what you want
+    193 warning(datafunctions): GetHolder cannot follow a Character promote
+    183 warning(localization): The substitution parameter $WHERE$ is not defined anywhere as a key.
+    148 warning(localization): The substitution parameter $PROV$ is not defined anywhere as a key.
+    146 warning(logic): OR with only one item inside is probably not what you intended
+    124 warning(localization): The substitution parameter $OTHER_TITLE$ is not defined anywhere as a key.
+    118 warning(localization): The substitution parameter $SECOND_ADJ$ is not defined anywhere as a key.
+    108 warning(localization): The substitution parameter $SETTLEMENT$ is not defined anywhere as a key.
+    108 warning(datafunctions): GetCapitalLocation cannot follow a Province promote
+    104 warning(localization): The substitution parameter $INSERT$ is not defined anywhere as a key.
+     95 warning(localization): The substitution parameter $WONDER_UPGRADE_TYPE$ is not defined anywhere as a key.
+     89 warning(localization): The substitution parameter $PIETYNAME$ is not defined anywhere as a key.
+     88 warning(logic): `piety =` means exactly equal to that amount, which is usually not what you want
+     85 warning(localization): The substitution parameter $HONORIFIC$ is not defined anywhere as a key.
+     82 warning(missing-localization): missing spanish, french and german localization key bookmark_fae_N_desc
+     80 warning(missing-item): coa fae_N not defined in common/coat_of_arms/coat_of_arms/
+     80 warning(localization): The substitution parameter $AMBITION_TARGET_NAME$ is not defined anywhere as a key.
+     76 warning(localization): The substitution parameter $RECIPIENT$ is not defined anywhere as a key.
+     75 error(field-missing): required field `modifier` missing
+     72 warning(localization): The substitution parameter $OFFMAP$ is not defined anywhere as a key.
+     72 warning(datafunctions): GetBaseName cannot follow a Character promote
+     68 warning(localization): The substitution parameter $WONDER_TYPE$ is not defined anywhere as a key.
+     68 warning(localization): The substitution parameter $FACTION$ is not defined anywhere as a key.
+     65 tips(performance): AND with only one item inside is useless
+     64 warning(localization): The substitution parameter $DECISION$ is not defined anywhere as a key.
+     61 warning(rivers): (N, N) river pixel has N neighbors
+     60 warning(localization): The substitution parameter $ROUTE$ is not defined anywhere as a key.
+     60 warning(localization): The substitution parameter $FAILED$ is not defined anywhere as a key.
+     56 warning(missing-localization): missing spanish, french and german localization key cn_fae_stommheim
+     56 warning(localization): The substitution parameter $VICTIM$ is not defined anywhere as a key.
+
+
+=== findings inside common/decisions/ only (this lane's output), by class ===
+   396 warning(field-missing): required field `picture` missing
+   198 warning(logic): `gold =` means exactly equal to that amount, which is usually not what you want
+   146 warning(logic): OR with only one item inside is probably not what you intended
+    88 warning(logic): `piety =` means exactly equal to that amount, which is usually not what you want
+    75 error(field-missing): required field `modifier` missing
+    65 tips(performance): AND with only one item inside is useless
+    53 error(structure): expected block, found value
+    50 error(unknown-field): unknown token `government`
+    42 warning(logic): `prestige =` means exactly equal to that amount, which is usually not what you want
+    39 warning(scopes): `tier` is for landed title but scope seems to be character
+    30 error(missing-item): event generalmisc.N not defined in events/
+    30 error(unknown-field): unknown field `duration`
+    28 error(missing-item): event N not defined in events/
+    25 warning(scopes): `holding_type` is for province but scope seems to be landed title
+    24 warning(scopes): `change_title_holder` is for landed title but scope seems to be character
+    21 error(field-missing): required field `name` missing
+    17 error(missing-item): modifier burn_path_mod not defined in common/modifiers/
+    17 warning(scopes): `ROOT` produces character but expected faith
+    16 error(unknown-field): unknown token `is_playable`
+    15 warning(missing-localization): missing english, spanish, french and german localization key is_not_busy_trigger_tooltip
+    15 warning(scopes): `add_artifact_title_history` is for artifact but scope seems to be character
+    12 error(missing-item): dlc name Reapers not defined in dlc_metadata/
+    12 error(missing-item): event TOG.N not defined in events/
+    12 error(unknown-field): unknown token `trigger_switch`
+    12 error(unknown-field): unknown token `EMPEROR`
+    12 warning(scopes): `has_building` is for province but scope seems to be landed title
+    11 error(missing-item): event wizinit.N not defined in events/
+    11 error(structure): expected value, found block
+    11 error(unknown-field): unknown token `chronicle`
+    11 error(unknown-field): unknown token `KING`
+    10 error(missing-item): modifier in_seclusion not defined in common/modifiers/
+    10 error(missing-item): event divrel.N not defined in events/
+    10 warning(scopes): `geographical_region` is for province but scope seems to be landed title
+     9 error(missing-item): event NE.N not defined in events/
+     9 error(missing-item): modifier borrowed_from_gurs not defined in common/modifiers/
+     9 error(missing-item): event MNM.N not defined in events/
+     9 error(unknown-field): unknown token `tribal`
+     8 error(missing-item): dlc name The Old Gods not defined in dlc_metadata/
+     8 error(validation): cannot use `any_` lists in an effect
+     8 error(unknown-field): unknown token `laduguer`
+     7 error(missing-item): modifier expelled_gurs not defined in common/modifiers/
+     7 error(missing-item): modifier symptom_treatment_N not defined in common/modifiers/
+     7 warning(unknown-field): unknown field `trigger`
+     6 error(missing-item): modifier told_story_nr_N not defined in common/modifiers/
+     6 error(missing-item): building tb_hillfort_N not defined in common/buildings/
+     6 error(missing-item): event BRO.N not defined in events/
+     6 error(unknown-field): unknown token `lolth_cult`
+     6 error(unknown-field): unknown token `triadic`
+     6 error(unknown-field): unknown token `giant_pantheon`
+     6 error(unknown-field): unknown token `castle`
+     6 error(unknown-field): unknown token `tiamat`
+     6 error(unknown-field): unknown token `dwarven_pantheon`
+     6 error(unknown-field): unknown token `temple`
+     6 error(unknown-field): unknown token `gur`
+     6 error(unknown-field): unknown token `gurri`
+     6 error(unknown-field): unknown field `value`
+     6 warning(scopes): `any_in_de_facto_hierarchy` is for landed title but scope seems to be character
+     6 warning(scopes): `capital_barony` is for character but scope seems to be landed title
+     6 warning(missing-localization): missing english, spanish, french and german localization key plot_gain_fellow_vassal_title_decision_N_desc
+     6 warning(missing-localization): missing english, spanish, french and german localization key plot_gain_liege_title_decision_N_desc
+     5 error(missing-item): dlc name Holy Fury not defined in dlc_metadata/
+     5 error(missing-item): event frmaint.N not defined in events/
+     5 error(missing-item): modifier rel_diversity_mod not defined in common/modifiers/
+     5 error(missing-item): modifier total_diversity_mod not defined in common/modifiers/
+     5 error(missing-item): modifier successful_treatment_N not defined in common/modifiers/
+     5 error(unknown-field): unknown token `mercenary`
+     5 error(unknown-field): unknown token `faithless`
+     5 error(unknown-field): unknown token `COUNT`
+     5 error(unknown-field): unknown token `ulutiuan`
+     5 error(unknown-field): unknown token `ulutiuan_reformed`
+     4 error(missing-item): modifier summoned_cooldown not defined in common/modifiers/
+     4 error(missing-item): modifier known_lycan_modifier not defined in common/modifiers/
+     4 error(missing-item): modifier known_vamp_modifier not defined in common/modifiers/
+     4 error(missing-item): modifier syncretic_triadic not defined in common/modifiers/
+     4 error(missing-item): event uthgar.N not defined in events/
+     4 error(missing-item): event ZHE.N not defined in events/
+     4 error(missing-item): modifier alliance_member not defined in common/modifiers/
+     4 error(missing-item): event CDR.N not defined in events/
+     4 error(missing-item): dlc name Mystics not defined in dlc_metadata/
+     4 error(missing-item): event REP.N not defined in events/
+     4 error(missing-item): council position yes not defined in common/council_positions/
+     4 error(unknown-field): unknown token `ubtao_worship`
+     4 error(unknown-field): unknown token `city`
+     4 error(unknown-field): unknown token `mercantile`
+     4 error(unknown-field): unknown token `DUKE`
+     4 error(field-missing): required field `target` missing
+     4 error(unknown-field): unknown field `who`
+     4 warning(scopes): `ROOT` produces character but expected culture
+     3 error(missing-item): event HF.N not defined in events/
+     3 error(missing-item): event LT.N not defined in events/
+     3 error(missing-item): modifier undead_realm_lord not defined in common/modifiers/
+     3 error(missing-item): building tb_market_town_N not defined in common/buildings/
+     3 error(missing-item): building tb_nomad_ranch_N not defined in common/buildings/
+     3 error(missing-item): event nomadtribalmaint.N not defined in events/
+     3 error(missing-item): modifier vow_of_poverty not defined in common/modifiers/
+     3 error(missing-item): event BFL.N not defined in events/
+     3 error(missing-item): modifier open_arcane_brother not defined in common/modifiers/
+     3 error(missing-item): modifier open_flame_brother not defined in common/modifiers/
+     3 error(missing-item): event KNI.N not defined in events/
+     3 error(missing-item): modifier open_zhent not defined in common/modifiers/
+     3 error(missing-item): dlc name Sons of Abraham not defined in dlc_metadata/
+     3 error(missing-item): focus focus_hunting not defined in common/focuses/
+     3 error(missing-item): modifier doing_penance not defined in common/modifiers/
+     3 error(missing-item): modifier in_meditation not defined in common/modifiers/
+     3 error(unknown-field): unknown token `abyssal_cult`
+     3 error(unknown-field): unknown token `geomancy`
+     3 error(unknown-field): unknown token `mulhorandi_faith`
+     3 error(unknown-field): unknown token `muhjari`
+     3 error(unknown-field): unknown token `faceless_god`
+     3 error(unknown-field): unknown token `bahamut`
+     3 error(unknown-field): unknown token `blue_flame`
+     3 error(unknown-field): unknown token `joyful`
+     3 error(unknown-field): unknown token `e_a_brotherhood`
+     3 error(unknown-field): unknown token `e_brotherhood_of_true_flame`
+     3 error(unknown-field): unknown token `e_zhentarim`
+     3 error(unknown-field): unknown token `emperor`
+     3 error(unknown-field): unknown token `tuigan_shamanism`
+     3 error(unknown-field): unknown token `new_title`
+     3 error(unknown-field): unknown field `inherit`
+     3 error(strict-scopes): scope:ckN_from might not be available here
+     3 warning(missing-localization): missing english, spanish, french and german localization key recruit_troops_nomad_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key recruit_troops_norse_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key carousing_with_the_men_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key increase_mercenary_size_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key court_exodus_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key convert_to_attacker_religion_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key ask_help_to_manage_titles_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key help_liege_manage_titles_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key employ_soldier_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_claimant_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_independence_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_lower_crown_authority_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_lower_tribal_organization_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_overthrow_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_feudal_elective_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_gavelkind_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_primogeniture_ultimatum_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_seniority_ultimatum_desc
+     3 warning(scopes): `any_dynasty_member` is for dynasty but scope seems to be character
+     3 warning(missing-localization): missing english, spanish, french and german localization key raise_monster_units_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key convert_to_republic_ai_desc
+     3 warning(scopes): `ROOT` produces character but expected dynasty
+     3 warning(missing-localization): missing english, spanish, french and german localization key faithless_branch_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key restore_ammarindar_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key choose_warhorse_nomad_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key commission_runestone_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key hold_blot_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key hold_tiger_hunt_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key rename_wonder_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key sky_burial_decision_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key plot_seize_trade_post_decision_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key convert_to_feudalism_indep_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key convert_to_feudalism_vassal_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key convert_to_republic_indep_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key demand_liege_title_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key form_new_empire_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key form_new_kingdom_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key hold_nomad_wargames_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key petition_doge_for_tp_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key usurp_tp_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key shou_lung_sends_reinforcements_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key conscript_merchant_ships_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key raise_tribal_units_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key drink_from_fountain_of_youth_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key recruit_academy_hero_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key recruit_wonder_guard_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key repair_wonder_decision_desc
+     3 warning(missing-localization): missing english, spanish, french and german localization key store_relic_in_wonder_desc
+     2 error(missing-item): dlc name Horse Lords not defined in dlc_metadata/
+     2 error(missing-item): event ADVN.N not defined in events/
+     2 error(missing-item): modifier summoned_spectator not defined in common/modifiers/
+     2 error(missing-item): modifier tensers_transformation_mod not defined in common/modifiers/
+     2 error(missing-item): modifier wild_shape_mod not defined in common/modifiers/
+     2 error(missing-item): modifier improved_wild_shape_mod not defined in common/modifiers/
+     2 error(missing-item): modifier expert_wild_shape_mod not defined in common/modifiers/
+     2 error(missing-item): modifier master_wild_shape_mod not defined in common/modifiers/
+     2 error(missing-item): modifier badly_bruised not defined in common/modifiers/
+     2 error(missing-item): modifier black_eye not defined in common/modifiers/
+     2 error(missing-item): modifier swollen_ankle not defined in common/modifiers/
+     2 error(missing-item): modifier swollen_wrist not defined in common/modifiers/
+     2 error(missing-item): modifier sore_muscles not defined in common/modifiers/
+     2 error(missing-item): modifier cracked_ribs not defined in common/modifiers/
+     2 error(missing-item): modifier concussion not defined in common/modifiers/
+     2 error(missing-item): modifier monk_diplo not defined in common/modifiers/
+     2 error(missing-item): modifier monk_martial not defined in common/modifiers/
+     2 error(missing-item): modifier monk_stewardship not defined in common/modifiers/
+     2 error(missing-item): modifier monk_intrigue not defined in common/modifiers/
+     2 error(missing-item): modifier monk_learning not defined in common/modifiers/
+     2 error(missing-item): modifier spell_longstrider_mod not defined in common/modifiers/
+     2 error(missing-item): modifier spell_rage_mod not defined in common/modifiers/
+     2 error(missing-item): event WARL.N not defined in events/
+     2 error(missing-item): modifier recoveringfromchildbirth not defined in common/modifiers/
+     2 error(missing-item): event frstory.N not defined in events/
+     2 error(missing-item): government type democratic_feudal_government not defined in common/governments/
+     2 error(missing-item): government type divine_feudal_government not defined in common/governments/
+     2 error(missing-item): event froldrealms.N not defined in events/
+     2 error(missing-item): modifier syncretic_bahamut not defined in common/modifiers/
+     2 error(missing-item): modifier syncretic_tiamat not defined in common/modifiers/
+     2 error(missing-item): modifier syncretic_draconic not defined in common/modifiers/
+     2 error(missing-item): event frzakh.N not defined in events/
+     2 error(missing-item): modifier took_wounds not defined in common/modifiers/
+     2 error(missing-item): modifier syncretic_mercantile not defined in common/modifiers/
+     2 error(missing-item): event conv.N not defined in events/
+     2 error(missing-item): event LA.N not defined in events/
+     2 error(missing-item): event DAL.N not defined in events/
+     2 error(missing-item): government type ordning_government not defined in common/governments/
+     2 error(missing-item): modifier open_warlock_knight not defined in common/modifiers/
+     2 error(missing-item): event HRP.N not defined in events/
+     2 error(missing-item): event EME.N not defined in events/
+     2 error(missing-item): modifier long_live_the_brotherhood_cooldown not defined in common/modifiers/
+     2 error(missing-item): dlc name Jade Dragon not defined in dlc_metadata/
+     2 error(missing-item): modifier syncretic_tuigan not defined in common/modifiers/
+     2 error(missing-item): modifier secluded_revelry not defined in common/modifiers/
+     2 error(missing-item): modifier savoring_the_end_days not defined in common/modifiers/
+     2 error(missing-item): modifier starving_food_shortage not defined in common/modifiers/
+     2 error(missing-item): modifier failed_treatment_N not defined in common/modifiers/
+     2 error(unknown-field): unknown token `spouse`
+     2 error(unknown-field): unknown token `toteteohuan`
+     2 error(unknown-field): unknown token `orc_pantheon`
+     2 error(unknown-field): unknown token `goblin_pantheon`
+     2 error(unknown-field): unknown token `kiaransalee`
+     2 error(unknown-field): unknown token `martial_faith`
+     2 error(unknown-field): unknown token `monster`
+     2 error(unknown-field): unknown token `c_waterdeep`
+     2 error(unknown-field): unknown token `holy_order`
+     2 error(unknown-field): unknown token `calishite_faith`
+     2 error(unknown-field): unknown token `ten_thousand_gods`
+     2 error(unknown-field): unknown token `qisma`
+     2 error(unknown-field): unknown token `pantheist_league`
+     2 error(unknown-field): unknown token `lapal_faith`
+     2 error(unknown-field): unknown token `treant`
+     2 error(unknown-field): unknown token `untheric_faith`
+     2 error(unknown-field): unknown token `untheric`
+     2 error(unknown-field): unknown token `king`
+     2 error(unknown-field): unknown token `draconic_pantheon`
+     2 error(unknown-field): unknown token `ghaunadaur`
+     2 error(unknown-field): unknown token `infernal`
+     2 error(unknown-field): unknown token `deities_of_fury`
+     2 error(unknown-field): unknown token `adama`
+     2 error(unknown-field): unknown token `monster_pantheon`
+     2 error(unknown-field): unknown token `qukoku`
+     2 error(unknown-field): unknown token `e_warlock_knights`
+     2 error(unknown-field): unknown token `chultan`
+     2 error(unknown-field): unknown token `thinguth`
+     2 error(unknown-field): unknown token `lantanna`
+     2 error(unknown-field): unknown token `eraka`
+     2 error(unknown-field): unknown token `N`
+     2 error(unknown-field): unknown field `stacking`
+     2 warning(missing-item): nickname nick_the_dark_lady not defined in common/nicknames/
+     2 warning(missing-item): nickname nick_the_copper_queen not defined in common/nicknames/
+     2 warning(missing-item): nickname nick_the_dark not defined in common/nicknames/
+     2 warning(scopes): `has_province_modifier` is for province but scope seems to be landed title
+     2 warning(scopes): expected dynasty
+     2 warning(missing-localization): missing english, spanish, french and german localization key plot_gain_fellow_vassal_title_decision_N
+     2 warning(missing-localization): missing english, spanish, french and german localization key plot_gain_liege_title_decision_N
+     1 error(missing-item): council position no not defined in common/council_positions/
+     1 error(missing-item): modifier sent_adventurers not defined in common/modifiers/
+     1 error(missing-item): event RAID.N not defined in events/
+     1 error(missing-item): artifact type kossuth_ruby not defined in common/artifacts/types/
+     1 error(missing-item): modifier detect_thoughts_mod not defined in common/modifiers/
+     1 error(missing-item): modifier glamour not defined in common/modifiers/
+     1 error(missing-item): modifier legend_lore_mod not defined in common/modifiers/
+     1 error(missing-item): modifier mindblade not defined in common/modifiers/
+     1 error(missing-item): modifier oath_of_the_ancients not defined in common/modifiers/
+     1 error(missing-item): modifier oath_of_the_crown not defined in common/modifiers/
+     1 error(missing-item): modifier oath_of_devotion not defined in common/modifiers/
+     1 error(missing-item): modifier oath_of_redemption not defined in common/modifiers/
+     1 error(missing-item): modifier oath_of_vengeance not defined in common/modifiers/
+     1 error(missing-item): event druidinit.N not defined in events/
+     1 error(missing-item): modifier renegade_illithid not defined in common/modifiers/
+     1 error(missing-item): event monster.N not defined in events/
+     1 error(missing-item): event secret_identity.N not defined in events/
+     1 error(missing-item): modifier vampire_blood_fed not defined in common/modifiers/
+     1 error(missing-item): modifier vamp_fed_on_prov not defined in common/modifiers/
+     1 error(missing-item): modifier undead_province not defined in common/modifiers/
+     1 error(missing-item): event fradoption.N not defined in events/
+     1 error(missing-item): event sacrifice.N not defined in events/
+     1 error(missing-item): government type nomadic_tribal_government not defined in common/governments/
+     1 error(missing-item): event frtut.N not defined in events/
+     1 error(missing-item): title e_shanatar not defined in common/landed_titles/
+     1 error(missing-item): modifier akadian_adaptability not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_diplomacy not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_martial not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_stewardship not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_intrigue not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_learning not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_combat not defined in common/modifiers/
+     1 error(missing-item): modifier beshaba_health not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_cyric not defined in common/modifiers/
+     1 error(missing-item): artifact type direguard_artf not defined in common/artifacts/types/
+     1 error(missing-item): modifier syncretic_giant not defined in common/modifiers/
+     1 error(missing-item): event Ordning.N not defined in events/
+     1 error(missing-item): modifier earth_stability not defined in common/modifiers/
+     1 error(missing-item): modifier helmite_bodyguards not defined in common/modifiers/
+     1 error(missing-item): modifier held_uthfeast_timer not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_calishite not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_lapal not defined in common/modifiers/
+     1 error(missing-item): modifier ilmater_health_mod not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_illithid not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_laduguer not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_uthgardt not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_primordial not defined in common/modifiers/
+     1 error(missing-item): modifier summoned_genie not defined in common/modifiers/
+     1 error(missing-item): dlc name Legacy of Rome not defined in dlc_metadata/
+     1 error(missing-item): modifier syncretic_kiaransalee not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_thasmudyanic not defined in common/modifiers/
+     1 error(missing-item): event rlg_chg.N not defined in events/
+     1 error(missing-item): modifier ulutiu_seal not defined in common/modifiers/
+     1 error(missing-item): modifier ulutiu_walrus not defined in common/modifiers/
+     1 error(missing-item): modifier ulutiu_bear not defined in common/modifiers/
+     1 error(missing-item): modifier ulutiu_reindeer not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_ulutiuan not defined in common/modifiers/
+     1 error(missing-item): modifier vecna_forbidden_knowledge_mod not defined in common/modifiers/
+     1 error(missing-item): modifier lord_all_diplo_cooldown not defined in common/modifiers/
+     1 error(missing-item): modifier acquire_ingredients_decision_cooldown_timer not defined in common/modifiers/
+     1 error(missing-item): modifier build_knight_bloodline_cooldown not defined in common/modifiers/
+     1 error(missing-item): modifier adventurers_boost not defined in common/modifiers/
+     1 error(missing-item): modifier brain_golem_bodyguard not defined in common/modifiers/
+     1 error(missing-item): modifier delve_into_forbidden_cooldown not defined in common/modifiers/
+     1 error(missing-item): modifier delve_into_heraldry_cooldown not defined in common/modifiers/
+     1 error(missing-item): event HERA.N not defined in events/
+     1 error(missing-item): modifier dragon_minor_gift_cooldown not defined in common/modifiers/
+     1 error(missing-item): event morndin.N not defined in events/
+     1 error(missing-item): event seldarine.N not defined in events/
+     1 error(missing-item): modifier invite_dracolich_cooldown not defined in common/modifiers/
+     1 error(missing-item): event KRAK.N not defined in events/
+     1 error(missing-item): modifier beat_masked_lords not defined in common/modifiers/
+     1 error(missing-item): event STH.N not defined in events/
+     1 error(missing-item): modifier shadow_telflamm_walker_modifier not defined in common/modifiers/
+     1 error(missing-item): event TWI.N not defined in events/
+     1 error(missing-item): modifier zhent_trade_cooldown not defined in common/modifiers/
+     1 error(missing-item): modifier uninspired not defined in common/modifiers/
+     1 error(missing-item): event JD.N not defined in events/
+     1 error(missing-item): modifier syncretic_ancestral not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_yuir not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_rashemen not defined in common/modifiers/
+     1 error(missing-item): modifier syncretic_ubtao not defined in common/modifiers/
+     1 error(missing-item): modifier worshipped_ancestors_timer not defined in common/modifiers/
+     1 error(missing-item): modifier nomad_warhorse not defined in common/modifiers/
+     1 error(missing-item): event ARTF.N not defined in events/
+     1 error(missing-item): modifier held_blot_timer not defined in common/modifiers/
+     1 error(missing-item): modifier held_jarilo_timer not defined in common/modifiers/
+     1 error(missing-item): modifier morale_from_nerge not defined in common/modifiers/
+     1 error(missing-item): dlc name Rajas of India not defined in dlc_metadata/
+     1 error(missing-item): modifier held_ukon_juhla_timer not defined in common/modifiers/
+     1 error(missing-item): modifier held_uzgavenes_timer not defined in common/modifiers/
+     1 error(missing-item): modifier expelled_gurs_timer not defined in common/modifiers/
+     1 error(missing-item): modifier promise_of_celibacy not defined in common/modifiers/
+     1 error(missing-item): modifier attempting_to_blend_in not defined in common/modifiers/
+     1 error(missing-item): modifier withdrawal_symptoms not defined in common/modifiers/
+     1 error(missing-item): government type merchant_republic_government not defined in common/governments/
+     1 error(missing-item): opinion modifier requested_land not defined in common/opinion_modifiers/
+     1 error(missing-item): modifier holding_nomad_wargames not defined in common/modifiers/
+     1 error(missing-item): modifier held_nomad_wargames not defined in common/modifiers/
+     1 error(missing-item): event RIP.N not defined in events/
+     1 error(missing-item): modifier mystic_treatment_decent not defined in common/modifiers/
+     1 error(missing-item): modifier mystic_treatment_poor not defined in common/modifiers/
+     1 error(missing-item): modifier mystic_treatment_terrible not defined in common/modifiers/
+     1 error(missing-item): modifier out_traveling not defined in common/modifiers/
+     1 error(missing-item): modifier recently_opened_gates not defined in common/modifiers/
+     1 error(missing-item): modifier jd_shou_lung_honor_guard_timer not defined in common/modifiers/
+     1 error(missing-item): modifier jd_shou_lung_regiment_timer not defined in common/modifiers/
+     1 error(missing-item): focus focus_scholarship not defined in common/focuses/
+     1 error(missing-item): modifier studying_the_stars not defined in common/modifiers/
+     1 error(missing-item): modifier heliocentrist_scholar not defined in common/modifiers/
+     1 error(missing-item): modifier weird_scholar not defined in common/modifiers/
+     1 error(unknown-field): unknown token `loviatar`
+     1 error(unknown-field): unknown token `vhaeraun`
+     1 error(unknown-field): unknown token `e_narfell`
+     1 error(unknown-field): unknown token `regalia_of_impiltur`
+     1 error(unknown-field): unknown token `k_impiltur`
+     1 error(unknown-field): unknown token `crown_of_narfell`
+     1 error(unknown-field): unknown token `peacock_throne_base`
+     1 error(unknown-field): unknown token `peacock_throne_left_side`
+     1 error(unknown-field): unknown token `peacock_throne_right_side`
+     1 error(unknown-field): unknown token `peacock_throne_canopy`
+     1 error(unknown-field): unknown token `c_zundbridge`
+     1 error(unknown-field): unknown token `c_red_cliffs`
+     1 error(unknown-field): unknown token `thymari`
+     1 error(unknown-field): unknown token `vayemniri`
+     1 error(unknown-field): unknown token `elven_pantheon`
+     1 error(field-missing): required field `amount` missing
+     1 error(unknown-field): unknown token `d_broken_arrow`
+     1 error(unknown-field): unknown token `kahin`
+     1 error(unknown-field): unknown token `urdlen`
+     1 error(unknown-field): unknown token `d_reghed_elk`
+     1 error(unknown-field): unknown token `d_reghed_bear`
+     1 error(unknown-field): unknown token `d_reghed_wolf`
+     1 error(unknown-field): unknown token `d_reghed_tiger`
+     1 error(unknown-field): unknown token `lorendrow`
+     1 error(unknown-field): unknown token `aevendrow`
+     1 error(unknown-field): unknown token `drow`
+     1 error(unknown-field): unknown token `c_tempat_larang`
+     1 error(unknown-field): unknown token `c_saikhoi`
+     1 error(unknown-field): unknown token `c_kuo_meilan`
+     1 error(unknown-field): unknown token `k_ra_khati`
+     1 error(unknown-field): unknown token `k_chukei`
+     1 error(unknown-field): unknown token `k_larang`
+     1 error(unknown-field): unknown token `k_amn`
+     1 error(unknown-field): unknown token `k_wealdath`
+     1 error(unknown-field): unknown token `k_tethyr`
+     1 error(unknown-field): unknown token `k_erlkazar`
+     1 error(unknown-field): unknown token `k_calimshan`
+     1 error(unknown-field): unknown token `c_shoonach`
+     1 error(unknown-field): unknown token `church_of_cyric`
+     1 error(unknown-field): unknown token `c_huzuz`
+     1 error(unknown-field): unknown token `illithid_pantheon`
+     1 error(unknown-field): unknown token `kossuth`
+     1 error(unknown-field): unknown token `padhran`
+     1 error(unknown-field): unknown token `pagan`
+     1 error(unknown-field): unknown token `primordial`
+     1 error(unknown-field): unknown token `thasmudyanic`
+     1 error(unknown-field): unknown token `sekolah`
+     1 error(unknown-field): unknown token `d_waterdeep`
+     1 error(unknown-field): unknown token `yuir`
+     1 error(unknown-field): unknown token `yuir_reformed`
+     1 error(unknown-field): unknown token `rasallesian`
+     1 error(unknown-field): unknown token `ancestral_cult`
+     1 error(unknown-field): unknown token `aslanlar`
+     1 error(unknown-field): unknown token `shaaran`
+     1 error(unknown-field): unknown token `nar`
+     1 error(unknown-field): unknown token `arkaiun`
+     1 error(unknown-field): unknown token `semphari`
+     1 error(unknown-field): unknown token `raurindi`
+     1 error(unknown-field): unknown token `chessentan`
+     1 error(unknown-field): unknown token `giant_pantheon_group`
+     1 error(unknown-field): unknown token `e_yaimunnahar`
+     1 error(unknown-field): unknown token `animist`
+     1 error(unknown-field): unknown token `sossrim`
+     1 error(unknown-field): unknown token `BARON`
+     1 error(unknown-field): unknown token `the_path`
+     1 error(unknown-field): unknown token `duke`
+     1 warning(missing-item): nickname nick_the_sildur not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_trobairitz not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lioness not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_enchantress not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_war_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_red_gladiatrix not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_queen_under_the_mountain not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_queen_of_thorns not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_pale not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_grand_matriarch not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lady_of_murder not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_radiant not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_battle_mistress not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_beast_mistress not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_grandmother not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_cowardly not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_pale_mistress not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_sea_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_warrior_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_luckless not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_mistress_of_masks not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_mistress_of_the_wild_hunt not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_landmother not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_lady_of_blight not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_lady_of_blue_breath not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_lady_of_swords not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_mistress_of_the_peaks not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_bronze_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fey_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fiend_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lich_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_sylvan_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_wight_queen not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fey_lady not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_silent_lady not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_sylvan_lady not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lady_of_spells not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_wightmother not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_mistress_of_wide_pastures not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_mistress_of_wights not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_vampiric_mother not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_mourning not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_game_mistress not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_enchanter not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_war_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_red_gladiator not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_masked not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_shining not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_penitent not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_king_under_the_mountain not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_king_of_thorns not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_iron_unbent not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_true_steel not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_grim not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_grand_patriarch not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lord_of_murder not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_battle_master not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_beast_master not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_grandfather not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_pale_master not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_warrior_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_master_of_masks not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_master_of_the_wild_hunt not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_landfather not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_blight_lord not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_lord_of_blue_breath not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_lord_of_swords not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_master_of_the_peaks not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_bronze_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_copper_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fey_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fiend_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lich_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_sylvan_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_wight_king not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_fey_lord not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_silent_lord not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_sylvan_lord not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lord_of_spells not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_lord_of_wights not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_master_of_wide_pastures not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_master_of_wights not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_vampiric_father not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_daughter_of_the_maimed_one not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_son_of_the_maimed_one not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_iron not defined in common/nicknames/
+     1 warning(missing-item): nickname nick_the_game_master not defined in common/nicknames/
+     1 warning(missing-localization): missing english, spanish, french and german localization key recruit_troops_nomad
+     1 warning(missing-localization): missing english, spanish, french and german localization key recruit_troops_norse
+     1 warning(missing-localization): missing english, spanish, french and german localization key carousing_with_the_men
+     1 warning(missing-localization): missing english, spanish, french and german localization key increase_mercenary_size
+     1 warning(scopes): `has_trait` is for character but scope seems to be landed title
+     1 warning(missing-localization): missing english, spanish, french and german localization key court_exodus
+     1 warning(missing-localization): missing english, spanish, french and german localization key convert_to_attacker_religion
+     1 warning(missing-localization): missing english, spanish, french and german localization key ask_help_to_manage_titles
+     1 warning(missing-localization): missing english, spanish, french and german localization key help_liege_manage_titles
+     1 warning(missing-localization): missing english, spanish, french and german localization key employ_soldier
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_claimant_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_independence_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_lower_crown_authority_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_lower_tribal_organization_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_overthrow_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_feudal_elective_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_gavelkind_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_primogeniture_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key faction_succ_seniority_ultimatum
+     1 warning(missing-localization): missing english, spanish, french and german localization key sent_adventurers
+     1 warning(missing-localization): missing english, spanish, french and german localization key raise_monster_units
+     1 warning(missing-localization): missing english, spanish, french and german localization key convert_to_republic_ai
+     1 warning(scopes): `is_coastal` is for province but scope seems to be landed title
+     1 warning(scopes): `location` is for character, army or combat but scope seems to be landed title
+     1 warning(missing-localization): missing english, spanish, french and german localization key restore_ammarindar
+     1 warning(missing-localization): missing english, spanish, french and german localization key tooltip_not_busy
+     1 warning(missing-localization): missing english, spanish, french and german localization key acquire_ingredients_decision_cooldown_timer
+     1 warning(scopes): `destroy_title` is for character but scope seems to be landed title
+     1 warning(missing-localization): missing english, spanish, french and german localization key hashshashin_loan_money_TT
+     1 warning(missing-localization): missing english, spanish, french and german localization key choose_warhorse_nomad
+     1 warning(missing-localization): missing english, spanish, french and german localization key nomad_acquires_warhorse_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key commission_runestone
+     1 warning(missing-localization): missing english, spanish, french and german localization key hold_blot
+     1 warning(missing-localization): missing english, spanish, french and german localization key prepare_blot
+     1 warning(missing-localization): missing english, spanish, french and german localization key prepare_nerge
+     1 warning(missing-localization): missing english, spanish, french and german localization key hold_tiger_hunt
+     1 warning(missing-localization): missing english, spanish, french and german localization key rename_wonder
+     1 warning(missing-localization): missing english, spanish, french and german localization key sky_burial_decision
+     1 warning(missing-localization): missing english, spanish, french and german localization key sky_burial_custom_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key plot_seize_trade_post_decision
+     1 warning(missing-localization): missing english, spanish, french and german localization key convert_to_feudalism_indep
+     1 warning(missing-localization): missing english, spanish, french and german localization key convert_to_feudalism_vassal
+     1 warning(missing-localization): missing english, spanish, french and german localization key convert_to_republic_indep
+     1 warning(missing-localization): missing english, spanish, french and german localization key demand_liege_title
+     1 warning(missing-localization): missing english, spanish, french and german localization key demand_liege_title_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_empire
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_empire_requirement_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_empire_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_kingdom
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_kingdom_requirement_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key form_new_kingdom_tooltip
+     1 warning(missing-localization): missing english, spanish, french and german localization key hold_nomad_wargames
+     1 warning(missing-localization): missing english, spanish, french and german localization key petition_doge_for_tp
+     1 warning(missing-localization): missing english, spanish, french and german localization key usurp_tp
+     1 warning(missing-localization): missing english, spanish, french and german localization key shou_lung_sends_reinforcements
+     1 warning(missing-localization): missing english, spanish, french and german localization key conscript_merchant_ships
+     1 warning(missing-localization): missing english, spanish, french and german localization key raise_tribal_units
+     1 warning(missing-localization): missing english, spanish, french and german localization key drink_from_fountain_of_youth
+     1 warning(missing-localization): missing english, spanish, french and german localization key recruit_academy_hero
+     1 warning(missing-localization): missing english, spanish, french and german localization key recruit_wonder_guard
+     1 warning(missing-localization): missing english, spanish, french and german localization key repair_wonder_decision
+     1 warning(missing-localization): missing english, spanish, french and german localization key store_relic_in_wonder
+
+TOTAL findings inside common/decisions/: 2569
