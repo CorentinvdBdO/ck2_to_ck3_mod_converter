@@ -119,8 +119,8 @@ by `tables.derive_government()` — first match wins:
 | # | input | CK3 government |
 |---|---|---|
 | 1 | CK2 `government = x` in `history/titles` | `government_map.csv` |
-| 2 | `mercenary = yes` | `mercenary_government` |
-| 3 | `holy_order = yes` | `holy_order_government` |
+| 2 | `mercenary = yes` | `feudal_government` (was `mercenary_government` until 2026-09-09: CK3 reserves it for engine-created companies; 136 landed mercenary duchies carrying it crashed the first tick in ~1 launch of 4) |
+| 3 | `holy_order = yes` | `feudal_government` (was `holy_order_government`, same reason; 19 landed orders) |
 | 4 | `pirate = yes` | `landless_adventurer_government` |
 | 5 | `tribe = yes` | `tribal_government` |
 | 6 | declared in `republics.txt` | `republic_government` |
@@ -132,8 +132,7 @@ Rows 2-5 are ordered specific-before-generic on purpose: `e_pirates` sets
 win. The reason is written into the file as a comment above the title's
 history, so the derivation is auditable per title.
 
-Result over Faerûn: 5296 feudal, 136 mercenary, 71 tribal, 20 nomad, 20 holy
-order, 5 theocracy, 2 republic, 1 landless adventurer.
+Result over Faerûn (2026-09-09): 5451 feudal (incl. 136 CK2 mercenary companies and 20 CK2 orders, flagged in comments), 71 tribal, 20 nomad, 5 theocracy, 2 republic, 1 landless adventurer. `tables.HISTORY_GOVERNMENTS` is the allowed set; a test refuses any other id.
 
 ### Succession laws
 

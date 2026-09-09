@@ -683,8 +683,6 @@ def test_faerun_governments_are_all_real_ck3_ids(faerun_model):
 
     valid = set(tables.load_government_map(GOV_CSV).values())
     valid |= {
-        "mercenary_government",
-        "holy_order_government",
         "landless_adventurer_government",
         "theocracy_government",
         "republic_government",

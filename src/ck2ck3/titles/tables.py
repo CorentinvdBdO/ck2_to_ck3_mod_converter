@@ -107,10 +107,37 @@ def load_government_laws(path: Path) -> dict[str, str]:
 #: them.  These are the ``government_map.csv`` rows whose ``ck2_government``
 #: column is a parenthesised note rather than a CK2 government id, plus the
 #: two landed_titles flags that row set covers.
+#: Every government id CK3 1.19 declares in ``common/governments`` (`verified`
+#: 2026-09-09). A title history may only name one of these; vanilla's own
+#: ``history/titles`` never uses ``mercenary_government`` or
+#: ``holy_order_government`` (those belong to engine-created companies and
+#: orders), and landed titles carrying them crashed the first tick in ~1
+#: launch of 4 (docs/DECISIONS.md 2026-09-09, "special governments").
+VANILLA_GOVERNMENTS: frozenset[str] = frozenset({
+    "administrative_government", "celestial_government", "clan_government",
+    "feudal_government", "herder_government", "holy_order_government",
+    "japan_administrative_government", "japan_feudal_government",
+    "landless_adventurer_government", "mandala_government",
+    "mercenary_government", "meritocratic_government", "nomad_government",
+    "republic_government", "steppe_admin_government", "theocracy_government",
+    "tribal_government", "wanua_government",
+})
+
+#: Governments a *history* title may carry (VANILLA_GOVERNMENTS minus the two
+#: engine-object governments).
+HISTORY_GOVERNMENTS: frozenset[str] = VANILLA_GOVERNMENTS - {
+    "mercenary_government", "holy_order_government",
+}
+
 FLAG_GOVERNMENTS: tuple[tuple[str, str, str], ...] = (
     # (CK2 landed_titles key, CK3 government, why)
-    ("mercenary", "mercenary_government", "CK2 landed_titles mercenary = yes"),
-    ("holy_order", "holy_order_government", "CK2 landed_titles holy_order = yes"),
+    # CK2 mercenary companies and holy orders are *landed duchies* in Faerun
+    # (136 + 19, every one with counties). CK3 models both as engine objects
+    # (common/mercenary_companies, common/holy_orders) whose governments a
+    # history title must not carry: feudal here, the CK2 nature in the comment;
+    # the submod can create real companies/orders from them.
+    ("mercenary", "feudal_government", "CK2 landed_titles mercenary = yes; landed in Faerun, so feudal (CK3 mercenary_government is for engine-created companies)"),
+    ("holy_order", "feudal_government", "CK2 landed_titles holy_order = yes; landed in Faerun, so feudal (CK3 holy_order_government is for engine-created orders)"),
     (
         "pirate",
         "landless_adventurer_government",
