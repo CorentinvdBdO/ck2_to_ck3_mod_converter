@@ -173,6 +173,9 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             ck3_max_level=int(hm.get("ck3_max_level", 49205)),
             curve=[(int(a), int(b)) for a, b in hm.get("curve", [])],
             tile_size=int(hm.get("tile_size", 33)),
+            deepen_sea=bool(hm.get("deepen_sea", True)),
+            sea_shelf_px=int(hm.get("sea_shelf_px", 24)),
+            sea_floor=int(hm.get("sea_floor", 0)),
         ),
         heightmap_detail=map_config.heightmap_detail_config(raw),
         provinces=map_config.ProvincesConfig(

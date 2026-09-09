@@ -141,3 +141,40 @@ def measure_sea_level(
         "land_median": float(np.median(land)),
         "suggested_sea_level": (w99 + l01) / 2.0,
     }
+
+
+def deepen_sea(
+    heights: np.ndarray,
+    water_level: int,
+    *,
+    shelf_px: int = 24,
+    floor: int = 0,
+) -> np.ndarray:
+    """Push the open sea down to ``floor``, keeping a coastal shelf.
+
+    CK2's ``topology.bmp`` carries almost no bathymetry: Faerûn's whole ocean
+    sits between 1439 and the water level once rescaled, a median of only 39 %
+    of the way down, and CK3 renders shallow water as sand — the ocean west of
+    Waterdeep came out beach-coloured in game (2026-09-10).
+
+    Vanilla's own sea floor is **flat 0**: p25, median and p75 of vanilla's
+    underwater pixels are all 0 (`verified` against
+    ``game/map_data/heightmap.png``, water level 3932). So the fix is not a
+    rescale of CK2's noise but vanilla's shape — ``floor`` everywhere, with a
+    linear ramp over ``shelf_px`` pixels of distance from the coast so beaches
+    and straits keep a gradient instead of dropping off a wall.
+
+    Land pixels (``> water_level``) are untouched.
+    """
+    from scipy import ndimage
+
+    water = heights <= water_level
+    if not water.any():
+        return heights
+    # distance in pixels from each water pixel to the nearest land pixel
+    dist = ndimage.distance_transform_edt(water)
+    t = np.clip(dist / max(shelf_px, 1), 0.0, 1.0)
+    shelf = water_level + (floor - water_level) * t
+    out = heights.copy()
+    out[water] = np.rint(shelf[water]).astype(heights.dtype)
+    return out

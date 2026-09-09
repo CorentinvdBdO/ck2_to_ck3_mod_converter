@@ -159,6 +159,14 @@ class HeightmapConfig:
     curve: list[tuple[int, int]] = field(default_factory=list)
     #: tile_size written into heightmap.heightmap
     tile_size: int = 33
+    #: push the open sea to `sea_floor`, keeping a `sea_shelf_px` coastal ramp.
+    #: CK2 has almost no bathymetry and CK3 paints shallow water as sand
+    #: (docs/step_map_heightmap.md); vanilla's own sea floor is a flat 0.
+    deepen_sea: bool = True
+    #: pixels of coastal ramp between the water surface and `sea_floor`
+    sea_shelf_px: int = 24
+    #: 16-bit height of the open-sea floor (vanilla: 0)
+    sea_floor: int = 0
 
 
 #: vanilla per-CK3-terrain high-frequency RMS (16-bit levels, land only),
