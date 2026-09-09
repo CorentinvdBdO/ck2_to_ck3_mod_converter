@@ -14,7 +14,7 @@ common/decisions/dlc_decisions/fp_1,shadow,DLC decisions naming vanilla titles (
 common/decisions/dlc_decisions/fp_3,shadow,DLC decisions naming vanilla titles (21 title_links).
 common/decisions/dlc_decisions/mpo,shadow,DLC decisions naming vanilla titles (12 title_links).
 common/decisions/dlc_decisions/tgp,shadow,"206 title_links, including tgp_silk_road_decisions.txt - the Silk Road situation the playtest crashed on."
-common/flavorization,shadow,"1783 pdx_persistent_reader ""Failed to read key reference"" at load, all naming vanilla titles (e_japan, k_chrysanthemum_throne). EK2 stubs 6 of 8 files, Godherja 3."
+common/flavorization,keep,"KEEP since 2026-09-09 (was shadow): with no flavorization at all the engine computes every ruler's title name at the first tick after unpausing (""Failed to find any valid flavorization for character X"") and crashed ~1 launch in 4 at 0x141972299 (the user's 18:33 crash, 3/10 headless baseline); with the vanilla files restored 10/10 launches survived. Vanilla generic flavorizations (King/Duke/...) also give rulers proper names. Cost: 1783 harmless ""Failed to read key reference"" lines at load, all naming vanilla titles (e_japan, k_chrysanthemum_throne). EK2 stubs 6 of 8 files, Godherja 3 - both keep the generics."
 common/great_projects/types,shadow,341 title_links: wonders pinned to vanilla counties and provinces.
 common/legends/chronicles,shadow,32 title_links plus vanilla dynasty references.
 common/legends/legend_seeds,shadow,"4411 ""Failed to fetch a valid dynasty"" script errors and 47 title_links: seeds are historical legends about vanilla dynasties and titles."
