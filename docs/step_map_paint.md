@@ -323,3 +323,15 @@ claudespace/scripts/ck3_soak.sh faerun_ck2_to_ck3_converted \
 functions). ck3-tiger has nothing to check here — §6/§7 already established
 it raises nothing about this pair (opaque binary files to it either way);
 this lane did not re-run it.
+
+### 8.6 In-game check (coordinator, 2026-09-09)
+
+- `verified` Probe `tga_rle_0p5` loaded after the mod (`Paint variant: tga_rle_0p5 ... Enabled` in
+  debug.log): the game reached In Game and stayed alive 100 s, zero `detail_index`/`detail_intensity`/
+  texture errors in error.log. The first probe run was invalid (its descriptor `replace_path`-ed
+  `gfx/map/terrain`, deleting vanilla materials); fixed in `scripts/paint_variants.py`.
+- `assumed` Visual quality of half-resolution paint at close zoom. The headless `-test` run sits on the
+  character-selection map (political flat map, `claudespace` screenshot), which does not show the paint;
+  the player's playtest is the visual check.
+- Decision: defaults are now `terrain_paint_format = "tga_rle"`, `terrain_paint_scale = 0.5` (2.3 MB +
+  53 MB); the generated mod repo tracks the pair again.

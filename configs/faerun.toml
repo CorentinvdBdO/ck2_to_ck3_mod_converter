@@ -116,7 +116,7 @@ terrain_paint_quantize = 16
 # from the map editor's own mask-bake code, so a renamed .dds may simply
 # never be found - docs/step_map_paint.md §8.2). Left at the vanilla-matching
 # default until the coordinator's in-game check (§8.5) picks one.
-terrain_paint_format = "tga"
+terrain_paint_format = "tga_rle"
 # Downsample factor: 1.0 matches provinces.png (vanilla's own choice); 0.5
 # halves both dimensions (nearest-neighbour for detail_index so no bogus
 # in-between material ordinal is invented, box-filter for detail_intensity).
@@ -126,7 +126,7 @@ terrain_paint_format = "tga"
 # uncompressed (docs/step_map_paint.md §8.3, measured: tga_rle at 0.5 is
 # 2.33 MB + 54.55 MB, the smallest of all six format x scale combinations
 # tried). Left at 1.0 (full size) until the coordinator's in-game check.
-terrain_paint_scale = 1.0
+terrain_paint_scale = 0.5
 
 # --- measured scale inputs (flat keys: `scale` under [map] is already the
 # --- derived float above, so a [map.scale] table would collide with it)

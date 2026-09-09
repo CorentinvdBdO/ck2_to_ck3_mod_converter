@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-09 10:20 by Claude session (coordinator)
+Updated: 2026-09-09 13:30 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -33,7 +33,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 
 ## Blockers and open flags
 - 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
-- Terrain paint pair is 2 × 226 MB uncompressed TGA: gitignored in the generated mod repo (GitHub 100 MB limit); RLE / half-res untested. Human call pending.
+- Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads in game without errors; visual check at close zoom pending (user playtest).
 - Ancient non-immortal characters still exist (56 alive ≥150 years without a CK2 immortal marker); ages are accepted by the game but worth a race-lifespan decision.
 - Worker agents hang forever at `git commit` (permission prompt nobody answers); coordinator commits. See `~/.claude/harness/NOTES.md`.
 - Backlog: `docs/integration_backlog.md` (trait classifier, lifespan overrides, culture gfx chain order, island-region neighbours, TOO LARGE BOX barony, faith icons, bookmark art).
