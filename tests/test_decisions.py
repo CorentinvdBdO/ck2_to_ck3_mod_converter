@@ -235,6 +235,7 @@ ck3_game = "{ck3_game}"
 out = "{out}"
 
 [decisions]
+enabled = true
 provenance = "{provenance}"
 evidence = "{evidence}"
 triggers = "{triggers}"
@@ -322,3 +323,13 @@ def test_run_writes_common_decisions_and_evidence(run_ctx, monkeypatch: pytest.M
     assert rows["high_score"]["emitted"] == "yes"
     assert rows["low_score"]["emitted"] == "yes"
     assert rows["not_character_scope"]["emitted"] == "no"
+
+
+def test_run_is_opt_in_by_default(run_ctx, monkeypatch: pytest.MonkeyPatch) -> None:
+    """[decisions] enabled defaults to false: the step writes nothing (docs/step_decisions.md §3b)."""
+    ctx, out, _ = run_ctx
+    ctx.config.raw["decisions"]["enabled"] = False
+    result = step.run(ctx)
+    assert result.counts["emitted"] == 0
+    assert not list((out / "common" / "decisions").glob("fae_*.txt")) if (out / "common" / "decisions").exists() else True
+    assert "opt-in" in result.summary
