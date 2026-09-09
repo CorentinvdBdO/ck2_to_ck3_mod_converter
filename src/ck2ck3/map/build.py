@@ -338,6 +338,29 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         log("building heightmap")
         heights = heightmap.build(src / "topology.bmp", canvas, cfg.heightmap)
 
+        if cfg.heightmap.deepen_sea:
+            # CK2 carries almost no bathymetry; CK3 paints shallow water as
+            # sand (docs/step_map_heightmap.md, 2026-09-10 in-game check).
+            log(f"deepening the sea (floor {cfg.heightmap.sea_floor}, "
+                f"shelf {cfg.heightmap.sea_shelf_px} px)")
+            before = heights[heights <= cfg.heightmap.ck3_water_level]
+            heights = heightmap.deepen_sea(
+                heights,
+                cfg.heightmap.ck3_water_level,
+                shelf_px=cfg.heightmap.sea_shelf_px,
+                floor=cfg.heightmap.sea_floor,
+            )
+            after = heights[heights <= cfg.heightmap.ck3_water_level]
+            report["sea_floor"] = {
+                "median_before": int(np.median(before)) if before.size else 0,
+                "median_after": int(np.median(after)) if after.size else 0,
+                "water_level": int(cfg.heightmap.ck3_water_level),
+                "shelf_px": int(cfg.heightmap.sea_shelf_px),
+            }
+            log(f"sea floor: median {report['sea_floor']['median_before']} -> "
+                f"{report['sea_floor']['median_after']} (water level "
+                f"{cfg.heightmap.ck3_water_level})")
+
         if cfg.heightmap_detail.enabled:
             from . import heightmap_detail
 

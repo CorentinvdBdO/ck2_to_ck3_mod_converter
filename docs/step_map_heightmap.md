@@ -148,3 +148,26 @@ spectrum, not the right shape: side by side it reads as gravel where vanilla
 reads as landscape (`docs/map_fidelity.md` §4.2). Closing that gap needs
 ridged-multifractal noise or a hydraulic-erosion pass — a different order of
 work, and a look call for a human, not this lane's scope.
+
+## Sea floor (2026-09-10)
+
+CK2's `topology.bmp` carries almost no bathymetry. Rescaled, Faerûn's whole
+ocean landed in `[1439, 4883]` — a median only **39 %** of the way below the
+water surface — and CK3 paints shallow water as sand, so the ocean west of
+Waterdeep came out beach-coloured in the in-game check (camera probe,
+`docs/step_map_paint.md` §9.5/§9.8).
+
+Vanilla's own sea floor is a **flat 0**: p25, median and p75 of vanilla's
+underwater pixels are all 0 (`verified` against `game/map_data/heightmap.png`,
+water level 3932 = `WATERLEVEL 3.0 / WORLD_EXTENTS_Y 50.0 × 65535`). So
+`ck2ck3.map.heightmap.deepen_sea` takes vanilla's shape rather than rescaling
+CK2's noise: every water pixel goes to `[map.heightmap] sea_floor` (0), with a
+linear ramp over `sea_shelf_px` (24) pixels of distance from the nearest land,
+so beaches and straits keep a gradient instead of dropping off a wall. Land
+pixels are untouched; the pass runs before the detail synthesis and the packer.
+
+Measured on Faerûn: water median 2981 → **0**, p75 4420 → **0**, 14.0 % of
+water pixels remain on the shelf between 0 and the water level, land minimum
+4884 (one level above the surface, as before).
+
+`deepen_sea = false` restores the old behaviour.

@@ -201,3 +201,30 @@ def test_measure_sea_level_needs_both_land_and_water():
     ids = np.array([[7]], dtype=np.int32)
     with pytest.raises(ValueError, match="both water and land"):
         heightmap.measure_sea_level(topo, ids, water_ids={7})
+
+
+def test_deepen_sea_flattens_the_open_sea_and_keeps_a_shelf():
+    """CK2 has no bathymetry and CK3 paints shallow water as sand; vanilla's own
+    sea floor is a flat 0 (docs/step_map_heightmap.md)."""
+    import numpy as np
+    from ck2ck3.map import heightmap
+
+    wl = 4883
+    # a 1-pixel island at the centre of a 121x121 sea, all of it just under the surface
+    h = np.full((121, 121), wl - 100, dtype=np.uint16)
+    h[60, 60] = wl + 5000
+    out = heightmap.deepen_sea(h, wl, shelf_px=10, floor=0)
+
+    assert out[60, 60] == wl + 5000, "land must not move"
+    assert out[60, 61] < wl, "the pixel next to land stays under water"
+    assert out[60, 61] > out[60, 66] > out[0, 0], "depth increases away from the coast"
+    assert out[0, 0] == 0, "the open sea sits on the floor"
+    assert out.max() == wl + 5000 and out.dtype == h.dtype
+
+
+def test_deepen_sea_is_a_no_op_without_water():
+    import numpy as np
+    from ck2ck3.map import heightmap
+
+    h = np.full((8, 8), 20000, dtype=np.uint16)
+    assert (heightmap.deepen_sea(h, 4883) == h).all()
