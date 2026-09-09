@@ -1,88 +1,155 @@
-"""Tests for gfx/map/terrain/colormap.dds: CK2 colour resample + DDS writer.
+"""Tests for gfx/map/terrain/colormap.dds: measured terrain tint + DDS writer.
 
 Format `verified` against two shipped, loadable CK3 total conversions (Elder
 Kings 2, Godherja): uncompressed A8R8G8B8, quarter province-map resolution,
 alpha = 255. See ``ck2ck3.map.colormap`` module docstring for the byte-level
-evidence.
+evidence, and for why this lane (`colormap-fix`) replaced a CK2-colormap
+resample (`docs/step_map_paint.md` §9.6) with a tint measured from vanilla's
+own `colormap.dds`/`detail_index.tga` pair.
 """
 
 from __future__ import annotations
 
+import csv
 import struct
+from pathlib import Path
 
 import numpy as np
 from PIL import Image
 
 from ck2ck3.map import colormap
-from ck2ck3.map.config import Canvas
+
+REPO = Path(__file__).resolve().parents[1]
 
 
-def _canvas(**kw) -> Canvas:
-    base = dict(
-        width=16,
-        height=16,
-        scaled_width=8,
-        scaled_height=8,
-        offset_x=4,
-        offset_y=4,
-        factor=2.0,
-        crop_x0=0,
-        crop_y0=0,
-        crop_x1=4,
-        crop_y1=4,
+def test_read_tint_map_parses_rows_and_skips_comments(tmp_path):
+    p = tmp_path / "tints.csv"
+    p.write_text(
+        "# a comment line\n"
+        "ck3_terrain,tint_r,tint_g,tint_b,sample_count,note\n"
+        "plains,127,127,126,13019,some note\n"
+        "water,129,130,129,8041139,another note\n",
+        encoding="utf-8",
     )
-    base.update(kw)
-    return Canvas(**base)
+    m = colormap.read_tint_map(p)
+    assert m == {"plains": (127, 127, 126), "water": (129, 130, 129)}
 
 
-def _write_ck2_colormap(path, arr: np.ndarray) -> None:
-    """A minimal, uncompressed-enough source colormap for PIL to read back.
+def test_read_tint_map_missing_file_is_not_an_error(tmp_path):
+    assert colormap.read_tint_map(tmp_path / "nope.csv") == {}
 
-    Saved as PNG then reopened as if it were the CK2 asset: ``render`` only
-    needs ``Image.open(...).convert("RGB")``, so a PNG stand-in exercises the
-    same code path without a DXT1 encoder in the test.
+
+def test_build_from_terrain_paints_by_ck3_key_via_lut():
+    # two CK2 categories -> two CK3 keys via an explicit mapping override
+    codes = np.array([[0, 1], [1, 0]], dtype=np.uint8)
+    code_names = ["plains_cat", "forest_cat"]
+    mapping = {"plains_cat": "plains", "forest_cat": "forest"}
+    tint_map = {"plains": (10, 20, 30), "forest": (40, 50, 60), "water": (0, 0, 0)}
+    water_mask = np.zeros((2, 2), dtype=bool)
+
+    out = colormap.build_from_terrain(
+        codes, code_names, tint_map=tint_map, water_mask=water_mask,
+        mapping=mapping, blur_sigma=0,
+    )
+    assert out.dtype == np.uint8
+    assert tuple(out[0, 0]) == (10, 20, 30)
+    assert tuple(out[1, 1]) == (10, 20, 30)
+    assert tuple(out[0, 1]) == (40, 50, 60)
+    assert tuple(out[1, 0]) == (40, 50, 60)
+
+
+def test_build_from_terrain_water_mask_overrides_terrain_key():
+    # every pixel maps to "plains", but the whole grid is marked water
+    codes = np.zeros((3, 3), dtype=np.uint8)
+    code_names = ["plains_cat"]
+    mapping = {"plains_cat": "plains"}
+    tint_map = {"plains": (200, 10, 10), "water": (1, 2, 3)}
+    water_mask = np.ones((3, 3), dtype=bool)
+
+    out = colormap.build_from_terrain(
+        codes, code_names, tint_map=tint_map, water_mask=water_mask,
+        mapping=mapping, blur_sigma=0,
+    )
+    assert (out == np.array([1, 2, 3], dtype=np.uint8)).all()
+
+
+def test_build_from_terrain_missing_key_falls_back_to_default_and_is_reported():
+    codes = np.zeros((2, 2), dtype=np.uint8)
+    code_names = ["mystery_cat"]
+    mapping = {"mystery_cat": "no_such_ck3_key"}
+    tint_map = {"plains": (5, 6, 7)}
+    warnings: list[str] = []
+
+    out = colormap.build_from_terrain(
+        codes, code_names, tint_map=tint_map,
+        water_mask=np.zeros((2, 2), dtype=bool),
+        mapping=mapping, default="plains", blur_sigma=0, warn=warnings.append,
+    )
+    assert (out == np.array([5, 6, 7], dtype=np.uint8)).all()
+    assert any("no_such_ck3_key" in w for w in warnings)
+
+
+def test_build_from_terrain_blur_smooths_the_boundary():
+    codes = np.zeros((20, 20), dtype=np.uint8)
+    codes[:, 10:] = 1
+    code_names = ["a", "b"]
+    mapping = {"a": "plains", "b": "forest"}
+    tint_map = {"plains": (0, 0, 0), "forest": (200, 200, 200)}
+    water_mask = np.zeros((20, 20), dtype=bool)
+
+    out = colormap.build_from_terrain(
+        codes, code_names, tint_map=tint_map, water_mask=water_mask,
+        mapping=mapping, blur_sigma=2.0,
+    )
+    # a pixel right at the boundary is no longer a pure class colour
+    boundary = int(out[10, 10, 0])
+    assert 0 < boundary < 200
+    # far from the boundary, the blur has not reached and colours stay pure
+    assert tuple(out[10, 0]) == (0, 0, 0)
+    assert tuple(out[10, 19]) == (200, 200, 200)
+
+
+def _weighted_mean_saturation(rows: list[dict], r_key: str, g_key: str, b_key: str, n_key: str) -> float:
+    total_n = sum(int(row[n_key]) for row in rows)
+    total = 0.0
+    for row in rows:
+        rgb = (float(row[r_key]), float(row[g_key]), float(row[b_key]))
+        total += (max(rgb) - min(rgb)) * int(row[n_key])
+    return total / total_n
+
+
+def test_our_land_tints_do_not_exceed_vanillas_own_saturation_by_much():
+    """Regression guard: `mappings/colormap_tints.csv` land rows vs. vanilla.
+
+    Every land tint in our table *is* one of vanilla's own measured material
+    means (`scripts/build_colormap_tints_csv.py`), so this should already
+    hold by construction; this test exists to catch a future edit (a
+    hand-picked, more saturated colour; a broken measurement script) rather
+    than to prove today's numbers. Margin: 3 (max-min channel units) over
+    vanilla's own sample-count-weighted mean saturation across every material
+    it actually paints — vanilla's own materials span roughly 0.85 (water) to
+    ~19 (its most saturated desert material), so 3 is a small fraction of
+    that range, not a rubber stamp.
     """
-    Image.fromarray(arr).save(path)
+    with (REPO / "docs" / "evidence" / "vanilla_colormap_tints.csv").open(
+        encoding="utf-8", newline=""
+    ) as fh:
+        vanilla_rows = list(csv.DictReader(fh))
+    vanilla_land = [r for r in vanilla_rows if not r["material_name"].startswith("water")]
+    vanilla_sat = _weighted_mean_saturation(
+        vanilla_land, "mean_r", "mean_g", "mean_b", "sample_count"
+    )
 
+    with (REPO / "mappings" / "colormap_tints.csv").open(encoding="utf-8", newline="") as fh:
+        our_rows = list(csv.DictReader(fh))
+    our_land = [r for r in our_rows if r["ck3_terrain"] != "water"]
+    our_sat = _weighted_mean_saturation(our_land, "tint_r", "tint_g", "tint_b", "sample_count")
 
-def test_render_places_source_at_offset_and_fills_margin(tmp_path):
-    # 4x4 source, left half red, right half green -> resampled to 8x8, pasted
-    # at (4, 4) on a 16x16 canvas filled with a distinct margin colour.
-    src = np.zeros((4, 4, 3), dtype=np.uint8)
-    src[:, :2] = (255, 0, 0)
-    src[:, 2:] = (0, 255, 0)
-    p = tmp_path / "colormap.png"
-    _write_ck2_colormap(p, src)
-
-    canvas = _canvas()
-    out = colormap.render(p, canvas, margin_rgb=(1, 2, 3))
-    assert out.shape == (16, 16, 3)
-
-    # corners are untouched margin
-    assert tuple(out[0, 0]) == (1, 2, 3)
-    assert tuple(out[15, 15]) == (1, 2, 3)
-    # inside the pasted region: left half red-ish, right half green-ish
-    assert out[8, 5][0] > out[8, 5][1]  # red channel dominant on the left
-    assert out[8, 10][1] > out[8, 10][0]  # green channel dominant on the right
-
-
-def test_render_rescales_crop_when_source_size_differs(tmp_path):
-    """A colormap not pixel-aligned with provinces.bmp still resamples right."""
-    # source colormap is 8x8 (double the "provinces.bmp" resolution assumed
-    # by the canvas' crop box, which is in provinces.bmp pixels)
-    src = np.zeros((8, 8, 3), dtype=np.uint8)
-    src[:4] = (255, 0, 0)
-    src[4:] = (0, 0, 255)
-    p = tmp_path / "colormap.png"
-    _write_ck2_colormap(p, src)
-
-    canvas = _canvas(crop_x0=0, crop_y0=0, crop_x1=4, crop_y1=4)
-    out = colormap.render(p, canvas, source_size=(4, 4))
-    assert out.shape == (16, 16, 3)
-    # crop should have been rescaled 2x into the 8x8 source's own space,
-    # i.e. the whole 8x8 source is used, not just its top-left quadrant
-    assert out[5, 8][2] == 0  # top rows: red, no blue
-    assert out[10, 8][0] == 0  # bottom rows: blue, no red
+    margin = 3.0
+    assert our_sat <= vanilla_sat + margin, (
+        f"our land tints average saturation {our_sat:.2f} exceeds vanilla's "
+        f"own {vanilla_sat:.2f} by more than {margin}"
+    )
 
 
 def test_downsample_shape_and_identity_at_scale_one():

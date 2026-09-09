@@ -347,27 +347,19 @@ and an art review of `mappings/terrain_paint.csv`'s two flagged judgement
 calls. This lane (`map-colour`) does all three, plus the evidence the
 coordinator needs to check them without launching the game itself.
 
-### 9.1 `gfx/map/terrain/colormap.dds`
+### 9.1 `gfx/map/terrain/colormap.dds` (superseded by §9.7)
 
-**Format decision, `verified` against real file headers, not vanilla's own
-bake.** Vanilla 1.19 ships `colormap.dds` at full province resolution
-(9216x4608), DXT5, 14 mips, 56.6 MB (`xxd`: fourCC `DXT5`,
-`dwPitchOrLinearSize = 42,467,328 = 9216*4608`). But two shipped, currently
-loadable CK3 total conversions — Elder Kings 2 and Godherja — both ship
-`colormap.dds` **uncompressed 32-bit BGRA (A8R8G8B8), at exactly one-quarter
-of their own province-map resolution** (EK2 2064x1376 of 8256x5504; Godherja
-2048x1024 of 8192x4096; alpha = 255 everywhere, sampled). This lane follows
-the two real conversions: `ck2ck3.map.colormap` resamples the CK2 mod's own
-`map/terrain/colormap.dds` (pixel-aligned with `provinces.bmp`, `verified`
-both 4096x3328 for Faerûn) onto the canvas with the exact crop/scale/offset
-`ck2ck3.map.config.plan_canvas` already computed for the province raster,
-downsamples to `[map] colormap_scale` (default `0.25`), and writes an
-uncompressed BGRA8 DDS byte-for-byte matching the two reference mods'
-`ddspf`/`caps` fields. Faerûn's real run: 2080x1696 with a full mip chain,
-18.8 MB. Config: `[map] colormap` (default `true`), `colormap_scale` (`0.25`),
-`colormap_mips` (`true`). Tests: `tests/test_map_colormap.py` (geometry on a
-synthetic image, header bytes against both reference mods, DDS round-trip via
-PIL).
+This lane (`map-colour`) originally shipped a resample of the CK2 mod's own
+`map/terrain/colormap.dds` onto the canvas, in the same uncompressed BGRA8
+DDS format two reference mods (Elder Kings 2, Godherja) use. **§9.6 found
+this wrong**: CK2's colormap is a saturated, geography-specific land painting
+with no sea/land distinction of its own, not a neutral tint, and resampling
+it put CK2's arctic patch on Waterdeep. `[map] colormap` shipped `false`
+until lane `colormap-fix` replaced the resample with a **measured tint**;
+see §9.7 for the current approach, config keys and numbers. The DDS format
+decision itself (uncompressed BGRA8, quarter province-map resolution,
+matching the two reference mods' header fields) is unchanged — only the
+pixel content changed.
 
 `gfx/map/terrain/output_final_colormap.dds` is vanilla's own bake-tool output
 and ships **0 bytes** in the real game folder (`verified`); nothing reads it
@@ -531,3 +523,144 @@ tint derived from our own terrain classes, calibrated against vanilla's own
 per-material colormap means (vanilla `detail_index.tga` gives the material per
 pixel and `colormap.dds` the tint at the same pixel, so the calibration is a
 measurement, not a guess).
+
+### 9.7 Lane `colormap-fix`: measured tint replaces the resample
+
+**Measurement 1 — vanilla's own per-material tint.**
+`scripts/measure_vanilla_colormap_tints.py` pairs every pixel of vanilla's
+`gfx/map/terrain/colormap.dds` with the same pixel of `detail_index.tga`
+(both `verified` 9216x4608, pixel-aligned) and accumulates mean/stddev RGB
+per material ordinal, over land only. Decode method, `verified`: Pillow 12.3
+decodes the DXT5 `colormap.dds` to a full per-pixel RGB array natively in
+~0.15 s — a **full BC3 decode**, not the 4x4-block colour-endpoint
+approximation the lane brief allowed for as a fallback. Water definition,
+`verified`: vanilla's own `sea_zones`+`lakes` province ids from
+`map_data/default.map`, rasterised via `provinces.png` + `definition.csv` —
+not "pixels whose material is a sea material", because vanilla's own
+`materials.settings` has no material named for water at all. Output:
+`docs/evidence/vanilla_colormap_tints.csv` (102 rows: 101 materials + a
+synthetic `water` row). Interesting rows (mean RGB, sample count):
+
+| material | mean RGB | n | note |
+|---|---|---|---|
+| water (sea_zones+lakes) | 129,130,129 | 8.04M | matches §9.6's own 131,129,131 ocean sample |
+| beach_02 | 129,130,129 | 10.55M | coastal transition strip; near-identical to open water |
+| plains_01 | 127,127,126 | 13.0K | our own `plains` primary |
+| forest_leaf_01 | 128,128,125 | 649K | our own `forest` primary (§9.3's bug fix) |
+| desert_rocky | 138,128,115 | 363K | our own `desert_mountains` primary, most saturated common land material |
+| desert_wavy_01_larger | 154,138,116 | 406K | the single most saturated material vanilla paints anywhere (R-B=38) |
+
+Every material's mean sits in a tight near-neutral band (R 115-154, G
+114-142, B 96-140); nothing approaches CK2's saturated 116,142,74 green.
+
+**Measurement 2 — vanilla's own colour blur scale.**
+`scripts/measure_vanilla_colormap_blur.py` finds the single most-interior
+land pixel (largest chessboard distance to water, `scipy.ndimage
+.distance_transform_cdt`, a 1px false border added first so the canvas edge
+cannot itself win the search — `verified` by a hand test that the transform
+otherwise treats the array boundary as infinitely far, not as background),
+crops a guaranteed-all-land 1024x1024 box around it (landed in west/central
+Africa, `chessboard distance 606`), high-passes it (subtract a sigma=32
+blur) and finds where its radially-averaged 2D autocorrelation first drops
+to 1/e: **9 px**, in vanilla `colormap.dds` pixels
+(`docs/evidence/vanilla_colormap_blur.csv`). Used unconverted as our own
+canvas-pixel blur sigma because our canvas is built to match vanilla's own
+km/px (`docs/map_scale.md`) — the entire point of the scale-factor fit — so
+a vanilla pixel and a canvas pixel already cover the same ground distance.
+`assumed`: equating an autocorrelation e-folding radius with a Gaussian blur
+sigma is exact only for blurred white noise, not vanilla's actual texture,
+and one sample region stands in for the whole map.
+
+**Building our own colormap.** `scripts/build_colormap_tints_csv.py` turns
+measurement 1 into `mappings/colormap_tints.csv` — CK3 terrain key -> tint
+RGB — by looking up each key's **primary** material in the existing
+`mappings/terrain_paint.csv` (no second hand-picked table) and taking that
+material's measured mean. All 16 rows (15 land keys + `water`) resolved to a
+real vanilla sample, no fallback needed. `ck2ck3.map.colormap
+.build_from_terrain` paints this straight from `ck2ck3.map.terrain_paint`'s
+own per-pixel CK2-code grid (`codes_tgt`/`code_names`, `build.py` — no second
+resize), overrides every `water_mask` pixel with the measured water tint,
+then blurs with the measured sigma. `build.py` also had to start keeping
+`codes_tgt` alive when `[map] colormap` is on and `[map] terrain_paint` is
+off (`keep_codes_tgt`), since both passes now share it.
+
+**Bug found and fixed: the `[map] colormap` toggle was dead.**
+`src/ck2ck3/steps/map.py::_map_config` — the function that turns
+`configs/faerun.toml`'s `[map]` table into a `MapConfig` for the real CLI
+pipeline — never read `colormap`/`colormap_scale`/`colormap_mips` at all, so
+`configs/faerun.toml`'s `colormap = false` (set by the coordinator after
+§9.6) was **silently ignored**: every real run kept using the `MapConfig`
+dataclass default (`colormap: bool = True`) and painted the broken CK2
+resample regardless of the toml. `ck2ck3.map.config.load` (the
+standalone-TOML entry point, `python -m ck2ck3.map.build`) already read it
+correctly — only the CLI-facing builder was missing it. `verified` by
+toggling `[map] colormap` in `configs/faerun.toml` before and after the fix
+and checking whether `gfx/map/terrain/colormap.dds` appeared in a real run's
+output: before the fix it appeared regardless of the toml value; after,
+`false` correctly skips it (54 files instead of 55) and `true` writes it.
+Fixed alongside adding the two new keys (`colormap_tints_csv`,
+`colormap_blur_sigma`) so they are not born with the same bug.
+
+**Numbers, real Faerûn run** (`uv run ck2ck3 --config configs/faerun.toml
+--out <dir> --steps map`, `scripts/verify_colormap_land_water.py <out
+dir>`):
+
+| | land | water | vanilla land (weighted) | vanilla water |
+|---|---|---|---|---|
+| mean RGB | 126.7, 125.9, 122.5 | 128.8, 129.8, 128.7 | (varies by material) | 129,130,129 |
+| stddev RGB | 1.2, 2.0, 3.8 | 0.4, 0.5, 0.7 | up to ~20 per material | 2.8 |
+| saturation (max-min) | **4.18** | **1.02** | **6.97** | **0.85** |
+
+Our land saturation (4.18) is comfortably under vanilla's own weighted mean
+(6.97) — the blur and Faerûn's own terrain-class mix pull it toward neutral,
+never past it — and our water tint (1.02) sits within a point of vanilla's
+own (0.85), close enough that the small gap is squarely inside vanilla's
+own material-to-material variation. **`[map] colormap` is re-enabled
+(`true`)** on this basis. File: 2080x1696, 18.81 MB, unchanged from the old
+resample's size (same format/resolution, only the pixel content changed).
+
+**Regression guards** (`tests/test_map_colormap.py`):
+`test_our_land_tints_do_not_exceed_vanillas_own_saturation_by_much` fails if
+`mappings/colormap_tints.csv`'s land rows exceed vanilla's own weighted mean
+saturation by more than 3 (max-min channel units) —
+`test_build_from_terrain_water_mask_overrides_terrain_key` checks a
+water-masked pixel gets the water tint regardless of its terrain-key colour.
+Existing DDS geometry/header/round-trip tests (from the original resample
+lane) are kept green.
+
+**ck3-tiger**: `verified` — a real `ck3-tiger` run against a fresh map-only
+output (`fatal: 0`, `error: 1320` all `missing-item`/`duplicate-item`/
+`rivers`, none mentioning `colormap` or `dds`) found nothing about this file.
+Note this is a *stronger* check than the `detail_index.tga`/
+`detail_intensity.tga` pair's own precedent (§8.7: "opaque binary files to it
+either way"): `ck3-tiger`'s own binary embeds a `tiger_lib::dds` module that
+decodes a DDS header via the `image` crate (unlike the TGA pair, which has no
+comparable module in the binary at all) — so tiger *can* look inside a DDS
+file. It simply produced no diagnostic of any kind about
+`gfx/map/terrain/colormap.dds` in this run.
+
+Config: `[map] colormap` (default `true`), `colormap_tints_csv` (default
+`mappings/colormap_tints.csv`), `colormap_blur_sigma` (default `9.0`),
+`colormap_scale` (`0.25`, unchanged), `colormap_mips` (`true`, unchanged).
+Hand-off: `docs/evidence/HANDOFF_colormap_tint.md`.
+
+### 9.8 The camera probe works (coordinator, 2026-09-09 23:37)
+
+`scripts/camera_probe.py` was tried in game and does what it claims:
+`START_LOOK_AT { 2351.8 0 5706.6 }` opened the map on Waterdeep and the Sword
+Coast (Faerûn county names, our coastline), and adding
+`REALM_COLOR_MAP_START_ZOOM_STEP = 0` with `START_ZOOM_STEP = 4` removed the
+political colour wash so the **terrain, its paint and the trees are visible**
+in a headless screenshot. Recipe:
+
+```
+uv run scripts/camera_probe.py <mod dir> <probe dir> --place waterdeep --zoom 4
+# then add REALM_COLOR_MAP_START_ZOOM_STEP = 0 to the probe's NCamera block
+claudespace/scripts/ck3_soak.sh <mod> --extra <probe dir> --secs 120
+# screenshot ~60 s after "Setting idler 'In Game'":
+#   WAYLAND_DISPLAY=ck3-headless weston-screenshooter
+```
+
+Two waits matter: the In Game marker fires while the loading screen is still
+up, so a screenshot taken 20 s after it catches the loading art; 60 s is
+enough. Any visual claim about the map can now be checked without the user.

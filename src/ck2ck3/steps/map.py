@@ -204,6 +204,22 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
         terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
+        # BUG FIXED (lane `colormap-fix`): this builder never read any of the
+        # five `[map] colormap*` keys, so `configs/faerun.toml`'s own
+        # `colormap = false` (set by the coordinator after the CK2-colormap
+        # resample was found wrong, docs/step_map_paint.md §9.6) was silently
+        # ignored by the real CLI pipeline - every run kept using the
+        # `MapConfig` dataclass default (`colormap: bool = True`) and painted
+        # the broken resample anyway. `ck2ck3.map.config.load` (the
+        # standalone-TOML entry point) already read these correctly; only
+        # this CLI-facing builder was missing them.
+        colormap=bool(raw.get("colormap", True)),
+        colormap_tints_csv=Path(
+            str(raw.get("colormap_tints_csv", "mappings/colormap_tints.csv"))
+        ),
+        colormap_blur_sigma=float(raw.get("colormap_blur_sigma", 9.0)),
+        colormap_scale=float(raw.get("colormap_scale", 0.25)),
+        colormap_mips=bool(raw.get("colormap_mips", True)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,
