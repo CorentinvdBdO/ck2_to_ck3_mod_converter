@@ -32,6 +32,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Git push: token in `../claudespace/tokens` (gitignored), per-repo `credential.helper`; user CorentinvdBdO.
 
 ## Blockers and open flags
+- **Intermittent post-test crash** at 0x141972299 a few seconds after the scripted tests, i.e. at the first tick after `-test` unpauses: 3/10 baseline launches (2026-09-09, `claudespace/docs/ck3_test_framework.md` §8.1). Pre-existing, unrelated to decisions. Needs a probe series (~10 launches per hypothesis); candidates: the same tick systems as the fixed 0x143380BB9 crash.
 - 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
 - Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads in game without errors; visual check at close zoom pending (user playtest).
 - Ancient non-immortal characters still exist (56 alive ≥150 years without a CK2 immortal marker); ages are accepted by the game but worth a race-lifespan decision.
@@ -51,5 +52,5 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 
 ## Next 3
 1. User playtest 3 of build 4 (`docs/playtest.md`): fresh game survives unpausing; clothes, traits, terrain paint, relief, CK2 port seeds.
-2. Events §5 step 3: decisions step exists but is **opt-in** (`[decisions] enabled = false`): intermittent DB-init crash and the test runner stops firing with the ported set in (`docs/step_decisions.md` §3b). Next lane: bisect the 37 files with `ck3_bisect_probe.sh --mode empty` + canary test, then `new` events.
+2. Events §5 step 3: decisions step **stabilised and on** (`docs/step_decisions.md` §3b): 3 fully converted decisions live, 393 inert stubs with the converted draft as comments, AI weight 0; canary-verified test runs. Next: `new` events (1762), with the same rule — half-converted bodies are never live.
 3. Map look follow-ups: terrain-paint size call (RLE/half-res test in game), trees/colour map (§4.3), art pass on `mappings/terrain_paint.csv`; characters' looks: per-race ethnicities (`docs/research_dna_races.md` §4).

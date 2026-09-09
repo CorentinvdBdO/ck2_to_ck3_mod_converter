@@ -1,8 +1,10 @@
+# Test copy of faerun.toml: distinct mod name so a second registration never shares the shipped
+# mod's name (docs/step_decisions.md §3b); regenerate it with `sed` from faerun.toml when needed.
 # Faerûn (Project Faerûn, CK2) → CK3 1.19. Reference config for `ck2ck3`.
 # Key reference: docs/cli.md. Relative paths resolve against the repository root.
 
 [mod]
-name = "Faerun (CK2 conversion, raw)"
+name = "Faerun decisions test build"
 # Prefix for every generated identifier and filename (fae_*). `fk_` is the
 # hand-written submod, see docs/PROJECT.md.
 prefix = "fae"
@@ -341,16 +343,17 @@ named_scope = "marker"
 # CK2 decisions (`decisions`/`society_decisions`/`plot_decisions` groups) with
 # provenance status new/modified.
 [decisions]
-# Enabled (2026-09-09 evening) after the stabilisation described in
-# docs/step_decisions.md §3b: decisions below min_score are inert stubs
-# (structure only, converted draft as comments), AI weight is always 0.
+# Opt-in (2026-09-09): with the ported decisions in, the game crashed at
+# database init in 1 of 3 launches (0x141946BC4) and, when it loaded, the
+# scripted-test runner never fired (an always-failing canary passed). Bisecting
+# the 37 files pointed at several; two defects were fixed (picture block,
+# CK2 event triggers), the rest is open. Flip to true to work on it:
+# docs/step_decisions.md §3b.
 enabled = true
 provenance = "docs/evidence/decisions_provenance.csv"
 # A decision whose converted trigger/effect keys score below this (mapped ÷
-# total) is emitted as an inert stub with its converted draft as `# draft:`
-# comments. 1.0 = only fully mapped decisions go live (3 of 396 today); any
-# live half-converted body silenced the scripted-test runner and crashed
-# database init in ~1 launch of 3 (docs/step_decisions.md §3b).
+# total) keeps its converted content but gets `is_shown = { always = no }`
+# plus a `fae_unported = yes` comment, so it exists and is inspectable.
 min_score = 1.0
 
 # Scripted tests written into the mod by step `tests`, asserting the generated

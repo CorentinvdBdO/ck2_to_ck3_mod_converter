@@ -200,7 +200,7 @@ def test_convert_decision_partially_mapped() -> None:
     assert converted.mapped < converted.total
 
 
-def test_convert_decision_below_threshold_hides_but_keeps_content() -> None:
+def test_convert_decision_below_threshold_is_an_inert_stub_with_draft() -> None:
     block = _decision_block("potential = { society = yes } effect = { add_gold = 50 }")
     converted = step.convert_decision(
         "my_dec", block, status="new", kind="decisions",
@@ -212,9 +212,12 @@ def test_convert_decision_below_threshold_hides_but_keeps_content() -> None:
     assert is_shown.value.entries[0].value is False
     header = converted.block.entries[0].leading_comments
     assert any("fae_unported" in c for c in header)
-    # the effect content is still present and inspectable
+    # the effect is an inert stub; the converted draft survives as `# draft:` comments
     effect_node = next(n for n in converted.block.entries if isinstance(n, Node) and n.key == "effect")
-    assert effect_node.value.entries[0].key == "add_gold"
+    assert effect_node.value.entries == []
+    assert any("add_gold" in c and c.startswith("# draft:") for c in effect_node.leading_comments)
+    is_valid = next((n for n in converted.block.entries if isinstance(n, Node) and n.key == "is_valid"), None)
+    assert is_valid is None or is_valid.value.entries[0].value is True
 
 
 # -- run(ctx) integration -----------------------------------------------------
@@ -325,11 +328,32 @@ def test_run_writes_common_decisions_and_evidence(run_ctx, monkeypatch: pytest.M
     assert rows["not_character_scope"]["emitted"] == "no"
 
 
-def test_run_is_opt_in_by_default(run_ctx, monkeypatch: pytest.MonkeyPatch) -> None:
-    """[decisions] enabled defaults to false: the step writes nothing (docs/step_decisions.md §3b)."""
+def test_run_can_be_disabled(run_ctx, monkeypatch: pytest.MonkeyPatch) -> None:
+    """[decisions] enabled = false skips the step and writes nothing (docs/step_decisions.md §3b)."""
     ctx, out, _ = run_ctx
     ctx.config.raw["decisions"]["enabled"] = False
     result = step.run(ctx)
     assert result.counts["emitted"] == 0
     assert not list((out / "common" / "decisions").glob("fae_*.txt")) if (out / "common" / "decisions").exists() else True
     assert "opt-in" in result.summary
+
+
+def test_default_picture_is_quoted_once(run_ctx) -> None:
+    """The writer quotes string values itself: pre-quoting produced `""gfx/...""` and a parser
+    desync that silenced the scripted-test runner (2026-09-09)."""
+    ctx, out, _ = run_ctx
+    step.run(ctx)
+    text = "".join(p.read_text(encoding="utf-8-sig") for p in (out / "common" / "decisions").glob("*.txt"))
+    assert 'reference = "gfx/interface/illustrations/decisions/decision_misc.dds"' in text
+    assert '""gfx' not in text
+
+
+def test_ai_will_do_is_forced_to_zero(run_ctx) -> None:
+    """Raw-ported decisions are never taken by the AI (docs/step_decisions.md §3b)."""
+    ctx, out, _ = run_ctx
+    step.run(ctx)
+    text = "".join(p.read_text(encoding="utf-8-sig") for p in (out / "common" / "decisions").glob("*.txt"))
+    import re
+    bodies = re.findall(r"ai_will_do = \{(.*?)\n\t\}", text, re.S)
+    assert bodies, "no ai_will_do emitted"
+    assert all(b.strip() == "base = 0" for b in bodies), bodies
