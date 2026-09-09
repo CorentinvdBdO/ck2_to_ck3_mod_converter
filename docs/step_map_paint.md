@@ -506,3 +506,28 @@ define does *not* visibly move the camera (e.g. the frontend/bookmark-select
 screen ignores it and only the post-`-test` 3D view honours it), that is
 itself useful evidence for `docs/evidence/HANDOFF_map_colour.md` and the next
 lane, not a dead end — the fallback stays the user's own playtest.
+
+### 9.6 The CK2 colormap is the wrong kind of texture (coordinator, 2026-09-09 23:40)
+
+In-game check with the camera probe over Waterdeep (`START_ZOOM_STEP = 4`,
+`REALM_COLOR_MAP_START_ZOOM_STEP = 0`, screenshot in the session evidence):
+terrain paint and trees **render correctly**, but the ground was washed pale
+blue-white and the ocean brown.
+
+Cause, `verified` by sampling both files:
+
+| file | over ocean | over land | character |
+|---|---|---|---|
+| vanilla CK3 `colormap.dds` (9216×4608 DXT5) | 131,129,131 | 148,125,106 (France) | near-neutral **tint**, multiplied over the terrain materials |
+| our resample of CK2 `map/terrain/colormap.dds` (4096×3328 DXT1) | 116,142,74 | same green | saturated **satellite image**, no sea/land distinction |
+
+CK2's colormap is a painted land texture that covers the sea too (CK2 draws
+water over it), and its content is CK2's own artistic map, not our province
+geometry: its arctic patch landed on Waterdeep. Multiplying it over CK3's
+terrain materials is wrong twice over — wrong saturation and wrong content.
+
+`[map] colormap` is **false** until the next lane replaces the resample with a
+tint derived from our own terrain classes, calibrated against vanilla's own
+per-material colormap means (vanilla `detail_index.tga` gives the material per
+pixel and `colormap.dds` the tint at the same pixel, so the calibration is a
+measurement, not a guess).

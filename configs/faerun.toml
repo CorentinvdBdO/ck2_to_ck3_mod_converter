@@ -132,7 +132,7 @@ terrain_paint_scale = 0.5
 # map/terrain/colormap.dds (pixel-aligned with provinces.bmp - verified,
 # both 4096x3328). Ship none and CK3 falls back to vanilla's own colormap
 # stretched across the canvas (docs/step_map_paint.md §9).
-colormap = true
+colormap = false
 # Downsample factor from canvas resolution. verified against two shipped,
 # loadable total conversions (Elder Kings 2, Godherja), which both ship their
 # own colormap.dds uncompressed at exactly one-quarter of their own
