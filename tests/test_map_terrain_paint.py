@@ -203,3 +203,172 @@ def test_save_tga_round_trips_through_pil(tmp_path):
     terrain_paint.save_tga(arr, path)
     back = np.asarray(Image.open(path).convert("RGBA"))
     assert np.array_equal(arr, back)
+
+
+# --------------------------------------------------------------------------- #
+# save_tga(rle=True) / load_tga — [map] terrain_paint_format = "tga_rle"
+# --------------------------------------------------------------------------- #
+def test_save_tga_rle_writes_image_type_10(tmp_path):
+    arr = np.zeros((3, 4, 4), dtype=np.uint8)
+    arr[..., 0] = 200
+    arr[..., 3] = 255
+    path = tmp_path / "out_rle.tga"
+    terrain_paint.save_tga(arr, path, rle=True)
+    data = path.read_bytes()
+    assert data[2] == 10, "must be image type 10 (RLE), matching Elder Kings 2 / Godherja"
+
+
+def test_save_tga_rle_round_trips(tmp_path):
+    rng = np.random.default_rng(1)
+    arr = rng.integers(0, 255, size=(9, 13, 4), dtype=np.uint8)
+    arr[..., 3] = 255
+    path = tmp_path / "rt_rle.tga"
+    terrain_paint.save_tga(arr, path, rle=True)
+    back = terrain_paint.load_tga(path)
+    assert np.array_equal(arr, back)
+
+
+def test_plain_and_rle_tga_decode_to_the_same_pixels(tmp_path):
+    rng = np.random.default_rng(2)
+    arr = rng.integers(0, 255, size=(20, 20, 4), dtype=np.uint8)
+    arr[..., 3] = 255
+    p1, p2 = tmp_path / "plain.tga", tmp_path / "rle.tga"
+    terrain_paint.save_tga(arr, p1, rle=False)
+    terrain_paint.save_tga(arr, p2, rle=True)
+    assert np.array_equal(terrain_paint.load_tga(p1), terrain_paint.load_tga(p2))
+
+
+# --------------------------------------------------------------------------- #
+# save_dds / load_dds — [map] terrain_paint_format = "dds"
+# --------------------------------------------------------------------------- #
+def test_save_dds_writes_a_valid_header():
+    arr = np.zeros((3, 4, 4), dtype=np.uint8)
+    path_bytes = terrain_paint._dds_header(4, 3)
+    assert path_bytes[:4] == b"DDS "
+    assert len(path_bytes) == 128
+    # dwSize == 124, dwHeight == 3, dwWidth == 4 (offsets documented in code)
+    import struct
+
+    dw_size = struct.unpack_from("<I", path_bytes, 4)[0]
+    dw_height = struct.unpack_from("<I", path_bytes, 12)[0]
+    dw_width = struct.unpack_from("<I", path_bytes, 16)[0]
+    assert (dw_size, dw_height, dw_width) == (124, 3, 4)
+    del arr
+
+
+def test_save_dds_round_trips(tmp_path):
+    rng = np.random.default_rng(3)
+    arr = rng.integers(0, 255, size=(7, 11, 4), dtype=np.uint8)
+    arr[..., 3] = 255
+    path = tmp_path / "rt.dds"
+    terrain_paint.save_dds(arr, path)
+    back = terrain_paint.load_dds(path)
+    assert np.array_equal(arr, back)
+
+
+def test_load_dds_rejects_a_non_dds_file(tmp_path):
+    path = tmp_path / "notdds.bin"
+    path.write_bytes(b"not a dds file at all, but long enough" + b"\0" * 100)
+    with pytest.raises(ValueError):
+        terrain_paint.load_dds(path)
+
+
+# --------------------------------------------------------------------------- #
+# save_paint / load_paint / paint_ext — the [map] terrain_paint_format dispatch
+# --------------------------------------------------------------------------- #
+@pytest.mark.parametrize("fmt,ext", [("tga", "tga"), ("tga_rle", "tga"), ("dds", "dds")])
+def test_paint_ext(fmt, ext):
+    assert terrain_paint.paint_ext(fmt) == ext
+
+
+def test_paint_ext_rejects_unknown_format():
+    with pytest.raises(ValueError):
+        terrain_paint.paint_ext("png")
+
+
+@pytest.mark.parametrize("fmt", terrain_paint.PAINT_FORMATS)
+def test_save_load_paint_round_trips_every_format(tmp_path, fmt):
+    rng = np.random.default_rng(4)
+    arr = rng.integers(0, 255, size=(6, 8, 4), dtype=np.uint8)
+    arr[..., 3] = 255
+    path = tmp_path / f"paint.{terrain_paint.paint_ext(fmt)}"
+    terrain_paint.save_paint(arr, path, fmt)
+    back = terrain_paint.load_paint(path, fmt)
+    assert np.array_equal(arr, back)
+
+
+# --------------------------------------------------------------------------- #
+# downsample_index / downsample_intensity — [map] terrain_paint_scale
+# --------------------------------------------------------------------------- #
+def test_downsample_index_is_nearest_neighbour_never_interpolates():
+    """A 2x2 block of two distinct ordinals must downsample to one of the
+    two source values, never an average (which could name a bogus material)."""
+    arr = np.zeros((4, 4, 4), dtype=np.uint8)
+    arr[:2, :2, 0] = 10
+    arr[:2, 2:, 0] = 200  # far from 10 -- an average (105) is easy to spot
+    arr[2:, :2, 0] = 10
+    arr[2:, 2:, 0] = 200
+    out = terrain_paint.downsample_index(arr, 0.5)
+    assert out.shape == (2, 2, 4)
+    assert set(np.unique(out[..., 0]).tolist()) <= {10, 200}
+
+
+def test_downsample_index_halves_dimensions():
+    # even dimensions, same aspect ratio as the shipped 8320x6784 canvas
+    arr = np.zeros((416, 338, 4), dtype=np.uint8)
+    out = terrain_paint.downsample_index(arr, 0.5)
+    assert out.shape[:2] == (arr.shape[0] // 2, arr.shape[1] // 2)
+
+
+def test_downsample_intensity_preserves_sum_to_255():
+    rng = np.random.default_rng(5)
+    h, w = 10, 12
+    prim = rng.integers(1, 255, size=(h, w), dtype=np.uint8)
+    arr = np.zeros((h, w, 4), dtype=np.uint8)
+    arr[..., 0] = prim
+    arr[..., 1] = 255 - prim
+    out = terrain_paint.downsample_intensity(arr, 0.5)
+    assert out.shape == (h // 2, w // 2, 4)
+    total = out[..., 0].astype(np.uint16) + out[..., 1].astype(np.uint16)
+    assert (total == 255).all()
+    assert (out[..., 2:] == 0).all()
+
+
+def test_downsample_intensity_is_a_box_average_not_nearest():
+    """A checkerboard of 0/254 should average toward the middle, distinguishing
+    box filtering from a nearest-neighbour pick of one corner."""
+    arr = np.zeros((2, 2, 4), dtype=np.uint8)
+    arr[0, 0, 0], arr[0, 1, 0] = 0, 254
+    arr[1, 0, 0], arr[1, 1, 0] = 254, 0
+    arr[..., 1] = 255 - arr[..., 0]
+    out = terrain_paint.downsample_intensity(arr, 0.5)
+    assert out.shape == (1, 1, 4)
+    assert 100 < int(out[0, 0, 0]) < 155  # averages to 127, not 0 or 254
+
+
+def test_downsample_intensity_rejects_scale_above_one():
+    arr = np.zeros((4, 4, 4), dtype=np.uint8)
+    with pytest.raises(ValueError):
+        terrain_paint.downsample_intensity(arr, 2.0)
+
+
+def test_full_pipeline_downsample_roundtrips_through_every_format(tmp_path, ordinals):
+    """End to end at the config default scale (0.5): build a small paint pair,
+    downsample, write and read back every format."""
+    codes = np.tile(np.array([1, 2], dtype=np.uint16), (40, 20))
+    names = ["", "plains", "hills"]
+    mmap = _material_map(
+        tmp_path,
+        [
+            ("plains", "plains_01", "plains_01_noisy", ""),
+            ("hills", "hills_01", "plains_01", ""),
+        ],
+    )
+    layers = terrain_paint.build_layers(codes, names, material_map=mmap, ordinals=ordinals)
+    idx = terrain_paint.downsample_index(layers.index, 0.5)
+    inten = terrain_paint.downsample_intensity(layers.intensity, 0.5)
+    assert idx.shape[:2] == inten.shape[:2] == (20, 20)
+    for fmt in terrain_paint.PAINT_FORMATS:
+        ip = tmp_path / f"idx.{terrain_paint.paint_ext(fmt)}"
+        terrain_paint.save_paint(idx, ip, fmt)
+        assert np.array_equal(terrain_paint.load_paint(ip, fmt), idx)

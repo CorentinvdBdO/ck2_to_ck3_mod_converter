@@ -404,6 +404,19 @@ class MapConfig:
     #: docs/map_fidelity.md §4.1 measures 16 as visually invisible and much
     #: more compressible than the full 256 steps)
     terrain_paint_quantize: int = 16
+    #: pixel format for detail_index/detail_intensity: ``"tga"`` (vanilla's
+    #: own, uncompressed truecolour, image type 2), ``"tga_rle"`` (RLE, image
+    #: type 10 — `verified` accepted by two shipped total-conversion workshop
+    #: mods, Elder Kings 2 and Godherja, both at full resolution), or
+    #: ``"dds"`` (uncompressed BGRA8 — implemented but unverified against the
+    #: actual game; see docs/step_map_paint.md §size). Default unchanged
+    #: until the coordinator's in-game check picks one.
+    terrain_paint_format: str = "tga"
+    #: nearest-neighbour (index) / box-filter (intensity) downsample factor
+    #: for the paint pair. ``1.0`` matches `provinces.png` (vanilla's own
+    #: choice); ``0.5`` quarters the pixel count. docs/step_map_paint.md
+    #: §size. Default unchanged until the coordinator's in-game check.
+    terrain_paint_scale: float = 1.0
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -476,6 +489,8 @@ def load(path: str | Path) -> MapConfig:
             str(raw.get("terrain_paint_csv", "mappings/terrain_paint.csv"))
         ),
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
+        terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
+        terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),
