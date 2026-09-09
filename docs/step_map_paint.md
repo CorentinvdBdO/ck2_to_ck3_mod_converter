@@ -335,3 +335,174 @@ this lane did not re-run it.
   the player's playtest is the visual check.
 - Decision: defaults are now `terrain_paint_format = "tga_rle"`, `terrain_paint_scale = 0.5` (2.3 MB +
   53 MB); the generated mod repo tracks the pair again.
+
+---
+
+## 9. Lane `map-colour`: colormap, trees, the material art pass, and evidence
+
+**Question this answers.** `docs/map_fidelity.md` §4.3/§4.4 flagged three more
+things behind "we ship no terrain paint at all": `colormap.dds` (a straight
+CK2 asset resample), tree scatter (CK2 `trees.bmp` -> CK3 placed instances),
+and an art review of `mappings/terrain_paint.csv`'s two flagged judgement
+calls. This lane (`map-colour`) does all three, plus the evidence the
+coordinator needs to check them without launching the game itself.
+
+### 9.1 `gfx/map/terrain/colormap.dds`
+
+**Format decision, `verified` against real file headers, not vanilla's own
+bake.** Vanilla 1.19 ships `colormap.dds` at full province resolution
+(9216x4608), DXT5, 14 mips, 56.6 MB (`xxd`: fourCC `DXT5`,
+`dwPitchOrLinearSize = 42,467,328 = 9216*4608`). But two shipped, currently
+loadable CK3 total conversions — Elder Kings 2 and Godherja — both ship
+`colormap.dds` **uncompressed 32-bit BGRA (A8R8G8B8), at exactly one-quarter
+of their own province-map resolution** (EK2 2064x1376 of 8256x5504; Godherja
+2048x1024 of 8192x4096; alpha = 255 everywhere, sampled). This lane follows
+the two real conversions: `ck2ck3.map.colormap` resamples the CK2 mod's own
+`map/terrain/colormap.dds` (pixel-aligned with `provinces.bmp`, `verified`
+both 4096x3328 for Faerûn) onto the canvas with the exact crop/scale/offset
+`ck2ck3.map.config.plan_canvas` already computed for the province raster,
+downsamples to `[map] colormap_scale` (default `0.25`), and writes an
+uncompressed BGRA8 DDS byte-for-byte matching the two reference mods'
+`ddspf`/`caps` fields. Faerûn's real run: 2080x1696 with a full mip chain,
+18.8 MB. Config: `[map] colormap` (default `true`), `colormap_scale` (`0.25`),
+`colormap_mips` (`true`). Tests: `tests/test_map_colormap.py` (geometry on a
+synthetic image, header bytes against both reference mods, DDS round-trip via
+PIL).
+
+`gfx/map/terrain/output_final_colormap.dds` is vanilla's own bake-tool output
+and ships **0 bytes** in the real game folder (`verified`); nothing reads it
+at runtime and this lane does not write one either.
+
+### 9.2 Trees
+
+`ck2ck3.map.tree_scatter` scatters instances into the 18 vanilla
+`gfx/map/map_object_data/generated/*.txt` files the `map-ui` lane emptied
+(their coordinates belonged to Europe's canvas). Density: vanilla 1.19 places
+549,126 instances over its own 9216x4608 canvas (`verified`,
+`scripts/verify_tree_density.py` sums every `count=` in the real files) —
+0.012931 instances/px, ~729,900 for our 8320x6784 canvas. Eligibility: any
+nonzero CK2 `trees.bmp` pixel (upsampled 8x to province-bitmap resolution,
+then resampled onto the canvas the same way the province raster is), minus
+water and impassable. Mesh choice: the pixel's own CK3 terrain classification
+(the majority-vote result `build.py` already computes) via a new table
+`mappings/tree_meshes.csv`, not the CK2 palette colour — §1.4 found no
+confirmed index->species mapping, so this is the more grounded signal, and it
+means an unpainted terrain class simply gets no trees. Format
+`verified` against `gfx/map/map_object_data/generated/tree_pine_01_a_generator_1.txt`
+directly: `object={ name= layer= pdxmesh= count=N transform="x y z qx qy qz
+qw sx sy sz\n..." }`, scale always `1 1 1`, reusing
+`ck2ck3.map.locators.world_position`/`yaw_quaternion` unchanged for the frame.
+Faerûn's real run: 711,875 of 729,838 target instances placed (97.5%),
+17,963 dropped (desert/mountains/farmlands — no mesh row, by design: bare
+sand, above the treeline, cultivated land). Per-file sizes: 66 MB total
+across 18 files (vanilla's own is ~52 MB per `docs/map_fidelity.md` §1.6).
+Config: `[map] trees` (default `true`), `trees_csv`, `trees_seed` (`4242`,
+deterministic), `trees_density_per_px`. Tests:
+`tests/test_map_tree_scatter.py` (forest-mask/upsample geometry, scatter
+determinism, water/mesh exclusion, `mappings/tree_meshes.csv` completeness
+against every `common/terrain_types` key).
+
+### 9.3 `mappings/terrain_paint.csv` art pass
+
+`scripts/verify_terrain_paint_materials.py` reads vanilla's own
+`detail_index.tga` primary channel, cross-referenced with
+`common/province_terrain` + `map_data/provinces.png`, to find what material
+vanilla itself paints for each CK3 terrain key — excluding the `gen_*`/
+`central_*` climate-zone material families (dozens of Earth-geography-specific
+variants like `gen_tropical_hills`/`gen_steppe_mountain` with no Faerûn
+equivalent, which otherwise dilute the vote into meaningless fragments).
+**Found one real bug and two genuine improvements, changed 3 of 17 rows:**
+
+* **`forest` was painted with `forest_pine_01`, byte-identical to `taiga`'s
+  own primary** — a copy-paste that gave broadleaf forest a conifer texture.
+  Vanilla's own non-regional top pick for `forest` is `forest_leaf_01`
+  (75.5% share, strongly dominant); `taiga`'s own top pick is `forest_pine_01`
+  (78.4%, confirming that one was already right). Changed `forest`'s primary
+  to `forest_leaf_01`. This is exactly the "same class of mistake" this lane
+  was asked to check every row for, and it was the only instance found.
+* **`terraced_hills`** (a flagged judgement call): vanilla's own top pick is
+  `farm_paddy_01` at 56.5% share — overwhelmingly dominant, and thematically
+  exact (rice-paddy terracing). Changed primary from `hills_01_rocks_medi` to
+  `farm_paddy_01`, demoting the old primary to secondary.
+* **`desert_mountains`**: vanilla's former primary `mountain_02_desert_c`
+  does not appear in vanilla's own top 3 for this key at all; the real top is
+  `desert_rocky` (36.9%, near-tied with `hills_01_rocks_medi` at 33.5%).
+  Swapped primary/secondary so the material vanilla itself favours leads.
+* **`taiga`**'s flagged secondary (`snow`) is kept: vanilla's own real
+  secondary there is `forestfloor` (5.9%), not snow, but Faerûn's CK2
+  arctic/glacier categories also fold into `taiga` with no vanilla CK3
+  equivalent of their own (`ck2ck3.map.terrain`), so `snow` is a deliberate
+  style choice for that broader, colder bucket — the note now says so
+  explicitly instead of asserting it unverified.
+* Every other row's note now records what vanilla itself paints there and why
+  it was kept or not (`mappings/terrain_paint.csv`, one note per row).
+  Several rows (`plains`, `oasis`, `wetlands`, `steppe`) show a vanilla "top
+  pick" driven by real-world geography that does not generalise to Faerûn
+  (steppe/mountain overlap in Central Asia, farmland regional variants named
+  for India, etc.) and were deliberately kept as-is.
+
+### 9.4 Evidence: `docs/evidence/map_colour/`
+
+`scripts/render_map_colour_evidence.py` composites province outlines (edge
+detection on `map_data/provinces.png`) + the resampled `colormap.dds` +
+a hillshade of `map_data/heightmap.png`, entirely in Python (no game engine),
+for three regions in canvas pixels (8320x6784, top-down y):
+
+| region | box (x, y, w, h) | how found |
+|---|---|---|
+| Sword Coast (Waterdeep-Baldur's Gate) | 2080, 940, 2048, 2048 | reused from `scripts/render_map_paint_evidence.py` (lane `map-paint-seeds`) |
+| Anauroch | 2297, 43, 2048, 2048 | centroid of the largest connected "desert"-terrain blob in the *north* half of the canvas (`scipy.ndimage.label`; several disconnected deserts exist, the northern one matches Anauroch's lore geography) |
+| Spine of the World | 1405, 0, 2048, 1024 | the exact province named "Spine of the World" in `docs/evidence/province_id_map.csv` (CK3 id 4056, rgb (161,200,228)), a far-north `impassable_mountains` range |
+
+Each PNG is quantised and resized to stay under 400 KB (`verified`: 328/328/138 KiB).
+These are **not** a substitute for an in-game look — no game shader, lighting
+or material texture is involved, only the converter's own raster outputs
+composited for a sanity check.
+
+### 9.5 What the coordinator should look at in game, and how
+
+The headless `-test` harness reaches `Setting idler 'In Game'`
+(`CLAUDE.md` invariant, 54 s vanilla control) but **no input is possible**
+(Xwayland aborts on XTEST), so the run otherwise sits wherever the camera
+starts. `NCamera.START_LOOK_AT` / `START_ZOOM_STEP` **are real defines**
+(`verified`, `game/common/defines/graphic/00_graphics.txt:172-175`), in the
+same bottom-up pixel frame as the locators; the `map` step already writes
+`START_LOOK_AT` to the bare canvas centre
+(`ck2ck3.map.bootstrap.render_camera_defines`, lane `map-ui`), which is not
+any of the three regions above.
+
+`scripts/camera_probe.py` writes a tiny probe mod that overrides just
+`START_LOOK_AT`/`START_ZOOM_STEP`, loaded *after* the converted mod so its
+`NCamera` block's individual keys win (the same "small override file, no
+`replace_path`" pattern §8.6 already uses for the paint-format probes):
+
+```
+uv run scripts/camera_probe.py <out_dir> <probe_dir> --place waterdeep --zoom 15
+claudespace/scripts/ck3_soak.sh <mod-name> --extra <probe_dir> --secs 60
+```
+
+which writes `<probe_dir>/common/defines/graphic/zzz_camera_probe_graphics.txt`:
+
+```
+NCamera = {
+	START_LOOK_AT = { 2351.8 0 5706.6 }
+	START_ZOOM_STEP = 15
+}
+```
+
+(2351.8/5706.6 is Waterdeep's own province centroid, run's canvas; `--place
+anauroch` / `--place spine` / `--x .. --y ..` pick a different point; `--zoom`
+0 is closest, 34 is furthest, vanilla's own start is 33).
+
+**Not tested in game from this lane** — the hard rule is the coordinator runs
+every in-game check, and this repo's own headless soak cannot supply input to
+confirm a camera actually moved. What to look at once it does: with the
+`ck3_soak.sh` screenshot at `In Game`, the terrain visible around Waterdeep
+should show the green/tan colour wash and dithered material blend this
+document's §2-§8 describe, not vanilla's flat Europe texture; compare against
+`docs/evidence/map_colour/sword_coast.png` for the broad colour/relief
+pattern (not a pixel match — that PNG has no game shader in it). If the
+define does *not* visibly move the camera (e.g. the frontend/bookmark-select
+screen ignores it and only the post-`-test` 3D view honours it), that is
+itself useful evidence for `docs/evidence/HANDOFF_map_colour.md` and the next
+lane, not a dead end — the fallback stays the user's own playtest.

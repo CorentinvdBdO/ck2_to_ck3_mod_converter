@@ -36,6 +36,7 @@ from . import (
     bootstrap,
     ck2read,
     ck2titles,
+    colormap,
     flatmap,
     graphical,
     heightmap,
@@ -47,6 +48,7 @@ from . import (
     table,
     terrain,
     terrain_paint,
+    tree_scatter,
     writers,
 )
 from .config import MapConfig, load, plan_canvas
@@ -387,6 +389,32 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         }
         del paper, heights
 
+        ck2_colormap = src / "terrain" / "colormap.dds"
+        if cfg.colormap and ck2_colormap.is_file():
+            log("painting gfx/map/terrain/colormap.dds (CK2 colour resample)")
+            cm = colormap.render(
+                ck2_colormap, canvas, source_size=(src_w, src_h)
+            )
+            cm = colormap.downsample(cm, cfg.colormap_scale)
+            sink.binary(
+                colormap.COLORMAP_PATH,
+                lambda p, cm=cm: colormap.save(cm, p, mips=cfg.colormap_mips),
+            )
+            report["colormap"] = {
+                "width": int(cm.shape[1]),
+                "height": int(cm.shape[0]),
+                "scale": cfg.colormap_scale,
+                "mips": cfg.colormap_mips,
+            }
+            log(f"colormap: {cm.shape[1]}x{cm.shape[0]}, mips={cfg.colormap_mips}")
+            del cm
+        elif cfg.colormap:
+            sink.warn(
+                f"[map] colormap = true but no CK2 colormap.dds at {ck2_colormap}; "
+                "shipping none (CK3 falls back to vanilla's own, stretched over "
+                "our canvas)"
+            )
+
         if cfg.terrain_paint:
             log("painting terrain (gfx/map/terrain/detail_index.tga + "
                 "detail_intensity.tga)")
@@ -483,15 +511,52 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         f"locators: {len(locators.LOCATOR_SPECS)} files, "
         f"{len(locator_land)} land / {len(locator_passable)} passable provinces"
     )
-    foliage = (
-        locators.render_foliage_stubs(cfg.ck3_game_dir)
-        if cfg.strip_vanilla_foliage
-        else {}
-    )
+    if cfg.trees and cfg.ck3_game_dir and trees is not None:
+        log("scattering trees (docs/map_fidelity.md §4.3, "
+            f"seed {cfg.trees_seed})")
+        trees_full = tree_scatter.upsample_to_source(trees, src_h, src_w)
+        forest_src = tree_scatter.forest_mask_from_trees_bmp(trees_full)
+        forest_canvas = _resize_bool(forest_src, canvas)
+        impassable_mask = np.isin(ck3_raster, list(impassable_ck3))
+        eligible = forest_canvas & ~water_mask & ~impassable_mask
+        tree_terrain_code, tree_terrain_keys = _terrain_code_grid(
+            ck3_raster, terrain_ck3, cfg.terrain_default
+        )
+        target_total = round(
+            cfg.trees_density_per_px * canvas.width * canvas.height
+        )
+        foliage, tree_counts, tree_dropped, tree_dropped_by_terrain = (
+            tree_scatter.render_all(
+                cfg.ck3_game_dir,
+                _repo_path(cfg, cfg.trees_csv),
+                eligible,
+                tree_terrain_code,
+                tree_terrain_keys,
+                canvas.height,
+                target_total=target_total,
+                seed=cfg.trees_seed,
+            )
+        )
+        placed = sum(tree_counts.values())
+        log(f"trees: {placed} of {target_total} target instances placed "
+            f"({tree_dropped} dropped, no mesh row: {tree_dropped_by_terrain}), "
+            f"{tree_counts}")
+        report["trees"] = {
+            "target_total": target_total,
+            "placed": placed,
+            "dropped_no_mesh": tree_dropped,
+            "dropped_by_terrain": tree_dropped_by_terrain,
+            "eligible_px": int(eligible.sum()),
+            **tree_counts,
+        }
+    elif cfg.strip_vanilla_foliage:
+        foliage = locators.render_foliage_stubs(cfg.ck3_game_dir)
+    else:
+        foliage = {}
     for rel, text in foliage.items():
         sink.text(rel, text)
     if foliage:
-        log(f"{len(foliage)} vanilla foliage generators emptied")
+        log(f"{len(foliage)} gfx/map/map_object_data/generated files written")
     report["locators"] = {
         "files": len(locators.LOCATOR_SPECS),
         "land": len(locator_land),

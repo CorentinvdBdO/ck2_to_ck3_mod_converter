@@ -1,0 +1,18 @@
+ck3_terrain,file,note
+plains,tree_leaf_01_single_generator_1.txt,vanilla's own "isolated single tree" mesh; 179733 of 265718 dropped instances were on this terrain before this row was added (verified, scripts/verify_tree_density.py-style run log), i.e. most of Faerun's painted forest sits over provinces the majority-terrain vote calls plains
+farmlands,,cultivated land; no canopy
+hills,tree_leaf_high_generator_1.txt,broadleaf; 68022 of 265718 dropped instances were on hills before this row was added, i.e. real CK2 forest that the majority-terrain vote classified hills rather than forest
+mountains,,above the treeline in vanilla's own convention
+desert_mountains,,not painted by Faerun (docs/step_map_paint.md); row kept for the next total conversion
+terraced_hills,,not painted by Faerun; row kept for the next total conversion
+desert,,bare sand; oasis carries the palms instead
+drylands,,sparse scrub, no tree mesh available that reads as "drylands" rather than "steppe"
+oasis,tree_palm_generator_1.txt,vanilla's own palm mesh; not painted by Faerun today but keeps the table complete
+jungle,tree_jungle_01_d_generator_1.txt,vanilla's densest jungle canopy mesh (38113 instances in the reference file, the largest jungle generator)
+forest,tree_leaf_high_generator_1.txt,vanilla's commonest broadleaf mesh (138645 instances in the reference file)
+taiga,tree_pine_01_b_generator_1.txt,vanilla's commonest conifer mesh (87196 instances); CK2 arctic/glacier also fold to taiga (ck2ck3.map.terrain)
+wetlands,reeds_01_generator_1.txt,reeds, not a tree mesh, but the closest vanilla generator to "wetland canopy/undergrowth"
+steppe,steppe_bush_01_generator.txt,scrub bushes, not trees; steppe's own vanilla generator
+floodplains,,farmed river land; no canopy
+sea,,water province; trees.bmp is never eligible there (excluded by the land/water mask regardless)
+coastal_sea,,water province; trees.bmp is never eligible there (excluded by the land/water mask regardless)

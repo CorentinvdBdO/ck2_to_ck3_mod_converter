@@ -128,6 +128,20 @@ terrain_paint_format = "tga_rle"
 # tried). Left at 1.0 (full size) until the coordinator's in-game check.
 terrain_paint_scale = 0.5
 
+# Write gfx/map/terrain/colormap.dds, resampled from the CK2 mod's own
+# map/terrain/colormap.dds (pixel-aligned with provinces.bmp - verified,
+# both 4096x3328). Ship none and CK3 falls back to vanilla's own colormap
+# stretched across the canvas (docs/step_map_paint.md §9).
+colormap = true
+# Downsample factor from canvas resolution. verified against two shipped,
+# loadable total conversions (Elder Kings 2, Godherja), which both ship their
+# own colormap.dds uncompressed at exactly one-quarter of their own
+# province-map resolution (2064x1376 of 8256x5504; 2048x1024 of 8192x4096).
+colormap_scale = 0.25
+# Full mip chain to 1x1 (Godherja's shape) vs. base level only (Elder Kings
+# 2's shape); both load in the two reference mods.
+colormap_mips = true
+
 # --- measured scale inputs (flat keys: `scale` under [map] is already the
 # --- derived float above, so a [map.scale] table would collide with it)
 #
