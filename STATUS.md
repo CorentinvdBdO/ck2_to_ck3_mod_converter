@@ -32,7 +32,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Git push: token in `../claudespace/tokens` (gitignored), per-repo `credential.helper`; user CorentinvdBdO.
 
 ## Blockers and open flags
-- **Intermittent post-test crash** at 0x141972299 a few seconds after the scripted tests, i.e. at the first tick after `-test` unpauses: 3/10 baseline launches (2026-09-09, `claudespace/docs/ck3_test_framework.md` §8.1). Pre-existing, unrelated to decisions. Needs a probe series (~10 launches per hypothesis); candidates: the same tick systems as the fixed 0x143380BB9 crash.
+- ~~Intermittent post-test crash~~ **fixed 2026-09-09 evening**: root cause was the blank `common/flavorization` shadow (no ruler title names → first-tick crash 0x141972299, the user's 18:33 crash). Vanilla flavorization kept: 10/10 launches alive vs 7/10. Landed mercenary/holy-order governments also normalised to feudal (`docs/DECISIONS.md`).
 - 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
 - Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads in game without errors; visual check at close zoom pending (user playtest).
 - Ancient non-immortal characters still exist (56 alive ≥150 years without a CK2 immortal marker); ages are accepted by the game but worth a race-lifespan decision.
@@ -51,6 +51,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. User playtest 3 of build 4 (`docs/playtest.md`): fresh game survives unpausing; clothes, traits, terrain paint, relief, CK2 port seeds.
+1. User playtest 3 of build 7 (`docs/playtest.md`): unpause and play for real this time; clothes, traits, terrain paint (half-res), relief, CK2 port seeds, ruler titles.
 2. Events §5 step 3: decisions step **stabilised and on** (`docs/step_decisions.md` §3b): 3 fully converted decisions live, 393 inert stubs with the converted draft as comments, AI weight 0; canary-verified test runs. Next: `new` events (1762), with the same rule — half-converted bodies are never live.
-3. Map look follow-ups: terrain-paint size call (RLE/half-res test in game), trees/colour map (§4.3), art pass on `mappings/terrain_paint.csv`; characters' looks: per-race ethnicities (`docs/research_dna_races.md` §4).
+3. Pre-unpause fidelity (user order 2026-09-09): paint first (visual check of the half-res RLE paint, art pass on `mappings/terrain_paint.csv`, trees/colour map `docs/map_fidelity.md` §4.3), then asset placement (§3: settlement/special-building locators from CK2 slot 0, unit stacks from slot 1). Events only after.

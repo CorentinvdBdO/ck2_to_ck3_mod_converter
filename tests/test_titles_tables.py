@@ -62,8 +62,8 @@ def test_explicit_ck2_government_wins():
 @pytest.mark.parametrize(
     "keywords,expected",
     [
-        ({"mercenary": True}, "mercenary_government"),
-        ({"holy_order": True}, "holy_order_government"),
+        ({"mercenary": True}, "feudal_government"),
+        ({"holy_order": True}, "feudal_government"),
         ({"pirate": True}, "landless_adventurer_government"),
         ({"tribe": True}, "tribal_government"),
         ({"controls_religion": True}, "theocracy_government"),
@@ -205,3 +205,13 @@ def test_every_faerun_law_is_covered():
     ]
     missing = [law for law in used if law not in tables.SUCCESSION_LAWS]
     assert missing == []
+
+
+def test_history_never_names_an_engine_object_government():
+    """mercenary/holy_order governments belong to engine-created companies and orders;
+    a landed title carrying them crashed the first tick (docs/DECISIONS.md 2026-09-09)."""
+    from ck2ck3.titles import tables
+    for _key, government, _why in tables.FLAG_GOVERNMENTS:
+        assert government in tables.HISTORY_GOVERNMENTS, government
+    for ck3 in tables.load_government_map(GOV_CSV).values():
+        assert ck3 in tables.HISTORY_GOVERNMENTS, ck3

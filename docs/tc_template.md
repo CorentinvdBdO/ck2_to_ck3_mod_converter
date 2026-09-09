@@ -67,7 +67,13 @@ Two traps, both hit and both now guarded:
    emptied body. Rule: script-database files are `keep`; a dangling vanilla
    title reference in a kept script only logs. `neutralise` stays for
    `common/on_action/story_cycles` only.
-3. **An empty trigger block evaluates true in CK3.** A neutralised
+3. **Never shadow `common/flavorization` (2026-09-09).** With the folder blank the engine finds no
+   title name for any ruler and, at the first tick after unpausing, crashed about one launch in four
+   (0x141972299; the user's 18:33 crash ends in 62 `RevokeTitlesForTheocraticLease` changes, the
+   headless baseline crashed 3/10). Restoring the vanilla files over the shadows gave 10/10 survivals
+   (`claudespace/docs/evidence/launch_*_2026-09-09_19*.log`, tags flav-1..10). The 1783 "Failed to
+   read key reference" lines the shadow was meant to silence are harmless.
+4. **An empty trigger block evaluates true in CK3.** A neutralised
    `scripted_trigger` therefore gets `{ always = no }`, and a `script_value` a
    bare `0`, not `{}` — otherwise
    `can_have_japanese_appointment_succession_law_trigger` would go from broken
@@ -103,7 +109,7 @@ files Atlantis / Elder Kings 2 / Godherja override at all.
 | `common/decisions/dlc_decisions/fp_3` | shadow | 5 | 5 | 21 | 28 | 1/3/3 | DLC decisions naming vanilla titles (21 title_links). |
 | `common/decisions/dlc_decisions/mpo` | shadow | 5 | 5 | 12 | 34 | 1/4/5 | DLC decisions naming vanilla titles (12 title_links). |
 | `common/decisions/dlc_decisions/tgp` | shadow | 10 | 10 | 206 | 258 | 0/8/8 | 206 title_links, including tgp_silk_road_decisions.txt - the Silk Road situation the playtest crashed on. |
-| `common/flavorization` | shadow | 8 | 8 |  | 168 | 0/9/7 | 1783 pdx_persistent_reader "Failed to read key reference" at load, all naming vanilla titles (e_japan, k_chrysanthemum_throne). EK2 stubs 6 of 8 files, Godherja 3. |
+| `common/flavorization` | keep (was shadow, 2026-09-09) | 8 | 8 |  | 168 | 0/9/7 | 1783 pdx_persistent_reader "Failed to read key reference" at load, all naming vanilla titles (e_japan, k_chrysanthemum_throne). EK2 stubs 6 of 8 files, Godherja 3. |
 | `common/great_projects/types` | shadow | 3 | 3 | 341 | 369 | 0/4/3 | 341 title_links: wonders pinned to vanilla counties and provinces. |
 | `common/legends/chronicles` | shadow | 1 | 1 | 32 | 64 | 1/1/1 | 32 title_links plus vanilla dynasty references. |
 | `common/legends/legend_seeds` | shadow | 1 | 1 | 47 | 106 | 1/1/1 | 4411 "Failed to fetch a valid dynasty" script errors and 47 title_links: seeds are historical legends about vanilla dynasties and titles. |

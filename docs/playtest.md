@@ -5,11 +5,13 @@ The generated mod lives in `/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun
 It is registered with the launcher by `claudespace/scripts/push_mod.sh` (a `.mod` file with `path=`
 inside the live user dir, see below).
 
-## What to expect (build 4, 2026-09-09 morning)
+## What to expect (build 7, 2026-09-09 evening)
 
 - Map of Faerûn at vanilla scale, 3705 baronies / 2127 counties, 1357 DR bookmark "Before the Storm",
   17 bookmarks total (1357–1501). Start as any of the 82 bookmark characters or pick a ruler on the map.
-- **Build 3 crashed every fresh game a few seconds after unpausing** (the blank-TC pass had emptied vanilla scripted-effect files the engine calls). Fixed: build 4 survives a 300 s headless soak. Start a new game; do not continue a build-2/3 save.
+- **Both unpause crashes are fixed.** Build 3 died every time (emptied vanilla scripted effects); build 4-6 died about one launch in four a few seconds after unpausing (your 18:33 crash: the blank `flavorization` folder left every ruler without a title name). Build 7 keeps vanilla flavorization and survived 10/10 headless launches. Start a new game; do not continue an older save.
+- Rulers now have proper titles (King of X, Duke of Y) from vanilla's generic flavorization; CK2 mercenary companies and holy orders are plain feudal realms for now (their CK2 nature is a comment in `history/titles`).
+- The converted CK2 decisions exist as inert stubs (3 live); the decisions menu shows only vanilla content.
 - New since your playtest 2: characters are dressed again (portrait base files were shadowed by mistake);
   removed CK2 traits (`cruel`, `envious`…) no longer exist — they map to CK3 traits (`sadistic`,
   `compassionate`, `arrogant`…) or are dropped; baronies are seeded from CK2 city/port positions; the terrain
