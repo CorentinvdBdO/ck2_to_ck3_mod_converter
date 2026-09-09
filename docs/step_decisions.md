@@ -199,6 +199,14 @@ After both: `ck3_soak.sh` 60 s alive, ck3-tiger fatal 0 / error 989 (baseline 58
 unknown-field 427, missing-item 332, field-missing 101, structure 62 — the hidden, below-threshold
 decisions still carry half-mapped bodies; they are inspectable by design).
 
+**Status after the fixes (coordinator, 2026-09-09 14:45):** not enough. The regenerated build
+loaded in 2 of 3 launches and crashed at database init in the third (same address
+0x141946BC4); when it loaded, the `-test` runner never executed a test (an always-failing canary
+in the mod's own `tests/` passed silently, the game showed the character-selection lobby with a
+glowing GUI element). The step is therefore **opt-in** (`[decisions] enabled = false`) and the
+shipped mod carries no ported decision until a lane bisects the remaining 37 files with
+`claudespace/scripts/ck3_bisect_probe.sh --mode empty` and a canary-verified test run.
+
 ## 4. Integration touch outside this lane's own files
 
 `src/ck2ck3/steps/tc_template.py`'s `OUTPUTS` previously included

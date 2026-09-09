@@ -341,6 +341,13 @@ named_scope = "marker"
 # CK2 decisions (`decisions`/`society_decisions`/`plot_decisions` groups) with
 # provenance status new/modified.
 [decisions]
+# Opt-in (2026-09-09): with the ported decisions in, the game crashed at
+# database init in 1 of 3 launches (0x141946BC4) and, when it loaded, the
+# scripted-test runner never fired (an always-failing canary passed). Bisecting
+# the 37 files pointed at several; two defects were fixed (picture block,
+# CK2 event triggers), the rest is open. Flip to true to work on it:
+# docs/step_decisions.md §3b.
+enabled = false
 provenance = "docs/evidence/decisions_provenance.csv"
 # A decision whose converted trigger/effect keys score below this (mapped ÷
 # total) keeps its converted content but gets `is_shown = { always = no }`

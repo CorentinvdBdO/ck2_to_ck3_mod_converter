@@ -81,6 +81,11 @@ EFFECT_SECTIONS = ("effect",)
 class DecisionsConfig:
     provenance: Path = REPO_ROOT / "docs" / "evidence" / "decisions_provenance.csv"
     min_score: float = 0.6
+    #: Off by default (2026-09-09): the first ported set crashed the game at
+    #: database init intermittently (0x141946BC4) and, when it loaded, the
+    #: scripted-test runner never fired. Until the vocabulary and the nested
+    #: schemas are complete, the step is opt-in: `[decisions] enabled = true`.
+    enabled: bool = False
     evidence: Path = REPO_ROOT / "docs" / "evidence" / "decisions_convertibility.csv"
     triggers: Path = REPO_ROOT / "mappings" / "triggers.csv"
     effects: Path = REPO_ROOT / "mappings" / "effects.csv"
@@ -94,6 +99,7 @@ class DecisionsConfig:
         return cls(
             provenance=_resolve(raw.get("provenance"), cls.provenance),
             min_score=float(raw.get("min_score", 0.6)),
+            enabled=bool(raw.get("enabled", False)),
             evidence=_resolve(raw.get("evidence"), cls.evidence),
             triggers=_resolve(raw.get("triggers"), cls.triggers),
             effects=_resolve(raw.get("effects"), cls.effects),
@@ -548,6 +554,11 @@ def find_decision_block(doc_block: Block, kind: str, decision_id: str) -> Block 
 
 def run(ctx: Context) -> StepResult:
     config = DecisionsConfig.from_raw(ctx.config.raw.get("decisions", {}))
+    if not config.enabled:
+        return StepResult(
+            summary="skipped: [decisions] enabled = false (opt-in until the port is stable, docs/step_decisions.md §3b)",
+            counts={"emitted": 0, "files": 0},
+        )
     triggers = read_vocab_csv(config.triggers)
     effects = read_vocab_csv(config.effects)
     traits = TraitInfo.from_ctx(ctx)
