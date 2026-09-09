@@ -5,10 +5,11 @@ The generated mod lives in `/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun
 It is registered with the launcher by `claudespace/scripts/push_mod.sh` (a `.mod` file with `path=`
 inside the live user dir, see below).
 
-## What to expect (build 3, 2026-09-08 evening)
+## What to expect (build 4, 2026-09-09 morning)
 
 - Map of Faerûn at vanilla scale, 3705 baronies / 2127 counties, 1357 DR bookmark "Before the Storm",
   17 bookmarks total (1357–1501). Start as any of the 82 bookmark characters or pick a ruler on the map.
+- **Build 3 crashed every fresh game a few seconds after unpausing** (the blank-TC pass had emptied vanilla scripted-effect files the engine calls). Fixed: build 4 survives a 300 s headless soak. Start a new game; do not continue a build-2/3 save.
 - New since your playtest 2: characters are dressed again (portrait base files were shadowed by mistake);
   removed CK2 traits (`cruel`, `envious`…) no longer exist — they map to CK3 traits (`sadistic`,
   `compassionate`, `arrogant`…) or are dropped; baronies are seeded from CK2 city/port positions; the terrain

@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-08 22:40 by Claude session (coordinator)
+Updated: 2026-09-09 10:20 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -32,7 +32,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Git push: token in `../claudespace/tokens` (gitignored), per-repo `credential.helper`; user CorentinvdBdO.
 
 ## Blockers and open flags
-- 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed) and CK2-named traits (fixed). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
+- 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
 - Terrain paint pair is 2 × 226 MB uncompressed TGA: gitignored in the generated mod repo (GitHub 100 MB limit); RLE / half-res untested. Human call pending.
 - Ancient non-immortal characters still exist (56 alive ≥150 years without a CK2 immortal marker); ages are accepted by the game but worth a race-lifespan decision.
 - Worker agents hang forever at `git commit` (permission prompt nobody answers); coordinator commits. See `~/.claude/harness/NOTES.md`.
@@ -40,6 +40,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-09 — **first-tick crash fixed** (build 4): 26 neutralised script files → keep; headless soak 300 s alive, 172/173 tests (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-09_101703.md`). Root cause and bisection: `docs/DECISIONS.md`, `docs/tc_template.md`.
 - 2026-09-08 — build 3: 15 steps, 1368 files; ck3-tiger fatal 0 / error 58 (41 loc hash collisions, 14 wrong-gender, 2 unknown-field, 1 history; `docs/evidence/tiger_build3_2026-09-08.txt`); pytest 1058; headless -test In Game 54 s, 172/173 (only ruler-holds-capital fails).
 - 2026-09-08 — playtest-2 build: 15 steps, 1378 files; headless `-test` In Game, 172/173 (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-08_201524.md`); map research `docs/map_fidelity.md`.
 - 2026-09-08 — **first In Game**: headless `-test` run of the converted mod reaches `Setting idler 'In Game'`; 166/173 generated tests pass (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-08_165318.md`).
@@ -49,6 +50,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. User playtest 3 of build 483d1d8 (`docs/playtest.md`): clothes, traits, terrain paint, relief, CK2 port seeds.
+1. User playtest 3 of build 4 (`docs/playtest.md`): fresh game survives unpausing; clothes, traits, terrain paint, relief, CK2 port seeds.
 2. Events §5 step 3: syntactic port of `new` events (1762) — trigger/effect tables, scopes, MTTH → on_action pulses, convertibility score; decisions first (410 new).
 3. Map look follow-ups: terrain-paint size call (RLE/half-res test in game), trees/colour map (§4.3), art pass on `mappings/terrain_paint.csv`; characters' looks: per-race ethnicities (`docs/research_dna_races.md` §4).

@@ -54,7 +54,20 @@ Two traps, both hit and both now guarded:
    from `common/laws/00_succession_laws.txt`, `setup_tributaries_effect` called
    from `on_action/game_start.txt`). Those 27 rows became `neutralise`. The
    check now reports **0**.
-2. **An empty trigger block evaluates true in CK3.** A neutralised
+2. **`neutralise` is unsafe for script databases (2026-09-09).** With 26
+   `scripted_effects`/`scripted_triggers`/`scripted_modifiers`/`script_values`
+   files neutralised, every fresh start of builds 2 and 3 died 2-7 s after the
+   first tick (access violation at 0x143380BB9; the user's build-3 crash 22 s
+   in was the same class). Build 1, which kept those files, survived; restoring
+   the 300 shadow files made build 3 survive; a probe bisection
+   (`claudespace/scripts/ck3_bisect_probe.sh`, log
+   `claudespace/docs/evidence/bisect_probe_faerun_ck2_to_ck3_converted_2026-09-09_095317.log`)
+   landed on the TGP/Frankokratia effect files and showed more than one culprit.
+   The engine and kept scripts call these effects by name and crash on an
+   emptied body. Rule: script-database files are `keep`; a dangling vanilla
+   title reference in a kept script only logs. `neutralise` stays for
+   `common/on_action/story_cycles` only.
+3. **An empty trigger block evaluates true in CK3.** A neutralised
    `scripted_trigger` therefore gets `{ always = no }`, and a `script_value` a
    bare `0`, not `{}` — otherwise
    `can_have_japanese_appointment_succession_law_trigger` would go from broken
@@ -105,32 +118,32 @@ files Atlantis / Elder Kings 2 / Godherja override at all.
 | `common/tutorial_lessons` | shadow | 9 | 9 | 27 | 27 | 4/6/4 | 27 title_links: the tutorial walks the player through 1066 Ireland. |
 | `events/decisions_events` | shadow | 19 | 19 | 337 | 409 | 6/16/15 | 337 title_links. Fired only by the decisions shadowed above, so shadowing both keeps the set closed. EK2 stubs 5 files, Godherja 9. |
 | `events/story_cycles` | shadow | 12 | 12 | 26 | 49 | 5/8/8 | 26 title_links. Fired only by common/story_cycles, shadowed above. Godherja stubs 4. |
-| `common/scripted_effects/00_decisions_effects.txt` | neutralise | 1 | 1 | 251 | 5147 | 22/86/94 | 251 title_links; called only from common/decisions. |
-| `common/scripted_effects/00_ep3_decision_effects.txt` | neutralise | 1 | 1 | 32 | 5147 | 22/86/94 | 32 title_links; called only from the ep3 decisions. |
-| `common/scripted_effects/00_historical_characters_scripted_effects.txt` | neutralise | 1 | 1 | 151 | 5147 | 22/86/94 | 151 title_links; spawns named vanilla historical characters. |
-| `common/scripted_effects/00_major_decisions_scripted_effects.txt` | neutralise | 1 | 1 | 933 | 5147 | 22/86/94 | 933 title_links - the single worst vanilla file. Called only from the major decisions. |
-| `common/scripted_effects/00_major_decisions_scripted_effects_2.txt` | neutralise | 1 | 1 | 3 | 5147 | 22/86/94 | Continuation of the file above; same callers. |
-| `common/scripted_effects/00_major_decisions_scripted_effects_3.txt` | neutralise | 1 | 1 | 50 | 5147 | 22/86/94 | 50 title_links; same callers. |
-| `common/scripted_effects/00_mongol_invasion_effects.txt` | neutralise | 1 | 1 | 121 | 5147 | 22/86/94 | 121 title_links: the Mongol invasion scripts vanilla titles and characters directly. |
-| `common/scripted_effects/00_tributary_setup_effects.txt` | neutralise | 1 | 1 | 105 | 5147 | 22/86/94 | 105 title_links: sets up the 1066/867 tributary web by title tag. |
-| `common/scripted_effects/01_exp1_historical_artifacts_creation_effect.txt` | neutralise | 1 | 1 | 77 | 5147 | 22/86/94 | 77 title_links; creates artefacts owned by vanilla characters. |
-| `common/scripted_effects/06_dlc_ce1_legend_effects.txt` | neutralise | 1 | 1 | 146 | 5147 | 22/86/94 | 146 title_links; the legend seeds that call it are shadowed above. |
-| `common/scripted_effects/07_frankokratia_scripted_effects.txt` | neutralise | 1 | 1 | 258 | 5147 | 22/86/94 | 258 title_links: the Frankokratia is a Byzantine map event chain. |
-| `common/scripted_effects/10_dlc_tgp_scripted_effects.txt` | neutralise | 1 | 1 | 314 | 5147 | 22/86/94 | 314 title_links (East Asia content). |
-| `common/scripted_effects/10_dlc_tgp_dynastic_cycle_scripted_effects.txt` | neutralise | 1 | 1 | 107 | 5147 | 22/86/94 | 107 title_links (East Asia content). |
-| `common/scripted_effects/tgp_tribute_mission_scripted_effects.txt` | neutralise | 1 | 1 | 66 | 5147 | 22/86/94 | 66 title_links (East Asia content). |
-| `common/scripted_triggers/07_frankokratia_triggers.txt` | neutralise | 1 | 1 | 89 | 874 | 10/79/82 | 89 title_links; paired with the Frankokratia effects. |
-| `common/scripted_triggers/10_tgp_japan_triggers.txt` | neutralise | 1 | 1 | 2965 | 874 | 10/79/82 | 2965 title_links - the largest single class in the log. Every trigger tests a vanilla Japanese title. |
-| `common/scripted_triggers/10_tgp_triggers.txt` | neutralise | 1 | 1 | 45 | 874 | 10/79/82 | 45 title_links (East Asia content). |
-| `common/scripted_triggers/10_tgp_dynastic_cycle_triggers.txt` | neutralise | 1 | 1 | 20 | 874 | 10/79/82 | 20 title_links (East Asia content). |
-| `common/scripted_triggers/tgp_tribute_mission_triggers.txt` | neutralise | 1 | 1 | 60 | 874 | 10/79/82 | 60 title_links (East Asia content). |
-| `common/scripted_modifiers/10_tgp_japan_modifiers.txt` | neutralise | 1 | 1 | 331 | 37 | 2/13/14 | 331 title_links (East Asia content). |
-| `common/script_values/10_tgp_japan_values.txt` | neutralise | 1 | 1 | 1 | 573 | 8/48/52 | Values read only by the shadowed Japanese triggers and modifiers. |
-| `common/script_values/tgp_japan_values.txt` | neutralise | 1 | 1 | 3 | 573 | 8/48/52 | Values read only by the shadowed Japanese content. |
-| `common/script_values/tgp_tribute_mission_values.txt` | neutralise | 1 | 1 | 30 | 573 | 8/48/52 | 30 title_links; read only by the shadowed tribute-mission scripts. |
-| `common/script_values/00_decision_values.txt` | neutralise | 1 | 1 | 4 | 573 | 8/48/52 | Read only by common/decisions. |
-| `common/script_values/00_mongol_values.txt` | neutralise | 1 | 1 |  | 573 | 8/48/52 | Read only by the Mongol invasion effects shadowed above. |
-| `common/script_values/00_invasion_values.txt` | neutralise | 1 | 1 | 1 | 573 | 8/48/52 | Read only by the Mongol invasion effects shadowed above. |
+| `common/scripted_effects/00_decisions_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 251 | 5147 | 22/86/94 | 251 title_links; called only from common/decisions. |
+| `common/scripted_effects/00_ep3_decision_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 32 | 5147 | 22/86/94 | 32 title_links; called only from the ep3 decisions. |
+| `common/scripted_effects/00_historical_characters_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 151 | 5147 | 22/86/94 | 151 title_links; spawns named vanilla historical characters. |
+| `common/scripted_effects/00_major_decisions_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 933 | 5147 | 22/86/94 | 933 title_links - the single worst vanilla file. Called only from the major decisions. |
+| `common/scripted_effects/00_major_decisions_scripted_effects_2.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 3 | 5147 | 22/86/94 | Continuation of the file above; same callers. |
+| `common/scripted_effects/00_major_decisions_scripted_effects_3.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 50 | 5147 | 22/86/94 | 50 title_links; same callers. |
+| `common/scripted_effects/00_mongol_invasion_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 121 | 5147 | 22/86/94 | 121 title_links: the Mongol invasion scripts vanilla titles and characters directly. |
+| `common/scripted_effects/00_tributary_setup_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 105 | 5147 | 22/86/94 | 105 title_links: sets up the 1066/867 tributary web by title tag. |
+| `common/scripted_effects/01_exp1_historical_artifacts_creation_effect.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 77 | 5147 | 22/86/94 | 77 title_links; creates artefacts owned by vanilla characters. |
+| `common/scripted_effects/06_dlc_ce1_legend_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 146 | 5147 | 22/86/94 | 146 title_links; the legend seeds that call it are shadowed above. |
+| `common/scripted_effects/07_frankokratia_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 258 | 5147 | 22/86/94 | 258 title_links: the Frankokratia is a Byzantine map event chain. |
+| `common/scripted_effects/10_dlc_tgp_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 314 | 5147 | 22/86/94 | 314 title_links (East Asia content). |
+| `common/scripted_effects/10_dlc_tgp_dynastic_cycle_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 107 | 5147 | 22/86/94 | 107 title_links (East Asia content). |
+| `common/scripted_effects/tgp_tribute_mission_scripted_effects.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 66 | 5147 | 22/86/94 | 66 title_links (East Asia content). |
+| `common/scripted_triggers/07_frankokratia_triggers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 89 | 874 | 10/79/82 | 89 title_links; paired with the Frankokratia effects. |
+| `common/scripted_triggers/10_tgp_japan_triggers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 2965 | 874 | 10/79/82 | 2965 title_links - the largest single class in the log. Every trigger tests a vanilla Japanese title. |
+| `common/scripted_triggers/10_tgp_triggers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 45 | 874 | 10/79/82 | 45 title_links (East Asia content). |
+| `common/scripted_triggers/10_tgp_dynastic_cycle_triggers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 20 | 874 | 10/79/82 | 20 title_links (East Asia content). |
+| `common/scripted_triggers/tgp_tribute_mission_triggers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 60 | 874 | 10/79/82 | 60 title_links (East Asia content). |
+| `common/scripted_modifiers/10_tgp_japan_modifiers.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 331 | 37 | 2/13/14 | 331 title_links (East Asia content). |
+| `common/script_values/10_tgp_japan_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 1 | 573 | 8/48/52 | Values read only by the shadowed Japanese triggers and modifiers. |
+| `common/script_values/tgp_japan_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 3 | 573 | 8/48/52 | Values read only by the shadowed Japanese content. |
+| `common/script_values/tgp_tribute_mission_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 30 | 573 | 8/48/52 | 30 title_links; read only by the shadowed tribute-mission scripts. |
+| `common/script_values/00_decision_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 4 | 573 | 8/48/52 | Read only by common/decisions. |
+| `common/script_values/00_mongol_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 |  | 573 | 8/48/52 | Read only by the Mongol invasion effects shadowed above. |
+| `common/script_values/00_invasion_values.txt` | keep (was neutralise, 2026-09-09) | 1 | 1 | 1 | 573 | 8/48/52 | Read only by the Mongol invasion effects shadowed above. |
 | `gfx/portraits/portrait_modifiers/02_all_developer_characters.txt`, `02_all_historical_characters.txt` | shadow | 2 | 2 | 857 | 857 | 8/25/28 (replace_path: EK2) | Only these two files name vanilla characters in a way that matters. **Was `shadow_dirty` on the folder until 2026-09-08**: 01_clothes_base, 01_headgear_base, 01_beards_base, 00_custom_hair, 05_headgear_situational, 06_clothes_special and 99_special test `title:h_china` / `title:k_chrysanthemum_throne`, so they were emptied and every character was naked and bald in playtest 2. A dangling title in a portrait trigger is one error-log line; a missing base file undresses the world. Rule: load-bearing `gfx/` folders are `keep`, never `shadow_dirty`. |
 | `gfx/court_scene/scene_cultures` | keep | 1 | 0 | 18 | 18 | 2/1/1 | 00_default_cultures.txt is the culture-to-court-scene mechanic; was shadow_dirty, now keep (same lesson as portrait_modifiers). Its 18 dangling title triggers only log. |
 | `gfx/interface/illustrations/scripted_illustrations` | keep | 7 | 0 | 40 | 206 | 1/1/3 | ingame.txt defines character_view_bg and the in-game window illustrations; shadowing it blanked them. Was shadow_dirty, now keep; 40 dangling title triggers only log. |
