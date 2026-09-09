@@ -165,3 +165,173 @@ for the full list): ridged/eroded structure instead of isotropic noise
 detail pass (§4.2, a different lane), tree scatter and the `colormap.dds`
 resample (§4.3), and the locator/asset placement half of Goal A's sibling
 work (`docs/evidence/HANDOFF_map_fidelity.md`, lane `map-ui`).
+
+## 8. Size (lane `paint-size`)
+
+**Question.** GitHub refuses files over 100 MB; the ~226 MB-per-layer TGA
+pair from §5/§6 forces the generated mod repo to gitignore both files, so a
+clone ships no terrain paint at all. Is there a format under 100 MB/file, or
+is none possible?
+
+**Answer: yes, but only at half resolution.** `[map] terrain_paint_scale =
+0.5` is *required* — RLE alone does not get the full-resolution pair under
+the limit (§8.3). `[map] terrain_paint_format = "tga_rle"` at
+`terrain_paint_scale = 0.5` is the recommendation (§8.4); defaults are
+unchanged (`"tga"`, `1.0`) pending the coordinator's in-game check.
+
+### 8.1 Does CK3 1.19 accept RLE TGA for this pair?
+
+**Yes, `verified`** — not by a game test (none run in this session, see §8.5),
+but by reading two other things:
+
+* **Two installed, published, currently-loadable workshop total conversions
+  ship RLE.** Elder Kings 2 (`workshop/content/1158310/2887120253`) and
+  Godherja (`.../2326030123`) both ship
+  `gfx/map/terrain/detail_index.tga`/`detail_intensity.tga` as TGA **image
+  type 10** (RLE) — byte offset 2 is `0x0a` in all four files (`xxd -l 20`,
+  `verified`) — at **exactly their own `provinces.png` resolution** (EK2
+  8256×5504, Godherja 8192×4096, both `verified` from the PNG IHDR and the
+  TGA width/height header fields). Princes of Darkness (`2216659254`) ships
+  neither file — it relies on vanilla's own terrain paint, a third data point
+  (not every TC overrides this pair). Neither EK2 nor Godherja ships
+  half-resolution paint.
+* **PIL reads both back correctly** (`Image.open(...).convert("RGBA")` on
+  Godherja's `detail_intensity.tga` decodes to a 4096×8192×4 array with the
+  expected value ranges per channel, `verified`) — RLE TGA decoding is not
+  exotic, standard library support round-trips it.
+* This settles the open question §3 above already flagged as untested:
+  `terrain_paint.save_tga(..., rle=True)` now writes RLE via PIL's own
+  `rle=True` (`verified` to produce the same image-type byte as the two
+  shipped mods, `test_save_tga_rle_writes_image_type_10`).
+
+### 8.2 Is DDS viable for these two specific files?
+
+**Unverified, and the evidence leans no.** `strings` on `ck3.exe` finds the
+literal names `detail_index.tga` / `detail_intensity.tga` exactly **twice**
+in the whole binary, both together, both followed immediately by a bare
+`.tga` string, all three from one object file:
+`C:\...\jomini\modules\map_editor\source\mapeditor_detail_data.cpp` (the map
+editor's own `ProcessMasks` mask-bake step). There is no second occurrence
+anywhere else in the binary, and no generic-extension search near it (unlike
+the *mask* PNGs, which do have one — `"Failed to load mask texture file: %s
+with any of the following formats (png,bmp,tga)."`, a different code path,
+`verified` same `strings` dump). One editor-time constant is weak evidence
+that the runtime loader uses the same hardcoded filename, but a single
+occurrence total, with a literal `.tga` extension right next to it, is the
+strongest signal this repo can get without a game test — `detail_index.dds`
+may simply never be looked for. Implemented anyway, per spec (§8.4/§8.6), and
+it carries no compression benefit even if it did load (§8.3): uncompressed
+BGRA8 has the same byte count as plain TGA.
+
+### 8.3 Measured sizes, every format × scale (Faerûn, real run)
+
+`uv run scripts/paint_variants.py <out dir>` on the reference `map`-step
+output (`docs/evidence/paint_variants.csv`, `verified`, real 8320×6784 data,
+not extrapolated from a tile like §4.1's own sizing table):
+
+| variant | format | scale | size (px) | `detail_index` | `detail_intensity` | total | under 100 MB/file? |
+|---|---|---|---|---|---|---|---|
+| `tga_full` | `tga` | 1.0 | 8320×6784 | 225.77 MB | 225.77 MB | 451.54 MB | no, no |
+| `tga_rle_full` | `tga_rle` | 1.0 | 8320×6784 | **5.57 MB** | 172.55 MB | 178.12 MB | yes, **no** |
+| `dds_full` | `dds` | 1.0 | 8320×6784 | 225.77 MB | 225.77 MB | 451.54 MB | no, no |
+| `tga_0p5` | `tga` | 0.5 | 4160×3392 | 56.44 MB | 56.44 MB | 112.89 MB | **yes, yes** |
+| `tga_rle_0p5` | `tga_rle` | 0.5 | 4160×3392 | **2.33 MB** | **54.55 MB** | **56.88 MB** | **yes, yes** |
+| `dds_0p5` | `dds` | 0.5 | 4160×3392 | 56.44 MB | 56.44 MB | 112.89 MB | **yes, yes** |
+
+**Why RLE alone is not enough.** `detail_index`'s ordinals are large flat
+runs (one CK2 terrain category covers thousands of contiguous pixels), so RLE
+crushes it 40x. `detail_intensity`'s blend weight is the noise-dithered field
+from §2 step 3 — a *different* pseudo-random value on nearly every pixel by
+design (that is what breaks up CK2's hard palette edges) — so consecutive
+bytes rarely repeat and RLE barely helps it (225.77 → 172.55 MB, 24%). This
+matches `docs/map_fidelity.md` §4.1's own extrapolated estimate (173 MB at 16
+quantisation steps) almost exactly, so that prototype-tile projection holds
+up against the real full-canvas run. **No format change alone clears the
+100 MB cap for `detail_intensity` at full resolution** — the noise field is
+the cost, not the container.
+
+**Why 0.5 clears it comfortably.** Downsampling quarters the pixel count, so
+even the *uncompressed* 0.5-scale files (56.44 MB) are under the limit with
+room to spare, and RLE on top shrinks the intensity layer further (54.55 MB)
+because a box-filtered half-resolution field is smoother — less pixel-to-
+pixel noise survives the averaging in `downsample_intensity` — than the
+full-resolution one.
+
+### 8.4 Recommendation
+
+**`[map] terrain_paint_format = "tga_rle"`, `[map] terrain_paint_scale =
+0.5`.** Reasoning:
+
+1. **Scale is not optional.** Every full-resolution candidate fails the
+   100 MB/file cap (§8.3); only `terrain_paint_scale = 0.5` gets under it at
+   all, regardless of format.
+2. **RLE is the `verified`-safest format at that scale** (§8.1) — real,
+   loadable, published mods use exactly this container. Plain `tga` at 0.5 is
+   the fallback if RLE somehow does not load in game: still comfortably under
+   the cap (56.44 MB/file) and bit-for-bit vanilla's own image type.
+3. **`dds` is not recommended**: no compression benefit (§8.3) and the
+   weakest load-viability evidence of the three (§8.2).
+
+### 8.5 What the coordinator must check in game
+
+Nothing here was checked against a running CK3 — this lane's own reading of
+`ck3.exe` strings and two shipped mods' file headers settles §8.1/§8.2 as far
+as static analysis can, but only a game load answers:
+
+* Does `terrain_paint_format = "tga_rle"` actually render (expected: yes,
+  §8.1)?
+* Does `terrain_paint_scale = 0.5` (a pair *smaller* than `provinces.png`,
+  which no installed shipped mod does) still align and render correctly —
+  the renderer samples in UV space, so this should just resample, but no
+  installed mod tests the smaller-than-province-map case?
+* Does `terrain_paint_format = "dds"` load at all, at either scale (expected:
+  no, §8.2)?
+
+`scripts/paint_variants.py`/`.sh` build all six combinations as probe mods
+under `<out>/../paint_variants/<variant>/` for
+`claudespace/scripts/ck3_soak.sh <mod> --extra <dir>` (§8.6).
+
+### 8.6 `scripts/paint_variants.py` / `.sh`
+
+Re-encodes an already-built `detail_index`/`detail_intensity` pair (any
+format the run used) into every format × scale combination, without a second
+converter run: `load_paint` decodes the master pair once, then for each
+variant `downsample_index`/`downsample_intensity` (only if `scale != 1.0`)
+and `save_paint` write
+`<out>/../paint_variants/<variant>/gfx/map/terrain/detail_index.<ext>` (and
+`detail_intensity`) plus a `descriptor.mod`
+(`replace_path="gfx/map/terrain"`, no `path=` line — `ck3_soak.sh --extra`
+adds that itself). Also writes `docs/evidence/paint_variants.csv` (§8.3's
+table, machine-readable). Usage:
+
+```
+uv run scripts/paint_variants.py /home/cvdbdo/git/paradox/ck3/wt/_out/paint-size
+claudespace/scripts/ck3_soak.sh faerun_ck2_to_ck3_converted \
+  --extra /home/cvdbdo/git/paradox/ck3/wt/_out/paint_variants/tga_rle_0p5
+```
+
+### 8.7 New `[map]` keys (`configs/faerun.toml`)
+
+| key | default | meaning |
+|---|---|---|
+| `terrain_paint_format` | `"tga"` | `"tga"` (vanilla's own, uncompressed) / `"tga_rle"` (RLE, `verified` §8.1) / `"dds"` (uncompressed BGRA8, unverified §8.2). Unchanged until the coordinator's in-game check (§8.5) picks one. |
+| `terrain_paint_scale` | `1.0` | `1.0` matches `provinces.png` (vanilla's choice); `0.5` halves both dimensions (nearest-neighbour for `detail_index`, box-filter for `detail_intensity` — `ck2ck3.map.terrain_paint.downsample_index`/`downsample_intensity`). Required for any format to clear the 100 MB/file cap (§8.3). |
+
+`ck2ck3.map.terrain_paint.save_paint`/`load_paint`/`paint_ext` dispatch on
+`terrain_paint_format`; every writer round-trips through its own reader
+(`tests/test_map_terrain_paint.py`, RLE and DDS both, plus the downsample
+functions). ck3-tiger has nothing to check here — §6/§7 already established
+it raises nothing about this pair (opaque binary files to it either way);
+this lane did not re-run it.
+
+### 8.6 In-game check (coordinator, 2026-09-09)
+
+- `verified` Probe `tga_rle_0p5` loaded after the mod (`Paint variant: tga_rle_0p5 ... Enabled` in
+  debug.log): the game reached In Game and stayed alive 100 s, zero `detail_index`/`detail_intensity`/
+  texture errors in error.log. The first probe run was invalid (its descriptor `replace_path`-ed
+  `gfx/map/terrain`, deleting vanilla materials); fixed in `scripts/paint_variants.py`.
+- `assumed` Visual quality of half-resolution paint at close zoom. The headless `-test` run sits on the
+  character-selection map (political flat map, `claudespace` screenshot), which does not show the paint;
+  the player's playtest is the visual check.
+- Decision: defaults are now `terrain_paint_format = "tga_rle"`, `terrain_paint_scale = 0.5` (2.3 MB +
+  53 MB); the generated mod repo tracks the pair again.

@@ -405,19 +405,33 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 quantize=cfg.terrain_paint_quantize,
                 warn=sink.warn,
             )
+            paint_format = cfg.terrain_paint_format
+            paint_scale = cfg.terrain_paint_scale
+            index_out, intensity_out = paint.index, paint.intensity
+            if paint_scale != 1.0:
+                index_out = terrain_paint.downsample_index(index_out, paint_scale)
+                intensity_out = terrain_paint.downsample_intensity(
+                    intensity_out, paint_scale
+                )
+            ext = terrain_paint.paint_ext(paint_format)
+            index_path = f"gfx/map/terrain/detail_index.{ext}"
+            intensity_path = f"gfx/map/terrain/detail_intensity.{ext}"
             sink.binary(
-                terrain_paint.DETAIL_INDEX_PATH,
-                lambda p: terrain_paint.save_tga(paint.index, p),
+                index_path,
+                lambda p: terrain_paint.save_paint(index_out, p, paint_format),
             )
             sink.binary(
-                terrain_paint.DETAIL_INTENSITY_PATH,
-                lambda p: terrain_paint.save_tga(paint.intensity, p),
+                intensity_path,
+                lambda p: terrain_paint.save_paint(intensity_out, p, paint_format),
             )
             report["terrain_paint"] = {
                 "classes": paint.classes,
                 "missing_material": paint.missing_material,
                 "missing_ordinal": paint.missing_ordinal,
                 "quantize": paint.quantize,
+                "format": paint_format,
+                "scale": paint_scale,
+                "index_size": [int(index_out.shape[1]), int(index_out.shape[0])],
             }
             log(f"terrain paint: {dict(sorted(paint.classes.items()))}")
             del paint

@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import csv
 import re
+import struct
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -55,6 +56,9 @@ DEFAULT_MATERIALS = ("plains_01", "plains_01_noisy")
 
 DETAIL_INDEX_PATH = "gfx/map/terrain/detail_index.tga"
 DETAIL_INTENSITY_PATH = "gfx/map/terrain/detail_intensity.tga"
+
+#: ``[map] terrain_paint_format`` candidates (docs/step_map_paint.md §size).
+PAINT_FORMATS = ("tga", "tga_rle", "dds")
 
 
 @dataclass
@@ -229,12 +233,179 @@ def build_layers(
     )
 
 
-def save_tga(arr: np.ndarray, path: str | Path) -> None:
-    """Write an RGBA layer as an uncompressed TGA, matching vanilla exactly.
+def save_tga(arr: np.ndarray, path: str | Path, *, rle: bool = False) -> None:
+    """Write an RGBA layer as a TGA, plain (vanilla's own format) or RLE.
 
-    `verified` against the vanilla game folder: both shipped files are image
-    type 2 (uncompressed truecolour), not RLE (type 10) — so this writer does
-    not use PIL's ``rle=True`` option, which would ship a format CK3's own
-    files never use.
+    `verified` against the vanilla game folder: vanilla's own shipped files
+    are image type 2 (uncompressed truecolour), not RLE (type 10). But two
+    installed workshop total conversions — Elder Kings 2 (`2887120253`) and
+    Godherja (`2326030123`) — ship `detail_index.tga`/`detail_intensity.tga`
+    as image type **10** (RLE), full `provinces.png` resolution, and both are
+    functioning published mods (`verified` file-header bytes,
+    `docs/step_map_paint.md` §size). ``rle=True`` uses PIL's RLE TGA writer,
+    which produces the same image-type byte (`verified` by
+    :func:`save_tga`'s own round-trip test).
     """
-    Image.fromarray(arr, "RGBA").save(path, "TGA")
+    Image.fromarray(arr, "RGBA").save(path, "TGA", rle=rle)
+
+
+def load_tga(path: str | Path) -> np.ndarray:
+    """Decode a TGA (plain or RLE) back to an HxWx4 uint8 RGBA array."""
+    return np.asarray(Image.open(path).convert("RGBA"))
+
+
+# --------------------------------------------------------------------------- #
+# DDS — uncompressed BGRA8, DX9 header, no mipmaps
+# --------------------------------------------------------------------------- #
+#
+# docs/step_map_paint.md §size documents why this candidate is implemented
+# but unverified: the only two occurrences of the strings "detail_index" /
+# "detail_intensity" anywhere in ck3.exe are next to a literal ".tga" and
+# come from ``mapeditor_detail_data.cpp`` (the map editor's own mask-bake
+# step) — no generic-extension search (like the one the mask-PNG loader logs,
+# "png,bmp,tga") was found for this specific pair, so a same-name-override
+# ``detail_index.dds`` may simply never be looked for. Implemented anyway per
+# spec, self-consistent (round-trips through :func:`load_dds`), and its
+# header is a standard uncompressed-ARGB8 DDS (DDPF_RGB|DDPF_ALPHAPIXELS,
+# masks 0x00FF0000/0x0000FF00/0x000000FF/0xFF000000 — the layout most DDS
+# tooling calls "A8R8G8B8"), stored top-down with B,G,R,A byte order per
+# pixel (the mask layout implies that byte order; this module's arrays are
+# RGBA, so channels 0 and 2 are swapped on the way in and out).
+
+DDS_MAGIC = b"DDS "
+
+#: magic(4s) + header(dwSize dwFlags dwHeight dwWidth dwPitchOrLinearSize
+#: dwDepth dwMipMapCount) + dwReserved1[11] + pixelformat(dwSize dwFlags
+#: dwFourCC dwRGBBitCount dwRBitMask dwGBitMask dwBBitMask dwABitMask) +
+#: dwCaps dwCaps2 dwCaps3 dwCaps4 dwReserved2. 4 + 124 = 128 bytes total.
+_DDS_STRUCT = struct.Struct("<4s7I11I8I5I")
+
+_DDSD_CAPS = 0x1
+_DDSD_HEIGHT = 0x2
+_DDSD_WIDTH = 0x4
+_DDSD_PITCH = 0x8
+_DDSD_PIXELFORMAT = 0x1000
+_DDPF_ALPHAPIXELS = 0x1
+_DDPF_RGB = 0x40
+_DDSCAPS_TEXTURE = 0x1000
+
+
+def _dds_header(width: int, height: int) -> bytes:
+    flags = _DDSD_CAPS | _DDSD_HEIGHT | _DDSD_WIDTH | _DDSD_PITCH | _DDSD_PIXELFORMAT
+    return _DDS_STRUCT.pack(
+        DDS_MAGIC,
+        124,  # dwSize
+        flags,
+        height,
+        width,
+        width * 4,  # dwPitchOrLinearSize (uncompressed: bytes per scanline)
+        0,  # dwDepth
+        0,  # dwMipMapCount
+        *([0] * 11),  # dwReserved1
+        32,  # pixelformat.dwSize
+        _DDPF_ALPHAPIXELS | _DDPF_RGB,  # pixelformat.dwFlags
+        0,  # pixelformat.dwFourCC (unused: not compressed)
+        32,  # pixelformat.dwRGBBitCount
+        0x00FF0000,  # dwRBitMask
+        0x0000FF00,  # dwGBitMask
+        0x000000FF,  # dwBBitMask
+        0xFF000000,  # dwABitMask
+        _DDSCAPS_TEXTURE,  # dwCaps
+        0, 0, 0,  # dwCaps2..4
+        0,  # dwReserved2
+    )
+
+
+def save_dds(arr: np.ndarray, path: str | Path) -> None:
+    """Write an RGBA layer as an uncompressed 32bpp BGRA8 DDS. See module
+    docstring above for the header layout and why this candidate is
+    unverified against the actual game."""
+    h, w = arr.shape[0], arr.shape[1]
+    bgra = np.ascontiguousarray(arr[..., (2, 1, 0, 3)])
+    Path(path).write_bytes(_dds_header(w, h) + bgra.tobytes())
+
+
+def load_dds(path: str | Path) -> np.ndarray:
+    """Decode a DDS written by :func:`save_dds` back to an HxWx4 RGBA array."""
+    raw = Path(path).read_bytes()
+    fields = _DDS_STRUCT.unpack(raw[: _DDS_STRUCT.size])
+    magic = fields[0]
+    if magic != DDS_MAGIC:
+        raise ValueError(f"not a DDS file: magic {magic!r}")
+    height, width = fields[3], fields[4]
+    pixels = raw[_DDS_STRUCT.size :]
+    bgra = np.frombuffer(pixels, dtype=np.uint8, count=height * width * 4)
+    bgra = bgra.reshape(height, width, 4)
+    return np.ascontiguousarray(bgra[..., (2, 1, 0, 3)])
+
+
+def paint_ext(fmt: str) -> str:
+    """File extension for a ``[map] terrain_paint_format`` value."""
+    if fmt not in PAINT_FORMATS:
+        raise ValueError(f"unknown terrain_paint_format {fmt!r}, want one of {PAINT_FORMATS}")
+    return "dds" if fmt == "dds" else "tga"
+
+
+def save_paint(arr: np.ndarray, path: str | Path, fmt: str) -> None:
+    """Dispatch to the writer for ``[map] terrain_paint_format``."""
+    if fmt == "tga":
+        save_tga(arr, path, rle=False)
+    elif fmt == "tga_rle":
+        save_tga(arr, path, rle=True)
+    elif fmt == "dds":
+        save_dds(arr, path)
+    else:
+        raise ValueError(f"unknown terrain_paint_format {fmt!r}, want one of {PAINT_FORMATS}")
+
+
+def load_paint(path: str | Path, fmt: str) -> np.ndarray:
+    """Dispatch to the reader for ``[map] terrain_paint_format``."""
+    if fmt in ("tga", "tga_rle"):
+        return load_tga(path)
+    if fmt == "dds":
+        return load_dds(path)
+    raise ValueError(f"unknown terrain_paint_format {fmt!r}, want one of {PAINT_FORMATS}")
+
+
+# --------------------------------------------------------------------------- #
+# downsample — [map] terrain_paint_scale
+# --------------------------------------------------------------------------- #
+def downsample_index(arr: np.ndarray, scale: float) -> np.ndarray:
+    """Nearest-neighbour resample of the ``detail_index`` layer.
+
+    The only method safe for an ordinal layer: interpolating two material
+    ordinals (say 12 and 46) would invent a bogus intermediate material (29)
+    that may not even exist. ``scale`` of 0.5 halves both dimensions.
+    """
+    h, w = arr.shape[:2]
+    nh = max(1, round(h * scale))
+    nw = max(1, round(w * scale))
+    yi = np.minimum((np.arange(nh) / scale).astype(np.int64), h - 1)
+    xi = np.minimum((np.arange(nw) / scale).astype(np.int64), w - 1)
+    return arr[yi][:, xi]
+
+
+def downsample_intensity(arr: np.ndarray, scale: float) -> np.ndarray:
+    """Box-filter resample of the ``detail_intensity`` layer.
+
+    Averages channel 0 (the primary blend weight) over each ``factor x
+    factor`` block (``factor = round(1/scale)``) and re-derives channel 1 as
+    its complement, rather than averaging both channels independently —
+    independent rounding of two box averages need not still sum to 255, and
+    the runtime's ``materials_limit`` contract requires it (`build_layers`
+    asserts it on the full-resolution pair; this keeps the invariant across a
+    downsample too). Channels 2/3 stay 0, matching `build_layers`'s own
+    two-material convention.
+    """
+    factor = round(1.0 / scale)
+    if factor < 1:
+        raise ValueError(f"terrain_paint_scale must be <= 1.0, got {scale}")
+    h, w = arr.shape[:2]
+    nh, nw = h // factor, w // factor
+    trimmed = arr[: nh * factor, : nw * factor, 0].astype(np.float64)
+    boxed = trimmed.reshape(nh, factor, nw, factor).mean(axis=(1, 3))
+    prim = np.clip(np.round(boxed), 1, 254).astype(np.uint8)
+    out = np.zeros((nh, nw, 4), dtype=np.uint8)
+    out[..., 0] = prim
+    out[..., 1] = 255 - prim
+    return out

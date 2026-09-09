@@ -196,6 +196,8 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             str(raw.get("terrain_paint_csv", "mappings/terrain_paint.csv"))
         ),
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
+        terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
+        terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

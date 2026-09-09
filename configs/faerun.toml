@@ -108,6 +108,25 @@ terrain_paint_csv = "mappings/terrain_paint.csv"
 # TGA either way (`verified` against vanilla: its own pair is image type 2,
 # not RLE), so the quantisation only helps if a future pass adds RLE.
 terrain_paint_quantize = 16
+# Pixel format: "tga" (vanilla's own, uncompressed image type 2), "tga_rle"
+# (RLE image type 10 - verified accepted: Elder Kings 2 and Godherja both
+# ship it, full resolution, both loadable published mods), or "dds"
+# (uncompressed BGRA8 - implemented but unverified: ck3.exe's only two
+# mentions of "detail_index"/"detail_intensity" are next to a literal ".tga",
+# from the map editor's own mask-bake code, so a renamed .dds may simply
+# never be found - docs/step_map_paint.md §8.2). Left at the vanilla-matching
+# default until the coordinator's in-game check (§8.5) picks one.
+terrain_paint_format = "tga_rle"
+# Downsample factor: 1.0 matches provinces.png (vanilla's own choice); 0.5
+# halves both dimensions (nearest-neighbour for detail_index so no bogus
+# in-between material ordinal is invented, box-filter for detail_intensity).
+# REQUIRED to get either file under GitHub's 100 MB cap: RLE alone still
+# leaves detail_intensity at ~173 MB at full resolution (the noise-dithered
+# blend field barely compresses), while 0.5 alone already clears the cap
+# uncompressed (docs/step_map_paint.md §8.3, measured: tga_rle at 0.5 is
+# 2.33 MB + 54.55 MB, the smallest of all six format x scale combinations
+# tried). Left at 1.0 (full size) until the coordinator's in-game check.
+terrain_paint_scale = 0.5
 
 # --- measured scale inputs (flat keys: `scale` under [map] is already the
 # --- derived float above, so a [map.scale] table would collide with it)
