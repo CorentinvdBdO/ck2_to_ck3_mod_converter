@@ -41,6 +41,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-10 — **paint half of pre-unpause fidelity done and verified in game** (mod ad8402f): terrain paint and 711,875 trees render; the colormap is rebuilt as a tint measured off vanilla (125-130 per channel, replacing a saturated CK2 satellite image); the sea has vanilla's flat-0 floor with a 24 px shelf (CK2 ships no bathymetry and CK3 painted our shallow sea as sand). Anauroch reads as desert, the Sword Coast as snowy January forest. The camera probe (`scripts/camera_probe.py` plus `REALM_COLOR_MAP_START_ZOOM_STEP = 0`) makes any visual claim checkable headless.
 - 2026-09-09 — **first-tick crash fixed** (build 4): 26 neutralised script files → keep; headless soak 300 s alive, 172/173 tests (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-09_101703.md`). Root cause and bisection: `docs/DECISIONS.md`, `docs/tc_template.md`.
 - 2026-09-08 — build 3: 15 steps, 1368 files; ck3-tiger fatal 0 / error 58 (41 loc hash collisions, 14 wrong-gender, 2 unknown-field, 1 history; `docs/evidence/tiger_build3_2026-09-08.txt`); pytest 1058; headless -test In Game 54 s, 172/173 (only ruler-holds-capital fails).
 - 2026-09-08 — playtest-2 build: 15 steps, 1378 files; headless `-test` In Game, 172/173 (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-08_201524.md`); map research `docs/map_fidelity.md`.
@@ -53,4 +54,4 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 ## Next 3
 1. User playtest 3 of build 7 (`docs/playtest.md`): unpause and play for real this time; clothes, traits, terrain paint (half-res), relief, CK2 port seeds, ruler titles.
 2. Events §5 step 3: decisions step **stabilised and on** (`docs/step_decisions.md` §3b): 3 fully converted decisions live, 393 inert stubs with the converted draft as comments, AI weight 0; canary-verified test runs. Next: `new` events (1762), with the same rule — half-converted bodies are never live.
-3. Pre-unpause fidelity (user order 2026-09-09): paint first (visual check of the half-res RLE paint, art pass on `mappings/terrain_paint.csv`, trees/colour map `docs/map_fidelity.md` §4.3), then asset placement (§3: settlement/special-building locators from CK2 slot 0, unit stacks from slot 1). Events only after.
+3. Pre-unpause fidelity, **asset placement** (paint is done): `docs/map_fidelity.md` §3 — settlement and special-building locators from CK2 `positions.txt` slot 0, unit stacks from slot 1. Events only after that.

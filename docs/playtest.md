@@ -5,11 +5,12 @@ The generated mod lives in `/home/cvdbdo/git/paradox/ck3/claudespace/mods/faerun
 It is registered with the launcher by `claudespace/scripts/push_mod.sh` (a `.mod` file with `path=`
 inside the live user dir, see below).
 
-## What to expect (build 7, 2026-09-09 evening)
+## What to expect (build 8, 2026-09-10)
 
 - Map of Faerûn at vanilla scale, 3705 baronies / 2127 counties, 1357 DR bookmark "Before the Storm",
   17 bookmarks total (1357–1501). Start as any of the 82 bookmark characters or pick a ruler on the map.
 - **Both unpause crashes are fixed.** Build 3 died every time (emptied vanilla scripted effects); build 4-6 died about one launch in four a few seconds after unpausing (your 18:33 crash: the blank `flavorization` folder left every ruler without a title name). Build 7 keeps vanilla flavorization and survived 10/10 headless launches. Start a new game; do not continue an older save.
+- The map is painted: CK2 terrain classes drive CK3's materials, 711,875 trees are scattered from CK2's `trees.bmp`, the colour wash is a tint measured off vanilla, and the sea has a real floor so it reads as deep water rather than beach. Zoom in on Anauroch (desert) and the Sword Coast (forest, snowed in because the bookmark is 2 January and Faerun's own climate marks 43 % of provinces wintery).
 - Rulers now have proper titles (King of X, Duke of Y) from vanilla's generic flavorization; CK2 mercenary companies and holy orders are plain feudal realms for now (their CK2 nature is a comment in `history/titles`).
 - The converted CK2 decisions exist as inert stubs (3 live); the decisions menu shows only vanilla content.
 - New since your playtest 2: characters are dressed again (portrait base files were shadowed by mistake);
