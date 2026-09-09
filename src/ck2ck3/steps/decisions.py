@@ -80,12 +80,11 @@ EFFECT_SECTIONS = ("effect",)
 @dataclass
 class DecisionsConfig:
     provenance: Path = REPO_ROOT / "docs" / "evidence" / "decisions_provenance.csv"
-    min_score: float = 0.6
-    #: Off by default (2026-09-09): the first ported set crashed the game at
-    #: database init intermittently (0x141946BC4) and, when it loaded, the
-    #: scripted-test runner never fired. Until the vocabulary and the nested
-    #: schemas are complete, the step is opt-in: `[decisions] enabled = true`.
-    enabled: bool = False
+    min_score: float = 1.0
+    #: On by default again (2026-09-09 evening) since below-threshold
+    #: decisions are inert stubs and the AI weight is always 0
+    #: (docs/step_decisions.md §3b). `[decisions] enabled = false` skips the step.
+    enabled: bool = True
     evidence: Path = REPO_ROOT / "docs" / "evidence" / "decisions_convertibility.csv"
     triggers: Path = REPO_ROOT / "mappings" / "triggers.csv"
     effects: Path = REPO_ROOT / "mappings" / "effects.csv"
@@ -98,8 +97,8 @@ class DecisionsConfig:
 
         return cls(
             provenance=_resolve(raw.get("provenance"), cls.provenance),
-            min_score=float(raw.get("min_score", 0.6)),
-            enabled=bool(raw.get("enabled", False)),
+            min_score=float(raw.get("min_score", 1.0)),
+            enabled=bool(raw.get("enabled", True)),
             evidence=_resolve(raw.get("evidence"), cls.evidence),
             triggers=_resolve(raw.get("triggers"), cls.triggers),
             effects=_resolve(raw.get("effects"), cls.effects),
@@ -453,10 +452,13 @@ def convert_decision(
     }
     fields: dict[str, Node] = {}
     trailing: list[str] = []
+    ck2_ai_will_do: Block | None = None
     for entry in ck2_block.entries:
         if not isinstance(entry, Node):
             continue
         key = entry.key
+        if key == "ai_will_do" and isinstance(entry.value, Block):
+            ck2_ai_will_do = entry.value
         if key in ck3_field_of and isinstance(entry.value, Block):
             ck3_key, table_kind = ck3_field_of[key]
             converted = convert_block(
@@ -490,10 +492,25 @@ def convert_decision(
             key="picture",
             value=Block(entries=[Node(
                 key="reference", op="=",
-                value='"gfx/interface/illustrations/decisions/decision_misc.dds"',
+                value="gfx/interface/illustrations/decisions/decision_misc.dds",
+                quoted_value=True,
             )]),
             leading_comments=["# CK2 GFX_evt_* picture has no CK3 counterpart; vanilla's generic decision illustration"],
         )
+    # AI off for every ported decision (2026-09-09). CK2 `ai_will_do` is a
+    # factor/modifier MTTH block, CK3's is base/add: the converted block is
+    # not a valid weight, and with it in place the scripted-test runner never
+    # fired (single-file probe: as-is silent; ai_will_do = { base = 0 } fired;
+    # claudespace/docs/evidence/bisect_probe_faerun_dec2_2026-09-09_154020.log
+    # and the v0..v4 variant soaks). The CK2 block stays as a comment for the
+    # human who re-enables AI use per decision in the submod.
+    ai_comment = []
+    if "ai_will_do" in fields:
+        ai_comment = _render_comment(Node(key="ai_will_do", value=ck2_ai_will_do)) if ck2_ai_will_do is not None else []
+    fields["ai_will_do"] = Node(
+        key="ai_will_do", value=Block(entries=[Node(key="base", op="=", value=0)]), blank_before=True,
+        leading_comments=["# AI never takes a raw-ported decision (docs/step_decisions.md §3b); CK2 weights below:", *ai_comment],
+    )
     order = ["picture", "is_shown", "is_valid", "cost", "effect", "ai_potential", "ai_will_do", "ai_check_interval"]
     for name in order:
         if name in fields:
@@ -511,21 +528,46 @@ def convert_decision(
     score = stats.score
     below = score < min_score
     if below:
-        # Force is_shown off, keep the converted content inspectable.
-        for i, n in enumerate(body.entries):
-            if isinstance(n, Node) and n.key == "is_shown":
-                body.entries[i] = Node(
-                    key="is_shown",
-                    value=Block(entries=[Node(key="always", value=False)]),
-                    blank_before=n.blank_before,
-                    leading_comments=n.leading_comments,
-                )
-                break
-        else:
-            body.entries.insert(0, Node(
-                key="is_shown",
-                value=Block(entries=[Node(key="always", value=False)]),
-            ))
+        # Below the threshold the decision becomes an INERT STUB: is_shown off,
+        # is_valid trivially true, empty effect. The converted draft of each
+        # section is kept as `# draft:` comment lines above the stub. Reason
+        # (2026-09-09): with the converted bodies in place the scripted-test
+        # runner never fired and the game crashed at database init in ~1 of 3
+        # launches; with every body stubbed (structure only) the runner fires
+        # (claudespace soak probes `allstub`, `v0..v4`). Only a decision whose
+        # every trigger/effect key mapped is emitted live.
+        stub_values = {
+            "is_shown": Block(entries=[Node(key="always", value=False)]),
+            "is_valid": Block(entries=[Node(key="always", value=True)]),
+            "effect": Block(entries=[]),
+            "ai_potential": Block(entries=[Node(key="always", value=False)]),
+        }
+
+        def _draft(n: Node) -> list[str]:
+            lines = _render_comment(Node(key=n.key, value=n.value))
+            return [("# draft: " + l[7:]) if l.startswith("# CK2: ") else "# draft:" for l in lines]
+
+        new_entries: list = []
+        seen: set[str] = set()
+        carried: list[str] = []   # draft of a dropped `cost`, attached to the next stub
+        for n in body.entries:
+            if isinstance(n, Node) and n.key == "cost":
+                carried.extend(["# cost dropped: a stub cannot be taken", *_draft(n)])
+                continue
+            if isinstance(n, Node) and n.key in stub_values:
+                seen.add(n.key)
+                new_entries.append(Node(
+                    key=n.key, value=stub_values[n.key], blank_before=n.blank_before,
+                    leading_comments=[*n.leading_comments, *carried, *_draft(n)],
+                ))
+                carried = []
+            else:
+                new_entries.append(n)
+        if carried:
+            body.end_comments = [*body.end_comments, *carried]
+        if "is_shown" not in seen:
+            new_entries.insert(0, Node(key="is_shown", value=Block(entries=[Node(key="always", value=False)])))
+        body.entries = new_entries
 
     header = [
         f"# convertibility: {score:.2f} ({stats.mapped}/{stats.total} keys mapped)"

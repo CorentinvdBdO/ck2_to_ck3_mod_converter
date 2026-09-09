@@ -202,10 +202,53 @@ decisions still carry half-mapped bodies; they are inspectable by design).
 **Status after the fixes (coordinator, 2026-09-09 14:45):** not enough. The regenerated build
 loaded in 2 of 3 launches and crashed at database init in the third (same address
 0x141946BC4); when it loaded, the `-test` runner never executed a test (an always-failing canary
-in the mod's own `tests/` passed silently, the game showed the character-selection lobby with a
-glowing GUI element). The step is therefore **opt-in** (`[decisions] enabled = false`) and the
-shipped mod carries no ported decision until a lane bisects the remaining 37 files with
-`claudespace/scripts/ck3_bisect_probe.sh --mode empty` and a canary-verified test run.
+in the mod's own `tests/` passed silently).
+
+**Root cause and the shipped policy (coordinator, 2026-09-09 17:00).** Probe soaks with a canary
+test (`claudespace/scripts/ck3_soak.sh`, `canary=fired|silent`) on a build named
+`faerun_dec2` with the step enabled:
+
+| probe | canary |
+|---|---|
+| all 37 files as emitted | silent (3/3) |
+| all 37 files emptied | fired |
+| all emptied + one hand-written minimal decision | fired |
+| one file kept as emitted (`fae_ze_war_chest.txt`, 2 decisions) | silent |
+| same file, `is_shown`/`is_valid` stubbed | fired |
+| same file, `effect` stubbed | fired |
+| same file, `ai_will_do = { base = 0 }` | fired |
+| all 37 files, only `ai_will_do` zeroed | silent (4/4) |
+| all 396 decisions stubbed (structure only) | fired |
+
+So the converted trigger/effect bodies are the problem class, not any single file: any live
+decision whose body carries half-converted CK2 script (CK2 scope words, `factor` weights, empty
+`NOT = { }`/`liege = { }` left by commented content) silences the test runner and, in about one
+launch in three, crashes database init. A structure-only decision is harmless. Policy now
+implemented in `convert_decision`:
+
+1. `min_score = 1.0`: a decision goes live only when every trigger/effect key mapped. Today that is
+   3 of 396 (`close_gov_list`, `close_psi_spellbook`, `close_rituals`).
+2. Every other decision is an **inert stub**: `is_shown = { always = no }`, `is_valid = { always = yes }`,
+   `effect = { }`, `ai_potential = { always = no }`, no `cost`; the converted draft of each section
+   is kept above it as `# draft:` comment lines, the original CK2 as `# CK2:` lines. Inspectable,
+   never evaluated.
+3. `ai_will_do = { base = 0 }` for every ported decision, live or stub: CK2's factor/modifier MTTH
+   block is not a CK3 weight. The CK2 block is kept as a comment; the submod re-enables AI use per
+   decision.
+4. `picture` is emitted once-quoted (`reference = "gfx/..."`); an earlier build double-quoted it and
+   desynced the parser (`Decision picture } missing entries`).
+5. CK2 event-firing effects (`character_event`, `letter_event`, `narrative_event`,
+   `long_character_event`) stay commented until the events step exists.
+
+Verification of the shipped policy, 10 launches each with an in-mod canary
+(`claudespace/scripts/ck3_soak.sh`): stub build 8/10 canary fired, 2/10 post-test crash at
+0x141972299; baseline build without any decision 9/10 fired, 3/10 the same post-test crash. The two
+are indistinguishable; that post-test crash is pre-existing and tracked in STATUS.md. Test config for
+this kind of check: `configs/faerun_dec2.toml` (distinct mod `name`, step enabled) — build it to
+`wt/_out/dec2`, symlink under `claudespace/mods/`, drop a canary into its `tests/`.
+
+The step is therefore enabled by default again; the scores rise as the vocabulary tables grow
+(`mappings/triggers.csv`, `effects.csv`) and decisions go live automatically when they reach 1.0.
 
 ## 4. Integration touch outside this lane's own files
 
