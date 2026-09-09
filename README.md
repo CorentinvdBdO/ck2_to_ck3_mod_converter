@@ -53,6 +53,7 @@ Validation chain: `pytest` (919) → `ck3-tiger` (fatal 0; 218 accepted errors, 
 
 ## 2. Hurdles (what actually cost time)
 
+- **The blank-TC `neutralise` mode crashed every fresh game.** Keeping a vanilla scripted-effect file's keys with empty bodies looked safe (a caller still resolves) and passed ck3-tiger and the scripted tests, but the engine calls some of those effects at the first tick and dereferences what they should have created: builds 2 and 3 died 2–7 s after unpausing. Found only once a headless soak existed (`-test` unpauses the game, so no input injection is needed), then bisected by restoring vanilla files over the shadows in halves (`claudespace/scripts/ck3_soak.sh`, `ck3_bisect_probe.sh`). Rule now: script databases are kept, never neutralised (`docs/tc_template.md`).
 - **The old code did not convert anything.** The regex parser dropped comments and could not write; nothing
   wrote a CK3 file. Replaced by a tokenizer parser with comment round-trip (6437/6437 Faerûn files, 3785/3785
   vanilla CK3 files parse and round-trip), then 13 steps in a day of parallel lanes.
