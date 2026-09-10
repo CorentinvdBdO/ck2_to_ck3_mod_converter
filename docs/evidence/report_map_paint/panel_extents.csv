@@ -1,0 +1,4 @@
+scale,km_across,faerun_canvas_x,faerun_canvas_y,faerun_km_per_px_height,faerun_km_per_px_paint,vanilla_heightmap_x,vanilla_heightmap_y,vanilla_km_per_px_height,vanilla_km_per_px_paint,panel_px
+continent,2000.0,3000,1500,1.4839,2.9678,3100,1500,0.74195,1.4839,380
+region,400.0,2345,1060,1.4839,2.9678,3200,1100,0.74195,1.4839,380
+local,80.0,2345,1060,1.4839,2.9678,3200,1100,0.74195,1.4839,380

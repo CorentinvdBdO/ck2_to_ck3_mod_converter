@@ -589,7 +589,11 @@ def fig_composition(recompute: bool) -> str:
     vtot = sum(van.values())
     van = {k: 100 * v / vtot for k, v in van.items()}
 
-    keys = sorted(set(ours) | set(ck2) | set(van), key=lambda k: -ours.get(k, 0))
+    # the name is the tiebreak: without it the tied-at-zero keys come out in
+    # set-iteration order, which PYTHONHASHSEED randomises, and the figure was
+    # a different PNG on every run (found by lane `relief-report`).
+    keys = sorted(set(ours) | set(ck2) | set(van),
+                  key=lambda k: (-ours.get(k, 0), k))
     y = np.arange(len(keys))
     fig, ax = plt.subplots(figsize=(8.6, 5.2), dpi=120)
     ax.barh(y + 0.27, [ck2.get(k, 0) for k in keys], 0.26, color=C_CK2,
@@ -666,6 +670,1138 @@ def fig_trees(recompute: bool) -> str:
     return "fig7_trees.png"
 
 
+# ===================================================================== §7
+# Side by side: Thay's terraces, multi-scale panels, per-material composition.
+# Everything below was added by lane `relief-report`; figures 1-7 above are
+# untouched.
+
+#: CK2 px -> canvas px.  The converter logs this triple every run
+#: (`scale factor 1.954310 -> canvas 8320x6784 (scaled 8005x6504, offset
+#: 157,140)`), and SCALED_W/H, OFFSET_X/Y above are the same line.
+CK2_SCALE = SCALED_W / 4096.0
+#: one 8-bit source level through the transfer curve, in 16-bit levels.
+#: (49205 - 4883) / (255 - 95) = 277.0125.  Every land pixel of the plain
+#: rescale is an integer multiple of this above the water pin, so a
+#: pixel-to-pixel step of exactly one riser is quantisation and nothing else.
+RISER = (MAX_LEVEL - WATER_LEVEL) / (255.0 - CK2_SEA_LEVEL)
+#: configs/faerun.toml `[map] heightmap_detail_deterrace_sigma_px`, default
+#: HeightmapDetailConfig.deterrace_sigma_px = 1.6 (src/ck2ck3/map/config.py:215)
+DETERRACE_SIGMA_PX = 1.6
+
+#: common/defines: WORLD_EXTENTS_Y.  A 16-bit level is `level/65535*extents_y`
+#: **game units** of height, and one provinces.png pixel is one game unit of
+#: ground, so a heightmap at resolution_factor 2 covers half a game unit per
+#: pixel.  Hillshading both maps in game units is the only like-for-like
+#: comparison: it is the slope the renderer itself sees.
+EXTENTS_Y_OURS, EXTENTS_Y_VANILLA = 51.0, 50.0
+UNITS_PER_HM_PX_OURS, UNITS_PER_HM_PX_VANILLA = 1.0, 0.5
+HILLSHADE_VE = 3.0
+HILLSHADE_AZ, HILLSHADE_ALT = 315.0, 35.0
+
+#: The vanilla control region for every side-by-side: the Norwegian coast,
+#: heightmap px (2x), i.e. provinces px (1600, 550).  Chosen for the brief's
+#: own reason -- coast plus mountains in one frame, the closest vanilla analogue
+#: of the Sword Coast and of Thay's scarps.  Recorded in panel_extents.csv.
+VANILLA_CTRL_HM = (3200, 1100)
+#: Faerûn centres, canvas px.  Waterdeep's own province centroid is
+#: (2345, 6784-5724=1060) (docs/step_map_assets.md §5b); the Sword Coast crop
+#: is docs/map_fidelity.md §4.2; the continent centre is the painted-extent
+#: rectangle's own middle (OFFSET + SCALED/2).
+WATERDEEP_CANVAS = (2345, 1060)
+SWORD_COAST_CANVAS = (SWORD_COAST[1] + SWORD_COAST[2] // 2,
+                      SWORD_COAST[0] + SWORD_COAST[2] // 2)
+CONTINENT_CANVAS = (OFFSET_X + SCALED_W // 2, OFFSET_Y + SCALED_H // 2)
+
+LANDED_TITLES = ROOT / "Faerun/Faerun/common/landed_titles/01_landed_titles.txt"
+
+
+# ------------------------------------------------------- Thay, from CK2 data
+def _strip_comment(line: str) -> str:
+    i = line.find("#")
+    return line if i < 0 else line[:i]
+
+
+def thay_counties_from_landed_titles() -> list[tuple[str, int]]:
+    """`(county title, CK2 province id)` for every county under `k_thay`.
+
+    Faerûn writes the province id as a trailing comment on the county's own
+    line (`c_thaymount = { # 1426`), which is also how `capital = 1426 #
+    c_thaymount` is read elsewhere in this repo.  The file is Windows-1252
+    (CLAUDE.md), so it is decoded as cp1252, not utf-8.
+    """
+    lines = _need(LANDED_TITLES, "CK2 landed_titles").read_text(
+        encoding="cp1252", errors="replace").splitlines()
+    start = next(i for i, l in enumerate(lines)
+                 if re.match(r"^\s*k_thay\s*=\s*\{", l))
+    depth, out = 0, []
+    for line in lines[start:]:
+        bare = _strip_comment(line)
+        m = re.match(r"^\s*(c_\w+)\s*=\s*\{\s*#\s*(\d+)", line)
+        if m and depth >= 1:
+            out.append((m.group(1), int(m.group(2))))
+        depth += bare.count("{") - bare.count("}")
+        if depth <= 0:
+            break
+    if not out:
+        raise SystemExit("no counties found under k_thay")
+    return out
+
+
+def read_ck2_definition() -> dict[int, tuple[int, int, int]]:
+    rows = {}
+    with _need(CK2_MAP / "definition.csv", "CK2 definition.csv").open(
+            encoding="cp1252", errors="replace") as f:
+        for line in f:
+            p = line.strip().split(";")
+            if len(p) >= 4 and p[0].isdigit():
+                rows[int(p[0])] = (int(p[1]), int(p[2]), int(p[3]))
+    return rows
+
+
+def m_thay_counties():
+    """Every Thayan county's pixel footprint on the CK2 `provinces.bmp`."""
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None
+    counties = thay_counties_from_landed_titles()
+    defs = read_ck2_definition()
+    with Image.open(_need(CK2_MAP / "provinces.bmp", "CK2 provinces.bmp")) as im:
+        prov = np.asarray(im.convert("RGB"))
+    key = ((prov[:, :, 0].astype(np.uint32) << 16)
+           | (prov[:, :, 1].astype(np.uint32) << 8) | prov[:, :, 2])
+    rows, allmask = [], np.zeros(key.shape, bool)
+    for title, pid in counties:
+        rgb = defs.get(pid)
+        if rgb is None:
+            rows.append({"county": title, "province_id": pid, "r": "", "g": "",
+                         "b": "", "px": 0, "ck2_x0": "", "ck2_x1": "",
+                         "ck2_y0": "", "ck2_y1": ""})
+            continue
+        m = key == ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2])
+        allmask |= m
+        ys, xs = np.nonzero(m)
+        rows.append({"county": title, "province_id": pid, "r": rgb[0],
+                     "g": rgb[1], "b": rgb[2], "px": int(m.sum()),
+                     "ck2_x0": int(xs.min()), "ck2_x1": int(xs.max()),
+                     "ck2_y0": int(ys.min()), "ck2_y1": int(ys.max())})
+    ys, xs = np.nonzero(allmask)
+    rows.append({"county": "(all k_thay)", "province_id": -1, "r": "", "g": "",
+                 "b": "", "px": int(allmask.sum()),
+                 "ck2_x0": int(xs.min()), "ck2_x1": int(xs.max()),
+                 "ck2_y0": int(ys.min()), "ck2_y1": int(ys.max())})
+    return rows
+
+
+_THAY_FIELDS = ["county", "province_id", "r", "g", "b", "px",
+                "ck2_x0", "ck2_x1", "ck2_y0", "ck2_y1"]
+
+
+def thay_window(recompute: bool = False, margin_px: int = 40):
+    """`(x0, x1, y0, y1)` canvas rectangle covering every Thayan county."""
+    rows = cached("thay_counties.csv", _THAY_FIELDS, m_thay_counties, recompute)
+    r = next(r for r in rows if r["county"] == "(all k_thay)")
+    x0 = int(OFFSET_X + int(r["ck2_x0"]) * CK2_SCALE) - margin_px
+    x1 = int(OFFSET_X + int(r["ck2_x1"]) * CK2_SCALE) + margin_px
+    y0 = int(OFFSET_Y + int(r["ck2_y0"]) * CK2_SCALE) - margin_px
+    y1 = int(OFFSET_Y + int(r["ck2_y1"]) * CK2_SCALE) + margin_px
+    return x0, x1, y0, y1
+
+
+# --------------------------------------------- the four elevation stages
+_STAGES: dict[bool, tuple] = {}
+
+
+def thay_stages(recompute: bool = False):
+    """`(ck2_src, plain, deterraced, shipped, land, win)` over the Thay window.
+
+    * `ck2_src`   the CK2 `topology.bmp` bytes themselves, native 2.90 km/px,
+                  cropped to the same ground -- the only array here that is
+                  not on our canvas.
+    * `plain`     `ck2ck3.map.heightmap`'s own output (plain_rescale_canvas).
+    * `deterraced` pass 1 of `ck2ck3.map.heightmap_detail` alone: a Gaussian
+                  of sigma 1.6 canvas px on land, exactly as
+                  `heightmap_detail.apply` does it, computed on a padded crop
+                  so the filter sees the same neighbourhood it would on the
+                  full canvas.
+    * `shipped`   the reference run's `map_data/heightmap.png`.
+    """
+    if recompute in _STAGES:
+        return _STAGES[recompute]
+    from scipy.ndimage import gaussian_filter
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None
+    print("measuring the Thay window ...", flush=True)
+    x0, x1, y0, y1 = thay_window(recompute)
+    pad = int(np.ceil(6 * DETERRACE_SIGMA_PX)) + 4
+    plain_full = plain_rescale_canvas()
+    P = plain_full[y0 - pad:y1 + pad, x0 - pad:x1 + pad].astype(np.float32)
+    del plain_full
+    D = gaussian_filter(P, DETERRACE_SIGMA_PX, mode="nearest")[pad:-pad, pad:-pad]
+    P = P[pad:-pad, pad:-pad]
+    S = load_heightmap(MOD / "map_data/heightmap.png")[y0:y1, x0:x1].astype(np.float32)
+    land = S > WATER_LEVEL
+    with Image.open(_need(CK2_MAP / "topology.bmp", "CK2 topology.bmp")) as im:
+        src8 = np.asarray(im.convert("L"))
+    cx0, cx1 = int((x0 - OFFSET_X) / CK2_SCALE), int((x1 - OFFSET_X) / CK2_SCALE)
+    cy0, cy1 = int((y0 - OFFSET_Y) / CK2_SCALE), int((y1 - OFFSET_Y) / CK2_SCALE)
+    from ck2ck3.map import heightmap as hm
+    from ck2ck3.map.config import HeightmapConfig
+    lut = hm.build_curve(HeightmapConfig(ck2_sea_level=CK2_SEA_LEVEL,
+                                         ck3_water_level=WATER_LEVEL,
+                                         ck3_max_level=MAX_LEVEL))
+    src = lut[src8[max(cy0, 0):cy1, max(cx0, 0):cx1]].astype(np.float32)
+    _STAGES[recompute] = (src, P, D, S, land, (x0, x1, y0, y1))
+    return _STAGES[recompute]
+
+
+def _edge_steps(a, land):
+    """|Δ| in riser units over every land-to-land 4-neighbour edge."""
+    dh = np.abs(np.diff(a, axis=1))[land[:, :-1] & land[:, 1:]]
+    dv = np.abs(np.diff(a, axis=0))[land[:-1, :] & land[1:, :]]
+    return np.concatenate([dh, dv]) / RISER
+
+
+_STEP_CLASSES = [(-0.01, 0.01, "flat (0)"), (0.01, 0.5, "sub-riser"),
+                 (0.5, 1.5, "1 riser (quantisation)"), (1.5, 2.5, "2 risers"),
+                 (2.5, 4.5, "3-4 risers"), (4.5, 1e9, ">=5 risers")]
+
+
+def m_thay_steps():
+    src, P, D, S, land, _ = thay_stages()
+    rows = []
+    for stage, a in (("ck2_plain_rescale", P), ("after_deterrace", D),
+                     ("shipped", S)):
+        s = _edge_steps(a, land)
+        for lo, hi, lbl in _STEP_CLASSES:
+            n = int(((s > lo) & (s <= hi)).sum())
+            rows.append({"stage": stage, "class": lbl, "edges": n,
+                         "pct": round(100.0 * n / s.size, 3),
+                         "n_edges_total": int(s.size),
+                         "mean_risers": round(float(s.mean()), 4),
+                         "p99_risers": round(float(np.percentile(s, 99)), 3),
+                         "max_risers": round(float(s.max()), 3)})
+    return rows
+
+
+_CLIFF_LAGS = (1, 2, 3, 4, 6, 8, 12)
+
+
+def m_thay_cliffs():
+    """How much of a real cliff survives the de-terrace Gaussian.
+
+    A cliff is defined on the **plain rescale**, before anything has touched
+    it: a horizontal land-to-land edge whose one-pixel step is at least
+    `thr` risers.  One riser is pure quantisation, so >= 2 means the 8-bit
+    source itself falls by two or more levels inside 1.48 km -- a real scarp.
+    For each such edge the signed drop is measured over a growing baseline
+    `2*lag - 1` px wide, oriented by the plain rescale's own sign, so
+    zero-mean synthesis noise averages out instead of inflating the number.
+    """
+    src, P, D, S, land, _ = thay_stages()
+    dx = np.diff(P, axis=1)
+    ok = land[:, :-1] & land[:, 1:]
+    rows = []
+    for thr in (2, 4, 6):
+        m = (np.abs(dx) >= (thr - 0.5) * RISER) & ok
+        ys, xs = np.nonzero(m)
+        keep = (xs >= max(_CLIFF_LAGS) + 2) & (xs < P.shape[1] - max(_CLIFF_LAGS) - 2)
+        ys, xs = ys[keep], xs[keep]
+        sgn = np.sign(dx[ys, xs])
+        for lag in _CLIFF_LAGS:
+            vals = {}
+            for name, a in (("plain", P), ("deterrace", D), ("shipped", S)):
+                vals[name] = float((sgn * (a[ys, xs + lag]
+                                           - a[ys, xs + 1 - lag])).mean()) / RISER
+            rows.append({
+                "cliff_threshold_risers": thr, "n_edges": int(ys.size),
+                "lag_px": lag, "baseline_km": round((2 * lag - 1) * KM_PX_OURS, 2),
+                "drop_plain_risers": round(vals["plain"], 3),
+                "drop_deterrace_risers": round(vals["deterrace"], 3),
+                "drop_shipped_risers": round(vals["shipped"], 3),
+                "kept_deterrace_pct": round(100 * vals["deterrace"] / vals["plain"], 1),
+                "kept_shipped_pct": round(100 * vals["shipped"] / vals["plain"], 1),
+            })
+    return rows
+
+
+def m_thay_transects():
+    """Two canvas rows straight across the Thayan plateau.
+
+    Row A is the row carrying the window's single largest plain-rescale step
+    (the western scarp below Thaymount); row B is 120 px south of it.  Both
+    are picked by the data, not by eye, so the figure cannot be cherry-picked.
+    """
+    src, P, D, S, land, (x0, x1, y0, y1) = thay_stages()
+    mag = np.abs(np.diff(P, axis=1)) * (land[:, :-1] & land[:, 1:])
+    rowA = int(np.argmax(mag.max(axis=1)))
+    rowB = min(rowA + 120, P.shape[0] - 1)
+    # `src` was cropped at the CK2-grid origin of the same window, so the
+    # canvas column has to come back to CK2 coordinates *relative to that
+    # origin*, not absolutely.
+    cx0 = max(int((x0 - OFFSET_X) / CK2_SCALE), 0)
+    cy0 = max(int((y0 - OFFSET_Y) / CK2_SCALE), 0)
+    rows = []
+    for lbl, r in (("A", rowA), ("B", rowB)):
+        cy = int(round(((y0 + r) - OFFSET_Y) / CK2_SCALE)) - cy0
+        for i in range(P.shape[1]):
+            cx = int(round(((x0 + i) - OFFSET_X) / CK2_SCALE)) - cx0
+            rows.append({
+                "transect": lbl, "canvas_row": y0 + r, "canvas_col": x0 + i,
+                "ck2_source": int(src[np.clip(cy, 0, src.shape[0] - 1),
+                                      np.clip(cx, 0, src.shape[1] - 1)]),
+                "plain": int(P[r, i]), "deterrace": int(round(D[r, i])),
+                "shipped": int(S[r, i]), "land": int(land[r, i]),
+            })
+    return rows
+
+
+_BAND_SIGMAS = (0.8, 1.6, 3.2, 6.4, 12.8, 25.6)
+
+
+def m_thay_bands():
+    """Band-passed RMS over Thay's land, plus vanilla's own control region.
+
+    Difference-of-Gaussians bands, so a band's label is the wavelength range
+    it passes.  The vanilla column is the Norwegian coast control at the same
+    **kilometre** bands (its heightmap is 2x, so its sigmas are doubled), and
+    is the only honest yardstick for "is our detail the right size".
+    """
+    from scipy.ndimage import gaussian_filter
+    src, P, D, S, land, _ = thay_stages()
+    core = np.zeros_like(land)
+    core[40:-40, 40:-40] = True
+    m = land & core
+    van, vland = _vanilla_control_patch()
+    rows = []
+    for i in range(len(_BAND_SIGMAS) - 1):
+        s1, s2 = _BAND_SIGMAS[i], _BAND_SIGMAS[i + 1]
+        row = {"band_km_lo": round(s1 * KM_PX_OURS * 2, 2),
+               "band_km_hi": round(s2 * KM_PX_OURS * 2, 2)}
+        for name, a in (("plain", P), ("deterrace", D), ("shipped", S)):
+            b = gaussian_filter(a, s1) - gaussian_filter(a, s2)
+            row[f"rms_{name}"] = round(float(b[m].std()), 1)
+        vs1 = s1 * KM_PX_OURS / KM_PX_VANILLA
+        vs2 = s2 * KM_PX_OURS / KM_PX_VANILLA
+        b = gaussian_filter(van, vs1) - gaussian_filter(van, vs2)
+        row["rms_vanilla_norway"] = round(float(b[vland].std()), 1)
+        rows.append(row)
+    return rows
+
+
+def m_clamp_floor():
+    """Land the detail pass sank below the water level, map-wide.
+
+    `heightmap_detail` guarantees every land pixel ends strictly above
+    `water_level`, and it enforces that by clamping.  A pixel sitting at
+    exactly `water_level + 1` is therefore a pixel the synthesis pushed under
+    and the invariant pulled back -- dead flat, with whatever elevation the
+    plain rescale gave it thrown away.  Measured against the plain rescale,
+    on the full canvas, not a crop.
+    """
+    from scipy.ndimage import distance_transform_edt
+    plain = plain_rescale_canvas()
+    ship = load_heightmap(MOD / "map_data/heightmap.png")
+    land = ship > WATER_LEVEL
+    clamp = ship == WATER_LEVEL + 1
+    n, c = int(land.sum()), int(clamp.sum())
+    dist = distance_transform_edt(land)[clamp]
+    lost = plain[clamp].astype(np.float64) - (WATER_LEVEL + 1)
+    low = land & (plain < 8000)
+    return [{
+        "land_px": n, "clamp_floor_px": c,
+        "clamp_pct_of_land": round(100.0 * c / n, 3),
+        "dist_to_water_p50_px": round(float(np.median(dist)), 1),
+        "dist_to_water_p90_px": round(float(np.percentile(dist, 90)), 1),
+        "dist_to_water_max_px": round(float(dist.max()), 1),
+        "within_6px_of_water_pct": round(100.0 * float((dist <= 6).mean()), 1),
+        "plain_height_there_p50": round(float(np.median(plain[clamp])), 0),
+        "plain_height_there_p90": round(float(np.percentile(plain[clamp], 90)), 0),
+        "mean_levels_lost": round(float(lost.mean()), 0),
+        "low_land_px_plain_under_8000": int(low.sum()),
+        "low_land_clamped_pct": round(100.0 * float((clamp & low).sum()
+                                                    / max(int(low.sum()), 1)), 1),
+    }]
+
+
+_CLAMP_FIELDS = ["land_px", "clamp_floor_px", "clamp_pct_of_land",
+                 "dist_to_water_p50_px", "dist_to_water_p90_px",
+                 "dist_to_water_max_px", "within_6px_of_water_pct",
+                 "plain_height_there_p50", "plain_height_there_p90",
+                 "mean_levels_lost", "low_land_px_plain_under_8000",
+                 "low_land_clamped_pct"]
+
+
+def _vanilla_control_patch(km: float = 400.0):
+    """The Norwegian-coast control crop of vanilla's heightmap, plus its land."""
+    cx, cy = VANILLA_CTRL_HM
+    half = int(km / KM_PX_VANILLA / 2)
+    van = load_heightmap(GAME / "map_data/heightmap.png")[
+        cy - half:cy + half, cx - half:cx + half].astype(np.float32)
+    return van, van > VANILLA_WATER
+
+
+# ------------------------------------------------------------- rendering
+def hillshade(z, *, units_per_px: float, extents_y: float,
+              ve: float = HILLSHADE_VE) -> np.ndarray:
+    """Standard hillshade in **game units**, so two maps are comparable.
+
+    A 16-bit level is `level/65535*WORLD_EXTENTS_Y` game units of height and
+    one provinces.png pixel is one game unit of ground, so `units_per_px` is
+    1.0 for our 1x heightmap and 0.5 for vanilla's 2x one.  Feeding both the
+    same vertical exaggeration then compares the slope the renderer sees, not
+    an artefact of how many pixels each map spends on a kilometre.
+    """
+    zu = z.astype(np.float32) / 65535.0 * extents_y * ve
+    gy, gx = np.gradient(zu, units_per_px)
+    slope = np.arctan(np.hypot(gx, gy))
+    aspect = np.arctan2(-gx, gy)
+    az, alt = np.radians(HILLSHADE_AZ), np.radians(HILLSHADE_ALT)
+    v = (np.sin(alt) * np.cos(slope)
+         + np.cos(alt) * np.sin(slope) * np.cos(az - aspect))
+    return np.clip(v, 0.0, 1.0)
+
+
+#: land the detail pass drove below the water level and the invariant clamped
+#: back to `water_level + 1` -- dead flat ground, drawn in this colour so it
+#: cannot be mistaken for a plain (see `clamp_floor.csv`).
+CLAMP_COLOUR = (0.85, 0.30, 0.55)
+
+
+def shade_rgb(z, land, *, units_per_px, extents_y, clamp=None) -> np.ndarray:
+    """Hillshade as RGB with water drawn flat blue, so coastlines read."""
+    v = hillshade(z, units_per_px=units_per_px, extents_y=extents_y)
+    rgb = np.repeat((0.25 + 0.75 * v)[:, :, None], 3, axis=2)
+    rgb[~land] = (0.36, 0.46, 0.58)
+    if clamp is not None:
+        rgb[clamp] = CLAMP_COLOUR
+    return np.clip(rgb, 0, 1)
+
+
+#: The material tints are vanilla's own measured means and they are nearly
+#: neutral by design (R 115-154, G 114-142, B 96-140 -- §4), so a literal
+#: rendering of them is 100 shades of grey.  Every paint panel therefore
+#: pushes each tint away from the grey point by this factor.  It is a display
+#: gain and nothing else: no hue is invented, the ordering and the ratios
+#: between materials are vanilla's, and the same gain is applied to all three
+#: columns.
+TINT_GAIN = 7.0
+TINT_GREY = 128.0
+
+
+def tint_lut() -> np.ndarray:
+    """`(256, 3)` float LUT: material ordinal -> boosted vanilla tint.
+
+    `docs/evidence/vanilla_colormap_tints.csv` is keyed by material *name*
+    (`scripts/measure_vanilla_colormap_tints.py`); the ordinals are vanilla's
+    own declaration order in `materials.settings`, the same numbering both
+    `detail_index.tga` files use.
+    """
+    from ck2ck3.map.terrain_paint import material_ordinals
+    ords_ = material_ordinals(_need(GAME / "gfx/map/terrain/materials.settings",
+                                    "vanilla materials.settings"))
+    lut = np.full((256, 3), TINT_GREY, dtype=np.float32)
+    for r in read_csv(EV / "vanilla_colormap_tints.csv"):
+        o = ords_.get(r["material_name"])
+        if o is not None and 0 <= o < 256:
+            lut[o] = (float(r["mean_r"]), float(r["mean_g"]), float(r["mean_b"]))
+    return lut
+
+
+def _boost(rgb: np.ndarray) -> np.ndarray:
+    return np.clip((TINT_GREY + (rgb - TINT_GREY) * TINT_GAIN) / 255.0, 0, 1)
+
+
+def paint_rgb(idx4: np.ndarray, int4: np.ndarray, lut: np.ndarray,
+              land: np.ndarray) -> np.ndarray:
+    """Blend the four `detail_index` materials by their `detail_intensity`."""
+    w = int4.astype(np.float32)
+    tot = np.maximum(w.sum(axis=2, keepdims=True), 1e-6)
+    mix = (lut[idx4] * w[:, :, :, None]).sum(axis=2) / tot
+    rgb = _boost(mix)
+    rgb[~land] = (0.36, 0.46, 0.58)
+    return rgb
+
+
+def ck2_paint_rgb(cat_codes: np.ndarray, names: list[str], lut: np.ndarray,
+                  land: np.ndarray) -> np.ndarray:
+    """The CK2 source's own terrain classes, in the same tint palette.
+
+    CK2 index -> CK2 category (`map/terrain.txt`) -> CK3 terrain key
+    (`CK2_TO_CK3_TERRAIN`) -> primary material (`mappings/terrain_paint.csv`)
+    -> vanilla's measured tint.  Exactly the chain the converter walks, minus
+    every micro pass, which is what "CK2 source, rescaled only" means.
+    """
+    from ck2ck3.map.terrain import CK2_TO_CK3_TERRAIN
+    from ck2ck3.map.terrain_paint import material_ordinals, read_material_map
+    ords_ = material_ordinals(GAME / "gfx/map/terrain/materials.settings")
+    mats = read_material_map(ROOT / "mappings/terrain_paint.csv")
+    per_code = np.full((len(names), 3), TINT_GREY, dtype=np.float32)
+    for i, cat in enumerate(names):
+        key = CK2_TO_CK3_TERRAIN.get(cat)
+        pair = mats.get(key) if key else None
+        if pair:
+            o = ords_.get(pair[0])
+            if o is not None:
+                per_code[i] = lut[o]
+    rgb = _boost(per_code[cat_codes])
+    rgb[~land] = (0.36, 0.46, 0.58)
+    return rgb
+
+
+def ck2_terrain_codes():
+    """`(codes, names, land)` on the CK2 source grid, trees promotion included."""
+    from PIL import Image
+    from ck2ck3.map.ck2read import read_terrain_texture_map
+    from ck2ck3.map import terrain as tr
+    Image.MAX_IMAGE_PIXELS = None
+    tex = read_terrain_texture_map(_need(CK2_MAP / "terrain.txt", "CK2 terrain.txt"))
+    with Image.open(_need(CK2_MAP / "terrain.bmp", "CK2 terrain.bmp")) as im:
+        idx = np.asarray(im)
+    with Image.open(_need(CK2_MAP / "trees.bmp", "CK2 trees.bmp")) as im:
+        trees = np.asarray(im)
+    cats = tr.ck2_category_grid(idx, tex, trees=trees, tree_indices=tuple(range(1, 256)))
+    codes, names = tr.category_codes(cats)
+    with Image.open(_need(CK2_MAP / "topology.bmp", "CK2 topology.bmp")) as im:
+        land = np.asarray(im.convert("L")) > CK2_SEA_LEVEL
+    return codes, names, land
+
+
+def resize_panel(rgb: np.ndarray, side: int) -> np.ndarray:
+    """Fit a panel to `side` px.  Upsample nearest (so the source's own
+    resolution stays visible), downsample by area (so it is not aliased)."""
+    from PIL import Image
+    im = Image.fromarray((np.clip(rgb, 0, 1) * 255).astype(np.uint8))
+    mode = Image.NEAREST if im.size[0] < side else Image.BOX
+    return np.asarray(im.resize((side, side), mode))
+
+
+def crop_c(arr, cx, cy, half):
+    y0, y1 = max(cy - half, 0), min(cy + half, arr.shape[0])
+    x0, x1 = max(cx - half, 0), min(cx + half, arr.shape[1])
+    return arr[y0:y1, x0:x1]
+
+
+
+
+# ------------------------------------------------- per-material composition
+#: Material families, matched against the material *name* in declaration
+#: order (first rule wins).  A family is the level at which a geographic
+#: argument can be made at all -- "vanilla has the Sahara" is a statement
+#: about arid ground, not about `gen_desert_lowlands` specifically.  Arid
+#: **mountains** count as mountains, not as desert: `gen_desert_mountain` is
+#: relief that happens to be dry.
+MATERIAL_FAMILIES = [
+    ("farmland", ("farm",)),
+    ("snow & ice", ("snow", "ice", "glacier")),
+    ("mountain", ("mountain",)),
+    ("hills", ("hills",)),
+    ("forest & jungle", ("forest", "jungle", "woods")),
+    ("wetlands", ("wetlands", "mud", "floodplain", "marsh")),
+    ("beach & cliff", ("beach", "coastline")),
+    ("desert & drylands", ("desert", "dryland", "oasis")),
+    ("steppe", ("steppe",)),
+    ("plains & lowlands", ("plains", "lowland", "grass", "soil", "dirt")),
+]
+#: vanilla's regional / climate-zone material families.  `terrain_paint.csv`
+#: excludes every one of them on purpose (a `gen_*` or `india_*` material is
+#: named for a real-world region Faerûn does not have), so their whole share
+#: is a mapping choice, not a geographic difference.
+_REGIONAL_RE = re.compile(r"^(gen_|medi_|northern_|india_|central_|tropical)")
+
+
+def material_family(name: str) -> str:
+    for fam, keys in MATERIAL_FAMILIES:
+        if any(k in name for k in keys):
+            return fam
+    return "other"
+
+
+def _paint_pair(base: Path, hm: Path, water: int):
+    """`(index, intensity, land)` of one map's paint, land at paint resolution."""
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None
+    with Image.open(_need(base / "gfx/map/terrain/detail_index.tga",
+                          f"{base.name} detail_index.tga")) as im:
+        idx = np.asarray(im.convert("RGBA")).astype(np.int32)
+    with Image.open(_need(base / "gfx/map/terrain/detail_intensity.tga",
+                          f"{base.name} detail_intensity.tga")) as im:
+        itn = np.asarray(im.convert("RGBA")).astype(np.float32)
+    land = load_heightmap(hm) > water
+    step = land.shape[0] // idx.shape[0]
+    land = land[::step, ::step][:idx.shape[0], :idx.shape[1]]
+    return idx, itn, land
+
+
+def _material_stats(idx, itn, land):
+    """Coverage / primary / presence / mean-weight per ordinal, plus blend stats."""
+    n = int(land.sum())
+    w = itn[land] / 255.0
+    ii = idx[land]
+    cov = np.zeros(256)
+    pres = np.zeros(256)
+    prim = np.zeros(256)
+    for c in range(4):
+        np.add.at(cov, ii[:, c], w[:, c])
+        np.add.at(pres, ii[:, c], (w[:, c] > 0).astype(float))
+    np.add.at(prim, ii[:, 0], 1.0)
+    norm = w / np.maximum(w.sum(axis=1, keepdims=True), 1e-9)
+    ent = float(-(np.where(norm > 0, norm * np.log2(np.maximum(norm, 1e-12)), 0)
+                  ).sum(axis=1).mean())
+    blend = {"land_px": n, "blend_entropy_bits": round(ent, 4),
+             "mean_nonzero_channels": round(float((w > 0).sum(axis=1).mean()), 4),
+             "mean_primary_weight": round(float(norm[:, 0].mean()), 4),
+             "materials_used": int((cov > 0).sum())}
+    with np.errstate(invalid="ignore", divide="ignore"):
+        mean_w = np.where(pres > 0, cov / np.maximum(pres, 1), 0.0)
+    return (cov / n * 100, prim / n * 100, pres / n * 100, mean_w), blend
+
+
+_BLEND: dict[str, dict] = {}
+
+
+def m_material_share():
+    from ck2ck3.map.terrain_paint import material_ordinals
+    ords_ = material_ordinals(_need(GAME / "gfx/map/terrain/materials.settings",
+                                    "vanilla materials.settings"))
+    name = {v: k for k, v in ords_.items()}
+    o, ob = _material_stats(*_paint_pair(MOD, MOD / "map_data/heightmap.png",
+                                         WATER_LEVEL))
+    v, vb = _material_stats(*_paint_pair(GAME, GAME / "map_data/heightmap.png",
+                                         VANILLA_WATER))
+    _BLEND["ours"], _BLEND["vanilla"] = ob, vb
+    rows = []
+    for i in range(256):
+        if not (o[0][i] or v[0][i]):
+            continue
+        nm = name.get(i, f"ordinal_{i}")
+        rows.append({
+            "material": nm, "ordinal": i, "family": material_family(nm),
+            "vanilla_regional": int(bool(_REGIONAL_RE.match(nm))),
+            "ours_coverage_pct": round(o[0][i], 4),
+            "vanilla_coverage_pct": round(v[0][i], 4),
+            "ours_primary_pct": round(o[1][i], 4),
+            "vanilla_primary_pct": round(v[1][i], 4),
+            "ours_presence_pct": round(o[2][i], 4),
+            "vanilla_presence_pct": round(v[2][i], 4),
+            "ours_mean_weight_where_present": round(o[3][i], 4),
+            "vanilla_mean_weight_where_present": round(v[3][i], 4),
+        })
+    return sorted(rows, key=lambda r: -(r["ours_coverage_pct"]
+                                        + r["vanilla_coverage_pct"]))
+
+
+_MATERIAL_FIELDS = ["material", "ordinal", "family", "vanilla_regional",
+                    "ours_coverage_pct", "vanilla_coverage_pct",
+                    "ours_primary_pct", "vanilla_primary_pct",
+                    "ours_presence_pct", "vanilla_presence_pct",
+                    "ours_mean_weight_where_present",
+                    "vanilla_mean_weight_where_present"]
+
+
+def m_paint_blend():
+    if not _BLEND:
+        m_material_share()
+    return [dict(map=k, **v) for k, v in _BLEND.items()]
+
+
+_BLEND_FIELDS = ["map", "land_px", "materials_used", "blend_entropy_bits",
+                 "mean_nonzero_channels", "mean_primary_weight"]
+
+#: The editorial half of figure 13, kept next to the numbers it explains.
+#: `expected` is one of `geography` (the difference follows from Faerûn not
+#: being Earth, and needs no fix), `mapping` (our own table produced it) or
+#: `mixed`.
+FAMILY_REASONS = {
+    "desert & drylands": ("geography",
+        "vanilla's land includes the Sahara, Arabia, Iran and the Thar; "
+        "Faerûn's only true desert is Anauroch, with the Calim and Raurin "
+        "fringes. A lower arid share is the correct answer, not a defect."),
+    "forest & jungle": ("geography",
+        "Faerûn is a forested continent (High Forest, Cormanthor, the "
+        "Chondalwood) and `trees.bmp` promotes every wooded pixel to forest; "
+        "vanilla's Europe/MENA sheet is largely cleared or arid."),
+    "steppe": ("geography",
+        "the Shaar, the Eastern Shaar and the Endless Wastes are a larger "
+        "fraction of Faerûn than the Pontic steppe is of vanilla's map."),
+    "plains & lowlands": ("mixed",
+        "part geography (the Dalelands, the Vilhon Reach), part mapping: CK2 "
+        "`pti` filler and unmapped indices both fall through to plains."),
+    "hills": ("mixed",
+        "Faerûn's CK2 palette has one hills index and uses it freely; vanilla "
+        "splits the same ground between hills and its regional families."),
+    "mountain": ("mixed",
+        "vanilla carries the Alps, Caucasus, Zagros, Himalaya and Tibet; but "
+        "we also fold CK2 `impassable_mountains` and `subterranean` into one "
+        "key, so the shortfall is not purely geographic."),
+    "snow & ice": ("geography",
+        "CK2 `arctic` and `glacier` both fold into taiga, whose secondary is "
+        "`snow`; the Spine of the World and the Great Glacier supply it."),
+    "wetlands": ("geography",
+        "the Marsh of Chelimber and the Farsea Marshes against vanilla's "
+        "Pripet, Nile delta and Mesopotamia -- same order, small either way."),
+    "farmland": ("geography", "both maps paint about 0.6 % farmland."),
+    "beach & cliff": ("mapping",
+        "NOT geography. Faerûn has more coastline per unit area than vanilla, "
+        "yet we paint 0 % beach on land: `mappings/terrain_paint.csv` gives "
+        "`sea`/`coastal_sea` a beach material but those pixels are under "
+        "water, and no land key ever picks one. A missing shoreline material."),
+    "other": ("mapping",
+        "vanilla's leftovers are regional and rock materials our table never "
+        "selects from."),
+}
+
+
+# --------------------------------------------------------------- figure 8
+def fig_thay_relief(recompute: bool) -> str:
+    src, P, D, S, land, (x0, x1, y0, y1) = thay_stages(recompute)
+    rows = cached("thay_transects.csv",
+                  ["transect", "canvas_row", "canvas_col", "ck2_source",
+                   "plain", "deterrace", "shipped", "land"],
+                  m_thay_transects, recompute)
+    rowA = int(next(r for r in rows if r["transect"] == "A")["canvas_row"]) - y0
+    magcol = int(np.argmax(np.abs(np.diff(P, axis=1))[rowA]))
+
+    # the CK2 source panel is on its own 2.90 km/px grid; give it the same
+    # ground by resampling nearest to the canvas rectangle (display only).
+    from PIL import Image
+    src_disp = np.asarray(Image.fromarray(src.astype(np.uint16)).resize(
+        (P.shape[1], P.shape[0]), Image.NEAREST)).astype(np.float32)
+
+    stages = [("CK2 topology.bmp\n(2.90 km/px, 8-bit)", src_disp),
+              ("ours: plain rescale\n(the 277-level terraces)", P),
+              ("+ de-terrace only\n(Gaussian σ = 1.6 px)", D),
+              ("ours: shipped\n(all four detail passes)", S)]
+    zoom_km = 120.0
+    zh = int(zoom_km / KM_PX_OURS / 2)
+    zy = int(np.clip(rowA, zh, P.shape[0] - zh))
+    zx = int(np.clip(magcol, zh, P.shape[1] - zh))
+
+    fig, axes = plt.subplots(2, 4, figsize=(13.2, 8.2), dpi=120)
+    for c, (lbl, a) in enumerate(stages):
+        for r, (sub, mask) in enumerate((
+                (None, land),
+                ((slice(zy - zh, zy + zh), slice(zx - zh, zx + zh)), None))):
+            z = a if sub is None else a[sub]
+            m = land if sub is None else land[sub]
+            rgb = shade_rgb(z, m, units_per_px=UNITS_PER_HM_PX_OURS,
+                            extents_y=EXTENTS_Y_OURS)
+            ax = axes[r][c]
+            ax.imshow(rgb, interpolation="nearest")
+            ax.set_xticks([])
+            ax.set_yticks([])
+            if r == 0:
+                ax.set_title(lbl, fontsize=8.5)
+                ax.add_patch(plt.Rectangle((zx - zh, zy - zh), 2 * zh, 2 * zh,
+                                           fill=False, ec=C_OURS, lw=1.2))
+                ax.axhline(rowA, color="#f0c000", lw=0.8, ls="--")
+            if c == 0:
+                km = (P.shape[1] * KM_PX_OURS if r == 0 else zoom_km)
+                ax.set_ylabel(f"{'Thay, all 33 counties' if r == 0 else 'the steepest scarp'}\n"
+                              f"{km:.0f} km across", fontsize=8)
+    fig.suptitle("Figure 8 — Thay's terraces through the pipeline. Same ground, same hillshade "
+                 "(315°/35°, ×3 in game units).\nRow 2 is the red box: the single steepest "
+                 "escarpment in the plain rescale. The dashed line is transect A.",
+                 fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.savefig(OUT / "fig8_thay_relief.png")
+    plt.close(fig)
+    return "fig8_thay_relief.png"
+
+
+# --------------------------------------------------------------- figure 9
+def fig_thay_transects(recompute: bool) -> str:
+    rows = cached("thay_transects.csv",
+                  ["transect", "canvas_row", "canvas_col", "ck2_source",
+                   "plain", "deterrace", "shipped", "land"],
+                  m_thay_transects, recompute)
+    by = defaultdict(list)
+    for r in rows:
+        by[r["transect"]].append(r)
+
+    series = (("ck2_source", "CK2 source through the transfer curve", C_CK2, ":", 1.3),
+              ("plain", "ours, plain rescale", C_BEFORE, "-", 1.1),
+              ("deterrace", "+ de-terrace only (σ = 1.6 px)", "#4f9d5d", "-", 1.3),
+              ("shipped", "ours, shipped", C_OURS, "-", 1.0))
+
+    fig = plt.figure(figsize=(11.0, 10.0), dpi=120)
+    gs = fig.add_gridspec(3, 2, height_ratios=[1, 1, 1.1], hspace=0.42, wspace=0.2)
+    axes = [fig.add_subplot(gs[0, :]), fig.add_subplot(gs[1, :])]
+
+    def water_bands(ax, rs, x):
+        wet = np.array([int(r["land"]) == 0 for r in rs])
+        d = np.diff(wet.astype(int))
+        starts = list(np.nonzero(d == 1)[0] + 1) + ([0] if wet[0] else [])
+        ends = list(np.nonzero(d == -1)[0] + 1) + ([len(wet)] if wet[-1] else [])
+        for a, b in zip(sorted(starts), sorted(ends)):
+            ax.axvspan(x[a], x[min(b, len(x) - 1)], color="#2a6fb0", alpha=0.10, lw=0)
+
+    for i, key in enumerate(("A", "B")):
+        rs = by[key]
+        x = np.array([int(r["canvas_col"]) for r in rs])
+        ax = axes[i]
+        water_bands(ax, rs, x)
+        for col, lbl, c, ls, lw in series:
+            ax.plot(x, [int(r[col]) for r in rs], ls, color=c, lw=lw, label=lbl)
+        ax.axhline(WATER_LEVEL, color="#2a6fb0", lw=0.9, ls="--")
+        ax.set_ylabel("16-bit height level")
+        ax.set_title(f"transect {key} — canvas row {rs[0]['canvas_row']}, west→east "
+                     f"across the Thayan plateau ({len(rs) * KM_PX_OURS:.0f} km; "
+                     "blue bands are water province pixels)", fontsize=9)
+        ax.grid(True, alpha=0.22)
+        if i == 0:
+            ax.legend(fontsize=8, loc="upper left", ncol=2)
+
+    rs = by["A"]
+    x = np.array([int(r["canvas_col"]) for r in rs])
+    plain = np.array([int(r["plain"]) for r in rs])
+    W = 52
+
+    # left inset: the steepest one-pixel step on this row.
+    j = int(np.argmax(np.abs(np.diff(plain))))
+    # right inset: the flattest window that still carries at least three
+    # risers -- i.e. the staircase itself, picked by the data.
+    dry = np.array([int(r["land"]) == 1 for r in rs])
+    span = np.array([plain[k:k + W].max() - plain[k:k + W].min()
+                     for k in range(len(plain) - W)], dtype=float)
+    allland = np.array([dry[k:k + W].all() for k in range(len(plain) - W)])
+    ok = (span >= 3 * RISER) & allland
+    if not ok.any():
+        ok = allland
+    k = int(np.argmin(np.where(ok, span, np.inf)))
+
+    drop = abs(int(plain[j + 1]) - int(plain[j]))
+    for col_i, (lo, hi, title) in enumerate((
+            (max(j - W // 2, 0), min(j + W // 2 + 1, len(rs)),
+             f"the steepest pixel step on this row: {drop} levels "
+             f"({drop / RISER:.0f} risers) in 1.48 km"),
+            (k, k + W,
+             "the flattest 77 km of the same row: the staircase itself, "
+             "277-level treads"))):
+        ax = fig.add_subplot(gs[2, col_i])
+        for col, lbl, c, ls, lw in series:
+            ax.plot(x[lo:hi], [int(r[col]) for r in rs[lo:hi]], ls, color=c,
+                    lw=1.5, marker="." if col != "ck2_source" else None, ms=3)
+        ax.set_title(title, fontsize=8.5)
+        ax.set_xlabel("canvas column (px)")
+        if col_i == 0:
+            ax.set_ylabel("16-bit height level")
+        ax.grid(True, alpha=0.22)
+
+    fig.suptitle("Figure 9 — what the de-terrace Gaussian does to a real cliff (left inset): "
+                 "it blunts the one-pixel step, it does not remove the drop.\n"
+                 "What it does to a quantisation riser (right inset): it removes it "
+                 "completely. The red curve's large excursions are the spectral fill — see "
+                 "figure 10.", fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.savefig(OUT / "fig9_thay_transects.png")
+    plt.close(fig)
+    return "fig9_thay_transects.png"
+
+
+# -------------------------------------------------------------- figure 10
+def fig_thay_steps(recompute: bool) -> str:
+    steps = cached("thay_steps.csv",
+                   ["stage", "class", "edges", "pct", "n_edges_total",
+                    "mean_risers", "p99_risers", "max_risers"],
+                   m_thay_steps, recompute)
+    cliffs = cached("thay_cliffs.csv",
+                    ["cliff_threshold_risers", "n_edges", "lag_px",
+                     "baseline_km", "drop_plain_risers", "drop_deterrace_risers",
+                     "drop_shipped_risers", "kept_deterrace_pct",
+                     "kept_shipped_pct"],
+                    m_thay_cliffs, recompute)
+
+    bands = cached("thay_bands.csv",
+                   ["band_km_lo", "band_km_hi", "rms_plain", "rms_deterrace",
+                    "rms_shipped", "rms_vanilla_norway"],
+                   m_thay_bands, recompute)
+
+    classes = [c for _, _, c in _STEP_CLASSES]
+    stages = [("ck2_plain_rescale", "plain rescale", C_BEFORE),
+              ("after_deterrace", "+ de-terrace", "#4f9d5d"),
+              ("shipped", "shipped", C_OURS)]
+    fig, (ax, bx, cx) = plt.subplots(1, 3, figsize=(16.6, 5.0), dpi=120,
+                                     gridspec_kw={"width_ratios": [1.15, 1, 1]})
+    y = np.arange(len(classes))
+    for k, (stage, lbl, col) in enumerate(stages):
+        vals = [next(float(r["pct"]) for r in steps
+                     if r["stage"] == stage and r["class"] == c) for c in classes]
+        tot = next(int(r["n_edges_total"]) for r in steps if r["stage"] == stage)
+        ax.barh(y + (1 - k) * 0.27, vals, 0.26, color=col,
+                label=f"{lbl} (n = {tot:,} edges)")
+    ax.set_yticks(y)
+    ax.set_yticklabels(classes)
+    ax.invert_yaxis()
+    ax.set_xlabel("share of land-to-land pixel edges in the Thay window (%)")
+    ax.set_title("Step heights across adjacent pixels\n"
+                 "one riser = 277 levels = one 8-bit source level", fontsize=9.5)
+    ax.grid(True, axis="x", alpha=0.22)
+    ax.legend(fontsize=8, loc="lower right")
+
+    for thr, col, mk in ((2, "#7f7f7f", "o"), (4, C_VANILLA, "s"), (6, C_OURS, "^")):
+        rs = [r for r in cliffs if int(r["cliff_threshold_risers"]) == thr]
+        rs.sort(key=lambda r: float(r["baseline_km"]))
+        n = rs[0]["n_edges"]
+        bx.plot([float(r["baseline_km"]) for r in rs],
+                [float(r["kept_deterrace_pct"]) for r in rs], "-" + mk, color=col,
+                ms=4, label=f"≥{thr} risers (n = {int(n):,})")
+        bx.plot([float(r["baseline_km"]) for r in rs],
+                [float(r["kept_shipped_pct"]) for r in rs], "--" + mk, color=col,
+                ms=3, alpha=0.55)
+    bx.axhline(100, color="0.4", lw=1.0, ls=":")
+    bx.set_ylim(50, 110)
+    bx.set_xlabel("baseline the drop is measured over (km)")
+    bx.set_ylabel("signed drop kept, % of the plain rescale's own")
+    bx.set_title("How much of a real cliff survives\n"
+                 "solid = after de-terrace, dashed = shipped map", fontsize=9.5)
+    bx.grid(True, alpha=0.22)
+    bx.legend(fontsize=8, loc="lower right")
+    lab = [f"{float(r['band_km_lo']):.0f}–{float(r['band_km_hi']):.0f}" for r in bands]
+    y = np.arange(len(bands))
+    for k, (col, lbl, colr) in enumerate((
+            ("rms_vanilla_norway", "vanilla CK3, Norwegian coast", C_VANILLA),
+            ("rms_shipped", "ours, shipped", C_OURS),
+            ("rms_deterrace", "+ de-terrace", "#4f9d5d"),
+            ("rms_plain", "plain rescale", C_BEFORE))):
+        cx.barh(y + (1.5 - k) * 0.21, [float(r[col]) for r in bands], 0.20,
+                color=colr, label=lbl)
+    cx.set_yticks(y)
+    cx.set_yticklabels(lab)
+    cx.invert_yaxis()
+    cx.set_ylabel("wavelength band (km)")
+    cx.set_xlabel("band-passed RMS over land (16-bit levels)")
+    cx.set_title("Where the synthesised detail actually lands\n"
+                 "(difference-of-Gaussian bands, Thay land vs vanilla's own coast)",
+                 fontsize=9.5)
+    cx.grid(True, axis="x", alpha=0.22)
+    cx.set_xlim(0, max(float(r["rms_shipped"]) for r in bands) * 1.42)
+    cx.legend(fontsize=7.5, loc="lower right", framealpha=0.95)
+
+    fig.suptitle("Figure 10 — the de-terrace pass removes the quantisation riser and keeps "
+                 "the cliff: a third of the one-pixel step is lost, 2 % of the drop over 36 km. "
+                 "The spectral fill then overshoots at 10–40 km.",
+                 fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.savefig(OUT / "fig10_thay_steps.png")
+    plt.close(fig)
+    return "fig10_thay_steps.png"
+
+
+# ---------------------------------------------------- figures 11 and 12
+#: (label, km across).  Continent is capped at 2000 km on purpose: it is the
+#: brief's own figure and it is what a vanilla crop can match.  Faerûn is
+#: ~4000 km from Waterdeep to Thay, so this frame is half the continent.
+PANEL_SCALES = [("continent", 2000.0), ("region", 400.0), ("local", 80.0)]
+#: Faerûn centres, canvas px, nested where the scale allows.
+FAERUN_CENTRES = {"continent": (3000, 1500), "region": WATERDEEP_CANVAS,
+                  "local": WATERDEEP_CANVAS}
+#: vanilla centres, **heightmap** px (2x); the paint is at half of these.
+VANILLA_CENTRES = {"continent": (3100, 1500), "region": VANILLA_CTRL_HM,
+                   "local": VANILLA_CTRL_HM}
+PANEL_PX = 380
+
+
+def m_panel_extents():
+    rows = []
+    for name, km in PANEL_SCALES:
+        fx, fy = FAERUN_CENTRES[name]
+        vx, vy = VANILLA_CENTRES[name]
+        rows.append({"scale": name, "km_across": km,
+                     "faerun_canvas_x": fx, "faerun_canvas_y": fy,
+                     "faerun_km_per_px_height": KM_PX_OURS,
+                     "faerun_km_per_px_paint": KM_PX_OURS * 2,
+                     "vanilla_heightmap_x": vx, "vanilla_heightmap_y": vy,
+                     "vanilla_km_per_px_height": KM_PX_VANILLA,
+                     "vanilla_km_per_px_paint": KM_PX_VANILLA * 2,
+                     "panel_px": PANEL_PX})
+    return rows
+
+
+_PANEL_FIELDS = ["scale", "km_across", "faerun_canvas_x", "faerun_canvas_y",
+                 "faerun_km_per_px_height", "faerun_km_per_px_paint",
+                 "vanilla_heightmap_x", "vanilla_heightmap_y",
+                 "vanilla_km_per_px_height", "vanilla_km_per_px_paint",
+                 "panel_px"]
+
+
+def _grid(fig, axes, rowlabels, collabels, title, path):
+    for r, rl in enumerate(rowlabels):
+        for c, cl in enumerate(collabels):
+            ax = axes[r][c]
+            ax.set_xticks([])
+            ax.set_yticks([])
+            if r == 0:
+                ax.set_title(cl, fontsize=9)
+            if c == 0:
+                ax.set_ylabel(rl, fontsize=8.5)
+    fig.suptitle(title, fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.savefig(OUT / path)
+    plt.close(fig)
+    return path
+
+
+def fig_panels_relief(recompute: bool) -> str:
+    cached("panel_extents.csv", _PANEL_FIELDS, m_panel_extents, recompute)
+    clamp_stats = cached("clamp_floor.csv", _CLAMP_FIELDS, m_clamp_floor,
+                         recompute)[0]
+    plain = plain_rescale_canvas()
+    ship = load_heightmap(MOD / "map_data/heightmap.png")
+    van = load_heightmap(GAME / "map_data/heightmap.png")
+    cols = ["CK2 source, rescaled only\n(1.4839 km/px, 8-bit ancestry)",
+            "ours, shipped\n(1.4839 km/px, detail pass)",
+            "vanilla CK3 — Norwegian coast\n(0.742 km/px, 2× heightmap)"]
+    fig, axes = plt.subplots(3, 3, figsize=(11.6, 12.0), dpi=120)
+    rowlabels = []
+    for r, (name, km) in enumerate(PANEL_SCALES):
+        fx, fy = FAERUN_CENTRES[name]
+        vx, vy = VANILLA_CENTRES[name]
+        ours_half = int(km / KM_PX_OURS / 2)
+        van_half = int(km / KM_PX_VANILLA / 2)
+        os_ = crop_c(ship, fx, fy, ours_half)
+        panels = [
+            (crop_c(plain, fx, fy, ours_half), os_ > WATER_LEVEL,
+             UNITS_PER_HM_PX_OURS, EXTENTS_Y_OURS, None),
+            (os_, os_ > WATER_LEVEL, UNITS_PER_HM_PX_OURS, EXTENTS_Y_OURS,
+             os_ == WATER_LEVEL + 1),
+            (crop_c(van, vx, vy, van_half), crop_c(van, vx, vy, van_half) > VANILLA_WATER,
+             UNITS_PER_HM_PX_VANILLA, EXTENTS_Y_VANILLA, None),
+        ]
+        for c, (z, m, upp, ey, cl) in enumerate(panels):
+            rgb = shade_rgb(z.astype(np.float32), m, units_per_px=upp,
+                            extents_y=ey, clamp=cl)
+            axes[r][c].imshow(resize_panel(rgb, PANEL_PX), interpolation="nearest")
+        rowlabels.append(f"{name} — {km:.0f} km across\n"
+                         f"({2 * ours_half} px ours / {2 * van_half} px vanilla)")
+    del plain, ship, van
+    return _grid(fig, axes, rowlabels, cols,
+                 "Figure 11 — elevation at three zooms, the same kilometres in every panel. "
+                 "Hillshade 315°/35°, ×3 vertical exaggeration in game units.\n"
+                 f"Pink in the middle column is land the detail pass sank below the water "
+                 f"level and the clamp pulled back to a dead-flat {WATER_LEVEL + 1}: "
+                 f"{clamp_stats['clamp_pct_of_land']} % of all land "
+                 f"(clamp_floor.csv).",
+                 "fig11_panels_relief.png")
+
+
+def fig_panels_paint(recompute: bool) -> str:
+    cached("panel_extents.csv", _PANEL_FIELDS, m_panel_extents, recompute)
+    lut = tint_lut()
+    oi, ot, oland = _paint_pair(MOD, MOD / "map_data/heightmap.png", WATER_LEVEL)
+    vi, vt, vland = _paint_pair(GAME, GAME / "map_data/heightmap.png", VANILLA_WATER)
+    codes, names, cland = ck2_terrain_codes()
+    cols = ["CK2 terrain.bmp, class-mapped\n(2.90 km/px, one material per pixel)",
+            "ours, shipped detail_index\n(2.97 km/px, two materials blended)",
+            "vanilla CK3 detail_index\n(1.4839 km/px, 3.5 materials blended)"]
+    fig, axes = plt.subplots(3, 3, figsize=(11.6, 12.0), dpi=120)
+    rowlabels = []
+    for r, (name, km) in enumerate(PANEL_SCALES):
+        fx, fy = FAERUN_CENTRES[name]
+        vx, vy = VANILLA_CENTRES[name]
+        ck2_c = (int(round((fx - OFFSET_X) / CK2_SCALE)),
+                 int(round((fy - OFFSET_Y) / CK2_SCALE)))
+        ck2_half = max(int(km / KM_PX_CK2 / 2), 1)
+        ours_half = max(int(km / (KM_PX_OURS * 2) / 2), 1)
+        van_half = max(int(km / (KM_PX_VANILLA * 2) / 2), 1)
+        rgbs = [
+            ck2_paint_rgb(crop_c(codes, ck2_c[0], ck2_c[1], ck2_half), names, lut,
+                          crop_c(cland, ck2_c[0], ck2_c[1], ck2_half)),
+            paint_rgb(crop_c(oi, fx // 2, fy // 2, ours_half),
+                      crop_c(ot, fx // 2, fy // 2, ours_half), lut,
+                      crop_c(oland, fx // 2, fy // 2, ours_half)),
+            paint_rgb(crop_c(vi, vx // 2, vy // 2, van_half),
+                      crop_c(vt, vx // 2, vy // 2, van_half), lut,
+                      crop_c(vland, vx // 2, vy // 2, van_half)),
+        ]
+        for c, rgb in enumerate(rgbs):
+            axes[r][c].imshow(resize_panel(rgb, PANEL_PX), interpolation="nearest")
+        rowlabels.append(f"{name} — {km:.0f} km across\n"
+                         f"({2 * ours_half} px ours / {2 * van_half} px vanilla)")
+    del oi, ot, vi, vt, codes
+    return _grid(fig, axes, rowlabels, cols,
+                 "Figure 12 — terrain paint at the same three zooms. Every pixel is its "
+                 f"materials' vanilla-measured colormap tint, blended by detail_intensity\n"
+                 f"and pushed ×{TINT_GAIN:.0f} from grey so the near-neutral tints are "
+                 "visible at all (display gain only, applied identically to all three columns).",
+                 "fig12_panels_paint.png")
+
+
+# -------------------------------------------------------------- figure 13
+def fig_materials(recompute: bool) -> str:
+    rows = cached("material_share.csv", _MATERIAL_FIELDS, m_material_share,
+                  recompute)
+    blend = cached("paint_blend.csv", _BLEND_FIELDS, m_paint_blend, recompute)
+    bl = {r["map"]: r for r in blend}
+
+    top = sorted(rows, key=lambda r: -(float(r["ours_coverage_pct"])
+                                       + float(r["vanilla_coverage_pct"])))[:22]
+    fam_o, fam_v = defaultdict(float), defaultdict(float)
+    for r in rows:
+        fam_o[r["family"]] += float(r["ours_coverage_pct"])
+        fam_v[r["family"]] += float(r["vanilla_coverage_pct"])
+
+    fig = plt.figure(figsize=(14.2, 8.6), dpi=120)
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.25], wspace=0.42)
+    ax = fig.add_subplot(gs[0, 0])
+    y = np.arange(len(top))
+    ax.barh(y + 0.2, [float(r["vanilla_coverage_pct"]) for r in top], 0.38,
+            color=C_VANILLA, label="vanilla CK3")
+    ax.barh(y - 0.2, [float(r["ours_coverage_pct"]) for r in top], 0.38,
+            color=C_OURS, label="ours, shipped")
+    ax.set_yticks(y)
+    ax.set_yticklabels([(r["material"][:27] + ("…" if len(r["material"]) > 27 else ""))
+                        + (" *" if int(r["vanilla_regional"]) else "")
+                        for r in top], fontsize=7.0)
+    ax.invert_yaxis()
+    ax.set_xlabel("share of painted land, intensity-weighted (%)")
+    ax.set_title("Per material, the 22 largest\n"
+                 "* = a vanilla regional/climate-zone material our table never picks",
+                 fontsize=9.5)
+    ax.grid(True, axis="x", alpha=0.22)
+    ax.legend(fontsize=8, loc="lower right")
+
+    bx = fig.add_subplot(gs[0, 1])
+    fams = sorted(set(fam_o) | set(fam_v), key=lambda f: -fam_v.get(f, 0))
+    y = np.arange(len(fams))
+    bx.barh(y + 0.2, [fam_v.get(f, 0) for f in fams], 0.38, color=C_VANILLA,
+            label="vanilla CK3")
+    bx.barh(y - 0.2, [fam_o.get(f, 0) for f in fams], 0.38, color=C_OURS,
+            label="ours, shipped")
+    tone = {"geography": "#4f9d5d", "mixed": "#c8912a", "mapping": "#b4463f"}
+    for i, f in enumerate(fams):
+        kind, _ = FAMILY_REASONS.get(f, ("mixed", ""))
+        d = fam_o.get(f, 0) - fam_v.get(f, 0)
+        bx.text(max(fam_v.get(f, 0), fam_o.get(f, 0)) + 0.4, i,
+                f"{d:+.1f} pp — {kind}", fontsize=7.5, va="center",
+                color=tone.get(kind, "0.3"))
+    bx.set_yticks(y)
+    bx.set_yticklabels(fams, fontsize=8.5)
+    bx.invert_yaxis()
+    bx.set_xlim(0, max(max(fam_v.values()), max(fam_o.values())) * 1.55)
+    bx.set_xlabel("share of painted land, intensity-weighted (%)")
+    bx.set_title("By material family, with the difference and whether geography explains it\n"
+                 "green = expected from Faerûn not being Earth · amber = mixed · red = our mapping",
+                 fontsize=9.5)
+    bx.grid(True, axis="x", alpha=0.22)
+    bx.legend(fontsize=8, loc="lower right")
+    txt = ("blend density, land pixels — "
+           f"materials used: ours {bl['ours']['materials_used']} of vanilla's "
+           f"{bl['vanilla']['materials_used']}  ·  "
+           f"non-zero channels per pixel: ours {float(bl['ours']['mean_nonzero_channels']):.2f} "
+           f"vs {float(bl['vanilla']['mean_nonzero_channels']):.2f}  ·  "
+           f"blend entropy: ours {float(bl['ours']['blend_entropy_bits']):.2f} bits "
+           f"vs {float(bl['vanilla']['blend_entropy_bits']):.2f}  ·  "
+           f"primary weight: ours {float(bl['ours']['mean_primary_weight']):.2f} "
+           f"vs {float(bl['vanilla']['mean_primary_weight']):.2f}")
+    fig.text(0.5, 0.015, txt, ha="center", fontsize=8.5, color="0.25")
+    fig.suptitle("Figure 13 — paint composition per material, not per terrain key. "
+                 "Area share alone is the weaker half of the story; the blend line under the "
+                 "figure is the stronger one.", fontsize=9.5)
+    fig.tight_layout(rect=(0, 0.045, 1, 0.94))
+    fig.savefig(OUT / "fig13_materials.png")
+    plt.close(fig)
+    return "fig13_materials.png"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--recompute", action="store_true",
@@ -680,6 +1816,12 @@ def main() -> None:
         fig_composition(args.recompute),  # figure 5
         fig_colour(),                     # figure 6
         fig_trees(args.recompute),        # figure 7
+        fig_thay_relief(args.recompute),    # figure 8   -- section 7
+        fig_thay_transects(args.recompute), # figure 9
+        fig_thay_steps(args.recompute),     # figure 10
+        fig_panels_relief(args.recompute),  # figure 11
+        fig_panels_paint(args.recompute),   # figure 12
+        fig_materials(args.recompute),      # figure 13
     ]
     for n in made:
         p = OUT / n

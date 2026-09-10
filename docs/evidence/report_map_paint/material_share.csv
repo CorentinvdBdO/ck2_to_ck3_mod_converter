@@ -1,0 +1,102 @@
+material,ordinal,family,vanilla_regional,ours_coverage_pct,vanilla_coverage_pct,ours_primary_pct,vanilla_primary_pct,ours_presence_pct,vanilla_presence_pct,ours_mean_weight_where_present,vanilla_mean_weight_where_present
+plains_01,51,plains & lowlands,0,15.4483,0.0481,21.3982,0.0547,22.2085,0.1452,0.6956,0.3314
+forest_pine_01,26,forest & jungle,0,9.7576,4.9334,13.71,6.9203,13.71,9.3042,0.7117,0.5302
+hills_01,28,hills,0,11.1367,0.9335,15.6516,1.0661,15.6516,2.7088,0.7115,0.3446
+steppe_grass,58,steppe,0,9.8642,0.9965,13.8567,0.7015,13.8567,4.1089,0.7119,0.2425
+mountain_02,38,mountain,0,9.5581,0.0636,13.4139,0.0134,13.4139,0.3843,0.7126,0.1654
+forest_jungle_01,24,forest & jungle,0,2.8767,4.7168,4.0411,6.1729,4.0411,7.9463,0.7118,0.5936
+forest_leaf_01,25,forest & jungle,0,4.7392,1.9172,6.6629,2.7312,6.6629,3.6085,0.7113,0.5313
+desert_02,12,desert & drylands,0,6.3755,0.1285,8.9654,0.1282,8.9654,0.4606,0.7111,0.2789
+plains_01_noisy,54,plains & lowlands,0,6.1827,0.1135,0.0,0.1406,21.3982,0.3282,0.2889,0.3457
+steppe_bushes,57,steppe,0,3.9925,1.5162,0.0,1.1633,13.8567,7.9222,0.2881,0.1914
+gen_central_hills,76,hills,1,0.0,5.5082,0.0,4.2152,0.0,19.0753,0.0,0.2888
+desert_wavy_01,16,desert & drylands,0,2.5899,2.7345,0.0,3.6982,8.9654,7.3309,0.2889,0.373
+hills_01_rocks,29,hills,0,4.515,0.5346,0.0,0.5758,15.6516,1.6462,0.2885,0.3248
+snow,56,snow & ice,0,3.9523,0.3348,0.0,0.1658,13.71,1.6145,0.2883,0.2074
+central_lowlands_02,63,plains & lowlands,1,0.0,3.981,0.0,3.4729,0.0,15.6591,0.0,0.2542
+gen_desert_mountain,92,mountain,1,0.0,3.9413,0.0,3.1739,0.0,16.1293,0.0,0.2444
+mountain_02_c,40,mountain,0,3.8558,0.0372,0.0,0.0433,13.4139,0.1015,0.2874,0.3669
+forestfloor,27,forest & jungle,0,3.0881,0.7468,0.0,0.7217,10.704,2.4623,0.2885,0.3033
+gen_drylands_base,94,desert & drylands,1,0.0,3.462,0.0,3.2427,0.0,13.0268,0.0,0.2658
+central_lowlands_03,64,plains & lowlands,1,0.0,3.2665,0.0,2.6297,0.0,13.4723,0.0,0.2425
+gen_desert_mountain_transition,93,mountain,1,0.0,3.2376,0.0,2.0863,0.0,14.6611,0.0,0.2208
+mountain_03,47,mountain,0,0.0,3.1359,0.0,3.9351,0.0,9.2414,0.0,0.3393
+gen_central_mountain_transition,78,mountain,1,0.0,2.9611,0.0,3.3756,0.0,10.8038,0.0,0.2741
+mountain_02_c_snow,41,snow & ice,0,0.0,2.9533,0.0,3.857,0.0,6.9895,0.0,0.4225
+drylands_01_grassy,20,desert & drylands,0,0.0015,2.8725,0.0,3.498,0.0054,8.3931,0.2729,0.3422
+gen_tropical_base,65,other,1,0.0,2.5094,0.0,1.887,0.0,10.4467,0.0,0.2402
+gen_steppe_mountain_transition,85,mountain,1,0.0,2.2985,0.0,1.7706,0.0,9.3291,0.0,0.2464
+gen_desert_base,86,desert & drylands,1,0.0,2.0789,0.0,1.8859,0.0,8.0225,0.0,0.2591
+gen_tropical_lowlands_03,68,plains & lowlands,1,0.0,1.8961,0.0,2.3906,0.0,5.3924,0.0,0.3516
+mountain_02_desert_c,45,mountain,0,0.0,1.6478,0.0,1.9956,0.0,4.8917,0.0,0.3369
+gen_tropical_mountain_transition,71,mountain,1,0.0,1.6406,0.0,1.9351,0.0,5.1428,0.0,0.319
+gen_desert_lowlands,87,desert & drylands,1,0.0,1.6344,0.0,1.3117,0.0,6.457,0.0,0.2531
+wetlands_02,60,wetlands,0,1.0605,0.4772,1.4844,0.5662,1.4844,1.0182,0.7144,0.4686
+drylands_01,18,desert & drylands,0,0.0039,1.4903,0.0054,1.3499,0.0054,5.4022,0.7271,0.2759
+gen_tropical_lowlands,66,plains & lowlands,1,0.0,1.4237,0.0,1.2093,0.0,4.9933,0.0,0.2851
+desert_wavy_01_larger,17,desert & drylands,0,0.0,1.357,0.0,1.7097,0.0,4.057,0.0,0.3345
+desert_rocky,15,desert & drylands,0,0.0,1.3501,0.0,1.5318,0.0,4.4806,0.0,0.3013
+wetlands_02_mud,61,wetlands,0,0.4239,0.6436,0.0,0.5935,1.4844,2.1639,0.2856,0.2974
+gen_tropical_lowlands_02,67,plains & lowlands,1,0.0,1.0585,0.0,1.2312,0.0,3.044,0.0,0.3477
+gen_steppe_lowlands_03,82,steppe,1,0.0,1.0093,0.0,1.1911,0.0,2.4764,0.0,0.4076
+gen_steppe_base,79,steppe,1,0.0,0.9818,0.0,0.651,0.0,5.0216,0.0,0.1955
+gen_desert_lowlands_04,90,desert & drylands,1,0.0,0.9537,0.0,1.1864,0.0,2.6044,0.0,0.3662
+gen_tropical_mountain,70,mountain,1,0.0,0.9263,0.0,0.9267,0.0,3.4197,0.0,0.2709
+gen_tropical_hills,69,hills,1,0.0,0.9091,0.0,0.3073,0.0,4.6554,0.0,0.1953
+gen_central_base,72,other,1,0.0,0.8095,0.0,0.8564,0.0,2.92,0.0,0.2772
+mountain_02_d,42,mountain,0,0.0,0.8018,0.0,0.6983,0.0,3.996,0.0,0.2007
+gen_steppe_lowlands,80,steppe,1,0.0,0.7868,0.0,0.3641,0.0,4.8369,0.0,0.1627
+mountain_02_d_snow,43,snow & ice,0,0.0,0.7866,0.0,0.3364,0.0,3.579,0.0,0.2198
+gen_steppe_hills,83,hills,1,0.0,0.7486,0.0,0.8305,0.0,2.2894,0.0,0.327
+gen_desert_lowlands_02,88,desert & drylands,1,0.0,0.736,0.0,0.6882,0.0,2.3792,0.0,0.3094
+gen_desert_lowlands_03,89,desert & drylands,1,0.0,0.7153,0.0,0.8727,0.0,2.0307,0.0,0.3523
+gen_steppe_lowlands_02,81,steppe,1,0.0,0.7145,0.0,0.6256,0.0,2.5195,0.0,0.2836
+farmland_01,22,farmland,0,0.5775,0.1357,0.8103,0.1782,0.8103,0.3104,0.7127,0.4372
+steppe_rocks,59,steppe,0,0.0,0.6739,0.0,0.625,0.0,2.2772,0.0,0.296
+debug,5,other,0,0.0,0.6512,0.0,0.2414,0.0,4.4226,0.0,0.1472
+gen_drylands_lowlands_03,97,desert & drylands,1,0.0,0.5349,0.0,0.591,0.0,1.7002,0.0,0.3146
+coastline_cliff_desert,9,beach & cliff,0,0.0,0.5331,0.0,0.7083,0.0,1.5921,0.0,0.3349
+hills_01_rocks_medi,30,hills,0,0.0,0.5273,0.0,0.3816,0.0,2.1165,0.0,0.2491
+gen_drylands_lowlands_02,96,desert & drylands,1,0.0,0.5158,0.0,0.5809,0.0,1.548,0.0,0.3332
+oasis,50,desert & drylands,0,0.0,0.4918,0.0,0.6175,0.0,1.0396,0.0,0.473
+mountain_02_snow,46,snow & ice,0,0.0,0.4695,0.0,0.5795,0.0,1.1672,0.0,0.4023
+mountain_02_d_valleys,44,mountain,0,0.0,0.4586,0.0,0.4154,0.0,1.6702,0.0,0.2746
+medi_dry_mud,33,wetlands,1,0.0,0.4252,0.0,0.3656,0.0,1.5196,0.0,0.2798
+central_mountain,62,mountain,1,0.0,0.4232,0.0,0.0825,0.0,3.3321,0.0,0.127
+desert_cracked,13,desert & drylands,0,0.0,0.3754,0.0,0.4248,0.0,1.3223,0.0,0.2839
+gen_drylands_lowlands,95,desert & drylands,1,0.0,0.3689,0.0,0.2956,0.0,1.3537,0.0,0.2725
+gen_northern_lowlands_03,104,plains & lowlands,1,0.0,0.3536,0.0,0.4679,0.0,0.934,0.0,0.3786
+beach_02,6,beach & cliff,0,0.0,0.3382,0.0,0.3125,0.0,1.1773,0.0,0.2873
+gen_drylands_mountain,99,mountain,1,0.0,0.3321,0.0,0.2597,0.0,1.3107,0.0,0.2533
+gen_northern_base,101,other,1,0.0,0.3133,0.0,0.3013,0.0,1.0876,0.0,0.288
+medi_grass_01,35,plains & lowlands,1,0.0,0.3033,0.0,0.2548,0.0,1.0729,0.0,0.2827
+northern_plains_01,49,plains & lowlands,1,0.0,0.2798,0.0,0.2441,0.0,1.053,0.0,0.2658
+hills_01_rocks_small,31,hills,0,0.0,0.2724,0.0,0.2427,0.0,0.9506,0.0,0.2865
+mud_wet_01,48,wetlands,0,0.0,0.2625,0.0,0.1916,0.0,1.0499,0.0,0.25
+plains_01_rough,55,plains & lowlands,0,0.0,0.2562,0.0,0.0141,0.0,4.664,0.0,0.0549
+gen_drylands_hills,98,hills,1,0.0,0.2523,0.0,0.0467,0.0,1.2025,0.0,0.2099
+gen_central_lowlands_03,75,plains & lowlands,1,0.0,0.2392,0.0,0.2109,0.0,0.8188,0.0,0.2922
+beach_02_mediterranean,7,beach & cliff,0,0.0,0.2249,0.0,0.2374,0.0,0.6044,0.0,0.3721
+india_farmlands,32,farmland,1,0.0,0.2193,0.0,0.291,0.0,0.3612,0.0,0.6071
+gen_central_lowlands,73,plains & lowlands,1,0.0,0.2129,0.0,0.1903,0.0,0.698,0.0,0.3051
+gen_drylands_mountain_transition,100,mountain,1,0.0,0.2055,0.0,0.138,0.0,0.8098,0.0,0.2538
+mountain_02_b,39,mountain,0,0.0,0.1978,0.0,0.211,0.0,0.6357,0.0,0.3112
+gen_northern_lowlands_02,103,plains & lowlands,1,0.0,0.1967,0.0,0.2579,0.0,0.4927,0.0,0.3991
+farm_paddy_01,21,farmland,0,0.0,0.1824,0.0,0.232,0.0,0.4128,0.0,0.4418
+gen_northern_lowlands,102,plains & lowlands,1,0.0,0.1707,0.0,0.1537,0.0,0.5631,0.0,0.3031
+plains_01_dry,52,plains & lowlands,0,0.0,0.1654,0.0,0.1748,0.0,0.4914,0.0,0.3366
+gen_central_mountain,77,mountain,1,0.0,0.1564,0.0,0.1479,0.0,0.6169,0.0,0.2536
+floodplains_01,23,wetlands,0,0.0,0.1457,0.0,0.1732,0.0,0.3466,0.0,0.4204
+gen_desert_hills,91,hills,1,0.0,0.1195,0.0,0.0064,0.0,2.5871,0.0,0.0462
+gen_central_lowlands_02,74,plains & lowlands,1,0.0,0.1063,0.0,0.1089,0.0,0.3358,0.0,0.3167
+coastline_cliff_grey,10,beach & cliff,0,0.0,0.1025,0.0,0.1032,0.0,0.2992,0.0,0.3425
+drylands_01_cracked,19,desert & drylands,0,0.0,0.0809,0.0,0.0295,0.0,0.4674,0.0,0.1732
+beach_02_pebbles,8,beach & cliff,0,0.0,0.0653,0.0,0.0661,0.0,0.209,0.0,0.3124
+plains_01_dry_mud,53,wetlands,0,0.0,0.0638,0.0,0.0562,0.0,0.2266,0.0,0.2816
+medi_farmlands,34,farmland,1,0.0,0.0615,0.0,0.0868,0.0,0.1389,0.0,0.4428
+gen_steppe_mountain,84,mountain,1,0.0,0.0585,0.0,0.0083,0.0,0.5342,0.0,0.1095
+medi_noisy_grass,37,plains & lowlands,1,0.0,0.0136,0.0,0.0064,0.0,0.066,0.0,0.2053
+desert_flat_01,14,desert & drylands,0,0.0,0.0011,0.0,0.0,0.0,0.0138,0.0,0.0803
+desert_01,11,desert & drylands,0,0.0,0.0007,0.0,0.0006,0.0,0.0027,0.0,0.2565
+medi_lumpy_grass,36,plains & lowlands,1,0.0,0.0007,0.0,0.0005,0.0,0.0029,0.0,0.227
+summer_grass,3,plains & lowlands,0,0.0,0.0005,0.0,0.0005,0.0,0.0008,0.0,0.5984

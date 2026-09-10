@@ -248,8 +248,12 @@ coastal crop.
 
 **Isotropic noise, not landscape.** Vanilla's detail is dendritic — valleys, ridge
 lines, drainage. Ours has the right amplitude and, in band, the right spectrum, but
-the wrong shape; side by side it reads as gravel. Ridged-multifractal noise or a
-hydraulic-erosion pass is a different order of work and a human's look call.
+the wrong shape; side by side it reads as gravel. §7.1 puts a number on the shape
+problem over Thay: between 9.5 and 38 km the shipped map carries **1.4–1.7× the
+band-passed relief of the most rugged coast vanilla ships**, so the fill's error is
+an excess at county scale rather than a deficit, and the fix is a
+frequency-dependent gain, not a smaller de-terrace sigma. Ridged-multifractal noise
+or a hydraulic-erosion pass is a different order of work and a human's look call.
 
 **`assumed`, not `verified`.** Equating an autocorrelation e-folding radius with a
 Gaussian sigma is exact only for blurred white noise, and one 1024 × 1024 sample
@@ -266,9 +270,238 @@ today.
 
 ---
 
-Reproduce every figure: `uv run --with matplotlib python
+## 7. Side by side
+
+Three questions, asked after the first six sections were read: what happens to
+Thay's terraces, how does the map look next to vanilla at matched zoom, and
+which of the paint differences are *supposed* to be there. Every number below
+is in a CSV under `docs/evidence/report_map_paint/` and every figure is
+reproduced by the same one command.
+
+### 7.1 Thay's terraces: the de-terrace pass blunts cliffs, it does not remove them
+
+Thay is the hard case on purpose. It is a stack of sharp terraces behind deep
+escarpments, and the pipeline's very first micro pass is a Gaussian blur whose
+job is to destroy terraces — so if anything in the map is going to lose a real
+cliff, it is this. The window is derived from the data rather than picked by
+eye: the **33 counties** under `k_thay` in
+`Faerun/Faerun/common/landed_titles/01_landed_titles.txt` cover 47,652 CK2
+pixels, bounding box CK2 (2351, 738)–(2636, 1064), which is canvas
+4711–5348 × 1542–2259, **945 km across**
+(`docs/evidence/report_map_paint/thay_counties.csv`, one row per county).
+
+![Thay through the pipeline](evidence/report_map_paint/fig8_thay_relief.png)
+
+*Figure 8 — the same ground four times: the CK2 source at its own 2.90 km/px,
+our plain rescale, the de-terrace Gaussian alone, and the shipped map. Row 2 is
+the red box, the steepest escarpment in the window. The terraces are plainly
+visible in columns 1 and 2 and plainly gone in column 3 — and so is the CK2
+source's own pixel grid, which is the point. What column 4 adds is not the
+terracing back.*
+
+**The measurement.** On the plain rescale every land pixel is an exact multiple
+of one **riser** — 277.0125 levels, one 8-bit source step — above the water pin,
+so a step between neighbours is countable in risers. Over the 757,403
+land-to-land pixel edges in the window
+(`docs/evidence/report_map_paint/thay_steps.csv`, `verified`):
+
+| step across one pixel | plain rescale | after de-terrace | shipped |
+|---|---|---|---|
+| flat (0) | **48.45 %** | 3.15 % | 3.80 % |
+| under one riser | 0.05 % | **57.48 %** | 47.09 % |
+| exactly 1 riser — pure quantisation | **34.15 %** | 28.01 % | 27.85 % |
+| 2 risers | 11.02 % | 7.99 % | 9.67 % |
+| 3–4 risers | 5.50 % | 3.18 % | 8.39 % |
+| ≥ 5 risers | 0.84 % | 0.19 % | 3.19 % |
+| largest single step | 13.999 risers (3878 levels) | 9.42 | 12.52 |
+
+Read the first two columns together and the pass is doing exactly what it was
+written to do. Half of the plain rescale's edges are *flat* and a third are
+*exactly one riser*: that pair is the staircase, and it is 82.6 % of all edges.
+After the Gaussian, 57.5 % of edges are sub-riser — the staircase has become a
+ramp — while the multi-riser edges, the ones that carry a real slope, fall only
+from 17.36 % to 11.17 %.
+
+But a per-pixel step is the wrong instrument for "did the cliff survive". A
+Gaussian is a low-pass: it preserves the total drop and spreads it out. So the
+right measurement is the **signed drop across a growing baseline**, taken on
+the edges the plain rescale itself calls cliffs, oriented by the plain
+rescale's own sign so that zero-mean synthesis noise averages out instead of
+inflating the answer (`docs/evidence/report_map_paint/thay_cliffs.csv`):
+
+| baseline | ≥ 2 risers (n = 56,257) | ≥ 4 risers (n = 6,224) | ≥ 6 risers (n = 700) |
+|---|---|---|---|
+| 1.48 km (±1 px) | 64.3 % kept | 67.3 % | 64.2 % |
+| 4.45 km | 78.5 % | 76.6 % | 71.9 % |
+| 10.4 km | 91.3 % | 88.1 % | 84.3 % |
+| 22.3 km | 96.2 % | 96.2 % | 97.4 % |
+| 34.1 km | **98.4 %** | **98.4 %** | **98.0 %** |
+
+**The answer, `verified`: no, σ = 1.6 px does not flatten real cliffs.** It
+costs a third of the one-pixel step (67 % kept on the steepest class) and
+essentially nothing of the escarpment (98 % of the drop over 34 km). What it
+removes is *sharpness*, not amplitude: the drop that used to happen inside one
+1.48 km pixel is redistributed over roughly ±3 px, about 9 km of horizontal
+run. For a plateau edge that in the source was already a 2.90 km-wide step,
+this is close to a no-op; for a genuine 100 m-in-1 km cliff — which the CK2
+source could not have represented anyway — it is a real loss, and no de-terrace
+setting can recover information the 8-bit source never carried.
+
+![Thay transects](evidence/report_map_paint/fig9_thay_transects.png)
+
+*Figure 9 — two rows straight across the plateau. The insets are the two cases
+side by side: left, the steepest pixel step on the row (3878 levels in 1.48 km)
+— blue falls, green falls the same distance a little later; right, the flattest
+land window on the same row, where blue is a clean 277-level staircase and
+green is the smooth ramp through it. Same filter, opposite verdicts. Blue bands
+are water-province pixels.*
+
+**The design input for the erosion lane is elsewhere.** If the de-terrace pass
+is not the problem, the spectral fill is. Band-passing the same ground against
+vanilla's own most rugged coast (`thay_bands.csv`, `verified`):
+
+| wavelength | plain rescale | de-terraced | **shipped** | **vanilla, Norway** |
+|---|---|---|---|---|
+| 2.4–4.7 km | 141 | 88 | 167 | 194 |
+| 4.7–9.5 km | 294 | 243 | 409 | 359 |
+| 9.5–19 km | 528 | 491 | **925** | 646 |
+| 19–38 km | 812 | 796 | **1745** | 1038 |
+| 38–76 km | 1213 | 1206 | 1689 | 1404 |
+
+Below 5 km we are short of vanilla, which is §6's finding again. Between 9.5
+and 38 km we are **1.4 to 1.7× rougher than the most rugged ground vanilla
+ships**, and that energy is not landscape: it is the isotropic fill, at the
+scale of a county. That, not the Gaussian, is what an erosion pass has to
+replace — and the fix is a frequency-dependent gain, not a smaller sigma.
+
+![Thay step and cliff statistics](evidence/report_map_paint/fig10_thay_steps.png)
+
+*Figure 10 — the three tables above as one figure.
+`thay_steps.csv`, `thay_cliffs.csv`, `thay_bands.csv`.*
+
+### 7.2 Three zooms, three maps
+
+Same kilometres in every panel, so the eye is comparing terrain and not
+resolution. Columns: the CK2 source rescaled and nothing else, the shipped map,
+and a vanilla CK3 crop of the Norwegian coast — chosen because it is coast plus
+mountains in one frame, the closest vanilla has to both the Sword Coast and
+Thay. Centres and extents are in
+`docs/evidence/report_map_paint/panel_extents.csv`. Hillshading is done in
+**game units** (`level / 65535 × WORLD_EXTENTS_Y` over provinces-pixels of
+ground), which is the only like-for-like: it compares the slope the renderer
+sees, not how many pixels each map spends on a kilometre.
+
+![Elevation at three zooms](evidence/report_map_paint/fig11_panels_relief.png)
+
+*Figure 11 — elevation. Three things read immediately. At **continent** scale
+our map is covered in 20–40 km blobs that vanilla does not have — the 19–38 km
+overshoot in §7.1, visible. At **region** scale vanilla is dendritic — valleys,
+ridge lines, drainage — and we are smooth lumps. At **local** scale (80 km) the
+CK2 column still shows its terrace banding, ours is a blur, and vanilla has
+real ridges: our 1× heightmap has 52 px there against vanilla's 106.*
+
+![Terrain paint at three zooms](evidence/report_map_paint/fig12_panels_paint.png)
+
+*Figure 12 — the same three extents in terrain paint. Each pixel is drawn as
+its `detail_index` materials' own vanilla-measured colormap tints, blended by
+`detail_intensity` and pushed ×7 away from grey, because vanilla's tints are
+near-neutral by design (§4) and a literal rendering is a hundred shades of
+grey. The gain is display only and identical in all three columns. Ours is
+speckled where vanilla is coherent: our primary/secondary blend is a σ = 1.5 px
+noise field on a 2.97 km/px sheet, so its dither is a 4–5 km checker, while
+vanilla's blends follow relief. Our paint is also half vanilla's resolution in
+km per pixel (`terrain_paint_scale = 0.5`, §3), which the local row shows as
+26 px against 52.*
+
+### 7.3 Paint composition per material, and which differences are expected
+
+Figure 5 compared terrain *keys*. Below the keys are the 102 materials vanilla
+actually declares, and that is where the interesting difference lives. Shares
+are **intensity-weighted** — a material's real fractional coverage summed over
+all four `detail_index` channels, not just where it happens to be the primary —
+over land only, both maps
+(`docs/evidence/report_map_paint/material_share.csv`, one row per material).
+
+![Per-material composition](evidence/report_map_paint/fig13_materials.png)
+
+*Figure 13 — left, the 22 largest materials. Right, the same numbers rolled up
+into families with the difference and a verdict on it.*
+
+| family | ours | vanilla | difference | expected? |
+|---|---|---|---|---|
+| desert & drylands | 8.97 % | 21.88 % | **−12.91 pp** | **geography.** Vanilla's land is the Sahara, Arabia, Iran and the Thar; Faerûn's only true desert is Anauroch, with the Calim and Raurin fringes. A lower arid share is the correct answer. |
+| mountain | 13.41 % | 22.52 % | −9.11 pp | mixed. Vanilla carries the Alps, Caucasus, Zagros, Himalaya and Tibet — but we also fold CK2 `impassable_mountains` and `subterranean` into the one key, so the gap is not purely geographic. |
+| forest & jungle | 20.46 % | 12.31 % | +8.15 pp | geography. Faerûn is forested (High Forest, Cormanthor, the Chondalwood) and `trees.bmp` promotes every wooded pixel; vanilla's sheet is cleared or arid. |
+| plains & lowlands | 21.63 % | 14.09 % | +7.54 pp | mixed. Part real (the Dalelands, the Vilhon Reach), part fall-through: CK2 `pti` filler and unmapped indices both land on plains. |
+| steppe | 13.86 % | 6.68 % | +7.18 pp | geography. The Shaar, the Eastern Shaar and the Endless Wastes against vanilla's Pontic steppe. |
+| hills | 15.65 % | 9.81 % | +5.85 pp | mixed. Faerûn's CK2 palette has one hills index and spends it freely; vanilla splits the same ground with its regional families. |
+| snow & ice | 3.95 % | 4.54 % | −0.59 pp | geography. CK2 `arctic` and `glacier` both fold to taiga, whose secondary is `snow`. |
+| wetlands | 1.48 % | 2.02 % | −0.53 pp | geography. Small on both maps. |
+| farmland | 0.58 % | 0.60 % | −0.02 pp | geography — both maps paint about the same. |
+| **beach & cliff** | **0.00 %** | 1.26 % | −1.26 pp | **not geography — a mapping gap.** Faerûn has more coastline per unit area than vanilla, and we paint no shoreline material on land at all: `mappings/terrain_paint.csv` gives `sea`/`coastal_sea` a beach material, but those pixels are under water and no land key ever picks one. |
+| other | 0.00 % | 4.28 % | −4.28 pp | mapping. Vanilla's leftovers are regional and rock materials our table never selects from. |
+
+Two mapping facts sit under the whole table. We paint **20 of vanilla's 101**
+used materials, and **56.1 % of vanilla's own coverage is regional or
+climate-zone families** (`gen_*`, `medi_*`, `northern_*`, `india_*`,
+`central_*`) that `mappings/terrain_paint.csv` excludes on purpose, because a
+material named for a real-world region has no Faerûn meaning. That exclusion is
+defensible and it is also the single largest reason the two palettes do not
+line up; it is a choice, not a measurement.
+
+**The better measure is density, not area.** Area share mostly restates
+geography. What actually separates the two bakes is how the four channels are
+used (`docs/evidence/report_map_paint/paint_blend.csv`, `verified`):
+
+| | ours | vanilla |
+|---|---|---|
+| materials used over land | 20 | 101 |
+| non-zero channels per pixel | **2.000** | **3.467** |
+| blend entropy | 0.73 bits | 1.49 bits |
+| mean weight of the primary material | 0.71 | 0.52 |
+
+Ours is exactly 2.000 — every land pixel is a strict primary/secondary pair,
+by construction — against vanilla's 3.47, and vanilla's primary carries barely
+half the weight where ours carries 0.71. This is the micro difference that no
+area share can show, and it is a cheap one to close: a third material drawn
+from the terrain classes of the neighbouring pixels, at low weight, would move
+both numbers most of the way without touching the class map at all.
+
+### 7.4 Two defects this section found
+
+**8.2 % of our land is dead flat at the clamp floor.** `heightmap_detail`
+guarantees that every land pixel ends strictly above the water level, and it
+enforces that by clamping. Map-wide, **2,166,924 land pixels — 8.19 % of all
+land — sit at exactly `water_level + 1 = 4884`**, which means the synthesis
+pushed them under and the invariant pulled them back, throwing away whatever
+elevation the plain rescale gave them: a median of 7376 levels there, p90
+12,362, a mean of **3485 levels destroyed per pixel**. 14.6 % of all land the
+plain rescale put below 8000 is affected. This is not coast smoothing — the
+median such pixel is **76 px (113 km) from the nearest water**, and only 13.6 %
+are within 6 px of a shore. It is the spectral fill's amplitude, the same
+overshoot §7.1 measures, sinking whole lowlands. §1's note that "p01/p05 are
+pulled down to the water level by coast smoothing" is therefore wrong about the
+cause, and is corrected here. `docs/evidence/report_map_paint/clamp_floor.csv`;
+the pink patches in figure 11's middle column are these pixels.
+
+**Figure 5 was a different PNG on every run.** Its key ordering broke ties
+through set iteration, which `PYTHONHASHSEED` randomises. Fixed by making the
+material name the tiebreak; figures 1–4, 6 and 7 are byte-identical to the
+version shipped with §1–§6.
+
+---
+
+Reproduce all thirteen figures: `uv run --with matplotlib python
 scripts/report_map_paint_plots.py` (add `--recompute` to re-measure from the rasters
-instead of the cached CSVs in `docs/evidence/report_map_paint/`). Sources:
+instead of the cached CSVs in `docs/evidence/report_map_paint/`). The reference
+conversion every measurement reads is the shipped configuration at
+`../_out/seafloor`, not the live mod, which whatever lane is running regenerates.
+Every number quoted above is a column of a CSV in that folder:
+`thay_counties.csv` `thay_steps.csv` `thay_cliffs.csv` `thay_transects.csv`
+`thay_bands.csv` `clamp_floor.csv` `panel_extents.csv` `material_share.csv`
+`paint_blend.csv`, plus §1–§6's `spectrum.csv` `height_hist.csv` `land_stats.csv`
+`seafloor_transect.csv` `terrain_area_share.csv` `tree_counts.csv` `hf_achieved.csv`.
+Sources:
 `docs/step_map_paint.md`, `docs/step_map_heightmap.md`, `docs/map_fidelity.md`,
 `docs/map_scale.md`. In-game screenshots of the shipped paint:
 `../claudespace/docs/evidence/waterdeep_terrain.png`, `waterdeep_sea.png`,
