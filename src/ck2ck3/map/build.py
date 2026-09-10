@@ -721,28 +721,75 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         target_total = round(
             cfg.trees_density_per_px * canvas.width * canvas.height
         )
-        foliage, tree_counts, tree_dropped, tree_dropped_by_terrain = (
-            tree_scatter.render_all(
-                cfg.ck3_game_dir,
-                _repo_path(cfg, cfg.trees_csv),
-                eligible,
-                tree_terrain_code,
-                tree_terrain_keys,
-                canvas.height,
-                target_total=target_total,
-                seed=cfg.trees_seed,
+        # The regional mix conditions on the *ported* winter climate zone
+        # (map_data/climate.txt, written a few lines below from this same
+        # `climate` dict) as well as the terrain class and the latitude band
+        # - docs/step_map_paint.md §9.9.
+        mix_table: dict[tuple[str, str, str], tree_scatter.MixDist] = {}
+        tree_climate_code = None
+        tree_climate_keys = None
+        if cfg.trees_regional:
+            mix_table = tree_scatter.read_mix_table(
+                _repo_path(cfg, cfg.trees_mix_csv)
             )
+            mix_overrides = tree_scatter.read_mix_table(
+                _repo_path(cfg, cfg.trees_mix_overrides_csv)
+            )
+            if mix_overrides:
+                mix_table = tree_scatter.apply_mix_overrides(
+                    mix_table, mix_overrides
+                )
+            if not mix_table:
+                sink.warn(
+                    f"no tree mix table at {cfg.trees_mix_csv}: every tree "
+                    "falls back to its terrain key's single row in "
+                    f"{cfg.trees_csv} (uv run "
+                    "scripts/measure_vanilla_tree_mix.py && uv run "
+                    "scripts/build_tree_mix_csv.py)"
+                )
+            tree_climate_code, tree_climate_keys = _climate_code_grid(
+                ck3_raster, climate, ids
+            )
+        (
+            foliage,
+            tree_counts,
+            tree_dropped,
+            tree_dropped_by_terrain,
+            tree_levels,
+        ) = tree_scatter.render_all(
+            cfg.ck3_game_dir,
+            _repo_path(cfg, cfg.trees_csv),
+            eligible,
+            tree_terrain_code,
+            tree_terrain_keys,
+            canvas.height,
+            target_total=target_total,
+            seed=cfg.trees_seed,
+            mix_table=mix_table,
+            climate_code=tree_climate_code,
+            climate_keys=tree_climate_keys,
+            cell_px=cfg.trees_cell_px,
+            coherence=cfg.trees_cell_coherence,
         )
         placed = sum(tree_counts.values())
         log(f"trees: {placed} of {target_total} target instances placed "
             f"({tree_dropped} dropped, no mesh row: {tree_dropped_by_terrain}), "
             f"{tree_counts}")
+        if cfg.trees_regional:
+            log(f"  regional mix ({len(mix_table)} conditions, cell "
+                f"{cfg.trees_cell_px} px, coherence "
+                f"{cfg.trees_cell_coherence}): {tree_levels}")
         report["trees"] = {
             "target_total": target_total,
             "placed": placed,
             "dropped_no_mesh": tree_dropped,
             "dropped_by_terrain": tree_dropped_by_terrain,
             "eligible_px": int(eligible.sum()),
+            "regional": cfg.trees_regional,
+            "mix_conditions": len(mix_table),
+            "mix_levels": tree_levels,
+            "cell_px": cfg.trees_cell_px,
+            "cell_coherence": cfg.trees_cell_coherence,
             **tree_counts,
         }
     elif cfg.strip_vanilla_foliage:
@@ -1093,6 +1140,33 @@ def _terrain_code_grid(
     for pid, key in terrain_ck3.items():
         if 0 <= pid <= max_id:
             lut[pid] = index.get(key, index[default])
+    return lut[np.clip(ck3_raster, 0, max_id)], keys
+
+
+def _climate_code_grid(
+    ck3_raster: np.ndarray, ck2_climate: dict[str, list[int]], ids
+) -> tuple[np.ndarray, list[str]]:
+    """Per-pixel winter climate zone, from the CK2 mod's own map/climate.txt.
+
+    The same remap ``writers.render_climate`` uses for ``map_data/climate.txt``
+    itself (CK2 province -> its CK3 baronies), so the zone a tree is sampled
+    under is the zone the game will read for that province.  A province in no
+    block gets ``none`` - CK3's own default, and vanilla leaves most of its
+    own map out of ``climate.txt`` too (635 of 11,651 land provinces), so the
+    measured table has a real ``none`` column to condition on.
+    """
+    zone_of_id: dict[int, str] = {}
+    for zone, ck2_ids in ck2_climate.items():
+        key = zone.replace("_winter", "")
+        for ck3_id in ids.remap_ids(list(ck2_ids)):
+            zone_of_id.setdefault(ck3_id, key)
+    keys = sorted({"none", *zone_of_id.values()})
+    index = {k: i for i, k in enumerate(keys)}
+    max_id = int(ck3_raster.max()) if ck3_raster.size else 0
+    lut = np.full(max_id + 1, index["none"], dtype=np.uint8)
+    for pid, zone in zone_of_id.items():
+        if 0 <= pid <= max_id:
+            lut[pid] = index[zone]
     return lut[np.clip(ck3_raster, 0, max_id)], keys
 
 

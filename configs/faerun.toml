@@ -212,6 +212,29 @@ colormap_scale = 0.25
 # 2's shape); both load in the two reference mods.
 colormap_mips = true
 
+# --- trees (docs/step_map_paint.md section 9.2 and 9.9)
+#
+# Scatter tree instances into the 18 vanilla
+# gfx/map/map_object_data/generated/*.txt from CK2 trees.bmp, at vanilla's
+# own measured per-pixel density. Every one of the 18 is overridden either
+# way; an unused generator is written as an empty stub.
+trees = true
+trees_csv = "mappings/tree_meshes.csv"
+trees_seed = 4242
+# Pick the mesh from vanilla's own measured
+# P(mesh | CK3 terrain key, winter climate zone, latitude band) instead of
+# from the terrain key alone. Same points, same drops - only which mesh.
+# Table: scripts/measure_vanilla_tree_mix.py -> docs/evidence/vanilla_tree_mix.csv
+#        -> scripts/build_tree_mix_csv.py -> mappings/tree_mix.csv
+trees_regional = true
+trees_mix_csv = "mappings/tree_mix.csv"
+trees_mix_overrides_csv = "overrides/tree_mix.csv"
+# Species form stands, not per-pixel salt and pepper: this share of the trees
+# take one shared uniform per square cell of this size. Calibrated against
+# vanilla's own stand purity (docs/evidence/vanilla_tree_patch_scale.csv).
+trees_cell_px = 24
+trees_cell_coherence = 0.55
+
 # --- measured scale inputs (flat keys: `scale` under [map] is already the
 # --- derived float above, so a [map.scale] table would collide with it)
 #

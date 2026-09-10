@@ -1,0 +1,20 @@
+file,family,vanilla,ours_terrain_only,ours_regional
+reeds_01_generator_1.txt,reeds,47085,23898,33565
+steppe_bush_01_generator.txt,steppe bush,4647,17711,934
+tree_cypress_01_generator_1.txt,cypress,7138,0,13637
+tree_jungle_01_c_generator_1.txt,jungle,1227,0,3443
+tree_jungle_01_d_generator_1.txt,jungle,38113,104334,102756
+tree_leaf_01_single_generator_1.txt,broadleaf,3954,179733,5680
+tree_leaf_2_high_generator_1.txt,broadleaf,14831,0,34086
+tree_leaf_high_generator_1.txt,broadleaf,138645,339829,184190
+tree_leaf_high_generator_2.txt,broadleaf,36248,0,53852
+tree_leaf_high_generator_3.txt,broadleaf,74170,0,111056
+tree_palm_generator_1.txt,palm,12739,0,2048
+tree_pine_01_a_generator_1.txt,pine,51997,0,41695
+tree_pine_01_b_generator_1.txt,pine,87196,46370,122941
+tree_pine_impassable_01_a_generator_1.txt,pine,30406,0,887
+tree_sakura_01_generator.txt,sakura,323,0,445
+tree_sakura_02_generator.txt,sakura,53,0,0
+tree_sakura_03_generator.txt,sakura,143,0,227
+tree_sakura_forest_generator.txt,sakura,211,0,433
+TOTAL,,549126,711875,711875

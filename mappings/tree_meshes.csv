@@ -6,7 +6,7 @@ mountains,,above the treeline in vanilla's own convention
 desert_mountains,,not painted by Faerun (docs/step_map_paint.md); row kept for the next total conversion
 terraced_hills,,not painted by Faerun; row kept for the next total conversion
 desert,,bare sand; oasis carries the palms instead
-drylands,,sparse scrub, no tree mesh available that reads as "drylands" rather than "steppe"
+drylands,tree_palm_generator_1.txt,"vanilla plants drylands (palm 30 %, leaf_high, single leaf by latitude, docs/evidence/vanilla_tree_mix.csv); this row only opens the gate, the regional mix table picks the species. Faerun paints no drylands pixels today (report fig 5), so it is inert until a terrain override or another mod supplies some (coordinator, 2026-09-10)"
 oasis,tree_palm_generator_1.txt,vanilla's own palm mesh; not painted by Faerun today but keeps the table complete
 jungle,tree_jungle_01_d_generator_1.txt,vanilla's densest jungle canopy mesh (38113 instances in the reference file, the largest jungle generator)
 forest,tree_leaf_high_generator_1.txt,vanilla's commonest broadleaf mesh (138645 instances in the reference file)

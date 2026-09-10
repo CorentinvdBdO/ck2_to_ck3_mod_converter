@@ -1,0 +1,17 @@
+# HUMAN INPUT - the hook for forcing a tree species somewhere.
+# Read by the `map` step as [map] trees_mix_overrides_csv, applied on top of
+# the measured mappings/tree_mix.csv (docs/step_map_paint.md section 9.9).
+#
+# A row set REPLACES the measured distribution for its exact
+# (ck3_terrain, climate, lat_band) key - it is not blended - and the `p`
+# column is renormalised, so weights need not sum to 1. `*` in `climate` or
+# `lat_band` is the wildcard the sampler falls back to; lat_band 0 is the
+# northernmost tenth of the canvas, 9 the southernmost. `file` must name a
+# real vanilla gfx/map/map_object_data/generated/*.txt or the instances are
+# dropped (reported as `no_vanilla_generator_file` in the run report).
+#
+# Example - force pure palms on southern drylands, whatever vanilla measured:
+#   drylands,none,9,tree_palm_generator_1.txt,1
+#
+# Empty by default: the shipped mix is entirely vanilla's own measurement.
+ck3_terrain,climate,lat_band,file,p

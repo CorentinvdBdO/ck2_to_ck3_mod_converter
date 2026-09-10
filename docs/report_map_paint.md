@@ -227,6 +227,15 @@ mesh choice follows terrain class rather than vanilla's regional variety. Our to
 is 30 % above vanilla's because our canvas is 33 % larger; the per-pixel density is
 vanilla's own. `docs/evidence/report_map_paint/tree_counts.csv`.*
 
+**Superseded 2026-09-10 (lane `trees-regional`).** The mesh choice is no longer
+terrain class alone: it samples vanilla's own measured
+`P(mesh | terrain, climate, latitude band)`. 17 of the 18 generators are now used,
+the largest single one falls from 47.7 % to 25.9 % of all instances, and pine's
+share of the two northernmost bands goes 14.3 % → 72.1 % against vanilla's own
+92.6 %. Same 711,875 instances at the same places — only the mesh changed.
+Method, tables and the band × species figure: `docs/step_map_paint.md` §9.9,
+`docs/evidence/tree_mix/`.
+
 ## 6. What is still not vanilla-like
 
 **Half of vanilla's spatial bandwidth, by construction.** We ship a 1× heightmap, so

@@ -422,7 +422,11 @@ Faerûn's real run: 711,875 of 729,838 target instances placed (97.5%),
 sand, above the treeline, cultivated land). Per-file sizes: 66 MB total
 across 18 files (vanilla's own is ~52 MB per `docs/map_fidelity.md` §1.6).
 Config: `[map] trees` (default `true`), `trees_csv`, `trees_seed` (`4242`,
-deterministic), `trees_density_per_px`. Deterministic across *processes* only since
+deterministic), `trees_density_per_px`. **Superseded in part by §9.9**: the
+mesh choice is now vanilla's own measured
+`P(mesh | terrain, climate, latitude band)` (`[map] trees_regional`, default
+`true`); the density, eligibility and format decisions in this section are
+unchanged. Deterministic across *processes* only since
 2026-09-10: the per-mesh yaw salt was `hash(file)`, which Python randomises
 per process, so every regeneration rewrote all 711,875 yaws (1.4 M diff lines
 in the generated mod); it is `zlib.crc32(file)` now (`tree_scatter.mesh_seed`). Tests:
@@ -700,3 +704,213 @@ claudespace/scripts/ck3_soak.sh <mod> --extra <probe dir> --secs 120
 Two waits matter: the In Game marker fires while the loading screen is still
 up, so a screenshot taken 20 s after it catches the loading art; 60 s is
 enough. Any visual claim about the map can now be checked without the user.
+
+### 9.9 Lane `trees-regional`: procedural regional species mix
+
+**Question this answers.** §9.2 picked a tree's mesh from its province's CK3
+terrain class alone. That used **6 of vanilla's 18 generators** and leaned on
+`tree_leaf_high_generator_1` for 48 % of all instances
+(`docs/report_map_paint.md` fig 7): no pine belt in the north, no cypress, no
+palm anywhere. Vanilla's own placement is regional, and this lane measures
+that and reproduces it.
+
+**Measurement 1 — vanilla's own mix.**
+`scripts/measure_vanilla_tree_mix.py` walks all 549,126 instances in vanilla's
+own 18 `gfx/map/map_object_data/generated/*.txt`, converts each
+`transform=`'s `x`/`z` back to a canvas pixel (`y = 4608 − z`, the same frame
+`ck2ck3.map.locators` uses), and looks up three things at that pixel:
+
+| variable | source | note |
+|---|---|---|
+| CK3 terrain key | `common/province_terrain` via `provinces.png` + `definition.csv` | 11,651 rows, `default_land = plains` |
+| winter climate zone | `map_data/climate.txt` | `mild`/`normal`/`severe`, else `none` — vanilla names only **635** of its 11,651 land provinces |
+| latitude band | canvas row decile, band 0 = north | `assumed`: fractional north-south position transfers between a real-world map and a fantasy one |
+
+Output `docs/evidence/vanilla_tree_mix.csv` (967 rows,
+`P(file | terrain, climate, band)` with counts). Vanilla's own gradient, as
+share of each band's instances:
+
+| band | pine | broadleaf | jungle | palm | cypress | reeds |
+|---|---|---|---|---|---|---|
+| 0 (N) | **93.6** | 6.4 | 0 | 0 | 0 | 0 |
+| 1 | **91.7** | 2.6 | 0 | 0 | 0 | 5.7 |
+| 2 | 26.7 | 57.9 | 0 | 0 | 0 | 15.4 |
+| 3 | 0.3 | 83.2 | 0 | 0 | 0.1 | 8.9 |
+| 4 | 1.4 | 82.6 | 0.3 | 0 | **11.8** | 3.5 |
+| 5 | 0.1 | 66.8 | 16.2 | 10.0 | 4.8 | 2.0 |
+| 6 | 0 | 38.0 | 47.3 | 11.0 | 0 | 3.7 |
+| 7 | 0 | 46.4 | 21.3 | **23.1** | 0.1 | 9.1 |
+| 8 | 0 | 54.2 | 39.0 | 1.8 | 0 | 4.9 |
+| 9 (S) | 0 | 13.2 | **85.1** | 1.7 | 0 | 0 |
+
+So "pines north, cypress and palm south" is vanilla's own behaviour, not a
+style preference — and the four `tree_sakura_*` generators are 730 instances
+in total (0.13 %), a Japan-only curiosity that survives in the table at that
+same negligible weight rather than being hand-deleted.
+
+**Measurement 2 — which conditioning variable actually carries the signal.**
+`scripts/build_tree_mix_csv.py` scores every scheme by top-1 accuracy and
+cross-entropy over vanilla's own instances
+(`docs/evidence/vanilla_tree_mix_conditioning.csv`):
+
+| scheme | conditions | top-1 | cross-entropy |
+|---|---|---|---|
+| global | 1 | 25.2 % | 3.188 bits |
+| terrain | 15 | 49.8 % | 2.056 bits |
+| terrain + climate | 44 | 50.7 % | 2.008 bits |
+| **terrain + latitude** | 104 | **58.8 %** | **1.626 bits** |
+| terrain + climate + latitude | 188 | 59.4 % | 1.588 bits |
+
+Latitude is worth ten times what climate is worth *on vanilla's data*, because
+vanilla's `climate.txt` covers 5 % of its provinces. That measurement, not a
+prior, fixes the fallback order in `tree_scatter.resolve_mix`. (In-sample, so
+the finest scheme is flattered — hence the `--min-count 100` gate; the two
+single-variable schemes are compared on equal footing.)
+
+**The table.** `mappings/tree_mix.csv` (`# GENERATED`, 277 conditions,
+1632 rows) materialises the full conditional *and* its marginals as explicit
+rows, `*` being the wildcard. The sampler's chain, most specific first:
+
+1. `(terrain, climate, band)`
+2. `(terrain, *, band)`
+3. `(terrain, *, band∓1)` — bands are ordinal and species vary smoothly with
+   latitude. Not cosmetic: vanilla has **no forest-classified province in its
+   own band 0 at all** (Iceland and northern Norway are taiga and mountains),
+   while Faerûn's band 0 is 79,028 tree instances of mostly forest-classified
+   land. Without this step the entire far north fell through to the
+   Europe-wide severe-winter forest marginal and came out 65 % broadleaf; band
+   1 next door is 70 % pine. Pine share in bands 0–1 went 28 % → 72 % when
+   this rung was added.
+4. `(terrain, climate, *)`
+5. `(terrain, *, *)`
+6. the terrain's single row in `mappings/tree_meshes.csv`
+
+**Faerûn's own conditioning variables.** The terrain class is the existing
+per-province majority vote; the climate zone is `_climate_code_grid` in
+`ck2ck3.map.build`, which remaps Faerûn's own CK2 `map/climate.txt` through
+the same `IdMap` that writes `map_data/climate.txt` itself, so a tree is
+sampled under the zone the game will read for that province; the band is
+`tree_scatter.lat_band`, a canvas row decile of our own 6784-px canvas.
+
+**Coherence.** Species form stands. `[map] trees_cell_coherence` (0.55) of the
+trees take one shared uniform per `[map] trees_cell_px` (24) square cell,
+hashed by cell position with `zlib.crc32` — never `hash()`, which Python salts
+per process and which already cost this module a 1.4 M-line diff of pure yaw
+churn (§9.2). The rest draw independently, because **vanilla's own stands are
+not pure**: `docs/evidence/vanilla_tree_patch_scale.csv` measures the
+instance-weighted share of a cell's dominant generator and vanilla is only
+0.775 at 8 px, 0.724 at 24 px, 0.541 at 256 px. Calibrated result
+(`docs/evidence/tree_mix/patch_scale.csv`), `verified` on the real run:
+
+| cell | vanilla | ours, terrain only | ours, regional |
+|---|---|---|---|
+| 8 px | 0.775 | 0.987 | 0.745 |
+| 24 px | 0.724 | 0.962 | **0.727** |
+| 64 px | 0.657 | 0.910 | 0.559 |
+| 256 px | 0.541 | 0.773 | 0.474 |
+
+The terrain-only pass was far *too* pure (a whole province is one species);
+ours now matches vanilla at the calibration scale and is somewhat more mixed
+than vanilla above it — see the open questions.
+
+**The density contract is untouched.** `tree_scatter.pick_points` is shared by
+both paths, so the same seed picks the same points either way, and
+`mappings/tree_meshes.csv` stays the eligibility gate — a terrain key with an
+empty `file` column gets no trees whatever the mix table says. `verified` on
+the real Faerûn run: **711,875 of 729,838 placed, 17,963 dropped, identical
+before and after**. All 18 vanilla generator files are still overridden; the
+one the mix never uses (`tree_sakura_02_generator.txt`) is written as an
+empty stub.
+
+**Result, real Faerûn run** (`--out ../_out/trees-regional`,
+`scripts/report_tree_mix.py`). **17 of 18 generators used, up from 6**, and
+the share of the largest single generator falls from 47.7 % to 25.9 %:
+
+| generator | vanilla | ours, terrain only | ours, regional |
+|---|---|---|---|
+| `tree_pine_01_b_generator_1` | 87,196 | 46,370 | 122,941 |
+| `tree_pine_01_a_generator_1` | 51,997 | 0 | 41,695 |
+| `tree_pine_impassable_01_a_generator_1` | 30,406 | 0 | 887 |
+| `tree_leaf_high_generator_1` | 138,645 | 339,829 | 184,190 |
+| `tree_leaf_high_generator_2` | 36,248 | 0 | 53,852 |
+| `tree_leaf_high_generator_3` | 74,170 | 0 | 111,056 |
+| `tree_leaf_2_high_generator_1` | 14,831 | 0 | 34,086 |
+| `tree_leaf_01_single_generator_1` | 3,954 | 179,733 | 5,680 |
+| `tree_jungle_01_d_generator_1` | 38,113 | 104,334 | 102,756 |
+| `tree_jungle_01_c_generator_1` | 1,227 | 0 | 3,443 |
+| `tree_cypress_01_generator_1` | 7,138 | 0 | 13,637 |
+| `tree_palm_generator_1` | 12,739 | 0 | 2,048 |
+| `reeds_01_generator_1` | 47,085 | 23,898 | 33,565 |
+| `steppe_bush_01_generator` | 4,647 | 17,711 | 934 |
+| four `tree_sakura_*` | 730 | 0 | 1,105 |
+| **total** | **549,126** | **711,875** | **711,875** |
+
+And the claim as a measurement — species family as a share of each latitude
+band, vanilla / ours (`docs/evidence/tree_mix/lat_band_mesh.csv`, figure
+`docs/evidence/tree_mix/fig_lat_band_mesh.png`):
+
+| band | pine | broadleaf | jungle | palm | cypress | reeds | ours n |
+|---|---|---|---|---|---|---|---|
+| 0 (N) | 93.6 / **66.8** | 6.4 / 19.4 | – | – | – | 0 / 13.8 | 79,028 |
+| 1 | 91.7 / **77.4** | 2.6 / 21.5 | – | – | – | 5.7 / 1.1 | 112,886 |
+| 2 | 26.7 / 9.5 | 57.9 / 77.2 | – | – | – | 15.4 / 13.2 | 73,057 |
+| 3 | 0.3 / 1.0 | 83.2 / 90.2 | – | – | 0.1 / 0 | 8.9 / 6.5 | 91,205 |
+| 4 | 1.4 / 1.0 | 82.6 / 69.8 | 0.3 / 17.6 | 0 / 0.2 | 11.8 / **10.2** | 3.5 / 1.3 | 87,238 |
+| 5 | 0.1 / 5.3 | 66.8 / 59.3 | 16.2 / 30.5 | 10.0 / 0.3 | 4.8 / 3.6 | 2.0 / 1.0 | 129,712 |
+| 6 | 0 / 21.5 | 38.0 / 58.3 | 47.3 / 18.5 | 11.0 / 0.4 | – | 3.7 / 1.4 | 45,235 |
+| 7 | 0 / 0 | 46.4 / 65.7 | 21.3 / 29.4 | 23.1 / 1.1 | – | 9.1 / 3.8 | 57,623 |
+| 8 | 0 / 0 | 54.2 / 26.1 | 39.0 / **70.7** | 1.8 / 0.6 | – | 4.9 / 2.6 | 21,809 |
+| 9 (S) | 0 / 0 | 13.2 / 20.4 | 85.1 / **75.2** | 1.7 / 4.3 | – | – | 14,082 |
+
+Pine in the two northernmost bands: **14.3 % → 72.1 %** (vanilla 92.6 %).
+Jungle + palm in the two southernmost: **52.3 % → 75.4 %** (vanilla 63.8 %).
+Cypress appears at all, and peaks in band 4 at 10.2 % against vanilla's own
+11.8 %.
+
+**Config.** `[map] trees_regional` (default `true`), `trees_mix_csv`
+(`mappings/tree_mix.csv`), `trees_mix_overrides_csv` (`overrides/tree_mix.csv`),
+`trees_cell_px` (24), `trees_cell_coherence` (0.55). Read in **both**
+`ck2ck3.map.config.load` and `ck2ck3.steps.map._map_config` — and while adding
+them, **the four existing `[map] trees*` keys turned out to have the
+`colormap = false` bug too**: `_map_config` never read `trees`, `trees_csv`,
+`trees_seed` or `trees_density_per_px` at all, so `[map] trees = false` in
+`configs/faerun.toml` would have been a silent no-op. All nine keys are now
+read there and pinned by
+`tests/test_map_tree_mix.py::test_cli_config_builder_reads_the_tree_keys`.
+
+**Human hook.** `overrides/tree_mix.csv` (ships empty) replaces the measured
+distribution for an exact `(terrain, climate, lat_band)` key — not blended, so
+forcing a region's species is one obvious edit.
+
+**Reproduce.**
+
+```
+uv run scripts/measure_vanilla_tree_mix.py          # -> docs/evidence/vanilla_tree_mix.csv
+uv run scripts/build_tree_mix_csv.py                # -> mappings/tree_mix.csv
+PYTHONPATH=$PWD/src uv run ck2ck3 --config configs/faerun.toml --steps map --out <dir>
+uv run --with matplotlib python scripts/report_tree_mix.py --before <dir off> --after <dir on>
+```
+
+**Open questions.**
+
+1. **Palm is still 2,048 instances against vanilla's 12,739.** Vanilla plants
+   palms on `drylands` (30 %), `floodplains` (67 %) and `oasis` (48 %);
+   `mappings/tree_meshes.csv` gives `drylands`, `floodplains` and `desert`
+   an empty row, so Faerûn's Calimshan and the Shaar drop their trees
+   instead. Enabling `drylands` alone would move a few thousand instances
+   from `dropped` to `palm` — a real change to the drop count, so it is a
+   decision, not a bug fix.
+2. **Band 6 is 21.5 % pine where vanilla is 0.** That is Faerûn geography,
+   not a table error: CK2 arctic/glacier folds to CK3 `taiga`
+   (`ck2ck3.map.terrain`) and Faerûn has cold uplands at mid-canvas.
+   `assumed` to be correct; the coordinator's in-game look is the check.
+3. **Above the calibration scale our stands are more mixed than vanilla's**
+   (0.559 vs 0.657 at 64 px). Vanilla's long-range correlation comes from its
+   province geometry, which one square cell size cannot reproduce; a second,
+   coarser coherence scale would.
+4. The latitude-band transfer is `assumed` — a canvas row decile of a
+   real-world map standing in for a canvas row decile of Faerûn. It is the
+   whole reason band 6 and band 9 read as they do.
+5. `tree_pine_impassable_01_a_generator_1` is 887 instances for us and 30,406
+   for vanilla, because our eligibility excludes impassable provinces and
+   vanilla's own use of that mesh is almost entirely on them.

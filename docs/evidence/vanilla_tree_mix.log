@@ -1,0 +1,35 @@
+reading provinces.png + definition.csv ...
+  9216x4608, 13269 max province id
+  11651 province_terrain rows (default plains), 635 climate rows
+  reeds_01_generator_1.txt: 47085 instances
+  steppe_bush_01_generator.txt: 4647 instances
+  tree_cypress_01_generator_1.txt: 7138 instances
+  tree_jungle_01_c_generator_1.txt: 1227 instances
+  tree_jungle_01_d_generator_1.txt: 38113 instances
+  tree_leaf_01_single_generator_1.txt: 3954 instances
+  tree_leaf_2_high_generator_1.txt: 14831 instances
+  tree_leaf_high_generator_1.txt: 138645 instances
+  tree_leaf_high_generator_2.txt: 36248 instances
+  tree_leaf_high_generator_3.txt: 74170 instances
+  tree_palm_generator_1.txt: 12739 instances
+  tree_pine_01_a_generator_1.txt: 51997 instances
+  tree_pine_01_b_generator_1.txt: 87196 instances
+  tree_pine_impassable_01_a_generator_1.txt: 30406 instances
+  tree_sakura_01_generator.txt: 323 instances
+  tree_sakura_02_generator.txt: 53 instances
+  tree_sakura_03_generator.txt: 143 instances
+  tree_sakura_forest_generator.txt: 211 instances
+wrote /home/cvdbdo/git/paradox/ck3/wt/trees-regional/docs/evidence/vanilla_tree_mix.csv (967 rows)
+wrote /home/cvdbdo/git/paradox/ck3/wt/trees-regional/docs/evidence/vanilla_tree_bands.csv (108 rows)
+wrote /home/cvdbdo/git/paradox/ck3/wt/trees-regional/docs/evidence/vanilla_tree_patch_scale.csv
+  cell    8 px: purity 0.7747
+  cell   16 px: purity 0.7493
+  cell   24 px: purity 0.7241
+  cell   32 px: purity 0.7058
+  cell   48 px: purity 0.679
+  cell   64 px: purity 0.6574
+  cell   96 px: purity 0.6317
+  cell  128 px: purity 0.6068
+  cell  192 px: purity 0.564
+  cell  256 px: purity 0.5414
+total instances: 549,126
