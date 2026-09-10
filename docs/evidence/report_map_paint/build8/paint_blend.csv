@@ -1,0 +1,3 @@
+map,land_px,materials_used,blend_entropy_bits,mean_nonzero_channels,mean_primary_weight
+ours,6611751,20,0.7341,2.0,0.7117
+vanilla,23720182,101,1.4916,3.467,0.5247

@@ -817,7 +817,7 @@ than vanilla above it — see the open questions.
 both paths, so the same seed picks the same points either way, and
 `mappings/tree_meshes.csv` stays the eligibility gate — a terrain key with an
 empty `file` column gets no trees whatever the mix table says. `verified` on
-the real Faerûn run: **711,875 of 729,838 placed, 17,963 dropped, identical
+the real Faerûn run at the time (build 9, before `[map] province_terrain_history`): **711,875 of 729,838 placed, 17,963 dropped, identical
 before and after**. All 18 vanilla generator files are still overridden; the
 one the mix never uses (`tree_sakura_02_generator.txt`) is written as an
 empty stub.
@@ -844,6 +844,8 @@ the share of the largest single generator falls from 47.7 % to 25.9 %:
 | `steppe_bush_01_generator` | 4,647 | 17,711 | 934 |
 | four `tree_sakura_*` | 730 | 0 | 1,105 |
 | **total** | **549,126** | **711,875** | **711,875** |
+
+Since build 10 the province-history terrain override retags 946 provinces (335 to `farmlands`, which has no mesh row), so the live count is **700,622 placed / 29,216 dropped** (`docs/evidence/last_run.md`, `docs/report_map_paint.md` §5); the mix shares above shift by under a point.
 
 And the claim as a measurement — species family as a share of each latitude
 band, vanilla / ours (`docs/evidence/tree_mix/lat_band_mesh.csv`, figure

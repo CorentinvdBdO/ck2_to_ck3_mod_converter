@@ -1,8 +1,14 @@
 """Figures for `docs/report_map_paint.md` (lane `report-paint`).
 
-Run: uv run --with matplotlib python scripts/report_map_paint_plots.py [--recompute]
+Run: uv run --with matplotlib python scripts/report_map_paint_plots.py
+         [--mod DIR] [--recompute]
 (matplotlib is deliberately not a repo dependency; --with keeps pyproject as is,
 same convention as scripts/map_fidelity_plots.py.)
+
+`--mod` is the reference conversion every measurement reads; it defaults to the
+live generated mod (`../claudespace/mods/faerun_ck2_to_ck3_converted`).  The
+first edition of this report measured `../_out/seafloor`, a build-8 conversion;
+those CSVs and PNGs are kept under `docs/evidence/report_map_paint/build8/`.
 
 Writes PNGs to docs/evidence/report_map_paint/.
 
@@ -27,8 +33,9 @@ them beside the PNGs; later runs read the cache and touch no raster at all.
                            back out of the shipped detail_index.tga
   tree_counts.csv          instances per generator file, ours vs vanilla
 
-  hf_achieved.csv          NOT measured here: transcribed from
-                           docs/evidence/HANDOFF_map_heightmap_detail.md
+  hf_achieved.csv          achieved high-frequency RMS per CK3 terrain key,
+                           all land and interior land, measured with vanilla's
+                           own estimator (see m_hf_achieved)
 """
 from __future__ import annotations
 
@@ -52,15 +59,15 @@ OUT = ROOT / "docs/evidence/report_map_paint"
 FID = ROOT / "docs/evidence/map_fidelity"
 EV = ROOT / "docs/evidence"
 
-#: The reference run of the shipped configuration: lane `seafloor`, 2026-09-10,
-#: `[map] heightmap_detail = true` + `[map.heightmap] deepen_sea = true`.  A
-#: fixed output directory on purpose -- ../claudespace/mods/... is regenerated
-#: by whatever lane is running and is not a stable thing to measure.
-MOD = ROOT / "../_out/seafloor"
-#: the run one lane earlier: same detail pass, deepen_sea off
-MOD_NO_DEEPEN = ROOT / "../_out/colormap-fix"
+#: The reference conversion every measurement reads.  `--mod DIR` overrides it;
+#: the default is the live generated mod, which is what the report is about
+#: (build 12, 2026-09-10).  The first edition measured `../_out/seafloor`, a
+#: build-8 conversion, and its CSVs/PNGs are kept under `OUT / "build8"`.
+DEFAULT_MOD = ROOT / "../claudespace/mods/faerun_ck2_to_ck3_converted"
+MOD = DEFAULT_MOD
 GAME = ROOT / "../claudespace/game_files"
 CK2_MAP = ROOT / "Faerun/Faerun/map"
+CONFIG = ROOT / "configs/faerun.toml"
 
 # --- constants every figure needs, all traceable ----------------------------
 # docs/map_scale.md: 2.90 km/px CK2 source, 1.4839 km/px canvas (= vanilla's own)
@@ -292,13 +299,48 @@ def m_seafloor_transect():
 
     Waterdeep's own province centroid is (2351.8, 5706.6) in the bottom-up
     locator frame (docs/step_map_paint.md §9.5), i.e. canvas row 6784-5707=1077.
+
+    The `before` series is the plain rescale itself, not an older output
+    directory.  `deepen_sea` acts on the plain rescale's water, so the plain
+    rescale IS the CK2-derived floor, and taking it from here keeps the figure
+    independent of which build happens to sit in `../_out` (the first edition
+    read a build-8 run with `deepen_sea = false`).
     """
     y, x0, x1 = 1077, 1750, 2450
     now = load_heightmap(MOD / "map_data/heightmap.png")[y, x0:x1]
-    before = load_heightmap(
-        MOD_NO_DEEPEN / "map_data/heightmap.png")[y, x0:x1]
+    before = plain_rescale_canvas()[y, x0:x1]
     return [{"x_px": x0 + i, "ck2_derived": int(b), "deepened": int(n)}
             for i, (b, n) in enumerate(zip(before, now))]
+
+
+def m_water_stats():
+    """Map-wide water-pixel percentiles, plain rescale vs shipped.
+
+    §2's claim ("the water median goes 2981 -> 0") was quoted from
+    `docs/step_map_paint.md` §9.6 in the first edition; measuring it here makes
+    it a column of a CSV like every other number in the report.
+    """
+    from scipy.ndimage import distance_transform_edt
+    plain = plain_rescale_canvas()
+    ship = load_heightmap(MOD / "map_data/heightmap.png")
+    water = ship <= WATER_LEVEL
+    shelf = distance_transform_edt(water)[water] <= SEA_SHELF_PX
+    rows = []
+    for stage, arr in (("plain_rescale", plain), ("shipped", ship)):
+        w = arr[water].astype(np.float64)
+        rows.append({
+            "stage": stage, "water_px": int(w.size),
+            "p25": round(float(np.percentile(w, 25)), 1),
+            "p50": round(float(np.median(w)), 1),
+            "p75": round(float(np.percentile(w, 75)), 1),
+            "max": round(float(w.max()), 1),
+            "on_shelf_pct": round(100.0 * float(shelf.mean()), 1),
+        })
+    return rows
+
+
+_WATER_FIELDS = ["stage", "water_px", "p25", "p50", "p75", "max",
+                 "on_shelf_pct"]
 
 
 def m_terrain_area_share():
@@ -337,6 +379,127 @@ def m_terrain_area_share():
                          "ck3_terrain": "+".join(prim.get(name, ["(unmapped)"])),
                          "px": int(n)})
     return sorted(rows, key=lambda r: (r["where"], -r["px"]))
+
+
+def _mod_province_terrain() -> tuple[np.ndarray, list[str]]:
+    """Per-canvas-pixel CK3 terrain key of the reference mod, as a code grid.
+
+    Vanilla's own `hf_by_terrain.csv` is measured per **province terrain**
+    (scripts/map_fidelity_heightmap.py), not per painted material, so the
+    achieved side has to be measured the same way or the comparison is
+    between two different class maps.
+    """
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None
+    terr: dict[int, str] = {}
+    for line in _need(MOD / "common/province_terrain/fae_province_terrain.txt",
+                      "mod province_terrain").read_text(
+                          encoding="utf-8-sig").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        if k.strip().isdigit():
+            terr[int(k.strip())] = v.strip()
+    rgb2id: dict[int, int] = {}
+    for line in _need(MOD / "map_data/definition.csv",
+                      "mod definition.csv").read_text(
+                          encoding="utf-8").splitlines():
+        p = line.split(";")
+        if len(p) >= 4 and p[0].isdigit() and int(p[0]):
+            rgb2id[(int(p[1]) << 16) | (int(p[2]) << 8) | int(p[3])] = int(p[0])
+    with Image.open(_need(MOD / "map_data/provinces.png",
+                          "mod provinces.png")) as im:
+        prov = np.asarray(im.convert("RGB"))
+    key = ((prov[:, :, 0].astype(np.uint32) << 16)
+           | (prov[:, :, 1].astype(np.uint32) << 8) | prov[:, :, 2])
+    del prov
+    uniq, inv = np.unique(key, return_inverse=True)
+    del key
+    names = sorted({terr.get(rgb2id.get(int(u), -1), "") for u in uniq})
+    code_of = {n: i for i, n in enumerate(names)}
+    codes = np.array([code_of[terr.get(rgb2id.get(int(u), -1), "")]
+                      for u in uniq], dtype=np.int16)
+    return codes[inv].reshape(-1, CANVAS_W), names
+
+
+#: vanilla's estimator: 64 heightmap px at its 0.742 km/px = 47.5 km, high-pass
+#: sigma 4.0 px = 2.97 km.  Ours is a 1x heightmap at 1.4839 km/px, so the same
+#: ground is 32 px and the same cut-off is sigma 2.0 px.
+HF_WIN_PX = 32
+HF_SIGMA_PX = 2.968 / KM_PX_OURS
+#: docs/step_map_heightmap.md: "interior" = land more than this far from water
+INTERIOR_PX = 20
+
+
+def m_hf_achieved():
+    """Achieved high-frequency RMS per CK3 terrain key, all land and interior.
+
+    Same estimator as vanilla's own `hf_by_terrain.csv`
+    (`scripts/map_fidelity_heightmap.py`), transposed to a 1x heightmap: up to
+    300 windows per class, each window entirely on land with its **central
+    half** entirely inside the class -- vanilla checks a 16 province-px
+    neighbourhood inside a 32 province-px window, and copying that exactly is
+    what makes the two columns comparable.  The high-pass residual's standard
+    deviation, averaged over windows.  The first edition of this report
+    transcribed these numbers from
+    `docs/evidence/HANDOFF_map_heightmap_detail.md` instead of measuring them.
+    """
+    from scipy.ndimage import distance_transform_edt, gaussian_filter
+    tmap, names = _mod_province_terrain()
+    h = load_heightmap(MOD / "map_data/heightmap.png").astype(np.float32)
+    land = h > WATER_LEVEL
+    hp = h - gaussian_filter(h, HF_SIGMA_PX)
+    del h
+    interior = distance_transform_edt(land) > INTERIOR_PX
+    tgt = {r["terrain"]: float(r["hf_rms_levels"])
+           for r in read_csv(FID / "hf_by_terrain.csv")}
+    rng = np.random.default_rng(23)
+    W = HF_WIN_PX
+    rows = []
+    for code, name in enumerate(names):
+        if not name or name in ("sea", "coastal_sea"):
+            continue
+        sel = (tmap == code) & land
+        ys, xs = np.nonzero(sel)
+        if ys.size < 2000:
+            continue
+        idx = rng.choice(ys.size, size=min(20000, ys.size), replace=False)
+        got = {"all_land": [], "interior": []}
+        for i in idx:
+            if len(got["all_land"]) >= 300 and len(got["interior"]) >= 300:
+                break
+            py, px = int(ys[i]), int(xs[i])
+            y, x = py - W // 2, px - W // 2
+            if not (0 <= y and y + W <= tmap.shape[0]
+                    and 0 <= x and x + W <= tmap.shape[1]):
+                continue
+            if not land[y:y + W, x:x + W].all():
+                continue
+            q = W // 4
+            if not (tmap[y + q:y + W - q, x + q:x + W - q] == code).all():
+                continue
+            v = float(hp[y:y + W, x:x + W].std())
+            if len(got["all_land"]) < 300:
+                got["all_land"].append(v)
+            if interior[py, px] and len(got["interior"]) < 300:
+                got["interior"].append(v)
+        if len(got["all_land"]) < 20:
+            continue
+        rows.append({
+            "terrain": name,
+            "target": round(tgt.get(name, float("nan")), 1),
+            "achieved_all_land": round(float(np.mean(got["all_land"])), 1),
+            "achieved_interior": (round(float(np.mean(got["interior"])), 1)
+                                  if len(got["interior"]) >= 20 else ""),
+            "windows_all_land": len(got["all_land"]),
+            "windows_interior": len(got["interior"]),
+        })
+    return sorted(rows, key=lambda r: r["terrain"])
+
+
+_HF_FIELDS = ["terrain", "target", "achieved_all_land", "achieved_interior",
+              "windows_all_land", "windows_interior"]
 
 
 def m_tree_counts():
@@ -385,7 +548,10 @@ def fig_spectrum(recompute: bool) -> str:
     anchor = float(np.interp(0.02, kv, av))
     kk = np.array([0.004, 0.7])
     ax.loglog(kk, anchor * (kk / 0.02) ** -2.0, "-", color="0.55", lw=1.0,
-              zorder=0, label=r"$f^{-2.0}$ (vanilla's fitted land law)")
+              zorder=0,
+              label=r"$f^{-2.0}$ reference slope (build 8's fill target; vanilla's"
+                    "\nown fit over 0.02–0.4 c/km is −2.195, and the pass now uses"
+                    "\nvanilla's measured curve instead)")
 
     for f, lbl, ls in ((1 / (2 * KM_PX_CK2), "CK2 source Nyquist\n0.172 c/km", "-"),
                        (1 / (2 * KM_PX_OURS), "our Nyquist\n0.337 c/km", "-."),
@@ -421,8 +587,11 @@ def fig_heights(recompute: bool) -> str:
 
     lo, hi = 9000, 10400
     grid = np.arange(lo, hi)
-    for stage, col, lbl in (("before", C_BEFORE, "plain rescale (212 levels map-wide)"),
-                            ("now", C_OURS, "shipped, detail pass (44,522)")):
+    for stage, col, lbl in (
+            ("before", C_BEFORE, "plain rescale (%s levels map-wide)"
+             % f"{int(st['ours_before_detail']['distinct_values']):,}"),
+            ("now", C_OURS, "shipped, detail pass (%s)"
+             % f"{int(st['ours_now']['distinct_values']):,}")):
         y = np.full(hi - lo, 0.4)
         for r in hist:
             if r["stage"] == stage and lo <= int(r["level"]) < hi:
@@ -472,12 +641,15 @@ def fig_heights(recompute: bool) -> str:
 def fig_seafloor(recompute: bool) -> str:
     rows = cached("seafloor_transect.csv", ["x_px", "ck2_derived", "deepened"],
                   m_seafloor_transect, recompute)
+    ws = {r["stage"]: r for r in cached("water_stats.csv", _WATER_FIELDS,
+                                        m_water_stats, recompute)}
     x = np.array([int(r["x_px"]) for r in rows])
     before = np.array([int(r["ck2_derived"]) for r in rows])
     now = np.array([int(r["deepened"]) for r in rows])
 
     fig, ax = plt.subplots(figsize=(9.0, 4.2), dpi=120)
-    ax.plot(x, before, color=C_BEFORE, lw=1.3, label="CK2-derived sea floor (deepen_sea = false)")
+    ax.plot(x, before, color=C_BEFORE, lw=1.3,
+            label="CK2-derived sea floor (the plain rescale, before deepen_sea)")
     ax.plot(x, now, color=C_OURS, lw=1.3, label="shipped (deepen_sea = true, 24 px shelf)")
     ax.axhline(WATER_LEVEL, color="#2a6fb0", lw=1.1, ls="--")
     ax.text(x[0] + 5, WATER_LEVEL + 400, f"water level {WATER_LEVEL}  "
@@ -491,7 +663,12 @@ def fig_seafloor(recompute: bool) -> str:
     ax.set_xlabel("canvas column (px), row 1077 — west from Waterdeep into the Sea of Swords")
     ax.set_ylabel("16-bit height level")
     ax.set_ylim(-800, 14000)
-    ax.set_title("Sea-floor transect, Sword Coast")
+    ax.set_title("Sea-floor transect, Sword Coast  —  map-wide water median "
+                 f"{float(ws['plain_rescale']['p50']):.0f} → "
+                 f"{float(ws['shipped']['p50']):.0f}, p75 "
+                 f"{float(ws['plain_rescale']['p75']):.0f} → "
+                 f"{float(ws['shipped']['p75']):.0f}, "
+                 f"{float(ws['shipped']['on_shelf_pct']):.1f} % on the shelf")
     ax.grid(True, alpha=0.22)
     ax.legend(fontsize=8, loc="upper left")
     fig.tight_layout()
@@ -615,9 +792,11 @@ def fig_composition(recompute: bool) -> str:
     return "fig5_composition.png"
 
 
-def fig_hf_targets() -> str:
+def fig_hf_targets(recompute: bool) -> str:
     tgt = {r["terrain"]: float(r["hf_rms_levels"]) for r in read_csv(FID / "hf_by_terrain.csv")}
-    ach = read_csv(OUT / "hf_achieved.csv")
+    ach = [r for r in cached("hf_achieved.csv", _HF_FIELDS, m_hf_achieved,
+                             recompute)
+           if r["terrain"] in tgt and r["achieved_interior"]]
     keys = [r["terrain"] for r in sorted(ach, key=lambda r: tgt.get(r["terrain"], 0))]
     a = {r["terrain"]: r for r in ach}
     y = np.arange(len(keys))
@@ -627,12 +806,15 @@ def fig_hf_targets() -> str:
     ax.barh(y, [float(a[k]["achieved_interior"]) for k in keys], 0.25, color=C_OURS,
             label="ours, interior land (> 20 px from any coast)")
     ax.barh(y - 0.26, [float(a[k]["achieved_all_land"]) for k in keys], 0.25,
-            color=C_BEFORE, label="ours, all land (coast step inflates this)")
+            color=C_BEFORE,
+            label="ours, all land (in build 8 the coast step inflated this by up to 1.5×)")
     ax.set_yticks(y)
     ax.set_yticklabels(keys)
     ax.set_xlabel("high-frequency RMS (16-bit levels, detail below ~6 km)")
+    lo = min(tgt[k] for k in keys)
+    hi = max(tgt[k] for k in keys)
     ax.set_title("The calibration table the detail pass obeys\n"
-                 "(vanilla spans 70 for taiga to 311 for mountains on the classes Faerûn paints —\n"
+                 f"(vanilla spans {lo:.0f} to {hi:.0f} on the classes Faerûn paints —\n"
                  "one global noise amplitude would be wrong for all of them)")
     ax.grid(True, axis="x", alpha=0.22)
     ax.legend(fontsize=8, loc="lower right")
@@ -684,9 +866,27 @@ CK2_SCALE = SCALED_W / 4096.0
 #: rescale is an integer multiple of this above the water pin, so a
 #: pixel-to-pixel step of exactly one riser is quantisation and nothing else.
 RISER = (MAX_LEVEL - WATER_LEVEL) / (255.0 - CK2_SEA_LEVEL)
-#: configs/faerun.toml `[map] heightmap_detail_deterrace_sigma_px`, default
-#: HeightmapDetailConfig.deterrace_sigma_px = 1.6 (src/ck2ck3/map/config.py:215)
-DETERRACE_SIGMA_PX = 1.6
+#: Pass 1 of `ck2ck3.map.heightmap_detail`, read out of the shipped config
+#: rather than hard-coded, because build 9 replaced the Gaussian with a
+#: cliff-aware Perona-Malik diffusion (`docs/step_map_heightmap.md` §2b):
+#: `heightmap_detail_deterrace_mode = "cliff_aware"`, sigma 2.2 px, flux
+#: half-width 415.5 levels.  The build-8 edition of this report measured
+#: `"gaussian"` at sigma 1.6.
+def _detail_cfg():
+    import tomllib
+    raw = tomllib.loads(_need(CONFIG, "converter config").read_text("utf-8"))
+    from ck2ck3.map.config import heightmap_detail_config
+    return heightmap_detail_config(raw.get("map", {}))
+
+
+def deterrace(plain: np.ndarray, cfg) -> np.ndarray:
+    """Pass 1 alone, exactly as `heightmap_detail.apply` runs it."""
+    if cfg.deterrace_mode == "cliff_aware":
+        from ck2ck3.map.heightmap_erosion import deterrace_cliff_aware
+        return deterrace_cliff_aware(plain, cfg.deterrace_sigma_px,
+                                     cfg.cliff_step_levels)
+    from scipy.ndimage import gaussian_filter
+    return gaussian_filter(plain, cfg.deterrace_sigma_px, mode="nearest")
 
 #: common/defines: WORLD_EXTENTS_Y.  A 16-bit level is `level/65535*extents_y`
 #: **game units** of height, and one provinces.png pixel is one game unit of
@@ -817,25 +1017,25 @@ def thay_stages(recompute: bool = False):
                   cropped to the same ground -- the only array here that is
                   not on our canvas.
     * `plain`     `ck2ck3.map.heightmap`'s own output (plain_rescale_canvas).
-    * `deterraced` pass 1 of `ck2ck3.map.heightmap_detail` alone: a Gaussian
-                  of sigma 1.6 canvas px on land, exactly as
-                  `heightmap_detail.apply` does it, computed on a padded crop
-                  so the filter sees the same neighbourhood it would on the
-                  full canvas.
+    * `deterraced` pass 1 of `ck2ck3.map.heightmap_detail` alone, in whatever
+                  mode `configs/faerun.toml` selects (build 12: cliff-aware
+                  Perona-Malik, sigma 2.2 px), computed on a padded crop so
+                  the filter sees the same neighbourhood it would on the full
+                  canvas.
     * `shipped`   the reference run's `map_data/heightmap.png`.
     """
     if recompute in _STAGES:
         return _STAGES[recompute]
-    from scipy.ndimage import gaussian_filter
     from PIL import Image
     Image.MAX_IMAGE_PIXELS = None
     print("measuring the Thay window ...", flush=True)
+    cfg = _detail_cfg()
     x0, x1, y0, y1 = thay_window(recompute)
-    pad = int(np.ceil(6 * DETERRACE_SIGMA_PX)) + 4
+    pad = int(np.ceil(6 * cfg.deterrace_sigma_px)) + 4
     plain_full = plain_rescale_canvas()
     P = plain_full[y0 - pad:y1 + pad, x0 - pad:x1 + pad].astype(np.float32)
     del plain_full
-    D = gaussian_filter(P, DETERRACE_SIGMA_PX, mode="nearest")[pad:-pad, pad:-pad]
+    D = deterrace(P, cfg)[pad:-pad, pad:-pad]
     P = P[pad:-pad, pad:-pad]
     S = load_heightmap(MOD / "map_data/heightmap.png")[y0:y1, x0:x1].astype(np.float32)
     land = S > WATER_LEVEL
@@ -1366,9 +1566,12 @@ def fig_thay_relief(recompute: bool) -> str:
     src_disp = np.asarray(Image.fromarray(src.astype(np.uint16)).resize(
         (P.shape[1], P.shape[0]), Image.NEAREST)).astype(np.float32)
 
+    cfg = _detail_cfg()
+    dt_label = ("Perona–Malik" if cfg.deterrace_mode == "cliff_aware"
+                else "Gaussian")
     stages = [("CK2 topology.bmp\n(2.90 km/px, 8-bit)", src_disp),
               ("ours: plain rescale\n(the 277-level terraces)", P),
-              ("+ de-terrace only\n(Gaussian σ = 1.6 px)", D),
+              (f"+ de-terrace only\n({dt_label} σ = {cfg.deterrace_sigma_px:.1f} px)", D),
               ("ours: shipped\n(all four detail passes)", S)]
     zoom_km = 120.0
     zh = int(zoom_km / KM_PX_OURS / 2)
@@ -1417,9 +1620,12 @@ def fig_thay_transects(recompute: bool) -> str:
     for r in rows:
         by[r["transect"]].append(r)
 
+    cfg = _detail_cfg()
+    dt = ("Perona–Malik" if cfg.deterrace_mode == "cliff_aware" else "Gaussian")
     series = (("ck2_source", "CK2 source through the transfer curve", C_CK2, ":", 1.3),
               ("plain", "ours, plain rescale", C_BEFORE, "-", 1.1),
-              ("deterrace", "+ de-terrace only (σ = 1.6 px)", "#4f9d5d", "-", 1.3),
+              ("deterrace", f"+ de-terrace only ({dt} σ = {cfg.deterrace_sigma_px:.1f} px)",
+               "#4f9d5d", "-", 1.3),
               ("shipped", "ours, shipped", C_OURS, "-", 1.0))
 
     fig = plt.figure(figsize=(11.0, 10.0), dpi=120)
@@ -1486,12 +1692,18 @@ def fig_thay_transects(recompute: bool) -> str:
             ax.set_ylabel("16-bit height level")
         ax.grid(True, alpha=0.22)
 
-    fig.suptitle("Figure 9 — what the de-terrace Gaussian does to a real cliff (left inset): "
-                 "it blunts the one-pixel step, it does not remove the drop.\n"
+    keeps = ("keeps the drop and the step"
+             if cfg.deterrace_mode == "cliff_aware"
+             else "blunts the one-pixel step but keeps the drop")
+    fig.suptitle(f"Figure 9 — what the de-terrace pass ({dt} σ = "
+                 f"{cfg.deterrace_sigma_px:.1f} px) does to a real cliff "
+                 f"(left inset): it {keeps}.\n"
                  "What it does to a quantisation riser (right inset): it removes it "
                  "completely. The red curve's large excursions are the spectral fill — see "
                  "figure 10.", fontsize=9.5)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    # not tight_layout: the two insets live in a nested gridspec and matplotlib
+    # warns that it cannot lay those out.  These margins are the same result.
+    fig.subplots_adjust(top=0.90, bottom=0.06, left=0.075, right=0.975)
     fig.savefig(OUT / "fig9_thay_transects.png")
     plt.close(fig)
     return "fig9_thay_transects.png"
@@ -1576,10 +1788,21 @@ def fig_thay_steps(recompute: bool) -> str:
     cx.set_xlim(0, max(float(r["rms_shipped"]) for r in bands) * 1.42)
     cx.legend(fontsize=7.5, loc="lower right", framealpha=0.95)
 
-    fig.suptitle("Figure 10 — the de-terrace pass removes the quantisation riser and keeps "
-                 "the cliff: a third of the one-pixel step is lost, 2 % of the drop over 36 km. "
-                 "The spectral fill then overshoots at 10–40 km.",
-                 fontsize=9.5)
+    # every number in the caption comes out of the two CSVs above
+    c4 = [r for r in cliffs if int(r["cliff_threshold_risers"]) == 4]
+    near = min(c4, key=lambda r: float(r["baseline_km"]))
+    far = max(c4, key=lambda r: float(r["baseline_km"]))
+    worst = max(bands, key=lambda r: (float(r["rms_shipped"])
+                                      / max(float(r["rms_vanilla_norway"]), 1e-9)))
+    ratio = float(worst["rms_shipped"]) / float(worst["rms_vanilla_norway"])
+    fig.suptitle(
+        "Figure 10 — the de-terrace pass removes the quantisation riser and keeps the cliff: "
+        f"{float(near['kept_deterrace_pct']):.0f} % of the one-pixel step and "
+        f"{float(far['kept_deterrace_pct']):.0f} % of the drop over "
+        f"{float(far['baseline_km']):.0f} km survive (≥ 4 risers).\n"
+        f"The fill's largest excess over vanilla is {ratio:.2f}× at "
+        f"{float(worst['band_km_lo']):.0f}–{float(worst['band_km_hi']):.0f} km.",
+        fontsize=9.5)
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     fig.savefig(OUT / "fig10_thay_steps.png")
     plt.close(fig)
@@ -1796,20 +2019,74 @@ def fig_materials(recompute: bool) -> str:
     fig.suptitle("Figure 13 — paint composition per material, not per terrain key. "
                  "Area share alone is the weaker half of the story; the blend line under the "
                  "figure is the stronger one.", fontsize=9.5)
-    fig.tight_layout(rect=(0, 0.045, 1, 0.94))
+    # see fig_thay_transects: a nested gridspec is not tight_layout's business
+    fig.subplots_adjust(top=0.91, bottom=0.09, left=0.135, right=0.985)
     fig.savefig(OUT / "fig13_materials.png")
     plt.close(fig)
     return "fig13_materials.png"
 
 
+# -------------------------------------------------------------- figure 14
+#: The erosion lane's own hillshades, at its own two crops
+#: (`docs/evidence/heightmap_erosion/crops.json`): k_thay and
+#: k_spine_of_the_world, 512 px square on this canvas.  Reused rather than
+#: regenerated so the before/after pair is the same pixels the lane that made
+#: the change looked at.
+EROSION_EV = EV / "heightmap_erosion"
+_BA_COLS = [("plain_rescale", "ours: plain rescale\n(no detail pass)"),
+            ("ours_shipped_isotropic", "build 8: Gaussian σ 1.6\n+ isotropic f^−2 fill"),
+            ("ours_eroded", "build 12: cliff-aware σ 2.2\n+ eroded relief")]
+
+
+def fig_before_after() -> str:
+    from PIL import Image
+    rows = [("thay", "Thay — 512 px, 760 km"),
+            ("spine", "Spine of the World — 512 px, 760 km")]
+    fig, axes = plt.subplots(2, 4, figsize=(13.4, 7.2), dpi=120)
+    with Image.open(_need(EROSION_EV / "hillshade_ck3_vanilla_mountains.png",
+                          "vanilla control hillshade")) as im:
+        van = np.asarray(im.convert("RGB"))
+    for r, (region, rlabel) in enumerate(rows):
+        for c, (tag, clabel) in enumerate(_BA_COLS):
+            p = _need(EROSION_EV / f"hillshade_{region}_{tag}.png",
+                      f"{region} {tag} hillshade")
+            with Image.open(p) as im:
+                axes[r][c].imshow(np.asarray(im.convert("RGB")),
+                                  interpolation="nearest")
+            if r == 0:
+                axes[r][c].set_title(clabel, fontsize=8.5)
+        axes[r][3].imshow(van, interpolation="nearest")
+        if r == 0:
+            axes[r][3].set_title("vanilla CK3 — mountains\n(the control)",
+                                 fontsize=8.5)
+        axes[r][0].set_ylabel(rlabel, fontsize=8.5)
+        for c in range(4):
+            axes[r][c].set_xticks([])
+            axes[r][c].set_yticks([])
+    fig.suptitle("Figure 14 — before and after the erosion lane, same crops, same hillshade. "
+                 "Build 8's fill is isotropic gravel at county scale;\nbuild 12's is a "
+                 "drainage network. Panels are the erosion lane's own PNGs "
+                 "(docs/evidence/heightmap_erosion/, crops.json).", fontsize=9.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.92))
+    fig.savefig(OUT / "fig14_before_after.png")
+    plt.close(fig)
+    return "fig14_before_after.png"
+
+
 def main() -> None:
+    global MOD
     ap = argparse.ArgumentParser()
+    ap.add_argument("--mod", type=Path, default=DEFAULT_MOD,
+                    help="the reference conversion to measure "
+                         f"(default: {DEFAULT_MOD})")
     ap.add_argument("--recompute", action="store_true",
                     help="re-measure the cached CSVs from the shipped rasters")
     args = ap.parse_args()
+    MOD = args.mod.resolve()
+    print(f"reference conversion: {MOD}", flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
     made = [
-        fig_hf_targets(),                 # figure 1
+        fig_hf_targets(args.recompute),   # figure 1
         fig_spectrum(args.recompute),     # figure 2
         fig_heights(args.recompute),      # figure 3
         fig_seafloor(args.recompute),     # figure 4
@@ -1822,6 +2099,7 @@ def main() -> None:
         fig_panels_relief(args.recompute),  # figure 11
         fig_panels_paint(args.recompute),   # figure 12
         fig_materials(args.recompute),      # figure 13
+        fig_before_after(),                 # figure 14  -- build 8 vs build 12
     ]
     for n in made:
         p = OUT / n
