@@ -248,6 +248,39 @@ ck3-tiger over the resulting mod: **fatal 0, error 58** — 41
 (`docs/evidence/tiger_map_assets_2026-09-10_summary.txt`). Locator coordinates
 are invisible to it, which is exactly why the three scripts above exist.
 
+## 5b. Seen in game (coordinator, 2026-09-10 12:34)
+
+Build 9 (`locator_offset_mode = "median_radius"`) was run headless with the
+camera probe over Waterdeep (`scripts/camera_probe.py --place waterdeep
+--zoom 4` plus `REALM_COLOR_MAP_START_ZOOM_STEP = 0`) and screenshotted
+110 s after `Setting idler 'In Game'`
+(`claudespace/scripts/ck3_shot.sh`, evidence
+`claudespace/docs/evidence/b9_waterdeep_locators.png`). `verified`:
+
+* Waterdeep's holding model and its coat of arms stand at the CK2 author's
+  town — the tooltip reads `b_castle_ward`, `X: 2345, Y: 5724`, which is the
+  slot-0 anchor, 19 px from the province centroid `(2351.8, 5706.6)` the
+  build-8 map used.
+* Every visible settlement sits on its own land with its coat of arms on it;
+  no model in the sea, none stacked on another. Title icons are on the
+  correct coast.
+* The game stayed alive for the 240 s soak; the scripted tests ran
+  (`fae_map_every_ruler_holds_its_capital` logged, as in every build), so the
+  session did unpause.
+
+Distances checked against vanilla on the shipped files
+(`scripts/check_locator_frame.py --mod`, median px to the same province's
+`buildings`): special_building 9.05 / 9.05, player stack 7.10 / 7.10, other
+stack 7.69 / 7.69, siege 9.98 / 9.98, combat 13.63 / 13.63, activities
+9.40 / 9.40 — ours / vanilla, every row equal by construction. Our p95 equals
+our median (a fixed bearing per type) where vanilla's is a spread; §7 open
+question 1.
+
+Also found by this run: the mod's own `tests/` had **no canary** — the
+`fae_canary_must_fail` test the soak looks for had only ever been added by
+hand to probe copies, so `ck3_soak.sh` reported `canary=silent` on a run
+whose tests did execute. The `tests` step now emits it (`steps/tests.py`).
+
 ## 6. Config, and proving the keys are read
 
 ```toml

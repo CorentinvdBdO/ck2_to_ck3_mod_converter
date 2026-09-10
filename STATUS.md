@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-09 13:30 by Claude session (coordinator)
+Updated: 2026-09-10 13:00 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -33,14 +33,16 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 
 ## Blockers and open flags
 - ~~Intermittent post-test crash~~ **fixed 2026-09-09 evening**: root cause was the blank `common/flavorization` shadow (no ruler title names → first-tick crash 0x141972299, the user's 18:33 crash). Vanilla flavorization kept: 10/10 launches alive vs 7/10. Landed mercenary/holy-order governments also normalised to feudal (`docs/DECISIONS.md`).
-- 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Unverified in game: terrain paint rendering on a non-vanilla canvas, heightmap detail look, CK2 port seeds.
-- Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads in game without errors; visual check at close zoom pending (user playtest).
+- 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Seen in game headless (camera probe): terrain paint, colormap tint, sea floor, trees, settlement positions (builds 8–9). Not yet seen: heightmap detail at close zoom, CK2 port seeds.
+- Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads and renders in game (headless probe, zoom step 4); close-zoom quality pending the user playtest.
 - Ancient non-immortal characters still exist (56 alive ≥150 years without a CK2 immortal marker); ages are accepted by the game but worth a race-lifespan decision.
 - Worker agents hang forever at `git commit` (permission prompt nobody answers); coordinator commits. See `~/.claude/harness/NOTES.md`.
 - Backlog: `docs/integration_backlog.md` (trait classifier, lifespan overrides, culture gfx chain order, island-region neighbours, TOO LARGE BOX barony, faith icons, bookmark art).
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-10 — **asset placement done and seen in game (build 9)**: map-object locators anchor on CK2 `positions.txt` slot 0 for the county-capital barony (2108/2116 accepted by the inside-own-pixels gate), centroid otherwise, with vanilla's measured per-type offset at vanilla's median distance (`median_radius`: siege 9.98 px, stacks 7.10/7.69, combat 13.63 — ours equals vanilla row by row). Headless probe over Waterdeep: the castle and its CoA stand at the CK2 author's town (`b_castle_ward`, X 2345 Y 5724), 240 s soak alive, tiger fatal 0 / error 58 unchanged (`claudespace/docs/evidence/b9_waterdeep_locators.png`, `docs/step_map_assets.md` §5b). Two side fixes: the tree yaw seed was `hash(file)` (per-process random → 1.4 M diff lines per regen; now `crc32`), and the `tests` step now emits the `fae_canary_must_fail` canary the soak looks for.
+- 2026-09-10 — `docs/report_map_paint.md`: the paint pipeline as one argument (macro from CK2, micro from vanilla), seven figures. New measurements: interior land under-filled above 0.08 cycles/km (80 vs vanilla 215 levels at 0.1 c/km, below the plain rescale); the detail pass moves land p95 +9.4 % / p99 +20.2 % (`docs/step_map_heightmap.md` §7, backlog).
 - 2026-09-10 — **paint half of pre-unpause fidelity done and verified in game** (mod ad8402f): terrain paint and 711,875 trees render; the colormap is rebuilt as a tint measured off vanilla (125-130 per channel, replacing a saturated CK2 satellite image); the sea has vanilla's flat-0 floor with a 24 px shelf (CK2 ships no bathymetry and CK3 painted our shallow sea as sand). Anauroch reads as desert, the Sword Coast as snowy January forest. The camera probe (`scripts/camera_probe.py` plus `REALM_COLOR_MAP_START_ZOOM_STEP = 0`) makes any visual claim checkable headless.
 - 2026-09-09 — **first-tick crash fixed** (build 4): 26 neutralised script files → keep; headless soak 300 s alive, 172/173 tests (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-09_101703.md`). Root cause and bisection: `docs/DECISIONS.md`, `docs/tc_template.md`.
 - 2026-09-08 — build 3: 15 steps, 1368 files; ck3-tiger fatal 0 / error 58 (41 loc hash collisions, 14 wrong-gender, 2 unknown-field, 1 history; `docs/evidence/tiger_build3_2026-09-08.txt`); pytest 1058; headless -test In Game 54 s, 172/173 (only ruler-holds-capital fails).
@@ -52,6 +54,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. User playtest 3 of build 7 (`docs/playtest.md`): unpause and play for real this time; clothes, traits, terrain paint (half-res), relief, CK2 port seeds, ruler titles.
-2. Events §5 step 3: decisions step **stabilised and on** (`docs/step_decisions.md` §3b): 3 fully converted decisions live, 393 inert stubs with the converted draft as comments, AI weight 0; canary-verified test runs. Next: `new` events (1762), with the same rule — half-converted bodies are never live.
-3. Pre-unpause fidelity, **asset placement** (paint is done): `docs/map_fidelity.md` §3 — settlement and special-building locators from CK2 `positions.txt` slot 0, unit stacks from slot 1. Events only after that.
+1. **Events** (README §5 step 3): syntactic port of the 1762 `new` events with the decisions lessons — never emit half-converted script live, stub with `# draft:` comments, canary in every test run, distinct mod `name` for test copies. Pre-unpause fidelity (paint + asset placement) is closed.
+2. User playtest 3 of build 9 (`docs/playtest.md`): unpause and play; clothes, traits, terrain paint at close zoom, relief, settlement positions, ruler titles.
+3. Heightmap detail follow-up (from the report): fill the 0.08–0.3 cycles/km band (de-terrace sigma / frequency-dependent gain) and decide whether the land tails should be clamped to the CK2 source; measure on interior patches only.

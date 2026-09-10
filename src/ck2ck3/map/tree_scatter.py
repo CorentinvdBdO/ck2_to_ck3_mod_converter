@@ -50,6 +50,7 @@ from __future__ import annotations
 import csv
 import io
 import re
+import zlib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -214,6 +215,17 @@ def scatter(
     return out, dropped, dropped_by_terrain
 
 
+def mesh_seed(file: str) -> int:
+    """Per-mesh salt for the yaw RNG: ``crc32`` of the file name.
+
+    It used to be ``hash(file)``, which Python randomises per process
+    (``PYTHONHASHSEED``), so every regeneration rewrote all 711,875 tree yaws
+    and the generated mod's diff was 1.4 M lines of pure churn (build 9,
+    2026-09-10).  ``crc32`` is stable across processes and platforms.
+    """
+    return zlib.crc32(file.encode("utf-8")) & 0xFFFFFFFF
+
+
 def render_generated_file(
     points: np.ndarray, canvas_height: int, mesh: MeshInfo, *, seed: int = 4242
 ) -> str:
@@ -236,7 +248,7 @@ def render_generated_file(
     n = 0 if points is None else points.shape[0]
     if n == 0:
         return head + "\tinstances={\n\t}\n}\n"
-    rng = np.random.default_rng(seed ^ (hash(mesh.file) & 0xFFFFFFFF))
+    rng = np.random.default_rng(seed ^ mesh_seed(mesh.file))
     theta = rng.uniform(0.0, 2.0 * np.pi, size=n)
     x = points[:, 0]
     z = float(canvas_height) - points[:, 1]

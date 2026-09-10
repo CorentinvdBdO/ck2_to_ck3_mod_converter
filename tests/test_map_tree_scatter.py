@@ -140,3 +140,26 @@ def test_mesh_csv_covers_every_ck3_terrain_key():
     ck3_keys = set(CK2_TO_CK3_TERRAIN.values())
     missing = ck3_keys - set(table)
     assert not missing, f"mappings/tree_meshes.csv is missing rows for {missing}"
+
+
+def test_mesh_seed_is_stable_across_processes():
+    """`hash(str)` is salted per process; the yaw seed must not be."""
+    import subprocess
+    import sys
+    import zlib
+
+    from ck2ck3.map.tree_scatter import mesh_seed
+
+    assert mesh_seed("tree_leaf_high_generator_1.txt") == zlib.crc32(
+        b"tree_leaf_high_generator_1.txt"
+    )
+    code = "from ck2ck3.map.tree_scatter import mesh_seed; print(mesh_seed('x.txt'))"
+    outs = {
+        subprocess.run(
+            [sys.executable, "-c", code],
+            env={"PYTHONHASHSEED": str(i), "PYTHONPATH": "src"},
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        for i in (1, 2)
+    }
+    assert len(outs) == 1
