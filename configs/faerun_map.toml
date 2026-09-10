@@ -84,8 +84,17 @@ tile_size = 33  # both reference total conversions use 33; vanilla uses 65
 # configs/faerun.toml (the CLI path) turns it on.
 enabled = false
 seed = 1357
-# deterrace_sigma_px = 1.6
-# spectral_slope = -2.0
+# Nested table here, flat `heightmap_detail_*` keys under [map] in the CLI
+# config -- same fields, two readers (docs/step_map_heightmap.md §5).
+# deterrace_mode = "cliff_aware"     # or "gaussian"
+# deterrace_sigma_px = 2.2
+# cliff_step_levels = 415.5
+# relief_mode = "eroded"             # or "isotropic"
+# erosion_iterations = 16
+# erosion_accum_iterations = 3
+# target_mode = "vanilla_curve"      # or "power_law"
+# gain_mode = "deficit"              # or "hf_target"
+# spectral_slope = -2.0              # only read by "power_law"
 # gain_blur_px = 6.0
 # river_depth = 900.0
 # coast_smooth_px = 4.0

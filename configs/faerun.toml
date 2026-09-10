@@ -238,10 +238,48 @@ max_canvas_px = 32768
 # boolean flag of that name.
 heightmap_detail = true
 heightmap_detail_seed = 1357
+
+# --- pass 1, de-terrace: cliff-aware, not a blind blur (docs/step_map_heightmap.md
+# §2b). "cliff_aware" is Perona-Malik anisotropic diffusion: flux between two
+# pixels is weighted exp(-(dh/cliff_step_levels)^2), so a one-step quantisation
+# riser (277 levels) diffuses away and a multi-step cliff does not. Measured on
+# Thay and the Spine of the World: multi-step cliff amplitude survives at 1.06x
+# against the Gaussian's 0.83x, and it removes MORE riser at the same time.
+# "gaussian" + sigma 1.6 reproduces the build shipped 2026-09-10.
+heightmap_detail_deterrace_mode = "cliff_aware"
+heightmap_detail_deterrace_sigma_px = 2.2
+heightmap_detail_cliff_step_levels = 415.5   # 1.5 x 277.0125, one source step
+
+# --- pass 2, relief: eroded (dendritic), not isotropic noise
+# (docs/step_map_heightmap.md §2c). "eroded" seeds the de-terraced surface with
+# fractal noise and runs a short landscape-evolution model (multiple-flow
+# accumulation, stream-power incision, hillslope diffusion) so valleys drain and
+# ridges connect; the result is then spectrally equalised onto the fill target,
+# which changes no phase. "isotropic" is the original white noise.
+heightmap_detail_relief_mode = "eroded"
+heightmap_detail_erosion_iterations = 16
+heightmap_detail_erosion_accum_iterations = 3
+# heightmap_detail_erosion_seed_amplitude = 300.0
+# heightmap_detail_erosion_mfd_exponent = 4.0
+# heightmap_detail_erosion_incision = 0.5
+# heightmap_detail_erosion_diffusion = 0.06
+
+# --- pass 2, fill target: vanilla's own measured radial land spectrum, anchored
+# to our map in the 0.015-0.03 cycles/km band where the two already agree. The
+# single fitted f^-2.0 power law ("power_law") over-fills 0.03-0.1 and
+# under-fills above 0.08 (0.37x vanilla at 0.1 cycles/km on the shipped build).
+heightmap_detail_target_mode = "vanilla_curve"
+# Where the fill's absolute amplitude comes from. "deficit": from the measured
+# per-frequency shortfall, with the vanilla per-terrain table applied as a
+# relative modulation around 1. "hf_target" is the original rule, one scalar
+# per class from sqrt(want^2 - have^2) on a 3 km high-pass -- which a
+# cliff-aware de-terrace starves, because the edges it deliberately keeps
+# count as detail already present (docs/step_map_heightmap.md §2c e).
+heightmap_detail_gain_mode = "deficit"
+# heightmap_detail_spectral_slope = -2.0   # only read by "power_law"
+
 # The rest default to the prototype's own numbers (docs/map_fidelity.md §4.2)
 # and are only worth overriding for an experiment:
-# heightmap_detail_deterrace_sigma_px = 1.6
-# heightmap_detail_spectral_slope = -2.0
 # heightmap_detail_gain_blur_px = 6.0
 # heightmap_detail_river_depth = 900.0
 # heightmap_detail_coast_smooth_px = 4.0

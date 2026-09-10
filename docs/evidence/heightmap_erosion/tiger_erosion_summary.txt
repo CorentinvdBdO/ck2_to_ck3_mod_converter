@@ -1,0 +1,68 @@
+ck3-tiger, lane erosion, 2026-09-10
+mod: /home/cvdbdo/git/paradox/ck3/wt/_out/erosion (full run, heightmap detail cliff_aware/eroded/vanilla_curve)
+
+--- by kind
+  38924 warning(missing-localization)
+  10336 untidy(missing-localization)
+   6788 warning(localization)
+   1834 warning(duplicate-item)
+   1634 warning(datafunctions)
+    455 warning(missing-file)
+    319 warning(rivers)
+    142 tips(suggest-localization)
+     84 warning(missing-item)
+     41 error(localization-key-collision)
+     21 warning(history)
+     15 warning(bookmarks)
+     14 error(wrong-gender)
+      4 warning(markup)
+      2 error(unknown-field)
+      1 warning(exact-duplicate-item)
+      1 error(history)
+--- by message
+  32854 warning(missing-localization): missing spanish, french and german localization key dynn_fae_N
+   1834 warning(duplicate-item): localization is redefined by another localization
+    884 warning(datafunctions): GetLocation cannot follow a Character promote
+    315 warning(datafunctions): unknown datafunction EvilGodName
+    284 warning(localization): The substitution parameter $CHAR$ is not defined anywhere as a key.
+    248 warning(rivers): (N, N) river tributary (red) not joining another river
+    233 warning(localization): The substitution parameter $FIRST_ADJ$ is not defined anywhere as a key.
+    228 warning(localization): The substitution parameter $DIRECTION$ is not defined anywhere as a key.
+    212 warning(localization): The substitution parameter $SOCIETY$ is not defined anywhere as a key.
+    193 warning(datafunctions): GetHolder cannot follow a Character promote
+    183 warning(localization): The substitution parameter $WHERE$ is not defined anywhere as a key.
+    148 warning(localization): The substitution parameter $PROV$ is not defined anywhere as a key.
+    124 warning(localization): The substitution parameter $OTHER_TITLE$ is not defined anywhere as a key.
+    118 warning(localization): The substitution parameter $SECOND_ADJ$ is not defined anywhere as a key.
+    108 warning(localization): The substitution parameter $SETTLEMENT$ is not defined anywhere as a key.
+    108 warning(datafunctions): GetCapitalLocation cannot follow a Province promote
+    104 warning(localization): The substitution parameter $INSERT$ is not defined anywhere as a key.
+     95 warning(localization): The substitution parameter $WONDER_UPGRADE_TYPE$ is not defined anywhere as a key.
+     89 warning(localization): The substitution parameter $PIETYNAME$ is not defined anywhere as a key.
+     85 warning(localization): The substitution parameter $HONORIFIC$ is not defined anywhere as a key.
+     82 warning(missing-localization): missing spanish, french and german localization key bookmark_fae_N_desc
+     80 warning(missing-item): coa fae_N not defined in common/coat_of_arms/coat_of_arms/
+     80 warning(localization): The substitution parameter $AMBITION_TARGET_NAME$ is not defined anywhere as a key.
+     76 warning(localization): The substitution parameter $RECIPIENT$ is not defined anywhere as a key.
+     72 warning(localization): The substitution parameter $OFFMAP$ is not defined anywhere as a key.
+     72 warning(datafunctions): GetBaseName cannot follow a Character promote
+     68 warning(localization): The substitution parameter $WONDER_TYPE$ is not defined anywhere as a key.
+     68 warning(localization): The substitution parameter $FACTION$ is not defined anywhere as a key.
+     64 warning(localization): The substitution parameter $DECISION$ is not defined anywhere as a key.
+     61 warning(rivers): (N, N) river pixel has N neighbors
+     60 warning(localization): The substitution parameter $ROUTE$ is not defined anywhere as a key.
+     60 warning(localization): The substitution parameter $FAILED$ is not defined anywhere as a key.
+     56 warning(missing-localization): missing spanish, french and german localization key cn_fae_stommheim
+     56 warning(localization): The substitution parameter $VICTIM$ is not defined anywhere as a key.
+     56 warning(localization): The substitution parameter $BLOODLINE$ is not defined anywhere as a key.
+     52 warning(localization): The substitution parameter $ENEMY$ is not defined anywhere as a key.
+     52 untidy(missing-localization): missing english, spanish, french and german localization for name  
+     48 warning(localization): The substitution parameter $TECH$ is not defined anywhere as a key.
+     48 warning(localization): The substitution parameter $JOB$ is not defined anywhere as a key.
+     44 warning(localization): The substitution parameter $VAR$ is not defined anywhere as a key.
+report   docs/evidence/heightmap_erosion/tiger_erosion.txt
+
+fatal: 0, error: 58, warning: 50079, untidy: 10336, tips: 142
+
+Identical totals to the shipped build's own run (docs/evidence/tiger_map_assets_2026-09-10_summary.txt):
+fatal: 0, error: 58, warning: 50079, untidy: 10336, tips: 142

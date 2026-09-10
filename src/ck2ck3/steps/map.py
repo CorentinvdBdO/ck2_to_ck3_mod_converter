@@ -101,6 +101,17 @@ def run(ctx: Context) -> StepResult:
     trees = report.get("trees", {})
     colormap = report.get("colormap", {})
     loc = report.get("locators", {})
+    # the heightmap-detail switches are named in the step summary on purpose:
+    # last_run.md is then the proof that the `[map] heightmap_detail_*` keys
+    # were read, which a key under the wrong header silently is not
+    # (docs/step_map_heightmap.md §5)
+    hd = report.get("heightmap_detail", {})
+    hd_summary = (
+        f"; heightmap detail {hd['deterrace_mode']}/{hd['relief_mode']}"
+        f"/{hd.get('target_mode', 'power_law')}, "
+        f"{hd['land_pct_on_clamp_floor']} % of land on the clamp floor"
+        if hd else ""
+    )
     return StepResult(
         summary=(
             f"map {canvas['width']}x{canvas['height']} at scale "
@@ -108,7 +119,7 @@ def run(ctx: Context) -> StepResult:
             f"{cfg.scale.vanilla_km_per_px} km/px): "
             f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
             f"{bar['counties']} counties, {bar['demoted']} demoted, "
-            f"{prov['lost']} lost"
+            f"{prov['lost']} lost" + hd_summary
         ),
         counts={
             "provinces": prov["ck3_total"],
@@ -135,6 +146,11 @@ def run(ctx: Context) -> StepResult:
                if loc.get("ck2_anchors") else {}),
             **({"locators_moved_instances": loc["moved_instances"]}
                if "moved_instances" in loc else {}),
+            **({"heightmap_distinct_values": hd["distinct_values_after"],
+                "heightmap_clamp_floor_px": hd["land_px_on_clamp_floor"],
+                "heightmap_excursion_limited_px": hd["excursion_limited_px"],
+                "heightmap_detail_seconds": int(hd["elapsed_s"])}
+               if hd else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),

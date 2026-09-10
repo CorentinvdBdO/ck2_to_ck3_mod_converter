@@ -1,0 +1,10 @@
+region,map,coherence,drain_top1_share,channel_alignment
+ck3_vanilla_mountains_0,ck3_vanilla,0.5397,0.2006,-0.6548
+ck3_vanilla_mountains_1,ck3_vanilla,0.5556,0.1992,-0.5896
+ck3_vanilla_mountains_2,ck3_vanilla,0.5613,0.2029,-0.5043
+thay,ours_plain_rescale,0.3779,0.1453,-0.3593
+thay,ours_shipped_isotropic,0.6128,0.2066,-0.4311
+thay,ours_eroded,0.4997,0.1872,-0.4113
+spine,ours_plain_rescale,0.3044,0.1392,-0.2186
+spine,ours_shipped_isotropic,0.5899,0.2037,-0.3193
+spine,ours_eroded,0.4819,0.1905,-0.2008

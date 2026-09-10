@@ -364,8 +364,18 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         if cfg.heightmap_detail.enabled:
             from . import heightmap_detail
 
+            # every switched key is named in the run log, so `last_run.md` is
+            # proof the config was actually read -- a `[map]` key spelled or
+            # placed wrong is silently ignored otherwise
             log(f"synthesising heightmap detail (seed {cfg.heightmap_detail.seed}, "
-                "docs/map_fidelity.md §4.2)")
+                f"deterrace={cfg.heightmap_detail.deterrace_mode}"
+                f"@sigma {cfg.heightmap_detail.deterrace_sigma_px}px"
+                f"/cliff {cfg.heightmap_detail.cliff_step_levels} levels, "
+                f"relief={cfg.heightmap_detail.relief_mode}"
+                f"@{cfg.heightmap_detail.erosion_iterations}x"
+                f"{cfg.heightmap_detail.erosion_accum_iterations}, "
+                f"target={cfg.heightmap_detail.target_mode}; "
+                "docs/step_map_heightmap.md §2b/§2c)")
             f = cfg.heightmap.resolution_factor
             terrain_code, terrain_keys = _terrain_code_grid(
                 ck3_raster, terrain_ck3, cfg.terrain_default
@@ -386,7 +396,11 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             report["heightmap_detail"] = detail_stats
             log(
                 f"heightmap detail: {detail_stats['distinct_values_before']} -> "
-                f"{detail_stats['distinct_values_after']} distinct values "
+                f"{detail_stats['distinct_values_after']} distinct values, "
+                f"{detail_stats['land_pct_on_clamp_floor']} % of land on the "
+                f"water+1 clamp floor "
+                f"({detail_stats['excursion_limited_pct_of_land']} % of land "
+                f"had its offset saturated into the headroom) "
                 f"({detail_stats['elapsed_s']}s)"
             )
 

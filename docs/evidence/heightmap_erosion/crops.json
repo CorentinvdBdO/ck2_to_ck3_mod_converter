@@ -1,0 +1,30 @@
+{
+  "thay": {
+    "title": "k_thay",
+    "baronies_in_ck2": 247,
+    "provinces_on_map": 85,
+    "bbox_yxyx": [
+      1583,
+      4752,
+      2222,
+      5311
+    ],
+    "crop_y": 1646,
+    "crop_x": 4775,
+    "crop_side": 512
+  },
+  "spine": {
+    "title": "k_spine_of_the_world",
+    "baronies_in_ck2": 56,
+    "provinces_on_map": 11,
+    "bbox_yxyx": [
+      416,
+      2032,
+      516,
+      2315
+    ],
+    "crop_y": 210,
+    "crop_x": 1917,
+    "crop_side": 512
+  }
+}
