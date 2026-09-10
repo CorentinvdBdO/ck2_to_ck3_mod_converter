@@ -18,3 +18,7 @@ class in `docs/evidence/tiger_full_2026-09-08.md` with its count.
 - Claudespace: unify `ck3_mod_prefix()` (scripts/ck3_paths.sh) with `prefix_for()` (ci/checks.sh).
 - Headless display for automated game runs (weston headless + Xwayland) — user decision.
 - git-guard hook reads the session cwd, so worker threads in worktrees get blocked; fix hook to honour `cd`/`-C` in the command (see ~/.claude/harness/NOTES.md).
+
+Added by lane `report-paint` (2026-09-10), from `docs/report_map_paint.md` §6.
+- `map` heightmap detail: interior land is under-filled above 0.08 cycles/km (80 vs vanilla 215 levels at 0.1 c/km; 10 vs 45 at 0.2), below even the plain rescale there. Try `heightmap_detail_deterrace_sigma_px` < 1.6 and/or a frequency-dependent pass-2 gain; measure on all-land interior patches, never on a coastal crop (`scripts/report_map_paint_plots.py --recompute`).
+- `map` heightmap detail: the pass moves land p95 +9.4 % / p99 +20.2 %; decide whether the tails should be clamped to the CK2 source's.

@@ -1,0 +1,16 @@
+terrain,target,achieved_all_land,achieved_interior
+# transcribed from docs/evidence/HANDOFF_map_heightmap_detail.md, which reports
+# scripts/check_heightmap_detail_amplitude.py over the whole shipped map.
+# target duplicates docs/evidence/map_fidelity/hf_by_terrain.csv (vanilla's own).
+# `interior` = land more than 20 px (~30 km) from any coast, the like-for-like
+# comparison: vanilla's own table excludes any 64x64 window touching water.
+desert,91.2,107.3,100.8
+farmlands,96.7,139.0,128.9
+forest,110.7,134.2,129.9
+hills,213.3,258.9,235.4
+jungle,120.7,130.4,100.0
+mountains,311.4,360.3,344.5
+plains,86.3,115.8,93.3
+steppe,97.2,141.0,108.5
+taiga,70.1,124.0,93.9
+wetlands,70.4,105.9,85.5
