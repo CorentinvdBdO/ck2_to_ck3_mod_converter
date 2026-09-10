@@ -197,6 +197,9 @@ def test_the_evidence_files_are_written(report):
         "lost_provinces.csv",
         "barony_set.csv",
         "nonbarony_holdings.csv",
+        # lane `province-terrain`: one row per CK3 province whose CK2 county
+        # declares a `terrain = X` override (docs/step_map_terrain.md)
+        "terrain_history_baronies.csv",
     }
     assert len(ev["barony_set.csv"].splitlines()) == 3857 + 1
     assert ev["nonbarony_holdings.csv"].strip().count("\n") == 0  # header only

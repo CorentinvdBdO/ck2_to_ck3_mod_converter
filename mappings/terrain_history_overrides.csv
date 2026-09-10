@@ -1,0 +1,44 @@
+# CK2 `history/provinces` `terrain = X` override -> what the converter does with it.
+#
+# In CK2 this line IS the province's gameplay terrain; the `terrain.bmp` majority
+# is only the fallback (docs/step_map_terrain.md §1). 1040 of Faerun's 2125
+# province files carry one and 716 of those disagree with their own bitmap, so
+# without this table half of Faerun's counties ship a terrain the CK2 author did
+# not choose.
+#
+# Columns
+#   ck2_terrain  the value on the right of `terrain =`
+#   action       `apply`       - the override wins (subject to the per-barony
+#                                rule in docs/step_map_terrain.md §3)
+#                `keep_bitmap` - the override is NOT a landscape statement; the
+#                                terrain.bmp majority stands
+#   ck3_terrain  CK3 1.19 terrain key when action=apply; empty for keep_bitmap
+#   note         why, with the measured evidence
+#
+# Read by `ck2ck3.map.terrain_history.read_rules`; path is `[map]
+# terrain_history_csv`. A category with no row here is counted as `unmapped` in
+# the run report and keeps the bitmap - never silently guessed.
+# Shares below are from `scripts/survey_terrain_history.py`
+# (docs/evidence/terrain_history_survey.md), CK2 stats from
+# `Faerun/Faerun/map/terrain.txt` categories block, CK3 stats from
+# `game/common/terrain_types/00_terrains.txt`.
+ck2_terrain,action,ck3_terrain,note
+plains,apply,plains,"36 provinces. Same key the pixel table uses; agrees with its own bitmap in 19 of 36, and the other 17 (14 steppe, 2 hills, 1 arctic) are the author flattening terrain the bitmap painted rougher."
+farmlands,apply,farmlands,"123 provinces. The clearest case for the override: 111 of 123 have a `plains` bitmap majority and only 2 a `farmlands` one, because Faerun's terrain.bmp barely paints farmland at all. Without the override 121 of Faerun's 123 authored farmland counties ship as plains."
+coastal,keep_bitmap,,"141 provinces. NOT a landscape statement, so the bitmap majority stands. Three reasons. (1) CK2 declares `coastal` with farmlands' exact economics (movement_cost 1.1, max_attrition -0.01, supply_limit 5, same colour 137/104/165) and one difference: bottleneck_chance 15 vs 5 - it is a coastal-chokepoint tag on top of good land, not a description of the ground. (2) CK3 has no coastal terrain because it derives coastal-ness from the map itself (ports, docks, coastal buildings need no terrain key), so the whole content of the tag is already delivered by our provinces.png. (3) The bitmap under it is five different landscapes with no winner - plains 63.1%, desert 18.4%, hills 9.2%, arctic 7.1%, jungle 2.1% - unlike every other category here, and the names are overwhelmingly islands and rocks (Ruathym, Purple Rocks, The Whalebones, al-Faraq Islands, Maribar Island). Mapping it to `farmlands` (what the pixel table does, harmlessly, since terrain.bmp has zero `coastal` pixels) would hand 141 counties CK3's single strongest terrain (+0.5 supply, +0.2 development growth), 36 of them arctic or desert islets whose ground texture would still paint snow and sand. ALTERNATIVE if the coordinator disagrees: set action=apply, ck3_terrain=farmlands - one edit, no code change."
+forest,apply,forest,"202 provinces, the largest group. Only 60 have a `forest` bitmap majority: Faerun derives forest from trees.bmp, which is 1/8 resolution, so a wooded county whose tree pixels do not reach 50 % of its area reads as plains (110 of 202 do). The override is the author correcting exactly that."
+woods,apply,forest,"0 provinces in Faerun's history files, but a declared CK2 category (light forest). CK3 has one forest tier; same key the pixel table uses."
+hills,apply,hills,"169 provinces. 80 agree with their bitmap, 57 are painted plains and 14 arctic. Relief the author asserts and the 8-bit terrain paint lost."
+mountain,apply,mountains,"84 provinces. Only 20 have a `mountain` bitmap majority and 53 a `hills` one - a mountain county whose peaks do not cover half its pixels votes hills. The override is the difference between CK3 mountains (supply -0.5, movement 0.5) and hills (-0.1, 0.8)."
+impassable_mountains,apply,mountains,"0 provinces in Faerun. Kept for completeness. NOTE: impassability itself stays bitmap-derived (`ck2ck3.map.build` reads it off the majority CK2 category before the override is applied), so this row changes the terrain key only."
+steppe,apply,steppe,"3 provinces, 2 of them painted hills. Smallest group; applied for consistency, not because it matters."
+desert,apply,desert,"23 provinces, 14 already desert by bitmap, 8 painted plains."
+coastal_desert,apply,drylands,"0 provinces in Faerun's history files. Same key the pixel table uses; Faerun's terrain.bmp index 19 labelled `coastal_desert` is actually the ocean texture (see ck2ck3.map.terrain docstring), so this row only ever fires on a history line."
+jungle,apply,jungle,"125 provinces, 43 agreeing. The other 82 are painted forest (34), plains (34), hills (6) or mountain (5) - trees.bmp cannot distinguish jungle from forest, only the history line can."
+marsh,apply,wetlands,"26 provinces, 16 agreeing, 10 painted plains."
+arctic,apply,taiga,"10 provinces, 9 already taiga by bitmap - the override changes almost nothing here. CK3 has no arctic key; `taiga` is the pixel table's choice and paint and gameplay must not disagree about it (docs/step_map_paint.md §2). Open: `taiga` is mild for polar tundra."
+glacier,apply,taiga,"38 provinces, 36 already taiga by bitmap. Same NO-CK3-EQUIVALENT note as `arctic`; changing it to `mountains` would also change the terrain paint, which lane map-paint owns."
+subterranean,apply,mountains,"60 provinces - the Underdark, and CK2's harshest habitable category (movement_cost 1.6, supply_limit 1, bottleneck_chance 45). CK3's nearest is `mountains` (supply -0.5, dev -0.25, movement 0.5), the pixel table's own choice. Only 24 of 60 vote mountains from the bitmap; 15 vote hills, 12 steppe and 5 plains, i.e. the surface texture painted above the caverns. NO CK3 EQUIVALENT - the submod's job, not the converter's."
+pti,keep_bitmap,,"CK2 `province terrain identifier` filler with no gameplay fields at all (only a colour). Not a terrain statement; the bitmap stands."
+ocean,keep_bitmap,,"Water. A land province must never take a water key (ck2ck3.map.terrain.CK3_WATER_TERRAIN), and water provinces take their terrain from default.map, not from history."
+inland_ocean,keep_bitmap,,"Water; see `ocean`."

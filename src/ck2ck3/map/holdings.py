@@ -19,6 +19,12 @@ Facts this module encodes, all `verified` on Faerûn 2026-09-07:
 * The right-hand side is not always a holding type: ``b_sea_ward =
   ct_planar_portal`` builds a *building*.  Only the nine CK2 holding types
   count, and of those only four have a CK3 counterpart.
+* A top-level ``terrain = <category>`` line is the province's **gameplay**
+  terrain in CK2, and it wins over the ``terrain.bmp`` majority (which is only
+  the fallback).  1040 of Faerûn's 2125 province files carry one, all
+  top-level, none dated (`verified`, ``scripts/survey_terrain_history.py``).
+  Read into :attr:`ProvinceHistory.terrains`; applied by
+  ``ck2ck3.map.terrain_history``.
 * Faerûn uses exactly four of them (castle 1905, tribal 1465, city 1280,
   temple 697 assignments).  ``nomad``, ``family_palace``, ``fort``,
   ``hospital`` and ``trade_post`` appear nowhere, but they are handled anyway
@@ -74,16 +80,21 @@ _ID_FROM_FILENAME = re.compile(r"^\s*(\d+)")
 _COMMENT = re.compile(r"#[^\n]*")
 _TITLE = re.compile(r"\btitle\s*=\s*(c_[A-Za-z0-9_]+)")
 _MAX_SETTLEMENTS = re.compile(r"\bmax_settlements\s*=\s*(\d+)")
-#: a dated block header, an opening/closing brace, a `b_x = y` assignment, or a
-#: `culture = x` line. The culture is read only to pick a **graphical** region
-#: for the province's CK3 baronies (`map_data/geographical_regions`); the real
-#: culture of the CK3 province is written by the `history_titles` step.
+#: a dated block header, an opening/closing brace, a `b_x = y` assignment, a
+#: `culture = x` line or a `terrain = x` line. The culture is read only to pick
+#: a **graphical** region for the province's CK3 baronies
+#: (`map_data/geographical_regions`); the real culture of the CK3 province is
+#: written by the `history_titles` step. The terrain is the CK2 author's
+#: **gameplay** terrain override for the province (see
+#: `ck2ck3.map.terrain_history`); in CK2 it wins over the `terrain.bmp`
+#: majority, which is only the fallback.
 _EVENT = re.compile(
     r"(?P<date>(\d+)\.(\d+)\.(\d+))\s*=\s*\{"
     r"|(?P<open>\{)"
     r"|(?P<close>\})"
     r"|(?P<barony>b_[A-Za-z0-9_]+)\s*=\s*(?P<value>[A-Za-z0-9_]+)"
     r"|culture\s*=\s*(?P<culture>[A-Za-z0-9_]+)"
+    r"|\bterrain\s*=\s*(?P<terrain>[A-Za-z0-9_]+)"
 )
 
 
@@ -117,6 +128,24 @@ class ProvinceHistory:
     assignments: dict[str, list[tuple[Date, str]]] = field(default_factory=dict)
     #: [(date, ck2 culture)] in file order; CK2 lets a province change culture
     cultures: list[tuple[Date, str]] = field(default_factory=list)
+    #: [(date, ck2 terrain category)] in file order; CK2 allows a dated
+    #: `terrain = x` too, so this is a history like the others rather than a
+    #: single value (Faerûn never uses a dated one, `verified` —
+    #: `docs/step_map_terrain.md` §1)
+    terrains: list[tuple[Date, str]] = field(default_factory=list)
+
+    def terrain_at(self, date: Date) -> str | None:
+        """The CK2 terrain override in effect at ``date`` (last one wins).
+
+        ``None`` when the province declares no override at all at or before
+        ``date`` — then the ``terrain.bmp`` majority is the terrain, which is
+        CK2's own fallback order.
+        """
+        best: tuple[Date, str] | None = None
+        for when, value in self.terrains:
+            if when <= date and (best is None or when >= best[0]):
+                best = (when, value)
+        return best[1] if best else None
 
     def culture_at(self, date: Date) -> str | None:
         """The CK2 culture in effect at ``date`` (last assignment wins)."""
@@ -195,6 +224,8 @@ def read_province_file(path: str | Path) -> ProvinceHistory | None:
                 dates.pop()
         elif tok.group("culture"):
             hist.cultures.append((dates[-1], tok.group("culture")))
+        elif tok.group("terrain"):
+            hist.terrains.append((dates[-1], tok.group("terrain")))
         else:
             hist.assignments.setdefault(tok.group("barony"), []).append(
                 (dates[-1], tok.group("value"))

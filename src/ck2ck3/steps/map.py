@@ -100,6 +100,7 @@ def run(ctx: Context) -> StepResult:
     bar = report["baronies"]
     trees = report.get("trees", {})
     colormap = report.get("colormap", {})
+    th = report.get("terrain_history", {})
     loc = report.get("locators", {})
     return StepResult(
         summary=(
@@ -135,6 +136,22 @@ def run(ctx: Context) -> StepResult:
                if loc.get("ck2_anchors") else {}),
             **({"locators_moved_instances": loc["moved_instances"]}
                if "moved_instances" in loc else {}),
+            # lane `province-terrain`: the CK2 history `terrain = X` override
+            # (docs/step_map_terrain.md). Counted here so a run report says
+            # how many counties the author's own choice actually moved.
+            **({"terrain_override_counties": th["counties_with_override"],
+                "terrain_override_provinces_changed": th["provinces_changed"],
+                "terrain_override_applied_capital": th["applied_capital"],
+                "terrain_override_applied_weak": th["applied_weak_bitmap"],
+                "terrain_override_kept_bitmap": (
+                    th["kept_strong_bitmap"] + th["kept_rule"]
+                ),
+                "terrain_override_already_agreed": th["already_agreed"],
+                "terrain_override_unmapped": sum(
+                    th["unmapped_categories"].values()
+                ),
+                "terrain_override_class_px_moved": th["class_grid_pixels_moved"]}
+               if th.get("enabled") else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),
@@ -204,6 +221,24 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         ),
         terrain_map=dict(tr.get("map", {})),
         terrain_default=str(tr.get("default", "plains")),
+        # `[map] province_terrain_history` (lane `province-terrain`). Read HERE
+        # as well as in `ck2ck3.map.config.load`, for the reason the
+        # `ck2_locator_positions` comment above gives: a key this CLI-facing
+        # builder never reads is a silent no-op whatever the TOML says.
+        # tests/test_map_terrain_history.py::test_cli_config_builder_reads_the_key
+        # pins all three.
+        terrain_history=bool(raw.get("province_terrain_history", True)),
+        terrain_history_csv=Path(
+            str(
+                raw.get(
+                    "terrain_history_csv", "mappings/terrain_history_overrides.csv"
+                )
+            )
+        ),
+        terrain_history_weak=tuple(
+            str(v)
+            for v in raw.get("terrain_history_weak_classes", ("plains", "farmlands"))
+        ),
         lake_region_names=tuple(raw.get("lake_names", ("Lakes",))),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,

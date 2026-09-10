@@ -127,6 +127,26 @@ locator_offset_scale = 1.0
 # docs/DECISIONS.md 2026-09-10.
 locator_offset_mode = "median_radius"
 
+# Honour the CK2 `history/provinces` `terrain = X` line. In CK2 THAT is the
+# province's gameplay terrain and the terrain.bmp majority is only the engine's
+# fallback, so it is the converter's first source too (CLAUDE.md invariant).
+# 1040 of Faerun's 2125 province files carry one and 716 of those disagree with
+# their own bitmap, so with this false half the map's counties ship a terrain
+# the CK2 author did not choose. false = the behaviour before lane
+# `province-terrain` (bitmap majority only). docs/step_map_terrain.md.
+province_terrain_history = true
+# CK2 override category -> apply / keep_bitmap + CK3 key, with the reasoning
+# and the measured share per row. `coastal` (141 counties) is the one
+# keep_bitmap decision worth re-reading before changing it.
+terrain_history_csv = "mappings/terrain_history_overrides.csv"
+# One CK2 county is several CK3 baronies, but the override is per county. The
+# county-CAPITAL barony always takes it; a NON-capital barony takes it only
+# when its own terrain.bmp majority is one of these "weak" classes, i.e. says
+# nothing about relief or vegetation that the override would be overwriting.
+# Empty list = capital only; add e.g. "steppe" to be more aggressive.
+# docs/step_map_terrain.md §3 has the measured agreement rates.
+terrain_history_weak_classes = ["plains", "farmlands"]
+
 # Write gfx/map/terrain/detail_index.tga + detail_intensity.tga, the pair CK3's
 # renderer actually reads (docs/step_map_paint.md). Ship neither and CK3
 # samples vanilla's own pair in UV space across the canvas - Faerun wears

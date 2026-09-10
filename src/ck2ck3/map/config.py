@@ -382,6 +382,16 @@ class MapConfig:
     terrain_map: dict[str, str] = field(default_factory=dict)
     #: CK3 terrain key used when nothing else matches
     terrain_default: str = "plains"
+    #: honour the CK2 `history/provinces` `terrain = X` override, which in CK2
+    #: IS the province's gameplay terrain (the bitmap majority is only the
+    #: fallback).  docs/step_map_terrain.md; false = the pre-lane behaviour,
+    #: bitmap majority only.
+    terrain_history: bool = True
+    #: CK2 override category -> apply/keep_bitmap + CK3 key, with the reasoning
+    terrain_history_csv: Path = Path("mappings/terrain_history_overrides.csv")
+    #: bitmap classes a NON-capital barony lets the county override refine;
+    #: any other bitmap class wins over the override for that barony
+    terrain_history_weak: tuple[str, ...] = ("plains", "farmlands")
     #: CK2 ocean_region comment texts that mean "lake" rather than "sea"
     lake_region_names: tuple[str, ...] = ("Lakes",)
     #: trees.bmp palette indices that count as forest (CK2 default.map `tree`)
@@ -555,6 +565,24 @@ def load(path: str | Path) -> MapConfig:
         repo_dir=base,
         terrain_map=dict(tr.get("map", {})),
         terrain_default=str(tr.get("default", "plains")),
+        terrain_history=bool(tr.get("history", raw.get("province_terrain_history", True))),
+        terrain_history_csv=Path(
+            str(
+                tr.get(
+                    "history_csv",
+                    raw.get(
+                        "terrain_history_csv", "mappings/terrain_history_overrides.csv"
+                    ),
+                )
+            )
+        ),
+        terrain_history_weak=tuple(
+            str(v)
+            for v in tr.get(
+                "history_weak_classes",
+                raw.get("terrain_history_weak_classes", ("plains", "farmlands")),
+            )
+        ),
         lake_region_names=tuple(raw.get("regions", {}).get("lake_names", ("Lakes",))),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
