@@ -149,6 +149,26 @@ reads as landscape (`docs/map_fidelity.md` §4.2). Closing that gap needs
 ridged-multifractal noise or a hydraulic-erosion pass — a different order of
 work, and a look call for a human, not this lane's scope.
 
+**Measured after shipping (report lane, 2026-09-10, `verified`,
+`docs/evidence/report_map_paint/spectrum.csv`, `land_stats.csv`).** Two
+corrections to the claims above:
+
+* **The band above 0.08 cycles/km is under-filled.** Over 48 all-land interior
+  256×256 patches the shipped map carries 80 levels at 0.1 cycles/km against
+  vanilla's 215, and 10 against 45 at 0.2 — *less* than the plain rescale
+  (152, 61) there. The de-terrace Gaussian (σ = 1.6 px) is a low-pass at about
+  2.4 km and pass 2 puts back roughly an order of magnitude less than vanilla
+  above 0.08 cycles/km. The earlier evidence crop (`docs/evidence/heightmap_detail/spectrum.png`)
+  looked right only because it contains a coastline, whose 4884-level step
+  inflates every frequency. Candidate fix: a smaller de-terrace sigma or a
+  frequency-dependent gain in pass 2, re-measured on interior patches.
+  Tracked in `docs/integration_backlog.md`.
+* **The macro tails move.** The pass holds land p50 (9038 → 9240, +2.2 %) but
+  raises p95 by 9.4 % and p99 by 20.2 %, and coast smoothing pulls p01/p05
+  down to the water level. "Frequencies below 0.01 cycles/km are never
+  touched" is true of pass 2 alone; the coast pass and the per-terrain gain
+  seams do reshape the extremes. Whether that is acceptable is a look call.
+
 ## Sea floor (2026-09-10)
 
 CK2's `topology.bmp` carries almost no bathymetry. Rescaled, Faerûn's whole
