@@ -66,6 +66,31 @@ _ACCUM_REFERENCE_PERCENTILE = 92.0
 #: descent: a pixel may never be cut below the neighbour it drains into.
 _INCISION_SLOPE_CAP = 0.5
 
+#: Ceiling (16-bit levels per pixel) on the slope the stream-power law is
+#: allowed to see, as a multiple of ``QUANTISATION_STEP_LEVELS``.
+#:
+#: Why it has to exist (docs/step_map_heightmap.md §2d).  ``S`` in
+#: ``dz = -K (A/A_ref)^m S`` is the *macro* steepest descent, and on Thay's
+#: escarpments that is up to 4,505 levels/px against a land median of 128.
+#: The law therefore cut the plateau rim by up to 1,939 levels *per
+#: iteration*, sixteen times over, while the uniform uplift added the mean
+#: of that back to every land pixel: measured on the Thay crop the returned
+#: field averaged **-1,142 levels on cliff pixels and +632 levels twelve
+#: pixels away** (`verified`), i.e. a 1,774-level trench around every
+#: escarpment before the spectral pass had touched it.  That is the
+#: cliff-foot moat playtest 3 reported.
+#:
+#: 1.0 step = 277 levels/px, one source value per pixel: the steepest
+#: gradient the 8-bit source can express without being a *multi*-step cliff,
+#: which is macro relief the erosion has no business re-carving.  Measured
+#: on the Thay crop the cliff-to-interior trench in the returned field falls
+#: 1,773 -> 593 levels at 1.0 and only to 1,153 at 2.0 (`verified`,
+#: docs/evidence/relief_sharp/erosion_slope_ceiling.csv).  The
+#: "cannot cut below the neighbour it drains into" guard above still uses
+#: the *true* slope, so the cap loosens nothing.  0 disables it and
+#: reproduces build 13.
+DEFAULT_INCISION_SLOPE_CEILING_STEPS = 1.0
+
 
 def _slices(shape: tuple[int, int], dy: int, dx: int):
     """Source and destination slices for a translation by ``(dy, dx)``."""
@@ -287,6 +312,7 @@ def eroded_relief(
     incision: float = 0.5,
     area_exponent: float = 0.5,
     diffusion: float = 0.06,
+    slope_ceiling_steps: float = DEFAULT_INCISION_SLOPE_CEILING_STEPS,
 ) -> tuple[np.ndarray, dict]:
     """Return ``(relief field, diagnostics)`` -- unit-variance over land.
 
@@ -298,6 +324,10 @@ def eroded_relief(
     """
     h0 = np.array(base, dtype=np.float32)
     w = h0 + np.float32(seed_amplitude) * fractal_seed(h0.shape, rng)
+    ceiling = (
+        float(slope_ceiling_steps) * QUANTISATION_STEP_LEVELS
+        if slope_ceiling_steps > 0 else 0.0
+    )
     landf = land.astype(np.float32)
     n_land = int(land.sum())
     uplift_total = 0.0
@@ -323,7 +353,12 @@ def eroded_relief(
         acc /= max(a_ref, 1e-6)
         _pow_inplace(acc, area_exponent)
         acc *= incision
-        acc *= slope
+        if ceiling > 0.0:
+            # the driving slope is capped; the "never below the downstream
+            # neighbour" guard below still reads the true one
+            acc *= np.minimum(slope, np.float32(ceiling))
+        else:
+            acc *= slope
         slope *= _INCISION_SLOPE_CAP
         np.minimum(acc, slope, out=acc)
         del slope
@@ -349,5 +384,6 @@ def eroded_relief(
         "erosion_iterations": iterations,
         "erosion_accum_iterations": accum_iterations,
         "erosion_uplift_levels": round(uplift_total, 1),
+        "erosion_slope_ceiling_steps": round(float(slope_ceiling_steps), 2),
         "erosion_field_rms_levels": round(sd, 1),
     }

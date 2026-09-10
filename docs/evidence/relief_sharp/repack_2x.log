@@ -1,0 +1,4 @@
+/home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp-2x/map_data/heightmap.png: 16640x13568
+  tile_size   33: FAILED -- too many distinct tiles for the 8-bit indirection offsets (256x256 per level); raise max_compress_level or shrink the heightmap
+  tile_size   65:    51.1 MB in 17 s  heightmap.heightmap 0.0MB indirection_heightmap.png 0.0MB packed_heightmap.png 51.1MB  levels=[(0, 0), (0, 5980), (0, 6244), (0, 6448), (0, 6610)]
+  tile_size  129:    72.1 MB in 17 s  heightmap.heightmap 0.0MB indirection_heightmap.png 0.0MB packed_heightmap.png 72.1MB  levels=[(0, 0), (0, 7482), (0, 7872), (0, 8037), (0, 8122)]

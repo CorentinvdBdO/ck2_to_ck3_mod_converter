@@ -391,6 +391,13 @@ heightmap_detail_erosion_accum_iterations = 3
 # heightmap_detail_erosion_mfd_exponent = 4.0
 # heightmap_detail_erosion_incision = 0.5
 # heightmap_detail_erosion_diffusion = 0.06
+# Ceiling on the slope the stream-power law may see, in 277-level source
+# steps per pixel. S is the *macro* steepest descent, and on Thay's
+# escarpments that is 4,505 levels/px against a land median of 128: uncapped,
+# the law planed the plateau rims and the uniform uplift handed the mean back
+# to the interior, leaving a 1,773-level trench around every escarpment --
+# the moat playtest 3 reported. 0 reproduces build 13.
+heightmap_detail_erosion_slope_ceiling_steps = 0.5
 
 # --- pass 2, fill target: vanilla's own measured radial land spectrum, anchored
 # to our map in the 0.015-0.03 cycles/km band where the two already agree. The
@@ -405,10 +412,24 @@ heightmap_detail_target_mode = "vanilla_curve"
 # count as detail already present (docs/step_map_heightmap.md §2c e).
 heightmap_detail_gain_mode = "deficit"
 # heightmap_detail_spectral_slope = -2.0   # only read by "power_law"
+# --- pass 2, the band the fill is allowed to own (docs/step_map_heightmap.md
+# §2d). Full strength at 0.05 cycles/km (20 km), a one-octave raised-cosine
+# roll-on below. The CK2 source is 4096x3328 upscaled 1.9543x, so its own
+# Nyquist is 0.172 cycles/km: below that its terrain is fully *resolved* and
+# only quantised, and a quantiser adds broadband noise rather than removing
+# macro relief. Filling the shortfall down to 0.01 cycles/km, as build 13 did,
+# therefore invented 35-60 km relief on ground the CK2 author drew flat
+# (+-20,000 levels across Thay's plateaus). 0 reproduces build 13.
+heightmap_detail_fill_min_cycles_per_km = 0.05
 
 # The rest default to the prototype's own numbers (docs/map_fidelity.md §4.2)
 # and are only worth overriding for an experiment:
 # heightmap_detail_gain_blur_px = 6.0
+# The fraction of a pixel's own headroom the synthesised offset may saturate
+# into. 1.0 (the old behaviour) still reaches water_level+1 exactly, because
+# tanh tends to 1: on Thay that pinned 4.2 % of the land flat at the foot of
+# the escarpments -- a moat. docs/step_map_heightmap.md §2d.
+heightmap_detail_headroom_fraction = 0.5
 # heightmap_detail_river_depth = 900.0
 # heightmap_detail_coast_smooth_px = 4.0
 

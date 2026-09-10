@@ -1,0 +1,73 @@
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+79342 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 22 of 308 merges did not survive (they fall on a pixel the province map says is water)
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp-2x
+Traceback (most recent call last):
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/.venv/bin/ck2ck3", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/cli.py", line 88, in main
+    ctx, runs = run_steps(config, names, dry_run=args.dry_run, logger=logger)
+                ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/runner.py", line 47, in run_steps
+    raw = module.run(ctx)
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/steps/map.py", line 65, in run
+    report = map_build.run(cfg, sink, skip_images=_skip_images(ctx))
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/build.py", line 520, in run
+    meta = _write_packed(sink, heights, cfg)
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/build.py", line 1236, in _write_packed
+    sink.binary("map_data/heightmap.heightmap", save)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/sink.py", line 134, in binary
+    path = write_binary(rel, save)
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/context.py", line 272, in write_binary
+    save(path)
+    ~~~~^^^^^^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/build.py", line 1231, in save
+    packed_heightmap.write_packed(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        heights, path.parent, tile_size=cfg.heightmap.tile_size
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/packed_heightmap.py", line 493, in write_packed
+    atlas, indirection, level_offsets, empty = _pack_atlas(
+                                               ~~~~~~~~~~~^
+        padded, levels, tile_size, max_compress_level, should_wrap_x
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/cvdbdo/git/paradox/ck3/wt/relief-sharp/src/ck2ck3/map/packed_heightmap.py", line 403, in _pack_atlas
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: too many distinct tiles for the 8-bit indirection offsets (256x256 per level); raise max_compress_level or shrink the heightmap
+Command exited with non-zero status 1
+	Command being timed: "uv run ck2ck3 --config configs/_relief_sharp_2x.toml --steps map --out /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp-2x --no-evidence"
+	User time (seconds): 321.11
+	System time (seconds): 43.31
+	Percent of CPU this job got: 104%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:47.68
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 19814044
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1663037
+	Voluntary context switches: 72
+	Involuntary context switches: 4127
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 258392
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+-rw-rw-r-- 1 cvdbdo cvdbdo 130888859 Sep 10 20:23 /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp-2x/map_data/heightmap.png
+-rw-rw-r-- 1 cvdbdo cvdbdo   1386506 Sep 10 20:17 /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp-2x/map_data/provinces.png

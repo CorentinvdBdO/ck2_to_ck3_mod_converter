@@ -110,6 +110,8 @@ def run(ctx: Context) -> StepResult:
     hd_summary = (
         f"; heightmap detail {hd['deterrace_mode']}/{hd['relief_mode']}"
         f"/{hd.get('target_mode', 'power_law')}, "
+        f"fill>={hd.get('fill_min_cycles_per_km', 0)} c/km, "
+        f"slope ceiling {hd.get('erosion_slope_ceiling_steps', 0)} steps, "
         f"{hd['land_pct_on_clamp_floor']} % of land on the clamp floor"
         if hd else ""
     )
@@ -163,7 +165,11 @@ def run(ctx: Context) -> StepResult:
                 ),
                 "terrain_override_class_px_moved": th["class_grid_pixels_moved"]}
                if th.get("enabled") else {}),
-            **({"heightmap_distinct_values": hd["distinct_values_after"],
+            **({"heightmap_fill_min_cycles_per_km":
+                    hd.get("fill_min_cycles_per_km", 0),
+                "heightmap_erosion_slope_ceiling_steps":
+                    hd.get("erosion_slope_ceiling_steps", 0),
+                "heightmap_distinct_values": hd["distinct_values_after"],
                 "heightmap_clamp_floor_px": hd["land_px_on_clamp_floor"],
                 "heightmap_excursion_limited_px": hd["excursion_limited_px"],
                 "heightmap_detail_seconds": int(hd["elapsed_s"])}

@@ -1,0 +1,22 @@
+
+== thay crop (512, 512) land 87.064% water-free radius 322 km
+  plain_rescale        undershoot      13  control      59  MOAT     -46  moat_p95   1385  dstd      0  floor  0.000%
+  build13_live         undershoot    3478  control     551  MOAT    2927  moat_p95   1444  dstd   2464  floor  0.034%
+  lane_1x_fix          undershoot     169  control     285  MOAT    -116  moat_p95   1505  dstd    804  floor  0.006%
+  no_fix               undershoot    3478  control     551  MOAT    2927  moat_p95   1444  dstd   2464  floor  0.034%
+  fillmin_only         undershoot    1172  control     311  MOAT     861  moat_p95   1313  dstd   1061  floor  0.007%
+  slopecap_only        undershoot     468  control     514  MOAT     -46  moat_p95   1574  dstd   1569  floor  0.083%
+  headroom_1.0         undershoot     177  control     293  MOAT    -116  moat_p95   1530  dstd    808  floor  0.007%
+  slopecap_1.0         undershoot     327  control     312  MOAT      15  moat_p95   1458  dstd    818  floor  0.007%
+
+== spine crop (512, 512) land 82.465% water-free radius 517 km
+  plain_rescale        undershoot      12  control      59  MOAT     -46  moat_p95   1108  dstd      0  floor  0.000%
+  build13_live         undershoot    2678  control     328  MOAT    2350  moat_p95   1095  dstd   1695  floor  0.038%
+  lane_1x_fix          undershoot      95  control     168  MOAT     -72  moat_p95   1194  dstd    405  floor  0.031%
+  no_fix               undershoot    2678  control     328  MOAT    2350  moat_p95   1095  dstd   1695  floor  0.038%
+  fillmin_only         undershoot     885  control     180  MOAT     705  moat_p95   1067  dstd    629  floor  0.031%
+  slopecap_only        undershoot     218  control     348  MOAT    -130  moat_p95   1271  dstd   1083  floor  0.032%
+  headroom_1.0         undershoot      98  control     173  MOAT     -74  moat_p95   1210  dstd    410  floor  0.033%
+  slopecap_1.0         undershoot     190  control     182  MOAT       9  moat_p95   1194  dstd    415  floor  0.030%
+
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-sharp/docs/evidence/relief_sharp/moat_live.csv

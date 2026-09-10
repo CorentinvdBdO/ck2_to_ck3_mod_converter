@@ -1,0 +1,19 @@
+vanilla 48 patches
+ours_1x 8320x6784 48 patches Nyquist 0.337 c/km
+  thay {'grad_p99_levels_per_km': 950.0, 'grad_p999_levels_per_km': 1598.0, 'grad_max_levels_per_km': 2392.0}
+ours_2x 16640x13568 48 patches Nyquist 0.674 c/km
+  thay {'grad_p99_levels_per_km': 1888.0, 'grad_p999_levels_per_km': 2650.0, 'grad_max_levels_per_km': 4618.0}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.02, 'vanilla': 7776.3, 'ours_1x': 4495.4, 'ours_1x_over_vanilla': 0.58, 'ours_2x': 8752.3, 'ours_2x_over_vanilla': 1.13}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.03, 'vanilla': 3322.3, 'ours_1x': 1653.5, 'ours_1x_over_vanilla': 0.5, 'ours_2x': 3010.3, 'ours_2x_over_vanilla': 0.91}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.05, 'vanilla': 942.3, 'ours_1x': 913.0, 'ours_1x_over_vanilla': 0.97, 'ours_2x': 1030.4, 'ours_2x_over_vanilla': 1.09}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.07, 'vanilla': 471.7, 'ours_1x': 464.8, 'ours_1x_over_vanilla': 0.99, 'ours_2x': 514.7, 'ours_2x_over_vanilla': 1.09}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.1, 'vanilla': 215.5, 'ours_1x': 199.6, 'ours_1x_over_vanilla': 0.93, 'ours_2x': 244.8, 'ours_2x_over_vanilla': 1.14}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.15, 'vanilla': 86.0, 'ours_1x': 56.9, 'ours_1x_over_vanilla': 0.66, 'ours_2x': 108.5, 'ours_2x_over_vanilla': 1.26}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.2, 'vanilla': 45.0, 'ours_1x': 38.9, 'ours_1x_over_vanilla': 0.86, 'ours_2x': 67.2, 'ours_2x_over_vanilla': 1.49}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.25, 'vanilla': 26.9, 'ours_1x': 39.8, 'ours_1x_over_vanilla': 1.48, 'ours_2x': 52.2, 'ours_2x_over_vanilla': 1.94}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.3, 'vanilla': 19.5, 'ours_1x': 41.1, 'ours_1x_over_vanilla': 2.11, 'ours_2x': 45.5, 'ours_2x_over_vanilla': 2.33}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.35, 'vanilla': 14.0, 'ours_1x': None, 'ours_1x_over_vanilla': None, 'ours_2x': 43.9, 'ours_2x_over_vanilla': 3.14}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.4, 'vanilla': 10.6, 'ours_1x': None, 'ours_1x_over_vanilla': None, 'ours_2x': 36.3, 'ours_2x_over_vanilla': 3.42}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.5, 'vanilla': 7.4, 'ours_1x': None, 'ours_1x_over_vanilla': None, 'ours_2x': 28.2, 'ours_2x_over_vanilla': 3.81}
+{'map': '-', 'kind': 'spectrum', 'cycles_per_km': 0.6, 'vanilla': 6.0, 'ours_1x': None, 'ours_1x_over_vanilla': None, 'ours_2x': 25.2, 'ours_2x_over_vanilla': 4.2}
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-sharp/docs/evidence/relief_sharp/two_x_canvas.csv

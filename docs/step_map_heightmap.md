@@ -280,6 +280,262 @@ Other measured effects of the pass, on the whole map:
 * the detail pass costs **10.9 s → ≈52 s**, and the whole `map` step
   61 s → 103 s.
 
+## 2d. The cliff-foot moat (`heightmap_detail_fill_min_cycles_per_km`, `heightmap_detail_erosion_slope_ceiling_steps`)
+
+**What the playtest saw.** Build 13, Thay: *"plateaux are dipping then coming
+back up"* — a trench just inside and outside every escarpment, the plateau
+top and the ground beyond it both higher than the strip between them. The
+user's read was *"your method amplified variations way too much"*, and that
+turned out to be exactly right.
+
+**How it is measured.** `scripts/relief_sharp_moat.py`, two numbers, both on
+the two study crops of §2b (`docs/evidence/relief_sharp/moat_live.csv`,
+`moat_isolate_thay.csv`, `moat_isolate_spine.csv`):
+
+* **undershoot** — for every adjacent pair the *plain rescale* jumps ≥ 2
+  quantisation risers over, walk 12 px into the low side and take the
+  deepest dip below the foot's own level. Transects whose source profile
+  keeps descending are dropped, so the foot really is flat in the source.
+* **control** — the same statistic on pairs that jump *one* riser: the same
+  fill on ground the source drew equally flat, but with no escarpment
+  beside it. Any fill dips a couple of hundred levels below a flat foot and
+  that is terrain; **`MOAT = undershoot − control`** is the part that only
+  happens next to a cliff, and that is the number to drive to zero.
+
+The land mask for all of this is the **province** mask read back off a
+finished map, never `plain_rescale > water_level`: Faerûn's CK2 lakes and
+river provinces sit on high ground (the median such pixel in the Thay crop is
+at 14,301 in the rescale), so a threshold on the rescale calls 10,020 Thay
+water pixels land and then reads the water pin under them as a 9,000-level
+trench. That mistake inflated the first measurement of this lane by ~2.5×.
+
+### The three candidates, each toggled on its own
+
+Build-13 settings on the Thay crop, one switch at a time
+(`docs/evidence/relief_sharp/moat_isolate_thay.csv`, `verified`):
+
+| variant | undershoot | control | **MOAT** |
+|---|---|---|---|
+| plain rescale | 12 | 56 | −44 |
+| de-terrace (Perona–Malik) **alone** | −47 | 80 | **−126** |
+| build 13, all passes | 1838 | 343 | **1494** |
+| …with the Gaussian de-terrace instead | 2071 | 364 | 1707 |
+| …with `erosion_incision = 0` | 199 | 309 | **−111** |
+| …with `relief_mode = "isotropic"` | 33 | 340 | **−308** |
+| …with `gain_mode = "hf_target"` | 1412 | 259 | 1153 |
+| …with `river_depth = 0` | 1802 | 300 | 1503 |
+| …with `coast_smooth_px = 0` | 1836 | 342 | 1494 |
+
+**Perona–Malik is not the cause** (`verified`). Its overshoot is real — §2b
+measures 1.13 × cliff survival — but it is bounded by the step: on the whole
+Thay crop the de-terrace moves land by 184 levels RMS and 805 levels at
+most, and on its own it leaves *less* undershoot than the plain rescale. The
+blind Gaussian is **worse**, which settles it: a sharpening filter cannot be
+what a blurring filter also does.
+
+**Neither is the coast pass, `deepen_sea`, or the river carve** (`verified`).
+Thay's crop is 322 km from the nearest water, so `_smooth_coast`'s factor is
+1 everywhere in it, and turning the coast pass and the river carve off moves
+MOAT by 0 and 9 levels.
+
+**Neither is the deficit-mode gain.** `gain_mode = "hf_target"` still leaves
+MOAT at 1153.
+
+### Cause 1 — the stream-power law was handed the escarpment as its slope
+
+`eroded_relief` evolves `w = base + fractal seed` and returns `w − base`, on
+the argument that "nothing of the macro survives into the caller's noise
+field". That is false as soon as the model *erodes* the macro. `S` in
+`dz = −K (A/A_ref)^m S` is the steepest descent of `w`, which on Thay's
+escarpments is up to **4,505 levels/px against a land median of 128**
+(`verified`). Capped at `_INCISION_SLOPE_CAP = 0.5` of it, that is still
+1,939 levels cut from the plateau rim *per iteration*, sixteen times over —
+and the uniform uplift then hands the mean of that back to every land pixel.
+Measured on the Thay crop, the returned field averages **−1,142 levels on
+cliff pixels and +632 levels twelve pixels away**: a 1,773-level trench
+around every escarpment before the spectral pass has touched it
+(`docs/evidence/relief_sharp/erosion_slope_ceiling.csv`, `verified`).
+
+**The fix.** `heightmap_detail_erosion_slope_ceiling_steps` caps the slope
+the *stream-power term* may see, in 277-level source steps per pixel. The
+"never below the neighbour it drains into" guard still reads the true slope,
+so nothing is loosened. The default is **0.5** = 138 levels/px, which is the
+fractal seed's own 93rd-percentile gradient (p50 47, p90 115, p99 183,
+`verified`): the model then incises the relief it is *synthesising* and not
+the escarpment it was handed. Trench in the returned field, Thay crop:
+
+| `slope_ceiling_steps` | 0 (build 13) | 4.0 | 2.0 | 1.0 | **0.5** |
+|---|---|---|---|---|---|
+| field RMS, levels | 931 | 875 | 674 | 487 | **390** |
+| cliff→interior trench, levels | 1773 | 1654 | 1153 | 593 | **246** |
+
+### Cause 2 — the fill was filling a band that was never a deficit
+
+§2c aims the fill at vanilla's own measured land spectrum and fills the
+shortfall from `KEEP_STRUCTURE_BELOW_KM` = 0.01 cycles/km up. Vanilla's
+amplitude at 0.021 cycles/km (47 km) is **7,100 levels**, and our interior
+carries 0.51 × of it, so the pass was injecting ~6,100 levels of relief at
+47 km wavelength — on top of the CK2 author's own macro relief. Measured on
+48 all-land interior patches of the build-13 map, that is what the numbers
+say happened (`verified`, ratio to vanilla):
+
+| cycles/km | km | plain rescale | build 13 | **this build** |
+|---|---|---|---|---|
+| 0.0105 | 95 | 0.69 | 0.88 | **0.69** |
+| 0.0158 | 63 | 0.62 | 1.08 | **0.62** |
+| 0.0211 | 47 | 0.51 | 1.13 | **0.51** |
+| 0.0290 | 34 | 0.40 | 1.23 | **0.44** |
+| 0.0395 | 25 | 0.39 | 1.12 | **0.80** |
+| 0.0500 | 20 | 0.41 | 1.03 | **0.93** |
+| 0.0711 | 14 | 0.46 | 1.03 | **0.95** |
+| 0.1000 | 10 | 0.70 | 1.13 | **0.95** |
+| 0.1500 | 6.7 | 1.20 | 0.96 | **0.65** |
+| 0.2001 | 5.0 | 1.31 | 0.90 | **0.85** |
+| 0.3001 | 3.3 | 1.50 | 2.06 | **2.10** |
+
+Build 13 matched vanilla from 95 km to 10 km, which is exactly the problem.
+**A shortfall at 47 km is not a deficit the pass is entitled to fill.** The
+CK2 source raster is 4096 × 3328 upscaled 1.9543 × onto the canvas, so one
+source pixel is 2.90 km and its own Nyquist is **0.172 cycles/km**
+(`verified`, `docs/map_scale.md`): below that the author's terrain is fully
+*resolved* and only *quantised*, and a quantiser only ever **adds**
+broadband noise (step / √12 = 80 levels, white) — it cannot remove 7,100
+levels at 47 km. What the shortfall down there measures is the difference
+between Faerûn's macro relief and Europe's, and filling it fabricates
+mountain-scale terrain on ground the CK2 author drew flat. On Thay's
+plateaus that was ±20,000 levels of 35–60 km undulation, which is the moat
+the playtest saw and, word for word, "variations amplified way too much".
+
+**The fix.** `heightmap_detail_fill_min_cycles_per_km` is where the fill
+reaches full strength, with a one-octave raised-cosine roll-on below it
+(`heightmap_detail.fill_band_weight`; a brick wall would ring, and a sinc
+beside an escarpment is another moat). Default **0.05 cycles/km = 20 km**:
+below it the source is resolved and untouched, above it the deficit is
+genuinely ours — the de-terrace alone (a σ 2.2 px = 3.3 km diffusion)
+attenuates there, and past 0.172 cycles/km there is no source content at
+all. 0 restores build 13.
+
+### What it costs
+
+The 0.05–0.2 cycles/km band §2c bought stays bought (0.93/0.95/0.95/0.65/0.85
+against vanilla at 0.05/0.07/0.10/0.15/0.20); 0.01–0.03 goes back to the
+plain rescale's own 0.51–0.69 ×, which is Faerûn's relief rather than
+Europe's. `0.15` at 0.65 × is the one point that got worse — the fill's
+roll-on and the de-terrace both bite there — and it is left as it is.
+
+### Measured, finished maps
+
+Both study crops, plain rescale / build 13 / this build, province land mask
+(`docs/evidence/relief_sharp/moat_live.csv`, `verified`):
+
+| crop | map | undershoot | control | **MOAT** | delta RMS vs rescale | land on clamp floor |
+|---|---|---|---|---|---|---|
+| Thay | build 13 | 3478 | 551 | **+2927** | 2464 | 0.034 % |
+| Thay | this build | 169 | 285 | **−116** | 804 | 0.006 % |
+| Spine | build 13 | 2678 | 328 | **+2350** | 1695 | 0.038 % |
+| Spine | this build | 95 | 168 | **−72** | 405 | 0.031 % |
+
+The cliff-foot profile is now *flatter* than the same fill leaves ordinary
+ground: MOAT is negative on both crops, and the absolute undershoot is under
+200 levels, against a 3,878-level (14-riser) cliff on Thay's steepest edge
+that §2b still keeps. Whole-canvas land on the clamp floor 0.382 % → 0.377 %.
+
+### The ablation — one full `map` run per default this lane moved
+
+`scripts/relief_sharp_ablate.sh` (five whole-canvas runs, ~2 min each),
+measured by `scripts/relief_sharp_moat.py --mode live`
+(`docs/evidence/relief_sharp/moat_live.csv`, `verified`). MOAT is the
+cliff-foot excess defined above; `Δ RMS` is the finished map against the
+plain rescale, on land, inside the crop.
+
+| run | Thay MOAT | Thay Δ RMS | Spine MOAT | Spine Δ RMS |
+|---|---|---|---|---|
+| plain rescale | −46 | 0 | −46 | 0 |
+| **build 13** (`no_fix`, byte-identical to the shipped map) | **+2927** | 2464 | **+2350** | 1695 |
+| fill band only (slope ceiling off) | +861 | 1061 | +705 | 629 |
+| slope ceiling only (fill from 0.01 c/km) | −46 | **1569** | −130 | **1083** |
+| **both, ceiling 0.5** (shipped) | **−116** | **804** | **−72** | **405** |
+| both, ceiling 1.0 | +15 | 818 | +9 | 415 |
+| both, `headroom_fraction = 1.0` | −116 | 808 | −74 | 410 |
+
+Read it as two separate defects with two separate fixes. **The slope ceiling
+is what removes the cliff *correlation*** — on its own it takes MOAT to zero.
+**The fill band is what removes the *amplitude*** — on its own it halves the
+map's departure from the source but leaves MOAT at +861/+705. Only the pair
+gives both, and only at ceiling **0.5**: at 1.0 the trench comes back
+(+15/+9 rather than −116/−72). `headroom_fraction` changes nothing
+measurable, as stated above.
+
+**A third default moved, and it is a bound rather than a fix.**
+`heightmap_detail_headroom_fraction` (0.5) is the fraction of a pixel's own
+headroom `_limit_excursion` may saturate into. At 1.0 `tanh` still reaches
+`water_level + 1` exactly, so a pixel whose fill is several times its
+headroom clips flat and a run of them prints a trench. On the finished
+Faerûn map it changes nothing measurable (`verified`, the ablation below) —
+the limiter binds on 0.19 % of land — so it is here as a guarantee, not as
+part of the moat fix.
+
+---
+
+## 2e. `resolution_factor = 2`, measured (not shipped)
+
+Playtest 3's second finding: *"I see the erosion, but still too smooth, not
+sharp enough."* Half of that is §7's standing limit — a 1× sheet has a
+Nyquist of 0.337 cycles/km against vanilla's 0.674, and no pass reaches past
+it. `[map.heightmap] resolution_factor = 2` was prototyped on the two study
+crops and then run over the whole canvas
+(`scripts/relief_sharp_2x.py`, `relief_sharp_2x_full.py`,
+`relief_sharp_repack_2x.py`; `docs/evidence/relief_sharp/two_x_*.csv`,
+`run_map_2x.log`, `repack_2x.log`). All `verified`.
+
+**It works, and it is sharper.** Thay's steepest one-pixel step, expressed
+per km so the two grids compare: gradient p99 **950 → 1888** levels/km, p99.9
+1598 → 2650, max 2392 → 4618. The cliff is not just kept, it is twice as
+steep on the ground.
+
+**Three costs, one of them a blocker until it is configured.**
+
+1. **The packer refuses the default tile size.** The indirection map
+   addresses the atlas with 8-bit offsets, so one compression level holds at
+   most 256 × 256 = 65,536 distinct tiles. At `tile_size = 33` (stride 32) a
+   2× Faerûn canvas is 520 × 424 = **220,480** tiles before any dedupe and
+   `write_packed` raises. `tile_size = 65` (stride 64) gives 260 × 212 =
+   55,120 and packs — which is exactly what vanilla's own 2× sheet does
+   (18432 × 9216 at `tile_size = 65`). So 2× is a **two**-key change.
+2. **Bytes.** `packed_heightmap.png` 16.3 → **51.1 MB** at `tile_size = 65`
+   (72.1 MB at 129), and `heightmap.png` 39.0 → **130.9 MB**. The pair is
+   182 MB against the 1× 55 MB, over the ~150 MB the lane was given.
+3. **Runtime and memory.** The `map` step goes 143 s → **348 s** (5:48, plus
+   ~20 s for the pack it did not reach), **19.8 GB peak RSS**. Inside the
+   6-minute budget, not inside a small machine.
+
+**And the sharpness it adds is not vanilla's.** Interior spectrum, 48
+all-land 256 px patches, the report's own estimator, ratio to vanilla
+(`docs/evidence/relief_sharp/two_x_canvas.csv`):
+
+| cycles/km | 0.05 | 0.07 | 0.10 | 0.15 | 0.20 | 0.25 | 0.30 | 0.35 | 0.40 | 0.50 | 0.60 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ours 1× | 0.97 | 0.99 | 0.93 | 0.66 | 0.86 | 1.48 | 2.11 | — | — | — | — |
+| ours 2× | 1.09 | 1.09 | 1.14 | 1.26 | 1.49 | 1.94 | 2.33 | **3.14** | **3.42** | **3.81** | **4.20** |
+
+The new band is filled 3–4 × too hot. Two reasons, both known: the transfer
+curve's risers are a *sharper* edge on the finer grid (the plain 2× rescale
+alone measures 3.3–4.9 × vanilla at 0.4–0.6), and every `*_px` key of the
+pass is a **canvas**-pixel length. `ck2ck3.map.build` now multiplies
+`deterrace_sigma_px`, `gain_blur_px` and `coast_smooth_px` by the resolution
+factor — a no-op at 1× — but `fractal_seed`'s octave sigmas and
+`_carve_rivers`'s width constants are still module-level pixel counts, so at
+2× the synthetic relief and the river cross-sections sit at half their
+intended ground scale. **That is the work a 2× lane has to do**, and it is
+why `resolution_factor` stays at 1 here.
+
+**The control that proves the point.** A finished 1× map bicubic-upsampled
+to 2× measures 0.29–0.36 × vanilla at 0.6 cycles/km — an interpolator adds
+no frequency. If sharpness is wanted, the pass has to *run* at 2×; there is
+no cheap version.
+
+---
+
 ## 3. Invariants — what cannot break, and why it cannot
 
 * **Every water pixel is returned byte-identical to the plain rescale.**
@@ -332,10 +588,13 @@ nearest-neighbour upsampled to the heightmap's own resolution first
 | `heightmap_detail_erosion_mfd_exponent` | `4.0` | pass 2 multiple-flow-direction slope exponent |
 | `heightmap_detail_erosion_incision` | `0.5` | pass 2 stream-power K |
 | `heightmap_detail_erosion_diffusion` | `0.06` | pass 2 hillslope diffusion per step |
+| `heightmap_detail_erosion_slope_ceiling_steps` | `0.5` | pass 2 ceiling on the slope the stream-power law sees, in 277-level source steps per px; `0` reproduces build 13 (§2d) |
 | `heightmap_detail_target_mode` | `"vanilla_curve"` | pass 2 fill target: vanilla's measured curve (§2c) or `"power_law"` |
 | `heightmap_detail_target_gain` | `1.0` | multiplier on that curve before the shortfall is taken |
 | `heightmap_detail_gain_mode` | `"deficit"` | pass 2 amplitude authority: the measured shortfall with the terrain table as a relative modulation (§2c e), or `"hf_target"`, the original per-class `sqrt(want² − have²)` |
 | `heightmap_detail_spectral_slope` | `-2.0` | pass 2 power-law exponent — only read by `"power_law"` |
+| `heightmap_detail_fill_min_cycles_per_km` | `0.05` | pass 2: where the fill reaches full strength, one-octave cosine roll-on below; `0` reproduces build 13 (§2d) |
+| `heightmap_detail_headroom_fraction` | `0.5` | pass 2: the fraction of a pixel's own headroom the offset may saturate into, so `tanh` cannot reach the clamp floor exactly (§2d) |
 | `heightmap_detail_gain_blur_px` | `6.0` | pass 2 amplitude-seam blur |
 | `heightmap_detail_river_depth` | `900.0` | pass 3 valley depth |
 | `heightmap_detail_coast_smooth_px` | `4.0` | pass 4 beach-flattening distance |
@@ -377,8 +636,9 @@ so `docs/evidence/last_run.md` records what the run actually used.
 
 **Half of vanilla's spatial bandwidth, by construction.** We ship a 1×
 heightmap, so our Nyquist is 0.337 cycles/km against vanilla's 0.674
-(`verified`). No detail pass reaches past it; `[map.heightmap]
-resolution_factor = 2` is a one-line change and a large one in bytes.
+(`verified`). No detail pass reaches past it. `[map.heightmap]
+resolution_factor = 2` is measured in **§2e** — it is affordable, it does
+add sharpness, and it is not a one-line change after all.
 
 **The macro tails still move, and the reason was misdiagnosed.** The 2026-09-10
 note in this section said coast smoothing pulled land p01/p05 down to the
