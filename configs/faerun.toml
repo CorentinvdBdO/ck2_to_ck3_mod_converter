@@ -246,6 +246,45 @@ colormap_scale = 0.25
 # 2's shape); both load in the two reference mods.
 colormap_mips = true
 
+# --- the whole-map water/snow/surround rasters
+#     (docs/step_map_water_border.md, lane water-border)
+#
+# Three textures are sampled at a whole-map UV - the shader divides the world
+# position by the map size (gfx/FX/jomini/jomini_water_default.fxh:42) - so
+# every texel is pinned to one spot of the map. Ship none and the sea shows
+# vanilla's painting of Eurasia and Africa at close zoom, which is exactly what
+# the build-13 playtest reported. Both shipped total conversions override all
+# three. RGB/gloss/foam come from vanilla's own measured mean per coast
+# distance (mappings/water_profile.csv, scripts/measure_vanilla_water.py),
+# indexed by OUR distance to OUR coast.
+water = true
+water_profile_csv = "mappings/water_profile.csv"
+# Half canvas is vanilla's own and Elder Kings 2's for the colour map...
+water_scale = 0.5
+# ...and Godherja ships its foam map at an eighth, so the foam ramp does not
+# need the colour map's resolution.
+water_foam_scale = 0.25
+# Both reference mods ship snow_mask.dds at a quarter of their canvas.
+snow_mask_scale = 0.25
+# Flat R for the snow mask: 255 = snow never falls, 0 = the engine's own winter
+# model and its hemisphere term decide. 0, not vanilla's raster mean of 66:
+# R SUPPRESSES snow, so the mean would suppress a quarter of it everywhere.
+# Both measured derivations (per material, per latitude) were rejected -
+# docs/step_map_water_border.md section 4.
+snow_mask_no_snow = 0
+
+# gfx/map/surround_map/surround_mask.dds decides where the map stops being
+# drawn: pdxterrain.shader:777 makes the terrain transparent where its B
+# channel is high and pdxborder.shader:115 clips the political borders there.
+# Vanilla's is painted around Earth and eats up to 67 % of the map height at
+# the top - empty Arctic there, the Spine of the World on ours (the second
+# build-13 finding). We repaint the thinnest frame vanilla itself uses, on all
+# four edges: 54 texels, terrain clear from 11 (22 canvas px), the whole frame
+# inside our 128 px sea margin.
+surround_mask = true
+surround_profile_csv = "mappings/surround_profile.csv"
+surround_scale = 0.5
+
 # --- trees (docs/step_map_paint.md section 9.2 and 9.9)
 #
 # Scatter tree instances into the 18 vanilla

@@ -637,6 +637,35 @@ class MapConfig:
     #: write the full mip chain to 1x1 (Godherja's shape) vs. base level only
     #: (Elder Kings 2's shape); both load.
     colormap_mips: bool = True
+    #: write gfx/map/water/watercolor_rgb_waterspec_a.dds + foam_map.dds and
+    #: gfx/map/textures/snow_mask.dds. All three are sampled at a whole-map UV
+    #: and encode vanilla's Earth; ship none and the sea shows Europe
+    #: (docs/step_map_water_border.md, ck2ck3.map.water). Both shipped total
+    #: conversions override all three.
+    water: bool = True
+    #: vanilla's measured colour/gloss/foam against coast distance, in canvas
+    #: pixels (scripts/measure_vanilla_water.py).
+    water_profile_csv: Path = Path("mappings/water_profile.csv")
+    #: downsample factor from canvas resolution for the water colour map;
+    #: vanilla and Elder Kings 2 both ship theirs at half canvas.
+    water_scale: float = 0.5
+    #: same, for the foam map. Godherja ships its own at an eighth of canvas,
+    #: so the foam ramp does not need the colour map's resolution.
+    water_foam_scale: float = 0.25
+    #: same, for the snow mask; both reference mods ship a quarter canvas.
+    snow_mask_scale: float = 0.25
+    #: flat R for the snow mask: 255 = snow never falls, 0 = the engine's own
+    #: winter model and hemisphere term decide. See ck2ck3.map.water for why
+    #: neither of the two measured derivations survived.
+    snow_mask_no_snow: int = 0
+    #: write gfx/map/surround_map/surround_mask.dds. Vanilla's own hides up to
+    #: 67 % of the map height at the top - empty Arctic there, real territory
+    #: on any other map (docs/step_map_water_border.md §3, ck2ck3.map.surround).
+    surround_mask: bool = True
+    #: the measured frame profile (scripts/measure_vanilla_surround.py)
+    surround_profile_csv: Path = Path("mappings/surround_profile.csv")
+    #: downsample factor from canvas resolution for the surround mask
+    surround_scale: float = 0.5
     #: scatter tree instances into gfx/map/map_object_data/generated/*.txt
     #: from CK2 trees.bmp (docs/step_map_paint.md §9). Default on; false
     #: falls back to strip_vanilla_foliage's empty stubs.
@@ -796,6 +825,19 @@ def load(path: str | Path) -> MapConfig:
         colormap_blur_sigma=float(raw.get("colormap_blur_sigma", 9.0)),
         colormap_scale=float(raw.get("colormap_scale", 0.25)),
         colormap_mips=bool(raw.get("colormap_mips", True)),
+        water=bool(raw.get("water", True)),
+        water_profile_csv=Path(
+            str(raw.get("water_profile_csv", "mappings/water_profile.csv"))
+        ),
+        water_scale=float(raw.get("water_scale", 0.5)),
+        water_foam_scale=float(raw.get("water_foam_scale", 0.25)),
+        snow_mask_scale=float(raw.get("snow_mask_scale", 0.25)),
+        snow_mask_no_snow=int(raw.get("snow_mask_no_snow", 0)),
+        surround_mask=bool(raw.get("surround_mask", True)),
+        surround_profile_csv=Path(
+            str(raw.get("surround_profile_csv", "mappings/surround_profile.csv"))
+        ),
+        surround_scale=float(raw.get("surround_scale", 0.5)),
         trees=bool(raw.get("trees", True)),
         trees_csv=Path(str(raw.get("trees_csv", "mappings/tree_meshes.csv"))),
         trees_seed=int(raw.get("trees_seed", 4242)),

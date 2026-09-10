@@ -29,3 +29,6 @@ Added by lane `events` (2026-09-10), coordinator decisions on the hand-off's ope
 - `events`: `modified` (2911) and `common/on_actions` (197) are the next two lanes; `docs/evidence/HANDOFF_events.md` §2–§3 is their brief.
 - `events` (seen in game, build 13): 539 `jomini_eventmanager.cpp: Event X is orphaned` — live events with no caller; emit `orphan = yes` on every event not referenced by a live `trigger_event` until the on_actions lane wires them. 108 `jomini_dynamicdescription.cpp: Unrecognized loc key` from 5 `fae_kni.*` events: their CK2 `EVTDESC700xx` keys are among the 40 loc misses; stub an event whose `desc` key is missing, or mint the key.
 
+
+Added by lane `water-border` (2026-09-10).
+- `tests/test_cli.py` runs real steps that rewrite other lanes' `docs/evidence/*.csv` on every `pytest` (decisions convertibility, terrain-history baronies, …): point those evidence writes at `tmp_path` in the test, or make the steps write evidence only when the real CLI runs. Own small lane.

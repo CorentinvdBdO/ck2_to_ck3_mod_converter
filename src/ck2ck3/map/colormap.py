@@ -264,7 +264,11 @@ def header(width: int, height: int, *, mips: int = 1) -> bytes:
 
 
 def save(rgb: np.ndarray, path: Path, *, mips: bool = True) -> None:
-    """Write ``rgb`` (h, w, 3) uint8 as an uncompressed BGRA8 DDS, alpha=255.
+    """Write ``rgb`` as an uncompressed BGRA8 DDS.
+
+    ``(h, w, 3)`` gets alpha = 255; ``(h, w, 4)`` keeps the alpha it carries,
+    which is what ``ck2ck3.map.water`` needs — the water colour map's alpha is
+    the gloss channel, not padding.
 
     ``mips=True`` (default) writes the full chain to 1x1, Godherja's shape;
     ``False`` writes only the base level, EK2's shape. Both load per the two
@@ -272,8 +276,11 @@ def save(rgb: np.ndarray, path: Path, *, mips: bool = True) -> None:
     smoother look at oblique camera angles.
     """
     h, w = rgb.shape[:2]
-    alpha = np.full((h, w, 1), 255, dtype=np.uint8)
-    rgba = np.concatenate([rgb.astype(np.uint8), alpha], axis=-1)
+    if rgb.shape[-1] == 4:
+        rgba = rgb.astype(np.uint8)
+    else:
+        alpha = np.full((h, w, 1), 255, dtype=np.uint8)
+        rgba = np.concatenate([rgb.astype(np.uint8), alpha], axis=-1)
     levels = _mip_chain(rgba) if mips else [rgba]
     data = bytearray()
     for level in levels:

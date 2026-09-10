@@ -1,0 +1,534 @@
+ck3-tiger 2026-09-10T20:09:30+02:00
+mod:  /home/cvdbdo/git/paradox/ck3/wt/_out/water-border
+game: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+---
+
+# Committed extract of a ck3-tiger whole-mod report, written by
+# scripts/tiger_error_extract.py. The raw report is gitignored (359 MB on
+# Faerun: one block per diagnostic, 208k of them localisation warnings).
+# Kept here: every error/fatal block verbatim, and the by-kind /
+# by-message summary that indexes what is not here. Regenerate with
+# scripts/validate_output_mod.sh, then re-run this.
+
+=== every error/fatal block ===
+
+error(localization-key-collision): localization keys 'bookmark_rags_to_riches_duke_robert_subheading and Riechauf' have same MURMUR3A hash '0x48615B8A'
+    --> [CK3] localization/english/bookmark/bookmark_rags_to_riches_1066_l_english.yml
+  37 |  bookmark_rags_to_riches_duke_robert_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_names_l_english.yml
+1737 |  Riechauf:0 "Riechauf"
+     |  ^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'laamp_legitimist_support_contract_success and Dobsoka' have same MURMUR3A hash '0x1093A066'
+     --> [CK3] localization/english/dlc/ep3/ep3_laamps_8_l_english.yml
+  234 | laamp_legitimist_support_contract_success: "After accepting this [task_contract|E] and traveling to [recipient.GetCurrentLocation.GetName], you will be able to negotiate up to #color_yellow 1800 gold#! and #color_yellow 3000 elite troops#!, in exchange for sizable payments afterwards."
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+     --> [MOD] localization/english/fae_names_l_english.yml
+15685 |  Dobsoka:0 "Dobsoka"
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'fp2_yearly.4004.c.tt and Koart' have same MURMUR3A hash '0xF36D8684'
+     --> [CK3] localization/english/dlc/fp2/dlc_fp2_events_amalgamated_l_english.yml
+  931 |  fp2_yearly.4004.c.tt:0 "[mozarab_wanderer.GetName] returns to wandering"
+      |  ^^^^^^^^^^^^^^^^^^^^ 
+     --> [MOD] localization/english/fae_names_l_english.yml
+33378 |  Koart:0 "Koart"
+      |  ^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'diplomacy_generic.0014.withhold_information.desc and k_rashemen' have same MURMUR3A hash '0x3ADB342D'
+    --> [CK3] localization/english/event_localization/lifestyle/statecraft/diplomacy_generic_events_l_english.yml
+  53 |  diplomacy_generic.0014.withhold_information.desc:0 "Since I began to withhold information from [disobedient_subject.GetTitledFirstName], [disobedient_subject.GetSheHe] has made a damn fool of [disobedient_subject.GetHerselfHimself] on more occasions than I can count. Dismissing [disobedient_subject.GetHerHis] hopelessly outdated suggestions has been easier than outwitting a dog."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_0000_titles_l_english.yml
+7245 |  k_rashemen:0 "Rashemen"
+     |  ^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'PROV1421 and d_sunni_turkic_company_adj' have same MURMUR3A hash '0xCD2FF86C'
+     --> [MOD] localization/english/fae_0000_province_names_l_english.yml
+ 1424 |  PROV1421:0 "Batiriland"
+      |  ^^^^^^^^ 
+     --> [CK3] localization/english/titles_l_english.yml
+16019 |  d_sunni_turkic_company_adj:0 "Turkmen"
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'b_lonefang_adj and court.6070.b' have same MURMUR3A hash '0x89D63247'
+    --> [MOD] localization/english/fae_0000_titles_baronies_l_english.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ 
+    --> [CK3] localization/english/event_localization/court_events/court_events_claudia_l_english.yml
+ 146 |  court.6070.b:0 "Pen-wiggling is for losers and weaklings!"
+     |  ^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'dynn_fae_14595 and emperor_oigur' have same MURMUR3A hash '0x54EDAA1E'
+    --> [MOD] localization/english/fae_dynasties_l_english.yml
+1713 |  dynn_fae_14595:0 "Harcantel"
+     |  ^^^^^^^^^^^^^^ 
+    --> [MOD] localization/english/fae_culturesnreligions_l_english.yml
+4693 |  emperor_oigur:0 "Khahan"
+     |  ^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTAHF23881 and Padmini' have same MURMUR3A hash '0xE0DD68F8'
+     --> [MOD] localization/english/fae_holyfury_l_english.yml
+10249 |  EVTOPTAHF23881:0 "Curse you!"
+      |  ^^^^^^^^^^^^^^ 
+     --> [CK3] localization/english/names/character_names_l_english.yml
+15154 |  Padmini:0 "Padmini"
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTC_ZE_12112 and stewardship_domain_special.8012.desc' have same MURMUR3A hash '0x9573CEE7'
+    --> [MOD] localization/english/fae_v2_50b_l_english.yml
+1044 |  EVTOPTC_ZE_12112:0 "<!CK2:From.GetSheHeCap!> is a joy to have around."
+     |  ^^^^^^^^^^^^^^^^ 
+    --> [CK3] localization/english/event_localization/lifestyle/governance/stewardship_domain_events_l_english.yml
+ 547 |  stewardship_domain_special.8012.desc:0 "Are there no competent architects in my realm?! My new assistant architect, overseeing the aqueduct construction in [county.GetNameNoTier], has also been running over budget!\n\nI am tired of nonsense excuses such as "it cannot be done, [ROOT.Char.Custom('FormOfAddressForLiege')]"!"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'String_crescent and DR201' have same MURMUR3A hash '0xA3DA5710'
+   --> [MOD] localization/english/fae_v2_70_l_english.yml
+118 |  String_crescent:0 "crescent symbol"
+    |  ^^^^^^^^^^^^^^^ 
+   --> [MOD] localization/english/fae_faerun_year_names_l_english.yml
+205 |  DR201:0 "the Student"
+    |  ^^^^^ <-- here
+    = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Bo_jang and retinue_warpriests_3' have same MURMUR3A hash '0x7FB4FD88'
+     --> [CK3] localization/english/names/character_names_l_english.yml
+40026 |  Bo_jang: "Bo-jang" # 甫藏 (보장)
+      |  ^^^^^^^ 
+     --> [MOD] localization/english/fae_faerun_retinues_l_english.yml
+   20 |  retinue_warpriests_3:0 "Talontar Blightlords"
+      |  ^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'PROV1421 and d_sunni_turkic_company_adj' have same MURMUR3A hash '0xCD2FF86C'
+     --> [MOD] localization/french/fae_0000_province_names_l_french.yml
+ 1424 |  PROV1421:0 "Batiriland"
+      |  ^^^^^^^^ 
+     --> [CK3] localization/french/titles_l_french.yml
+16018 |  d_sunni_turkic_company_adj: "turkmène"
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'b_lonefang_adj and court.6070.b' have same MURMUR3A hash '0x89D63247'
+    --> [MOD] localization/french/fae_0000_titles_baronies_l_french.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ 
+    --> [CK3] localization/french/event_localization/court_events/court_events_claudia_l_french.yml
+ 145 |  court.6070.b: "Remuer la plume est réservé aux faibles !"
+     |  ^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'k_rashemen and diplomacy_generic.0014.withhold_information.desc' have same MURMUR3A hash '0x3ADB342D'
+    --> [MOD] localization/french/fae_0000_titles_l_french.yml
+7245 |  k_rashemen:0 "Rashéménie"
+     |  ^^^^^^^^^^ 
+    --> [CK3] localization/french/event_localization/lifestyle/statecraft/diplomacy_generic_events_l_french.yml
+  47 |  diplomacy_generic.0014.withhold_information.desc: "Depuis que j’ai commencé à cacher des informations [disobedient_subject.Custom('FR_au_Char_Pi')][disobedient_subject.GetTitledFirstName], [disobedient_subject.Custom('FR_IlElle')] s’est ridiculisé[disobedient_subject.Custom('FR_E')] à maintes occasions. Écarter ses suggestions dépassées a été aussi facile que de respirer."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'retinue_warpriests_3 and Bo_jang' have same MURMUR3A hash '0x7FB4FD88'
+     --> [MOD] localization/french/fae_faerun_retinues_l_french.yml
+   20 |  retinue_warpriests_3:0 "Talontar Blightlords"
+      |  ^^^^^^^^^^^^^^^^^^^^ 
+     --> [CK3] localization/french/names/character_names_l_french.yml
+39969 |  Bo_jang: "Bo-jang" #甫藏 (보장)
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'DR201 and String_crescent' have same MURMUR3A hash '0xA3DA5710'
+   --> [MOD] localization/french/fae_faerun_year_names_l_french.yml
+205 |  DR201:0 "the Student"
+    |  ^^^^^ 
+   --> [MOD] localization/french/fae_v2_70_l_french.yml
+118 |  String_crescent:0 "un symbole du Croissant"
+    |  ^^^^^^^^^^^^^^^ <-- here
+    = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Riechauf and bookmark_rags_to_riches_duke_robert_subheading' have same MURMUR3A hash '0x48615B8A'
+    --> [MOD] localization/french/fae_names_l_french.yml
+1737 |  Riechauf:0 "Riechauf"
+     |  ^^^^^^^^ 
+    --> [CK3] localization/french/bookmark/bookmark_rags_to_riches_1066_l_french.yml
+  28 |  bookmark_rags_to_riches_duke_robert_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Dobsoka and laamp_legitimist_support_contract_success' have same MURMUR3A hash '0x1093A066'
+     --> [MOD] localization/french/fae_names_l_french.yml
+15685 |  Dobsoka:0 "Dobsoka"
+      |  ^^^^^^^ 
+     --> [CK3] localization/french/dlc/ep3/ep3_laamps_8_l_french.yml
+  220 |  laamp_legitimist_support_contract_success: "Après avoir accepté ce [task_contract|El] et rejoint [recipient.GetCurrentLocation.GetName], vous pourrez négocier jusqu’à #color_yellow 1800 pièces d’or#! et #color_yellow 3000 troupes d’élite#! en échange de paiements importants par la suite."
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Koart and fp2_yearly.4004.c.tt' have same MURMUR3A hash '0xF36D8684'
+     --> [MOD] localization/french/fae_names_l_french.yml
+33378 |  Koart:0 "Koart"
+      |  ^^^^^ 
+     --> [CK3] localization/french/dlc/fp2/dlc_fp2_events_amalgamated_l_french.yml
+  868 |  fp2_yearly.4004.c.tt: "[mozarab_wanderer.Custom('FR_le_Char')|U][mozarab_wanderer.GetName] repart vagabonder"
+      |  ^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTC_ZE_12112 and stewardship_domain_special.8012.desc' have same MURMUR3A hash '0x9573CEE7'
+    --> [MOD] localization/french/fae_v2_50b_l_french.yml
+1044 |  EVTOPTC_ZE_12112:0 "<!CK2:From.GetIlElleCap!> est adorable. C'est un plaisir d'être en sa présence."
+     |  ^^^^^^^^^^^^^^^^ 
+    --> [CK3] localization/french/event_localization/lifestyle/governance/stewardship_domain_events_l_french.yml
+ 456 |  stewardship_domain_special.8012.desc: "N’y a-t-il pas d’architectes compétents dans mon pays ?! Mon nouvel architecte assistant qui supervise la construction de l’aqueduc en [county.GetNameNoTier] a également dépassé le budget !\n\nJe suis fatigué[ROOT.Char.Custom('FR_E')] des excuses absurdes telles que « cela ne peut pas être fait, [ROOT.Char.Custom('FR_MonseigneurMadame')|U] » !"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Padmini and EVTOPTAHF23881' have same MURMUR3A hash '0xE0DD68F8'
+     --> [CK3] localization/french/names/character_names_l_french.yml
+15154 |  Padmini: "Padmini"
+      |  ^^^^^^^ 
+     --> [MOD] localization/french/fae_holyfury_l_french.yml
+10249 |  EVTOPTAHF23881:0 "Soyez maudit<!CK2:tribal_festival_winner.Get_E!> !"
+      |  ^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'fp2_yearly.4004.c.tt and Koart' have same MURMUR3A hash '0xF36D8684'
+     --> [CK3] localization/german/dlc/fp2/dlc_fp2_events_amalgamated_l_german.yml
+  868 |  fp2_yearly.4004.c.tt: "[mozarab_wanderer.GetName] nimmt seine Wanderschaft wieder auf"
+      |  ^^^^^^^^^^^^^^^^^^^^ 
+     --> [MOD] localization/german/fae_names_l_german.yml
+33378 |  Koart:0 "Koart"
+      |  ^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'court.6070.b and b_lonefang_adj' have same MURMUR3A hash '0x89D63247'
+    --> [CK3] localization/german/event_localization/court_events/court_events_claudia_l_german.yml
+ 145 |  court.6070.b: "Mit der Feder zu wackeln, ist etwas für Verlierer und Schwächlinge!"
+     |  ^^^^^^^^^^^^ 
+    --> [MOD] localization/german/fae_0000_titles_baronies_l_german.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'PROV1421 and d_sunni_turkic_company_adj' have same MURMUR3A hash '0xCD2FF86C'
+     --> [MOD] localization/german/fae_0000_province_names_l_german.yml
+ 1424 |  PROV1421:0 "Batiriland"
+      |  ^^^^^^^^ 
+     --> [CK3] localization/german/titles_l_german.yml
+16018 |  d_sunni_turkic_company_adj: "Turkmenisch"
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'k_rashemen and diplomacy_generic.0014.withhold_information.desc' have same MURMUR3A hash '0x3ADB342D'
+    --> [MOD] localization/german/fae_0000_titles_l_german.yml
+7245 |  k_rashemen:0 "Rashemen"
+     |  ^^^^^^^^^^ 
+    --> [CK3] localization/german/event_localization/lifestyle/statecraft/diplomacy_generic_events_l_german.yml
+  47 |  diplomacy_generic.0014.withhold_information.desc: "Seit ich angefangen habe, [disobedient_subject.GetTitledFirstName] Informationen vorzuenthalten, hat [disobedient_subject.Custom('DE_PRO_PER_S_3P_N')] sich schon unzählige Male zum Narren gemacht. [disobedient_subject.Custom('DE_PRO_POS_S_3P')|U]e hoffnungslos veralteten Vorschläge zu verwerfen ist einfacher, als einen Hund an der Nase herumzuführen."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'DR201 and String_crescent' have same MURMUR3A hash '0xA3DA5710'
+   --> [MOD] localization/german/fae_faerun_year_names_l_german.yml
+205 |  DR201:0 "the Student"
+    |  ^^^^^ 
+   --> [MOD] localization/german/fae_v2_70_l_german.yml
+118 |  String_crescent:0 "Mondsichelsymbol"
+    |  ^^^^^^^^^^^^^^^ <-- here
+    = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTAHF23881 and Padmini' have same MURMUR3A hash '0xE0DD68F8'
+     --> [MOD] localization/german/fae_holyfury_l_german.yml
+10249 |  EVTOPTAHF23881:0 "Verflucht!"
+      |  ^^^^^^^^^^^^^^ 
+     --> [CK3] localization/german/names/character_names_l_german.yml
+15154 |  Padmini: "Padmini"
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Riechauf and bookmark_rags_to_riches_duke_robert_subheading' have same MURMUR3A hash '0x48615B8A'
+    --> [MOD] localization/german/fae_names_l_german.yml
+1737 |  Riechauf:0 "Riechauf"
+     |  ^^^^^^^^ 
+    --> [CK3] localization/german/bookmark/bookmark_rags_to_riches_1066_l_german.yml
+  28 |  bookmark_rags_to_riches_duke_robert_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Dobsoka and laamp_legitimist_support_contract_success' have same MURMUR3A hash '0x1093A066'
+     --> [MOD] localization/german/fae_names_l_german.yml
+15685 |  Dobsoka:0 "Dobsoka"
+      |  ^^^^^^^ 
+     --> [CK3] localization/german/dlc/ep3/ep3_laamps_8_l_german.yml
+  220 |  laamp_legitimist_support_contract_success: "Nachdem Ihr diesen [task_contract|E] angenommen habt und nach „[recipient.GetCurrentLocation.GetName|U]“ gereist seid, werdet Ihr im Tausch gegen spätere Zahlungen von erheblichem Umfang durch Verhandlungen bis zu #color_yellow 1.800 Gold#! und #color_yellow 3.000 Elitetruppen#! erhalten können."
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTC_ZE_12112 and stewardship_domain_special.8012.desc' have same MURMUR3A hash '0x9573CEE7'
+    --> [MOD] localization/german/fae_v2_50b_l_german.yml
+1044 |  EVTOPTC_ZE_12112:0 "<!CK2:From.GetSheHeCap!> ist wirklich eine gute Gesellschaft."
+     |  ^^^^^^^^^^^^^^^^ 
+    --> [CK3] localization/german/event_localization/lifestyle/governance/stewardship_domain_events_l_german.yml
+ 456 |  stewardship_domain_special.8012.desc: "Gibt es denn keine fähigen Architekten in meinem Reich?! Mein neuer Hilfsarchitekt, der den Bau des Aquädukts in [county.GetNameNoTier] leitet, überschreitet ebenfalls seine Mittel!\n\nIch habe unsinnige Ausreden wie „Das geht einfach nicht, [ROOT.Char.Custom('FormOfAddressForLiege')]“ gründlich satt!"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Bo_jang and retinue_warpriests_3' have same MURMUR3A hash '0x7FB4FD88'
+     --> [CK3] localization/german/names/character_names_l_german.yml
+39969 |  Bo_jang: "Bo-jang" #甫藏 (보장)
+      |  ^^^^^^^ 
+     --> [MOD] localization/german/fae_faerun_retinues_l_german.yml
+   20 |  retinue_warpriests_3:0 "Talontar Blightlords"
+      |  ^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'court.6070.b and b_lonefang_adj' have same MURMUR3A hash '0x89D63247'
+    --> [CK3] localization/spanish/event_localization/court_events/court_events_claudia_l_spanish.yml
+ 145 |  court.6070.b: "¡Mover la pluma es para fracasados y débiles!"
+     |  ^^^^^^^^^^^^ 
+    --> [MOD] localization/spanish/fae_0000_titles_baronies_l_spanish.yml
+9972 |  b_lonefang_adj:0 "Lonefang"
+     |  ^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'stewardship_domain_special.8012.desc and EVTOPTC_ZE_12112' have same MURMUR3A hash '0x9573CEE7'
+    --> [CK3] localization/spanish/event_localization/lifestyle/governance/stewardship_domain_events_l_spanish.yml
+ 456 |  stewardship_domain_special.8012.desc: "¿Es que en mi señorío no hay arquitectos competentes? Mi nuevo arquitecto asistente a cargo de supervisar la construcción del acueducto de [county.GetNameNoTier] ¡también se ha excedido del presupuesto!\n\n¡Estoy cansad[ROOT.Char.Custom('ES_OA')] de excusas sin sentido, como «no se puede hacer, [ROOT.Char.Custom('FormOfAddressForLiege')]!»."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    --> [MOD] localization/spanish/fae_v2_50b_l_spanish.yml
+1044 |  EVTOPTC_ZE_12112:0 "<!CK2:From.GetSheHeCap!> es una alegría tenerlo aquí."
+     |  ^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'PROV1421 and d_sunni_turkic_company_adj' have same MURMUR3A hash '0xCD2FF86C'
+     --> [MOD] localization/spanish/fae_0000_province_names_l_spanish.yml
+ 1424 |  PROV1421:0 "Batiriland"
+      |  ^^^^^^^^ 
+     --> [CK3] localization/spanish/titles_l_spanish.yml
+16018 |  d_sunni_turkic_company_adj: "turcomano"
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'k_rashemen and diplomacy_generic.0014.withhold_information.desc' have same MURMUR3A hash '0x3ADB342D'
+    --> [MOD] localization/spanish/fae_0000_titles_l_spanish.yml
+7245 |  k_rashemen:0 "Rashemen"
+     |  ^^^^^^^^^^ 
+    --> [CK3] localization/spanish/event_localization/lifestyle/statecraft/diplomacy_generic_events_l_spanish.yml
+  47 |  diplomacy_generic.0014.withhold_information.desc: "Desde que comencé a ocultar información a [SCOPE.sC('disobedient_subject').GetTitledFirstName|l], ha ido quedando como un[disobedient_subject.Custom('ES_XA')] complet[disobedient_subject.Custom('ES_OA')] idiota en más ocasiones de las que puedo contar. Desestimar sus sugerencias desesperadamente anticuadas ha sido más fácil que engañar a un perro."
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'retinue_warpriests_3 and Bo_jang' have same MURMUR3A hash '0x7FB4FD88'
+     --> [MOD] localization/spanish/fae_faerun_retinues_l_spanish.yml
+   20 |  retinue_warpriests_3:0 "Talontar Blightlords"
+      |  ^^^^^^^^^^^^^^^^^^^^ 
+     --> [CK3] localization/spanish/names/character_names_l_spanish.yml
+39969 |  Bo_jang: "Bo-jang" #甫藏 (보장)
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'DR201 and String_crescent' have same MURMUR3A hash '0xA3DA5710'
+   --> [MOD] localization/spanish/fae_faerun_year_names_l_spanish.yml
+205 |  DR201:0 "the Student"
+    |  ^^^^^ 
+   --> [MOD] localization/spanish/fae_v2_70_l_spanish.yml
+118 |  String_crescent:0 "símbolo de la medialuna"
+    |  ^^^^^^^^^^^^^^^ <-- here
+    = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'EVTOPTAHF23881 and Padmini' have same MURMUR3A hash '0xE0DD68F8'
+     --> [MOD] localization/spanish/fae_holyfury_l_spanish.yml
+10249 |  EVTOPTAHF23881:0 "¡Maldita sea!"
+      |  ^^^^^^^^^^^^^^ 
+     --> [CK3] localization/spanish/names/character_names_l_spanish.yml
+15154 |  Padmini: "Padmini"
+      |  ^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Riechauf and bookmark_rags_to_riches_duke_robert_subheading' have same MURMUR3A hash '0x48615B8A'
+    --> [MOD] localization/spanish/fae_names_l_spanish.yml
+1737 |  Riechauf:0 "Riechauf"
+     |  ^^^^^^^^ 
+    --> [CK3] localization/spanish/bookmark/bookmark_rags_to_riches_1066_l_spanish.yml
+  28 |  bookmark_rags_to_riches_duke_robert_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+     |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+     = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Dobsoka and laamp_legitimist_support_contract_success' have same MURMUR3A hash '0x1093A066'
+     --> [MOD] localization/spanish/fae_names_l_spanish.yml
+15685 |  Dobsoka:0 "Dobsoka"
+      |  ^^^^^^^ 
+     --> [CK3] localization/spanish/dlc/ep3/ep3_laamps_8_l_spanish.yml
+  220 |  laamp_legitimist_support_contract_success: "Después de aceptar este [task_contract|lE] y viajar a [recipient.GetCurrentLocation.GetName], podrás negociar hasta #color_yellow 1 800 de oro#! y #color_yellow 3 000 soldados de élite#!, a cambio de pagos considerables después."
+      |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(localization-key-collision): localization keys 'Koart and fp2_yearly.4004.c.tt' have same MURMUR3A hash '0xF36D8684'
+     --> [MOD] localization/spanish/fae_names_l_spanish.yml
+33378 |  Koart:0 "Koart"
+      |  ^^^^^ 
+     --> [CK3] localization/spanish/dlc/fp2/dlc_fp2_events_amalgamated_l_spanish.yml
+  868 |  fp2_yearly.4004.c.tt: "[mozarab_wanderer.GetName] vuelve a vagar"
+      |  ^^^^^^^^^^^^^^^^^^^^ <-- here
+      = Info: localization keys hash collision will cause some of them fail to load
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_1-1000_miscellaneous.txt
+5147 |         add_spouse = fae_190
+     |                      ^^^^^^^ 
+
+error(wrong-gender): character is not female
+     --> [MOD] history/characters/fae_20001-23000_cormyr.txt
+15748 |         add_spouse = fae_20848
+      |                      ^^^^^^^^^ 
+
+error(wrong-gender): character is not male
+    --> [MOD] history/characters/fae_2001-3000_baldurs_gate.txt
+9604 |         add_spouse = fae_2281 # Isobel
+     |                      ^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5305 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5321 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5345 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5362 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5379 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5400 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+    --> [MOD] history/characters/fae_26001-28000_dalelands.txt
+5423 |     mother = fae_26310 # Lorraine Treskeden
+     |              ^^^^^^^^^ 
+
+error(wrong-gender): character is not male
+    --> [MOD] history/characters/fae_33001-35000_amn.txt
+5194 |         add_spouse = fae_33275
+     |                      ^^^^^^^^^ 
+
+error(wrong-gender): character is not female
+     --> [MOD] history/characters/fae_41001-42000_savage_frontier.txt
+16929 |         add_spouse = fae_41904
+      |                      ^^^^^^^^^ 
+
+error(unknown-field): unknown token `sexuality`
+    --> [MOD] history/characters/fae_47001-48000_minor_elf_realms.txt
+1060 |         sexuality = homosexual
+     |         ^^^^^^^^^ 
+
+error(wrong-gender): character is not male
+  --> [MOD] history/characters/fae_5001-7000_silver_marches.txt
+82 |         add_spouse = fae_5371
+   |                      ^^^^^^^^ 
+
+error(unknown-field): unknown token `sexuality`
+   --> [MOD] history/characters/fae_52801-53000_chult.txt
+639 |         sexuality = homosexual
+    |         ^^^^^^^^^ 
+
+error(wrong-gender): character is not male
+   --> [MOD] history/characters/fae_9001-11000_western_heartlands.txt
+734 |         add_matrilineal_spouse = fae_9032
+    |                                  ^^^^^^^^ 
+
+error(history): holder of d_highreach is not alive at 657.1.1
+     --> [MOD] history/titles/fae_counties.txt
+57076 |         liege = d_highreach
+      |                 ^^^^^^^^^^^ 
+      = Info: setting the liege will not have effect here
+
+
+fatal: 0, error: 58, warning: 50097, untidy: 10336, tips: 142
+---
+summary: 58 error/fatal, 50097 warning, 10478 tips/untidy (tiger exit 0)
+--- by kind
+  38940 warning(missing-localization)
+  10336 untidy(missing-localization)
+   6788 warning(localization)
+   1834 warning(duplicate-item)
+   1634 warning(datafunctions)
+    455 warning(missing-file)
+    319 warning(rivers)
+    142 tips(suggest-localization)
+     84 warning(missing-item)
+     41 error(localization-key-collision)
+     21 warning(history)
+     15 warning(bookmarks)
+     14 error(wrong-gender)
+      4 warning(markup)
+      2 error(unknown-field)
+      1 warning(use-of-this)
+      1 warning(scopes)
+      1 warning(exact-duplicate-item)
+      1 error(history)
+--- by message
+  32854 warning(missing-localization): missing spanish, french and german localization key dynn_fae_N
+   1834 warning(duplicate-item): localization is redefined by another localization
+    884 warning(datafunctions): GetLocation cannot follow a Character promote
+    315 warning(datafunctions): unknown datafunction EvilGodName
+    284 warning(localization): The substitution parameter $CHAR$ is not defined anywhere as a key.
+    248 warning(rivers): (N, N) river tributary (red) not joining another river
+    233 warning(localization): The substitution parameter $FIRST_ADJ$ is not defined anywhere as a key.
+    228 warning(localization): The substitution parameter $DIRECTION$ is not defined anywhere as a key.
+    212 warning(localization): The substitution parameter $SOCIETY$ is not defined anywhere as a key.
+    193 warning(datafunctions): GetHolder cannot follow a Character promote
+    183 warning(localization): The substitution parameter $WHERE$ is not defined anywhere as a key.
+    148 warning(localization): The substitution parameter $PROV$ is not defined anywhere as a key.
+    124 warning(localization): The substitution parameter $OTHER_TITLE$ is not defined anywhere as a key.
+    118 warning(localization): The substitution parameter $SECOND_ADJ$ is not defined anywhere as a key.
+    108 warning(localization): The substitution parameter $SETTLEMENT$ is not defined anywhere as a key.
+    108 warning(datafunctions): GetCapitalLocation cannot follow a Province promote
+    104 warning(localization): The substitution parameter $INSERT$ is not defined anywhere as a key.
+     95 warning(localization): The substitution parameter $WONDER_UPGRADE_TYPE$ is not defined anywhere as a key.
+     89 warning(localization): The substitution parameter $PIETYNAME$ is not defined anywhere as a key.
+     85 warning(localization): The substitution parameter $HONORIFIC$ is not defined anywhere as a key.
+     82 warning(missing-localization): missing spanish, french and german localization key bookmark_fae_N_desc
+     80 warning(missing-item): coa fae_N not defined in common/coat_of_arms/coat_of_arms/
+     80 warning(localization): The substitution parameter $AMBITION_TARGET_NAME$ is not defined anywhere as a key.
+     76 warning(localization): The substitution parameter $RECIPIENT$ is not defined anywhere as a key.
+     72 warning(localization): The substitution parameter $OFFMAP$ is not defined anywhere as a key.
+     72 warning(datafunctions): GetBaseName cannot follow a Character promote
+     68 warning(localization): The substitution parameter $WONDER_TYPE$ is not defined anywhere as a key.
+     68 warning(localization): The substitution parameter $FACTION$ is not defined anywhere as a key.
+     64 warning(localization): The substitution parameter $DECISION$ is not defined anywhere as a key.
+     61 warning(rivers): (N, N) river pixel has N neighbors
+     60 warning(localization): The substitution parameter $ROUTE$ is not defined anywhere as a key.
+     60 warning(localization): The substitution parameter $FAILED$ is not defined anywhere as a key.
+     56 warning(missing-localization): missing spanish, french and german localization key cn_fae_stommheim
+     56 warning(localization): The substitution parameter $VICTIM$ is not defined anywhere as a key.
+     56 warning(localization): The substitution parameter $BLOODLINE$ is not defined anywhere as a key.
+     52 warning(localization): The substitution parameter $ENEMY$ is not defined anywhere as a key.
+     52 untidy(missing-localization): missing english, spanish, french and german localization for name  
+     48 warning(localization): The substitution parameter $TECH$ is not defined anywhere as a key.
+     48 warning(localization): The substitution parameter $JOB$ is not defined anywhere as a key.
+     44 warning(localization): The substitution parameter $VAR$ is not defined anywhere as a key.
