@@ -439,7 +439,7 @@ evilcat_remove_patrons,,none,verified,not found in the CK3 1.19 vocabulary sampl
 expert_bard,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 expert_cleric,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 expert_sorcerer,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
-fertility,fertility,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+fertility,,none,verified,"not a CK3 effect key: `fertility` is a trigger-only comparison; the effect is add_fertility",1
 fire_giant,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 firenewt,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 flip_secret_religious_community_provinces,,none,verified,secret religious societies/cults do not exist in CK3 (docs/mechanics_inventory.md),1
@@ -460,7 +460,7 @@ has_prevs_secret_religion_truly_trigger,,none,verified,not found in the CK3 1.19
 has_severe_disability_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 has_sympathy_for_true_religion_of_prev_trigger,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
 has_title_flag,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1
-health,health,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
+health,,none,verified,"not a CK3 effect key: `health` is a trigger-only comparison; the effects are add_health/set_health",1
 horse_archers,horse_archers,exact,assumed,auto: identical spelling found in CK3 1.19 script usage (semantics not individually checked),1
 in_faction,,none,assumed,not found in the CK3 1.19 vocabulary sample as a bare trigger,1
 is_abroad,,none,verified,not found in the CK3 1.19 vocabulary sample (auto-classified),1

@@ -280,6 +280,12 @@ CURATED_EFFECTS: dict[str, tuple[str | None, str, str, str]] = {
     "piety": (None, "none", "verified", "not a CK3 effect key: piety is trigger-only, changed only via add_piety - no bare effect of this name"),
     "ai": (None, "none", "verified", "context-dependent field; no single CK3 vocabulary meaning as a bare effect, needs a human check per call site"),
     "name": (None, "none", "assumed", "context-dependent field name, not a single vocabulary key"),
+    # Same class as `wealth`/`piety` below, found by ck3-tiger on the first
+    # live events build (lane `events`, 2026-09-10): the auto tier marked both
+    # `exact` because the spelling exists in CK3 script, but only as a trigger
+    # - `error(wrong-use): 'health' is a trigger and can't be used as an effect`.
+    "health": (None, "none", "verified", "not a CK3 effect key: `health` is a trigger-only comparison; the effects are add_health/set_health"),
+    "fertility": (None, "none", "verified", "not a CK3 effect key: `fertility` is a trigger-only comparison; the effect is add_fertility"),
     "wealth": (None, "none", "verified", "not a CK3 effect key: `piety`/`prestige`/`gold` are trigger-only comparisons in CK3, changed only via add_gold/add_piety/add_prestige - no bare effect of this name"),
     "prestige": (None, "none", "verified", "not a CK3 effect key: prestige is trigger-only, changed only via add_prestige - no bare effect of this name"),
     "opinion": (None, "none", "verified", "not a CK3 effect key: opinion is a trigger-only comparison block, changed only via add_opinion/remove_opinion - no bare effect of this name"),

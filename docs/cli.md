@@ -71,6 +71,12 @@ converter repository root, so the CLI behaves the same from any directory.
 | `decisions.min_score` | float | a decision's converted keys mapped ÷ total below this get `is_shown = { always = no }`, default `0.6` |
 | `decisions.triggers` / `decisions.effects` | path | `mappings/triggers.csv` / `effects.csv`, overridable for tests |
 | `decisions.evidence` | path | `docs/evidence/decisions_convertibility.csv`, overridable for tests |
+| `events.enabled` | bool | `false` writes no `events/<prefix>_*.txt` at all, default `true` |
+| `events.provenance` | path | `docs/evidence/events_provenance.csv`; only `status = new` rows are ported |
+| `events.min_score` | float | an event's converted keys mapped ÷ total below this becomes an inert stub, default `1.0` (`docs/step_events.md` §5) |
+| `events.themes_csv` | path | `mappings/event_themes.csv`, CK2 `picture`/`border` → CK3 `theme` |
+| `events.default_theme` | string | theme for an event whose picture and border are both unlisted, default `default` |
+| `events.triggers` / `events.effects` / `events.evidence` | path | as the `decisions` rows above, overridable for tests |
 | `tests.sample` | int | history title holders and land provinces the `tests` step asserts, spread evenly. `0` = every one (3694 provinces) |
 | `tests.bookmark` | str | bookmark key to anchor the tests to; unset = the highest-weight one, which is what the game's `-test` starts |
 
@@ -151,6 +157,7 @@ the ids you import unchanged from CK2, then `allocate()` the rest.
 | `cultures` | `common/culture/*`, `common/ethnicities`, … | CK2 culture groups/cultures → pillars, cultures, name lists. **Runs after `dynasties`**: a name list's `dynasty_names` comes from `ctx.data["dynasties"]["names_by_culture"]` |
 | `religions` | `common/religion/*` | CK2 religion groups/religions → families, religions, faiths, holy sites |
 | `decisions` | `common/decisions` | character-scope CK2 decisions ported to CK3 syntax (`docs/step_decisions.md`). **Runs after `loc`/`traits`** |
+| `events` | `events` | Faerûn's 1762 `new` CK2 events ported to CK3 syntax (`docs/step_events.md`). **Runs after `decisions`** (shared vocabulary tables and converter), `loc` and `traits` |
 | `tests` | `tests` | CK3 scripted tests asserting the generated mod's own claims; **runs last**, see below |
 
 `[map] title_scaffolding = true` re-enables the throwaway one-barony-per-province

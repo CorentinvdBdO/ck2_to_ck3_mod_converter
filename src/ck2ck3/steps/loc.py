@@ -370,6 +370,19 @@ def run(ctx: Context) -> StepResult:
         counts["files"] += len(per_file)
         counts[f"keys_{language}"] = keys
 
+    # Hand the key set to the `events` lane: an event `desc`/option `name` is
+    # a CK2 loc key this step ports verbatim, and the events step reports how
+    # many of the keys it emits have no text behind them
+    # (docs/step_events.md §6). English only - it is the one language Faerûn
+    # fills on 100 % of rows (configs/faerun.toml).
+    ctx.data["loc"] = {
+        "keys": frozenset(
+            key
+            for _stem, entries in plan.per_language.get("english", ())
+            for key in entries
+        )
+    }
+
     report = plan.report
     counts["codes"] = report.total
     counts["codes_converted"] = report.converted

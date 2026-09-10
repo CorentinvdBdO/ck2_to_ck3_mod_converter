@@ -1,0 +1,109 @@
+ck2_field,ck2_value,ck3_theme,note,faerun_new_uses
+border,GFX_event_normal_frame_religion,faith,CK2 religion frame -> CK3 faith theme,345
+border,GFX_event_normal_frame_war,war,CK2 war frame -> CK3 war theme,108
+border,GFX_event_normal_frame_intrigue,intrigue,unchanged concept,71
+border,GFX_event_letter_frame_religion,faith,CK2 religion frame -> CK3 faith theme,28
+border,GFX_event_normal_frame_economy,stewardship,CK3 renamed the economy lifestyle to stewardship,27
+border,GFX_event_normal_frame_diplomacy,diplomacy,unchanged concept,20
+border,GFX_event_narrative_frame_war,war,CK2 war frame -> CK3 war theme,9
+border,GFX_event_narrative_frame_religion,faith,CK2 religion frame -> CK3 faith theme,3
+border,GFX_event_long_frame_war,war,CK2 war frame -> CK3 war theme,2
+border,GFX_event_letter_frame_diplomacy,diplomacy,unchanged concept,1
+border,GFX_event_letter_frame_intrigue,intrigue,unchanged concept,1
+border,GFX_event_letter_frame_war,war,CK2 war frame -> CK3 war theme,1
+border,GFX_event_narrative_frame_diplomacy,diplomacy,unchanged concept,1
+picture,GFX_evt_bishop,faith,clergy,113
+picture,GFX_evt_relic_box,faith,relic/reliquary,90
+picture,GFX_evt_wizard,learning,scholarship; CK3 has no arcane theme,54
+picture,GFX_evt_melee,martial,melee at arms,44
+picture,GFX_evt_vampire_1,witchcraft,the nearest CK3 theme for undead flavour,43
+picture,GFX_evt_angels_1,faith,divine apparition,33
+picture,GFX_evt_library,learning,library,28
+picture,GFX_evt_dark_prayer,witchcraft,occult rite,24
+picture,GFX_evt_werewolf,witchcraft,the nearest CK3 theme for lycanthropy,23
+picture,GFX_evt_savage_frontier,travel,wilderness journey,20
+picture,GFX_evt_experiment,learning,experiment,17
+picture,GFX_evt_joust,martial,joust,17
+picture,GFX_evt_viking_throneroom_oldgods,faith,pagan hall,16
+picture,GFX_evt_steppe_mercenaries,war,mercenary company,15
+picture,GFX_evt_stressed_ruler,mental_health,stress,15
+picture,GFX_evt_shady_meeting,intrigue,conspiracy,14
+picture,GFX_evt_bandits,war,bandits,13
+picture,GFX_evt_battle,battle,battle,13
+picture,GFX_evt_gathering_of_minds,learning,council of scholars,12
+picture,GFX_evt_magic_ritual,witchcraft,ritual,12
+picture,GFX_evt_duel_scene,martial,duel,11
+picture,GFX_evt_feast,feast_activity,feast,11
+picture,GFX_evt_large_army,war,army on the march,11
+picture,GFX_evt_tribal_shrine,faith,shrine,11
+picture,GFX_evt_adventurers_3,travel,adventuring party on the road,9
+picture,GFX_evt_into_the_dungeon,dungeon,dungeon,9
+picture,GFX_evt_lovers,love,lovers,9
+picture,GFX_evt_market,stewardship,market,9
+picture,GFX_evt_wizard_2,learning,scholarship; CK3 has no arcane theme,9
+picture,GFX_evt_adventurers,travel,adventuring party on the road,8
+picture,GFX_evt_burning_house,disaster,fire,8
+picture,GFX_evt_council,realm,council,8
+picture,GFX_evt_religious_exultation,faith,religious ceremony,8
+picture,GFX_evt_secret_ceremony,witchcraft,secret rite,8
+picture,GFX_evt_whispers,intrigue,rumour,8
+picture,GFX_evt_adventurers_2,travel,adventuring party on the road,7
+picture,GFX_evt_angels_2,faith,divine apparition,7
+picture,GFX_evt_catching_heretic,faith,heresy,7
+picture,GFX_evt_midwinter_blot_oldgods,faith,pagan sacrifice,7
+picture,GFX_evt_vikings_arriving_oldgods,raid,raiders landing,7
+picture,GFX_evt_bad_news,diplomacy,message,6
+picture,GFX_evt_died_battle,battle,battle death,6
+picture,GFX_evt_emissary,diplomacy,envoy,6
+picture,GFX_evt_hunt,hunt_activity,hunt,6
+picture,GFX_evt_orcs,war,hostile warband,6
+picture,GFX_evt_quarrel,unfriendly,quarrel,6
+picture,GFX_evt_castle_construction,stewardship,construction,5
+picture,GFX_evt_gossip_1,intrigue,gossip,5
+picture,GFX_evt_noble_in_castle,realm,court,5
+picture,GFX_evt_treasure,stewardship,treasure,5
+picture,GFX_evt_carnage_1,battle,battlefield carnage,4
+picture,GFX_evt_death,death,death,4
+picture,GFX_evt_death_knight,witchcraft,the nearest CK3 theme for undead flavour,4
+picture,GFX_evt_drunk,mental_health,drink,4
+picture,GFX_evt_eavesdropping,intrigue,eavesdropping,4
+picture,GFX_evt_emissary_arabic,diplomacy,envoy,4
+picture,GFX_evt_imam,faith,clergy,4
+picture,GFX_evt_secluded_in_prayer,faith,prayer,4
+picture,GFX_evt_torture,prison,torture; CK3's prison theme covers the dungeon,4
+picture,GFX_evt_barbarian_1,war,hostile warband,3
+picture,GFX_evt_birth,pregnancy,birth,3
+picture,GFX_evt_child_reading,education,a child being taught,3
+picture,GFX_evt_council_quarrelling,realm,council dispute,3
+picture,GFX_evt_doge_republic,stewardship,republic,3
+picture,GFX_evt_festival_1,festival_activity,festival,3
+picture,GFX_evt_illness,physical_health,illness,3
+picture,GFX_evt_lunatic,mental_health,madness,3
+picture,GFX_evt_magic_2,witchcraft,ritual,3
+picture,GFX_evt_peasants,stewardship,peasantry,3
+picture,GFX_evt_scandal,intrigue,scandal,3
+picture,GFX_evt_siege,war,siege,3
+picture,GFX_evt_suspicious_noble,intrigue,suspicion,3
+picture,GFX_evt_adventurers_4,travel,adventuring party on the road,2
+picture,GFX_evt_book_carolingian_script,learning,book/manuscript,2
+picture,GFX_evt_burning_house_arabic,disaster,fire,2
+picture,GFX_evt_busy_trading_dock_republic,stewardship,trade,2
+picture,GFX_evt_courier,diplomacy,courier,2
+picture,GFX_evt_courtiers_talking,court,court chatter,2
+picture,GFX_evt_forest_a,travel,forest,2
+picture,GFX_evt_forest_b,travel,forest,2
+picture,GFX_evt_jugglers,party,entertainers,2
+picture,GFX_evt_marriage,marriage,wedding,2
+picture,GFX_evt_monastery_monks,faith,monastery,2
+picture,GFX_evt_noble_haughty_talking_to_peasants,stewardship,peasantry,2
+picture,GFX_evt_norse_tempest,disaster,storm,2
+picture,GFX_evt_northlander_raid,raid,raid,2
+picture,GFX_evt_recovery,recovery,recovery,2
+picture,GFX_evt_rider_1,travel,rider,2
+picture,GFX_evt_rival_rulers,unfriendly,rivalry between rulers,2
+picture,GFX_evt_runecaster_1,learning,runes; CK3 has no arcane theme,2
+picture,GFX_evt_savannah_a,travel,open country,2
+picture,GFX_evt_scholar_1,learning,scholar,2
+picture,GFX_evt_shadowy_cabal,witchcraft,cabal,2
+picture,GFX_evt_tribal_lands,travel,open country,2
+picture,GFX_evt_weaponsmith,martial,arms,2
