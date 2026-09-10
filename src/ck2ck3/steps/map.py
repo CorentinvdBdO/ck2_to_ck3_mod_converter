@@ -244,6 +244,24 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         colormap_blur_sigma=float(raw.get("colormap_blur_sigma", 9.0)),
         colormap_scale=float(raw.get("colormap_scale", 0.25)),
         colormap_mips=bool(raw.get("colormap_mips", True)),
+        # SAME BUG, SAME LANE (`trees-regional`, 2026-09-10): none of the
+        # `[map] trees*` keys were read here either, so `[map] trees = false`
+        # in configs/faerun.toml would have been a silent no-op exactly like
+        # `colormap = false` was. Every key below is pinned by
+        # tests/test_map_tree_mix.py::test_cli_config_builder_reads_the_tree_keys.
+        trees=bool(raw.get("trees", True)),
+        trees_csv=Path(str(raw.get("trees_csv", "mappings/tree_meshes.csv"))),
+        trees_seed=int(raw.get("trees_seed", 4242)),
+        trees_density_per_px=float(
+            raw.get("trees_density_per_px", 549_126 / (9216 * 4608))
+        ),
+        trees_regional=bool(raw.get("trees_regional", True)),
+        trees_mix_csv=Path(str(raw.get("trees_mix_csv", "mappings/tree_mix.csv"))),
+        trees_mix_overrides_csv=Path(
+            str(raw.get("trees_mix_overrides_csv", "overrides/tree_mix.csv"))
+        ),
+        trees_cell_px=int(raw.get("trees_cell_px", 24)),
+        trees_cell_coherence=float(raw.get("trees_cell_coherence", 0.55)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

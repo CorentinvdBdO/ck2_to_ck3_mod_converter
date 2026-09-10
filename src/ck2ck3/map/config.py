@@ -492,6 +492,22 @@ class MapConfig:
     #: density, 549,126 instances over its 9216x4608 canvas (`verified`,
     #: scripts/verify_tree_density.py)
     trees_density_per_px: float = 549_126 / (9216 * 4608)
+    #: pick each tree's mesh from vanilla's own measured
+    #: P(mesh | terrain, climate, latitude band) instead of from the terrain
+    #: key alone (docs/step_map_paint.md §9.9). Density and eligibility are
+    #: unchanged either way - only the *which mesh* step differs.
+    trees_regional: bool = True
+    #: the measured conditional table (scripts/build_tree_mix_csv.py)
+    trees_mix_csv: Path = Path("mappings/tree_mix.csv")
+    #: human overrides applied on top of it, per exact condition
+    trees_mix_overrides_csv: Path = Path("overrides/tree_mix.csv")
+    #: square canvas cell the regional sampler draws one shared uniform for,
+    #: so species read as stands rather than per-pixel salt and pepper
+    trees_cell_px: int = 24
+    #: share of trees that take their cell's uniform rather than their own;
+    #: 1.0 is fully coherent, 0.0 fully independent. Calibrated against
+    #: docs/evidence/vanilla_tree_patch_scale.csv.
+    trees_cell_coherence: float = 0.55
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -585,6 +601,13 @@ def load(path: str | Path) -> MapConfig:
         trees_density_per_px=float(
             raw.get("trees_density_per_px", 549_126 / (9216 * 4608))
         ),
+        trees_regional=bool(raw.get("trees_regional", True)),
+        trees_mix_csv=Path(str(raw.get("trees_mix_csv", "mappings/tree_mix.csv"))),
+        trees_mix_overrides_csv=Path(
+            str(raw.get("trees_mix_overrides_csv", "overrides/tree_mix.csv"))
+        ),
+        trees_cell_px=int(raw.get("trees_cell_px", 24)),
+        trees_cell_coherence=float(raw.get("trees_cell_coherence", 0.55)),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),

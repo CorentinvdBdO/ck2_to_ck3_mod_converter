@@ -1,0 +1,6 @@
+scheme,conditions,top1_accuracy,cross_entropy_bits
+global,1,0.2525,3.1884
+terrain,15,0.4978,2.0562
+terrain+climate,44,0.5074,2.0079
+terrain+lat_band,104,0.5877,1.6264
+terrain+climate+lat_band,188,0.5937,1.5876
