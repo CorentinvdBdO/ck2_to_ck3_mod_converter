@@ -1,0 +1,17 @@
+raster,channel,min,max,mean,median,p05,p95,frac_at_min,distinct
+watercolor_rgb_waterspec_a.dds,R,23,65,41.29,39,23,65,0.1613,43
+watercolor_rgb_waterspec_a.dds,G,54,80,63.28,64,54,73,0.074,27
+watercolor_rgb_waterspec_a.dds,B,56,82,62.82,63,57,75,0.0299,27
+watercolor_rgb_waterspec_a.dds,A,52,76,71.96,73,61,76,0.0046,23
+foam_map.dds,R,15,80,48.27,71,15,74,0.1797,58
+foam_map.dds,G,0,255,121.54,87,0,255,0.3974,67
+foam_map.dds,B,140,140,140.0,140,140,140,1.0,1
+foam_map.dds,A,255,255,255.0,255,255,255,1.0,1
+snow_mask.dds,R,0,0,0.0,0,0,0,1.0,1
+snow_mask.dds,G,16,207,91.88,91,52,135,0.0,192
+snow_mask.dds,B,0,255,84.89,83,26,155,0.0003,256
+snow_mask.dds,A,0,255,170.07,172,100,229,0.0,256
+surround_mask.dds,R,0,156,5.67,0,0,16,0.943,33
+surround_mask.dds,G,0,251,5.28,0,0,0,0.9545,33
+surround_mask.dds,B,0,255,2.31,0,0,0,0.9893,7
+surround_mask.dds,A,255,255,255.0,255,255,255,1.0,1

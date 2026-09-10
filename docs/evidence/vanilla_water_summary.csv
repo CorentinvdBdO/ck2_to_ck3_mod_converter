@@ -1,0 +1,24 @@
+quantity,value,note
+raster_width,4608,"vanilla ships both rasters at 4608x2304, half the 9216x4608 canvas"
+raster_height,2304,
+water_level_16bit,3932,WATERLEVEL 3 / WORLD_EXTENTS_Y 50 * 65535
+water_fraction,0.4414,share of vanilla's map that is below the water surface
+watercolor_shelf_r,43,water within 8 texels of a coast
+watercolor_shelf_g,76,
+watercolor_shelf_b,78,
+watercolor_shelf_a,63,alpha = gloss
+watercolor_deep_r,24,water more than 64 texels from a coast
+watercolor_deep_g,57,
+watercolor_deep_b,58,
+watercolor_deep_a,73,alpha = gloss
+watercolor_land_r,59,land; rivers sample these texels
+watercolor_land_g,66,
+watercolor_land_b,61,
+watercolor_land_a,74,alpha = gloss
+foam_r_shore,78.5,foam_map.R within 2 texels of a coast; shader uses 1 - R
+foam_r_deep,17.5,foam_map.R more than 64 texels out
+foam_r_tau_texels,31.0,"e-folding coast distance of the foam ramp, raster texels"
+foam_g_water,225,foam_map.G is the water mask the approaching-wave pass reads
+foam_g_land,0,
+foam_b_const,140,constant in vanilla
+foam_a_const,255,constant in vanilla

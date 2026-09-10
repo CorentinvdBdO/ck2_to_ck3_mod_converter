@@ -25,6 +25,19 @@ ci/checks.sh
 ../claudespace/scripts/ck3_test.sh faerun_ck2_to_ck3_converted --headless
 ```
 
+**`--out` does not redirect the evidence, and neither does pytest.** The
+`events` and `decisions` steps default their evidence path to the *converter
+repo's* `docs/evidence/` (`ck2ck3.steps.events.py:207` and its decisions
+sibling), not to the run's output dir. So both a full run with
+`--out <throwaway dir>` **and a bare `uv run pytest`** leave three committed
+CSVs dirty — `events_convertibility.csv`, `events_unmapped_keys.csv`,
+`decisions_convertibility.csv`. `verified` 2026-09-10 (lane `water-border`) by
+bisecting the suite: `tests/test_cli.py` is the one that does it; the events,
+decisions and provenance test files all override the path correctly. A lane
+that never touched those steps must `git checkout --` the three before
+committing. Real fix: an `--evidence-dir` flag, or a `test_cli` fixture that
+overrides the two paths the way the other three test files already do.
+
 Step 1 is skippable on an unchanged checkout: both outputs are committed, and
 `ci/checks.sh` fails if `overrides/loc_keys.csv` has drifted from the
 `mappings/loc_key_renames_*.csv` it is built from.

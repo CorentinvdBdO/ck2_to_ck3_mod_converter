@@ -295,6 +295,23 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         colormap_blur_sigma=float(raw.get("colormap_blur_sigma", 9.0)),
         colormap_scale=float(raw.get("colormap_scale", 0.25)),
         colormap_mips=bool(raw.get("colormap_mips", True)),
+        # SAME SHAPE AGAIN (lane `water-border`): every `[map] water*` /
+        # `snow_mask*` / `surround*` key has to be read HERE too, or turning
+        # one off in configs/faerun.toml is a silent no-op.
+        # tests/test_map_water.py::test_cli_config_builder_reads_the_keys.
+        water=bool(raw.get("water", True)),
+        water_profile_csv=Path(
+            str(raw.get("water_profile_csv", "mappings/water_profile.csv"))
+        ),
+        water_scale=float(raw.get("water_scale", 0.5)),
+        water_foam_scale=float(raw.get("water_foam_scale", 0.25)),
+        snow_mask_scale=float(raw.get("snow_mask_scale", 0.25)),
+        snow_mask_no_snow=int(raw.get("snow_mask_no_snow", 0)),
+        surround_mask=bool(raw.get("surround_mask", True)),
+        surround_profile_csv=Path(
+            str(raw.get("surround_profile_csv", "mappings/surround_profile.csv"))
+        ),
+        surround_scale=float(raw.get("surround_scale", 0.5)),
         # SAME BUG, SAME LANE (`trees-regional`, 2026-09-10): none of the
         # `[map] trees*` keys were read here either, so `[map] trees = false`
         # in configs/faerun.toml would have been a silent no-op exactly like

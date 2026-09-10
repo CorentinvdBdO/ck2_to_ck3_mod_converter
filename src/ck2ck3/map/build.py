@@ -46,11 +46,13 @@ from . import (
     locators,
     provinces,
     rivers,
+    surround,
     table,
     terrain,
     terrain_history,
     terrain_paint,
     tree_scatter,
+    water,
     writers,
 )
 from .config import MapConfig, load, plan_canvas
@@ -562,6 +564,9 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             )
             del cm, land_px, water_px
 
+        if cfg.water:
+            report["water"] = _write_water_rasters(sink, cfg, water_mask, log)
+
         if cfg.terrain_paint:
             log("painting terrain (gfx/map/terrain/detail_index.tga + "
                 "detail_intensity.tga)")
@@ -847,6 +852,10 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         "scale": round(table.scale_factor(canvas.width, canvas.height), 4),
     }
 
+    # ----------------------------------------------- the frame around the map
+    if cfg.surround_mask and not skip_images:
+        report["surround_mask"] = _write_surround_mask(sink, cfg, canvas, log)
+
     sink.text("map_data/climate.txt", writers.render_climate(climate, ids))
     sink.text("map_data/island_region.txt", writers.render_island_region(islands, ids))
     graphical_buckets = graphical.assign(
@@ -999,6 +1008,103 @@ def _building_gfx_of_ck2_gfx(path: Path) -> dict[str, str]:
             if key and value:
                 out[key] = value
     return out
+
+
+def _write_water_rasters(sink: Sink, cfg: MapConfig, water_mask, log) -> dict:
+    """The three whole-map rasters that otherwise show vanilla's Earth.
+
+    ``gfx/map/water/watercolor_rgb_waterspec_a.dds``, ``.../foam_map.dds`` and
+    ``gfx/map/textures/snow_mask.dds`` are all sampled at a whole-map UV, so a
+    mod that ships none draws Europe's oceans and the Sahara's heat belt under
+    its own continent (`docs/step_map_water_border.md`, ``ck2ck3.map.water``).
+    """
+    profile = water.read_water_profile(_repo_path(cfg, cfg.water_profile_csv))
+    if not profile:
+        sink.warn(
+            f"[map] water = true but {cfg.water_profile_csv} is missing or "
+            "empty; shipping flat deep-water colour and no shore foam"
+        )
+    canvas_h, canvas_w = water_mask.shape
+    report: dict = {}
+
+    for name, scale, builder, path in (
+        ("watercolor", cfg.water_scale, water.build_watercolor,
+         water.WATERCOLOR_PATH),
+        ("foam_map", cfg.water_foam_scale, water.build_foam_map,
+         water.FOAM_MAP_PATH),
+    ):
+        # Resample the mask, not the finished raster: coast distance has to be
+        # measured on the grid the texture is written at, or the shelf ramp
+        # comes out scaled by the downsample factor.
+        mask = _resample_mask(water_mask, scale)
+        raster = builder(mask, profile=profile, px_per_texel=1.0 / scale)
+        sink.binary(path, lambda p, r=raster: water.save(r, p))
+        report[name] = {
+            "width": int(raster.shape[1]),
+            "height": int(raster.shape[0]),
+            "scale": scale,
+            "format": "A8R8G8B8",
+        }
+        log(f"{name}: {raster.shape[1]}x{raster.shape[0]} "
+            f"({scale:g} x canvas)")
+        del raster, mask
+
+    snow_h = max(4, round(canvas_h * cfg.snow_mask_scale))
+    snow_w = max(4, round(canvas_w * cfg.snow_mask_scale))
+    snow = water.build_snow_mask(
+        (snow_h, snow_w),
+        no_snow=cfg.snow_mask_no_snow,
+        game_dir=cfg.ck3_game_dir,
+    )
+    sink.binary(water.SNOW_MASK_PATH, lambda p, r=snow: water.save(r, p))
+    report["snow_mask"] = {
+        "width": snow_w,
+        "height": snow_h,
+        "scale": cfg.snow_mask_scale,
+        "no_snow_r": cfg.snow_mask_no_snow,
+    }
+    log(f"snow_mask: {snow_w}x{snow_h} (flat R = {cfg.snow_mask_no_snow})")
+    return report
+
+
+def _resample_mask(mask, scale: float):
+    """Nearest-neighbour resample of a boolean mask; identity at scale 1."""
+    if scale == 1.0:
+        return mask
+    h, w = mask.shape
+    nh, nw = max(4, round(h * scale)), max(4, round(w * scale))
+    ys = (np.arange(nh) / scale).astype(np.int64).clip(0, h - 1)
+    xs = (np.arange(nw) / scale).astype(np.int64).clip(0, w - 1)
+    return mask[ys[:, None], xs[None, :]]
+
+
+def _write_surround_mask(sink: Sink, cfg: MapConfig, canvas, log) -> dict:
+    """The frame that vanilla paints around Earth and we have to re-cut.
+
+    Vanilla's own ``surround_mask.dds`` hides up to 67 % of the map height at
+    the top (`verified`, ``scripts/measure_vanilla_surround.py``) — empty
+    Arctic there, real territory on ours.
+    """
+    profile = surround.read_profile(_repo_path(cfg, cfg.surround_profile_csv))
+    if len(profile) <= 1:
+        sink.warn(
+            f"[map] surround_mask = true but {cfg.surround_profile_csv} is "
+            "missing or empty; shipping an unframed mask (map fully visible)"
+        )
+    width = max(4, round(canvas.width * cfg.surround_scale)) // 4 * 4
+    height = max(4, round(canvas.height * cfg.surround_scale)) // 4 * 4
+    mask = surround.build(width, height, profile)
+    sink.binary(
+        surround.SURROUND_MASK_PATH, lambda p, m=mask: surround.save(m, p)
+    )
+    log(f"surround_mask: {width}x{height} (DXT1), frame {len(profile)} texels")
+    return {
+        "width": width,
+        "height": height,
+        "scale": cfg.surround_scale,
+        "frame_texels": int(len(profile)),
+        "format": "DXT1",
+    }
 
 
 def _repo_path(cfg: MapConfig, rel: Path) -> Path:
