@@ -46,6 +46,10 @@ DEFAULT_ORDER: tuple[str, ...] = (
     # and `traits` (bare `<trait> = yes/no` shorthand needs the live/rename
     # trait-id map).
     "decisions",
+    # After `decisions`: the two share `mappings/triggers.csv`/`effects.csv`
+    # and `decisions.convert_block`; after `loc` and `traits` for the same
+    # reasons `decisions` is (docs/step_events.md).
+    "events",
     # Last on purpose: `tests` asserts what the earlier steps wrote, by
     # reading the generated mod back.
     "tests",

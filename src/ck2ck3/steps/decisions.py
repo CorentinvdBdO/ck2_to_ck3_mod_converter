@@ -223,6 +223,12 @@ def _is_bool_scalar(value: object) -> bool | None:
     return None
 
 
+#: A ``hooks`` entry: given the CK2 entry and the section kind, return either
+#: ``(replacement_node, "")`` (counted as mapped) or ``(None, reason)``
+#: (rendered as ``# CK2:`` comment lines plus ``# CK2-unmapped: <reason>``).
+Hook = "Callable[[Node, str], tuple[Node | None, str]]"
+
+
 def convert_block(
     source: Block,
     *,
@@ -231,6 +237,7 @@ def convert_block(
     effects: dict[str, VocabRow],
     traits: TraitInfo,
     stats: ConvertStats,
+    hooks: dict[str, object] | None = None,
 ) -> Block:
     """Recursively port one CK2 trigger/effect block to CK3 syntax.
 
@@ -239,6 +246,14 @@ def convert_block(
     deliberate simplification: a handful of keys are only reachable through
     the "wrong" table's context, e.g. a trigger nested in an effect's
     ``limit = {}``, see `docs/step_decisions.md` §2 limitation #1).
+
+    ``hooks`` maps a lower-cased CK2 key to a callable that owns that key's
+    whole conversion, consulted after the structural/trait special cases and
+    before the vocabulary table. It exists for a key whose CK3 form depends on
+    state no table can hold: the `events` step (`docs/step_events.md`) uses it
+    for CK2's event-firing effects, which become ``trigger_event`` only when
+    the target event is itself emitted live. ``None`` (the default) leaves
+    this step's behaviour exactly as it was.
     """
     primary, secondary = (triggers, effects) if kind == "trigger" else (effects, triggers)
     out = Block(multiline=True)
@@ -274,7 +289,7 @@ def convert_block(
             if isinstance(entry.value, Block):
                 new_value = convert_block(
                     entry.value, kind=kind, triggers=triggers, effects=effects,
-                    traits=traits, stats=stats,
+                    traits=traits, stats=stats, hooks=hooks,
                 )
             node = Node(
                 key=new_key, op=entry.op, value=new_value,
@@ -290,7 +305,7 @@ def convert_block(
         if TITLE_TAG_RE.match(key) and isinstance(entry.value, Block):
             new_value = convert_block(
                 entry.value, kind=kind, triggers=triggers, effects=effects,
-                traits=traits, stats=stats,
+                traits=traits, stats=stats, hooks=hooks,
             )
             node = Node(
                 key=f"title:{key}", op=entry.op, value=new_value,
@@ -316,7 +331,7 @@ def convert_block(
             if isinstance(entry.value, Block):
                 new_value = convert_block(
                     entry.value, kind=child_kind, triggers=triggers, effects=effects,
-                    traits=traits, stats=stats,
+                    traits=traits, stats=stats, hooks=hooks,
                 )
             node = Node(
                 key=key, op=entry.op, value=new_value,
@@ -363,6 +378,24 @@ def convert_block(
             pending_comments.append(f"# CK2-unmapped: {reason}")
             continue
 
+        # -- caller-owned key (see `hooks`) ---------------------------------
+        hook = hooks.get(lower) if hooks else None
+        if hook is not None:
+            stats.total += 1
+            replacement, reason = hook(entry, kind)
+            if replacement is not None:
+                stats.mapped += 1
+                replacement.leading_comments = [
+                    *entry.leading_comments, *replacement.leading_comments
+                ]
+                replacement.blank_before = entry.blank_before
+                flush_onto(replacement)
+                out.append(replacement)
+                continue
+            pending_comments.extend(_render_comment(entry))
+            pending_comments.append(f"# CK2-unmapped: {key}: {reason}")
+            continue
+
         # -- vocabulary table -----------------------------------------------
         if lower not in STRUCTURAL_KEYS:
             stats.total += 1
@@ -393,7 +426,7 @@ def convert_block(
                 if isinstance(entry.value, Block):
                     value = convert_block(
                         entry.value, kind=kind, triggers=triggers, effects=effects,
-                        traits=traits, stats=stats,
+                        traits=traits, stats=stats, hooks=hooks,
                     )
             stats.mapped += 1
             node = Node(

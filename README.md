@@ -144,9 +144,18 @@ computable, since the CK2 base game is installed:
    tricks) is classified by `docs/mechanics_inventory.md`; the port keeps the event skeleton and comments the
    mechanic-specific block, so the submod re-implements the mechanic once and the events light up.
 
-Order of work: provenance pass and bridge table first (they decide everything else), then decisions
-(small, self-contained — **done**, step `decisions`, `docs/step_decisions.md`), then on_actions, then
-character events by convertibility score descending.
+Order of work: provenance pass and bridge table first (**done**, `docs/events_provenance.md`), then
+decisions (small, self-contained — **done**, step `decisions`, `docs/step_decisions.md`), then the
+`new` events (**done**, step `events`, `docs/step_events.md`: 1704 of the 1762 emitted, 160 live and
+1544 inert stubs, ck3-tiger fatal 0 / error 58 — the baseline, nothing from `events/`), then
+on_actions, then the 2911 `modified` events (`docs/evidence/HANDOFF_events.md` says what each needs).
+
+Two things the `new` slice settled that the rest inherits: **ids** come from `ck2ck3.ids.event_id` /
+`build_event_id_map` (namespace = the CK2 namespace lower-cased behind the mod prefix, bare-numeric CK2
+ids in one shared `<prefix>_ck2`, and any number above 65535 re-allocated — ck3-tiger rejects the rest),
+and **nothing fires yet**: every ported event is `is_triggered_only`, so the on_actions lane is what
+turns the port on. `mean_time_to_happen` has no CK3 event counterpart and is stubbed rather than guessed
+into an on_action pulse.
 
 ## 6. Repositories and layout
 

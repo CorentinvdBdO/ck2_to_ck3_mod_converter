@@ -510,6 +510,26 @@ provenance = "docs/evidence/decisions_provenance.csv"
 # database init in ~1 launch of 3 (docs/step_decisions.md §3b).
 min_score = 1.0
 
+# Events port (step `events`, docs/step_events.md). The 1762 `new` CK2 events
+# (README §5 step 3); the 2911 `modified` ones and on_actions are later lanes.
+[events]
+# Same stabilisation policy as [decisions]: everything is emitted, but only a
+# fully converted event is live. Set false to write no events/fae_*.txt at all.
+enabled = true
+provenance = "docs/evidence/events_provenance.csv"
+# mapped / total trigger-effect keys. 1.0 = an event goes live only when every
+# key mapped AND it clears the hard gates (no MTTH, no CK2 FROM scope, an
+# option if it is shown, and every event it fires is itself live) -
+# docs/step_events.md §4. Anything below is an inert stub carrying its own
+# converted draft as `# draft:` comments.
+min_score = 1.0
+# CK2 `picture`/`border` -> CK3 `theme`. Regenerate and verify every theme id
+# against the 1.19 install with scripts/build_event_themes_csv.py.
+themes_csv = "mappings/event_themes.csv"
+# Theme for an event whose picture and border are both unlisted. `default` is
+# a real vanilla theme (common/event_themes/00_event_themes.txt).
+default_theme = "default"
+
 # Scripted tests written into the mod by step `tests`, asserting the generated
 # mod's own claims. Grammar and how the game runs them:
 # ../claudespace/docs/ck3_test_framework.md.
