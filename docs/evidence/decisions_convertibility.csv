@@ -3,66 +3,66 @@ DW_demonic_impregnation,targeted_decisions,modified,no,,"third-party character-t
 DW_prolong_life,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 abandon_province,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 abandon_trade_post,trade_post_decisions,modified,no,,trade-post-scope; trade routes/posts do not exist in CK3 1.19 (docs/mechanics_inventory.md)
-aboleth_lay_egg,decisions,new,no,,not found in source file at run time
-acquire_society_title_decision,society_decisions,new,no,,not found in source file at run time
+aboleth_lay_egg,decisions,new,yes,0.826,"below min_score, is_shown forced off"
+acquire_society_title_decision,society_decisions,new,yes,0.000,"below min_score, is_shown forced off"
 adopt_chinese_imperialism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 adopt_faith,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 adopt_heir,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-adopt_heir_fake,decisions,new,no,,not found in source file at run time
-adopt_shou_lung_imperialism,decisions,new,no,,not found in source file at run time
+adopt_heir_fake,decisions,new,yes,0.462,"below min_score, is_shown forced off"
+adopt_shou_lung_imperialism,decisions,new,yes,0.479,"below min_score, is_shown forced off"
 adopt_tribalism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-adventuring_quest,decisions,new,no,,not found in source file at run time
+adventuring_quest,decisions,new,yes,0.594,"below min_score, is_shown forced off"
 african_tolerate_abrahamics,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 ai_claim_county_if_baron,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 ai_request_sponsored_baptism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-akadian_adaptability_decision,decisions,new,no,,not found in source file at run time
+akadian_adaptability_decision,decisions,new,yes,0.444,"below min_score, is_shown forced off"
 alcohol_gift_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-alliance_diplomacy,society_decisions,new,no,,not found in source file at run time
-alliance_mediation,society_decisions,new,no,,not found in source file at run time
-alliance_raise_ships,society_decisions,new,no,,not found in source file at run time
-alliance_raise_troops,society_decisions,new,no,,not found in source file at run time
-ancestor_worship,decisions,modified,no,,not found in source file at run time
-animate_objects,decisions,new,no,,not found in source file at run time
+alliance_diplomacy,society_decisions,new,yes,0.412,"below min_score, is_shown forced off"
+alliance_mediation,society_decisions,new,yes,0.091,"below min_score, is_shown forced off"
+alliance_raise_ships,society_decisions,new,yes,0.300,"below min_score, is_shown forced off"
+alliance_raise_troops,society_decisions,new,yes,0.150,"below min_score, is_shown forced off"
+ancestor_worship,decisions,modified,yes,0.711,"below min_score, is_shown forced off"
+animate_objects,decisions,new,yes,0.368,"below min_score, is_shown forced off"
 anti_host_adventuring,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-appease_spirits,society_decisions,new,no,,not found in source file at run time
-arcane_experiment,society_decisions,new,no,,not found in source file at run time
+appease_spirits,society_decisions,new,yes,0.375,"below min_score, is_shown forced off"
+arcane_experiment,society_decisions,new,yes,0.458,"below min_score, is_shown forced off"
 ask_for_land,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 ask_for_pardon,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-ask_help_to_manage_titles,decisions,modified,no,,not found in source file at run time
+ask_help_to_manage_titles,decisions,modified,yes,0.353,"below min_score, is_shown forced off"
 ask_teutonic_for_help_pagan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 ask_teutonic_for_help_teutonic,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 ask_to_leave_court,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 ask_wards_liege_to_allow_culture_religion_swap,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 ask_wards_liege_to_allow_faith_focus,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-assassins_borrow_money,society_decisions,modified,no,,not found in source file at run time
+assassins_borrow_money,society_decisions,modified,yes,0.500,"below min_score, is_shown forced off"
 assassins_clear_marked_for_death_target,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-assassins_donate,society_decisions,modified,no,,not found in source file at run time
-assassins_drug_effect,society_decisions,modified,no,,not found in source file at run time
+assassins_donate,society_decisions,modified,yes,0.500,"below min_score, is_shown forced off"
+assassins_drug_effect,society_decisions,modified,yes,0.417,"below min_score, is_shown forced off"
 assassins_mark_for_death,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-assassins_pay_debt,society_decisions,modified,no,,not found in source file at run time
-assassins_raise_ships,society_decisions,modified,no,,not found in source file at run time
-assassins_raise_troops,society_decisions,modified,no,,not found in source file at run time
+assassins_pay_debt,society_decisions,modified,yes,0.552,"below min_score, is_shown forced off"
+assassins_raise_ships,society_decisions,modified,yes,0.200,"below min_score, is_shown forced off"
+assassins_raise_troops,society_decisions,modified,yes,0.167,"below min_score, is_shown forced off"
 assassins_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 assassins_scare_ruler,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-auril_embrace,decisions,new,no,,not found in source file at run time
+auril_embrace,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 auril_winter_protection,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 bacchants_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-bahamut_attract_dragon,decisions,new,no,,not found in source file at run time
+bahamut_attract_dragon,decisions,new,yes,0.625,"below min_score, is_shown forced off"
 become_genghis_khan,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 become_genghis_khan_tribal,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 become_kshatriya,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 become_samrat_chakravartin,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 become_saoshyant,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 become_vaishya,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-beholder_eye_sacrifice,decisions,new,no,,not found in source file at run time
-beshabas_boon,decisions,new,no,,not found in source file at run time
-bind_fiend,decisions,new,no,,not found in source file at run time
-bloodthirsty_games_decision,decisions,modified,no,,not found in source file at run time
-bloodthirsty_mass_sacrifice_decision,decisions,modified,no,,not found in source file at run time
+beholder_eye_sacrifice,decisions,new,yes,0.667,"below min_score, is_shown forced off"
+beshabas_boon,decisions,new,yes,0.737,"below min_score, is_shown forced off"
+bind_fiend,decisions,new,yes,0.524,"below min_score, is_shown forced off"
+bloodthirsty_games_decision,decisions,modified,yes,0.629,"below min_score, is_shown forced off"
+bloodthirsty_mass_sacrifice_decision,decisions,modified,yes,0.621,"below min_score, is_shown forced off"
 bon_tolerate_indians,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-borrow_money_assassins,decisions,modified,no,,not found in source file at run time
+borrow_money_assassins,decisions,modified,yes,0.531,"below min_score, is_shown forced off"
 borrow_money_bektashi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-borrow_money_gurs,decisions,new,no,,not found in source file at run time
+borrow_money_gurs,decisions,new,yes,0.625,"below min_score, is_shown forced off"
 borrow_money_haruriyyah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 borrow_money_jewish_special,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 borrow_money_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -70,32 +70,32 @@ borrow_money_knights_templar,decisions,deleted,no,,status deleted: out of this l
 borrow_money_radhanites,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 break_non_aggression_pact,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 break_up_with_lover,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-breath_weapon,decisions,new,no,,not found in source file at run time
+breath_weapon,decisions,new,yes,0.833,"below min_score, is_shown forced off"
 brew_happiness_potion,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 brew_mood_drug,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-brotherhood_acquire_ingredients_decision,society_decisions,new,no,,not found in source file at run time
-brotherhood_laboratory,society_decisions,new,no,,not found in source file at run time
+brotherhood_acquire_ingredients_decision,society_decisions,new,yes,0.500,"below min_score, is_shown forced off"
+brotherhood_laboratory,society_decisions,new,yes,0.500,"below min_score, is_shown forced off"
 build_hospital,title_decisions,kept,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-build_knight_bloodline,society_decisions,new,no,,not found in source file at run time
+build_knight_bloodline,society_decisions,new,yes,0.500,"below min_score, is_shown forced off"
 build_laboratory,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-build_observatory,decisions,modified,no,,not found in source file at run time
+build_observatory,decisions,modified,yes,0.826,"below min_score, is_shown forced off"
 build_spelljammer_port,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 build_third_temple,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 buy_indulgence_for_sins,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-buy_instrument,decisions,new,no,,not found in source file at run time
-call_for_heroes,society_decisions,new,no,,not found in source file at run time
-carousing_with_the_men,decisions,modified,no,,not found in source file at run time
+buy_instrument,decisions,new,yes,0.786,"below min_score, is_shown forced off"
+call_for_heroes,society_decisions,new,yes,0.444,"below min_score, is_shown forced off"
+carousing_with_the_men,decisions,modified,yes,0.710,"below min_score, is_shown forced off"
 catholic_pilgrimage,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 celebrate_bema,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 celebrate_jashan_e_sadah,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 celebrate_passover,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-celibate_mom_dec,decisions,modified,no,,not found in source file at run time
-ceremony_of_honor_to_helm,decisions,new,no,,not found in source file at run time
+celibate_mom_dec,decisions,modified,yes,0.730,"below min_score, is_shown forced off"
+ceremony_of_honor_to_helm,decisions,new,yes,0.529,"below min_score, is_shown forced off"
 ceremorphosis,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-challenge_the_caliph,decisions,new,no,,not found in source file at run time
+challenge_the_caliph,decisions,new,yes,0.462,"below min_score, is_shown forced off"
 change_composition_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 change_council_job,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-change_pagan_branch_decision,decisions,modified,no,,not found in source file at run time
+change_pagan_branch_decision,decisions,modified,yes,0.733,"below min_score, is_shown forced off"
 change_wards_focus_to_faith,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 change_wards_focus_to_heritage,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 chauntea_favor,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
@@ -129,38 +129,38 @@ chinese_strategist,offmap_decisions,deleted,no,,offmap-power-scope; offmap power
 choose_hermetic_art,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 choose_hindu_patron_deity,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 choose_military_aspect,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-choose_undeath,society_decisions,new,no,,not found in source file at run time
-choose_warhorse_nomad,decisions,modified,no,,not found in source file at run time
+choose_undeath,society_decisions,new,yes,0.440,"below min_score, is_shown forced off"
+choose_warhorse_nomad,decisions,modified,yes,0.760,"below min_score, is_shown forced off"
 christian_mercenary_against_reconquista_defender_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 christian_mercenary_against_reconquista_mercenary_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 claim_constantinople,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 claim_duel_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-close_gov_list,decisions,new,no,,not found in source file at run time
-close_psi_spellbook,decisions,new,no,,not found in source file at run time
-close_rituals,decisions,new,no,,not found in source file at run time
-close_sorc_spellbook,decisions,new,no,,not found in source file at run time
+close_gov_list,decisions,new,yes,1.000,
+close_psi_spellbook,decisions,new,yes,1.000,
+close_rituals,decisions,new,yes,1.000,
+close_sorc_spellbook,decisions,new,yes,0.667,"below min_score, is_shown forced off"
 cold_ones_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 come_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-commission_runestone,decisions,modified,no,,not found in source file at run time
+commission_runestone,decisions,modified,yes,0.688,"below min_score, is_shown forced off"
 commit_suicide,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 commit_suicide_immortal,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-concord_brain_golem,society_decisions,new,no,,not found in source file at run time
-concord_thrall_army,society_decisions,new,no,,not found in source file at run time
-conscript_merchant_ships,decisions,modified,no,,not found in source file at run time
+concord_brain_golem,society_decisions,new,yes,0.417,"below min_score, is_shown forced off"
+concord_thrall_army,society_decisions,new,yes,0.100,"below min_score, is_shown forced off"
+conscript_merchant_ships,decisions,modified,yes,0.273,"below min_score, is_shown forced off"
 convert_indian_branch,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_andalusian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_attacker_religion,decisions,modified,no,,not found in source file at run time
+convert_to_attacker_religion,decisions,modified,yes,0.393,"below min_score, is_shown forced off"
 convert_to_buddhism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_castillan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_catalan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_commonwealth_indep,decisions,new,no,,not found in source file at run time
-convert_to_commonwealth_vassal,decisions,new,no,,not found in source file at run time
+convert_to_commonwealth_indep,decisions,new,yes,0.531,"below min_score, is_shown forced off"
+convert_to_commonwealth_vassal,decisions,new,yes,0.538,"below min_score, is_shown forced off"
 convert_to_danish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_divine_indep,decisions,new,no,,not found in source file at run time
-convert_to_divine_vassal,decisions,new,no,,not found in source file at run time
+convert_to_divine_indep,decisions,new,yes,0.583,"below min_score, is_shown forced off"
+convert_to_divine_vassal,decisions,new,yes,0.569,"below min_score, is_shown forced off"
 convert_to_dutch,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_feudalism_indep,decisions,modified,no,,not found in source file at run time
-convert_to_feudalism_vassal,decisions,modified,no,,not found in source file at run time
+convert_to_feudalism_indep,decisions,modified,yes,0.500,"below min_score, is_shown forced off"
+convert_to_feudalism_vassal,decisions,modified,yes,0.553,"below min_score, is_shown forced off"
 convert_to_french,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_hinduism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_italian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -171,9 +171,9 @@ convert_to_liege_religion,targeted_decisions,modified,no,,"third-party character
 convert_to_liege_religion_on_liege,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_local_culture,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_local_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_magocracy_indep,decisions,new,no,,not found in source file at run time
-convert_to_magocracy_vassal,decisions,new,no,,not found in source file at run time
-convert_to_nomadic_tribe,decisions,new,no,,not found in source file at run time
+convert_to_magocracy_indep,decisions,new,yes,0.296,"below min_score, is_shown forced off"
+convert_to_magocracy_vassal,decisions,new,yes,0.338,"below min_score, is_shown forced off"
+convert_to_nomadic_tribe,decisions,new,yes,0.509,"below min_score, is_shown forced off"
 convert_to_norman,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_norwegian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_occitan,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -181,19 +181,19 @@ convert_to_outremer,targetted_decisions,deleted,no,,"third-party character-targe
 convert_to_parent_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_portuguese,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_reformed,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_republic_ai,decisions,new,no,,not found in source file at run time
-convert_to_republic_indep,decisions,modified,no,,not found in source file at run time
+convert_to_republic_ai,decisions,new,yes,0.465,"below min_score, is_shown forced off"
+convert_to_republic_indep,decisions,modified,yes,0.567,"below min_score, is_shown forced off"
 convert_to_russian,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_scottish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_spouse_religion,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 convert_to_swedish,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-convert_to_tribal_indep,society_decisions,new,no,,not found in source file at run time
-convert_to_tribal_vassal,society_decisions,new,no,,not found in source file at run time
+convert_to_tribal_indep,society_decisions,new,yes,0.613,"below min_score, is_shown forced off"
+convert_to_tribal_vassal,society_decisions,new,yes,0.480,"below min_score, is_shown forced off"
 convert_tribal_to_castle,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 convert_tribal_to_city,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 convert_tribal_to_temple,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 convince_to_straighten_up,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-court_exodus,decisions,modified,no,,not found in source file at run time
+court_exodus,decisions,modified,yes,0.606,"below min_score, is_shown forced off"
 create_antioch,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_aragon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_archduchy_of_austria,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -203,11 +203,11 @@ create_bosnia,decisions,deleted,no,,status deleted: out of this lane's scope (RE
 create_bulls_rishabha,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_castille,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_cyprus,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-create_direguard,decisions,new,no,,not found in source file at run time
+create_direguard,decisions,new,yes,0.692,"below min_score, is_shown forced off"
 create_dralhas_children,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_followers_arjuna,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_fraticelli_papacy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-create_grand_caliphate,decisions,new,no,,not found in source file at run time
+create_grand_caliphate,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 create_hungary,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_iconoclast_patriarchy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_israel,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -216,7 +216,7 @@ create_kingdom_genoa,decisions,deleted,no,,status deleted: out of this lane's sc
 create_kingdom_pisa,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_kingdom_venice,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_leon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-create_many_arrows,decisions,new,no,,not found in source file at run time
+create_many_arrows,decisions,new,yes,0.545,"below min_score, is_shown forced off"
 create_mercenary_company,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 create_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 create_myrmidons,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -226,11 +226,11 @@ create_russian_empire,decisions,deleted,no,,status deleted: out of this lane's s
 create_stoics,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_switzerland,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 create_the_hansa,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-create_treant,decisions,new,no,,not found in source file at run time
+create_treant,decisions,new,yes,0.364,"below min_score, is_shown forced off"
 create_warrior_lodge_hellenic,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 cult_of_kali_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-cure_disease_decision,decisions,new,no,,not found in source file at run time
-cure_wound_decision,decisions,new,no,,not found in source file at run time
+cure_disease_decision,decisions,new,yes,0.609,"below min_score, is_shown forced off"
+cure_wound_decision,decisions,new,yes,0.765,"below min_score, is_shown forced off"
 cyric_make_rival,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 death_cheese_ranch,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 decision_abduct,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -238,16 +238,16 @@ decision_break_free,targetted_decisions,modified,no,,"third-party character-targ
 decision_spy_on,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 declare_feud,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 delve_into_classics_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-delve_into_forbidden,society_decisions,new,no,,not found in source file at run time
-delve_into_heraldry,society_decisions,new,no,,not found in source file at run time
+delve_into_forbidden,society_decisions,new,yes,0.438,"below min_score, is_shown forced off"
+delve_into_heraldry,society_decisions,new,yes,0.467,"below min_score, is_shown forced off"
 demand_courtier_religious_conversion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 demand_gavelkind,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 demand_gavelkind_use_favor,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-demand_liege_title,decisions,modified,no,,not found in source file at run time
+demand_liege_title,decisions,modified,yes,0.591,"below min_score, is_shown forced off"
 demand_vassal_religious_conversion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-destroy_artifact,decisions,modified,no,,not found in source file at run time
+destroy_artifact,decisions,modified,yes,0.556,"below min_score, is_shown forced off"
 destroy_great_pillar,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-detect_thoughts_sorc,decisions,new,no,,not found in source file at run time
+detect_thoughts_sorc,decisions,new,yes,0.406,"below min_score, is_shown forced off"
 determine_zodiac_sign_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 devil_worshiper_desecrate_temple_decision,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 devil_worshipers_corrupt_priest,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -257,15 +257,15 @@ devil_worshipers_demonic_possession,targeted_decisions,deleted,no,,"third-party 
 devil_worshipers_induction,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 devil_worshipers_invite_disciple_of_devil,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 devil_worshipers_summon_familiar,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-discount_mercs,society_decisions,new,no,,not found in source file at run time
+discount_mercs,society_decisions,new,yes,0.381,"below min_score, is_shown forced off"
 dissolve_factions_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 dissolve_mercenary_company,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 dissolve_mercenary_company_feudal,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-divine_bloodline,decisions,new,no,,not found in source file at run time
+divine_bloodline,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 dof_ravage_territory,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-dof_weak_abdicate,decisions,new,no,,not found in source file at run time
+dof_weak_abdicate,decisions,new,yes,0.639,"below min_score, is_shown forced off"
 dominate_person_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-dominate_person_sorc_fake,decisions,new,no,,not found in source file at run time
+dominate_person_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 donate_money_to_assassins,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 donate_money_to_bektashi,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 donate_money_to_chosen_perkunas,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -287,47 +287,47 @@ donate_money_to_the_immortals,decisions,deleted,no,,status deleted: out of this 
 donate_money_to_the_zealots,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 donate_money_to_warriors_perun,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 donate_money_to_zun_warriors,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-donate_to_liege,decisions,modified,no,,not found in source file at run time
-dragon_minor_gift,society_decisions,new,no,,not found in source file at run time
-dragon_transformation,decisions,new,no,,not found in source file at run time
-dragonborn_transformation,decisions,new,no,,not found in source file at run time
+donate_to_liege,decisions,modified,yes,0.621,"below min_score, is_shown forced off"
+dragon_minor_gift,society_decisions,new,yes,0.333,"below min_score, is_shown forced off"
+dragon_transformation,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+dragonborn_transformation,decisions,new,yes,0.533,"below min_score, is_shown forced off"
 drill_troops_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-drink_from_fountain_of_youth,decisions,modified,no,,not found in source file at run time
+drink_from_fountain_of_youth,decisions,modified,yes,0.500,"below min_score, is_shown forced off"
 duel_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-duel_for_society_leadership_decision,society_decisions,new,no,,not found in source file at run time
-dwarven_lodge_fighting_style,society_decisions,new,no,,not found in source file at run time
+duel_for_society_leadership_decision,society_decisions,new,yes,0.182,"below min_score, is_shown forced off"
+dwarven_lodge_fighting_style,society_decisions,new,yes,0.375,"below min_score, is_shown forced off"
 dynamic_crusader_state,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 dynastic_meddling,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 eat_brain,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-elemental_transformation,decisions,new,no,,not found in source file at run time
-elven_lodge_fighting_style,society_decisions,new,no,,not found in source file at run time
+elemental_transformation,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+elven_lodge_fighting_style,society_decisions,new,yes,0.375,"below min_score, is_shown forced off"
 embrace_ashari,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 embrace_mutazila,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 embrace_roman_culture,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 empire_of_bulgaria_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-employ_a_smith,decisions,modified,no,,not found in source file at run time
-employ_court_physician,decisions,modified,no,,not found in source file at run time
-employ_priest,decisions,modified,no,,not found in source file at run time
+employ_a_smith,decisions,modified,yes,0.600,"below min_score, is_shown forced off"
+employ_court_physician,decisions,modified,yes,0.375,"below min_score, is_shown forced off"
+employ_priest,decisions,modified,yes,0.375,"below min_score, is_shown forced off"
 employ_priestess,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-employ_siamorphe_steward,decisions,new,no,,not found in source file at run time
-employ_soldier,decisions,modified,no,,not found in source file at run time
-employ_steward,decisions,modified,no,,not found in source file at run time
+employ_siamorphe_steward,decisions,new,yes,0.235,"below min_score, is_shown forced off"
+employ_soldier,decisions,modified,yes,0.450,"below min_score, is_shown forced off"
+employ_steward,decisions,modified,yes,0.214,"below min_score, is_shown forced off"
 employ_stewardess,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-empty_mind_dec,decisions,new,no,,not found in source file at run time
+empty_mind_dec,decisions,new,yes,0.444,"below min_score, is_shown forced off"
 endearing_noblemen_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-engage_in_training,decisions,new,no,,not found in source file at run time
-enlightened_schools,decisions,new,no,,not found in source file at run time
+engage_in_training,decisions,new,yes,0.091,"below min_score, is_shown forced off"
+enlightened_schools,decisions,new,yes,0.615,"below min_score, is_shown forced off"
 establish_cell,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 establish_dwarfhold,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-establish_lycan_court,decisions,new,no,,not found in source file at run time
+establish_lycan_court,decisions,new,yes,0.760,"below min_score, is_shown forced off"
 establish_shadow_guild,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-establish_vampire_court,decisions,new,no,,not found in source file at run time
+establish_vampire_court,decisions,new,yes,0.880,"below min_score, is_shown forced off"
 establishing_habsburg,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 exchange_land_for_hospital,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 execute_eat,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-expel_assassins,decisions,new,no,,not found in source file at run time
+expel_assassins,decisions,new,yes,0.471,"below min_score, is_shown forced off"
 expel_chosen_perkunas,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-expel_gurs,decisions,new,no,,not found in source file at run time
+expel_gurs,decisions,new,yes,0.627,"below min_score, is_shown forced off"
 expel_huitzilopochtli,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 expel_immortals,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 expel_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -350,55 +350,55 @@ expel_warriors_perun,decisions,deleted,no,,status deleted: out of this lane's sc
 expel_zealots,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 expel_zun_warriors,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 exploit_economy,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-extort_subjects,decisions,modified,no,,not found in source file at run time
+extort_subjects,decisions,modified,yes,0.750,"below min_score, is_shown forced off"
 extract_secret,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 faction_antiking_ultimatum,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-faction_claimant_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_increase_council_power_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_independence_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_lower_crown_authority_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_lower_tribal_organization_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_overthrow_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_powerful_vassal_takeover_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_succ_feudal_elective_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_succ_gavelkind_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_succ_primogeniture_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_succ_seniority_ultimatum,plot_decisions,modified,no,,not found in source file at run time
-faction_succ_ultimogeniture_ultimatum,plot_decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_arctic_dwarf_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_chessentan_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_1_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_1_remove_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_2_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_2_remove_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_3_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_culture_3_remove_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_dragonspawn_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_fire_giant_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_firenewt_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_kobold_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_lizardfolk_decision,decisions,new,no,,not found in source file at run time
+faction_claimant_ultimatum,plot_decisions,modified,yes,0.333,"below min_score, is_shown forced off"
+faction_increase_council_power_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_independence_ultimatum,plot_decisions,modified,yes,0.406,"below min_score, is_shown forced off"
+faction_lower_crown_authority_ultimatum,plot_decisions,modified,yes,0.308,"below min_score, is_shown forced off"
+faction_lower_tribal_organization_ultimatum,plot_decisions,modified,yes,0.308,"below min_score, is_shown forced off"
+faction_overthrow_ultimatum,plot_decisions,modified,yes,0.381,"below min_score, is_shown forced off"
+faction_powerful_vassal_takeover_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_succ_feudal_elective_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_succ_gavelkind_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_succ_primogeniture_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_succ_seniority_ultimatum,plot_decisions,modified,yes,0.348,"below min_score, is_shown forced off"
+faction_succ_ultimogeniture_ultimatum,plot_decisions,new,yes,0.348,"below min_score, is_shown forced off"
+faerun_dragon_minion_arctic_dwarf_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_chessentan_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_1_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_1_remove_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_2_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_2_remove_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_3_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_culture_3_remove_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_dragonspawn_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_fire_giant_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_firenewt_decision,decisions,new,yes,0.429,"below min_score, is_shown forced off"
+faerun_dragon_minion_kobold_decision,decisions,new,yes,0.429,"below min_score, is_shown forced off"
+faerun_dragon_minion_lizardfolk_decision,decisions,new,yes,0.429,"below min_score, is_shown forced off"
 faerun_dragon_minion_pick_culture_settlement_decision,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 faerun_dragon_minion_pick_culture_title_decision,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-faerun_dragon_minion_pick_extra_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_shield_dwarf_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_show_management_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_storm_giant_decision,decisions,new,no,,not found in source file at run time
-faerun_dragon_minion_strixiki_decision,decisions,new,no,,not found in source file at run time
-faithless_branch,decisions,new,no,,not found in source file at run time
-faithless_hard_work,decisions,new,no,,not found in source file at run time
-feast_0,decisions,modified,no,,not found in source file at run time
+faerun_dragon_minion_pick_extra_decision,decisions,new,yes,0.368,"below min_score, is_shown forced off"
+faerun_dragon_minion_shield_dwarf_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_show_management_decision,decisions,new,yes,0.700,"below min_score, is_shown forced off"
+faerun_dragon_minion_storm_giant_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faerun_dragon_minion_strixiki_decision,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faithless_branch,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+faithless_hard_work,decisions,new,yes,0.619,"below min_score, is_shown forced off"
+feast_0,decisions,modified,yes,0.373,"below min_score, is_shown forced off"
 find_guru,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-find_runecaster,decisions,new,no,,not found in source file at run time
+find_runecaster,decisions,new,yes,0.667,"below min_score, is_shown forced off"
 fix_holding_with_dead_owner,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-form_great_wyrm_tribe,decisions,new,no,,not found in source file at run time
+form_great_wyrm_tribe,decisions,new,yes,0.542,"below min_score, is_shown forced off"
 form_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_knights_of_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_knights_of_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_lcr,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-form_mage_hunters,decisions,new,no,,not found in source file at run time
-form_new_empire,decisions,modified,no,,not found in source file at run time
-form_new_kingdom,decisions,modified,no,,not found in source file at run time
+form_mage_hunters,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+form_new_empire,decisions,modified,yes,0.457,"below min_score, is_shown forced off"
+form_new_kingdom,decisions,modified,yes,0.477,"below min_score, is_shown forced off"
 form_st_addai,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_st_anthony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_teutonic_order,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
@@ -406,75 +406,75 @@ form_the_eastern_marches,decisions,deleted,no,,status deleted: out of this lane'
 form_the_hre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_the_hre_early,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 form_the_outremer,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-foster_child,decisions,new,no,,not found in source file at run time
-found_rhymanthiin,decisions,new,no,,not found in source file at run time
+foster_child,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+found_rhymanthiin,decisions,new,yes,0.565,"below min_score, is_shown forced off"
 fr_prepared_invasion,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-garagos_tactics,decisions,new,no,,not found in source file at run time
-gather_raiders,decisions,new,no,,not found in source file at run time
-gather_warriors,decisions,new,no,,not found in source file at run time
-gender_alteration,decisions,new,no,,not found in source file at run time
-get_animal_companion,decisions,new,no,,not found in source file at run time
+garagos_tactics,decisions,new,yes,0.632,"below min_score, is_shown forced off"
+gather_raiders,decisions,new,yes,0.417,"below min_score, is_shown forced off"
+gather_warriors,decisions,new,yes,0.316,"below min_score, is_shown forced off"
+gender_alteration,decisions,new,yes,0.580,"below min_score, is_shown forced off"
+get_animal_companion,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 give_child_special_baptism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-glamour_dec,decisions,new,no,,not found in source file at run time
+glamour_dec,decisions,new,yes,0.417,"below min_score, is_shown forced off"
 go_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 go_on_hajj,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-go_raiding,decisions,new,no,,not found in source file at run time
-great_ritual,society_decisions,new,no,,not found in source file at run time
-grumbar_earth_stability_decision,decisions,new,no,,not found in source file at run time
+go_raiding,decisions,new,yes,0.636,"below min_score, is_shown forced off"
+great_ritual,society_decisions,new,yes,0.458,"below min_score, is_shown forced off"
+grumbar_earth_stability_decision,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 harper_prepared_invasion,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-harper_training,society_decisions,new,no,,not found in source file at run time
+harper_training,society_decisions,new,yes,0.286,"below min_score, is_shown forced off"
 hathor_tend_poor,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 heal_mind,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-heal_mind_fake,decisions,new,no,,not found in source file at run time
+heal_mind_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 hellenic_dedicate_temple,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-help_liege_manage_titles,decisions,modified,no,,not found in source file at run time
+help_liege_manage_titles,decisions,modified,yes,0.407,"below min_score, is_shown forced off"
 hermetic_grand_debate,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hermetics_acquire_ingredients_decision,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hermetics_make_horoscope,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 hermetics_perform_scrying,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 hermetics_write_magnum_opus,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 hermetics_write_theory_paper,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-highmagic_baelnorn,decisions,new,no,,not found in source file at run time
-highmagic_celestial_army,decisions,new,no,,not found in source file at run time
-highmagic_mythal,decisions,new,no,,not found in source file at run time
-highmagic_nymphs_aura,decisions,new,no,,not found in source file at run time
-highmagic_reverend_one,decisions,new,no,,not found in source file at run time
-highmagic_worldweave,decisions,new,no,,not found in source file at run time
-hire_brigands,decisions,new,no,,not found in source file at run time
-hire_helmite_bodyguards,decisions,new,no,,not found in source file at run time
-hire_planewalker,decisions,new,no,,not found in source file at run time
+highmagic_baelnorn,decisions,new,yes,0.296,"below min_score, is_shown forced off"
+highmagic_celestial_army,decisions,new,yes,0.522,"below min_score, is_shown forced off"
+highmagic_mythal,decisions,new,yes,0.609,"below min_score, is_shown forced off"
+highmagic_nymphs_aura,decisions,new,yes,0.609,"below min_score, is_shown forced off"
+highmagic_reverend_one,decisions,new,yes,0.407,"below min_score, is_shown forced off"
+highmagic_worldweave,decisions,new,yes,0.625,"below min_score, is_shown forced off"
+hire_brigands,decisions,new,yes,0.462,"below min_score, is_shown forced off"
+hire_helmite_bodyguards,decisions,new,yes,0.679,"below min_score, is_shown forced off"
+hire_planewalker,decisions,new,yes,0.400,"below min_score, is_shown forced off"
 hire_teutonic_honor_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hoar_declare_rival,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-hoar_impending_doom,decisions,new,no,,not found in source file at run time
-hoar_penultimate_thunder,decisions,new,no,,not found in source file at run time
-hold_a_epic_tournament,decisions,modified,no,,not found in source file at run time
-hold_a_furusiyya,decisions,modified,no,,not found in source file at run time
-hold_a_jousting_tournament,society_decisions,new,no,,not found in source file at run time
-hold_blot,decisions,modified,no,,not found in source file at run time
+hoar_impending_doom,decisions,new,yes,0.571,"below min_score, is_shown forced off"
+hoar_penultimate_thunder,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+hold_a_epic_tournament,decisions,modified,yes,0.457,"below min_score, is_shown forced off"
+hold_a_furusiyya,decisions,modified,yes,0.500,"below min_score, is_shown forced off"
+hold_a_jousting_tournament,society_decisions,new,yes,0.400,"below min_score, is_shown forced off"
+hold_blot,decisions,modified,yes,0.656,"below min_score, is_shown forced off"
 hold_diwali_feast_buddhist,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hold_diwali_feast_hindu,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hold_diwali_feast_jain,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 hold_diwali_feast_kali_puja,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-hold_grand_hunt,decisions,modified,no,,not found in source file at run time
-hold_great_tribal_festival,decisions,modified,no,,not found in source file at run time
-hold_jarilo,decisions,modified,no,,not found in source file at run time
-hold_magic_symposium,decisions,new,no,,not found in source file at run time
-hold_nerge,decisions,modified,no,,not found in source file at run time
-hold_nomad_wargames,decisions,modified,no,,not found in source file at run time
-hold_tiger_hunt,decisions,modified,no,,not found in source file at run time
-hold_ukon_juhla,decisions,modified,no,,not found in source file at run time
-hold_uthgar_season_feast,decisions,new,no,,not found in source file at run time
-hold_uzgavenes,decisions,modified,no,,not found in source file at run time
+hold_grand_hunt,decisions,modified,yes,0.585,"below min_score, is_shown forced off"
+hold_great_tribal_festival,decisions,modified,yes,0.581,"below min_score, is_shown forced off"
+hold_jarilo,decisions,modified,yes,0.667,"below min_score, is_shown forced off"
+hold_magic_symposium,decisions,new,yes,0.533,"below min_score, is_shown forced off"
+hold_nerge,decisions,modified,yes,0.629,"below min_score, is_shown forced off"
+hold_nomad_wargames,decisions,modified,yes,0.667,"below min_score, is_shown forced off"
+hold_tiger_hunt,decisions,modified,yes,0.697,"below min_score, is_shown forced off"
+hold_ukon_juhla,decisions,modified,yes,0.656,"below min_score, is_shown forced off"
+hold_uthgar_season_feast,decisions,new,yes,0.611,"below min_score, is_shown forced off"
+hold_uzgavenes,decisions,modified,yes,0.656,"below min_score, is_shown forced off"
 hold_zun_feast,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-illithid_elder_brain,decisions,new,no,,not found in source file at run time
-ilmater_health,decisions,new,no,,not found in source file at run time
+illithid_elder_brain,decisions,new,yes,0.542,"below min_score, is_shown forced off"
+ilmater_health,decisions,new,yes,0.778,"below min_score, is_shown forced off"
 ilmater_prov_health,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-ilsensine_awaken_psi,decisions,new,no,,not found in source file at run time
+ilsensine_awaken_psi,decisions,new,yes,0.579,"below min_score, is_shown forced off"
 ilsensine_dominate_mob,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 ilsensine_force_efficiency,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 immortal_retire,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-increase_alertness,decisions,new,no,,not found in source file at run time
-increase_mercenary_size,decisions,modified,no,,not found in source file at run time
+increase_alertness,decisions,new,yes,0.577,"below min_score, is_shown forced off"
+increase_mercenary_size,decisions,modified,yes,0.708,"below min_score, is_shown forced off"
 indian_pilgrimage,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 infect_with_lycanthropy,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 interfere_in_vassal_war_attacker,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -482,117 +482,117 @@ interfere_in_vassal_war_attacker_use_favor,targeted_decisions,modified,no,,"thir
 interfere_in_vassal_war_defender,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 interfere_in_vassal_war_defender_use_favor,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 introduce_heir,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-invite_dracolich,society_decisions,new,no,,not found in source file at run time
-invite_druid,society_decisions,new,no,,not found in source file at run time
+invite_dracolich,society_decisions,new,yes,0.333,"below min_score, is_shown forced off"
+invite_druid,society_decisions,new,yes,0.200,"below min_score, is_shown forced off"
 invite_hermetic_to_stargazing,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-invite_high_mage,decisions,new,no,,not found in source file at run time
+invite_high_mage,decisions,new,yes,0.444,"below min_score, is_shown forced off"
 invite_to_party,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 issue_declaration_of_repentance,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-join_retreat,decisions,new,no,,not found in source file at run time
-joyful_etiquette_lessons,decisions,new,no,,not found in source file at run time
-joyful_improve_appearance,decisions,new,no,,not found in source file at run time
-kaitotem,decisions,new,no,,not found in source file at run time
+join_retreat,decisions,new,yes,0.579,"below min_score, is_shown forced off"
+joyful_etiquette_lessons,decisions,new,yes,0.667,"below min_score, is_shown forced off"
+joyful_improve_appearance,decisions,new,yes,0.588,"below min_score, is_shown forced off"
+kaitotem,decisions,new,yes,0.733,"below min_score, is_shown forced off"
 kievan_rus_local_traditions,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 knight_order_inspire_warriors,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-knight_order_summon_commander,society_decisions,new,no,,not found in source file at run time
+knight_order_summon_commander,society_decisions,new,yes,0.289,"below min_score, is_shown forced off"
 knight_order_warrior_training,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-kossuth_burn_away_illness,decisions,new,no,,not found in source file at run time
+kossuth_burn_away_illness,decisions,new,yes,0.692,"below min_score, is_shown forced off"
 kossuth_cleanse_land,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-kraken_aqua_servant,society_decisions,new,no,,not found in source file at run time
-kraken_legendary_gathering,society_decisions,new,no,,not found in source file at run time
-kuo_tan_become_vassal,society_decisions,new,no,,not found in source file at run time
-launder_cash,decisions,new,no,,not found in source file at run time
-lay_on_hands,decisions,new,no,,not found in source file at run time
-legend_lore_sorc,decisions,new,no,,not found in source file at run time
+kraken_aqua_servant,society_decisions,new,yes,0.118,"below min_score, is_shown forced off"
+kraken_legendary_gathering,society_decisions,new,yes,0.261,"below min_score, is_shown forced off"
+kuo_tan_become_vassal,society_decisions,new,yes,0.586,"below min_score, is_shown forced off"
+launder_cash,decisions,new,yes,0.302,"below min_score, is_shown forced off"
+lay_on_hands,decisions,new,yes,0.390,"below min_score, is_shown forced off"
+legend_lore_sorc,decisions,new,yes,0.423,"below min_score, is_shown forced off"
 legitimize_bastard,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-long_live_the_brotherhood,society_decisions,new,no,,not found in source file at run time
-long_live_the_flame_brotherhood,society_decisions,new,no,,not found in source file at run time
-loyal_vassalage,decisions,new,no,,not found in source file at run time
+long_live_the_brotherhood,society_decisions,new,yes,0.458,"below min_score, is_shown forced off"
+long_live_the_flame_brotherhood,society_decisions,new,yes,0.429,"below min_score, is_shown forced off"
+loyal_vassalage,decisions,new,yes,0.571,"below min_score, is_shown forced off"
 make_primary,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 make_rome_capital,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 make_shieldmaiden,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-malar_become_werebeast,decisions,new,no,,not found in source file at run time
-manifest_mindblade,decisions,new,no,,not found in source file at run time
+malar_become_werebeast,decisions,new,yes,0.571,"below min_score, is_shown forced off"
+manifest_mindblade,decisions,new,yes,0.385,"below min_score, is_shown forced off"
 mend_great_schism,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 mind_control_dec,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 monastic_order_convert_county,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-monastic_order_meditation,society_decisions,modified,no,,not found in source file at run time
+monastic_order_meditation,society_decisions,modified,yes,0.600,"below min_score, is_shown forced off"
 monastic_order_penance,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-monastic_order_rejoin_world,society_decisions,modified,no,,not found in source file at run time
+monastic_order_rejoin_world,society_decisions,modified,yes,0.923,"below min_score, is_shown forced off"
 monastic_orders_donate_to_charity,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-monastic_orders_go_celibate,society_decisions,modified,no,,not found in source file at run time
+monastic_orders_go_celibate,society_decisions,modified,yes,0.727,"below min_score, is_shown forced off"
 monastic_orders_invite_ascetic,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-monastic_orders_perfect_self,society_decisions,new,no,,not found in source file at run time
+monastic_orders_perfect_self,society_decisions,new,yes,0.308,"below min_score, is_shown forced off"
 monastic_orders_spiritual_guidance,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-monastic_orders_stop_celibate,society_decisions,modified,no,,not found in source file at run time
+monastic_orders_stop_celibate,society_decisions,modified,yes,0.333,"below min_score, is_shown forced off"
 monastic_orders_teach_virtue,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-money_to_piety,decisions,new,no,,not found in source file at run time
-monk_abandon_focus,decisions,new,no,,not found in source file at run time
-monk_contemplate,decisions,new,no,,not found in source file at run time
-monk_longevity,decisions,new,no,,not found in source file at run time
-monk_mob,decisions,new,no,,not found in source file at run time
-mound_burial_decision,decisions,new,no,,not found in source file at run time
+money_to_piety,decisions,new,yes,0.824,"below min_score, is_shown forced off"
+monk_abandon_focus,decisions,new,yes,0.846,"below min_score, is_shown forced off"
+monk_contemplate,decisions,new,yes,0.556,"below min_score, is_shown forced off"
+monk_longevity,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+monk_mob,decisions,new,yes,0.455,"below min_score, is_shown forced off"
+mound_burial_decision,decisions,new,yes,0.615,"below min_score, is_shown forced off"
 move_crown_focus,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 muhjari_cultivate_gardens,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 muhjari_syncretise,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 murder_deflection_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 muslim_mercenary_for_reconquista_attacker_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 muslim_mercenary_for_reconquista_mercenary_side,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-nature_favor,society_decisions,new,no,,not found in source file at run time
+nature_favor,society_decisions,new,yes,0.091,"below min_score, is_shown forced off"
 negotiate_with_adventurer,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 nomad_adopt_feudalism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 nomad_adopt_republicanism,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 nomadrule_duel_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 nomadrule_duel_out_of_court,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-observe_ramadan,decisions,modified,no,,not found in source file at run time
-onyx_conjure_servants,decisions,new,no,,not found in source file at run time
-open_gov_list,decisions,new,no,,not found in source file at run time
-open_psi_spellbook,decisions,new,no,,not found in source file at run time
-open_rituals,decisions,new,no,,not found in source file at run time
-open_sorc_spellbook,decisions,new,no,,not found in source file at run time
-open_the_gates,decisions,modified,no,,not found in source file at run time
+observe_ramadan,decisions,modified,yes,0.533,"below min_score, is_shown forced off"
+onyx_conjure_servants,decisions,new,yes,0.303,"below min_score, is_shown forced off"
+open_gov_list,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+open_psi_spellbook,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+open_rituals,decisions,new,yes,0.308,"below min_score, is_shown forced off"
+open_sorc_spellbook,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+open_the_gates,decisions,modified,yes,0.780,"below min_score, is_shown forced off"
 orc_claim,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 order_to_join_holy_order,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 order_to_take_vows,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 organize_army_light,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 organize_levy,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-organize_levy_reminder,decisions,new,no,,not found in source file at run time
+organize_levy_reminder,decisions,new,yes,0.600,"below min_score, is_shown forced off"
 organize_varangian_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-overthrow_grandmaster_decision,society_decisions,new,no,,not found in source file at run time
-pagan_branch_decision,decisions,modified,no,,not found in source file at run time
-paladin_oaths,decisions,new,no,,not found in source file at run time
+overthrow_grandmaster_decision,society_decisions,new,yes,0.115,"below min_score, is_shown forced off"
+pagan_branch_decision,decisions,modified,yes,0.769,"below min_score, is_shown forced off"
+paladin_oaths,decisions,new,yes,0.700,"below min_score, is_shown forced off"
 patrons_bon,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-patrons_fae_cf,decisions,new,no,,not found in source file at run time
+patrons_fae_cf,decisions,new,yes,0.350,"below min_score, is_shown forced off"
 patrons_khu,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-petition_doge_for_tp,decisions,modified,no,,not found in source file at run time
-phantasmal_force,decisions,new,no,,not found in source file at run time
-phantasmal_force_sorc,decisions,new,no,,not found in source file at run time
-pick_beast_totem,decisions,new,no,,not found in source file at run time
+petition_doge_for_tp,decisions,modified,yes,0.545,"below min_score, is_shown forced off"
+phantasmal_force,decisions,new,yes,0.314,"below min_score, is_shown forced off"
+phantasmal_force_sorc,decisions,new,yes,0.368,"below min_score, is_shown forced off"
+pick_beast_totem,decisions,new,yes,0.100,"below min_score, is_shown forced off"
 pick_main_deity,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-pick_wiz_spec,decisions,new,no,,not found in source file at run time
+pick_wiz_spec,decisions,new,yes,0.200,"below min_score, is_shown forced off"
 pillage_settlement,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 plaguebringers_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-planar_binding_sorc_divine,decisions,new,no,,not found in source file at run time
-planar_binding_sorc_shadow,decisions,new,no,,not found in source file at run time
-planar_binding_sorc_storm,decisions,new,no,,not found in source file at run time
-plot_gain_fellow_vassal_title_decision_100,plot_decisions,modified,no,,not found in source file at run time
-plot_gain_fellow_vassal_title_decision_75,plot_decisions,modified,no,,not found in source file at run time
-plot_gain_liege_title_decision_100,plot_decisions,modified,no,,not found in source file at run time
-plot_gain_liege_title_decision_75,plot_decisions,modified,no,,not found in source file at run time
+planar_binding_sorc_divine,decisions,new,yes,0.423,"below min_score, is_shown forced off"
+planar_binding_sorc_shadow,decisions,new,yes,0.407,"below min_score, is_shown forced off"
+planar_binding_sorc_storm,decisions,new,yes,0.423,"below min_score, is_shown forced off"
+plot_gain_fellow_vassal_title_decision_100,plot_decisions,modified,yes,0.091,"below min_score, is_shown forced off"
+plot_gain_fellow_vassal_title_decision_75,plot_decisions,modified,yes,0.083,"below min_score, is_shown forced off"
+plot_gain_liege_title_decision_100,plot_decisions,modified,yes,0.154,"below min_score, is_shown forced off"
+plot_gain_liege_title_decision_75,plot_decisions,modified,yes,0.143,"below min_score, is_shown forced off"
 plot_gain_title_decision,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-plot_gain_vassal_title_decision,plot_decisions,modified,no,,not found in source file at run time
-plot_seize_trade_post_decision,plot_decisions,modified,no,,not found in source file at run time
+plot_gain_vassal_title_decision,plot_decisions,modified,yes,0.000,"below min_score, is_shown forced off"
+plot_seize_trade_post_decision,plot_decisions,modified,yes,0.091,"below min_score, is_shown forced off"
 plot_weaken_fellow_vassal_decision,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 plot_weaken_fellow_vassal_decision_liege,plot_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 plunder_dragon_hoard,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 plunder_knowledge_wonder,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 possess_prisoner,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 prepare_coronation_ceremony,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-prepare_for_iurit,decisions,new,no,,not found in source file at run time
+prepare_for_iurit,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 prepare_reconquista,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-present_debutante,decisions,modified,no,,not found in source file at run time
-present_male_debutante,decisions,new,no,,not found in source file at run time
-primordial_summon_genie,decisions,new,no,,not found in source file at run time
+present_debutante,decisions,modified,yes,0.250,"below min_score, is_shown forced off"
+present_male_debutante,decisions,new,yes,0.250,"below min_score, is_shown forced off"
+primordial_summon_genie,decisions,new,yes,0.562,"below min_score, is_shown forced off"
 prisoner_brazen_bull,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 prisoner_dark_sacrifice,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 prisoner_dragon_burning,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -605,116 +605,116 @@ prisoner_to_oubilette,targetted_decisions,modified,no,,"third-party character-ta
 prisoner_to_suite,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 prisoner_torture,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 promise_to_join_reconquista,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-purchase_spelljammer,decisions,new,no,,not found in source file at run time
+purchase_spelljammer,decisions,new,yes,0.400,"below min_score, is_shown forced off"
 purge_spellplague,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 raiding_adventurer_buy_title,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 raise_chinese_honor_guard,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 raise_chinese_regiment,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-raise_defensive_unit,decisions,modified,no,,not found in source file at run time
-raise_monster_units,decisions,new,no,,not found in source file at run time
-raise_shou_lung_honor_guard,decisions,new,no,,not found in source file at run time
-raise_shou_lung_regiment,decisions,new,no,,not found in source file at run time
-raise_tribal_units,decisions,modified,no,,not found in source file at run time
-raise_undead_units,decisions,new,no,,not found in source file at run time
-ranger_pick_terrain,decisions,new,no,,not found in source file at run time
-reckless_dweomer,decisions,new,no,,not found in source file at run time
+raise_defensive_unit,decisions,modified,yes,0.500,"below min_score, is_shown forced off"
+raise_monster_units,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+raise_shou_lung_honor_guard,decisions,new,yes,0.632,"below min_score, is_shown forced off"
+raise_shou_lung_regiment,decisions,new,yes,0.571,"below min_score, is_shown forced off"
+raise_tribal_units,decisions,modified,yes,0.429,"below min_score, is_shown forced off"
+raise_undead_units,decisions,new,yes,0.692,"below min_score, is_shown forced off"
+ranger_pick_terrain,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+reckless_dweomer,decisions,new,yes,0.417,"below min_score, is_shown forced off"
 reclaim_nomad_province,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 reconquista_beneficiary_other,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 reconquista_beneficiary_self,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 recreate_the_papal_guards,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-recreate_waterdeep,decisions,new,no,,not found in source file at run time
-recruit_academy_hero,decisions,modified,no,,not found in source file at run time
-recruit_amaunatori_judge,decisions,new,no,,not found in source file at run time
+recreate_waterdeep,decisions,new,yes,0.526,"below min_score, is_shown forced off"
+recruit_academy_hero,decisions,modified,yes,0.385,"below min_score, is_shown forced off"
+recruit_amaunatori_judge,decisions,new,yes,0.300,"below min_score, is_shown forced off"
 recruit_child_decision,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-recruit_deneir_scribe,decisions,new,no,,not found in source file at run time
-recruit_helmite_commander,decisions,new,no,,not found in source file at run time
+recruit_deneir_scribe,decisions,new,yes,0.300,"below min_score, is_shown forced off"
+recruit_helmite_commander,decisions,new,yes,0.364,"below min_score, is_shown forced off"
 recruit_prisoner,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-recruit_torm_paladin,decisions,new,no,,not found in source file at run time
-recruit_troops_nomad,decisions,modified,no,,not found in source file at run time
-recruit_troops_norse,decisions,modified,no,,not found in source file at run time
-recruit_wonder_guard,decisions,modified,no,,not found in source file at run time
-reforge_crown_of_narfell_decision,decisions,new,no,,not found in source file at run time
-reforge_regalia_of_impiltur_decision,decisions,new,no,,not found in source file at run time
-reform_anok_imaskar,decisions,new,no,,not found in source file at run time
-reform_athalantar,decisions,new,no,,not found in source file at run time
-reform_moradask_empire,decisions,new,no,,not found in source file at run time
-reform_moradask_kingdom,decisions,new,no,,not found in source file at run time
-reform_muluk_kingdom,decisions,new,no,,not found in source file at run time
-reform_shanatar,decisions,new,no,,not found in source file at run time
-reform_shoon,decisions,new,no,,not found in source file at run time
-reform_uthtower,decisions,new,no,,not found in source file at run time
-reform_yarlith,decisions,new,no,,not found in source file at run time
-regenerate_decision,decisions,new,no,,not found in source file at run time
+recruit_torm_paladin,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+recruit_troops_nomad,decisions,modified,yes,0.276,"below min_score, is_shown forced off"
+recruit_troops_norse,decisions,modified,yes,0.312,"below min_score, is_shown forced off"
+recruit_wonder_guard,decisions,modified,yes,0.222,"below min_score, is_shown forced off"
+reforge_crown_of_narfell_decision,decisions,new,yes,0.429,"below min_score, is_shown forced off"
+reforge_regalia_of_impiltur_decision,decisions,new,yes,0.409,"below min_score, is_shown forced off"
+reform_anok_imaskar,decisions,new,yes,0.406,"below min_score, is_shown forced off"
+reform_athalantar,decisions,new,yes,0.417,"below min_score, is_shown forced off"
+reform_moradask_empire,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+reform_moradask_kingdom,decisions,new,yes,0.455,"below min_score, is_shown forced off"
+reform_muluk_kingdom,decisions,new,yes,0.538,"below min_score, is_shown forced off"
+reform_shanatar,decisions,new,yes,0.423,"below min_score, is_shown forced off"
+reform_shoon,decisions,new,yes,0.520,"below min_score, is_shown forced off"
+reform_uthtower,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+reform_yarlith,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+regenerate_decision,decisions,new,yes,0.667,"below min_score, is_shown forced off"
 release_tributary,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 relieve_shieldmaiden,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 remove_reconquista_beneficiary_other,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 remove_reconquista_beneficiary_self,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-remove_vow_of_poverty,decisions,new,no,,not found in source file at run time
-rename_artifact,decisions,modified,no,,not found in source file at run time
-rename_wonder,decisions,modified,no,,not found in source file at run time
+remove_vow_of_poverty,decisions,new,yes,0.818,"below min_score, is_shown forced off"
+rename_artifact,decisions,modified,yes,0.600,"below min_score, is_shown forced off"
+rename_wonder,decisions,modified,yes,0.000,"below min_score, is_shown forced off"
 renounce_iconoclasm,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-repair_peacock_throne,decisions,new,no,,not found in source file at run time
-repair_wonder_decision,decisions,modified,no,,not found in source file at run time
-repay_money_gurs,decisions,new,no,,not found in source file at run time
+repair_peacock_throne,decisions,new,yes,0.450,"below min_score, is_shown forced off"
+repair_wonder_decision,decisions,modified,yes,0.200,"below min_score, is_shown forced off"
+repay_money_gurs,decisions,new,yes,0.778,"below min_score, is_shown forced off"
 repay_money_jewish_special,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 repay_money_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 repay_money_radhanites,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 request_council_position,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 request_sponsored_baptism,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-request_to_rank_up_within_society,society_decisions,modified,no,,not found in source file at run time
-resplendent_youth,decisions,new,no,,not found in source file at run time
-restore_ammarindar,decisions,new,no,,not found in source file at run time
-restore_besilmer,decisions,new,no,,not found in source file at run time
-restore_black_altar,decisions,new,no,,not found in source file at run time
+request_to_rank_up_within_society,society_decisions,modified,yes,0.286,"below min_score, is_shown forced off"
+resplendent_youth,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+restore_ammarindar,decisions,new,yes,0.652,"below min_score, is_shown forced off"
+restore_besilmer,decisions,new,yes,0.568,"below min_score, is_shown forced off"
+restore_black_altar,decisions,new,yes,0.375,"below min_score, is_shown forced off"
 restore_byzantine_empire,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-restore_dareth,decisions,new,no,,not found in source file at run time
+restore_dareth,decisions,new,yes,0.625,"below min_score, is_shown forced off"
 restore_dwarfhold,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 restore_ecumenical_patriarchate,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-restore_gharraghaur,decisions,new,no,,not found in source file at run time
-restore_haunghdannar,decisions,new,no,,not found in source file at run time
+restore_gharraghaur,decisions,new,yes,0.575,"below min_score, is_shown forced off"
+restore_haunghdannar,decisions,new,yes,0.633,"below min_score, is_shown forced off"
 restore_high_priesthood,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-restore_ironstar,decisions,new,no,,not found in source file at run time
-restore_lotus_throne,decisions,new,no,,not found in source file at run time
-restore_magister,decisions,new,no,,not found in source file at run time
-restore_oghrann,decisions,new,no,,not found in source file at run time
+restore_ironstar,decisions,new,yes,0.633,"below min_score, is_shown forced off"
+restore_lotus_throne,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+restore_magister,decisions,new,yes,0.250,"below min_score, is_shown forced off"
+restore_oghrann,decisions,new,yes,0.579,"below min_score, is_shown forced off"
 restore_pope_in_rome,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 restore_priesthood,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-restore_promenade_of_the_dark_maiden,decisions,new,no,,not found in source file at run time
+restore_promenade_of_the_dark_maiden,decisions,new,yes,0.235,"below min_score, is_shown forced off"
 restore_roman_empire,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-restore_sarphil,decisions,new,no,,not found in source file at run time
-restore_tethyamar,decisions,new,no,,not found in source file at run time
-reveal_secret_identity,decisions,new,no,,not found in source file at run time
+restore_sarphil,decisions,new,yes,0.576,"below min_score, is_shown forced off"
+restore_tethyamar,decisions,new,yes,0.588,"below min_score, is_shown forced off"
+reveal_secret_identity,decisions,new,yes,0.918,"below min_score, is_shown forced off"
 revenance,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-revenge_waterdeep,society_decisions,new,no,,not found in source file at run time
+revenge_waterdeep,society_decisions,new,yes,0.394,"below min_score, is_shown forced off"
 revoke_primary,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-ritual_animate_dead,decisions,new,no,,not found in source file at run time
+ritual_animate_dead,decisions,new,yes,0.308,"below min_score, is_shown forced off"
 ritual_charm_person,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-ritual_charm_person_fake,decisions,new,no,,not found in source file at run time
+ritual_charm_person_fake,decisions,new,yes,0.467,"below min_score, is_shown forced off"
 ritual_dominate_person,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-ritual_dominate_person_fake,decisions,new,no,,not found in source file at run time
+ritual_dominate_person_fake,decisions,new,yes,0.455,"below min_score, is_shown forced off"
 ritual_of_the_border,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-ritual_summon_fiends,decisions,new,no,,not found in source file at run time
-rlg_chg_player_dec,decisions,new,no,,not found in source file at run time
+ritual_summon_fiends,decisions,new,yes,0.361,"below min_score, is_shown forced off"
+rlg_chg_player_dec,decisions,new,yes,0.611,"below min_score, is_shown forced off"
 rogue_take_over_crime,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 roman_renaissance,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-ruby_summon_spectator,decisions,new,no,,not found in source file at run time
+ruby_summon_spectator,decisions,new,yes,0.722,"below min_score, is_shown forced off"
 ruthless_taxation,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-sacrifice_everyone_decision,decisions,new,no,,not found in source file at run time
-sadaqah_saddka,decisions,modified,no,,not found in source file at run time
+sacrifice_everyone_decision,decisions,new,yes,0.417,"below min_score, is_shown forced off"
+sadaqah_saddka,decisions,modified,yes,0.471,"below min_score, is_shown forced off"
 same_gender_consort,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 same_gender_marry,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-same_gender_marry_fake,decisions,new,no,,not found in source file at run time
+same_gender_marry_fake,decisions,new,yes,0.647,"below min_score, is_shown forced off"
 satanists_recruit,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 school_tao,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 search_for_artifact,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-secret_religions_blend_in,society_decisions,modified,no,,not found in source file at run time
+secret_religions_blend_in,society_decisions,modified,yes,0.571,"below min_score, is_shown forced off"
 secret_religions_conduct_secret_ceremony,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 secret_religions_evoke_sympathy,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-secret_religions_falsely_confess_faith,decisions,modified,no,,not found in source file at run time
-secret_religions_found_secret_religious_society,decisions,modified,no,,not found in source file at run time
+secret_religions_falsely_confess_faith,decisions,modified,yes,0.600,"below min_score, is_shown forced off"
+secret_religions_found_secret_religious_society,decisions,modified,yes,0.444,"below min_score, is_shown forced off"
 secret_religions_induct_character,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 secret_religions_induct_child,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-secret_religions_openly_adopt_faith,society_decisions,modified,no,,not found in source file at run time
+secret_religions_openly_adopt_faith,society_decisions,modified,yes,0.354,"below min_score, is_shown forced off"
 secret_religions_personally_adopt_secret_religion,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 secret_religions_prepare_grounds,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 secret_religions_recruit,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -756,8 +756,8 @@ secretly_convert_to_zoroastrian_holy_site,title_decisions,deleted,no,,"title-sco
 secretly_convert_to_zun_pagan_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 secretly_convert_to_zun_pagan_reformed_holy_site,title_decisions,deleted,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 seduce_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-seek_treatment,decisions,modified,no,,not found in source file at run time
-seld_invite_fey,decisions,new,no,,not found in source file at run time
+seek_treatment,decisions,modified,yes,0.750,"below min_score, is_shown forced off"
+seld_invite_fey,decisions,new,yes,0.455,"below min_score, is_shown forced off"
 select_crusade_beneficiary,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 send_child_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 send_spouse_into_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -765,10 +765,10 @@ send_troops_mercenary_company_feudal,targetted_decisions,modified,no,,"third-par
 set_crown_focus,title_decisions,modified,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
 settle_iceland,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 settle_iceland_manually,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-shadow_arts,society_decisions,new,no,,not found in source file at run time
+shadow_arts,society_decisions,new,yes,0.471,"below min_score, is_shown forced off"
 shadow_sabotage,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 shadow_scare_ruler,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-shadow_telflamm_walker,society_decisions,new,no,,not found in source file at run time
+shadow_telflamm_walker,society_decisions,new,yes,0.500,"below min_score, is_shown forced off"
 shatter_mind,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 shiite_caliphate_cairo_decision,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 shou_lung_administrator,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
@@ -792,63 +792,63 @@ shou_lung_kow_tow_pilgrimage,offmap_decisions,new,no,,offmap-power-scope; offmap
 shou_lung_master_engineer,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_raid,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_request_invasion,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
-shou_lung_sends_reinforcements,decisions,new,no,,not found in source file at run time
+shou_lung_sends_reinforcements,decisions,new,yes,0.395,"below min_score, is_shown forced off"
 shou_lung_siege_engineers,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_silk_road_favored_status,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_stop_raid,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_strategist,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
 shou_lung_tributary_break_free,offmap_decisions,new,no,,offmap-power-scope; offmap powers do not exist in CK3 (docs/mechanics_inventory.md)
-shun_the_living,decisions,new,no,,not found in source file at run time
-shut_the_gates,decisions,modified,no,,not found in source file at run time
+shun_the_living,decisions,new,yes,0.659,"below min_score, is_shown forced off"
+shut_the_gates,decisions,modified,yes,0.565,"below min_score, is_shown forced off"
 sire_vampire,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 sire_vampire_spawn,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-sky_burial_decision,decisions,modified,no,,not found in source file at run time
+sky_burial_decision,decisions,modified,yes,0.625,"below min_score, is_shown forced off"
 slaad_reproduction,targetted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_animate_dead_sorc,decisions,new,no,,not found in source file at run time
+spell_animate_dead_sorc,decisions,new,yes,0.368,"below min_score, is_shown forced off"
 spell_blight_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_blight_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_blight_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 spell_charm_person_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_charm_person_sorc_fake,decisions,new,no,,not found in source file at run time
-spell_conjure_elementals_sorc,decisions,new,no,,not found in source file at run time
-spell_conjure_natural_allies,decisions,new,no,,not found in source file at run time
+spell_charm_person_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+spell_conjure_elementals_sorc,decisions,new,yes,0.375,"below min_score, is_shown forced off"
+spell_conjure_natural_allies,decisions,new,yes,0.260,"below min_score, is_shown forced off"
 spell_controlweather_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_controlweather_sorc_fake,decisions,new,no,,not found in source file at run time
-spell_create_homunculus_sorc,decisions,new,no,,not found in source file at run time
+spell_controlweather_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+spell_create_homunculus_sorc,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 spell_fabricate_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_fabricate_sorc_fake,decisions,new,no,,not found in source file at run time
-spell_find_familiar_sorc,decisions,new,no,,not found in source file at run time
+spell_fabricate_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+spell_find_familiar_sorc,decisions,new,yes,0.367,"below min_score, is_shown forced off"
 spell_forget_past_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_forget_past_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_forget_past_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 spell_greater_restoration,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_greater_restoration_cleric_fake,decisions,new,no,,not found in source file at run time
-spell_greater_restoration_druid_fake,decisions,new,no,,not found in source file at run time
+spell_greater_restoration_cleric_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+spell_greater_restoration_druid_fake,decisions,new,yes,0.400,"below min_score, is_shown forced off"
 spell_greater_restoration_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_greater_restoration_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_greater_restoration_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 spell_heal,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_heal_cleric_fake,decisions,new,no,,not found in source file at run time
-spell_heal_druid_fake,decisions,new,no,,not found in source file at run time
+spell_heal_cleric_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+spell_heal_druid_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 spell_heal_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_heal_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_heal_sorc_fake,decisions,new,yes,0.429,"below min_score, is_shown forced off"
 spell_lesser_restoration,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_lesser_restoration_cleric_fake,decisions,new,no,,not found in source file at run time
-spell_lesser_restoration_druid_fake,decisions,new,no,,not found in source file at run time
+spell_lesser_restoration_cleric_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+spell_lesser_restoration_druid_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 spell_lesser_restoration_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_lesser_restoration_sorc_fake,decisions,new,no,,not found in source file at run time
-spell_longstrider_sorc,decisions,new,no,,not found in source file at run time
-spell_rage_sorc,decisions,new,no,,not found in source file at run time
+spell_lesser_restoration_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+spell_longstrider_sorc,decisions,new,yes,0.444,"below min_score, is_shown forced off"
+spell_rage_sorc,decisions,new,yes,0.409,"below min_score, is_shown forced off"
 spell_regenerate,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_regenerate_cleric_fake,decisions,new,no,,not found in source file at run time
-spell_regenerate_druid_fake,decisions,new,no,,not found in source file at run time
+spell_regenerate_cleric_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+spell_regenerate_druid_fake,decisions,new,yes,0.400,"below min_score, is_shown forced off"
 spell_regenerate_sorc,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-spell_regenerate_sorc_fake,decisions,new,no,,not found in source file at run time
+spell_regenerate_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 spell_restoration_prov,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_restoration_prov_druid_fake,decisions,new,no,,not found in source file at run time
-spell_restoration_prov_fake,decisions,new,no,,not found in source file at run time
+spell_restoration_prov_druid_fake,decisions,new,yes,0.400,"below min_score, is_shown forced off"
+spell_restoration_prov_fake,decisions,new,yes,0.333,"below min_score, is_shown forced off"
 spell_restoration_prov_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_summon_lesser_demons_sorc,decisions,new,no,,not found in source file at run time
+spell_summon_lesser_demons_sorc,decisions,new,yes,0.368,"below min_score, is_shown forced off"
 spell_wall_of_stone_sorc,settlement_decisions,new,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-spell_wall_of_stone_sorc_fake,decisions,new,no,,not found in source file at run time
-sponsor_arts,society_decisions,new,no,,not found in source file at run time
+spell_wall_of_stone_sorc_fake,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+sponsor_arts,society_decisions,new,yes,0.333,"below min_score, is_shown forced off"
 sponsor_merchant_republic_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 spread_madness,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 stable_attribute_improvement_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -870,44 +870,44 @@ stop_seduce_decision_target,targetted_decisions,modified,no,,"third-party charac
 stop_spy_on_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 stop_spy_on_decision_target,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 stop_sway,targetted_decisions,kept,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-store_relic_in_wonder,decisions,modified,no,,not found in source file at run time
-summer_fair,decisions,modified,no,,not found in source file at run time
-summon_divine_minion,decisions,new,no,,not found in source file at run time
-summon_fiend_army,decisions,new,no,,not found in source file at run time
-summon_spectator,decisions,new,no,,not found in source file at run time
-summon_zhent_servant,society_decisions,new,no,,not found in source file at run time
+store_relic_in_wonder,decisions,modified,yes,0.619,"below min_score, is_shown forced off"
+summer_fair,decisions,modified,yes,0.392,"below min_score, is_shown forced off"
+summon_divine_minion,decisions,new,yes,0.429,"below min_score, is_shown forced off"
+summon_fiend_army,decisions,new,yes,0.609,"below min_score, is_shown forced off"
+summon_spectator,decisions,new,yes,0.643,"below min_score, is_shown forced off"
+summon_zhent_servant,society_decisions,new,yes,0.368,"below min_score, is_shown forced off"
 support_people,title_decisions,new,no,,"title-scope (filter=/ai_target_filter=), CK3 has no title-scope decisions"
-syncretic_sympathy_decision,decisions,modified,no,,not found in source file at run time
+syncretic_sympathy_decision,decisions,modified,yes,0.350,"below min_score, is_shown forced off"
 take_child_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 take_on_pain,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 take_spouse_out_of_hiding,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-take_vow_of_poverty,decisions,new,no,,not found in source file at run time
+take_vow_of_poverty,decisions,new,yes,0.769,"below min_score, is_shown forced off"
 talisman_evil_destruction,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 talisman_good_destruction,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-tell_a_story_decision,decisions,modified,no,,not found in source file at run time
+tell_a_story_decision,decisions,modified,yes,0.690,"below min_score, is_shown forced off"
 the_devil_worshipers_tainted_touch,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-torm_tactics,decisions,new,no,,not found in source file at run time
+torm_tactics,decisions,new,yes,0.632,"below min_score, is_shown forced off"
 train_assassin_protege,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 tribal_build_great_pillar,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 tributary_independence_china,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-tributary_independence_normal,decisions,modified,no,,not found in source file at run time
-tributary_independence_shou_lung,decisions,new,no,,not found in source file at run time
+tributary_independence_normal,decisions,modified,yes,0.385,"below min_score, is_shown forced off"
+tributary_independence_shou_lung,decisions,new,yes,0.444,"below min_score, is_shown forced off"
 trollcrafters_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 twisted_blackmail,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 twisted_turn_vassal,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-twisted_undead_servant,society_decisions,new,no,,not found in source file at run time
-ulutiu_offering_to_spirit_beast,decisions,new,no,,not found in source file at run time
-ulutiu_winter_soldier,decisions,new,no,,not found in source file at run time
-undeath_after_death,decisions,new,no,,not found in source file at run time
+twisted_undead_servant,society_decisions,new,yes,0.077,"below min_score, is_shown forced off"
+ulutiu_offering_to_spirit_beast,decisions,new,yes,0.737,"below min_score, is_shown forced off"
+ulutiu_winter_soldier,decisions,new,yes,0.565,"below min_score, is_shown forced off"
+undeath_after_death,decisions,new,yes,0.636,"below min_score, is_shown forced off"
 use_scary_upgrade,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 use_secluded_upgrade,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-usurp_tp,decisions,modified,no,,not found in source file at run time
-uthgar_emulate_beast,decisions,new,no,,not found in source file at run time
-uthgar_runemeet,decisions,new,no,,not found in source file at run time
-uthgardt_ancestral_champion,decisions,new,no,,not found in source file at run time
-uthgardt_ancestral_host,decisions,new,no,,not found in source file at run time
-uthgardt_great_beast,decisions,new,no,,not found in source file at run time
-vampire_feed,decisions,new,no,,not found in source file at run time
+usurp_tp,decisions,modified,yes,0.344,"below min_score, is_shown forced off"
+uthgar_emulate_beast,decisions,new,yes,0.105,"below min_score, is_shown forced off"
+uthgar_runemeet,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+uthgardt_ancestral_champion,decisions,new,yes,0.312,"below min_score, is_shown forced off"
+uthgardt_ancestral_host,decisions,new,yes,0.429,"below min_score, is_shown forced off"
+uthgardt_great_beast,decisions,new,yes,0.500,"below min_score, is_shown forced off"
+vampire_feed,decisions,new,yes,0.625,"below min_score, is_shown forced off"
 vassal_blinding_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 vassal_castrate_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 vassal_evil_sacrifice_decision,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
@@ -915,46 +915,46 @@ vassal_fatwa_decision,targetted_decisions,deleted,no,,"third-party character-tar
 vassal_generic_sacrifice_decision,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 vassal_sacrifice_decision,targetted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 vassal_zun_judgement_decision,targetted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-vassalize_flaming_fist,decisions,new,no,,not found in source file at run time
+vassalize_flaming_fist,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 vassalize_holy_sepulchre,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 vassalize_knights_hospitaler,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 vassalize_knights_of_calatrava,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 vassalize_knights_of_santiago,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 vassalize_knights_templar,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-vassalize_sun_soul,society_decisions,new,no,,not found in source file at run time
+vassalize_sun_soul,society_decisions,new,yes,0.350,"below min_score, is_shown forced off"
 vassalize_teutonic_knights,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-vecna_forbidden_knowledge,decisions,new,no,,not found in source file at run time
-velsharoon_ascend,decisions,new,no,,not found in source file at run time
+vecna_forbidden_knowledge,decisions,new,yes,0.600,"below min_score, is_shown forced off"
+velsharoon_ascend,decisions,new,yes,0.357,"below min_score, is_shown forced off"
 velsharoon_sacrifice,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-vergadain_court_merchants,decisions,new,no,,not found in source file at run time
+vergadain_court_merchants,decisions,new,yes,0.500,"below min_score, is_shown forced off"
 vodouns_recruit,targeted_decisions,deleted,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 vushmgir_brothers_legacy,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-warlock_pact_boon,decisions,new,no,,not found in source file at run time
-warlock_patron_pick,decisions,new,no,,not found in source file at run time
+warlock_pact_boon,decisions,new,yes,0.292,"below min_score, is_shown forced off"
+warlock_patron_pick,decisions,new,yes,0.200,"below min_score, is_shown forced off"
 warrior_lodge_call_to_glory,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 warrior_lodge_inspire_warriors,settlement_decisions,modified,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
-warrior_lodge_legendary_gathering,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_legendary_gathering,society_decisions,modified,yes,0.300,"below min_score, is_shown forced off"
 warrior_lodge_norse_go_berserk,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 warrior_lodge_romuva_baltic_holds,settlement_decisions,deleted,no,,"settlement-scope (filter=/ai_target_filter=), CK3 has no settlement-scope decisions"
 warrior_lodge_slavic_stand_together,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-warrior_lodge_summon_commander,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_summon_commander,society_decisions,modified,yes,0.341,"below min_score, is_shown forced off"
 warrior_lodge_suomenusko_summon_warriors,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 warrior_lodge_tengri_call_of_the_steppe,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-warrior_lodge_war_sacrifice,society_decisions,modified,no,,not found in source file at run time
+warrior_lodge_war_sacrifice,society_decisions,modified,yes,0.419,"below min_score, is_shown forced off"
 warrior_lodge_west_african_create_fetish,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 warrior_lodge_zun_battle_trance,society_decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
 warrior_toughness,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
 warrior_training,targeted_decisions,modified,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-welcome_gurs,decisions,new,no,,not found in source file at run time
+welcome_gurs,decisions,new,yes,0.714,"below min_score, is_shown forced off"
 welcome_jews,decisions,deleted,no,,status deleted: out of this lane's scope (README §5 step 3 ports new/modified only)
-wiz_clone,decisions,new,no,,not found in source file at run time
-wiz_craft_homunculus,decisions,new,no,,not found in source file at run time
-wiz_divine_threat,decisions,new,no,,not found in source file at run time
-wiz_lichdom,decisions,new,no,,not found in source file at run time
-wiz_longevity,decisions,new,no,,not found in source file at run time
-wiz_planar_binding,decisions,new,no,,not found in source file at run time
-wiz_summon_elementals,decisions,new,no,,not found in source file at run time
-write_a_book,decisions,modified,no,,not found in source file at run time
+wiz_clone,decisions,new,yes,0.278,"below min_score, is_shown forced off"
+wiz_craft_homunculus,decisions,new,yes,0.281,"below min_score, is_shown forced off"
+wiz_divine_threat,decisions,new,yes,0.333,"below min_score, is_shown forced off"
+wiz_lichdom,decisions,new,yes,0.297,"below min_score, is_shown forced off"
+wiz_longevity,decisions,new,yes,0.346,"below min_score, is_shown forced off"
+wiz_planar_binding,decisions,new,yes,0.528,"below min_score, is_shown forced off"
+wiz_summon_elementals,decisions,new,yes,0.280,"below min_score, is_shown forced off"
+write_a_book,decisions,modified,yes,0.844,"below min_score, is_shown forced off"
 write_about_ruler,targeted_decisions,new,no,,"third-party character-targeted; maps to CK3 character interactions, out of this lane's scope"
-zhent_become_tributary,society_decisions,new,no,,not found in source file at run time
-zhent_trade_route,society_decisions,new,no,,not found in source file at run time
+zhent_become_tributary,society_decisions,new,yes,0.583,"below min_score, is_shown forced off"
+zhent_trade_route,society_decisions,new,yes,0.429,"below min_score, is_shown forced off"
