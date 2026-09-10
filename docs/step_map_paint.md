@@ -50,6 +50,39 @@ not a second copy of the same data, and a converter that writes the TGA pair
 directly needs no editor pass, the same conclusion `packed_heightmap` reached
 for elevation.
 
+## 1b. Gameplay terrain is NOT this file's business (lane `province-terrain`)
+
+`common/province_terrain` and the paint pair are two different answers to two
+different questions, and since lane `province-terrain` they are allowed to
+disagree — because in CK2 they already do.
+
+* **Paint** is per **pixel**: each pixel's CK2 terrain category (from
+  `terrain.bmp` + `trees.bmp`) picks a material pair. That is what §2 below
+  describes and it is unchanged.
+* **Gameplay terrain** is per **province**, and its first source is the CK2
+  `history/provinces` `terrain = X` line, not the bitmap — CK2's own rule, see
+  `docs/step_map_terrain.md`. 1040 of Faerûn's 2125 province files carry that
+  line; the override moved 946 CK3 provinces.
+
+So the sentence in §2 step 1 — "paint and gameplay terrain never disagree" —
+is now true only of the *table* (both still resolve a CK2 category through
+`ck2ck3.map.terrain.CK2_TO_CK3_TERRAIN`), not of the *result*. **946 provinces
+are painted one class and played as another**, most of them painted plains and
+played farmlands/forest. This is faithful to CK2, where the bitmap is the
+texture and the history line is the terrain, but it is a visible mismatch
+between the ground and the province tooltip.
+
+Zero paint pixels changed, so **figure 5 in `docs/report_map_paint.md` does not
+move** — it is read back out of the shipped `detail_index.tga`. What did move,
+because it reads the per-province class grid, is the heightmap detail pass and
+the tree scatter: 6.61 % of canvas pixels change class
+(`docs/step_map_terrain.md` §5).
+
+Open, for whoever owns this file next: repaint an overridden county's pixels to
+its override's material pair, so the ground matches the tooltip. That would
+also move figure 5 and the colormap, so it is a paint-lane decision, not a
+terrain-lane one.
+
 ## 2. Pipeline
 
 `ck2ck3.map.terrain_paint.build_layers`, called from `ck2ck3.map.build.run`

@@ -23,6 +23,7 @@ import io
 import json
 import sys
 import time
+from collections import Counter
 from collections.abc import Sequence
 from dataclasses import replace
 from pathlib import Path
@@ -47,6 +48,7 @@ from . import (
     rivers,
     table,
     terrain,
+    terrain_history,
     terrain_paint,
     tree_scatter,
     writers,
@@ -317,6 +319,96 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     }
     water_mask = np.isin(ck3_raster, list(water_ck3))
     terrain_ck3 = {pid: key for pid, key in tres.by_province.items()}
+
+    # ------------------------------ CK2 province-history `terrain = X` override
+    # In CK2 that line IS the province's gameplay terrain and the bitmap
+    # majority above is only the fallback, so it wins here too
+    # (docs/step_map_terrain.md). Applied AFTER impassability is decided, on
+    # purpose: `impassable_ck3` stays a pure terrain.bmp property, exactly as
+    # before this lane.
+    terrain_bitmap_only = dict(terrain_ck3)
+    if cfg.terrain_history:
+        rules = terrain_history.read_rules(
+            _repo_path(cfg, cfg.terrain_history_csv)
+        )
+        overrides = {
+            pid: cat
+            for pid, hist in province_history.items()
+            if (cat := hist.terrain_at(cfg.baronies.bookmark))
+        }
+        capitals = {
+            b.key: b.is_capital
+            for bs in plan.by_province.values()
+            for b in bs
+        }
+        refs = [
+            terrain_history.BaronyRef(
+                ck3_id=p.id,
+                ck2_id=p.ck2_id,
+                # a land province that was never split IS its own county
+                is_capital=capitals.get(p.barony or "", True),
+                barony=p.barony or "",
+                county=p.county or "",
+            )
+            for p in ids.provinces
+            if not p.is_water and p.ck2_id is not None
+        ]
+        hres = terrain_history.apply_overrides(
+            terrain_ck3,
+            refs=refs,
+            overrides=overrides,
+            rules=rules,
+            weak_classes=cfg.terrain_history_weak,
+        )
+        terrain_ck3 = hres.terrain
+        report["terrain_history"] = {
+            "enabled": True,
+            "overrides_in_ck2_history": len(overrides),
+            **hres.summary(),
+        }
+        report["terrain"] = dict(Counter(terrain_ck3.values()))
+        log(
+            f"province-history terrain override: {len(overrides)} CK2 counties "
+            f"declare one, {hres.summary()['counties_with_override']} usable; "
+            f"{hres.changed} CK3 provinces changed "
+            f"(capital {hres.outcomes['applied_capital']}, "
+            f"non-capital-weak {hres.outcomes['applied_weak_bitmap']}, "
+            f"kept strong bitmap {hres.outcomes['kept_strong_bitmap']}, "
+            f"already agreed {hres.outcomes['already_agreed']}, "
+            f"unmapped {sum(hres.unmapped.values())})"
+        )
+        if hres.unmapped:
+            sink.warn(
+                "CK2 history terrain categories with no row in "
+                f"{cfg.terrain_history_csv}: "
+                + ", ".join(f"{k} ({v})" for k, v in sorted(hres.unmapped.items()))
+                + " - bitmap majority kept"
+            )
+        log(f"terrain after override: {dict(Counter(terrain_ck3.values()).most_common())}")
+        # How far this moves the two passes that read the per-PROVINCE terrain
+        # class rather than the per-pixel one: the heightmap detail gain and
+        # the tree mesh choice (both go through `_terrain_code_grid`).  The
+        # terrain PAINT is per-pixel and does not move at all
+        # (docs/step_map_terrain.md §5).
+        changed_ids = [
+            pid for pid, key in terrain_ck3.items() if key != terrain_bitmap_only[pid]
+        ]
+        moved_px = (
+            int(np.isin(ck3_raster, changed_ids).sum()) if changed_ids else 0
+        )
+        report["terrain_history"]["class_grid_pixels_moved"] = moved_px
+        report["terrain_history"]["class_grid_pixels_moved_share"] = round(
+            moved_px / float(ck3_raster.size), 6
+        )
+        log(
+            f"terrain class grid (heightmap detail + tree meshes): "
+            f"{moved_px} px moved "
+            f"({100 * moved_px / float(ck3_raster.size):.2f} % of the canvas)"
+        )
+        _terrain_history_evidence = terrain_history.render_evidence_csv(hres)
+    else:
+        report["terrain_history"] = {"enabled": False}
+        _terrain_history_evidence = None
 
     # ---------------------------------------------------------------- images
     if not skip_images:
@@ -796,6 +888,10 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             selections, names=ck2_names
         ),
     }
+    if _terrain_history_evidence is not None:
+        report["_evidence"]["terrain_history_baronies.csv"] = (
+            _terrain_history_evidence
+        )
     report["_plan"] = plan
     report["_ids"] = ids
     report["_canvas"] = canvas

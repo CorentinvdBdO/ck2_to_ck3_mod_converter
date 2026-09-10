@@ -1,0 +1,1041 @@
+ck2_province,name,county,kind,history_terrain,history_ck3_key,bitmap_category,bitmap_ck3_key,agree
+1,Waterdeep,c_waterdeep,land,farmlands,farmlands,hills,hills,no
+2,Amphail,c_amphail,land,farmlands,farmlands,plains,plains,no
+3,Daggerford,c_daggerford,land,farmlands,farmlands,plains,plains,no
+6,Dragonspear,c_dragonspear,land,plains,plains,plains,plains,yes
+8,Neverwinter,c_neverwinter,land,farmlands,farmlands,plains,plains,no
+9,Mere of Dead Men,c_mere_of_dead_men,land,marsh,wetlands,marsh,wetlands,yes
+11,Neverwinter Wood,c_neverwinter_wood,land,forest,forest,forest,forest,yes
+13,Baldurs Gate,c_baldurs_gate,land,farmlands,farmlands,plains,plains,no
+14,The Trollclaws,c_the_trollclaws,land,hills,hills,plains,plains,no
+16,Scornubel,c_scornubel,land,farmlands,farmlands,plains,plains,no
+17,Luskan,c_luskan,land,arctic,taiga,arctic,taiga,yes
+20,Kryptgarden Forest,c_kryptgarden_forest,land,forest,forest,hills,hills,no
+21,Lurkwood,c_lurkwood,land,forest,forest,forest,forest,yes
+22,Ardeepsward,c_ardeepsward,land,farmlands,farmlands,plains,plains,no
+25,Silverymoon,c_silverymoon,land,farmlands,farmlands,arctic,taiga,no
+26,Surbrin Hills,c_surbrin_hills,land,hills,hills,hills,hills,yes
+27,The Evermoors,c_the_evermoors,land,hills,hills,marsh,wetlands,no
+29,Everlund,c_everlund,land,farmlands,farmlands,arctic,taiga,no
+30,Silvermoon Pass,c_silvermoon_pass,land,hills,hills,hills,hills,yes
+32,Mithral Hall,c_mithral_hall,land,mountain,mountains,mountain,mountains,yes
+33,Druarwood,c_druarwood,land,forest,forest,forest,forest,yes
+34,Moonwood,c_moonwood,land,forest,forest,forest,forest,yes
+35,Coldwood,c_coldwood,land,forest,forest,forest,forest,yes
+36,Citadel Adbar,c_citadel_adbar,land,hills,hills,arctic,taiga,no
+37,Turlangs Wood,c_turlangs_wood,land,forest,forest,arctic,taiga,no
+38,Sundabar,c_sundabar,land,hills,hills,arctic,taiga,no
+39,Fell Pass,c_fell_pass,land,mountain,mountains,mountain,mountains,yes
+40,Mirabar,c_mirabar,land,hills,hills,arctic,taiga,no
+41,Khedrun Valley,c_khedrun_valley,land,hills,hills,mountain,mountains,no
+42,Blackford,c_blackford,land,arctic,taiga,arctic,taiga,yes
+45,Kelvins Cairn,c_kelvins_cairn,land,subterranean,mountains,arctic,taiga,no
+46,Lac Dinneshere,c_lac_dinneshere,land,arctic,taiga,hills,hills,no
+47,Night Trees,c_night_trees,land,forest,forest,forest,forest,yes
+48,Hartsvale,c_hartsvale,land,hills,hills,arctic,taiga,no
+49,Tholvarr,c_tholvarr,land,mountain,mountains,hills,hills,no
+50,The Great Oak,c_the_great_oak,land,mountain,mountains,mountain,mountains,yes
+51,Evermelt,c_evermelt,land,glacier,taiga,glacier,taiga,yes
+52,Endless Blizzard,c_endless_blizzard,land,hills,hills,hills,hills,yes
+53,Arn Forest,c_arn_forest,land,forest,forest,arctic,taiga,no
+55,Lost Peaks,c_lost_peaks,land,forest,forest,arctic,taiga,no
+56,Heartblood,c_heartblood,land,forest,forest,forest,forest,yes
+57,The Sisters,c_the_sisters,land,mountain,mountains,hills,hills,no
+58,Trollbark Forest,c_trollbark_forest,land,forest,forest,plains,plains,no
+60,Southwood,c_southwood,land,forest,forest,plains,plains,no
+61,Cloakwood,c_cloakwood,land,forest,forest,plains,plains,no
+62,Beregost,c_beregost,land,farmlands,farmlands,plains,plains,no
+64,Nashkel,c_nashkel,land,hills,hills,plains,plains,no
+65,Durlags Tower,c_durlags_tower,land,forest,forest,plains,plains,no
+67,Tall Trees,c_tall_trees,land,forest,forest,arctic,taiga,no
+68,Ebenfar,c_ebenfar,land,hills,hills,hills,hills,yes
+69,The Bleak Plain,c_the_bleak_plain,land,arctic,taiga,arctic,taiga,yes
+70,Unicorn Run,c_unicorn_run,land,forest,forest,forest,forest,yes
+72,Roaringshore,c_roaringshore,land,farmlands,farmlands,plains,plains,no
+73,Greenest,c_greenest,land,farmlands,farmlands,plains,plains,no
+74,Athkatla,c_athkatla,land,farmlands,farmlands,plains,plains,no
+75,Kalathtyr,c_kalathtyr,land,marsh,wetlands,marsh,wetlands,yes
+76,Esmeltaran,c_esmeltaran,land,farmlands,farmlands,plains,plains,no
+77,Crimmor,c_crimmor,land,hills,hills,mountain,mountains,no
+78,Eshpurta,c_eshpurta,land,hills,hills,plains,plains,no
+79,Imnescar,c_imnescar,land,farmlands,farmlands,plains,plains,no
+82,Murann,c_murann,land,farmlands,farmlands,plains,plains,no
+83,Trademeet,c_trademeet,land,plains,plains,plains,plains,yes
+84,Brost,c_brost,land,hills,hills,plains,plains,no
+87,East Tejarn,c_east_tejarn,land,hills,hills,hills,hills,yes
+88,Trailstone,c_trailstone,land,hills,hills,plains,plains,no
+89,Shilmista,c_shilmista,land,forest,forest,hills,hills,no
+90,Old Well,c_old_well,land,plains,plains,steppe,steppe,no
+91,Arylon,c_arylon,land,farmlands,farmlands,plains,plains,no
+92,Iriaebor,c_iriaebor,land,farmlands,farmlands,plains,plains,no
+94,Corm Orp,c_corm_orp,land,farmlands,farmlands,plains,plains,no
+97,Serpent Hills,c_serpent_hills,land,hills,hills,hills,hills,yes
+98,Hammer Hall,c_hammer_hall,land,hills,hills,hills,hills,yes
+99,The Rockshaws,c_the_rockshaws,land,hills,hills,hills,hills,yes
+101,Najara,c_najara,land,hills,hills,plains,plains,no
+102,Forest of Wyrms,c_forest_of_wyrms,land,forest,forest,plains,plains,no
+103,Reaching Wood,c_reaching_wood,land,forest,forest,plains,plains,no
+104,Llorkh,c_llorkh,land,hills,hills,hills,hills,yes
+105,Ascalhorn,c_ascalhorn,land,hills,hills,arctic,taiga,no
+106,Felbarr,c_felbarr,land,hills,hills,arctic,taiga,no
+107,Far Forest,c_far_forest,land,forest,forest,arctic,taiga,no
+108,Fallen Lands,c_fallen_lands,land,hills,hills,hills,hills,yes
+109,Lonely Moor,c_lonely_moor,land,hills,hills,marsh,wetlands,no
+110,Forgotten Forest,c_forgotten_forest,land,forest,forest,hills,hills,no
+111,Chelimber,c_chelimber,land,marsh,wetlands,marsh,wetlands,yes
+112,Evereska,c_evereska,land,mountain,mountains,hills,hills,no
+113,Greycloak Hills,c_greycloak_hills,land,hills,hills,hills,hills,yes
+115,Well of Dragons,c_well_of_dragons,land,hills,hills,plains,plains,no
+116,Firedrake,c_firedrake,land,forest,forest,plains,plains,no
+117,Fyraven,c_fyraven,land,forest,forest,plains,plains,no
+119,Starspur,c_starspur,land,mountain,mountains,hills,hills,no
+122,Elemetar,c_elemetar,land,farmlands,farmlands,plains,plains,no
+124,Uluran,c_uluran,land,mountain,mountains,hills,hills,no
+128,Clovis Fields,c_clovis_fields,land,farmlands,farmlands,plains,plains,no
+136,West Tejarn,c_west_tejarn,land,hills,hills,hills,hills,yes
+137,Suldanessellar,c_suldanessellar,land,forest,forest,plains,plains,no
+138,Mytharan Woods,c_mytharan_woods,land,forest,forest,plains,plains,no
+139,Iskashyoll,c_iskashyoll,land,forest,forest,plains,plains,no
+140,Alisiwhann,c_alisiwhann,land,forest,forest,forest,forest,yes
+142,Calimport,c_calimport,land,desert,desert,plains,plains,no
+143,Teshburl,c_teshburl,land,desert,desert,desert,desert,yes
+144,Memnon,c_memnon,land,desert,desert,plains,plains,no
+145,Manshaka,c_manshaka,land,farmlands,farmlands,plains,plains,no
+146,Calim Desert,c_calim_desert,land,desert,desert,desert,desert,yes
+147,Keltar,c_keltar,land,desert,desert,plains,plains,no
+149,Schamedar,c_schamedar,land,farmlands,farmlands,plains,plains,no
+150,Volothamp,c_volothamp,land,farmlands,farmlands,plains,plains,no
+152,Sarenestar,c_sarenestar,land,forest,forest,plains,plains,no
+154,Darromar,c_darromar,land,farmlands,farmlands,plains,plains,no
+155,Dunod,c_dunod,land,hills,hills,hills,hills,yes
+157,The Shield,c_the_shield,land,forest,forest,plains,plains,no
+158,Moonglade,c_moonglade,land,forest,forest,plains,plains,no
+163,Lheshayl,c_lheshayl,land,plains,plains,steppe,steppe,no
+169,The Crags,c_the_crags,land,hills,hills,hills,hills,yes
+175,Thornwood,c_thornwood,land,forest,forest,plains,plains,no
+176,Ioma,c_ioma,land,coastal,farmlands,hills,hills,no
+177,Irphong,c_irphong,land,coastal,farmlands,plains,plains,no
+178,Thordentor,c_thordentor,land,coastal,farmlands,plains,plains,no
+179,The Rookery,c_the_rookery,land,coastal,farmlands,plains,plains,no
+180,Toaridge-at-the-Suns-Setting,c_toaridge_at_the_suns_setting,land,coastal,farmlands,plains,plains,no
+181,The Flint,c_the_flint,land,coastal,farmlands,plains,plains,no
+182,The Tusks,c_the_tusks,land,coastal,farmlands,plains,plains,no
+183,The Singing Rocks,c_the_singing_rocks,land,coastal,farmlands,plains,plains,no
+185,Elversult,c_elversult,land,farmlands,farmlands,plains,plains,no
+190,Westgate,c_westgate,land,farmlands,farmlands,plains,plains,no
+192,Karlyns Vale,c_karlyns_vale,land,mountain,mountains,mountain,mountains,yes
+193,Widestep,c_widestep,land,plains,plains,steppe,steppe,no
+194,Nathlekh,c_nathlekh,land,plains,plains,plains,plains,yes
+195,Assam,c_assam,land,plains,plains,steppe,steppe,no
+196,Starfields,c_starfields,land,plains,plains,steppe,steppe,no
+197,Ormath,c_ormath,land,plains,plains,steppe,steppe,no
+198,Murpeth,c_murpeth,land,hills,hills,hills,hills,yes
+199,Surkh,c_surkh,land,hills,hills,steppe,steppe,no
+201,Giants Run,c_giants_run,land,plains,plains,steppe,steppe,no
+202,Long Arm,c_long_arm,land,hills,hills,plains,plains,no
+203,Westmark,c_westmark,land,plains,plains,steppe,steppe,no
+204,Broadfields,c_broadfields,land,plains,plains,steppe,steppe,no
+205,Hlondeth,c_hlondeth,land,mountain,mountains,hills,hills,no
+206,The Wetwoods,c_the_wetwoods,land,marsh,wetlands,marsh,wetlands,yes
+207,Lachom,c_lachom,land,mountain,mountains,plains,plains,no
+209,Pikemans Folly,c_pikemans_folly,land,mountain,mountains,hills,hills,no
+210,Arrabar,c_arrabar,land,farmlands,farmlands,plains,plains,no
+211,Marsh of Tun,c_marsh_of_tun,land,marsh,wetlands,marsh,wetlands,yes
+212,Veilstone,c_veilstone,land,steppe,steppe,hills,hills,no
+213,Gullrocks,c_gullrocks,land,coastal,farmlands,plains,plains,no
+214,Flamsterd,c_flamsterd,land,coastal,farmlands,hills,hills,no
+215,Norheim,c_norheim,land,coastal,farmlands,hills,hills,no
+216,Korinn,c_korinn,land,coastal,farmlands,hills,hills,no
+217,Frostfenn,c_frostfenn,land,hills,hills,plains,plains,no
+218,Grondsgrunn,c_grondsgrunn,land,hills,hills,plains,plains,no
+219,Wave Rocks,c_wave_rocks,land,coastal,farmlands,arctic,taiga,no
+220,Westphal,c_westphal,land,coastal,farmlands,plains,plains,no
+221,Sunset,c_sunset,land,coastal,farmlands,plains,plains,no
+223,Mintarn,c_mintarn,land,coastal,farmlands,plains,plains,no
+224,Ruathym,c_ruathym,land,coastal,farmlands,arctic,taiga,no
+225,The Icepeak,c_the_icepeak,land,coastal,farmlands,arctic,taiga,no
+226,Gundarlun,c_gundarlun,land,coastal,farmlands,hills,hills,no
+227,Tuern,c_tuern,land,coastal,farmlands,arctic,taiga,no
+228,Purple Rocks,c_purple_rocks,land,coastal,farmlands,arctic,taiga,no
+229,Umukek,c_umukek,land,coastal,farmlands,arctic,taiga,no
+230,The Whalebones,c_the_whalebones,land,coastal,farmlands,arctic,taiga,no
+232,Cimarine Isles,c_cimarine_isles,land,coastal,farmlands,plains,plains,no
+233,Ardeep Forest,c_ardeep_forest,land,forest,forest,arctic,taiga,no
+234,The Fell Wood,c_the_fell_wood,land,forest,forest,arctic,taiga,no
+235,Amkethran,c_amkethran,land,desert,desert,plains,plains,no
+237,Purskul,c_purskul,land,farmlands,farmlands,plains,plains,no
+238,Alaghon,c_alaghon,land,farmlands,farmlands,plains,plains,no
+239,Alaoreum,c_alaoreum,land,hills,hills,plains,plains,no
+240,Gildenglade,c_gildenglade,land,farmlands,farmlands,plains,plains,no
+241,Holdensword,c_holdensword,land,farmlands,farmlands,plains,plains,no
+242,Nonthal,c_nonthal,land,farmlands,farmlands,plains,plains,no
+243,The Faraway,c_the_faraway,land,forest,forest,plains,plains,no
+244,Xorhun,c_xorhun,land,hills,hills,plains,plains,no
+247,Tharsult,c_tharsult,land,coastal,farmlands,plains,plains,no
+249,Suzail,c_suzail,land,farmlands,farmlands,plains,plains,no
+250,Wyvernwater,c_wyvernwater,land,farmlands,farmlands,plains,plains,no
+251,Eveningstar,c_eveningstar,land,hills,hills,hills,hills,yes
+252,Marsember,c_marsember,land,forest,forest,plains,plains,no
+253,Arabel,c_arabel,land,farmlands,farmlands,plains,plains,no
+255,Warmshores,c_warmshores,land,hills,hills,hills,hills,yes
+256,Selgaunt,c_selgaunt,land,farmlands,farmlands,plains,plains,no
+257,Urmlaspyr,c_urmlaspyr,land,farmlands,farmlands,plains,plains,no
+258,Saerloon,c_saerloon,land,farmlands,farmlands,plains,plains,no
+259,Daerlun,c_daerlun,land,farmlands,farmlands,plains,plains,no
+260,Ordulin,c_ordulin,land,farmlands,farmlands,plains,plains,no
+262,Tantras,c_tantras,land,farmlands,farmlands,plains,plains,no
+269,Elventree,c_elventree,land,forest,forest,plains,plains,no
+270,Mulmaster,c_mulmaster,land,hills,hills,hills,hills,yes
+272,Essembra,c_essembra,land,forest,forest,plains,plains,no
+273,Archenbridge,c_archenbridge,land,hills,hills,plains,plains,no
+274,Daggerdale,c_daggerdale,land,hills,hills,plains,plains,no
+275,Highmoon,c_highmoon,land,forest,forest,plains,plains,no
+276,Blackfeather Bridge,c_blackfeather_bridge,land,forest,forest,plains,plains,no
+277,Harrowdale,c_harrowdale,land,forest,forest,plains,plains,no
+278,Highcastle,c_highcastle,land,mountain,mountains,hills,hills,no
+279,Ashabenford,c_ashabenford,land,forest,forest,plains,plains,no
+280,Scardale,c_scardale,land,hills,hills,plains,plains,no
+281,Sessrenglade,c_sessrenglade,land,hills,hills,plains,plains,no
+282,Shadowdale,c_shadowdale,land,forest,forest,plains,plains,no
+283,Miir,c_miir,land,hills,hills,mountain,mountains,no
+284,Tegal's Mark,c_tegals_mark,land,hills,hills,hills,hills,yes
+285,Teshwave,c_teshwave,land,hills,hills,plains,plains,no
+286,Storm Horns,c_storm_horns,land,mountain,mountains,hills,hills,no
+287,Sambar,c_sambar,land,farmlands,farmlands,plains,plains,no
+288,Leth,c_leth,land,hills,hills,plains,plains,no
+289,Sundrah,c_sundrah,land,hills,hills,plains,plains,no
+292,Mother-of-Mists,c_mother_of_mists,land,coastal,farmlands,hills,hills,no
+293,The Dawn Warrior,c_the_dawn_warrior,land,coastal,farmlands,plains,plains,no
+294,Salpir,c_salpir,land,forest,forest,plains,plains,no
+295,Ormen,c_ormen,land,farmlands,farmlands,plains,plains,no
+296,Curstallyon,c_curstallyon,land,forest,forest,plains,plains,no
+297,Sombor,c_sombor,land,hills,hills,plains,plains,no
+298,Beacon Rocks,c_beacon_rocks,land,coastal,farmlands,hills,hills,no
+299,The Whales Flukes,c_the_whales_flukes,land,coastal,farmlands,plains,plains,no
+300,Eastwood,c_eastwood,land,forest,forest,plains,plains,no
+301,Kings Forest,c_kings_forest,land,forest,forest,plains,plains,no
+305,Weathercote Wood,c_weathercote_wood,land,forest,forest,plains,plains,no
+306,Mt. Hotenow,c_mt_hotenow,land,mountain,mountains,forest,forest,no
+307,Westwood,c_westwood,land,forest,forest,hills,hills,no
+308,Callidyrr,c_callidyrr,land,forest,forest,plains,plains,no
+310,Stagford,c_stagford,land,forest,forest,plains,plains,no
+314,Hardang,c_hardang,land,hills,hills,hills,hills,yes
+315,Sunder,c_sunder,land,hills,hills,plains,plains,no
+316,Dynnegall,c_dynnegall,land,hills,hills,plains,plains,no
+318,Synnoria,c_synnoria,land,mountain,mountains,hills,hills,no
+320,Myrloch Vale,c_myrloch_vale,land,forest,forest,plains,plains,no
+322,Cambro,c_cambro,land,hills,hills,plains,plains,no
+323,Winterglen,c_winterglen,land,forest,forest,plains,plains,no
+324,Codsbay,c_codsbay,land,marsh,wetlands,plains,plains,no
+326,Shrouded Lands,c_shrouded_lands,land,marsh,wetlands,plains,plains,no
+328,Tilverton,c_tilverton,land,hills,hills,hills,hills,yes
+329,Hullack Forest,c_hullack_forest,land,forest,forest,plains,plains,no
+331,Redspring,c_redspring,land,mountain,mountains,hills,hills,no
+332,Thunderstone,c_thunderstone,land,marsh,wetlands,plains,plains,no
+333,Semberholme,c_semberholme,land,forest,forest,plains,plains,no
+334,Mosstrunks,c_mosstrunks,land,forest,forest,plains,plains,no
+335,Elven Court,c_elven_court,land,forest,forest,forest,forest,yes
+336,Tangled Trees,c_tangled_trees,land,forest,forest,forest,forest,yes
+337,Vale of Lost Voices,c_vale_of_lost_voices,land,forest,forest,forest,forest,yes
+338,Myth Drannor,c_myth_drannor,land,forest,forest,forest,forest,yes
+339,Darkwoods,c_darkwoods,land,forest,forest,forest,forest,yes
+340,Liswood,c_liswood,land,forest,forest,plains,plains,no
+342,Melvaunt,c_melvaunt,land,plains,plains,hills,hills,no
+344,Hulburg,c_hulburg,land,hills,hills,hills,hills,yes
+345,Thar,c_thar,land,hills,hills,hills,hills,yes
+346,Thentia,c_thentia,land,plains,plains,hills,hills,no
+347,North Rystall,c_north_rystall,land,forest,forest,forest,forest,yes
+348,Hawksroost,c_hawksroost,land,hills,hills,hills,hills,yes
+350,Rystall Wood,c_rystall_wood,land,forest,forest,forest,forest,yes
+355,Frozen Flindyke,c_frozen_flindyke,land,hills,hills,arctic,taiga,no
+369,Polten,c_polten,land,farmlands,farmlands,plains,plains,no
+370,Heliogabalus,c_heliogabalus,land,farmlands,farmlands,plains,plains,no
+371,Ostel,c_ostel,land,farmlands,farmlands,plains,plains,no
+372,Spiderhaunt Woods,c_spiderhaunt_woods,land,forest,forest,plains,plains,no
+373,Araugul,c_araugul,land,desert,desert,plains,plains,no
+374,Goblin Marches,c_goblin_marches,land,hills,hills,desert,desert,no
+375,Farsea Marsh,c_farsea_marsh,land,marsh,wetlands,marsh,wetlands,yes
+376,The Stonelands,c_the_stonelands,land,hills,hills,hills,hills,yes
+377,Shaddath,c_shaddath,land,hills,hills,mountain,mountains,no
+378,Sixstreams,c_sixstreams,land,hills,hills,plains,plains,no
+380,Kings Reach,c_kings_reach,land,hills,hills,plains,plains,no
+383,Daltonsvale,c_daltonsvale,land,forest,forest,plains,plains,no
+384,Bottomless Bog,c_bottomless_bog,land,marsh,wetlands,marsh,wetlands,yes
+385,Misty Forest,c_misty_forest,land,forest,forest,plains,plains,no
+387,Frozen Forest,c_frozen_forest,land,forest,forest,forest,forest,yes
+392,Samargol,c_samargol,land,farmlands,farmlands,plains,plains,no
+403,Sarshel,c_sarshel,land,farmlands,farmlands,plains,plains,no
+409,Soussal,c_soussal,land,jungle,jungle,jungle,jungle,yes
+410,Laas,c_laas,land,hills,hills,plains,plains,no
+419,Tembasi,c_tembasi,land,jungle,jungle,jungle,jungle,yes
+425,Sheirtalar,c_sheirtalar,land,farmlands,farmlands,plains,plains,no
+430,Thindar,c_thindar,land,farmlands,farmlands,plains,plains,no
+431,Blackvale,c_blackvale,land,jungle,jungle,forest,forest,no
+441,Mezro,c_mezro,land,jungle,jungle,jungle,jungle,yes
+442,The Samarlogh,c_the_samarlogh,land,jungle,jungle,plains,plains,no
+443,Talacoast,c_talacoast,land,jungle,jungle,jungle,jungle,yes
+445,Sapphire Shores,c_sapphire_shores,land,jungle,jungle,jungle,jungle,yes
+446,The Chultengar,c_the_chultengar,land,jungle,jungle,forest,forest,no
+447,Valley of Dread,c_valley_of_dread,land,jungle,jungle,hills,hills,no
+448,Hisari,c_hisari,land,jungle,jungle,forest,forest,no
+449,Shilku Bay,c_shilku_bay,land,jungle,jungle,jungle,jungle,yes
+450,Valley of Lost Honor,c_valley_of_lost_honor,land,desert,desert,jungle,jungle,no
+451,Couatl Wilds,c_couatl_wilds,land,jungle,jungle,forest,forest,no
+453,Mbala,c_mbala,land,jungle,jungle,forest,forest,no
+454,Olung,c_olung,land,jungle,jungle,forest,forest,no
+455,Shatterwave,c_shatterwave,land,jungle,jungle,forest,forest,no
+456,Aldani Basin,c_aldani_basin,land,marsh,wetlands,marsh,wetlands,yes
+457,Land of Ash and Smoke,c_land_of_ash_and_smoke,land,desert,desert,desert,desert,yes
+458,Wildstorm Vale,c_wildstorm_vale,land,jungle,jungle,jungle,jungle,yes
+459,Bulobo,c_bulobo,land,jungle,jungle,forest,forest,no
+460,Orolunga,c_orolunga,land,jungle,jungle,forest,forest,no
+461,Jahaka Bay,c_jahaka_bay,land,jungle,jungle,hills,hills,no
+462,Snapping Turtle Bay,c_snapping_turtle_bay,land,hills,hills,hills,hills,yes
+464,Nsi,c_nsi,land,hills,hills,jungle,jungle,no
+465,Matolo,c_matolo,land,hills,hills,jungle,jungle,no
+467,Lapalgulph,c_lapalgulph,land,jungle,jungle,plains,plains,no
+469,Mhairling,c_mhairling,land,jungle,jungle,jungle,jungle,yes
+471,Cony Gap,c_cony_gap,land,hills,hills,plains,plains,no
+472,Lyntara,c_lyntara,land,arctic,taiga,arctic,taiga,yes
+474,Zanzazzar,c_zanzazzar,land,jungle,jungle,forest,forest,no
+482,Council Hills,c_council_hills,land,hills,hills,steppe,steppe,no
+486,Sharawood,c_sharawood,land,jungle,jungle,jungle,jungle,yes
+488,Riftwood,c_riftwood,land,jungle,jungle,steppe,steppe,no
+489,Eartheart,c_eartheart,land,subterranean,mountains,steppe,steppe,no
+494,Channathwood,c_channathwood,land,jungle,jungle,jungle,jungle,yes
+500,Laila,c_laila,land,farmlands,farmlands,plains,plains,no
+502,Saraath,c_saraath,land,jungle,jungle,plains,plains,no
+503,Coilvines,c_coilvines,land,jungle,jungle,jungle,jungle,yes
+505,Kaarekh,c_kaarekh,land,jungle,jungle,jungle,jungle,yes
+506,Bamas,c_bamas,land,jungle,jungle,jungle,jungle,yes
+507,Oostar,c_oostar,land,jungle,jungle,forest,forest,no
+508,Qota,c_qota,land,jungle,jungle,jungle,jungle,yes
+509,Toa,c_toa,land,jungle,jungle,forest,forest,no
+511,Moonvales,c_moonvales,land,jungle,jungle,plains,plains,no
+512,Orphar,c_orphar,land,jungle,jungle,plains,plains,no
+513,Mhairhetel,c_mhairhetel,land,jungle,jungle,jungle,jungle,yes
+514,Lapaalis,c_lapaalis,land,jungle,jungle,jungle,jungle,yes
+515,Sesserash,c_sesserash,land,jungle,jungle,forest,forest,no
+516,Kassa Bay,c_kassa_bay,land,jungle,jungle,plains,plains,no
+517,Kinyo,c_kinyo,land,jungle,jungle,forest,forest,no
+521,Scrabbleground,c_scrabbleground,land,desert,desert,desert,desert,yes
+522,Broken Swords,c_broken_swords,land,plains,plains,plains,plains,yes
+523,Deadstars,c_deadstars,land,desert,desert,desert,desert,yes
+524,Misty Vale,c_misty_vale,land,jungle,jungle,jungle,jungle,yes
+526,Iirgar,c_iirgar,land,desert,desert,plains,plains,no
+529,The Shaarwood,c_the_shaarwood,land,forest,forest,steppe,steppe,no
+535,Shaareach Forest,c_shaareach_forest,land,jungle,jungle,steppe,steppe,no
+542,The Duskwood,c_the_duskwood,land,forest,forest,plains,plains,no
+546,Qurth Forest,c_qurth_forest,land,forest,forest,plains,plains,no
+569,Orbrekhland,c_orbrekhland,land,plains,plains,steppe,steppe,no
+571,Westgulth,c_westgulth,land,forest,forest,plains,plains,no
+572,Eastgulth,c_eastgulth,land,forest,forest,plains,plains,no
+574,Nun,c_nun,land,farmlands,farmlands,plains,plains,no
+575,Lilit Pass,c_lilit_pass,land,mountain,mountains,mountain,mountains,yes
+576,Nunwood,c_nunwood,land,forest,forest,plains,plains,no
+580,Soorenar,c_soorenar,land,farmlands,farmlands,plains,plains,no
+581,Ixinos,c_ixinos,land,coastal,farmlands,plains,plains,no
+582,Nesme,c_nesme,land,hills,hills,marsh,wetlands,no
+583,Snakewood,c_snakewood,land,forest,forest,plains,plains,no
+584,Rucien-Xan,c_rucien_xan,land,forest,forest,forest,forest,yes
+585,Underhome,c_underhome,land,subterranean,mountains,steppe,steppe,no
+586,Quarat,c_quarat,land,subterranean,mountains,steppe,steppe,no
+587,Shadows End,c_shadows_end,land,subterranean,mountains,steppe,steppe,no
+588,Rimmator,c_rimmator,land,subterranean,mountains,steppe,steppe,no
+589,Tarnhall,c_tarnhall,land,subterranean,mountains,steppe,steppe,no
+590,Daunting,c_daunting,land,subterranean,mountains,steppe,steppe,no
+591,Harlending,c_harlending,land,subterranean,mountains,steppe,steppe,no
+592,Glitterdelve,c_glitterdelve,land,subterranean,mountains,steppe,steppe,no
+593,Sundasz,c_sundasz,land,subterranean,mountains,steppe,steppe,no
+594,Satyr Road,c_satyr_road,land,forest,forest,forest,forest,yes
+595,Nearwoods,c_nearwoods,land,forest,forest,plains,plains,no
+596,Olum,c_olum,land,forest,forest,plains,plains,no
+597,Illuks,c_illuks,land,forest,forest,forest,forest,yes
+598,Adder Woods,c_adder_woods,land,forest,forest,plains,plains,no
+599,Velsit,c_velsit,land,forest,forest,plains,plains,no
+602,North Winterwood,c_north_winterwood,land,forest,forest,plains,plains,no
+603,South Winterwood,c_south_winterwood,land,forest,forest,plains,plains,no
+604,Ankhwood,c_ankhwood,land,forest,forest,plains,plains,no
+606,Ormpetarr,c_ormpetarr,land,farmlands,farmlands,plains,plains,no
+610,Zamsgrove,c_zamsgrove,land,forest,forest,plains,plains,no
+612,Lomatra,c_lomatra,land,farmlands,farmlands,plains,plains,no
+617,Avax,c_avax,land,hills,hills,hills,hills,yes
+618,Irestone,c_irestone,land,jungle,jungle,jungle,jungle,yes
+619,Vargath,c_vargath,land,jungle,jungle,jungle,jungle,yes
+620,Wolfwoods,c_wolfwoods,land,jungle,jungle,forest,forest,no
+621,Addak,c_addak,land,jungle,jungle,jungle,jungle,yes
+622,Gnollhomes,c_gnollhomes,land,jungle,jungle,jungle,jungle,yes
+623,Luthcheq,c_luthcheq,land,farmlands,farmlands,plains,plains,no
+624,Mordulkin,c_mordulkin,land,farmlands,farmlands,plains,plains,no
+628,Maerchwoods,c_maerchwoods,land,forest,forest,plains,plains,no
+629,Maerduuth,c_maerduuth,land,hills,hills,hills,hills,yes
+630,Akanax,c_akanax,land,hills,hills,plains,plains,no
+632,Thulbane,c_thulbane,land,hills,hills,hills,hills,yes
+634,Jade Hills,c_jade_hills,land,hills,hills,plains,plains,no
+635,Halarahh,c_halarahh,land,farmlands,farmlands,plains,plains,no
+638,Ralasuu Isle,c_ralasuu_isle,land,coastal,farmlands,plains,plains,no
+643,Aluar,c_aluar,land,farmlands,farmlands,plains,plains,no
+645,Sulaziir,c_sulaziir,land,farmlands,farmlands,plains,plains,no
+649,Talathgard,c_talathgard,land,hills,hills,plains,plains,no
+650,Thilzoun,c_thilzoun,land,hills,hills,hills,hills,yes
+651,Zzuntal,c_zzuntal,land,farmlands,farmlands,plains,plains,no
+657,Neldorild,c_neldorild,land,farmlands,farmlands,plains,plains,no
+658,Ship of the Gods,c_ship_of_the_gods,land,coastal,farmlands,plains,plains,no
+659,Unthalass,c_unthalass,land,farmlands,farmlands,plains,plains,no
+662,Methwood,c_methwood,land,forest,forest,plains,plains,no
+663,Kaoll,c_kaoll,land,farmlands,farmlands,plains,plains,no
+664,Firetrees,c_firetrees,land,hills,hills,plains,plains,no
+665,Angol,c_angol,land,farmlands,farmlands,plains,plains,no
+667,Black Ash Plain,c_black_ash_plain,land,desert,desert,desert,desert,yes
+670,Sadamzar,c_sadamzar,land,farmlands,farmlands,plains,plains,no
+671,Adder Swamp,c_adder_swamp,land,marsh,wetlands,marsh,wetlands,yes
+673,Uthangol,c_uthangol,land,hills,hills,plains,plains,no
+674,Angast,c_angast,land,farmlands,farmlands,plains,plains,no
+675,Mishtan,c_mishtan,land,farmlands,farmlands,plains,plains,no
+678,Aina,c_aina,land,farmlands,farmlands,plains,plains,no
+679,Gheldaneth,c_gheldaneth,land,farmlands,farmlands,plains,plains,no
+680,Skuld,c_skuld,land,farmlands,farmlands,plains,plains,no
+685,Ganathwood,c_ganathwood,land,forest,forest,plains,plains,no
+686,Rauthil,c_rauthil,land,farmlands,farmlands,plains,plains,no
+698,High Valley,c_high_valley,land,mountain,mountains,plains,plains,no
+699,Upper Murghol,c_upper_murghol,land,hills,hills,plains,plains,no
+700,Denzar,c_denzar,land,mountain,mountains,hills,hills,no
+707,Dhaztanar,c_dhaztanar,land,farmlands,farmlands,plains,plains,no
+708,Darabjind,c_darabjind,land,farmlands,farmlands,plains,plains,no
+717,Sempharin,c_sempharin,land,farmlands,farmlands,plains,plains,no
+723,Tonge,c_tonge,land,forest,forest,plains,plains,no
+726,Ghaastwood,c_ghaastwood,land,forest,forest,forest,forest,yes
+727,Haqar,c_haqar,land,forest,forest,forest,forest,yes
+728,Estan,c_estan,land,forest,forest,plains,plains,no
+729,Fergana,c_fergana,land,forest,forest,plains,plains,no
+732,Cathyr,c_cathyr,land,farmlands,farmlands,plains,plains,no
+740,Otennath,c_otennath,land,farmlands,farmlands,plains,plains,no
+741,East Lluirwood,c_east_lluirwood,land,jungle,jungle,jungle,jungle,yes
+742,Granuin Forest,c_granuin_forest,land,jungle,jungle,jungle,jungle,yes
+744,Lluirwood,c_lluirwood,land,jungle,jungle,jungle,jungle,yes
+745,Isle of Quelthiir,c_isle_of_quelthiir,land,coastal,farmlands,plains,plains,no
+747,Beluir,c_beluir,land,farmlands,farmlands,plains,plains,no
+752,Gundar Forest,c_gundar_forest,land,jungle,jungle,plains,plains,no
+753,Pyratar,c_pyratar,land,farmlands,farmlands,plains,plains,no
+754,Des,c_des,land,farmlands,farmlands,plains,plains,no
+755,Myrmyr,c_myrmyr,land,farmlands,farmlands,plains,plains,no
+758,Golden Fields,c_golden_fields,land,farmlands,farmlands,plains,plains,no
+759,Zelpir,c_zelpir,land,farmlands,farmlands,plains,plains,no
+762,Aerilpar Forest,c_aerilpar_forest,land,jungle,jungle,jungle,jungle,yes
+763,Beast Lands,c_beast_lands,land,hills,hills,plains,plains,no
+764,Vaelan,c_vaelan,land,farmlands,farmlands,plains,plains,no
+769,Ormpe,c_ormpe,land,farmlands,farmlands,plains,plains,no
+770,Dustwall,c_dustwall,land,hills,hills,hills,hills,yes
+775,Ajmer Forest,c_ajmer_forest,land,jungle,jungle,jungle,jungle,yes
+778,Bhaluin,c_bhaluin,land,coastal,farmlands,plains,plains,no
+782,Barbarians Road,c_barbarians_road,land,plains,plains,plains,plains,yes
+787,Dalvind,c_dalvind,land,plains,plains,plains,plains,yes
+792,Tharkar,c_tharkar,land,hills,hills,hills,hills,yes
+793,Hills of the Dead Kings,c_hills_of_the_dead_kings,land,hills,hills,hills,hills,yes
+794,Prastuil,c_prastuil,land,farmlands,farmlands,plains,plains,no
+800,Ship Isle,c_ship_isle,land,coastal,farmlands,plains,plains,no
+804,Zendum,c_zendum,land,hills,hills,hills,hills,yes
+808,Doegwood,c_doegwood,land,jungle,jungle,plains,plains,no
+811,Edenvale,c_edenvale,land,hills,hills,hills,hills,yes
+812,Serpent Valley,c_serpent_valley,land,hills,hills,plains,plains,no
+813,Olstone,c_olstone,land,mountain,mountains,hills,hills,no
+814,Highstars,c_highstars,land,hills,hills,plains,plains,no
+821,Ommvale,c_ommvale,land,hills,hills,hills,hills,yes
+822,Venasca,c_venasca,land,hills,hills,hills,hills,yes
+823,Lagiluri,c_lagiluri,land,mountain,mountains,hills,hills,no
+829,Westbay,c_westbay,land,farmlands,farmlands,plains,plains,no
+838,Shay Hills,c_shay_hills,land,hills,hills,hills,hills,yes
+841,Citadel Rashemar,c_citadel_rashemar,land,hills,hills,steppe,steppe,no
+844,Ugewood,c_ugewood,land,forest,forest,plains,plains,no
+847,Songfarla,c_songfarla,land,hills,hills,hills,hills,yes
+851,Firepeaks,c_firepeaks,land,mountain,mountains,hills,hills,no
+854,Sentinel Spire,c_sentinel_spire,land,mountain,mountains,steppe,steppe,no
+858,Umberwood,c_umberwood,land,forest,forest,forest,forest,yes
+866,Syevyer Forest,c_syevyer_forest,land,forest,forest,steppe,steppe,no
+874,Peqqir,c_peqqir,land,forest,forest,forest,forest,yes
+876,Nagoo,c_nagoo,land,hills,hills,hills,hills,yes
+885,Hatgiainli,c_hatgiainli,land,forest,forest,arctic,taiga,no
+890,Chama,c_chama,land,forest,forest,forest,forest,yes
+893,Bara,c_bara,land,hills,hills,desert,desert,no
+908,Yidyn,c_yidyn,land,forest,forest,forest,forest,yes
+910,Cholta,c_cholta,land,forest,forest,forest,forest,yes
+919,Horaholm,c_horaholm,land,hills,hills,arctic,taiga,no
+920,Luirbrech,c_luirbrech,land,hills,hills,hills,hills,yes
+925,Erech Forest,c_erech_forest,land,forest,forest,forest,forest,yes
+931,Quistrade,c_quistrade,land,hills,hills,arctic,taiga,no
+934,The Bird,c_the_bird,land,coastal,farmlands,desert,desert,no
+935,The Dancer,c_the_dancer,land,coastal,farmlands,desert,desert,no
+936,The Dune,c_the_dune,land,coastal,farmlands,desert,desert,no
+937,The Chador,c_the_chador,land,coastal,farmlands,plains,plains,no
+938,The Camels Hump,c_the_camels_hump,land,coastal,farmlands,plains,plains,no
+939,Ghajar,c_ghajar,land,coastal,farmlands,plains,plains,no
+940,Hawa,c_hawa,land,coastal,farmlands,plains,plains,no
+941,The Eyes,c_the_eyes,land,coastal,farmlands,plains,plains,no
+942,al-Azra,c_al_azra,land,coastal,farmlands,plains,plains,no
+943,al-Harir,c_al_harir,land,coastal,farmlands,plains,plains,no
+944,The Wizards Reach,c_the_wizards_reach,land,coastal,farmlands,desert,desert,no
+945,Muluk,c_muluk,land,farmlands,farmlands,desert,desert,no
+950,Hafaya,c_hafaya,land,farmlands,farmlands,desert,desert,no
+972,Scarlet Jungle,c_scarlet_jungle,land,forest,forest,jungle,jungle,no
+977,Alashan,c_alashan,land,hills,hills,hills,hills,yes
+978,Skarou,c_skarou,land,mountain,mountains,hills,hills,no
+979,Manass,c_manass,land,hills,hills,hills,hills,yes
+980,Broken Wall Pass,c_broken_wall_pass,land,mountain,mountains,hills,hills,no
+981,Saikhoi,c_saikhoi,land,mountain,mountains,hills,hills,no
+982,Rainbow Falls,c_rainbow_falls,land,mountain,mountains,hills,hills,no
+983,Yumbu Shan,c_yumbu_shan,land,mountain,mountains,mountain,mountains,yes
+984,Road Less Traveled,c_road_less_traveled,land,mountain,mountains,mountain,mountains,yes
+985,Kushk,c_kushk,land,mountain,mountains,mountain,mountains,yes
+986,Helenas Wood,c_helenas_wood,land,forest,forest,forest,forest,yes
+987,Sidewinder Wood,c_sidewinder_wood,land,forest,forest,plains,plains,no
+989,Dunwood,c_dunwood,land,forest,forest,plains,plains,no
+991,West Lethyr,c_west_lethyr,land,forest,forest,forest,forest,yes
+993,Narderwood,c_narderwood,land,forest,forest,plains,plains,no
+1000,Telflamm,c_telflamm,land,farmlands,farmlands,plains,plains,no
+1004,Surcross,c_surcross,land,hills,hills,plains,plains,no
+1006,Two-Stars,c_two_stars,land,farmlands,farmlands,plains,plains,no
+1007,Tezir,c_tezir,land,marsh,wetlands,plains,plains,no
+1009,Surmarsh,c_surmarsh,land,marsh,wetlands,marsh,wetlands,yes
+1011,Nethjet,c_nethjet,land,plains,plains,plains,plains,yes
+1012,Nethentir,c_nethentir,land,plains,plains,plains,plains,yes
+1013,Ethvale,c_ethvale,land,hills,hills,plains,plains,no
+1014,Umber Marsh,c_umber_marsh,land,marsh,wetlands,marsh,wetlands,yes
+1015,Mulsantir,c_mulsantir,land,forest,forest,plains,plains,no
+1016,Ashenwood,c_ashenwood,land,forest,forest,plains,plains,no
+1019,Urlingwood,c_urlingwood,land,forest,forest,hills,hills,no
+1020,Thasunta,c_thasunta,land,hills,hills,hills,hills,yes
+1022,Mulsanyaar,c_mulsanyaar,land,mountain,mountains,hills,hills,no
+1023,Surthay,c_surthay,land,hills,hills,plains,plains,no
+1024,Velprintalar,c_velprintalar,land,farmlands,farmlands,plains,plains,no
+1028,Emmech,c_emmech,land,hills,hills,hills,hills,yes
+1029,Milvarune,c_milvarune,land,mountain,mountains,hills,hills,no
+1030,Laothkund,c_laothkund,land,marsh,wetlands,plains,plains,no
+1031,Tyraturos,c_tyraturos,land,farmlands,farmlands,plains,plains,no
+1032,Bezantur,c_bezantur,land,hills,hills,plains,plains,no
+1033,The Alaor,c_the_alaor,land,coastal,farmlands,hills,hills,no
+1034,Eltabbar,c_eltabbar,land,hills,hills,hills,hills,yes
+1035,Umratharos,c_umratharos,land,plains,plains,plains,plains,yes
+1036,Thasselen,c_thasselen,land,marsh,wetlands,plains,plains,no
+1037,Murbant,c_murbant,land,marsh,wetlands,plains,plains,no
+1038,Anhaurz,c_anhaurz,land,plains,plains,plains,plains,yes
+1039,Gauros,c_gauros,land,hills,hills,hills,hills,yes
+1040,Escalant,c_escalant,land,farmlands,farmlands,plains,plains,no
+1041,Pyarados,c_pyarados,land,farmlands,farmlands,plains,plains,no
+1042,Moszabbar,c_moszabbar,land,hills,hills,hills,hills,yes
+1043,Umbthal,c_umbthal,land,hills,hills,arctic,taiga,no
+1044,Szul,c_szul,land,hills,hills,arctic,taiga,no
+1045,Dmir,c_dmir,land,hills,hills,arctic,taiga,no
+1046,Sefriszar,c_sefriszar,land,plains,plains,plains,plains,yes
+1047,Thazarim,c_thazarim,land,hills,hills,plains,plains,no
+1048,Amruthar,c_amruthar,land,plains,plains,plains,plains,yes
+1049,Zolum,c_zolum,land,farmlands,farmlands,plains,plains,no
+1050,Nuthretos,c_nuthretos,land,farmlands,farmlands,plains,plains,no
+1051,Rathmar,c_rathmar,land,plains,plains,plains,plains,yes
+1052,Taskaunt,c_taskaunt,land,marsh,wetlands,plains,plains,no
+1053,Tilbrand,c_tilbrand,land,marsh,wetlands,plains,plains,no
+1057,Yuirwood,c_yuirwood,land,forest,forest,plains,plains,no
+1059,The Surague,c_the_surague,land,mountain,mountains,forest,forest,no
+1067,Atars Looking Glass,c_atars_looking_glass,land,desert,desert,desert,desert,yes
+1085,The Stormtails,c_the_stormtails,land,coastal,farmlands,plains,plains,no
+1086,Shipgrave Isles,c_shipgrave_isles,land,coastal,farmlands,plains,plains,no
+1091,Hlaungadath,c_hlaungadath,land,desert,desert,desert,desert,yes
+1092,Spellgard,c_spellgard,land,desert,desert,desert,desert,yes
+1093,Oreme,c_oreme,land,desert,desert,desert,desert,yes
+1094,Quaver,c_quaver,land,desert,desert,desert,desert,yes
+1095,Glakis,c_glakis,land,desert,desert,desert,desert,yes
+1103,Lundeth,c_lundeth,land,desert,desert,plains,plains,no
+1107,Leuthilspar,c_leuthilspar,land,forest,forest,plains,plains,no
+1108,Siiluth,c_siiluth,land,forest,forest,plains,plains,no
+1109,Nimlith,c_nimlith,land,forest,forest,plains,plains,no
+1110,Sumbrar,c_sumbrar,land,coastal,farmlands,plains,plains,no
+1111,Drelagara,c_drelagara,land,forest,forest,plains,plains,no
+1112,Belintholme,c_belintholme,land,coastal,farmlands,plains,plains,no
+1113,Ruith,c_ruith,land,forest,forest,plains,plains,no
+1115,Taltempla,c_taltempla,land,forest,forest,hills,hills,no
+1116,Silver Hills,c_silver_hills,land,hills,hills,hills,hills,yes
+1117,Eagle Hills,c_eagle_hills,land,hills,hills,hills,hills,yes
+1118,Elion,c_elion,land,forest,forest,hills,hills,no
+1120,Araksa,c_araksa,land,coastal,farmlands,plains,plains,no
+1121,Thonns Fist,c_thonns_fist,land,coastal,farmlands,plains,plains,no
+1122,The Red Giant,c_the_red_giant,land,coastal,farmlands,hills,hills,no
+1123,Wards Islands,c_wards_islands,land,coastal,farmlands,hills,hills,no
+1124,Far Nemoree,c_far_nemoree,land,coastal,farmlands,plains,plains,no
+1125,The White Rocks,c_the_white_rocks,land,coastal,farmlands,plains,plains,no
+1126,The Pearls,c_the_pearls,land,coastal,farmlands,plains,plains,no
+1127,The Teeth,c_the_teeth,land,coastal,farmlands,plains,plains,no
+1132,Vale of the Reaver,c_vale_of_the_reaver,land,hills,hills,plains,plains,no
+1134,Isle of Prespur,c_isle_of_prespur,land,coastal,farmlands,plains,plains,no
+1135,Whamite Isles,c_whamite_isles,land,coastal,farmlands,plains,plains,no
+1136,Dragonisle,c_dragonisle,land,coastal,farmlands,plains,plains,no
+1137,Alphar and Kelthan,c_alphar_and_kelthan,land,coastal,farmlands,plains,plains,no
+1138,The Jaws,c_the_jaws,land,coastal,farmlands,plains,plains,no
+1140,Sunset Rocks,c_sunset_rocks,land,coastal,farmlands,plains,plains,no
+1143,Shaelyn,c_shaelyn,land,forest,forest,plains,plains,no
+1146,The Wayrock,c_the_wayrock,land,coastal,farmlands,plains,plains,no
+1147,Northdark Woods,c_northdark_woods,land,forest,forest,plains,plains,no
+1148,Trielta Hills,c_trielta_hills,land,hills,hills,hills,hills,yes
+1149,Orlumbor,c_orlumbor,land,coastal,farmlands,plains,plains,no
+1150,Naurogloth,c_naurogloth,land,mountain,mountains,hills,hills,no
+1151,Dawn Pass,c_dawn_pass,land,hills,hills,hills,hills,yes
+1152,Centaur Run,c_centaur_run,land,forest,forest,arctic,taiga,no
+1153,Wildergroves,c_wildergroves,land,forest,forest,plains,plains,no
+1154,Ssrenshen,c_ssrenshen,land,forest,forest,plains,plains,no
+1155,Greentree,c_greentree,land,forest,forest,plains,plains,no
+1156,Middlewoods,c_middlewoods,land,forest,forest,forest,forest,yes
+1162,Lothen,c_lothen,land,forest,forest,plains,plains,no
+1163,Bowshot,c_bowshot,land,farmlands,farmlands,plains,plains,no
+1164,Kalmins Grove,c_kalmins_grove,land,forest,forest,forest,forest,yes
+1165,Valley of Klaidson,c_valley_of_klaidson,land,mountain,mountains,mountain,mountains,yes
+1167,Hernes Wood,c_hernes_wood,land,jungle,jungle,jungle,jungle,yes
+1168,Jhalolokati,c_jhalolokati,land,jungle,jungle,plains,plains,no
+1169,Odesh,c_odesh,land,jungle,jungle,forest,forest,no
+1170,Tshalkha,c_tshalkha,land,jungle,jungle,plains,plains,no
+1171,Dancing Dolphins,c_dancing_dolphins,land,coastal,farmlands,hills,hills,no
+1172,Keluthar,c_keluthar,land,plains,plains,plains,plains,yes
+1175,Prints Floe,c_prints_floe,land,arctic,taiga,arctic,taiga,yes
+1176,Dzoulins Cradle,c_dzoulins_cradle,land,glacier,taiga,glacier,taiga,yes
+1177,Gallads Garden,c_gallads_garden,land,glacier,taiga,glacier,taiga,yes
+1178,Lonefang,c_lonefang,land,glacier,taiga,glacier,taiga,yes
+1179,Axard,c_axard,land,coastal,farmlands,arctic,taiga,no
+1180,Nerth,c_nerth,land,coastal,farmlands,arctic,taiga,no
+1182,Uldoon,c_uldoon,land,farmlands,farmlands,plains,plains,no
+1183,Peldvale,c_peldvale,land,forest,forest,plains,plains,no
+1184,Beowood,c_beowood,land,jungle,jungle,mountain,mountains,no
+1185,Bjeoerns Pass,c_bjeoerns_pass,land,mountain,mountains,hills,hills,no
+1187,Treggi Jungle,c_treggi_jungle,land,jungle,jungle,plains,plains,no
+1188,Phantom Pass,c_phantom_pass,land,mountain,mountains,hills,hills,no
+1189,Nix,c_nix,land,mountain,mountains,hills,hills,no
+1190,Anktarina,c_anktarina,land,plains,plains,plains,plains,yes
+1192,The Neth Stand,c_the_neth_stand,land,forest,forest,plains,plains,no
+1196,Jundarwood,c_jundarwood,land,forest,forest,plains,plains,no
+1197,Beasts Coast,c_beasts_coast,land,mountain,mountains,hills,hills,no
+1198,Spider Swamp,c_spider_swamp,land,marsh,wetlands,marsh,wetlands,yes
+1199,Mimph,c_mimph,land,farmlands,farmlands,plains,plains,no
+1200,Grunwald,c_grunwald,land,forest,forest,arctic,taiga,no
+1201,Maviddi Forest,c_maviddi_forest,land,forest,forest,forest,forest,yes
+1202,Grey Wood,c_grey_wood,land,forest,forest,plains,plains,no
+1204,Haelwood,c_haelwood,land,forest,forest,forest,forest,yes
+1205,Othars Hand,c_othars_hand,land,forest,forest,plains,plains,no
+1207,Ilighon,c_ilighon,land,coastal,farmlands,plains,plains,no
+1208,Wavecrest,c_wavecrest,land,coastal,farmlands,plains,plains,no
+1210,Nath Pass,c_nath_pass,land,mountain,mountains,hills,hills,no
+1211,Budais Cleft,c_budais_cleft,land,mountain,mountains,hills,hills,no
+1213,Halruaan Heights,c_halruaan_heights,land,mountain,mountains,hills,hills,no
+1214,Hidden Hopes,c_hidden_hopes,land,coastal,farmlands,plains,plains,no
+1216,Dark Arrow,c_dark_arrow,land,mountain,mountains,mountain,mountains,yes
+1217,Umbarra,c_umbarra,land,coastal,farmlands,plains,plains,no
+1218,Nemoree Isles,c_nemoree_isles,land,coastal,farmlands,plains,plains,no
+1219,Vale of Clouds,c_vale_of_clouds,land,mountain,mountains,hills,hills,no
+1220,Stormy High,c_stormy_high,land,mountain,mountains,hills,hills,no
+1222,Conaluil Range,c_conaluil_range,land,hills,hills,hills,hills,yes
+1226,Mhaelos,c_mhaelos,land,desert,desert,plains,plains,no
+1231,Azhul Pass,c_azhul_pass,land,mountain,mountains,mountain,mountains,yes
+1232,Firealm,c_firealm,land,mountain,mountains,hills,hills,no
+1233,Orlil,c_orlil,land,coastal,farmlands,plains,plains,no
+1234,Riatavin,c_riatavin,land,plains,plains,plains,plains,yes
+1235,North Reaching Wood,c_north_reaching_wood,land,forest,forest,plains,plains,no
+1238,Battle of Bones,c_battle_of_bones,land,hills,hills,plains,plains,no
+1240,Mortik Swamp,c_mortik_swamp,land,marsh,wetlands,marsh,wetlands,yes
+1241,Sunglade,c_sunglade,land,forest,forest,forest,forest,yes
+1242,Lilinuk,c_lilinuk,land,glacier,taiga,glacier,taiga,yes
+1243,Vekkak,c_vekkak,land,glacier,taiga,glacier,taiga,yes
+1244,Saichik,c_saichik,land,glacier,taiga,glacier,taiga,yes
+1245,Hykopgrok,c_hykopgrok,land,glacier,taiga,glacier,taiga,yes
+1246,Eghagu,c_eghagu,land,glacier,taiga,glacier,taiga,yes
+1247,Imajuvisik,c_imajuvisik,land,glacier,taiga,glacier,taiga,yes
+1248,Patatak,c_patatak,land,glacier,taiga,glacier,taiga,yes
+1249,Snokkok,c_snokkok,land,glacier,taiga,mountain,mountains,no
+1250,Gomwenk,c_gomwenk,land,glacier,taiga,glacier,taiga,yes
+1251,Utui,c_utui,land,glacier,taiga,glacier,taiga,yes
+1252,Igenghack,c_igenghack,land,glacier,taiga,glacier,taiga,yes
+1253,Huplik,c_huplik,land,glacier,taiga,glacier,taiga,yes
+1254,Shannath,c_shannath,land,glacier,taiga,glacier,taiga,yes
+1255,Kresttet,c_kresttet,land,glacier,taiga,glacier,taiga,yes
+1256,Wertikak,c_wertikak,land,glacier,taiga,glacier,taiga,yes
+1257,Siksuv,c_siksuv,land,glacier,taiga,glacier,taiga,yes
+1258,Jajam,c_jajam,land,glacier,taiga,glacier,taiga,yes
+1259,Aurora,c_aurora,land,glacier,taiga,glacier,taiga,yes
+1260,Anarath,c_anarath,land,glacier,taiga,glacier,taiga,yes
+1261,Bhaulaea,c_bhaulaea,land,glacier,taiga,glacier,taiga,yes
+1262,Untrivven,c_untrivven,land,glacier,taiga,glacier,taiga,yes
+1263,Smokeholes,c_smokeholes,land,glacier,taiga,glacier,taiga,yes
+1264,Riven Frost,c_riven_frost,land,glacier,taiga,glacier,taiga,yes
+1265,Lugotak,c_lugotak,land,glacier,taiga,glacier,taiga,yes
+1266,Ibelgrak,c_ibelgrak,land,glacier,taiga,glacier,taiga,yes
+1267,Ahtitlak,c_ahtitlak,land,glacier,taiga,glacier,taiga,yes
+1268,Morrowikik,c_morrowikik,land,glacier,taiga,glacier,taiga,yes
+1269,Shakkak,c_shakkak,land,glacier,taiga,mountain,mountains,no
+1270,Olyniak,c_olyniak,land,glacier,taiga,glacier,taiga,yes
+1280,Joya,c_joya,land,forest,forest,forest,forest,yes
+1281,Kabut,c_kabut,land,jungle,jungle,hills,hills,no
+1282,Lower Kuning,c_lower_kuning,land,jungle,jungle,forest,forest,no
+1284,Ketcheel,c_ketcheel,land,jungle,jungle,mountain,mountains,no
+1287,Hanya Maut,c_hanya_maut,land,desert,desert,desert,desert,yes
+1292,Larut,c_larut,land,forest,forest,forest,forest,yes
+1293,Phutan,c_phutan,land,forest,forest,hills,hills,no
+1294,Namtan,c_namtan,land,forest,forest,forest,forest,yes
+1295,Tocpe,c_tocpe,land,forest,forest,arctic,taiga,no
+1296,Draya,c_draya,land,forest,forest,forest,forest,yes
+1298,Tsagang,c_tsagang,land,forest,forest,arctic,taiga,no
+1299,Mache Gap,c_mache_gap,land,forest,forest,forest,forest,yes
+1300,Langdarma,c_langdarma,land,mountain,mountains,mountain,mountains,yes
+1301,Kemati Valley,c_kemati_valley,land,mountain,mountains,mountain,mountains,yes
+1304,Sorghum Fields,c_sorghum_fields,land,farmlands,farmlands,marsh,wetlands,no
+1321,Hai Jungle,c_hai_jungle,land,forest,forest,forest,forest,yes
+1322,Kuning,c_kuning,land,jungle,jungle,jungle,jungle,yes
+1323,Perpustakaan,c_perpustakaan,land,jungle,jungle,mountain,mountains,no
+1324,Sekola Atas,c_sekola_atas,land,jungle,jungle,mountain,mountains,no
+1325,Uhon Tsa,c_uhon_tsa,land,forest,forest,arctic,taiga,no
+1326,Ohmai,c_ohmai,land,forest,forest,arctic,taiga,no
+1328,Ekwong,c_ekwong,land,forest,forest,arctic,taiga,no
+1329,Shentsa,c_shentsa,land,forest,forest,forest,forest,yes
+1330,Shan Sao,c_shan_sao,land,forest,forest,jungle,jungle,no
+1332,Alamaqu,c_alamaqu,land,hills,hills,hills,hills,yes
+1333,Panjuis,c_panjuis,land,forest,forest,forest,forest,yes
+1339,The Fortress,c_the_fortress,land,coastal,farmlands,desert,desert,no
+1340,Ironfang Deep,c_ironfang_deep,land,subterranean,mountains,mountain,mountains,yes
+1341,Old Drivendelve,c_old_drivendelve,land,subterranean,mountains,mountain,mountains,yes
+1342,Bronzehelms,c_bronzehelms,land,subterranean,mountains,hills,hills,no
+1351,Lahib Island,c_lahib_island,land,coastal,farmlands,desert,desert,no
+1353,Pasar,c_pasar,land,jungle,jungle,forest,forest,no
+1354,Lower Kayu,c_lower_kayu,land,jungle,jungle,forest,forest,no
+1355,Keluh,c_keluh,land,jungle,jungle,forest,forest,no
+1357,Penuh Susak,c_penuh_susak,land,jungle,jungle,mountain,mountains,no
+1358,Mahligwi,c_mahligwi,land,jungle,jungle,jungle,jungle,yes
+1359,Binatang,c_binatang,land,jungle,jungle,jungle,jungle,yes
+1360,Soto,c_soto,land,jungle,jungle,hills,hills,no
+1361,Rimba,c_rimba,land,jungle,jungle,forest,forest,no
+1365,Yao Sai,c_yao_sai,land,forest,forest,jungle,jungle,no
+1366,KoChung,c_kochung,land,forest,forest,plains,plains,no
+1370,Taishan,c_taishan,land,forest,forest,plains,plains,no
+1371,Saigai,c_saigai,land,forest,forest,plains,plains,no
+1372,Akshu,c_akshu,land,forest,forest,hills,hills,no
+1384,Bunsha,c_bunsha,land,forest,forest,forest,forest,yes
+1385,Jaria,c_jaria,land,forest,forest,forest,forest,yes
+1386,Ungaran,c_ungaran,land,jungle,jungle,forest,forest,no
+1387,Tehing,c_tehing,land,jungle,jungle,forest,forest,no
+1389,Silapathar,c_silapathar,land,jungle,jungle,jungle,jungle,yes
+1391,Thunder Gap,c_thunder_gap,land,hills,hills,hills,hills,yes
+1396,Qudra,c_qudra,land,farmlands,farmlands,plains,plains,no
+1401,Northwind,c_northwind,land,coastal,farmlands,hills,hills,no
+1403,The Old Trees,c_the_old_trees,land,forest,forest,forest,forest,yes
+1405,Crab Reach,c_crab_reach,land,coastal,farmlands,plains,plains,no
+1406,Rassalantar,c_rassalantar,land,farmlands,farmlands,plains,plains,no
+1407,High Gap,c_high_gap,land,mountain,mountains,hills,hills,no
+1408,Loagrann,c_loagrann,land,mountain,mountains,hills,hills,no
+1409,Silverwood,c_silverwood,land,forest,forest,forest,forest,yes
+1410,Lizard Marsh,c_lizard_marsh,land,marsh,wetlands,marsh,wetlands,yes
+1411,Chionthar,c_chionthar,land,farmlands,farmlands,plains,plains,no
+1413,Settlestone,c_settlestone,land,mountain,mountains,mountain,mountains,yes
+1414,Far Ulhai,c_far_ulhai,land,forest,forest,forest,forest,yes
+1416,Shamandra,c_shamandra,land,coastal,farmlands,plains,plains,no
+1418,Po Yul Dzayul,c_po_yul_dzayul,land,mountain,mountains,mountain,mountains,yes
+1419,Skyvale,c_skyvale,land,mountain,mountains,hills,hills,no
+1420,Pterafolk Eyries,c_pterafolk_eyries,land,jungle,jungle,hills,hills,no
+1421,Batiriland,c_batiriland,land,jungle,jungle,forest,forest,no
+1422,Ingmur,c_ingmur,land,steppe,steppe,steppe,steppe,yes
+1423,Wood of Flam,c_wood_of_flam,land,forest,forest,plains,plains,no
+1425,Surag,c_surag,land,farmlands,farmlands,plains,plains,no
+1426,Thaymount,c_thaymount,land,mountain,mountains,hills,hills,no
+1427,Watchwall,c_watchwall,land,mountain,mountains,hills,hills,no
+1428,The Wyrmbones,c_the_wyrmbones,land,hills,hills,hills,hills,yes
+1429,Easting,c_easting,land,farmlands,farmlands,plains,plains,no
+1430,Ilipur,c_ilipur,land,hills,hills,steppe,steppe,no
+1431,Vercy Wood,c_vercy_wood,land,forest,forest,forest,forest,yes
+1432,Ospkur,c_ospkur,land,mountain,mountains,hills,hills,no
+1433,Ruriks End,c_ruriks_end,land,glacier,taiga,glacier,taiga,yes
+1434,Toraldur,c_toraldur,land,glacier,taiga,glacier,taiga,yes
+1435,Winters Edge,c_winters_edge,land,hills,hills,glacier,taiga,no
+1436,Vordrorn Forest,c_vordrorn_forest,land,forest,forest,hills,hills,no
+1437,Mhiilamnir,c_mhiilamnir,land,forest,forest,forest,forest,yes
+1439,Starmetal Hills,c_starmetal_hills,land,hills,hills,plains,plains,no
+1442,Reth,c_reth,land,hills,hills,hills,hills,yes
+1445,Zundbridge,c_zundbridge,land,farmlands,farmlands,farmlands,farmlands,yes
+1446,Upper Nix,c_upper_nix,land,mountain,mountains,hills,hills,no
+1447,Halangorn,c_halangorn,land,forest,forest,plains,plains,no
+1448,Open Marches,c_open_marches,land,plains,plains,plains,plains,yes
+1449,Dekanter,c_dekanter,land,subterranean,mountains,mountain,mountains,yes
+1453,Hiyal,c_hiyal,land,farmlands,farmlands,plains,plains,no
+1467,Huzuz,c_huzuz,land,farmlands,farmlands,desert,desert,no
+1471,Hilm,c_hilm,land,farmlands,farmlands,desert,desert,no
+1474,Fahhas,c_fahhas,land,farmlands,farmlands,desert,desert,no
+1475,Sumuk Island,c_sumuk_island,land,coastal,farmlands,desert,desert,no
+1476,Hitan Island,c_hitan_island,land,coastal,farmlands,desert,desert,no
+1483,al-Faraq Islands,c_al_faraq_islands,land,coastal,farmlands,desert,desert,no
+1495,Dawihi Island,c_dawihi_island,land,coastal,farmlands,plains,plains,no
+1500,Mahazaka,c_mahazaka,land,jungle,jungle,jungle,jungle,yes
+1503,Tayaraan,c_tayaraan,land,jungle,jungle,jungle,jungle,yes
+1504,al-Hanieh,c_al_hanieh,land,jungle,jungle,plains,plains,no
+1505,Kajiaruti,c_kajiaruti,land,jungle,jungle,jungle,jungle,yes
+1506,Hudariyah,c_hudariyah,land,jungle,jungle,jungle,jungle,yes
+1507,Giniracha,c_giniracha,land,coastal,farmlands,plains,plains,no
+1508,Sigram,c_sigram,land,jungle,jungle,jungle,jungle,yes
+1509,Sariban,c_sariban,land,jungle,jungle,plains,plains,no
+1510,Samphos,c_samphos,land,jungle,jungle,jungle,jungle,yes
+1511,Jeranjah,c_jeranjah,land,jungle,jungle,jungle,jungle,yes
+1513,Tadabbur,c_tadabbur,land,jungle,jungle,jungle,jungle,yes
+1514,Nawal,c_nawal,land,jungle,jungle,plains,plains,no
+1515,Gimise,c_gimise,land,jungle,jungle,plains,plains,no
+1517,Nathenje,c_nathenje,land,jungle,jungle,plains,plains,no
+1518,Tayabuk,c_tayabuk,land,jungle,jungle,plains,plains,no
+1519,Narodara,c_narodara,land,jungle,jungle,plains,plains,no
+1520,Bukitega,c_bukitega,land,jungle,jungle,plains,plains,no
+1521,al-Kurtum,c_al_kurtum,land,jungle,jungle,plains,plains,no
+1522,Bab-al-Gaba,c_bab_al_gaba,land,jungle,jungle,plains,plains,no
+1523,The Calves,c_the_calves,land,coastal,farmlands,jungle,jungle,no
+1524,Nahr al-Fil,c_nahr_al_fil,land,jungle,jungle,plains,plains,no
+1525,al-Asirr,c_al_asirr,land,jungle,jungle,plains,plains,no
+1526,Horn of Afyal,c_horn_of_afyal,land,jungle,jungle,plains,plains,no
+1527,Kasal,c_kasal,land,jungle,jungle,plains,plains,no
+1528,Medina al-Afyal,c_medina_al_afyal,land,jungle,jungle,plains,plains,no
+1530,Jinutt,c_jinutt,land,jungle,jungle,plains,plains,no
+1531,Uruk,c_uruk,land,jungle,jungle,plains,plains,no
+1532,Misbahd,c_misbahd,land,jungle,jungle,plains,plains,no
+1533,Rubbans Tears,c_rubbans_tears,land,coastal,farmlands,plains,plains,no
+1534,Jezarh Mar,c_jezarh_mar,land,coastal,farmlands,jungle,jungle,no
+1535,Serzeman Bamar,c_serzeman_bamar,land,coastal,farmlands,plains,plains,no
+1538,Dahab Island,c_dahab_island,land,coastal,farmlands,desert,desert,no
+1563,Tajar,c_tajar,land,farmlands,farmlands,desert,desert,no
+1564,Vast Swamp,c_vast_swamp,land,marsh,wetlands,marsh,wetlands,yes
+1565,Valley of Embers,c_valley_of_embers,land,jungle,jungle,desert,desert,no
+1566,Omu,c_omu,land,jungle,jungle,forest,forest,no
+1567,Fairheight,c_fairheight,land,mountain,mountains,hills,hills,no
+1568,Pharren,c_pharren,land,hills,hills,plains,plains,no
+1569,Earthfast,c_earthfast,land,mountain,mountains,hills,hills,no
+1570,Tun,c_tun,land,steppe,steppe,hills,hills,no
+1571,Hamlar Hills,c_hamlar_hills,land,hills,hills,hills,hills,yes
+1572,Zaz-in-Vintor,c_zaz_in_vintor,land,hills,hills,plains,plains,no
+1573,Nleeth and Amah,c_nleeth_and_amah,land,mountain,mountains,hills,hills,no
+1574,Nemessor,c_nemessor,land,coastal,farmlands,plains,plains,no
+1580,Middenlands,c_middenlands,land,farmlands,farmlands,plains,plains,no
+1582,Brynwood,c_brynwood,land,forest,forest,plains,plains,no
+1584,Glister,c_glister,land,hills,hills,hills,hills,yes
+1593,Maribar Island,c_maribar_island,land,coastal,farmlands,desert,desert,no
+1596,Pearl Banks,c_pearl_banks,land,coastal,farmlands,plains,plains,no
+1605,Ajayib,c_ajayib,land,farmlands,farmlands,plains,plains,no
+1607,al-Tarik Islands,c_al_tarik_islands,land,coastal,farmlands,desert,desert,no
+1608,Tarikat Island,c_tarikat_island,land,coastal,farmlands,desert,desert,no
+1610,Dabab,c_dabab,land,coastal,farmlands,plains,plains,no
+1611,Anklis and Qusur,c_anklis_and_qusur,land,coastal,farmlands,plains,plains,no
+1612,Manhus and Saliam,c_manhus_and_saliam,land,coastal,farmlands,plains,plains,no
+1613,Naqq and Qutil,c_naqq_and_qutil,land,coastal,farmlands,plains,plains,no
+1614,Thueban,c_thueban,land,coastal,farmlands,plains,plains,no
+1615,Eayan Aljunun,c_eayan_aljunun,land,coastal,farmlands,plains,plains,no
+1617,Sathadech,c_sathadech,land,mountain,mountains,plains,plains,no
+1618,Jezarh Jadew,c_jezarh_jadew,land,coastal,farmlands,plains,plains,no
+1619,Jezarh Shemshar,c_jezarh_shemshar,land,coastal,farmlands,jungle,jungle,no
+1620,Bender Berdh,c_bender_berdh,land,coastal,farmlands,plains,plains,no
+1621,Bender Adewah,c_bender_adewah,land,coastal,farmlands,plains,plains,no
+1622,Almawt,c_almawt,land,coastal,farmlands,desert,desert,no
+1623,Sharira,c_sharira,land,coastal,farmlands,desert,desert,no
+1624,Wahasha,c_wahasha,land,coastal,farmlands,desert,desert,no
+1627,Ishamar Isles,c_ishamar_isles,land,coastal,farmlands,plains,plains,no
+1632,Kothask,c_kothask,land,jungle,jungle,plains,plains,no
+1634,Sunrise Hills,c_sunrise_hills,land,hills,hills,plains,plains,no
+1635,Wrecking Coast,c_wrecking_coast,land,hills,hills,hills,hills,yes
+1636,Mraar Forest,c_mraar_forest,land,jungle,jungle,plains,plains,no
+1642,Maelevarar,c_maelevarar,land,hills,hills,plains,plains,no
+1650,Stormslough,c_stormslough,land,forest,forest,forest,forest,yes
+1652,Spiteful Isles,c_spiteful_isles,land,coastal,farmlands,plains,plains,no
+1653,Bellakh,c_bellakh,land,hills,hills,plains,plains,no
+1675,Chain of Broken Dreams,c_chain_of_broken_dreams,land,coastal,farmlands,plains,plains,no
+1680,Coldlight Cliffs,c_coldlight_cliffs,land,mountain,mountains,plains,plains,no
+1681,Roraari,c_roraari,land,hills,hills,hills,hills,yes
+1688,Talaran Highlands,c_talaran_highlands,land,hills,hills,forest,forest,no
+1691,Starspire,c_starspire,land,mountain,mountains,hills,hills,no
+1692,Elven Port,c_elven_port,land,forest,forest,forest,forest,yes
+1693,Tangkap,c_tangkap,land,desert,desert,desert,desert,yes
+1694,Daong Forest,c_daong_forest,land,forest,forest,forest,forest,yes
+1695,Kuo Meilan,c_kuo_meilan,land,plains,plains,steppe,steppe,no
+1696,Orbedal,c_orbedal,land,hills,hills,plains,plains,no
+1697,Cloven Hills,c_cloven_hills,land,hills,hills,hills,hills,yes
+1698,Ochoq,c_ochoq,land,arctic,taiga,arctic,taiga,yes
+1701,Green Fields,c_green_fields,land,plains,plains,plains,plains,yes
+1703,Vyridian Forest,c_vyridian_forest,land,forest,forest,plains,plains,no
+1706,Orogoth,c_orogoth,land,hills,hills,hills,hills,yes
+1707,Eldaths Water,c_eldaths_water,land,forest,forest,plains,plains,no
+1709,Qadim Hills,c_qadim_hills,land,hills,hills,hills,hills,yes
+1710,The Dells,c_the_dells,land,forest,forest,plains,plains,no
+1711,Karmsteppe,c_karmsteppe,land,plains,plains,steppe,steppe,no
+1712,Obarval,c_obarval,land,plains,plains,steppe,steppe,no
+1713,Argenmoor,c_argenmoor,land,plains,plains,steppe,steppe,no
+1714,Orbrekh Hills,c_orbrekh_hills,land,hills,hills,hills,hills,yes
+1715,Nymphwood,c_nymphwood,land,forest,forest,plains,plains,no
+1717,Pehrrifaal,c_pehrrifaal,land,plains,plains,plains,plains,yes
+1726,The Wormbones,c_the_wormbones,land,hills,hills,hills,hills,yes
+1731,Yorduul,c_yorduul,land,jungle,jungle,forest,forest,no
+1732,Zoundar,c_zoundar,land,hills,hills,hills,hills,yes
+1734,Rethild Shore,c_rethild_shore,land,marsh,wetlands,marsh,wetlands,yes
+1737,Molken,c_molken,land,jungle,jungle,forest,forest,no
+1738,Aznawood,c_aznawood,land,jungle,jungle,forest,forest,no
+1739,Amtar Eave,c_amtar_eave,land,jungle,jungle,jungle,jungle,yes
+1742,Middle Longwood,c_middle_longwood,land,jungle,jungle,jungle,jungle,yes
+1754,Quretta,c_quretta,land,farmlands,farmlands,plains,plains,no
+1761,Upper Sempadan,c_upper_sempadan,land,jungle,jungle,forest,forest,no
+1762,Aval,c_aval,land,jungle,jungle,forest,forest,no
+1772,Zhoman,c_zhoman,land,hills,hills,hills,hills,yes
+1780,Abarun,c_abarun,land,arctic,taiga,arctic,taiga,yes
+1783,Bahat,c_bahat,land,forest,forest,forest,forest,yes
+1789,Tulmene,c_tulmene,land,forest,forest,plains,plains,no
+2116,Belhancol,c_belhancol,land,coastal,farmlands,desert,desert,no
+2117,Mekebat,c_mekebat,land,jungle,jungle,plains,plains,no
+2119,Kiasia,c_kiasia,land,jungle,jungle,forest,forest,no
+2127,Mella,c_mella,land,jungle,jungle,plains,plains,no
+2128,Hrakhamar,c_hrakhamar,land,mountain,mountains,hills,hills,no
+2129,The Fang,c_the_fang,land,mountain,mountains,plains,plains,no
+2131,Surraer,c_surraer,land,mountain,mountains,plains,plains,no
+2141,Gontal,c_gontal,land,hills,hills,plains,plains,no
+2142,Darkturret,c_darkturret,land,hills,hills,hills,hills,yes
+2144,Velandilmur,c_velandilmur,land,hills,hills,plains,plains,no
+2150,Lylorn,c_lylorn,land,hills,hills,plains,plains,no
+2157,Graxan Forest,c_graxan_forest,land,jungle,jungle,hills,hills,no
+2162,Jezarh Mah Alewd,c_jezarh_mah_alewd,land,coastal,farmlands,plains,plains,no
+2163,Mergu Saah,c_mergu_saah,land,coastal,farmlands,plains,plains,no
+2164,Jezarh Restakhaz,c_jezarh_restakhaz,land,coastal,farmlands,plains,plains,no
+2165,Leneta,c_leneta,land,coastal,farmlands,plains,plains,no
+2166,al-Zabdiyat,c_al_zabdiyat,land,coastal,farmlands,plains,plains,no
+2167,Masud Jazayir,c_masud_jazayir,land,coastal,farmlands,plains,plains,no
+2168,Jazayir al-Alfar,c_jazayir_al_alfar,land,coastal,farmlands,plains,plains,no
+2169,Dirs,c_dirs,land,coastal,farmlands,plains,plains,no
+2195,Mount Illefarn,c_mount_illefarn,land,mountain,mountains,hills,hills,no
+2241,Dolblunde,c_dolblunde,land,subterranean,mountains,hills,hills,no
+2307,The Great Spire,c_the_great_spire,land,coastal,farmlands,arctic,taiga,no
+2308,Arnrock,c_arnrock,land,coastal,farmlands,hills,hills,no
+2323,Heroes Height,c_heroes_height,land,mountain,mountains,mountain,mountains,yes
+2331,Senia Plateau,c_senia_plateau,land,mountain,mountains,hills,hills,no
+2350,Glacier of the White Worm,c_glacier_of_the_white_worm,land,glacier,taiga,glacier,taiga,yes
+2366,Ardhi Kavu,c_ardhi_kavu,land,coastal,farmlands,plains,plains,no
+2367,Hasira,c_hasira,land,coastal,farmlands,desert,desert,no
+2368,Amekufa,c_amekufa,land,coastal,farmlands,desert,desert,no
+2369,Kupoteza,c_kupoteza,land,coastal,farmlands,plains,plains,no
+2370,Damu,c_damu,land,coastal,farmlands,desert,desert,no
+2371,Mnyama,c_mnyama,land,coastal,farmlands,desert,desert,no
+2372,Ndoto,c_ndoto,land,coastal,farmlands,desert,desert,no
+2373,Nyangumi,c_nyangumi,land,coastal,farmlands,desert,desert,no
+2374,Sayf,c_sayf,land,coastal,farmlands,desert,desert,no
+2375,Risha,c_risha,land,coastal,farmlands,desert,desert,no
+2380,Lopango,c_lopango,land,jungle,jungle,plains,plains,no
+2383,Farhaven,c_farhaven,land,coastal,farmlands,plains,plains,no
+2384,Mokalonni Islands,c_mokalonni_islands,land,coastal,farmlands,plains,plains,no
+2385,Sentinel Island,c_sentinel_island,land,coastal,farmlands,plains,plains,no
+2390,Moraan,c_moraan,land,coastal,farmlands,desert,desert,no
+2404,Tomyris,c_tomyris,land,forest,forest,forest,forest,yes
+2407,Upper Ama,c_upper_ama,land,forest,forest,arctic,taiga,no
+2412,Sunset Foothills,c_sunset_foothills,land,hills,hills,hills,hills,yes
+2413,High Moors,c_high_moors,land,hills,hills,hills,hills,yes
+2415,Tethyamar,c_tethyamar,land,subterranean,mountains,mountain,mountains,yes
+2417,Fields of Pryollus,c_fields_of_pryollus,land,hills,hills,plains,plains,no
+2419,Heartwood,c_heartwood,land,forest,forest,forest,forest,yes
+2420,Beast Marches,c_beast_marches,land,forest,forest,forest,forest,yes
+2422,Lost Vale,c_lost_vale,land,mountain,mountains,mountain,mountains,yes
+2423,Iritasker,c_iritasker,land,subterranean,mountains,hills,hills,no
+2424,Wyrms Tooth,c_wyrms_tooth,land,mountain,mountains,mountain,mountains,yes
+2426,Helms Hold,c_helms_hold,land,farmlands,farmlands,plains,plains,no
+2427,Goldenfields,c_goldenfields,land,farmlands,farmlands,farmlands,farmlands,yes
+2428,Sharandar,c_sharandar,land,forest,forest,forest,forest,yes
+2432,Maerwatch,c_maerwatch,land,hills,hills,hills,hills,yes
+2433,Heptios,c_heptios,land,hills,hills,plains,plains,no
+2434,The Imnescourse,c_the_imnescourse,land,farmlands,farmlands,plains,plains,no
+2436,Iyrandrar,c_iyrandrar,land,forest,forest,plains,plains,no
+2437,Relkaths Foot,c_relkaths_foot,land,forest,forest,plains,plains,no
+2438,Illuskwood,c_illuskwood,land,forest,forest,forest,forest,yes
+2439,Westfells,c_westfells,land,hills,hills,hills,hills,yes
+2440,Mount Sarengard,c_mount_sarengard,land,subterranean,mountains,plains,plains,no
+2441,Splendarrmornn,c_splendarrmornn,land,subterranean,mountains,mountain,mountains,yes
+2442,Nether Mountains,c_nether_mountains,land,subterranean,mountains,hills,hills,no
+2443,Eryndlyn,c_eryndlyn,land,subterranean,mountains,hills,hills,no
+2444,Eyegad,c_eyegad,land,subterranean,mountains,mountain,mountains,yes
+2445,Kanaglym,c_kanaglym,land,subterranean,mountains,hills,hills,no
+2446,Yaunoroth,c_yaunoroth,land,subterranean,mountains,mountain,mountains,yes
+2447,Oghrann,c_oghrann,land,subterranean,mountains,mountain,mountains,yes
+2448,Sshamath,c_sshamath,land,subterranean,mountains,mountain,mountains,yes
+2449,Adbarrim,c_adbarrim,land,subterranean,mountains,mountain,mountains,yes
+2450,Maerimydra,c_maerimydra,land,subterranean,mountains,plains,plains,no
+2451,Zanhoriloch,c_zanhoriloch,land,subterranean,mountains,plains,plains,no
+2452,Smoking Mountains,c_smoking_mountains,land,mountain,mountains,hills,hills,no
+2453,Tomb Hills,c_tomb_hills,land,hills,hills,plains,plains,no
+2454,East Methwood,c_east_methwood,land,forest,forest,plains,plains,no
+2455,Cennuroth,c_cennuroth,land,farmlands,farmlands,plains,plains,no
+2458,Sekras,c_sekras,land,farmlands,farmlands,plains,plains,no
+2459,Riders to the Sky,c_riders_to_the_sky,land,mountain,mountains,hills,hills,no
+2460,Ashfields,c_ashfields,land,farmlands,farmlands,plains,plains,no
+2461,Ascore,c_ascore,land,plains,plains,arctic,taiga,no
+2462,Cold Vale,c_cold_vale,land,hills,hills,arctic,taiga,no
+2463,Thunderholme,c_thunderholme,land,subterranean,mountains,mountain,mountains,yes
+2465,Kalterland,c_kalterland,land,hills,hills,steppe,steppe,no
+2466,Pelauvir,c_pelauvir,land,hills,hills,hills,hills,yes
+2468,Elmwood,c_elmwood,land,forest,forest,plains,plains,no
+2469,Turnback Mountain,c_turnback_mountain,land,subterranean,mountains,hills,hills,no
+2470,Ironfang Keep,c_ironfang_keep,land,mountain,mountains,mountain,mountains,yes
+2471,Hollow Mountain,c_hollow_mountain,land,subterranean,mountains,mountain,mountains,yes
+2472,Chilled Plain,c_chilled_plain,land,hills,hills,hills,hills,yes
+2473,Glaurachyndaar,c_glaurachyndaar,land,hills,hills,hills,hills,yes
+2474,East Keep,c_east_keep,land,subterranean,mountains,mountain,mountains,yes
+2475,Ong Woods,c_ong_woods,land,forest,forest,forest,forest,yes
+2477,North Peak,c_north_peak,land,subterranean,mountains,hills,hills,no
+2478,Treacherous Isles,c_treacherous_isles,land,coastal,farmlands,plains,plains,no
+2487,Panjang River,c_panjang_river,land,jungle,jungle,forest,forest,no
+2488,Jakadiri,c_jakadiri,land,jungle,jungle,jungle,jungle,yes
+2489,Detar Land,c_detar_land,land,jungle,jungle,forest,forest,no
+2490,Chulacca,c_chulacca,land,jungle,jungle,jungle,jungle,yes
+2491,Lunru,c_lunru,land,jungle,jungle,forest,forest,no
+2493,Menzoberranzan,c_menzoberranzan,land,subterranean,mountains,arctic,taiga,no
+2494,Bauthwaf,c_bauthwaf,land,subterranean,mountains,forest,forest,no
+2495,Nethra,c_nethra,land,marsh,wetlands,plains,plains,no
+2496,Ankhur,c_ankhur,land,farmlands,farmlands,plains,plains,no
+2497,Thazar,c_thazar,land,hills,hills,hills,hills,yes
+2499,Mhair Pass,c_mhair_pass,land,mountain,mountains,hills,hills,no
+2500,Mazat,c_mazat,land,mountain,mountains,hills,hills,no
+2501,Maharas Vale,c_maharas_vale,land,mountain,mountains,hills,hills,no
+2502,Gracklstugh,c_gracklstugh,land,subterranean,mountains,marsh,wetlands,no
+2503,Ched Nasad,c_ched_nasad,land,subterranean,mountains,mountain,mountains,yes
+2505,Drik Hargunen,c_drik_hargunen,land,subterranean,mountains,mountain,mountains,yes
+2506,Dunspeirrin,c_dunspeirrin,land,subterranean,mountains,mountain,mountains,yes
+2507,Ust Natha,c_ust_natha,land,subterranean,mountains,plains,plains,no
+2508,Sumber Hills,c_sumber_hills,land,hills,hills,hills,hills,yes
+2511,Selskar Vale,c_selskar_vale,land,hills,hills,hills,hills,yes
+2513,Svardborg,c_svardborg,land,glacier,taiga,glacier,taiga,yes
+2514,Mount Sundabar,c_mount_sundabar,land,mountain,mountains,glacier,taiga,no
+2515,Dareth,c_dareth,land,mountain,mountains,mountain,mountains,yes
+2516,High Horn,c_high_horn,land,mountain,mountains,hills,hills,no
+2518,Qarlondrar,c_qarlondrar,land,subterranean,mountains,mountain,mountains,yes
+2519,Harheldur,c_harheldur,land,subterranean,mountains,mountain,mountains,yes
+2520,Ahruukar,c_ahruukar,land,subterranean,mountains,hills,hills,no
+2521,Raskuldin,c_raskuldin,land,subterranean,mountains,mountain,mountains,yes
+2522,Khaelud,c_khaelud,land,subterranean,mountains,hills,hills,no
+2523,Fireforges,c_fireforges,land,subterranean,mountains,mountain,mountains,yes
+2524,Graskynar,c_graskynar,land,subterranean,mountains,hills,hills,no
+2525,Utuerth,c_utuerth,land,hills,hills,hills,hills,yes
+2528,Cloak Bay,c_cloak_bay,land,forest,forest,hills,hills,no
+2529,Wood of Sharp Teeth,c_wood_of_sharp_teeth,land,forest,forest,plains,plains,no
+2531,Lake Weng,c_lake_weng,land,mountain,mountains,hills,hills,no
+2532,Wild Hills,c_wild_hills,land,hills,hills,arctic,taiga,no
+2533,Green Shadows,c_green_shadows,land,forest,forest,plains,plains,no
+2558,Deep Imaskar,c_deep_imaskar,land,subterranean,mountains,steppe,steppe,no
+2559,Ikemmu,c_ikemmu,land,subterranean,mountains,hills,hills,no
+2560,Undraeth,c_undraeth,land,subterranean,mountains,mountain,mountains,yes
+2562,Llurth Dreier,c_llurth_dreier,land,subterranean,mountains,steppe,steppe,no
+2564,Okk,c_okk,land,glacier,taiga,glacier,taiga,yes
+2573,Three Rivers,c_three_rivers,land,forest,forest,plains,plains,no
+2578,Jungled Approach,c_jungled_approach,land,coastal,farmlands,plains,plains,no
+2579,Southwatch,c_southwatch,land,coastal,farmlands,plains,plains,no
+2580,Couatl's Landing,c_couatls_landing,land,coastal,farmlands,plains,plains,no
+2587,Wyrmdoom Crag,c_wyrmdoom_crag,land,mountain,mountains,arctic,taiga,no
+2594,Iltkazar,c_iltkazar,land,subterranean,mountains,hills,hills,no
+2601,Velarswood,c_velarswood,land,forest,forest,plains,plains,no
+2603,Freedale,c_freedale,land,forest,forest,plains,plains,no
+2604,Shadowglade,c_shadowglade,land,forest,forest,plains,plains,no
+2606,Beast Country,c_beast_country,land,forest,forest,plains,plains,no
+2607,Barrowfield,c_barrowfield,land,forest,forest,plains,plains,no
+2608,Hap,c_hap,land,forest,forest,plains,plains,no
+2610,Wright's Ferry,c_wrights_ferry,land,forest,forest,plains,plains,no
+2614,Maer Dualdon,c_maer_dualdon,land,arctic,taiga,arctic,taiga,yes
+2616,Dwarven Valley,c_dwarven_valley,land,arctic,taiga,arctic,taiga,yes
+2651,Guallidurth,c_guallidurth,land,subterranean,mountains,mountain,mountains,yes
+2652,Brightaxe Hall,c_brightaxe_hall,land,subterranean,mountains,mountain,mountains,yes
+2659,Iron Keep,c_iron_keep,land,hills,hills,plains,plains,no
+2688,Dernall,c_dernall,land,forest,forest,plains,plains,no
+2694,Undermountain,c_undermountain,land,subterranean,mountains,mountain,mountains,yes
+2695,Sargauth,c_sargauth,land,subterranean,mountains,plains,plains,no
+2696,Skullport,c_skullport,land,subterranean,mountains,hills,hills,no
+2697,Lair of the Eye,c_lair_of_the_eye,land,subterranean,mountains,hills,hills,no
