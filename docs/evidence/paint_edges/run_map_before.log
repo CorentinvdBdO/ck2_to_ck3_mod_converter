@@ -1,0 +1,61 @@
+reading CK2 map from /home/cvdbdo/git/paradox/ck3/wt/paint-edges/Faerun/Faerun/map
+reading CK2 titles and province history from /home/cvdbdo/git/paradox/ck3/wt/paint-edges/Faerun/Faerun
+2132 CK2 counties, 15195 defined baronies, 2125 province history files
+scale factor 1.954310 -> canvas 8320x6784 (scaled 8005x6504, offset 157,140, crop 0,0-4096,3328)
+painted extent is the whole source bitmap, so the crop is a no-op (docs/map_scale.md §7)
+rasterising provinces (NEAREST on the id array)
+2695 provinces survived, 3 lost, 1 regrown, 2 undefined colours in the bitmap
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+reading CK2 terrain
+barony set at 1357.1.1 (union to 1501.1.1): 3857 holdings in 2125 counties, min_barony_pixels=400
+79342 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+3705 baronies placed, 152 demoted, seeds {'capital_position': 2112, 'sampled': 835, 'port_position': 758}
+4276 CK3 provinces (padding ocean is id 4276)
+terrain majority vote (per CK3 province, target resolution)
+terrain: {'plains': 1776, 'hills': 630, 'desert': 331, 'mountains': 321, 'steppe': 306, 'taiga': 223, 'forest': 168, 'jungle': 92, 'wetlands': 51, 'farmlands': 16, 'drylands': 1}
+0 CK3 provinces are impassable_mountains
+210 untitled land provinces (CK2 wasteland) forced impassable_mountains
+province-history terrain override: 1040 CK2 counties declare one, 899 usable; 946 CK3 provinces changed (capital 563, non-capital-weak 383, kept strong bitmap 182, already agreed 553, unmapped 0)
+terrain after override: {'plains': 1077, 'hills': 686, 'mountains': 417, 'forest': 352, 'desert': 342, 'farmlands': 335, 'steppe': 272, 'taiga': 191, 'jungle': 180, 'wetlands': 62, 'drylands': 1}
+terrain class grid (heightmap detail + tree meshes): 3732425 px moved (6.61 % of the canvas)
+writing provinces.png
+tracing and redrawing rivers
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 22 of 308 merges did not survive (they fall on a pixel the province map says is water)
+rivers: {'sources': 331, 'merges': 286, 'splits': 9, 'body': 87854, 'water': 29995108, 'land': 26359292}
+building heightmap
+deepening the sea (floor 0, shelf 24 px)
+sea floor: median 2981 -> 0 (water level 4883)
+synthesising heightmap detail (seed 1357, deterrace=cliff_aware@sigma 2.2px/cliff 415.5 levels, relief=eroded@16x3, target=vanilla_curve; docs/step_map_heightmap.md §2b/§2c)
+heightmap detail: 343 -> 44366 distinct values, 0.35 % of land on the water+1 clamp floor (1.187 % of land had its offset saturated into the headroom) (52.2s)
+packing heightmap
+painting the flat (paper) map
+painting gfx/map/terrain/colormap.dds (measured terrain tint)
+colormap: 2080x1696, land mean [126.7, 125.9, 122.5], water mean [128.8, 129.8, 128.7]
+painting terrain (gfx/map/terrain/detail_index.tga + detail_intensity.tga)
+terrain paint: {'desert': 2370982, 'drylands': 25552948, 'farmlands': 214388, 'forest': 1764582, 'hills': 4180003, 'jungle': 1069364, 'mountains': 3562811, 'plains': 10042195, 'steppe': 3667540, 'taiga': 3624074, 'wetlands': 393993}
+writing map_data text files
+adjacency 1691->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1687->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1687 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+locators: 7 files, 3705 land / 4066 passable provinces
+  CK2 slot 0 anchors: 2108/2116 county capitals accepted (99.6 %), 8 outside own province, 0 off canvas, median move 9.9 px
+  buildings: 2108 of 3705 off the centroid (2108 CK2-anchored, 0 offset applied, 0 offset rejected), median move 9.9 px
+  special_building: 3651 of 3705 off the centroid (2108 CK2-anchored, 3553 offset applied, 152 offset rejected), median move 9.1 px
+  siege: 3624 of 3705 off the centroid (2108 CK2-anchored, 3483 offset applied, 222 offset rejected), median move 10.0 px
+  activities: 3636 of 3705 off the centroid (2108 CK2-anchored, 3538 offset applied, 167 offset rejected), median move 9.4 px
+  unit_stack_player_owned: 3948 of 4066 off the centroid (2108 CK2-anchored, 3921 offset applied, 145 offset rejected), median move 7.1 px
+  unit_stack_other_owner: 3930 of 4066 off the centroid (2108 CK2-anchored, 3861 offset applied, 205 offset rejected), median move 7.7 px
+  combat: 3640 of 4066 off the centroid (2108 CK2-anchored, 3424 offset applied, 642 offset rejected), median move 13.6 px
+scattering trees (docs/map_fidelity.md §4.3, seed 4242)
+trees: 700622 of 729838 target instances placed (29216 dropped, no mesh row: {'desert': 9657, 'farmlands': 4194, 'mountains': 15365}), {'reeds_01_generator_1.txt': 25162, 'steppe_bush_01_generator.txt': 613, 'tree_cypress_01_generator_1.txt': 7795, 'tree_jungle_01_c_generator_1.txt': 4951, 'tree_jungle_01_d_generator_1.txt': 159334, 'tree_leaf_01_single_generator_1.txt': 6755, 'tree_leaf_2_high_generator_1.txt': 23074, 'tree_leaf_high_generator_1.txt': 183844, 'tree_leaf_high_generator_2.txt': 46456, 'tree_leaf_high_generator_3.txt': 94869, 'tree_palm_generator_1.txt': 2010, 'tree_pine_01_a_generator_1.txt': 24951, 'tree_pine_01_b_generator_1.txt': 119643, 'tree_pine_impassable_01_a_generator_1.txt': 671, 'tree_sakura_01_generator.txt': 218, 'tree_sakura_03_generator.txt': 192, 'tree_sakura_forest_generator.txt': 84}
+  regional mix (277 conditions, cell 24 px, coherence 0.55): {'gated_no_mesh_row': 29216, 'terrain+band': 167057, 'terrain+climate+band': 431728, 'terrain+neighbour_band': 94971, 'terrain+climate': 6866}
+18 gfx/map/map_object_data/generated files written
+graphical regions: graphical_western=3274, graphical_mena=376, graphical_india=142, graphical_mediterranean=65, graphical_steppe=24, graphical_siberia=0, graphical_east_asia=34
+map          map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4276 provinces, 3705 baronies in 2125 counties, 152 demoted, 3 lost; heightmap detail cliff_aware/eroded/vanilla_curve, 0.35 % of land on the clamp floor
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/paint-edges-before
+  map            map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4276 provinces, 3705 baronies in 2125 counties, 152 demoted, 3 lost; heightmap detail cliff_aware/eroded/vanilla_curve, 0.35 % of land on the clamp floor [105.64s]
+55 files written, 10 warnings

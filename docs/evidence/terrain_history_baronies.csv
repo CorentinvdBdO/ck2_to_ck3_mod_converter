@@ -16,7 +16,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 98,1617,c_sathadech,b_sathadech,yes,mountain,plains,mountains,applied_capital
 100,1691,c_starspire,b_djerad_kurar,yes,mountain,hills,mountains,applied_capital
 104,2129,c_the_fang,b_djerad_madara,yes,mountain,plains,mountains,applied_capital
-109,1688,c_talaran_highlands,b_talara,yes,hills,forest,hills,applied_capital
+109,1688,c_talaran_highlands,b_talara,yes,hills,plains,hills,applied_capital
 110,1681,c_roraari,b_roraari,yes,hills,hills,hills,already_agreed
 111,1680,c_coldlight_cliffs,b_arrlaur,yes,mountain,plains,mountains,applied_capital
 119,1636,c_mraar_forest,b_ara_mraar,yes,jungle,plains,jungle,applied_capital
@@ -171,9 +171,9 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 412,1196,c_jundarwood,b_caldarth,yes,forest,plains,forest,applied_capital
 427,546,c_qurth_forest,b_qurthing,yes,forest,plains,forest,applied_capital
 428,542,c_the_duskwood,b_hesparin,yes,forest,plains,forest,applied_capital
-430,139,c_iskashyoll,b_iskashyoll,yes,forest,plains,forest,applied_capital
+430,139,c_iskashyoll,b_iskashyoll,yes,forest,forest,forest,already_agreed
 431,139,c_iskashyoll,b_khanall,no,forest,plains,forest,applied_weak_bitmap
-432,140,c_alisiwhann,b_alisiwhann,yes,forest,forest,forest,already_agreed
+432,140,c_alisiwhann,b_alisiwhann,yes,forest,plains,forest,applied_capital
 433,140,c_alisiwhann,b_adarthir,no,forest,plains,forest,applied_weak_bitmap
 434,140,c_alisiwhann,b_ragkyls_hold,no,forest,forest,forest,already_agreed
 439,152,c_sarenestar,b_sarenestar_glade,yes,forest,plains,forest,applied_capital
@@ -284,7 +284,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 604,443,c_talacoast,b_kunnya,no,jungle,forest,forest,kept_strong_bitmap
 608,454,c_olung,b_olung,yes,jungle,forest,jungle,applied_capital
 609,458,c_wildstorm_vale,b_port_beluarian,yes,jungle,jungle,jungle,already_agreed
-611,459,c_bulobo,b_bulobo,yes,jungle,forest,jungle,applied_capital
+611,459,c_bulobo,b_bulobo,yes,jungle,jungle,jungle,already_agreed
 612,464,c_nsi,b_kir_sabal,yes,hills,hills,hills,already_agreed
 613,464,c_nsi,b_edieh,no,hills,jungle,jungle,kept_strong_bitmap
 614,461,c_jahaka_bay,b_jahaka,yes,jungle,hills,jungle,applied_capital
@@ -568,7 +568,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 1059,1028,c_emmech,b_viedana,no,hills,hills,hills,already_agreed
 1062,1427,c_watchwall,b_thayguard,yes,mountain,hills,mountains,applied_capital
 1063,1427,c_watchwall,b_glarondar,no,mountain,hills,hills,kept_strong_bitmap
-1064,2437,c_relkaths_foot,b_royal_hall,yes,forest,forest,forest,already_agreed
+1064,2437,c_relkaths_foot,b_royal_hall,yes,forest,plains,forest,applied_capital
 1065,2437,c_relkaths_foot,b_relkaths_foot,no,forest,plains,forest,applied_weak_bitmap
 1066,2437,c_relkaths_foot,b_house_of_the_leaflord,no,forest,plains,forest,applied_weak_bitmap
 1067,1241,c_sunglade,b_sunglade,yes,forest,forest,forest,already_agreed
@@ -1043,7 +1043,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 2015,2508,c_sumber_hills,b_rivergard,no,hills,hills,hills,already_agreed
 2029,1439,c_starmetal_hills,b_beruns_hill,yes,hills,plains,hills,applied_capital
 2030,1439,c_starmetal_hills,b_twilight_tor,no,hills,plains,hills,applied_weak_bitmap
-2031,57,c_the_sisters,b_eldathyn,yes,mountain,forest,mountains,applied_capital
+2031,57,c_the_sisters,b_eldathyn,yes,mountain,hills,mountains,applied_capital
 2032,57,c_the_sisters,b_khlecayre,no,mountain,forest,forest,kept_strong_bitmap
 2033,57,c_the_sisters,b_darmaerthe,no,mountain,hills,hills,kept_strong_bitmap
 2034,57,c_the_sisters,b_talon_tower,no,mountain,hills,hills,kept_strong_bitmap
@@ -1063,7 +1063,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 2048,67,c_tall_trees,b_vale_of_memory,no,forest,forest,forest,already_agreed
 2049,300,c_eastwood,b_eastwood,yes,forest,taiga,forest,applied_capital
 2050,300,c_eastwood,b_karscragg,no,forest,plains,forest,applied_weak_bitmap
-2051,300,c_eastwood,b_starpoint,no,forest,forest,forest,already_agreed
+2051,300,c_eastwood,b_starpoint,no,forest,mountains,mountains,kept_strong_bitmap
 2052,1692,c_elven_port,b_elven_port,yes,forest,forest,forest,already_agreed
 2053,1692,c_elven_port,b_nar_kerymhoarth,no,forest,taiga,taiga,kept_strong_bitmap
 2054,2473,c_glaurachyndaar,b_glaurachyndaar,yes,hills,hills,hills,already_agreed
@@ -1400,7 +1400,7 @@ ck3_id,ck2_province,county,barony,is_capital,ck2_history_terrain,bitmap_ck3_terr
 2708,1127,c_the_teeth,b_barth,yes,coastal,plains,plains,kept_rule
 2720,308,c_callidyrr,b_caer_callidyrr,yes,forest,plains,forest,applied_capital
 2721,308,c_callidyrr,b_lehigh,no,forest,plains,forest,applied_weak_bitmap
-2722,308,c_callidyrr,b_llandeilo,no,forest,forest,forest,already_agreed
+2722,308,c_callidyrr,b_llandeilo,no,forest,plains,forest,applied_weak_bitmap
 2723,310,c_stagford,b_stagford,yes,forest,plains,forest,applied_capital
 2730,2688,c_dernall,b_doncastle,yes,forest,plains,forest,applied_capital
 2731,2688,c_dernall,b_aithelar,no,forest,plains,forest,applied_weak_bitmap

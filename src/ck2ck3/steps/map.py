@@ -279,6 +279,25 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
         terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
+        # lane `paint-edges` (docs/step_map_paint.md §10): soft, relief-aware
+        # class edges. Read HERE, under the flat `[map]` header, for the same
+        # reason as every key above - `_map_config` is the only reader, and a
+        # key added to `MapConfig` alone is silently ignored (the `[map]
+        # trees*` bug, build 11).
+        terrain_paint_soft_edges=bool(raw.get("terrain_paint_soft_edges", True)),
+        terrain_paint_edge_sigma_px=float(raw.get("terrain_paint_edge_sigma_px", 2.0)),
+        terrain_paint_relief_shift_px=float(
+            raw.get("terrain_paint_relief_shift_px", 1.5)
+        ),
+        terrain_paint_relief_sigma_px=float(
+            raw.get("terrain_paint_relief_sigma_px", 8.0)
+        ),
+        terrain_paint_relief_percentile=float(
+            raw.get("terrain_paint_relief_percentile", 90.0)
+        ),
+        terrain_paint_max_shift_source_px=float(
+            raw.get("terrain_paint_max_shift_source_px", 1.0)
+        ),
         # BUG FIXED (lane `colormap-fix`): this builder never read any of the
         # five `[map] colormap*` keys, so `configs/faerun.toml`'s own
         # `colormap = false` (set by the coordinator after the CK2-colormap
@@ -313,6 +332,9 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         ),
         trees_cell_px=int(raw.get("trees_cell_px", 24)),
         trees_cell_coherence=float(raw.get("trees_cell_coherence", 0.55)),
+        trees_mask_smooth=bool(raw.get("trees_mask_smooth", True)),
+        trees_mask_threshold=float(raw.get("trees_mask_threshold", 0.5)),
+        trees_mask_blur_px=float(raw.get("trees_mask_blur_px", 0.0)),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

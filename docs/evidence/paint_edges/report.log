@@ -1,0 +1,19 @@
+reading the two paint pairs...
+  before (build 13)       2.0 ch/px  primary 0.7116  entropy 0.7136  20 materials
+  after (soft edges)     3.23 ch/px  primary 0.5379  entropy 1.5046  27 materials
+  vanilla (target)      3.467 ch/px  primary 0.5247  entropy 1.4916  101 materials
+canvas 8320x6784, 1.4839 km per px
+  wrote fig_wealdath_before_after.png
+  wrote fig_anauroch_before_after.png
+  wrote fig_sword_coast_before_after.png
+measuring class displacement...
+encoding size variants (this is the part D measurement)...
+  detail_index       scale 1.0 tga        225.77 MB
+  detail_intensity   scale 1.0 tga        225.77 MB
+  detail_index       scale 1.0 tga_rle     20.42 MB
+  detail_intensity   scale 1.0 tga_rle     24.41 MB
+  detail_index       scale 0.5 tga         56.44 MB
+  detail_intensity   scale 0.5 tga         56.44 MB
+  detail_index       scale 0.5 tga_rle      7.14 MB
+  detail_intensity   scale 0.5 tga_rle      9.20 MB
+wrote /home/cvdbdo/git/paradox/ck3/wt/paint-edges/docs/evidence/paint_edges/paint_edges_summary.md in 10s

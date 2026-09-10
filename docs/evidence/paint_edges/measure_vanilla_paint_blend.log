@@ -1,0 +1,35 @@
+game dir: /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game
+building terrain-class map (province_terrain + provinces.png + definition.csv)...
+  16 distinct terrain keys (incl. '' = unmapped): ['', 'desert', 'desert_mountains', 'drylands', 'farmlands', 'floodplains', 'forest', 'hills', 'jungle', 'mountains', 'oasis', 'plains', 'steppe', 'taiga', 'terraced_hills', 'wetlands']
+boundary mask + distance_transform_edt...
+  distance transform: 2.4s, 1,217,874 boundary px of 42,467,328 (2.87%)
+reading detail_index.tga / detail_intensity.tga / heightmap.png...
+  land px: 23,720,182 of 42,467,328 (55.86%)
+computing per-pixel blend stats over land, binning by distance...
+  wrote vanilla_blend_by_distance.csv:
+    {'bin': '0-2', 'land_px': 2256312, 'mean_nonzero_channels': 3.2311, 'blend_entropy_bits': 1.4463, 'mean_primary_weight': 0.5224, 'share_1ch': np.float64(1.734), 'share_2ch': np.float64(13.625), 'share_3ch': np.float64(44.442), 'share_4ch': np.float64(40.199)}
+    {'bin': '2-5', 'land_px': 2955639, 'mean_nonzero_channels': 3.3381, 'blend_entropy_bits': 1.4807, 'mean_primary_weight': 0.5175, 'share_1ch': np.float64(1.136), 'share_2ch': np.float64(10.051), 'share_3ch': np.float64(42.679), 'share_4ch': np.float64(46.134)}
+    {'bin': '5-10', 'land_px': 3990266, 'mean_nonzero_channels': 3.4039, 'blend_entropy_bits': 1.4975, 'mean_primary_weight': 0.516, 'share_1ch': np.float64(0.907), 'share_2ch': np.float64(8.252), 'share_3ch': np.float64(40.387), 'share_4ch': np.float64(50.454)}
+    {'bin': '10-20', 'land_px': 4296657, 'mean_nonzero_channels': 3.4645, 'blend_entropy_bits': 1.5209, 'mean_primary_weight': 0.5099, 'share_1ch': np.float64(0.651), 'share_2ch': np.float64(6.856), 'share_3ch': np.float64(37.881), 'share_4ch': np.float64(54.612)}
+    {'bin': '20-50', 'land_px': 4312933, 'mean_nonzero_channels': 3.5266, 'blend_entropy_bits': 1.5341, 'mean_primary_weight': 0.5099, 'share_1ch': np.float64(0.448), 'share_2ch': np.float64(5.531), 'share_3ch': np.float64(34.939), 'share_4ch': np.float64(59.082)}
+    {'bin': '>50', 'land_px': 5908375, 'mean_nonzero_channels': 3.6227, 'blend_entropy_bits': 1.458, 'mean_primary_weight': 0.5567, 'share_1ch': np.float64(0.236), 'share_2ch': np.float64(3.551), 'share_3ch': np.float64(29.924), 'share_4ch': np.float64(66.289)}
+  interior mean_primary_weight (dist>=50px) = 0.5567; 90% threshold = 0.5010; crosses at d = 1 px
+computing per-terrain-key interior material mix...
+  desert           n= 1,344,885  top(all)=gen_central_hills  top3(non-regional)=[('desert_wavy_01', np.float64(23.2)), ('drylands_01', np.float64(15.1)), ('desert_rocky', np.float64(12.0))]
+  desert_mountains n=   287,089  top(all)=gen_steppe_lowlands_03  top3(non-regional)=[('desert_rocky', np.float64(36.4)), ('hills_01_rocks_medi', np.float64(32.5)), ('debug', np.float64(15.0))]
+  drylands         n=   976,867  top(all)=drylands_01_grassy  top3(non-regional)=[('drylands_01_grassy', np.float64(60.9)), ('drylands_01', np.float64(22.7)), ('mountain_02_d_valleys', np.float64(4.6))]
+  farmlands        n=    90,922  top(all)=india_farmlands  top3(non-regional)=[('farmland_01', np.float64(50.7)), ('steppe_grass', np.float64(10.9)), ('mountain_02_c_snow', np.float64(6.7))]
+  floodplains      n=    77,339  top(all)=floodplains_01  top3(non-regional)=[('floodplains_01', np.float64(46.7)), ('drylands_01_grassy', np.float64(13.2)), ('oasis', np.float64(9.3))]
+  forest           n=   734,117  top(all)=forest_leaf_01  top3(non-regional)=[('forest_leaf_01', np.float64(73.6)), ('mountain_02_c_snow', np.float64(8.5)), ('mountain_02_d_snow', np.float64(4.5))]
+  hills            n= 1,641,145  top(all)=central_lowlands_02  top3(non-regional)=[('hills_01', np.float64(19.0)), ('drylands_01_grassy', np.float64(16.3)), ('hills_01_rocks', np.float64(7.6))]
+  jungle           n=   422,118  top(all)=forest_jungle_01  top3(non-regional)=[('forest_jungle_01', np.float64(56.5)), ('steppe_bushes', np.float64(16.1)), ('steppe_grass', np.float64(8.7))]
+  mountains        n= 1,018,995  top(all)=central_lowlands_02  top3(non-regional)=[('mountain_02_snow', np.float64(18.2)), ('desert_rocky', np.float64(13.3)), ('debug', np.float64(6.8))]
+  oasis            n=    40,608  top(all)=gen_steppe_mountain_transition  top3(non-regional)=[('drylands_01_grassy', np.float64(32.4)), ('mountain_02_c', np.float64(28.3)), ('drylands_01', np.float64(20.4))]
+  plains           n= 1,896,958  top(all)=forest_jungle_01  top3(non-regional)=[('forest_jungle_01', np.float64(18.5)), ('desert_wavy_01', np.float64(15.0)), ('mountain_02_desert_c', np.float64(14.1))]
+  steppe           n=   932,866  top(all)=gen_tropical_mountain_transition  top3(non-regional)=[('mountain_03', np.float64(61.4)), ('drylands_01_grassy', np.float64(14.6)), ('mountain_02_desert_c', np.float64(5.4))]
+  taiga            n= 1,298,497  top(all)=forest_pine_01  top3(non-regional)=[('forest_pine_01', np.float64(71.2)), ('forestfloor', np.float64(7.3)), ('mountain_02_d', np.float64(6.3))]
+  terraced_hills   n=    45,683  top(all)=farm_paddy_01  top3(non-regional)=[('farm_paddy_01', np.float64(55.5)), ('steppe_bushes', np.float64(8.3)), ('steppe_rocks', np.float64(7.0))]
+  wetlands         n=   231,494  top(all)=oasis  top3(non-regional)=[('oasis', np.float64(44.3)), ('steppe_bushes', np.float64(9.4)), ('steppe_grass', np.float64(7.6))]
+  wrote vanilla_materials_by_terrain.csv (561 rows over 15 painted terrain keys)
+  wrote vanilla_blend_measurements.md (53 lines)
+done in 11.0s

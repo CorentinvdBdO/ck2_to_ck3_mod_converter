@@ -916,3 +916,215 @@ uv run --with matplotlib python scripts/report_tree_mix.py --before <dir off> --
 5. `tree_pine_impassable_01_a_generator_1` is 887 instances for us and 30,406
    for vanilla, because our eligibility excludes impassable provinces and
    vanilla's own use of that mesh is almost entirely on them.
+
+---
+
+## 10. Lane `paint-edges`: soft, relief-aware class edges
+
+**Question.** The user's playtest of build 13: *the map is very pixelated*.
+And the question behind it — "was the hypothesis wrong on just assigning by
+pixel, or is the map not high-def enough?"
+
+**Answer, measured: it is the edges, not the resolution.** Both halves of
+the answer are in §10.5, but the short version is that at build 13 the paint
+had two defects that are independent of how many pixels the file has, and
+fixing them shrank `detail_intensity.tga` by 7x, which then made the
+resolution question moot — the full-resolution pair now fits under the size
+cap that forced `terrain_paint_scale = 0.5` in the first place (§8).
+
+### 10.1 What was wrong, in the pipeline's own terms
+
+1. **The class edges were nearest-neighbour.** `terrain.bmp` is 2.90 km/px
+   and the canvas is 1.9543x finer (`docs/map_scale.md`), so
+   `_resize_codes`'s NEAREST resample turned every CK2 terrain-class
+   boundary into a staircase of 2x2 canvas pixels. At
+   `terrain_paint_scale = 0.5` one paint pixel is 2.97 km, so the staircase
+   *was* the paint grid: the class edge could not be anything but a step.
+2. **The blend was a noise dither, not a blend.** §2 step 3 mixed exactly
+   two materials per pixel with a Gaussian noise field that "ignores class
+   boundaries on purpose". It broke up flat texture, but it never softened a
+   class edge, and it cost 2.000 non-zero `detail_intensity` channels per
+   land pixel against vanilla's 3.467 (`docs/report_map_paint.md` §7.3).
+3. **`trees.bmp` is 1/8 resolution** — 23.2 km per tree pixel — and
+   `expand_trees` / `tree_scatter.upsample_to_source` expanded it with
+   `np.repeat`, so a forest boundary was a 15.6-canvas-pixel block. That is
+   the Wealdath Lego shape in the playtest screenshot.
+
+### 10.2 What replaces it (`ck2ck3.map.paint_edges`)
+
+`[map] terrain_paint_soft_edges = true` routes the paint through
+`build_soft_blend` instead of `terrain_paint.build_layers`:
+
+1. **A distance-field mask per class.** Each CK3 terrain class's 0/1
+   indicator is Gaussian-blurred at `terrain_paint_edge_sigma_px` canvas
+   pixels. The two strongest classes at a pixel set the blend, so a boundary
+   is a ramp whose shape follows the boundary and not a noise field.
+2. **A material *mix* per class, not a pair.** `mappings/terrain_paint.csv`
+   gained `tertiary_material` plus `primary_weight` / `secondary_weight` /
+   `tertiary_weight` (§10.4). Three of the four channels are the pixel's own
+   class, the fourth its strongest neighbour; a material both classes name is
+   merged into one channel rather than listed twice.
+3. **A relief-aware boundary.** `relief_warp` derives an integer (dy, dx)
+   per canvas pixel from the smoothed heightmap gradient, and the class map
+   is sampled through it *before* it is blended, so a forest/plains edge
+   wanders with the ground. Three properties by construction: the
+   displacement is bounded (`|d| <= terrain_paint_relief_shift_px`, and
+   rounding a vector component-wise can only shorten it — see the
+   `np.trunc` fallback in `relief_warp`), it is exactly zero on flat ground
+   (the saturating factor is `|grad h| / gradient_ref` clipped to 1), and it
+   is deterministic (no RNG anywhere in this path).
+4. **The same treatment for `trees.bmp`.** `forest_coverage` expands the
+   tree indicator bilinearly, pixel-centre aligned, and thresholds it at
+   `trees_mask_threshold`; the 0.5 contour sits on the midpoint between a
+   forest and a non-forest source pixel, which is the area-preserving
+   choice, and every corner is rounded. The same mask feeds the `forest`
+   class promotion (`terrain.ck2_category_codes(forest_mask=...)`) and the
+   tree scatter's eligibility, and the scatter mask is warped by the same
+   relief field, so the trees stand where the forest is painted.
+
+**The macro invariant.** CK2 still decides what is where. Only the sub-pixel
+shape of a boundary and the material mix at a pixel change; a class must
+never migrate more than one CK2 source pixel (2.90 km = 1.9543 canvas px)
+from where CK2 painted it. `class_displacement_stats` measures it on every
+run and the number is in the run log: for each pixel whose class changed,
+the distance to the nearest pixel that already carried the new class. That
+metric is the right one because swallowing a one-pixel speckle of class X
+registers as its neighbour Y moving one pixel, not as X moving to infinity.
+
+### 10.3 Config keys (all flat under `[map]`, read by `steps/map.py`)
+
+| key | default | meaning |
+|---|---|---|
+| `terrain_paint_soft_edges` | `true` | use the distance-field blend. `false` restores build 13's `build_layers` exactly |
+| `terrain_paint_edge_sigma_px` | `2.0` | Gaussian sigma, canvas px, of each class indicator mask: the width of the ramp. `0` = hard edges |
+| `terrain_paint_relief_shift_px` | `1.5` | maximum relief warp, canvas px (2.23 km, inside the 2.90 km bound). `0` disables the warp |
+| `terrain_paint_relief_sigma_px` | `8.0` | Gaussian on the heightmap before its gradient drives the warp |
+| `terrain_paint_relief_percentile` | `90.0` | land-gradient percentile at which the warp saturates at the full shift |
+| `trees_mask_smooth` | `true` | bilinear + threshold expansion of `trees.bmp` instead of `np.repeat` |
+| `trees_mask_threshold` | `0.5` | coverage level that counts as forest |
+| `trees_mask_blur_px` | `0.0` | extra Gaussian (source px) on the interpolated tree field |
+
+`_map_config` in `src/ck2ck3/steps/map.py` is the only reader of the `[map]`
+table; a key added to `MapConfig` alone is silently ignored, which is exactly
+the bug build 11 shipped with the `[map] trees*` keys. All eight are read
+there (`grep -n terrain_paint_soft_edges src/ck2ck3/steps/map.py`).
+
+### 10.4 Why a third material, and where it comes from
+
+`scripts/measure_vanilla_paint_blend.py` (this lane) settles whether
+vanilla's 3.467 channels per pixel is an edge effect or a property of the
+class itself, by binning vanilla's own land pixels by distance to the
+nearest terrain-class boundary
+(`docs/evidence/paint_edges/vanilla_blend_by_distance.csv`, `verified`):
+
+| distance to a class boundary | 0-2 px | 2-5 | 5-10 | 10-20 | 20-50 | >50 |
+|---|---|---|---|---|---|---|
+| non-zero channels / px | 3.231 | 3.338 | 3.404 | 3.465 | 3.527 | **3.623** |
+| mean primary weight | 0.522 | 0.518 | 0.516 | 0.510 | 0.510 | 0.557 |
+
+It goes **up** with distance from the boundary. So vanilla's blend is not
+edge bleed: a vanilla terrain class paints 3-4 materials of its own deep in
+its own interior, and soft edges alone could never reach 3.47. Each class
+needs its own third material — which is also the "third material" item
+`docs/report_map_paint.md` §7.3 left open.
+
+The same script's second output ranks, per CK3 terrain key, the materials
+vanilla paints on that key's own *interior* pixels
+(`docs/evidence/paint_edges/vanilla_materials_by_terrain.csv`). That ranking
+cannot be used raw: it is contaminated by province granularity — a vanilla
+province is one terrain key over thousands of pixels of real, varied ground,
+so vanilla's own "plains" pixels lead with `forest_jungle_01` (18.5 %) and
+its "steppe" pixels with `mountain_03` (61.4 %), two picks
+`mappings/terrain_paint.csv` had already rejected by hand with a note each.
+`scripts/propose_paint_tertiary.py` therefore applies a narrower rule, and
+records it in each row's `note`:
+
+> the tertiary is the highest-ranked material in vanilla's own non-regional
+> interior ranking **for that terrain key** that is in the same material
+> *family* as our audited primary, is not vanilla's `debug` placeholder, and
+> is not already the primary or the secondary. A key whose own ranking has no
+> same-family candidate falls back to the largest material of that family by
+> overall vanilla land coverage (only `steppe`, `sea` and `coastal_sea` do).
+
+Weights are `0.55 / 0.28 / 0.17` for every three-material row and
+`0.66 / 0.34` for a two-material one. They are not an art choice: 0.55/0.28/
+0.17 has a blend entropy of 1.42 bits and a primary weight of 0.55 before
+any neighbour is mixed in at a boundary, which is what lands the land-wide
+numbers on vanilla's measured 1.4916 bits and 0.5247.
+
+### 10.5 Resolution or edges? The measurement
+
+The user asked which of the two it was. Both builds below are at
+`terrain_paint_scale = 1.0` — **the same resolution** — so the comparison
+isolates the edges (`docs/evidence/paint_edges/paint_blend_before_after.csv`,
+`verified`, measured off the shipped TGA pairs, land only):
+
+| | build 13 (before) | soft edges (after) | vanilla (target) |
+|---|---|---|---|
+| non-zero channels / px | 2.000 | **3.23** | 3.467 |
+| mean primary weight | 0.712 | **0.538** | 0.525 |
+| blend entropy | 0.714 bits | **1.505 bits** | 1.492 bits |
+| materials used over land | 20 | 27 | 101 |
+
+**It was the edges, and here is why resolution could not have been the
+cause.** At build 13's `terrain_paint_scale = 0.5` one paint pixel was
+2.97 km and one CK2 source pixel is 2.90 km: the paint file already resolved
+its own input almost exactly. No class detail was being lost to the file's
+resolution — there was none left to lose. Every visible step was the NEAREST
+resample of that input and the noise dither over it, both of which look
+identical at any resolution. The before/after crops
+(`docs/evidence/paint_edges/fig_sword_coast_before_after.png`,
+`fig_wealdath_before_after.png`, `fig_anauroch_before_after.png`) show the
+same pixels of ground with and without the staircase.
+
+Resolution matters *after* the fix, not before it: a boundary ramp needs
+pixels to be drawn in, and at 1.48 km/px there are twice as many of them
+across each ramp as at 2.97. Which is why §10.6 ships full resolution — and
+it turned out to cost nothing.
+
+Two other measured results from the same pair of runs:
+
+* **The relief warp moved 24.1 % of the canvas** by at least one pixel, and
+  nothing on flat ground.
+* **The macro invariant held**: 1.4 % of land pixels changed class,
+  **max displacement 2.099 km (0.72 CK2 source pixels), p95 1.484 km
+  (0.51)** — inside the one-source-pixel bound, which is enforced rather
+  than hoped for (`terrain_paint_max_shift_source_px`, §10.3). Before the
+  enforcement was added the same configuration measured max 4.452 km: the
+  warp is bounded by construction but the blend's corner rounding can
+  swallow a one-pixel speckle, and the two together exceeded the bound.
+  34,361 canvas pixels (0.06 % of the canvas) revert to CK2's own
+  class because of the check.
+* **The smooth tree mask is area-preserving**, as the 0.5 threshold
+  promises: 456,344 source pixels become `forest` against the block
+  expansion's 461,888 (−1.2 %), and the scatter's eligible area is
+  1,234,566 against 1,259,712 (−2.0 %). The forests are the same size; only
+  their outlines changed.
+
+### 10.6 Size: full resolution is now free (part D)
+
+`docs/evidence/paint_edges/paint_sizes.csv`, `verified`, both layers
+re-encoded from the shipped full-resolution pair:
+
+| layer | scale | `tga` | `tga_rle` |
+|---|---|---|---|
+| `detail_index` | 1.0 (8320×6784) | 225.77 MB | **20.42 MB** |
+| `detail_intensity` | 1.0 | 225.77 MB | **24.41 MB** |
+| `detail_index` | 0.5 (4160×3392) | 56.44 MB | 7.14 MB |
+| `detail_intensity` | 0.5 | 56.44 MB | 9.20 MB |
+
+Against §8.3's build-13 numbers at the same scale and format: `tga_rle` at
+1.0 was 5.57 MB + **172.55 MB**. The intensity layer is **7.1x smaller**,
+and the whole pair at *full* resolution (44.8 MB) is now **smaller than the
+half-resolution pair was** (56.9 MB). §8.3's diagnosis was exactly right —
+"the noise field is the cost, not the container" — and removing the noise
+field removed the cost: a class interior is now one constant RGBA quadruple,
+which is what RLE is for. `detail_index` grew (5.57 → 20.40 MB) because it
+now carries three or four material ordinals per pixel instead of two, and
+that is a bargain.
+
+**So `[map] terrain_paint_scale = 1.0` is the new default** — the value
+vanilla, Elder Kings 2 and Godherja all use, and the one no installed mod
+tests a smaller alternative to (§8.5). The 100 MB/file constraint that
+forced 0.5 in §8.4 no longer binds, with 70 MB of headroom on the larger
+layer.
