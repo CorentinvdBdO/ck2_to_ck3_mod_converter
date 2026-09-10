@@ -1,0 +1,8 @@
+file,old_instances,new_instances,lost_ids,gained_ids,moved,moved_pct,median_move_px,p90_move_px,max_move_px
+building_locators.txt,3705,3705,0,0,2108,56.9,9.87,26.47,99.68
+special_building_locators.txt,3705,3705,0,0,3699,99.84,3.04,21.13,98.63
+siege_locators.txt,3705,3705,0,0,3699,99.84,4.26,22.0,102.44
+activities.txt,3705,3705,0,0,3696,99.76,4.34,21.75,97.36
+player_stack_locators.txt,4067,4067,0,0,3954,97.22,6.78,21.18,93.99
+other_stack_locators.txt,4067,4067,0,0,3930,96.63,7.76,21.79,95.46
+combat_locators.txt,4067,4067,0,0,3914,96.24,7.94,21.53,92.23

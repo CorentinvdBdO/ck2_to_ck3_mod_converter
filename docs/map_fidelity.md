@@ -377,6 +377,46 @@ reviewer can copy the rows they like across.
 
 ## 3. Placing CK3 assets from CK2's
 
+**Wired in** by lane `map-assets` (2026-09-10) as
+`ck2ck3.map.locators.ck2_capital_anchors` + `place_with_offsets`, behind
+`[map] ck2_locator_positions` (default on) — see **`docs/step_map_assets.md`**
+for the shipped model, the validity gate and the measured numbers.
+
+What ships is **not** §3.1's "one CK2 slot per locator type". Vanilla settles
+the question §3.1 could not: measured over all 11,297 of its land ids
+(`verified`, `scripts/measure_vanilla_locator_offsets.py` →
+`mappings/locator_offsets.csv`), **every locator type sits within ~15 px of
+the same province's `buildings` instance** — `siege` 10.0 px median,
+`unit_stack_player_owned` 7.1, `unit_stack_other_owner` 7.7, `combat` 13.6,
+`special_building` 9.1. A siege marker is the army *besieging the settlement*,
+not an independent point on the map. So the model is:
+
+1. **one anchor per province** — CK2 `positions.txt` **slot 0** (the
+   capital/city slot the CK2 binary names) for the **county-capital barony**,
+   accepted only when it lands inside that barony's own pixels in the
+   generated `provinces.png` (99.6 % of 2116 capitals; `verified`,
+   `scripts/check_ck2_locator_slots.py` →
+   `docs/evidence/map_fidelity/locator_slots.csv`); the province centroid for
+   everything else;
+2. **plus vanilla's own median per-type offset**, re-gated the same way.
+
+Two of §3.1's proposals were tested and dropped:
+
+* **slot 1 → the unit stacks.** Slot 1 is the most in-province slot (98.6 %),
+  but its median distance from slot 0 is **22.5 canvas px**, three times
+  vanilla's own 7.1 px stack offset — it would spread stacks far wider than
+  CK3 ever does. Vanilla's measured offset does the same job at the right
+  magnitude.
+* **slot 3 → `siege` or `combat`.** Slot 3 equals slot 0 in 58.1 % of Faerûn's
+  blocks (median offset 0.0 px, §1.6) and accepts at only 74.3 % against slot
+  0's 99.6 %. It is not an independent point in CK2 either, and `siege` does
+  not want one.
+
+§3.2 item 1 is unchanged and is a permanent limit, not a gap to close: 1574 of
+3694 baronies are not county capitals and have no CK2 anchor at all — they
+anchor on the centroid and take the same per-type offsets. §3.2 item 5 is
+closed: all seven files are written complete for every id, sea included.
+
 ### 3.1 The mapping
 
 | CK2 | CK3 locator | feasible? |
@@ -552,7 +592,7 @@ tiles, and 212 distinct values dedupe far better than 17,675 — expect
 | river-valley carving and coast smoothing | **S** | no |
 | ridged / eroded structure instead of isotropic noise | **L** | yes, it is a look call |
 | tree scatter into `map_object_data/generated/` | **M** | no |
-| the 8 locator sets from barony centroids (+ slot 0 / slot 4) | **M** | no — but coordinate with lane `map-ui`, §5 |
+| the 7 locator sets from barony centroids (+ CK2 slot 0 / slot 1) | **M** | **done** — lane `map-ui` (centroids), lane `map-assets` (CK2 slots), §3 |
 | `resolution_factor = 2` to reach vanilla's spatial bandwidth | **S** to switch, **L** in bytes | **yes — a size call** |
 
 ---
