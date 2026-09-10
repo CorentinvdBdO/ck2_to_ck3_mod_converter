@@ -94,6 +94,39 @@ lake_names = ["Lakes"]
 # (capital only). [map.baronies] city_slot / port_slot pick the slot indices.
 ck2_position_seeds = true
 
+# Anchor the COUNTY-CAPITAL barony's map-object locators on the CK2 author's
+# own town - positions.txt slot 0, the capital/city slot the CK2 binary itself
+# names - instead of the province colour centroid. The transformed slot is used
+# only if it lands inside that barony's own province in the generated
+# provinces.png; otherwise the centroid is kept. Every other barony and every
+# sea/lake/river/impassable province anchors on its centroid, and all seven
+# locator files are still written complete, for every id.
+# Slot 1 is NOT used for unit stacks (its median offset from slot 0 is 22.8
+# canvas px, 3x vanilla's own stack offset) and slot 3 is not used for siege
+# (it equals slot 0 in 58.1 % of Faerun's blocks).
+# docs/step_map_assets.md, docs/map_fidelity.md §3. false = build 8 behaviour.
+ck2_locator_positions = true
+# Each locator TYPE then sits at vanilla's own measured offset from that
+# anchor, so the settlement, its siege marker and the two unit stacks do not
+# draw on one point. Measured over all 11,297 vanilla land ids by
+# scripts/measure_vanilla_locator_offsets.py; every type is within ~15 px of
+# the holding, because a siege marker IS the army besieging the settlement.
+locator_offsets_csv = "mappings/locator_offsets.csv"
+# Vanilla px -> our px for those offsets. 1.0: this canvas is planned at
+# vanilla's own 1.4839 km per pixel by construction (docs/map_scale.md §1), so
+# a vanilla pixel and one of ours are the same ground distance and the same
+# on-screen separation. Change only if that stops being true.
+locator_offset_scale = 1.0
+# What "vanilla's offset" means. "median_radius" (default) keeps the measured
+# median direction but stretches it to vanilla's measured median DISTANCE from
+# the settlement; "median_vector" uses the raw median (dx, dz). The two
+# disagree for the rotationally symmetric types - siege's median vector is
+# 3.2 px long while its median distance is 10.0 px, because the directions
+# cancel - and the distance is the number a player sees (the siege marker must
+# not sit on the settlement model). docs/step_map_assets.md §2.2,
+# docs/DECISIONS.md 2026-09-10.
+locator_offset_mode = "median_radius"
+
 # Write gfx/map/terrain/detail_index.tga + detail_intensity.tga, the pair CK3's
 # renderer actually reads (docs/step_map_paint.md). Ship neither and CK3
 # samples vanilla's own pair in UV space across the canvas - Faerun wears

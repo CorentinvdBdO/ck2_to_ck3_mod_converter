@@ -100,6 +100,7 @@ def run(ctx: Context) -> StepResult:
     bar = report["baronies"]
     trees = report.get("trees", {})
     colormap = report.get("colormap", {})
+    loc = report.get("locators", {})
     return StepResult(
         summary=(
             f"map {canvas['width']}x{canvas['height']} at scale "
@@ -126,6 +127,14 @@ def run(ctx: Context) -> StepResult:
                if trees else {}),
             **({"colormap_px": colormap["width"] * colormap["height"]}
                if colormap else {}),
+            # how many locator instances left the province centroid, and how
+            # many county capitals took their CK2 positions.txt slot-0 town
+            # as the anchor (docs/step_map_assets.md)
+            **({"locators_ck2_anchors": loc["ck2_anchors"]["accepted"],
+                "locators_ck2_anchor_candidates": loc["ck2_anchors"]["candidates"]}
+               if loc.get("ck2_anchors") else {}),
+            **({"locators_moved_instances": loc["moved_instances"]}
+               if "moved_instances" in loc else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),
@@ -199,6 +208,18 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,
         title_scaffolding=bool(raw.get("title_scaffolding", False)),
+        # `[map] ck2_locator_positions` (lane `map-assets`). Read HERE as well
+        # as in `ck2ck3.map.config.load`: a key this CLI-facing builder never
+        # reads is a silent no-op whatever the TOML says - that is exactly how
+        # `[map] colormap = false` was ignored for two builds (see below).
+        # tests/test_map_locators.py::test_cli_config_builder_reads_the_key
+        # pins it.
+        ck2_locator_positions=bool(raw.get("ck2_locator_positions", True)),
+        locator_offsets_csv=Path(
+            str(raw.get("locator_offsets_csv", "mappings/locator_offsets.csv"))
+        ),
+        locator_offset_scale=float(raw.get("locator_offset_scale", 1.0)),
+        locator_offset_mode=str(raw.get("locator_offset_mode", "median_radius")),
         strip_vanilla_foliage=bool(raw.get("strip_vanilla_foliage", True)),
         terrain_paint=bool(raw.get("terrain_paint", True)),
         terrain_paint_csv=Path(

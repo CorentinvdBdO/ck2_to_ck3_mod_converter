@@ -40,6 +40,42 @@ error counts each fix removed: **`docs/evidence/game_load_2026-09-08.md`**.
 Read it before touching the `map`, `cultures` or `loc` steps — six of its nine
 fixes are things ck3-tiger does not report.
 
+## Running from a git worktree — read this first
+
+`wt/<lane>/.venv` is a **symlink to the main checkout's venv**, and that venv
+holds an *editable install* whose `.pth` file names one fixed source tree:
+
+```
+$ cat .venv/lib/python3.14/site-packages/_editable_impl_ck2_ck3_mod_converter.pth
+/home/cvdbdo/git/paradox/ck3/wt/report-paint/src
+```
+
+So in any other worktree `uv run ck2ck3` and `.venv/bin/python -m ck2ck3`
+import **someone else's `src/`** and silently convert with the wrong code.
+It fails silently: the run succeeds, the output looks plausible, and the
+lane's change is simply absent (`verified` 2026-09-10, lane `map-assets`:
+a full run produced locator files byte-identical to the previous build).
+
+`pytest` is immune — `pyproject.toml` sets `pythonpath = ["src", "."]`, which
+wins over the `.pth` — which is exactly why the tests were green while the
+run was wrong.
+
+The fix, in a worktree, for **any** command that imports `ck2ck3`:
+
+```sh
+PYTHONPATH=$PWD/src .venv/bin/python -m ck2ck3 --config configs/faerun.toml
+```
+
+The `.pth` is a plain path line, not an import hook, so `PYTHONPATH` takes
+precedence. Check before a long run:
+
+```sh
+PYTHONPATH=$PWD/src .venv/bin/python -c "import ck2ck3; print(ck2ck3.__file__)"
+```
+
+A repo script that does `sys.path.insert(0, .../src)` relative to its own
+file (e.g. `scripts/check_ck2_locator_slots.py`) is already safe.
+
 ## What each one is for
 
 | # | command | what it proves |

@@ -393,6 +393,35 @@ class MapConfig:
     #: and history/provinces.  Turn it on ([map] title_scaffolding = true) to
     #: boot a map-only mod without running the `titles` step.
     title_scaffolding: bool = False
+    #: place the county-capital barony's locators at the CK2
+    #: `positions.txt` slots instead of the province centroid: slot 0 ->
+    #: `buildings` + `special_building`, slot 1 -> the two unit stacks and
+    #: `combat` (`docs/step_map_assets.md`). A slot that does not land inside
+    #: that barony's own province falls back to the centroid, and every other
+    #: barony, sea and impassable province keeps the centroid regardless.
+    #: `[map] ck2_locator_positions` (default on); false is the pure-centroid
+    #: behaviour of build 8 and earlier.
+    ck2_locator_positions: bool = True
+    #: vanilla's own per-type offset from the `buildings` instance, added to
+    #: whatever anchor a province got (CK2 slot 0 or its centroid) so a siege
+    #: marker, a unit stack and the settlement do not sit on one point. CK3
+    #: 1.19 keeps every type within ~15 px of the holding
+    #: (`scripts/measure_vanilla_locator_offsets.py`). `[map]
+    #: locator_offsets_csv`; an absent file means no offsets.
+    locator_offsets_csv: Path = Path("mappings/locator_offsets.csv")
+    #: vanilla px -> canvas px for those offsets. 1.0 because this canvas is
+    #: planned at vanilla's own 1.4839 km per pixel by construction
+    #: (`docs/map_scale.md` §1); `[map] locator_offset_scale` exists so a
+    #: differently scaled map can say so instead of inheriting a wrong number.
+    locator_offset_scale: float = 1.0
+    #: what "vanilla's offset" means: ``"median_radius"`` (default: the measured
+    #: median direction stretched to vanilla's measured median distance from
+    #: the settlement) or ``"median_vector"`` (the raw measured median dx/dz).
+    #: The two disagree for the rotationally symmetric types, whose median
+    #: direction cancels out, and the distance is what a player sees --
+    #: `docs/step_map_assets.md` §2.2, `docs/DECISIONS.md` 2026-09-10.
+    #: `[map] locator_offset_mode`.
+    locator_offset_mode: str = "median_radius"
     #: blank out vanilla's `gfx/map/map_object_data/generated/*.txt` foliage.
     #: Those files hold ~52 MB of tree instances at *European* coordinates and
     #: nothing stops them loading over a custom map, so on our canvas they are
@@ -530,6 +559,12 @@ def load(path: str | Path) -> MapConfig:
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
         title_scaffolding=bool(out.get("title_scaffolding", False)),
+        ck2_locator_positions=bool(raw.get("ck2_locator_positions", True)),
+        locator_offsets_csv=Path(
+            str(raw.get("locator_offsets_csv", "mappings/locator_offsets.csv"))
+        ),
+        locator_offset_scale=float(raw.get("locator_offset_scale", 1.0)),
+        locator_offset_mode=str(raw.get("locator_offset_mode", "median_vector")),
         terrain_paint=bool(raw.get("terrain_paint", True)),
         terrain_paint_csv=Path(
             str(raw.get("terrain_paint_csv", "mappings/terrain_paint.csv"))

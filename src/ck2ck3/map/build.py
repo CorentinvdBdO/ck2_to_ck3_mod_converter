@@ -541,17 +541,80 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     }
     locator_passable = {p.id for p in ids.provinces if not p.is_impassable}
     locator_xy = {pid: (x, y) for pid, (y, x) in centroids.items()}
+    # ...except the county-capital barony, which can take the CK2 author's own
+    # coordinates: `positions.txt` is per CK2 province = per CK3 county, so
+    # slot 0 places its capital's holding and slot 1 its unit stacks
+    # (docs/step_map_assets.md). Everything else keeps the centroid.
+    locator_anchors: dict[int, tuple[float, float]] = {}
+    locator_anchor_stats: locators.AnchorStats | None = None
+    if cfg.ck2_locator_positions:
+        barony_id_of = {p.barony: p.id for p in ids.provinces if p.barony}
+        capital_ids = {}
+        for ck2_pid, bs in plan.by_province.items():
+            cap = next((b for b in bs if b.is_capital), None)
+            if cap is None:
+                continue
+            cap_id = barony_id_of.get(cap.key)
+            if cap_id is not None:
+                capital_ids[ck2_pid] = cap_id
+        locator_anchors, locator_anchor_stats = locators.ck2_capital_anchors(
+            positions=positions,
+            capital_ids=capital_ids,
+            canvas=canvas,
+            source_height=src_h,
+            raster=ck3_raster,
+            centroids=locator_xy,
+        )
+    # ...and every locator TYPE then sits at vanilla's own measured offset
+    # from that anchor, so the siege marker, the two unit stacks and the
+    # settlement do not draw on one point (mappings/locator_offsets.csv).
+    locator_offsets = locators.read_locator_offsets(
+        _repo_path(cfg, cfg.locator_offsets_csv)
+    )
+    if not locator_offsets:
+        sink.warn(
+            f"no locator offset table at {cfg.locator_offsets_csv}: every "
+            "locator type will draw on the same point per province "
+            "(uv run scripts/measure_vanilla_locator_offsets.py)"
+        )
+    locator_overrides, locator_type_stats = locators.place_with_offsets(
+        centroids=locator_xy,
+        anchors=locator_anchors,
+        offsets=locator_offsets,
+        raster=ck3_raster,
+        land_ids=locator_land,
+        passable_ids=locator_passable,
+        scale=cfg.locator_offset_scale,
+        mode=cfg.locator_offset_mode,
+    )
     for rel, text in locators.render_all(
         locator_xy,
         canvas.height,
         land_ids=locator_land,
         passable_ids=locator_passable,
+        overrides=locator_overrides,
     ).items():
         sink.text(rel, text)
     log(
         f"locators: {len(locators.LOCATOR_SPECS)} files, "
         f"{len(locator_land)} land / {len(locator_passable)} passable provinces"
     )
+    if locator_anchor_stats is not None:
+        a = locator_anchor_stats
+        log(
+            f"  CK2 slot {a.slot} anchors: {a.accepted}/{a.candidates} "
+            f"county capitals accepted ({100 * a.accept_rate:.1f} %), "
+            f"{a.outside_province} outside own province, "
+            f"{a.off_canvas} off canvas, median move {a.median_move_px:.1f} px"
+        )
+    for name, s in locator_type_stats.items():
+        log(
+            f"  {name}: {s['moved_from_centroid']} of {s['ids']} off the "
+            f"centroid ({s['ck2_anchored']} CK2-anchored, "
+            f"{s['offset_applied']} offset applied, "
+            f"{s['offset_rejected']} offset rejected), "
+            f"median move {s['median_move_px']:.1f} px"
+        )
     if cfg.trees and cfg.ck3_game_dir and trees is not None:
         log("scattering trees (docs/map_fidelity.md §4.3, "
             f"seed {cfg.trees_seed})")
@@ -603,6 +666,15 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         "land": len(locator_land),
         "passable": len(locator_passable),
         "foliage_stubs": len(foliage),
+        "ck2_positions": cfg.ck2_locator_positions,
+        "ck2_anchors": (
+            locator_anchor_stats.as_dict() if locator_anchor_stats else {}
+        ),
+        "offsets": {k: [v.dx, v.dz] for k, v in sorted(locator_offsets.items())},
+        "offset_scale": cfg.locator_offset_scale,
+        "offset_mode": cfg.locator_offset_mode,
+        "by_type": locator_type_stats,
+        "moved_instances": sum(len(v) for v in locator_overrides.values()),
     }
 
     # ------------------------------------------------------ the 3D map table

@@ -74,6 +74,19 @@ def read_locators(path: Path) -> tuple[dict[str, str], dict[int, tuple[float, ..
 
 def centroids(game: Path) -> tuple[dict[int, tuple[float, float]], int, int]:
     """Pixel centroid (x, y_top_down) of every province colour, plus image size."""
+    _ids, cen, w, h = _raster_and_centroids(game)
+    return cen, w, h
+
+
+def _raster_and_centroids(
+    game: Path,
+) -> tuple[np.ndarray, dict[int, tuple[float, float]], int, int]:
+    """Both, from one pass: the id raster and every province's pixel centroid.
+
+    The raster is what the *province* check needs since lane `map-assets`: a
+    locator is allowed to sit away from its centroid (it is at the CK2
+    author's own coordinate), but it must still be inside its own province.
+    """
     defs = game / "map_data" / "definition.csv"
     colour_to_id: dict[int, int] = {}
     with defs.open(encoding="utf-8-sig", errors="replace", newline="") as fh:
@@ -115,14 +128,31 @@ def centroids(game: Path) -> tuple[dict[int, tuple[float, float]], int, int]:
         for i in range(n)
         if count[i]
     }
-    return out, w, h
+    id_raster = np.where(hit, vals[pos], -1).reshape(h, w)
+    return id_raster, out, w, h
 
 
 def check_mod(mod: Path, against: Path | None, game: Path = DEFAULT_GAME) -> int:
     """Validate a generated mod's own locators. Returns a process exit code."""
-    cen, w, h = centroids(mod)
-    print(f"{mod}: canvas {w}x{h}, {len(cen)} province colours")
+    id_raster, cen, w, h = _raster_and_centroids(mod)
+    # A province colour centroid can fall OUTSIDE its own province when the
+    # shape is concave (a crescent bay, a ring of coast). That is not this
+    # mod's doing - it is the pre-existing fallback placement - so those ids
+    # are the baseline the per-instance check is measured against, not a
+    # failure. Only an instance the converter *moved* out of its province is.
+    centroid_outside = {
+        pid
+        for pid, (cx, cy) in cen.items()
+        if not (0 <= int(round(cx)) < w and 0 <= int(round(cy)) < h)
+        or int(id_raster[int(round(cy)), int(round(cx))]) != pid
+    }
+    print(
+        f"{mod}: canvas {w}x{h}, {len(cen)} province colours, "
+        f"{len(centroid_outside)} of them with a centroid outside their own "
+        f"shape (concave; the fallback placement's own limit)"
+    )
     bad = 0
+    ours: dict[str, dict[int, tuple[float, ...]]] = {}
     for fname in LOCATOR_FILES:
         path = mod / "gfx" / "map" / "map_object_data" / fname
         if not path.exists():
@@ -130,23 +160,42 @@ def check_mod(mod: Path, against: Path | None, game: Path = DEFAULT_GAME) -> int
             bad += 1
             continue
         _, inst = read_locators(path)
-        far = []
+        ours[fname] = inst
+        far: list[tuple[float, int]] = []
+        outside: list[int] = []
         for pid, v in inst.items():
             if pid == 0:  # the sentinel instance is not a province
                 continue
             c = cen.get(pid)
             if c is None:
                 continue
-            d = ((v[0] - c[0]) ** 2 + ((h - v[2]) - c[1]) ** 2) ** 0.5
+            y_top = h - v[2]
+            d = ((v[0] - c[0]) ** 2 + (y_top - c[1]) ** 2) ** 0.5
             if d > 1.0:
                 far.append((d, pid))
+            # THE check since lane `map-assets`: an instance may legitimately
+            # sit away from its centroid (CK2 positions.txt slot 0 / slot 1,
+            # docs/step_map_assets.md), but never outside its own province.
+            xi, yi = int(round(v[0])), int(round(y_top))
+            if 0 <= xi < w and 0 <= yi < h:
+                if int(id_raster[yi, xi]) != pid:
+                    outside.append(pid)
+            else:
+                outside.append(pid)
         worst = max(far, default=(0.0, None))
+        moved_out = sorted(set(outside) - centroid_outside)
         print(
             f"  {fname:32} {len(inst):5} instances, "
-            f"{len(far)} further than 1 px from their centroid, worst {worst[0]:.2f}"
+            f"{len(far)} off their centroid (worst {worst[0]:.2f} px), "
+            f"{len(outside)} outside their own province "
+            f"({len(outside) - len(moved_out)} of them concave-centroid ids)"
         )
-        if far:
+        if moved_out:
             bad += 1
+            print(
+                f"  {'':32} FAIL: {len(moved_out)} instance(s) the converter "
+                f"placed outside their own province: {moved_out[:8]}"
+            )
         if against is not None and (against / fname).exists():
             _, ref = read_locators(against / fname)
             vanilla_path = game / "gfx" / "map" / "map_object_data" / fname
@@ -178,7 +227,61 @@ def check_mod(mod: Path, against: Path | None, game: Path = DEFAULT_GAME) -> int
                     f"n={len(inherited)} median {statistics.median(inherited):.0f} px "
                     "(this gap IS the bug being fixed)"
                 )
+    _report_type_spread(ours, game)
     return 1 if bad else 0
+
+
+def _report_type_spread(
+    ours: dict[str, dict[int, tuple[float, ...]]], game: Path
+) -> None:
+    """Per-type distance to the same province's `buildings`, ours vs vanilla.
+
+    Since lane `map-assets` the generated map places one anchor per province
+    and adds vanilla's own measured per-type offset
+    (`mappings/locator_offsets.csv`, `docs/step_map_assets.md`).  This is the
+    check that the result actually looks like vanilla: a siege marker is the
+    army besieging the settlement, so it belongs a few pixels from it, not at
+    the other end of the barony.
+    """
+    base = ours.get("building_locators.txt")
+    if not base:
+        return
+    vdir = game / "gfx" / "map" / "map_object_data"
+    vbase = read_locators(vdir / "building_locators.txt")[1] if (
+        vdir / "building_locators.txt"
+    ).exists() else {}
+    print("  distance to the same province's `buildings` instance:")
+    print(f"  {'locator':32} {'ours med':>9} {'ours p95':>9} "
+          f"{'vanilla med':>12} {'vanilla p95':>12}")
+    for fname in LOCATOR_FILES:
+        inst = ours.get(fname)
+        if not inst:
+            continue
+        mine = _dists(inst, base)
+        vinst = read_locators(vdir / fname)[1] if (vdir / fname).exists() else {}
+        theirs = _dists(vinst, vbase) if vbase else []
+        print(
+            f"  {fname:32} {_med(mine):>9.2f} {_p95(mine):>9.2f} "
+            f"{_med(theirs):>12.2f} {_p95(theirs):>12.2f}"
+        )
+
+
+def _dists(
+    inst: dict[int, tuple[float, ...]], base: dict[int, tuple[float, ...]]
+) -> list[float]:
+    return [
+        ((v[0] - b[0]) ** 2 + (v[2] - b[2]) ** 2) ** 0.5
+        for pid, v in inst.items()
+        if pid != 0 and (b := base.get(pid)) is not None
+    ]
+
+
+def _med(values: list[float]) -> float:
+    return statistics.median(values) if values else float("nan")
+
+
+def _p95(values: list[float]) -> float:
+    return sorted(values)[int(0.95 * (len(values) - 1))] if values else float("nan")
 
 
 def main(argv: list[str] | None = None) -> int:
