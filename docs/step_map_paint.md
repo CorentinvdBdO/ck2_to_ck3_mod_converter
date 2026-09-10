@@ -389,7 +389,10 @@ Faerûn's real run: 711,875 of 729,838 target instances placed (97.5%),
 sand, above the treeline, cultivated land). Per-file sizes: 66 MB total
 across 18 files (vanilla's own is ~52 MB per `docs/map_fidelity.md` §1.6).
 Config: `[map] trees` (default `true`), `trees_csv`, `trees_seed` (`4242`,
-deterministic), `trees_density_per_px`. Tests:
+deterministic), `trees_density_per_px`. Deterministic across *processes* only since
+2026-09-10: the per-mesh yaw salt was `hash(file)`, which Python randomises
+per process, so every regeneration rewrote all 711,875 yaws (1.4 M diff lines
+in the generated mod); it is `zlib.crc32(file)` now (`tree_scatter.mesh_seed`). Tests:
 `tests/test_map_tree_scatter.py` (forest-mask/upsample geometry, scatter
 determinism, water/mesh exclusion, `mappings/tree_meshes.csv` completeness
 against every `common/terrain_types` key).

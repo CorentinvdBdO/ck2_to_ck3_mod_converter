@@ -251,6 +251,14 @@ def test_the_whole_file_is_the_expected_grammar(tmp_path):
         '\t}\n'
         '}\n'
         '\n'
+        'tst_canary_must_fail = {\n'
+        '\tname = "CANARY - must always fail; proves the -test runner executed"\n'
+        '\n'
+        '\texpect = {\n'
+        '\t\talways = no\n'
+        '\t}\n'
+        '}\n'
+        '\n'
         'tst_map_every_ruler_holds_its_capital = {\n'
         '\tname = "every ruler personally holds its capital barony"\n'
         '\n'
@@ -269,7 +277,7 @@ def test_the_whole_file_is_the_expected_grammar(tmp_path):
         '\t}\n'
         '}\n'
     )
-    assert counts["tests"] == 6  # 2 bookmark + 1 title + 2 province + 1 aggregate
+    assert counts["tests"] == 7  # 2 bookmark + 1 title + 2 province + canary + aggregate
     # fae_404 is in the bookmark but not in history/characters: no test.
     assert counts["bookmark_characters"] == 2
     assert counts["bookmark_characters_skipped"] == 1

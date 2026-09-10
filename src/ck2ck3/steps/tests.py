@@ -462,6 +462,19 @@ def build(
             ],
         )
 
+    # The canary: CK3 logs only *failing* tests, so a run in which every test
+    # passes is indistinguishable from one in which the runner never executed.
+    # One test that must always fail proves the runner ran; `ck3_soak.sh`
+    # reports it as `canary=fired|silent` (claudespace/docs/ck3_test_framework.md
+    # §8.1). It has to live in the mod's own tests/ because `replace_path =
+    # "tests"` removes any probe mod's.
+    lines += render_test(
+        f"{prefix}_canary_must_fail",
+        "CANARY - must always fail; proves the -test runner executed",
+        None,
+        ["always = no"],
+    )
+
     lines += render_test(
         f"{prefix}_map_every_ruler_holds_its_capital",
         "every ruler personally holds its capital barony",
@@ -471,7 +484,7 @@ def build(
 
     skipped = len(bookmark.characters) - bookmark_tests
     counts = {
-        "tests": bookmark_tests + len(title_keys) + len(province_ids) + 1,
+        "tests": bookmark_tests + len(title_keys) + len(province_ids) + 2,  # + canary + aggregate
         "bookmark_characters_skipped": skipped,
         "bookmark_characters": bookmark_tests,
         "title_holders": len(title_keys),
