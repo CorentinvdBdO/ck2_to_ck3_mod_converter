@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-10 18:30 by Claude session (coordinator)
+Updated: 2026-09-11 00:45 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -19,8 +19,8 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 ## Repos
 | repo | path | base | origin | state |
 |---|---|---|---|---|
-| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main da5e199+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
-| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 13 2026-09-10 18:15; 16 steps, 1482 files; tiger fatal 0 / error 58; 240 s soak alive, canary fired |
+| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main 808a790+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
+| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 15 2026-09-11 00:00; 16 steps, 1486 files; tiger fatal 0 / error 58; 8 soaks alive, 1 crash (0x141972299) |
 | forgotten_kings (submod) | `paradox/ck3/claudespace/mods/forgotten_kings` | main 3812924 | github.com/CorentinvdBdO/forgotten_kings (private, GPL-3.0) | skeleton + roadmap notes + `docs/design_dlc_gating.md` |
 | ck3_fantasy_assets | `paradox/ck3/ck3_fantasy_assets` | main | none (local by decision) | skeleton |
 | claudespace (workspace) | `paradox/ck3/claudespace` | master 17a247a | none | test harness, headless display, `/fk-push` `/fk-test` `/fk-errors`, `scripts/ck3_bisect.sh` |
@@ -32,6 +32,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Git push: token in `../claudespace/tokens` (gitignored), per-repo `credential.helper`; user CorentinvdBdO.
 
 ## Blockers and open flags
+- **0x141972299 first-tick crash recurred once** (2026-09-11 00:22, build 15, 1 of 17 soaks today). Same address as the flavorization crash; minidump kept. Next: soak build 15 ten times unattended and correlate the dying runs' `error.log` tails; suspect classes are the 160 live events and the ruler-title pass.
 - ~~Intermittent post-test crash~~ **fixed 2026-09-09 evening**: root cause was the blank `common/flavorization` shadow (no ruler title names → first-tick crash 0x141972299, the user's 18:33 crash). Vanilla flavorization kept: 10/10 launches alive vs 7/10. Landed mercenary/holy-order governments also normalised to feudal (`docs/DECISIONS.md`).
 - 1 scripted test fails: ruler-holds-capital invariant (2205/2208 rulers). Playtest 2 confirmed table and bookmarks; found nakedness (fixed), CK2-named traits (fixed), fresh-game crash on unpause (fixed 2026-09-09). Seen in game headless (camera probe): terrain paint, colormap tint, sea floor, trees, settlement positions (builds 8–9). Not yet seen: heightmap detail at close zoom, CK2 port seeds.
 - Terrain paint: RLE TGA at half resolution (2.3 + 53 MB) since 2026-09-09; loads and renders in game (headless probe, zoom step 4); close-zoom quality pending the user playtest.
@@ -41,6 +42,8 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-11 — **build 15, the playtest-3 fixes, all seen in game**: (1) *pixels* — the edges, not the resolution: distance-field class blend + third material per class + relief-modulated boundaries bounded to one CK2 pixel, smooth trees mask; blend now 3.23 channels/px (vanilla 3.47); full-res paint free (RLE 172 → 24 MB) — Wealdath's forest is organic (`claudespace/docs/evidence/b14_wealdath_paint.png`). (2) *Thay moat* — the stream-power erosion read the macro escarpment as slope and planed the rim; the fill also injected 35–60 km relief the CK2 source already resolves. `erosion_slope_ceiling_steps = 0.5`, `fill_min_cycles_per_km = 0.05`: cliff-foot excess +2927 → −116 levels, plateau flat again (`b15_thay_moat_fixed.png`). (3) *Europe under water* — `water/watercolor_rgb_waterspec_a.dds` is a painting of Eurasia; with `foam_map`, `snow_mask` and `surround_mask` now written for our canvas the deep sea is flat teal and shelves follow Faerûn's coast (`b15_deep_water.png`, `b15_shelf.png`). (4) *top border* — `surround_mask.dds` B channel made terrain transparent over up to 4545 of our rows; regenerated, the NW corner is drawn (`b15_north_edge.png`). 2× heightmap prototyped, not shipped: 182 MB pair, 348 s, 19.8 GB RSS (`docs/step_map_heightmap.md` §2e).
+- 2026-09-11 — **intermittent first-tick crash is back**: 1 of 17 soaks today died 7 s after In Game at 0x141972299 (`crashes/ck3_20260911_002242`), the same address as the 2026-09-09 flavorization crash that 10/10 launches had cleared. Not reproduced since; tracked in Blockers.
 - 2026-09-10 — **build 13, events step** (README §5 step 3, the `new` slice): 1704 of 1762 events emitted in 110 files / 97 namespaces — 160 live, 1544 inert stubs with the converted draft as `# draft:` comments, 58 skipped by scope. Gates keeping an event a stub: convertibility 1530, unsaved scope 550, call to a stubbed id 529, FROM scope 320. tiger fatal 0 / error 58 (baseline); **240 s headless soak alive, canary fired** — the class that crashed database init in the decisions build did not recur. Game error.log: 539 `Event X is orphaned` (live events with no caller yet — the on_actions lane wires them; until then every emitted event should carry `orphan = yes`, backlog) and 108 `Unrecognized loc key` from 5 knight-tournament events whose CK2 `EVTDESC` keys are among the 40 loc misses. `docs/step_events.md`, `docs/evidence/HANDOFF_events.md`.
 - 2026-09-10 — **build 12, eroded relief**: Perona–Malik de-terrace + stream-power erosion replace the Gaussian + isotropic fill. Interior band 0.05–0.2 c/km within 0.91–1.16× vanilla (was 0.23–0.54×), clamp-floor land 8.19 % → 0.35 %, cliffs kept (Thay/Spine 1.13/1.12), rivers in the drainage, detail pass 50 s. Seen in game: Thay's plateau escarpment and Thaymount, gullied Spine of the World ridges (`claudespace/docs/evidence/b12_thay_relief.png`, `b12_spine_relief.png`); soaks alive, canary fired. Accepted: 2.05× vanilla at 0.3 c/km, cliffs ~13 % sharper than source (`docs/DECISIONS.md`).
 - 2026-09-10 — **build 11, regional trees**: species sampled from vanilla's measured P(mesh | terrain, climate, latitude band), 17 of 18 generators; pine in the two northernmost bands 14 → 72 % (vanilla 93 %), jungle+palm in the two southernmost 52 → 75 %. Seen in game: Spine of the World conifer, Chult jungle canopy (`claudespace/docs/evidence/b11_spine_trees.png`, `b11_chult_trees.png`); two 200 s soaks alive, canary fired. Also fixed: `_map_config` read none of the `[map] trees*` keys.
@@ -59,6 +62,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3): wire CK2 on_action names to CK3's `common/on_action`, so the 160 live events fire; MTTH policy; `orphan = yes` on every emitted event without a live caller (539 game errors today); then the faith/culture value rewrite (un-rejects 1131 uses).
-2. **`modified` events lane** (2911, HANDOFF §2): override-of-vanilla path decided by the bridge table; filename collisions with the `new` slice.
-3. User playtest 3 of build 13 (`docs/playtest.md`): Thay's terraces and the Spine at close zoom, regional trees, settlement positions, and whether any of the 160 live events misbehaves.
+1. User playtest 4 of build 15 (`docs/playtest.md`): the four fixes at close zoom — Wealdath/Anauroch edges, Thay's plateau, open sea, the north edge — plus regional trees and settlement positions. Decide on the 2× heightmap (sharper mountains vs 182 MB / 6 min).
+2. Crash soak: 10 unattended soaks of build 15, correlate the 0x141972299 dying runs.
+3. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3), then `modified` events; backlog: `tests/test_cli.py` dirties evidence CSVs, shoreline material on coastal land, 0.3 c/km residual risers.
