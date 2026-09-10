@@ -1,0 +1,9 @@
+region,map,cliff_survival_ge2_steps,cliff_survival_ge3_steps,riser_removed_1_step,land_px
+thay,deterrace_gaussian_1.6,0.6923,0.6903,0.4305,238239
+thay,deterrace_cliff_aware_2.2,1.1329,1.0863,0.6396,238239
+thay,ours_shipped_isotropic,0.8365,0.7905,-0.0536,238239
+thay,ours_eroded,0.8746,0.7221,0.0643,238239
+spine,deterrace_gaussian_1.6,0.7028,0.7102,0.5073,216759
+spine,deterrace_cliff_aware_2.2,1.1215,1.0853,0.6476,216759
+spine,ours_shipped_isotropic,0.8315,0.8077,0.2617,216759
+spine,ours_eroded,0.9673,0.7898,0.3535,216759

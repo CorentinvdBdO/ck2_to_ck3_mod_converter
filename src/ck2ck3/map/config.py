@@ -211,17 +211,86 @@ class HeightmapDetailConfig:
     enabled: bool = False
     #: deterministic RNG seed for the synthetic noise field
     seed: int = 1357
-    #: pass 1 (de-terrace): Gaussian sigma, canvas px
-    deterrace_sigma_px: float = 1.6
+    #: pass 1 (de-terrace): Gaussian sigma, canvas px.  Under
+    #: ``deterrace_mode = "cliff_aware"`` this is still the blur the pass
+    #: achieves in a flat region, so the two modes are comparable -- but the
+    #: right value is not the same, because the cliff-aware filter does not
+    #: pay for its blur in cliff amplitude.  2.2 for cliff_aware (removes
+    #: 64 % of the one-step riser against the Gaussian's 47 %, and *raises*
+    #: cliff survival from 0.60 to 1.13); set it back to 1.6 alongside
+    #: ``deterrace_mode = "gaussian"`` to reproduce the shipped build.
+    deterrace_sigma_px: float = 2.2
+    #: pass 1 mode.  ``"cliff_aware"`` (default) is Perona-Malik anisotropic
+    #: diffusion: it removes the transfer curve's one-step risers but keeps a
+    #: real multi-step cliff.  ``"gaussian"`` is the original blind blur,
+    #: which destroys 31 % of the multi-step cliff amplitude on Thay and the
+    #: Spine of the World (docs/step_map_heightmap.md §2b).
+    deterrace_mode: str = "cliff_aware"
+    #: pass 1: the flux half-width, 16-bit levels.  The transfer curve steps
+    #: by 277 levels per 8-bit source value, so 1.5 x 277 sits between one
+    #: quantisation riser and two -- exactly the discrimination wanted.
+    cliff_step_levels: float = 415.5
     #: pass 2 (spectral fill): vanilla's land elevation spectrum is
-    #: amplitude ~ f**slope
+    #: amplitude ~ f**slope.  Only read when ``target_mode = "power_law"``.
     spectral_slope: float = -2.0
+    #: pass 2 fill target.  ``"vanilla_curve"`` (default) uses vanilla's own
+    #: measured radial land spectrum, anchored to our map in the band where
+    #: the two already agree; ``"power_law"`` is the original single fitted
+    #: ``f**spectral_slope``, which over-fills 0.03-0.1 cycles/km and
+    #: under-fills above 0.08 (docs/step_map_heightmap.md §2c).
+    target_mode: str = "vanilla_curve"
+    #: pass 2: multiplier on vanilla's own curve before the shortfall is
+    #: taken.  1.0 = aim at vanilla's measured absolute amplitude (both
+    #: sheets are 16-bit at the same km per pixel).  Only read by
+    #: ``target_mode = "vanilla_curve"``.
+    target_gain: float = 1.0
+    #: pass 2 amplitude authority.  ``"deficit"`` (default) puts the fill on
+    #: the measured per-frequency shortfall and applies the per-terrain table
+    #: as a relative modulation around 1; ``"hf_target"`` is the original
+    #: rule, one scalar per class from ``sqrt(want**2 - have**2)`` on a 3 km
+    #: high-pass -- which a cliff-aware de-terrace starves, because the edges
+    #: it keeps count as detail already present
+    #: (docs/step_map_heightmap.md §2c).
+    gain_mode: str = "deficit"
+    #: pass 2, ``gain_mode = "deficit"`` only: empirical correction on the
+    #: matched scale.  The match is made on the shaped field, but three
+    #: things touch it afterwards -- the per-terrain envelope (a spatial
+    #: multiply, which convolves the spectrum), the river carve and the
+    #: headroom ``tanh`` (a nonlinearity) -- and together they leave the
+    #: finished map above the target.  0.70 is measured, not derived: it is
+    #: what brings 0.05-0.2 cycles/km inside +-30 % of vanilla on interior
+    #: patches (docs/step_map_heightmap.md §2c).
+    fill_gain: float = 0.70
     #: pass 2: Gaussian blur (canvas px) on the per-pixel noise-gain field, so
     #: terrain-class borders leave no amplitude seam
     gain_blur_px: float = 6.0
     #: pass 2: per-CK3-terrain target high-frequency RMS (16-bit levels); a
     #: terrain key missing from this table falls back to its "plains" entry
     hf_targets: dict[str, float] = field(default_factory=lambda: dict(DEFAULT_HF_TARGETS))
+    #: pass 2 relief source.  ``"eroded"`` (default) runs a short
+    #: landscape-evolution model -- flow accumulation, stream-power incision,
+    #: hillslope diffusion -- so valleys drain and ridges connect;
+    #: ``"isotropic"`` is the original white noise, which has the right
+    #: amplitude and spectrum and the wrong shape
+    #: (docs/step_map_heightmap.md §2c).
+    relief_mode: str = "eroded"
+    #: pass 2 (eroded): landscape-evolution steps
+    erosion_iterations: int = 16
+    #: pass 2 (eroded): flow-accumulation relaxation passes per step.  The
+    #: catchment is carried between steps, so the propagation distance is
+    #: the product of the two.
+    erosion_accum_iterations: int = 3
+    #: pass 2 (eroded): initial fractal relief, 16-bit levels RMS.  Only the
+    #: shape of the result is used (it is renormalised), so this sets how
+    #: much there is for the erosion to cut into, not the output amplitude.
+    erosion_seed_amplitude: float = 300.0
+    #: pass 2 (eroded): multiple-flow-direction slope exponent.  Higher
+    #: concentrates flow into fewer, sharper channels.
+    erosion_mfd_exponent: float = 4.0
+    #: pass 2 (eroded): stream-power coefficient K in ``dz = -K (A/Aref)^m S``
+    erosion_incision: float = 0.5
+    #: pass 2 (eroded): hillslope linear-diffusion coefficient per step
+    erosion_diffusion: float = 0.06
     #: pass 3 (river valleys): depth in 16-bit levels at the centreline
     river_depth: float = 900.0
     #: pass 4 (coast smoothing): land within this many canvas px of the coast
@@ -242,11 +311,42 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
         deterrace_sigma_px=float(
             raw.get("heightmap_detail_deterrace_sigma_px", d.deterrace_sigma_px)
         ),
+        deterrace_mode=str(
+            raw.get("heightmap_detail_deterrace_mode", d.deterrace_mode)
+        ),
+        cliff_step_levels=float(
+            raw.get("heightmap_detail_cliff_step_levels", d.cliff_step_levels)
+        ),
         spectral_slope=float(
             raw.get("heightmap_detail_spectral_slope", d.spectral_slope)
         ),
+        target_mode=str(raw.get("heightmap_detail_target_mode", d.target_mode)),
+        target_gain=float(raw.get("heightmap_detail_target_gain", d.target_gain)),
+        gain_mode=str(raw.get("heightmap_detail_gain_mode", d.gain_mode)),
+        fill_gain=float(raw.get("heightmap_detail_fill_gain", d.fill_gain)),
         gain_blur_px=float(raw.get("heightmap_detail_gain_blur_px", d.gain_blur_px)),
         hf_targets=hf_targets,
+        relief_mode=str(raw.get("heightmap_detail_relief_mode", d.relief_mode)),
+        erosion_iterations=int(
+            raw.get("heightmap_detail_erosion_iterations", d.erosion_iterations)
+        ),
+        erosion_accum_iterations=int(
+            raw.get("heightmap_detail_erosion_accum_iterations",
+                    d.erosion_accum_iterations)
+        ),
+        erosion_seed_amplitude=float(
+            raw.get("heightmap_detail_erosion_seed_amplitude",
+                    d.erosion_seed_amplitude)
+        ),
+        erosion_mfd_exponent=float(
+            raw.get("heightmap_detail_erosion_mfd_exponent", d.erosion_mfd_exponent)
+        ),
+        erosion_incision=float(
+            raw.get("heightmap_detail_erosion_incision", d.erosion_incision)
+        ),
+        erosion_diffusion=float(
+            raw.get("heightmap_detail_erosion_diffusion", d.erosion_diffusion)
+        ),
         river_depth=float(raw.get("heightmap_detail_river_depth", d.river_depth)),
         coast_smooth_px=float(
             raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
@@ -271,9 +371,28 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         enabled=bool(hmd.get("enabled", d.enabled)),
         seed=int(hmd.get("seed", d.seed)),
         deterrace_sigma_px=float(hmd.get("deterrace_sigma_px", d.deterrace_sigma_px)),
+        deterrace_mode=str(hmd.get("deterrace_mode", d.deterrace_mode)),
+        cliff_step_levels=float(hmd.get("cliff_step_levels", d.cliff_step_levels)),
         spectral_slope=float(hmd.get("spectral_slope", d.spectral_slope)),
+        target_mode=str(hmd.get("target_mode", d.target_mode)),
+        target_gain=float(hmd.get("target_gain", d.target_gain)),
+        gain_mode=str(hmd.get("gain_mode", d.gain_mode)),
+        fill_gain=float(hmd.get("fill_gain", d.fill_gain)),
         gain_blur_px=float(hmd.get("gain_blur_px", d.gain_blur_px)),
         hf_targets=hf_targets,
+        relief_mode=str(hmd.get("relief_mode", d.relief_mode)),
+        erosion_iterations=int(hmd.get("erosion_iterations", d.erosion_iterations)),
+        erosion_accum_iterations=int(
+            hmd.get("erosion_accum_iterations", d.erosion_accum_iterations)
+        ),
+        erosion_seed_amplitude=float(
+            hmd.get("erosion_seed_amplitude", d.erosion_seed_amplitude)
+        ),
+        erosion_mfd_exponent=float(
+            hmd.get("erosion_mfd_exponent", d.erosion_mfd_exponent)
+        ),
+        erosion_incision=float(hmd.get("erosion_incision", d.erosion_incision)),
+        erosion_diffusion=float(hmd.get("erosion_diffusion", d.erosion_diffusion)),
         river_depth=float(hmd.get("river_depth", d.river_depth)),
         coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
     )
