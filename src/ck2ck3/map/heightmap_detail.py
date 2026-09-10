@@ -86,6 +86,32 @@ FIT_BAND_MAX_KM = 0.03
 FIT_BAND_FALLBACK_MAX_KM = 0.05
 #: frequencies below this are real large-scale structure, never touched
 KEEP_STRUCTURE_BELOW_KM = 0.01
+#: The CK2 source raster is 4096 x 3328 upscaled 1.9543x onto the canvas, so
+#: one source pixel is 2.90 km and the source's own Nyquist is
+#: ``1 / (2 * 2.90)`` = **0.172 cycles/km** (`verified`,
+#: ``docs/map_scale.md``).  Below it the CK2 author's terrain is fully
+#: *resolved*; it is only *quantised*, to 277-level steps.  That matters for
+#: where the fill is allowed to work -- see ``FILL_FULL_ABOVE_KM``.
+SOURCE_NYQUIST_KM = 0.172
+#: Default frequency at which the spectral fill reaches full strength, with a
+#: cosine roll-on over ``FILL_RAMP_OCTAVES`` below it (docs §2d).
+#:
+#: Why this is not ``KEEP_STRUCTURE_BELOW_KM``.  A quantiser only ever *adds*
+#: broadband noise (step / sqrt(12) = 80 levels, white); it cannot remove
+#: energy at 30-90 km.  So a shortfall against vanilla down there is not a
+#: bit-depth deficit the pass is entitled to fill -- it is the difference
+#: between Faerun's macro relief and Europe's, and filling it fabricates
+#: mountain-scale terrain on top of ground the CK2 author drew flat.  On
+#: build 13 that put +-20,000 levels of 35-60 km undulation across Thay's
+#: plateaus: the cliff-foot moat the playtest reported.  Above ~0.05
+#: cycles/km the deficit *is* ours to fill: the de-terrace (a sigma 2.2 px =
+#: 3.3 km diffusion) attenuates there, and past the source Nyquist there is
+#: no source content at all.
+FILL_FULL_ABOVE_KM = 0.05
+#: width of the roll-on below ``fill_min_cycles_per_km``, in octaves.  A hard
+#: spectral wall rings in space (Gibbs), which beside a cliff is another
+#: moat; one octave of raised cosine does not.
+FILL_RAMP_OCTAVES = 1.0
 #: Vanilla CK3's own measured radial land-elevation spectrum: (cycles/km,
 #: mean amplitude in 16-bit levels) over 48 all-land 256x256 patches of
 #: ``game/map_data/heightmap.png``, log-resampled from
@@ -204,6 +230,7 @@ def apply(
             mfd_exponent=cfg.erosion_mfd_exponent,
             incision=cfg.erosion_incision,
             diffusion=cfg.erosion_diffusion,
+            slope_ceiling_steps=cfg.erosion_slope_ceiling_steps,
         )
     elif cfg.relief_mode == "isotropic":
         field = None
@@ -215,6 +242,7 @@ def apply(
     noise, spec_diag = _spectral_deficit_noise(
         h2, land, km_per_px, cfg.spectral_slope, rng, field=field,
         target_mode=cfg.target_mode, target_gain=cfg.target_gain,
+        fill_min_cycles_per_km=cfg.fill_min_cycles_per_km,
     )
     del field
     spec_diag.update(relief_diag)
@@ -276,7 +304,8 @@ def apply(
 
     # 3b. bound the excursion by the headroom that actually exists ---------
     delta, headroom_diag = _limit_excursion(
-        delta, h2, float(water_level) + 1.0, float(max_level), land
+        delta, h2, float(water_level) + 1.0, float(max_level), land,
+        fraction=cfg.headroom_fraction,
     )
     out = h2 + delta
     del h2, delta
@@ -325,7 +354,8 @@ def apply(
     }
     for key in ("erosion_iterations", "erosion_accum_iterations",
                 "erosion_uplift_levels", "erosion_field_rms_levels",
-                "target_mode", "target_anchor_scale",
+                "erosion_slope_ceiling_steps",
+                "target_mode", "target_anchor_scale", "fill_min_cycles_per_km",
                 "deficit_scale", "deficit_match_bins"):
         if key in spec_diag:
             stats[key] = spec_diag[key]
@@ -361,6 +391,26 @@ def _radial_average(
     return sums / np.maximum(counts, 1), counts
 
 
+def fill_band_weight(
+    centres: np.ndarray, full_above: float, ramp_octaves: float = FILL_RAMP_OCTAVES
+) -> np.ndarray:
+    """0 below the band, 1 above it, raised cosine in log-frequency between.
+
+    ``full_above`` is where the fill is at full strength; the roll-on starts
+    ``ramp_octaves`` octaves below.  Zeroing the deficit with a step instead
+    would ring: a brick-wall radial filter has a sinc-shaped impulse
+    response, and a sinc beside an escarpment is exactly the artefact §2d
+    exists to remove.
+    """
+    if full_above <= 0.0:
+        return np.ones_like(centres, dtype=np.float32)
+    lo = full_above / (2.0 ** max(ramp_octaves, 1e-6))
+    with np.errstate(divide="ignore", invalid="ignore"):
+        t = np.log(np.maximum(centres, 1e-12) / lo) / np.log(full_above / lo)
+    t = np.clip(np.nan_to_num(t, nan=0.0, posinf=1.0, neginf=0.0), 0.0, 1.0)
+    return (0.5 * (1.0 - np.cos(np.pi * t))).astype(np.float32)
+
+
 def _spectral_deficit_noise(
     h2: np.ndarray,
     land: np.ndarray,
@@ -370,6 +420,7 @@ def _spectral_deficit_noise(
     field: np.ndarray | None = None,
     target_mode: str = "vanilla_curve",
     target_gain: float = 1.0,
+    fill_min_cycles_per_km: float = FILL_FULL_ABOVE_KM,
 ) -> tuple[np.ndarray, dict]:
     """Unit-scaled noise field shaped to the shortfall against vanilla's law.
 
@@ -468,6 +519,11 @@ def _spectral_deficit_noise(
             f"(expected 'vanilla_curve' or 'power_law')"
         )
     deficit_rad = np.sqrt(np.clip(target_rad ** 2 - amp_rad ** 2, 0, None))
+    # §2d: the fill only owns the band the source cannot carry.  Below it the
+    # shortfall against vanilla is Faerun's own macro relief, not a deficit,
+    # and filling it is what put a 4,900-level trench beside Thay's cliffs.
+    band_w = fill_band_weight(centres, fill_min_cycles_per_km)
+    deficit_rad = deficit_rad * band_w
     deficit_rad[centres < KEEP_STRUCTURE_BELOW_KM] = 0.0
 
     if field is None:
@@ -506,6 +562,7 @@ def _spectral_deficit_noise(
         "fit_band_bins": int(band.sum()),
         "target_mode": target_mode,
         "target_anchor_scale": round(anchor_scale, 4),
+        "fill_min_cycles_per_km": round(float(fill_min_cycles_per_km), 4),
         "_deficit_curve": (centres.copy(), deficit_rad.copy()),
         **spec_extra,
     }
@@ -563,6 +620,7 @@ def _limit_excursion(
     floor: float,
     ceiling: float,
     land: np.ndarray,
+    fraction: float = 1.0,
 ) -> tuple[np.ndarray, dict]:
     """Saturate the synthesised offset into the headroom the pixel really has.
 
@@ -577,9 +635,21 @@ def _limit_excursion(
     the floor into the map as a plateau, exactly the artefact being removed.
     Where ``|delta|`` is small against the headroom the saturation is the
     identity to first order, so nothing changes on real relief.
+
+    ``fraction`` (§2d).  Saturating at the *whole* headroom still reaches
+    the floor: ``tanh`` tends to 1, so a pixel whose fill is several times
+    its headroom lands on ``water_level + 1`` exactly, and a run of them
+    prints a flat trench.  That is where the moat survived on Thay after the
+    other two fixes: the ground at the foot of a tall escarpment is low, so
+    it has the least headroom on the map and gets the same fill as the
+    plateau above it -- 4.2 % of Thay's land sat on the clamp floor.
+    Saturating at ``fraction`` of the headroom instead keeps the last bit of
+    room unused, so the fill fades out where the map runs out of range
+    rather than clipping flat.
     """
-    down = np.maximum(base - floor, 0.0)
-    up = np.maximum(ceiling - base, 0.0)
+    frac = max(float(fraction), 1e-3)
+    down = np.maximum(base - floor, 0.0) * frac
+    up = np.maximum(ceiling - base, 0.0) * frac
     room = np.where(delta < 0, down, up)
     del down, up
     out = np.sign(delta) * room * np.tanh(np.abs(delta) / np.maximum(room, 1.0))

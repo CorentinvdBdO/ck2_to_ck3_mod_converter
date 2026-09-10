@@ -1,0 +1,11 @@
+== no_fix
+heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.01 c/km, slope ceiling 0.0 steps, 0.35 % of land on the clamp floor [128.15s]
+== fillmin_only
+heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.05 c/km, slope ceiling 0.0 steps, 0.376 % of land on the clamp floor [107.61s]
+== slopecap_only
+heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.01 c/km, slope ceiling 0.5 steps, 0.354 % of land on the clamp floor [102.55s]
+== headroom_1.0
+heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.05 c/km, slope ceiling 0.5 steps, 0.381 % of land on the clamp floor [102.64s]
+== slopecap_1.0
+heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.05 c/km, slope ceiling 1.0 steps, 0.378 % of land on the clamp floor [102.76s]
+done

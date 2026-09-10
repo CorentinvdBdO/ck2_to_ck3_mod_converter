@@ -291,6 +291,33 @@ class HeightmapDetailConfig:
     erosion_incision: float = 0.5
     #: pass 2 (eroded): hillslope linear-diffusion coefficient per step
     erosion_diffusion: float = 0.06
+    #: pass 2 (eroded): ceiling on the slope the stream-power law may see,
+    #: in quantisation steps (277 levels) per pixel.  0 disables the cap and
+    #: reproduces build 13, whose incision planed Thay's plateau rims by
+    #: thousands of levels because ``S`` there is the *macro* escarpment
+    #: (up to 4,505 levels/px against a land median of 128) --
+    #: docs/step_map_heightmap.md §2d.
+    erosion_slope_ceiling_steps: float = 1.0
+    #: pass 2: the frequency (cycles/km) at which the spectral fill reaches
+    #: full strength, with a one-octave raised-cosine roll-on below it.
+    #: 0 restores the pre-2026-09-10 behaviour (fill everything above
+    #: ``KEEP_STRUCTURE_BELOW_KM`` = 0.01 cycles/km), which fabricated
+    #: 35-60 km relief on top of the CK2 author's own and put a 4,900-level
+    #: mean trench beside Thay's escarpments -- the "plateaux dipping then
+    #: coming back up" of playtest 3 (docs/step_map_heightmap.md §2d).
+    #: 0.05 cycles/km = 20 km: below that the CK2 source is fully resolved
+    #: (its own Nyquist is 0.172 cycles/km) and only quantised, and a
+    #: quantiser adds broadband noise rather than removing macro relief, so
+    #: a shortfall there is Faerun's content and not ours to invent.
+    fill_min_cycles_per_km: float = 0.05
+    #: pass 2/3b: the fraction of each pixel's own headroom the synthesised
+    #: offset is allowed to saturate into.  1.0 is the pre-2026-09-10
+    #: behaviour and still reaches the ``water_level + 1`` floor exactly,
+    #: because ``tanh`` tends to 1: on Thay that pinned 4.2 % of the land
+    #: flat at the foot of the escarpments, which is a moat
+    #: (docs/step_map_heightmap.md §2d).  0.5 keeps the last half of the
+    #: range unused so the fill fades instead of clipping.
+    headroom_fraction: float = 0.5
     #: pass 3 (river valleys): depth in 16-bit levels at the centreline
     river_depth: float = 900.0
     #: pass 4 (coast smoothing): land within this many canvas px of the coast
@@ -347,6 +374,17 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
         erosion_diffusion=float(
             raw.get("heightmap_detail_erosion_diffusion", d.erosion_diffusion)
         ),
+        erosion_slope_ceiling_steps=float(
+            raw.get("heightmap_detail_erosion_slope_ceiling_steps",
+                    d.erosion_slope_ceiling_steps)
+        ),
+        fill_min_cycles_per_km=float(
+            raw.get("heightmap_detail_fill_min_cycles_per_km",
+                    d.fill_min_cycles_per_km)
+        ),
+        headroom_fraction=float(
+            raw.get("heightmap_detail_headroom_fraction", d.headroom_fraction)
+        ),
         river_depth=float(raw.get("heightmap_detail_river_depth", d.river_depth)),
         coast_smooth_px=float(
             raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
@@ -393,6 +431,15 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         ),
         erosion_incision=float(hmd.get("erosion_incision", d.erosion_incision)),
         erosion_diffusion=float(hmd.get("erosion_diffusion", d.erosion_diffusion)),
+        erosion_slope_ceiling_steps=float(
+            hmd.get("erosion_slope_ceiling_steps", d.erosion_slope_ceiling_steps)
+        ),
+        fill_min_cycles_per_km=float(
+            hmd.get("fill_min_cycles_per_km", d.fill_min_cycles_per_km)
+        ),
+        headroom_fraction=float(
+            hmd.get("headroom_fraction", d.headroom_fraction)
+        ),
         river_depth=float(hmd.get("river_depth", d.river_depth)),
         coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
     )

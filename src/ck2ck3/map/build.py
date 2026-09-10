@@ -466,9 +466,25 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 f"relief={cfg.heightmap_detail.relief_mode}"
                 f"@{cfg.heightmap_detail.erosion_iterations}x"
                 f"{cfg.heightmap_detail.erosion_accum_iterations}, "
-                f"target={cfg.heightmap_detail.target_mode}; "
-                "docs/step_map_heightmap.md §2b/§2c)")
+                f"target={cfg.heightmap_detail.target_mode}, "
+                f"fill>={cfg.heightmap_detail.fill_min_cycles_per_km} c/km, "
+                f"slope ceiling {cfg.heightmap_detail.erosion_slope_ceiling_steps}"
+                " steps; docs/step_map_heightmap.md §2b/§2c/§2d)")
             f = cfg.heightmap.resolution_factor
+            # every `*_px` key is a *canvas*-pixel length, so at
+            # resolution_factor > 1 it has to be re-expressed in heightmap
+            # pixels or the same number means half the distance on the
+            # ground: a sigma 2.2 px de-terrace at 2x blurs 1.6 km instead
+            # of 3.3 km and leaves the transfer curve's risers behind
+            # (docs/step_map_heightmap.md §2e).
+            detail_cfg = (
+                cfg.heightmap_detail if f == 1 else replace(
+                    cfg.heightmap_detail,
+                    deterrace_sigma_px=cfg.heightmap_detail.deterrace_sigma_px * f,
+                    gain_blur_px=cfg.heightmap_detail.gain_blur_px * f,
+                    coast_smooth_px=cfg.heightmap_detail.coast_smooth_px * f,
+                )
+            )
             terrain_code, terrain_keys = _terrain_code_grid(
                 ck3_raster, terrain_ck3, cfg.terrain_default
             )
@@ -483,8 +499,10 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 km_per_px=cfg.scale.vanilla_km_per_px / f,
                 water_level=cfg.heightmap.ck3_water_level,
                 max_level=cfg.heightmap.ck3_max_level,
-                cfg=cfg.heightmap_detail,
+                cfg=detail_cfg,
             )
+            detail_stats["resolution_factor"] = f
+            detail_stats["deterrace_sigma_px_used"] = detail_cfg.deterrace_sigma_px
             report["heightmap_detail"] = detail_stats
             log(
                 f"heightmap detail: {detail_stats['distinct_values_before']} -> "

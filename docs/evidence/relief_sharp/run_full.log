@@ -1,0 +1,110 @@
+/home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp holds no descriptor.mod, README.md or .git: refusing to clean it
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+79342 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 22 of 308 merges did not survive (they fall on a pixel the province map says is water)
+adjacency 1691->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1687->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1687 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+loc key dynn_fae_109 collides with a vanilla key's MURMUR3A hash; renamed to dynn_fae_109_x
+loc key dynn_fae_1215 collides with a vanilla key's MURMUR3A hash; renamed to dynn_fae_1215_x
+CK2 dynasty 644 has no culture
+CK2 dynasty id 15817 is defined more than once; CK3 will see a duplicate fae_ id
+23 cultures have fewer than 2 dynasty names even after pooling their culture group, because CK2 defines no dynasty of that group: horse, cat, bear, hedgehog_culture, duck_culture, dog_culture, elephant_culture, dragon_culture, red_panda, lich, undead_creature, undead_human ... (+11). Each is one culture_name_lists.cpp:169, and CK3 has no name to mint a generated character's dynasty from. Needs human input (overrides), not a derivation
+gur_opinion is already declared by vanilla CK3; not re-declared (common/modifier_definition_formats is not a replace_path)
+mari_opinion is already declared by vanilla CK3; not re-declared (common/modifier_definition_formats is not a replace_path)
+religions: holy site laduguer -> c_barakuir dropped: the map step placed no barony in that county, so the titles step does not declare it
+traits: creature_outsider: CK2 icon gfx/traits/creature_outsider.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: creature_slaad: CK2 icon gfx/traits/creature_slaad.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: stasis_clone: CK2 icon gfx/traits/statis_clone.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: 168 CK2 trait icons copied unchanged at 24x24; CK3 1.19 vanilla trait icons are 120x120 (gfx/interface/icons/traits/brave.dds) - the submod must rescale
+integrity same-sex spouse: 8 - fae_200 (1-1000 Miscellaneous.txt) add_spouse fae_190; fae_403 (1-1000 Miscellaneous.txt) marry fae_402; fae_20847 (20001-23000 Cormyr.txt) add_spouse fae_20848; fae_2282 (2001-3000 Baldurs gate.txt) add_spouse fae_2281; fae_33274 (33001-35000 Amn.txt) add_spouse fae_33275 (+3 more)
+CK2 character has a blank name; kept verbatim because CK3 requires the field (needs a human or an overrides row)
+key 'master_of_flame' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'logistics_expert' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'levy_coordinator' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'sapper' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_1' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_1_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_2' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_2_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_guardian' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_guardian_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_champion' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_champion_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_warden' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_warden_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'CB_NAME_SUCCESSION' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'increase_council_power_war_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'indian_subjugation_desc' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'kingdom_adventure_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'muslim_county_conquest_desc' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'offmap_submission_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+...and 1245 more duplicate keys
+0000_titles.csv:6526: key 'd_twilit_land:adj' is not a legal CK3 key, skipped
+00_ui.csv:358: key 'Army Maintenance' is not a legal CK3 key, skipped
+00_ui.csv:1630: key 'Effect:' is not a legal CK3 key, skipped
+00_ui.csv:3769: key 'Not%authorized' is not a legal CK3 key, skipped
+00_ui.csv:5301: key 'Take Action' is not a legal CK3 key, skipped
+00_ui.csv:6118: key '§bCapital:' is not a legal CK3 key, skipped
+00_ui.csv:6119: key '§bCulture:' is not a legal CK3 key, skipped
+00_ui.csv:6120: key '§bManpower:' is not a legal CK3 key, skipped
+00_ui.csv:6121: key '§bMax Attrition:' is not a legal CK3 key, skipped
+00_ui.csv:6122: key '§bReligion:' is not a legal CK3 key, skipped
+00_ui.csv:6123: key '§bRevolt Risk:' is not a legal CK3 key, skipped
+00_ui.csv:6124: key '§bRP:' is not a legal CK3 key, skipped
+00_ui.csv:6125: key '§bSupply Limit:' is not a legal CK3 key, skipped
+00_ui.csv:6126: key '§bTax:' is not a legal CK3 key, skipped
+00_ui.csv:6127: key '§WOMENS' is not a legal CK3 key, skipped
+00_ui.csv:6128: key '§WProvinces' is not a legal CK3 key, skipped
+00_ui.csv:6129: key '§WReligion' is not a legal CK3 key, skipped
+00_ui.csv:6130: key '§WWorld Religions' is not a legal CK3 key, skipped
+HolyFury.csv:7482: key 'random_mythological_creature_jörmungandr' is not a legal CK3 key, skipped
+MonksAndMystics.csv:639: key 'String_seiðr' is not a legal CK3 key, skipped
+...and 3 more illegal keys
+no CK3 equivalent for [GetFromRelation] (1362 occurrences)
+no CK3 equivalent for [Root.Society.GetName] (527 occurrences)
+no CK3 equivalent for [relic_hunter.GetJobTitle] (222 occurrences)
+no CK3 equivalent for [Root.GetChancellorName] (178 occurrences)
+no CK3 equivalent for [Root.Guardian.GetFullName] (156 occurrences)
+no CK3 equivalent for [Root.PlotTarget.GetTitledName] (154 occurrences)
+no CK3 equivalent for [From.GetJobTitle] (139 occurrences)
+no CK3 equivalent for [shou_lung.Ruler.GetEmperorEmpress] (138 occurrences)
+no CK3 equivalent for [Root.GetMyChancellorName] (130 occurrences)
+no CK3 equivalent for [Root.GetLordSpiritualName] (127 occurrences)
+no CK3 equivalent for [From.Society.GetName] (127 occurrences)
+no CK3 equivalent for [From.OriginalOwner.GetTitledFirstName] (116 occurrences)
+no CK3 equivalent for [Player.Religion.GetPietyName] (116 occurrences)
+no CK3 equivalent for [GetRootFromInsult] (107 occurrences)
+no CK3 equivalent for [From.OriginalOwner.Culture.GetName] (105 occurrences)
+no CK3 equivalent for [Root.Offmap.GetFullName] (96 occurrences)
+no CK3 equivalent for [This.Founder.GetFirstNameWithNick] (91 occurrences)
+no CK3 equivalent for [Root.job_marshal.GetTitledFirstName] (90 occurrences)
+no CK3 equivalent for [From.GetBoyGirl] (90 occurrences)
+no CK3 equivalent for [Root.job_spymaster.GetTitledFirstName] (86 occurrences)
+...and 1227 more codes with no CK3 equivalent (full table: docs/evidence/ck2_loc_codes.csv)
+37067 codes need a saved scope in the converted event (168 distinct); see docs/loc_codes.md
+64803 references to a CK2 saved scope (2566 distinct) became visible markers, because nothing ports CK2's events and so nothing runs save_scope_as: CK3 answers an unresolvable scope with "pdx_data_localize.cpp: Data error in loc string '<key>'". Set [loc] named_scope = "reference" in the commit that ships the event port
+43558 CK2 customizable-localisation codes (4573 distinct) became visible markers, because nothing emits common/customizable_localization and a Custom() call to a name CK3 does not know is an error per evaluation. That count is the size of the port; set [loc] custom_loc = "call" in the commit that ships it
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp
+  clean          refused to clean /home/cvdbdo/git/paradox/ck3/wt/_out/relief-sharp (does not look like the generated mod) [0.00s]
+  descriptor     descriptor.mod: 'Faerun (CK2 conversion, raw)' 0.1.0 for CK3 1.19.*, 13 replace_path [0.00s]
+  tc_template    tc_template: 204 empty shadows and 23 key-only stubs over 32 vanilla folders, 42 folders deliberately kept [0.02s]
+  map            map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4276 provinces, 3705 baronies in 2125 counties, 152 demoted, 3 lost; heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.05 c/km, slope ceiling 0.5 steps, 0.377 % of land on the clamp floor [133.95s]
+  dynasties      11952 dynasties in 3 files, 11951 name loc keys, 20 CK2 coats of arms dropped [1.17s]
+  cultures       67 culture groups -> 67 heritage + 67 language pillars; 419 cultures with 419 name lists; 37 placeholder ethnicities [1.30s]
+  religions      15 religion groups -> 15 families + 15 religions; 94 faiths with 469 holy sites over 254 counties [0.27s]
+  titles         7141 CK3 titles (65 e_, 267 k_, 979 d_, 2125 c_, 3705 b_), 11658 commented out, placement mode barony_set [2.16s]
+  history_titles 3228 title histories, 192 commented out, 3705 province blocks in 166 files [0.13s]
+  bookmarks      17 bookmarks, 82 characters (63 placed from the CK2 map, 19 on the fallback grid), default 1357.1.1 [0.05s]
+  traits         400 traits ported (117 race), 142 deduped to CK3 vanilla, 7 dropped (no CK3 counterpart), 1 became a CK3 sexuality, 867 commented out [0.22s]
+  characters     18124 characters in 80 files, 47107 dated blocks, 15925 CK2 entries commented out, 8 integrity problems [2.15s]
+  loc            localisation: 484 yml in 4 languages, 156800 english keys, 91.0% of 147711 text codes converted [2.22s]
+  decisions      3 decisions ported live, 393 below min_score (is_shown off, inspectable), 253 out-of-scope groups, 181 other skips, 37 files [0.30s]
+  events         160 events live, 1544 inert stubs, 58 skipped by scope, 110 files, 97 namespaces; top unmapped: character_event(1345), trait(990), mother_even_if_dead(907), true_father_even_if_dead(857), add_trait(710) [1.99s]
+  tests          108 scripted tests at 1357.1.1 (6 bookmark characters, 50/2639 title holders, 50/3705 provinces) -> tests/fae_generated_tests.txt [1.70s]
+1482 files written, 302 warnings
+run log: /home/cvdbdo/git/paradox/ck3/wt/relief-sharp/docs/evidence/last_run.md

@@ -1,0 +1,21 @@
+
+== spine crop (512, 512) (+128 px margin)
+  plain_rescale            undershoot      12  control      58  MOAT     -46  moat_p95   1108  dstd      0  floor  0.000%
+  live_build13_map         undershoot    2720  control     355  MOAT    2366  moat_p95   1134  dstd   1717  floor  0.307%
+  deterrace_pm_only        undershoot     -40  control      83  MOAT    -122  moat_p95    810  dstd    170  floor  0.027%
+  b13_default              undershoot    1363  control     302  MOAT    1060  moat_p95    908  dstd   1158  floor  0.055%
+  b13_deterrace_gaussian   undershoot    1741  control     376  MOAT    1364  moat_p95    938  dstd   1380  floor  0.028%
+  b13_no_incision          undershoot      38  control     295  MOAT    -257  moat_p95    809  dstd   1193  floor  0.085%
+  b13_isotropic_relief     undershoot      74  control     313  MOAT    -240  moat_p95   1112  dstd    958  floor  0.090%
+  b13_gain_hf_target       undershoot    1699  control     380  MOAT    1319  moat_p95    938  dstd   1419  floor  0.070%
+  b13_no_rivers            undershoot    1318  control     279  MOAT    1038  moat_p95    818  dstd   1162  floor  0.048%
+  b13_no_coast_smooth      undershoot    1360  control     300  MOAT    1060  moat_p95    909  dstd   1159  floor  0.048%
+  fix_slopecap_2.0         undershoot     894  control     418  MOAT     476  moat_p95   1015  dstd   1129  floor  0.066%
+  fix_slopecap_1.0         undershoot     411  control     454  MOAT     -44  moat_p95   1080  dstd   1073  floor  0.069%
+  fix_fillmin_only         undershoot     343  control     152  MOAT     191  moat_p95    901  dstd    347  floor  0.030%
+  fix_both_0.03            undershoot     219  control     304  MOAT     -85  moat_p95   1046  dstd    577  floor  0.048%
+  fix_both_0.05            undershoot     102  control     190  MOAT     -88  moat_p95    997  dstd    342  floor  0.036%
+  fix_both_0.05_cap1       undershoot     102  control     190  MOAT     -88  moat_p95    997  dstd    342  floor  0.036%
+  fix_both_0.08            undershoot      44  control     140  MOAT     -97  moat_p95    953  dstd    254  floor  0.035%
+
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-sharp/docs/evidence/relief_sharp/moat_isolate_spine.csv

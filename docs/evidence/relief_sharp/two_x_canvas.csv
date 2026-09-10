@@ -1,0 +1,16 @@
+map,kind,grad_p99_levels_per_km,grad_p999_levels_per_km,grad_max_levels_per_km,cycles_per_km,vanilla,ours_1x,ours_1x_over_vanilla,ours_2x,ours_2x_over_vanilla
+ours_1x,sharpness,950.0,1598.0,2392.0,,,,,,
+ours_2x,sharpness,1888.0,2650.0,4618.0,,,,,,
+-,spectrum,,,,0.02,7776.3,4495.4,0.58,8752.3,1.13
+-,spectrum,,,,0.03,3322.3,1653.5,0.5,3010.3,0.91
+-,spectrum,,,,0.05,942.3,913.0,0.97,1030.4,1.09
+-,spectrum,,,,0.07,471.7,464.8,0.99,514.7,1.09
+-,spectrum,,,,0.1,215.5,199.6,0.93,244.8,1.14
+-,spectrum,,,,0.15,86.0,56.9,0.66,108.5,1.26
+-,spectrum,,,,0.2,45.0,38.9,0.86,67.2,1.49
+-,spectrum,,,,0.25,26.9,39.8,1.48,52.2,1.94
+-,spectrum,,,,0.3,19.5,41.1,2.11,45.5,2.33
+-,spectrum,,,,0.35,14.0,,,43.9,3.14
+-,spectrum,,,,0.4,10.6,,,36.3,3.42
+-,spectrum,,,,0.5,7.4,,,28.2,3.81
+-,spectrum,,,,0.6,6.0,,,25.2,4.2

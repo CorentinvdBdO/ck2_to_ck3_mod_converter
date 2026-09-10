@@ -480,6 +480,8 @@ def test_every_new_flat_map_key_reaches_the_config():
         "heightmap_detail_erosion_mfd_exponent": 2.0,
         "heightmap_detail_erosion_incision": 0.25,
         "heightmap_detail_erosion_diffusion": 0.02,
+        "heightmap_detail_erosion_slope_ceiling_steps": 3.5,
+        "heightmap_detail_fill_min_cycles_per_km": 0.077,
     }
     cfg = heightmap_detail_config(raw)
     assert cfg.enabled
@@ -496,6 +498,8 @@ def test_every_new_flat_map_key_reaches_the_config():
     assert cfg.erosion_mfd_exponent == 2.0
     assert cfg.erosion_incision == 0.25
     assert cfg.erosion_diffusion == 0.02
+    assert cfg.erosion_slope_ceiling_steps == 3.5
+    assert cfg.fill_min_cycles_per_km == 0.077
 
 
 def test_the_new_keys_also_work_in_the_standalone_nested_table():
@@ -510,6 +514,7 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
         "erosion_iterations": 3, "erosion_accum_iterations": 1,
         "erosion_seed_amplitude": 9.0, "erosion_mfd_exponent": 1.5,
         "erosion_incision": 0.1, "erosion_diffusion": 0.01,
+        "erosion_slope_ceiling_steps": 3.5, "fill_min_cycles_per_km": 0.077,
     })
     assert (cfg.deterrace_mode, cfg.relief_mode, cfg.target_mode) == (
         "gaussian", "isotropic", "power_law")
@@ -518,6 +523,8 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
     assert cfg.gain_mode == "hf_target"
     assert cfg.fill_gain == 0.6
     assert cfg.erosion_iterations == 3
+    assert cfg.erosion_slope_ceiling_steps == 3.5
+    assert cfg.fill_min_cycles_per_km == 0.077
 
 
 def test_the_defaults_are_the_ones_the_docs_claim():
@@ -531,6 +538,9 @@ def test_the_defaults_are_the_ones_the_docs_claim():
     assert d.gain_mode == "deficit"
     assert d.fill_gain == 0.70
     assert d.deterrace_sigma_px == 2.2
+    # §2d, the cliff-foot moat
+    assert d.erosion_slope_ceiling_steps == 1.0    # 1 x 277.0125 levels/px
+    assert d.fill_min_cycles_per_km == 0.05        # 20 km
 
 
 # --------------------------------------------------------------------------- #
@@ -612,3 +622,122 @@ def test_the_relative_terrain_gain_has_a_land_mean_of_one():
     assert abs(float(amp[land].mean()) - 1.0) < 1e-3
     gains = {r["terrain"]: r["gain"] for r in rows}
     assert abs(gains["mountains"] / gains["plains"] - 311.4 / 86.3) < 0.01
+
+
+# --------------------------------------------------------------------------- #
+# §2d -- the cliff-foot moat
+# --------------------------------------------------------------------------- #
+def _plateau(h: int = 320, w: int = 320, cliff_steps: int = 8,
+             low: float = 12000.0, ramp: float = 6.0):
+    """All-land plateau: a `cliff_steps` riser down the middle, quantised.
+
+    No coastline at all, so the coast pass and `deepen_sea` cannot be what a
+    failure is about; a gentle `ramp` across the sheet so ordinary one-step
+    quantisation risers are present too, which is what pass 1 is for.
+    """
+    x = np.arange(w, dtype=np.float64)[None, :]
+    y = np.arange(h, dtype=np.float64)[:, None]
+    cx = w // 2
+    field = (
+        low
+        + cliff_steps * QUANT * (x < cx)
+        + ramp * (x % 40)
+        + ramp * (y % 40)
+    )
+    heights = (np.round(field / QUANT) * QUANT).astype(np.uint16)
+    land = np.ones((h, w), dtype=bool)
+    zeros_u8 = np.zeros((h, w), dtype=np.uint8)
+    return (heights, land, zeros_u8, np.zeros((h, w), dtype=bool),
+            np.zeros((h, w), dtype=np.float32), cx)
+
+
+def _foot_undershoot(base, out, cols, span: int = 12) -> float:
+    """Mean dip below the source's own level, walking `span` px right of `cols`."""
+    worst = []
+    for c in cols:
+        foot = base[:, c].astype(np.float64)
+        seg = out[:, c:c + span].astype(np.float64).min(axis=1)
+        worst.append(foot - seg)
+    return float(np.concatenate(worst).mean())
+
+
+def _run_plateau(**over):
+    heights, land, tcode, rb, rw, cx = _plateau()
+    out, stats = hd.apply(
+        heights, land_mask=land, terrain_code=tcode, terrain_keys=["plains"],
+        river_body=rb, river_width_index=rw, km_per_px=KM_PER_PX,
+        water_level=WATER, max_level=MAXLVL,
+        cfg=HeightmapDetailConfig(enabled=True, **over),
+    )
+    return heights, out, stats, cx
+
+
+def test_the_plateau_profile_is_monotonic_across_a_multi_step_cliff():
+    """Playtest 3: "plateaux are dipping then coming back up".
+
+    The finished profile beside the escarpment must not sit lower than the
+    same fill puts ordinary flat ground: a fill that dips a couple of
+    hundred levels below a flat foot is terrain, a dip that happens *only*
+    beside a cliff is the moat (docs/step_map_heightmap.md §2d).  The
+    control band is far enough from the cliff that the escarpment cannot
+    reach it.
+    """
+    base, out, _, cx = _run_plateau()
+    at_cliff = _foot_undershoot(base, out, [cx])
+    control = _foot_undershoot(base, out, [cx + 90, cx + 110, 40, 60])
+    assert at_cliff <= control + 150, (
+        f"cliff-foot undershoot {at_cliff:.0f} levels against a control of "
+        f"{control:.0f} on the same flat ground: a moat"
+    )
+
+
+def test_the_build_13_settings_still_show_the_moat_this_fixture_catches():
+    """The fixture has to be able to fail, or it proves nothing.
+
+    Build 13's own two settings -- no ceiling on the slope the stream-power
+    law sees, and a fill that starts at `KEEP_STRUCTURE_BELOW_KM` -- put the
+    moat back.
+    """
+    base, out, _, cx = _run_plateau(
+        erosion_slope_ceiling_steps=0.0, fill_min_cycles_per_km=0.01
+    )
+    at_cliff = _foot_undershoot(base, out, [cx])
+    control = _foot_undershoot(base, out, [cx + 90, cx + 110, 40, 60])
+    assert at_cliff > control + 150
+
+
+def test_the_slope_ceiling_keeps_the_eroded_field_off_the_escarpment():
+    """The mechanism, one level down: `S` in the stream-power law is the
+    *macro* slope, so an uncapped run planes the plateau rim and the uniform
+    uplift hands the mean back to the interior."""
+    from ck2ck3.map import heightmap_erosion as he
+
+    heights, land, _, _, _, cx = _plateau()
+    h2 = he.deterrace_cliff_aware(heights.astype(np.float32), 2.2, 415.5)
+    rim = np.zeros(heights.shape, dtype=bool)
+    rim[:, cx - 2:cx + 2] = True
+    far = np.zeros(heights.shape, dtype=bool)
+    far[:, cx + 40:cx + 120] = True
+
+    def trench(ceiling):
+        field, diag = he.eroded_relief(
+            h2, land, np.random.default_rng(1357), iterations=6,
+            accum_iterations=3, slope_ceiling_steps=ceiling,
+        )
+        f = field * diag["erosion_field_rms_levels"]
+        return float(f[far].mean() - f[rim].mean())
+
+    assert trench(0.0) > 200.0                      # build 13
+    assert trench(1.0) < 0.5 * trench(0.0)          # the shipped default
+
+
+def test_the_fill_band_weight_is_a_smooth_roll_on():
+    k = np.array([0.001, 0.01, 0.025, 0.05, 0.1, 0.3], dtype=np.float32)
+    w = hd.fill_band_weight(k, 0.05)
+    assert w[0] == 0.0 and w[1] == 0.0 and w[2] == 0.0   # below the ramp
+    assert w[3] == pytest.approx(1.0)                    # full at the knee
+    assert w[4] == 1.0 and w[5] == 1.0
+    mid = hd.fill_band_weight(np.array([0.0354], dtype=np.float32), 0.05)[0]
+    assert 0.4 < mid < 0.6                               # half an octave up
+    # 0 disables the band limit entirely (build 13's behaviour)
+    assert (hd.fill_band_weight(k, 0.0) == 1.0).all()
