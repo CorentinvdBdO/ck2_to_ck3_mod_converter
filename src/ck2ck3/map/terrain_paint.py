@@ -388,24 +388,31 @@ def downsample_index(arr: np.ndarray, scale: float) -> np.ndarray:
 def downsample_intensity(arr: np.ndarray, scale: float) -> np.ndarray:
     """Box-filter resample of the ``detail_intensity`` layer.
 
-    Averages channel 0 (the primary blend weight) over each ``factor x
-    factor`` block (``factor = round(1/scale)``) and re-derives channel 1 as
-    its complement, rather than averaging both channels independently —
-    independent rounding of two box averages need not still sum to 255, and
-    the runtime's ``materials_limit`` contract requires it (`build_layers`
-    asserts it on the full-resolution pair; this keeps the invariant across a
-    downsample too). Channels 2/3 stay 0, matching `build_layers`'s own
-    two-material convention.
+    Averages **all four** channels over each ``factor x factor`` block
+    (``factor = round(1/scale)``) and then re-normalises the pixel so the
+    four still sum to exactly 255 — independent rounding of four box averages
+    need not, and the runtime's ``materials_limit`` contract requires it
+    (`build_layers` / `paint_edges.build_soft_blend` assert it on the
+    full-resolution pair; this keeps the invariant across a downsample too).
+
+    Lane `paint-edges` changed this from "average channel 0 and derive
+    channel 1 as its complement": that shortcut silently deleted channels 2
+    and 3, which the soft-edge blend actually uses (a class interior carries
+    three materials, a boundary four). It is still correct for the old
+    two-channel layer, which simply has zeros in 2/3.
     """
     factor = round(1.0 / scale)
     if factor < 1:
         raise ValueError(f"terrain_paint_scale must be <= 1.0, got {scale}")
     h, w = arr.shape[:2]
     nh, nw = h // factor, w // factor
-    trimmed = arr[: nh * factor, : nw * factor, 0].astype(np.float64)
-    boxed = trimmed.reshape(nh, factor, nw, factor).mean(axis=(1, 3))
-    prim = np.clip(np.round(boxed), 1, 254).astype(np.uint8)
-    out = np.zeros((nh, nw, 4), dtype=np.uint8)
-    out[..., 0] = prim
-    out[..., 1] = 255 - prim
-    return out
+    trimmed = arr[: nh * factor, : nw * factor, :4].astype(np.float64)
+    boxed = trimmed.reshape(nh, factor, nw, factor, 4).mean(axis=(1, 3))
+    flat = boxed.reshape(-1, 4)
+    total = np.maximum(flat.sum(axis=1, keepdims=True), 1e-9)
+    q = np.rint(flat / total * 255.0).astype(np.int32)
+    lead = np.argmax(q, axis=1)
+    rows = np.arange(q.shape[0])
+    q[rows, lead] += 255 - q.sum(axis=1)
+    np.clip(q, 0, 255, out=q)
+    return q.astype(np.uint8).reshape(nh, nw, 4)

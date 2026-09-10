@@ -49,6 +49,7 @@ from . import (
     table,
     terrain,
     terrain_history,
+    paint_edges,
     terrain_paint,
     tree_scatter,
     writers,
@@ -160,9 +161,55 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     if (src / "trees.bmp").exists():
         with Image.open(src / "trees.bmp") as im:
             trees = np.asarray(im)
+    # lane `paint-edges`: trees.bmp is 1/8 resolution (23.2 km per tree pixel
+    # on Faerun), and `np.repeat`-ing it is what makes a forest read as Lego
+    # at close zoom.  Two masks, because the converter has always used two
+    # different index sets and they disagree: `tree_indices` is CK2's own
+    # `tree = { ... }` list from default.map (the terrain/paint promotion to
+    # `forest`), while the tree SCATTER has always taken any non-zero index.
+    # Both are now built the same smooth way (docs/step_map_paint.md §10.3).
+    forest_src_mask = None
+    scatter_src_mask = None
+    if trees is not None and cfg.trees_mask_smooth:
+        if tree_indices:
+            forest_src_mask = (
+                paint_edges.forest_coverage(
+                    trees,
+                    tree_indices,
+                    terrain_idx.shape,
+                    smooth=True,
+                    blur_px=cfg.trees_mask_blur_px,
+                )
+                >= cfg.trees_mask_threshold
+            )
+        scatter_src_mask = (
+            paint_edges.forest_coverage(
+                trees,
+                sorted({int(v) for v in np.unique(trees) if int(v) != 0}),
+                terrain_idx.shape,
+                smooth=True,
+                blur_px=cfg.trees_mask_blur_px,
+            )
+            >= cfg.trees_mask_threshold
+        )
     codes_src, code_names = terrain.ck2_category_codes(
-        terrain_idx, tex_map, trees=trees, tree_indices=tree_indices
+        terrain_idx, tex_map, trees=trees, tree_indices=tree_indices,
+        forest_mask=forest_src_mask,
     )
+    if forest_src_mask is not None:
+        report["trees_mask"] = {
+            "smooth": True,
+            "threshold": cfg.trees_mask_threshold,
+            "blur_px": cfg.trees_mask_blur_px,
+            "forest_src_px": int(forest_src_mask.sum()),
+            "scatter_src_px": int(scatter_src_mask.sum()),
+        }
+        log(
+            "smooth trees.bmp mask (bilinear + threshold "
+            f"{cfg.trees_mask_threshold}): {int(forest_src_mask.sum())} source "
+            f"px promoted to forest, {int(scatter_src_mask.sum())} eligible "
+            "for the tree scatter"
+        )
 
     # ------------------------------------------------------- barony planning
     bcfg = cfg.baronies
@@ -411,6 +458,7 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         _terrain_history_evidence = None
 
     # ---------------------------------------------------------------- images
+    paint_warp = None
     if not skip_images:
         log("writing provinces.png")
         rgb = _to_rgb(ck3_raster, ids)
@@ -496,6 +544,39 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 f"({detail_stats['elapsed_s']}s)"
             )
 
+        # lane `paint-edges`: the terrain-class boundary should follow the
+        # ground, not the CK2 pixel grid.  Derived HERE because `heights` is
+        # deleted a few lines below and the paint pass runs after that; the
+        # field is two int8 canvas planes (112 MB), not a copy of the
+        # heightmap.  Displacement is bounded by construction
+        # (docs/step_map_paint.md §10.2).
+        if (
+            cfg.terrain_paint
+            and cfg.terrain_paint_soft_edges
+            and cfg.terrain_paint_relief_shift_px > 0
+        ):
+            paint_warp = paint_edges.relief_warp(
+                heights,
+                (canvas.height, canvas.width),
+                shift_px=cfg.terrain_paint_relief_shift_px,
+                sigma_px=cfg.terrain_paint_relief_sigma_px,
+                land_mask=~water_mask,
+                gradient_percentile=cfg.terrain_paint_relief_percentile,
+            )
+            moved = int(((paint_warp[0] != 0) | (paint_warp[1] != 0)).sum())
+            report["paint_relief_warp"] = {
+                "shift_px": cfg.terrain_paint_relief_shift_px,
+                "sigma_px": cfg.terrain_paint_relief_sigma_px,
+                "percentile": cfg.terrain_paint_relief_percentile,
+                "displaced_px": moved,
+                "displaced_share": round(moved / float(water_mask.size), 6),
+            }
+            log(
+                "relief warp for the paint edges: max "
+                f"{cfg.terrain_paint_relief_shift_px} canvas px, {moved} px "
+                f"({100 * moved / float(water_mask.size):.1f} % of the canvas) "
+                "displaced"
+            )
         sink.binary("map_data/heightmap.png", lambda p: heightmap.save_png(heights, p))
 
         log("packing heightmap")
@@ -565,21 +646,48 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         if cfg.terrain_paint:
             log("painting terrain (gfx/map/terrain/detail_index.tga + "
                 "detail_intensity.tga)")
-            paint = terrain_paint.build_layers(
-                codes_tgt,
-                code_names,
-                material_map=terrain_paint.read_material_map(
-                    _repo_path(cfg, cfg.terrain_paint_csv)
-                ),
-                ordinals=terrain_paint.material_ordinals(
-                    (cfg.ck3_game_dir or Path())
-                    / "gfx" / "map" / "terrain" / "materials.settings"
-                ),
-                mapping=cfg.terrain_map or None,
-                default=cfg.terrain_default,
-                quantize=cfg.terrain_paint_quantize,
-                warn=sink.warn,
+            paint_csv = _repo_path(cfg, cfg.terrain_paint_csv)
+            paint_ordinals = terrain_paint.material_ordinals(
+                (cfg.ck3_game_dir or Path())
+                / "gfx" / "map" / "terrain" / "materials.settings"
             )
+            soft = None
+            if cfg.terrain_paint_soft_edges:
+                # docs/step_map_paint.md §10: distance-field class blend +
+                # per-class material mix + relief-aware boundary.
+                soft = paint_edges.build_soft_blend(
+                    codes_tgt,
+                    code_names,
+                    material_mix=paint_edges.read_material_mix(paint_csv),
+                    ordinals=paint_ordinals,
+                    mapping=cfg.terrain_map or None,
+                    default=cfg.terrain_default,
+                    quantize=cfg.terrain_paint_quantize,
+                    sigma_px=cfg.terrain_paint_edge_sigma_px,
+                    warp=paint_warp,
+                    max_shift_px=(
+                        canvas.factor * cfg.terrain_paint_max_shift_source_px
+                    ),
+                    land_mask=~water_mask,
+                    warn=sink.warn,
+                )
+                paint = terrain_paint.PaintLayers(
+                    index=soft.index,
+                    intensity=soft.intensity,
+                    classes=_class_pixel_counts(codes_tgt, code_names, cfg),
+                    quantize=max(1, int(cfg.terrain_paint_quantize)),
+                )
+            else:
+                paint = terrain_paint.build_layers(
+                    codes_tgt,
+                    code_names,
+                    material_map=terrain_paint.read_material_map(paint_csv),
+                    ordinals=paint_ordinals,
+                    mapping=cfg.terrain_map or None,
+                    default=cfg.terrain_default,
+                    quantize=cfg.terrain_paint_quantize,
+                    warn=sink.warn,
+                )
             paint_format = cfg.terrain_paint_format
             paint_scale = cfg.terrain_paint_scale
             index_out, intensity_out = paint.index, paint.intensity
@@ -607,8 +715,36 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 "format": paint_format,
                 "scale": paint_scale,
                 "index_size": [int(index_out.shape[1]), int(index_out.shape[0])],
+                "soft_edges": bool(cfg.terrain_paint_soft_edges),
             }
             log(f"terrain paint: {dict(sorted(paint.classes.items()))}")
+            if soft is not None:
+                km_per_px = cfg.scale.source_km_per_px / canvas.factor
+                disp = paint_edges.class_displacement_stats(
+                    soft.class_index_hard,
+                    soft.class_index,
+                    km_per_px=km_per_px,
+                    mask=~water_mask,
+                )
+                report["terrain_paint"]["blend"] = soft.stats
+                report["terrain_paint"]["displacement"] = disp
+                log(
+                    "paint blend (land): "
+                    f"{soft.stats['mean_nonzero_channels']} channels/px, "
+                    f"primary {soft.stats['mean_primary_weight']}, entropy "
+                    f"{soft.stats['blend_entropy_bits']} bits "
+                    "(vanilla 3.467 / 0.525 / 1.492)"
+                )
+                log(
+                    "class displacement vs the CK2 grid: max "
+                    f"{disp['max_km']} km, p95 {disp['p95_km']} km, "
+                    f"{disp['changed_share'] * 100:.1f} % of land pixels "
+                    f"(bound: {cfg.terrain_paint_max_shift_source_px} CK2 "
+                    f"source pixel = {cfg.scale.source_km_per_px} km, "
+                    f"{int(soft.stats['reverted_px'])} px reverted to CK2's "
+                    "own class)"
+                )
+                del soft
             del paint
         if keep_codes_tgt:
             del codes_tgt
@@ -724,9 +860,19 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     if cfg.trees and cfg.ck3_game_dir and trees is not None:
         log("scattering trees (docs/map_fidelity.md §4.3, "
             f"seed {cfg.trees_seed})")
-        trees_full = tree_scatter.upsample_to_source(trees, src_h, src_w)
-        forest_src = tree_scatter.forest_mask_from_trees_bmp(trees_full)
+        if scatter_src_mask is not None:
+            # lane `paint-edges`: the same bilinear+threshold mask the paint
+            # uses, so the trees stand exactly where the forest is painted
+            # instead of inside a 15.6-canvas-pixel Lego block.
+            forest_src = scatter_src_mask
+        else:
+            trees_full = tree_scatter.upsample_to_source(trees, src_h, src_w)
+            forest_src = tree_scatter.forest_mask_from_trees_bmp(trees_full)
         forest_canvas = _resize_bool(forest_src, canvas)
+        if paint_warp is not None:
+            forest_canvas = paint_edges.warp_apply(
+                forest_canvas.astype(np.uint8), paint_warp[0], paint_warp[1]
+            ).astype(bool)
         impassable_mask = np.isin(ck3_raster, list(impassable_ck3))
         eligible = forest_canvas & ~water_mask & ~impassable_mask
         tree_terrain_code, tree_terrain_keys = _terrain_code_grid(
@@ -1019,6 +1165,26 @@ def _codes_in(
 def _resize_bool(mask: np.ndarray, canvas) -> np.ndarray:
     """NEAREST resize of a source-resolution boolean grid onto the canvas."""
     return provinces._resize_ids(mask.astype(np.int32), canvas).astype(bool)
+
+
+def _class_pixel_counts(codes: np.ndarray, code_names, cfg) -> dict[str, int]:
+    """CK3 terrain key -> canvas pixel count, the run report's `classes` row.
+
+    Same number `ck2ck3.map.terrain_paint.build_layers` reports; recomputed
+    here because the soft-edge path (lane `paint-edges`) does not go through
+    it.  Counted on the CK2 class map *before* the blend, so the report keeps
+    measuring what CK2 painted.
+    """
+    table = dict(terrain.CK2_TO_CK3_TERRAIN if not cfg.terrain_map else cfg.terrain_map)
+    counts = np.bincount(codes.reshape(-1), minlength=len(code_names))
+    out: dict[str, int] = {}
+    for code, cnt in enumerate(counts.tolist()):
+        if not cnt:
+            continue
+        name = code_names[code]
+        key = table.get(name, cfg.terrain_default) if name else cfg.terrain_default
+        out[key] = out.get(key, 0) + int(cnt)
+    return out
 
 
 def _resize_codes(codes: np.ndarray, canvas) -> np.ndarray:

@@ -1,0 +1,9 @@
+layer,scale,format,width,height,bytes,mb,under_95mb
+detail_index,1.0,tga,8320,6784,225771564,225.77,0
+detail_intensity,1.0,tga,8320,6784,225771564,225.77,0
+detail_index,1.0,tga_rle,8320,6784,20421465,20.42,1
+detail_intensity,1.0,tga_rle,8320,6784,24413682,24.41,1
+detail_index,0.5,tga,4160,3392,56442924,56.44,1
+detail_intensity,0.5,tga,4160,3392,56442924,56.44,1
+detail_index,0.5,tga_rle,4160,3392,7136646,7.14,1
+detail_intensity,0.5,tga_rle,4160,3392,9201479,9.2,1

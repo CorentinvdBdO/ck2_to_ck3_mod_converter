@@ -120,11 +120,16 @@ def ck2_category_grid(
     *,
     trees: np.ndarray | None = None,
     tree_indices: tuple[int, ...] = (),
+    forest_mask: np.ndarray | None = None,
 ) -> np.ndarray:
     """CK2 terrain.bmp indices -> an array of CK2 category names (object dtype).
 
     Applies the CK2 ``tree`` override: any pixel whose ``trees.bmp`` index is in
     ``tree_indices`` becomes ``forest``, whatever ``terrain.bmp`` said.
+    ``forest_mask`` (source-resolution boolean) overrides that derivation
+    entirely, which is how lane `paint-edges` feeds in a smoothly interpolated
+    tree mask instead of the nearest-neighbour ``np.repeat`` block expansion
+    (:func:`ck2ck3.map.paint_edges.forest_coverage`).
     """
     lut = np.empty(256, dtype=object)
     lut[:] = ""
@@ -132,7 +137,9 @@ def ck2_category_grid(
         if 0 <= idx < 256:
             lut[idx] = cat
     cats = lut[terrain_idx]
-    if trees is not None and tree_indices:
+    if forest_mask is not None:
+        cats = np.where(forest_mask, "forest", cats)
+    elif trees is not None and tree_indices:
         tree_grid = expand_trees(trees, terrain_idx.shape)
         cats = np.where(np.isin(tree_grid, list(tree_indices)), "forest", cats)
     return cats
@@ -165,6 +172,7 @@ def ck2_category_codes(
     *,
     trees: np.ndarray | None = None,
     tree_indices: tuple[int, ...] = (),
+    forest_mask: np.ndarray | None = None,
 ) -> tuple[np.ndarray, list[str]]:
     """:func:`ck2_category_grid` as integer codes, for a 55 M-pixel canvas.
 
@@ -174,7 +182,7 @@ def ck2_category_codes(
     ``names`` (sorted, with ``""`` first).
     """
     lut_names = [""] + sorted({c for c in texture_map.values() if c})
-    if tree_indices and "forest" not in lut_names:
+    if (tree_indices or forest_mask is not None) and "forest" not in lut_names:
         lut_names.append("forest")
     code_of = {n: i for i, n in enumerate(lut_names)}
     lut = np.zeros(256, dtype=np.uint16)
@@ -182,7 +190,9 @@ def ck2_category_codes(
         if 0 <= idx < 256:
             lut[idx] = code_of.get(cat, 0)
     codes = lut[terrain_idx]
-    if trees is not None and tree_indices:
+    if forest_mask is not None:
+        codes = np.where(forest_mask, code_of["forest"], codes).astype(np.uint16)
+    elif trees is not None and tree_indices:
         tree_grid = expand_trees(trees, terrain_idx.shape)
         codes = np.where(
             np.isin(tree_grid, list(tree_indices)), code_of["forest"], codes

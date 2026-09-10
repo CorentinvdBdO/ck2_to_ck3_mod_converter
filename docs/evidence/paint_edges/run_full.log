@@ -1,0 +1,272 @@
+/home/cvdbdo/git/paradox/ck3/wt/_out/paint-edges holds no descriptor.mod, README.md or .git: refusing to clean it
+clean        refused to clean /home/cvdbdo/git/paradox/ck3/wt/_out/paint-edges (does not look like the generated mod)
+descriptor   descriptor.mod: 'Faerun (CK2 conversion, raw)' 0.1.0 for CK3 1.19.*, 13 replace_path
+tc_template  tc_template: 204 empty shadows and 23 key-only stubs over 32 vanilla folders, 42 folders deliberately kept
+reading CK2 map from /home/cvdbdo/git/paradox/ck3/wt/paint-edges/Faerun/Faerun/map
+reading CK2 titles and province history from /home/cvdbdo/git/paradox/ck3/wt/paint-edges/Faerun/Faerun
+2132 CK2 counties, 15195 defined baronies, 2125 province history files
+scale factor 1.954310 -> canvas 8320x6784 (scaled 8005x6504, offset 157,140, crop 0,0-4096,3328)
+painted extent is the whole source bitmap, so the crop is a no-op (docs/map_scale.md §7)
+rasterising provinces (NEAREST on the id array)
+2695 provinces survived, 3 lost, 1 regrown, 2 undefined colours in the bitmap
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+reading CK2 terrain
+smooth trees.bmp mask (bilinear + threshold 0.5): 456344 source px promoted to forest, 1234566 eligible for the tree scatter
+barony set at 1357.1.1 (union to 1501.1.1): 3857 holdings in 2125 counties, min_barony_pixels=400
+79342 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+3705 baronies placed, 152 demoted, seeds {'capital_position': 2112, 'sampled': 835, 'port_position': 758}
+4276 CK3 provinces (padding ocean is id 4276)
+terrain majority vote (per CK3 province, target resolution)
+terrain: {'plains': 1779, 'hills': 631, 'desert': 331, 'mountains': 322, 'steppe': 306, 'taiga': 224, 'forest': 162, 'jungle': 93, 'wetlands': 50, 'farmlands': 16, 'drylands': 1}
+0 CK3 provinces are impassable_mountains
+210 untitled land provinces (CK2 wasteland) forced impassable_mountains
+province-history terrain override: 1040 CK2 counties declare one, 899 usable; 947 CK3 provinces changed (capital 563, non-capital-weak 384, kept strong bitmap 183, already agreed 551, unmapped 0)
+terrain after override: {'plains': 1077, 'hills': 686, 'mountains': 418, 'forest': 351, 'desert': 342, 'farmlands': 335, 'steppe': 272, 'taiga': 192, 'jungle': 180, 'wetlands': 61, 'drylands': 1}
+terrain class grid (heightmap detail + tree meshes): 3723115 px moved (6.60 % of the canvas)
+writing provinces.png
+tracing and redrawing rivers
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 22 of 308 merges did not survive (they fall on a pixel the province map says is water)
+rivers: {'sources': 331, 'merges': 286, 'splits': 9, 'body': 87854, 'water': 29995108, 'land': 26359292}
+building heightmap
+deepening the sea (floor 0, shelf 24 px)
+sea floor: median 2981 -> 0 (water level 4883)
+synthesising heightmap detail (seed 1357, deterrace=cliff_aware@sigma 2.2px/cliff 415.5 levels, relief=eroded@16x3, target=vanilla_curve; docs/step_map_heightmap.md §2b/§2c)
+heightmap detail: 343 -> 44387 distinct values, 0.35 % of land on the water+1 clamp floor (1.187 % of land had its offset saturated into the headroom) (71.8s)
+relief warp for the paint edges: max 1.5 canvas px, 13612386 px (24.1 % of the canvas) displaced
+packing heightmap
+painting the flat (paper) map
+painting gfx/map/terrain/colormap.dds (measured terrain tint)
+colormap: 2080x1696, land mean [126.7, 125.9, 122.5], water mean [128.8, 129.8, 128.7]
+painting terrain (gfx/map/terrain/detail_index.tga + detail_intensity.tga)
+terrain paint: {'desert': 2371016, 'drylands': 25553210, 'farmlands': 214535, 'forest': 1743269, 'hills': 4188306, 'jungle': 1070231, 'mountains': 3565851, 'plains': 10051450, 'steppe': 3667966, 'taiga': 3622084, 'wetlands': 394962}
+paint blend (land): 3.23 channels/px, primary 0.5379, entropy 1.5046 bits (vanilla 3.467 / 0.525 / 1.492)
+class displacement vs the CK2 grid: max 2.099 km, p95 1.484 km, 1.4 % of land pixels (bound: 1.0 CK2 source pixel = 2.9 km, 34361 px reverted to CK2's own class)
+writing map_data text files
+adjacency 1691->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1687->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1687 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+locators: 7 files, 3705 land / 4066 passable provinces
+  CK2 slot 0 anchors: 2108/2116 county capitals accepted (99.6 %), 8 outside own province, 0 off canvas, median move 9.9 px
+  buildings: 2108 of 3705 off the centroid (2108 CK2-anchored, 0 offset applied, 0 offset rejected), median move 9.9 px
+  special_building: 3651 of 3705 off the centroid (2108 CK2-anchored, 3553 offset applied, 152 offset rejected), median move 9.1 px
+  siege: 3624 of 3705 off the centroid (2108 CK2-anchored, 3483 offset applied, 222 offset rejected), median move 10.0 px
+  activities: 3636 of 3705 off the centroid (2108 CK2-anchored, 3538 offset applied, 167 offset rejected), median move 9.4 px
+  unit_stack_player_owned: 3948 of 4066 off the centroid (2108 CK2-anchored, 3921 offset applied, 145 offset rejected), median move 7.1 px
+  unit_stack_other_owner: 3930 of 4066 off the centroid (2108 CK2-anchored, 3861 offset applied, 205 offset rejected), median move 7.7 px
+  combat: 3640 of 4066 off the centroid (2108 CK2-anchored, 3424 offset applied, 642 offset rejected), median move 13.6 px
+scattering trees (docs/map_fidelity.md §4.3, seed 4242)
+trees: 702873 of 729838 target instances placed (26965 dropped, no mesh row: {'desert': 8497, 'farmlands': 3726, 'mountains': 14742}), {'reeds_01_generator_1.txt': 22525, 'steppe_bush_01_generator.txt': 548, 'tree_cypress_01_generator_1.txt': 7187, 'tree_jungle_01_c_generator_1.txt': 5020, 'tree_jungle_01_d_generator_1.txt': 162365, 'tree_leaf_01_single_generator_1.txt': 6807, 'tree_leaf_2_high_generator_1.txt': 22422, 'tree_leaf_high_generator_1.txt': 184827, 'tree_leaf_high_generator_2.txt': 46224, 'tree_leaf_high_generator_3.txt': 95254, 'tree_palm_generator_1.txt': 2021, 'tree_pine_01_a_generator_1.txt': 23788, 'tree_pine_01_b_generator_1.txt': 122793, 'tree_pine_impassable_01_a_generator_1.txt': 595, 'tree_sakura_01_generator.txt': 217, 'tree_sakura_03_generator.txt': 203, 'tree_sakura_forest_generator.txt': 77}
+  regional mix (277 conditions, cell 24 px, coherence 0.55): {'gated_no_mesh_row': 26965, 'terrain+band': 169379, 'terrain+climate+band': 434199, 'terrain+neighbour_band': 92516, 'terrain+climate': 6779}
+18 gfx/map/map_object_data/generated files written
+graphical regions: graphical_western=3274, graphical_mena=376, graphical_india=142, graphical_mediterranean=65, graphical_steppe=24, graphical_siberia=0, graphical_east_asia=34
+map          map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4276 provinces, 3705 baronies in 2125 counties, 152 demoted, 3 lost; heightmap detail cliff_aware/eroded/vanilla_curve, 0.35 % of land on the clamp floor
+loc key dynn_fae_109 collides with a vanilla key's MURMUR3A hash; renamed to dynn_fae_109_x
+loc key dynn_fae_1215 collides with a vanilla key's MURMUR3A hash; renamed to dynn_fae_1215_x
+checked 11951 loc keys against 287886 vanilla keys
+00_dynasties.txt: 0 dynasties -> common/dynasties/fae_00_dynasties.txt
+01_animal_dynasties.txt: 0 dynasties -> common/dynasties/fae_01_animal_dynasties.txt
+Faerun_Dynasties.txt: 11952 dynasties -> common/dynasties/fae_faerun_dynasties.txt
+dynasty_houses: 5 vanilla files shadowed with empty files
+wrote /home/cvdbdo/git/paradox/ck3/wt/paint-edges/docs/evidence/dynasty_coa_dropped.csv
+wrote /home/cvdbdo/git/paradox/ck3/wt/paint-edges/mappings/loc_key_renames_characters.csv
+CK2 dynasty 644 has no culture
+CK2 dynasty id 15817 is defined more than once; CK3 will see a duplicate fae_ id
+dynasties    11952 dynasties in 3 files, 11951 name loc keys, 20 CK2 coats of arms dropped
+23 cultures have fewer than 2 dynasty names even after pooling their culture group, because CK2 defines no dynasty of that group: horse, cat, bear, hedgehog_culture, duck_culture, dog_culture, elephant_culture, dragon_culture, red_panda, lich, undead_creature, undead_human ... (+11). Each is one culture_name_lists.cpp:169, and CK3 has no name to mint a generated character's dynasty from. Needs human input (overrides), not a derivation
+gur_opinion is already declared by vanilla CK3; not re-declared (common/modifier_definition_formats is not a replace_path)
+mari_opinion is already declared by vanilla CK3; not re-declared (common/modifier_definition_formats is not a replace_path)
+cultures     67 culture groups -> 67 heritage + 67 language pillars; 419 cultures with 419 name lists; 37 placeholder ethnicities
+religions: holy site laduguer -> c_barakuir dropped: the map step placed no barony in that county, so the titles step does not declare it
+religions    15 religion groups -> 15 families + 15 religions; 94 faiths with 469 holy sites over 254 counties
+titles       7141 CK3 titles (65 e_, 267 k_, 979 d_, 2125 c_, 3705 b_), 11658 commented out, placement mode barony_set
+history_titles 3228 title histories, 192 commented out, 3705 province blocks in 166 files
+bookmarks    17 bookmarks, 82 characters (63 placed from the CK2 map, 19 on the fallback grid), default 1357.1.1
+traits: creature_outsider: CK2 icon gfx/traits/creature_outsider.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: creature_slaad: CK2 icon gfx/traits/creature_slaad.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: stasis_clone: CK2 icon gfx/traits/statis_clone.tga is not a .dds; CK3 reads .dds only, no icon emitted (no format conversion in the converter)
+traits: 168 CK2 trait icons copied unchanged at 24x24; CK3 1.19 vanilla trait icons are 120x120 (gfx/interface/icons/traits/brave.dds) - the submod must rescale
+traits       400 traits ported (117 race), 142 deduped to CK3 vanilla, 7 dropped (no CK3 counterpart), 1 became a CK3 sexuality, 867 commented out
+trait set from this run's traits step: 542 ids
+6011 CK3 modifier ids read from /home/cvdbdo/.local/share/Steam/steamapps/common/Crusader Kings III/game/common/modifiers
+1-1000 Miscellaneous.txt: 455 characters -> history/characters/fae_1-1000_miscellaneous.txt
+1001-2000 Deities.txt: 29 characters -> history/characters/fae_1001-2000_deities.txt
+11001-13000 Dragon Coast and Inner Sea.txt: 424 characters -> history/characters/fae_11001-13000_dragon_coast_and_inner_sea.txt
+13001-15000 Luskan.txt: 150 characters -> history/characters/fae_13001-15000_luskan.txt
+15001-17000 Neverwinter.txt: 257 characters -> history/characters/fae_15001-17000_neverwinter.txt
+17001-20000 Dwarves.txt: 305 characters -> history/characters/fae_17001-20000_dwarves.txt
+20001-23000 Cormyr.txt: 896 characters -> history/characters/fae_20001-23000_cormyr.txt
+2001-3000 Baldurs gate.txt: 411 characters -> history/characters/fae_2001-3000_baldurs_gate.txt
+23001-24000 Uthgardt.txt: 366 characters -> history/characters/fae_23001-24000_uthgardt.txt
+24001-26000 Impiltur.txt: 242 characters -> history/characters/fae_24001-26000_impiltur.txt
+26001-28000 Dalelands.txt: 572 characters -> history/characters/fae_26001-28000_dalelands.txt
+28001-30000 Tethyr.txt: 527 characters -> history/characters/fae_28001-30000_tethyr.txt
+30001-30299 Narfelli.txt: 161 characters -> history/characters/fae_30001-30299_narfelli.txt
+3001-5000 High Moor.txt: 91 characters -> history/characters/fae_3001-5000_high_moor.txt
+30300-30599 Orcs.txt: 171 characters -> history/characters/fae_30300-30599_orcs.txt
+30600-30899 Gnomes.txt: 46 characters -> history/characters/fae_30600-30899_gnomes.txt
+30900-31000 Thinguth.txt: 54 characters -> history/characters/fae_30900-31000_thinguth.txt
+31001-32000 Erlkazar.txt: 33 characters -> history/characters/fae_31001-32000_erlkazar.txt
+32001-33000 Nelanther.txt: 128 characters -> history/characters/fae_32001-33000_nelanther.txt
+33001-35000 Amn.txt: 502 characters -> history/characters/fae_33001-35000_amn.txt
+35001-36000 Yikarians.txt: 67 characters -> history/characters/fae_35001-36000_yikarians.txt
+36001-37000 Thinguth II.txt: 55 characters -> history/characters/fae_36001-37000_thinguth_ii.txt
+37001-38000 Tuigan.txt: 391 characters -> history/characters/fae_37001-38000_tuigan.txt
+38001-39000 Semphar.txt: 95 characters -> history/characters/fae_38001-39000_semphar.txt
+39001-40000 Ra-Khati and Khazari.txt: 96 characters -> history/characters/fae_39001-40000_ra-khati_and_khazari.txt
+40001-40500 Mulhorand.txt: 293 characters -> history/characters/fae_40001-40500_mulhorand.txt
+40500-40749 Chessentan.txt: 181 characters -> history/characters/fae_40500-40749_chessentan.txt
+40750-41000 Untheric.txt: 61 characters -> history/characters/fae_40750-41000_untheric.txt
+41001-42000 Savage Frontier.txt: 951 characters -> history/characters/fae_41001-42000_savage_frontier.txt
+42001-44000 Calimshan.txt: 414 characters -> history/characters/fae_42001-44000_calimshan.txt
+44001-45000 Arnaden.txt: 252 characters -> history/characters/fae_44001-45000_arnaden.txt
+45001-46000 Evermeet.txt: 51 characters -> history/characters/fae_45001-46000_evermeet.txt
+46001-47000 High Forest.txt: 54 characters -> history/characters/fae_46001-47000_high_forest.txt
+47001-48000 Minor Elf Realms.txt: 96 characters -> history/characters/fae_47001-48000_minor_elf_realms.txt
+48001-49000 Cormanthor.txt: 146 characters -> history/characters/fae_48001-49000_cormanthor.txt
+49001-50000 Vilhon Reach.txt: 821 characters -> history/characters/fae_49001-50000_vilhon_reach.txt
+50001-51000 Moonshae Isles.txt: 787 characters -> history/characters/fae_50001-51000_moonshae_isles.txt
+5001-7000 Silver Marches.txt: 253 characters -> history/characters/fae_5001-7000_silver_marches.txt
+51001-52000 Sembia.txt: 164 characters -> history/characters/fae_51001-52000_sembia.txt
+52001-52100 Thinguth.txt: 20 characters -> history/characters/fae_52001-52100_thinguth.txt
+52101-52200 Vaasa.txt: 97 characters -> history/characters/fae_52101-52200_vaasa.txt
+52201-52400 Shaaran.txt: 198 characters -> history/characters/fae_52201-52400_shaaran.txt
+52401-52500 Sossrim.txt: 46 characters -> history/characters/fae_52401-52500_sossrim.txt
+52501-52800 Ulutiun.txt: 114 characters -> history/characters/fae_52501-52800_ulutiun.txt
+52801-53000 Chult.txt: 147 characters -> history/characters/fae_52801-53000_chult.txt
+53001-54000 Thay.txt: 252 characters -> history/characters/fae_53001-54000_thay.txt
+54001-55000 Border Kingdoms.txt: 184 characters -> history/characters/fae_54001-55000_border_kingdoms.txt
+55001-56000 Dambrath.txt: 87 characters -> history/characters/fae_55001-56000_dambrath.txt
+56001-57000 Moonsea and Zhentilar.txt: 544 characters -> history/characters/fae_56001-57000_moonsea_and_zhentilar.txt
+57001-58000 Najara and Serpentes.txt: 57 characters -> history/characters/fae_57001-58000_najara_and_serpentes.txt
+58001-58200 Luiren.txt: 44 characters -> history/characters/fae_58001-58200_luiren.txt
+58201-59000 Lapaliiya.txt: 101 characters -> history/characters/fae_58201-59000_lapaliiya.txt
+59001-60000 Aglarond.txt: 141 characters -> history/characters/fae_59001-60000_aglarond.txt
+60001-60100 Shou Lung offmap.txt: 33 characters -> history/characters/fae_60001-60100_shou_lung_offmap.txt
+61001-62000 Anauroch.txt: 439 characters -> history/characters/fae_61001-62000_anauroch.txt
+62001-63000 Zakhara.txt: 820 characters -> history/characters/fae_62001-63000_zakhara.txt
+63001-63500 Shao Shan and Sempadan.txt: 165 characters -> history/characters/fae_63001-63500_shao_shan_and_sempadan.txt
+63501-63700 The Vast.txt: 153 characters -> history/characters/fae_63501-63700_the_vast.txt
+63701-64000 Damara.txt: 143 characters -> history/characters/fae_63701-64000_damara.txt
+64001-64500 Halruaa.txt: 107 characters -> history/characters/fae_64001-64500_halruaa.txt
+64501-65000 Shining Lands.txt: 202 characters -> history/characters/fae_64501-65000_shining_lands.txt
+65001-65200 Ama Basin.txt: 95 characters -> history/characters/fae_65001-65200_ama_basin.txt
+65201-65500 Rashemi.txt: 67 characters -> history/characters/fae_65201-65500_rashemi.txt
+65501-65800 Utter East.txt: 76 characters -> history/characters/fae_65501-65800_utter_east.txt
+65801-66200 Shou Lung.txt: 193 characters -> history/characters/fae_65801-66200_shou_lung.txt
+66201-66400 Outsiders.txt: 33 characters -> history/characters/fae_66201-66400_outsiders.txt
+66401-67000 Elven vassals.txt: 45 characters -> history/characters/fae_66401-67000_elven_vassals.txt
+67001-68000 Shining Lands II.txt: 118 characters -> history/characters/fae_67001-68000_shining_lands_ii.txt
+68001-69000 Akota.txt: 68 characters -> history/characters/fae_68001-69000_akota.txt
+69001-70000 Laerakond.txt: 342 characters -> history/characters/fae_69001-70000_laerakond.txt
+70001-71000 Thesk.txt: 41 characters -> history/characters/fae_70001-71000_thesk.txt
+7001-9000 Waterdeep.txt: 641 characters -> history/characters/fae_7001-9000_waterdeep.txt
+71001-72000 Magisters.txt: 100 characters -> history/characters/fae_71001-72000_magisters.txt
+72001-73000 Zakhara II.txt: 355 characters -> history/characters/fae_72001-73000_zakhara_ii.txt
+73001-74000 Shaar II.txt: 81 characters -> history/characters/fae_73001-74000_shaar_ii.txt
+74001-75000 Honor Among Thieves.txt: 19 characters -> history/characters/fae_74001-75000_honor_among_thieves.txt
+75001-75500 Underdark.txt: 52 characters -> history/characters/fae_75001-75500_underdark.txt
+75501-76000 Anchorome.txt: 17 characters -> history/characters/fae_75501-76000_anchorome.txt
+90000-100000 Monsters.txt: 3 characters -> history/characters/fae_90000-100000_monsters.txt
+9001-11000 Western Heartlands.txt: 636 characters -> history/characters/fae_9001-11000_western_heartlands.txt
+integrity same-sex spouse: 8 - fae_200 (1-1000 Miscellaneous.txt) add_spouse fae_190; fae_403 (1-1000 Miscellaneous.txt) marry fae_402; fae_20847 (20001-23000 Cormyr.txt) add_spouse fae_20848; fae_2282 (2001-3000 Baldurs gate.txt) add_spouse fae_2281; fae_33274 (33001-35000 Amn.txt) add_spouse fae_33275 (+3 more)
+CK2 character has a blank name; kept verbatim because CK3 requires the field (needs a human or an overrides row)
+wrote /home/cvdbdo/git/paradox/ck3/wt/paint-edges/docs/evidence/characters_dropped_keys.csv
+wrote /home/cvdbdo/git/paradox/ck3/wt/paint-edges/docs/evidence/characters_integrity.csv
+characters   18124 characters in 80 files, 47107 dated blocks, 15925 CK2 entries commented out, 8 integrity problems
+english: 100.0% of rows filled
+french: 70.1% of rows filled
+german: 70.1% of rows filled
+spanish: 70.1% of rows filled
+key 'master_of_flame' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'logistics_expert' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'levy_coordinator' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'sapper' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_1' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_1_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_2' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_2_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_guardian' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_guardian_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_champion' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_champion_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_warden' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'armor_tier_3_warden_desc' defined in both 000_generalvanillaloc.csv and 000_shou_lung.csv; 000_shou_lung.csv wins
+key 'CB_NAME_SUCCESSION' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'increase_council_power_war_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'indian_subjugation_desc' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'kingdom_adventure_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'muslim_county_conquest_desc' defined in both 000_casus_belli_changes.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+key 'offmap_submission_desc' defined in both 000_shou_lung.csv and 00_casus_belli.csv; 00_casus_belli.csv wins
+...and 1245 more duplicate keys
+0000_titles.csv:6526: key 'd_twilit_land:adj' is not a legal CK3 key, skipped
+00_ui.csv:358: key 'Army Maintenance' is not a legal CK3 key, skipped
+00_ui.csv:1630: key 'Effect:' is not a legal CK3 key, skipped
+00_ui.csv:3769: key 'Not%authorized' is not a legal CK3 key, skipped
+00_ui.csv:5301: key 'Take Action' is not a legal CK3 key, skipped
+00_ui.csv:6118: key '§bCapital:' is not a legal CK3 key, skipped
+00_ui.csv:6119: key '§bCulture:' is not a legal CK3 key, skipped
+00_ui.csv:6120: key '§bManpower:' is not a legal CK3 key, skipped
+00_ui.csv:6121: key '§bMax Attrition:' is not a legal CK3 key, skipped
+00_ui.csv:6122: key '§bReligion:' is not a legal CK3 key, skipped
+00_ui.csv:6123: key '§bRevolt Risk:' is not a legal CK3 key, skipped
+00_ui.csv:6124: key '§bRP:' is not a legal CK3 key, skipped
+00_ui.csv:6125: key '§bSupply Limit:' is not a legal CK3 key, skipped
+00_ui.csv:6126: key '§bTax:' is not a legal CK3 key, skipped
+00_ui.csv:6127: key '§WOMENS' is not a legal CK3 key, skipped
+00_ui.csv:6128: key '§WProvinces' is not a legal CK3 key, skipped
+00_ui.csv:6129: key '§WReligion' is not a legal CK3 key, skipped
+00_ui.csv:6130: key '§WWorld Religions' is not a legal CK3 key, skipped
+HolyFury.csv:7482: key 'random_mythological_creature_jörmungandr' is not a legal CK3 key, skipped
+MonksAndMystics.csv:639: key 'String_seiðr' is not a legal CK3 key, skipped
+...and 3 more illegal keys
+no CK3 equivalent for [GetFromRelation] (1362 occurrences)
+no CK3 equivalent for [Root.Society.GetName] (527 occurrences)
+no CK3 equivalent for [relic_hunter.GetJobTitle] (222 occurrences)
+no CK3 equivalent for [Root.GetChancellorName] (178 occurrences)
+no CK3 equivalent for [Root.Guardian.GetFullName] (156 occurrences)
+no CK3 equivalent for [Root.PlotTarget.GetTitledName] (154 occurrences)
+no CK3 equivalent for [From.GetJobTitle] (139 occurrences)
+no CK3 equivalent for [shou_lung.Ruler.GetEmperorEmpress] (138 occurrences)
+no CK3 equivalent for [Root.GetMyChancellorName] (130 occurrences)
+no CK3 equivalent for [Root.GetLordSpiritualName] (127 occurrences)
+no CK3 equivalent for [From.Society.GetName] (127 occurrences)
+no CK3 equivalent for [From.OriginalOwner.GetTitledFirstName] (116 occurrences)
+no CK3 equivalent for [Player.Religion.GetPietyName] (116 occurrences)
+no CK3 equivalent for [GetRootFromInsult] (107 occurrences)
+no CK3 equivalent for [From.OriginalOwner.Culture.GetName] (105 occurrences)
+no CK3 equivalent for [Root.Offmap.GetFullName] (96 occurrences)
+no CK3 equivalent for [This.Founder.GetFirstNameWithNick] (91 occurrences)
+no CK3 equivalent for [Root.job_marshal.GetTitledFirstName] (90 occurrences)
+no CK3 equivalent for [From.GetBoyGirl] (90 occurrences)
+no CK3 equivalent for [Root.job_spymaster.GetTitledFirstName] (86 occurrences)
+...and 1227 more codes with no CK3 equivalent (full table: docs/evidence/ck2_loc_codes.csv)
+37067 codes need a saved scope in the converted event (168 distinct); see docs/loc_codes.md
+64803 references to a CK2 saved scope (2566 distinct) became visible markers, because nothing ports CK2's events and so nothing runs save_scope_as: CK3 answers an unresolvable scope with "pdx_data_localize.cpp: Data error in loc string '<key>'". Set [loc] named_scope = "reference" in the commit that ships the event port
+43558 CK2 customizable-localisation codes (4573 distinct) became visible markers, because nothing emits common/customizable_localization and a Custom() call to a name CK3 does not know is an error per evaluation. That count is the size of the port; set [loc] custom_loc = "call" in the commit that ships it
+loc          localisation: 484 yml in 4 languages, 156800 english keys, 91.0% of 147711 text codes converted
+decisions    3 decisions ported live, 393 below min_score (is_shown off, inspectable), 253 out-of-scope groups, 181 other skips, 37 files
+events       160 events live, 1544 inert stubs, 58 skipped by scope, 110 files, 97 namespaces; top unmapped: character_event(1345), trait(990), mother_even_if_dead(907), true_father_even_if_dead(857), add_trait(710)
+tests        108 scripted tests at 1357.1.1 (6 bookmark characters, 50/2639 title holders, 50/3705 provinces) -> tests/fae_generated_tests.txt
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/paint-edges
+  clean          refused to clean /home/cvdbdo/git/paradox/ck3/wt/_out/paint-edges (does not look like the generated mod) [0.00s]
+  descriptor     descriptor.mod: 'Faerun (CK2 conversion, raw)' 0.1.0 for CK3 1.19.*, 13 replace_path [0.00s]
+  tc_template    tc_template: 204 empty shadows and 23 key-only stubs over 32 vanilla folders, 42 folders deliberately kept [0.02s]
+  map            map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4276 provinces, 3705 baronies in 2125 counties, 152 demoted, 3 lost; heightmap detail cliff_aware/eroded/vanilla_curve, 0.35 % of land on the clamp floor [152.49s]
+  dynasties      11952 dynasties in 3 files, 11951 name loc keys, 20 CK2 coats of arms dropped [1.13s]
+  cultures       67 culture groups -> 67 heritage + 67 language pillars; 419 cultures with 419 name lists; 37 placeholder ethnicities [1.29s]
+  religions      15 religion groups -> 15 families + 15 religions; 94 faiths with 469 holy sites over 254 counties [0.26s]
+  titles         7141 CK3 titles (65 e_, 267 k_, 979 d_, 2125 c_, 3705 b_), 11658 commented out, placement mode barony_set [2.60s]
+  history_titles 3228 title histories, 192 commented out, 3705 province blocks in 166 files [0.20s]
+  bookmarks      17 bookmarks, 82 characters (63 placed from the CK2 map, 19 on the fallback grid), default 1357.1.1 [0.07s]
+  traits         400 traits ported (117 race), 142 deduped to CK3 vanilla, 7 dropped (no CK3 counterpart), 1 became a CK3 sexuality, 867 commented out [0.26s]
+  characters     18124 characters in 80 files, 47107 dated blocks, 15925 CK2 entries commented out, 8 integrity problems [2.91s]
+  loc            localisation: 484 yml in 4 languages, 156800 english keys, 91.0% of 147711 text codes converted [2.66s]
+  decisions      3 decisions ported live, 393 below min_score (is_shown off, inspectable), 253 out-of-scope groups, 181 other skips, 37 files [0.41s]
+  events         160 events live, 1544 inert stubs, 58 skipped by scope, 110 files, 97 namespaces; top unmapped: character_event(1345), trait(990), mother_even_if_dead(907), true_father_even_if_dead(857), add_trait(710) [2.64s]
+  tests          108 scripted tests at 1357.1.1 (6 bookmark characters, 50/2639 title holders, 50/3705 provinces) -> tests/fae_generated_tests.txt [2.21s]
+1482 files written, 302 warnings
+run log: /home/cvdbdo/git/paradox/ck3/wt/paint-edges/docs/evidence/last_run.md

@@ -583,6 +583,34 @@ class MapConfig:
     #: choice); ``0.5`` quarters the pixel count. docs/step_map_paint.md
     #: §size. Default unchanged until the coordinator's in-game check.
     terrain_paint_scale: float = 1.0
+    #: lane `paint-edges`: replace the nearest-neighbour class edges + the
+    #: class-agnostic noise dither with a distance-field blend between the
+    #: two strongest CK3 terrain classes, plus a per-class material *mix*
+    #: (docs/step_map_paint.md §10). False restores the pre-build-14 path in
+    #: `ck2ck3.map.terrain_paint.build_layers`.
+    terrain_paint_soft_edges: bool = True
+    #: Gaussian sigma, **canvas pixels**, of each class indicator mask. Sets
+    #: how wide a class boundary's ramp is; 0 = hard edges again. Bounded by
+    #: the macro invariant (a class must not migrate more than one CK2 source
+    #: pixel, 2.90 km = 1.95 canvas px on Faerun).
+    terrain_paint_edge_sigma_px: float = 2.0
+    #: maximum displacement, **canvas pixels**, of the relief-aware warp that
+    #: makes a class boundary follow the ground instead of the CK2 pixel grid
+    #: (`ck2ck3.map.paint_edges.relief_warp`). 0 disables the warp.
+    terrain_paint_relief_shift_px: float = 1.5
+    #: Gaussian sigma, canvas pixels, applied to the heightmap before its
+    #: gradient drives the warp: the boundary should follow landforms, not
+    #: per-pixel noise.
+    terrain_paint_relief_sigma_px: float = 8.0
+    #: percentile of the land gradient magnitude at which the warp saturates
+    #: at `terrain_paint_relief_shift_px`. Flat ground gets no displacement.
+    terrain_paint_relief_percentile: float = 90.0
+    #: the macro invariant, in **CK2 source pixels**: a terrain class may
+    #: never win a canvas pixel further than this from where CK2 painted it.
+    #: Converted to canvas pixels with the canvas factor and enforced (not
+    #: hoped for) in `paint_edges.build_soft_blend`: an out-of-bound pixel
+    #: reverts to CK2's own class. 0 disables the check.
+    terrain_paint_max_shift_source_px: float = 1.0
     #: write gfx/map/terrain/colormap.dds — a measured tint per CK3 terrain
     #: key, calibrated against vanilla's own per-material colormap means
     #: (docs/step_map_paint.md §9.6/§9.7, lane `colormap-fix`; superseded the
@@ -637,6 +665,18 @@ class MapConfig:
     #: 1.0 is fully coherent, 0.0 fully independent. Calibrated against
     #: docs/evidence/vanilla_tree_patch_scale.csv.
     trees_cell_coherence: float = 0.55
+    #: lane `paint-edges`: expand `trees.bmp` (1/8 resolution, 23.2 km per
+    #: tree pixel) with a bilinear interpolation + threshold instead of
+    #: `np.repeat`, so a forest edge is a rounded contour rather than a
+    #: 15.6-canvas-pixel Lego block. False restores the nearest expansion.
+    trees_mask_smooth: bool = True
+    #: coverage level of the interpolated tree field that counts as forest.
+    #: 0.5 puts the boundary on the midpoint between a forest and a
+    #: non-forest source pixel, which is the area-preserving choice.
+    trees_mask_threshold: float = 0.5
+    #: extra Gaussian (in source pixels) on the interpolated tree field
+    #: before the threshold; 0 = bilinear only.
+    trees_mask_blur_px: float = 0.0
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -735,6 +775,20 @@ def load(path: str | Path) -> MapConfig:
         terrain_paint_quantize=int(raw.get("terrain_paint_quantize", 16)),
         terrain_paint_format=str(raw.get("terrain_paint_format", "tga")),
         terrain_paint_scale=float(raw.get("terrain_paint_scale", 1.0)),
+        terrain_paint_soft_edges=bool(raw.get("terrain_paint_soft_edges", True)),
+        terrain_paint_edge_sigma_px=float(raw.get("terrain_paint_edge_sigma_px", 2.0)),
+        terrain_paint_relief_shift_px=float(
+            raw.get("terrain_paint_relief_shift_px", 1.5)
+        ),
+        terrain_paint_relief_sigma_px=float(
+            raw.get("terrain_paint_relief_sigma_px", 8.0)
+        ),
+        terrain_paint_relief_percentile=float(
+            raw.get("terrain_paint_relief_percentile", 90.0)
+        ),
+        terrain_paint_max_shift_source_px=float(
+            raw.get("terrain_paint_max_shift_source_px", 1.0)
+        ),
         colormap=bool(raw.get("colormap", True)),
         colormap_tints_csv=Path(
             str(raw.get("colormap_tints_csv", "mappings/colormap_tints.csv"))
@@ -755,6 +809,9 @@ def load(path: str | Path) -> MapConfig:
         ),
         trees_cell_px=int(raw.get("trees_cell_px", 24)),
         trees_cell_coherence=float(raw.get("trees_cell_coherence", 0.55)),
+        trees_mask_smooth=bool(raw.get("trees_mask_smooth", True)),
+        trees_mask_threshold=float(raw.get("trees_mask_threshold", 0.5)),
+        trees_mask_blur_px=float(raw.get("trees_mask_blur_px", 0.0)),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),

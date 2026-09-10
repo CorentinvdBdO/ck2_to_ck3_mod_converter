@@ -1,0 +1,4 @@
+map,land_px,materials_used,mean_nonzero_channels,mean_primary_weight,blend_entropy_bits
+before (build 13),26447772,20,2.0,0.7116,0.7136
+after (soft edges),26447772,27,3.23,0.5379,1.5046
+vanilla (target),23720182,101,3.467,0.5247,1.4916
