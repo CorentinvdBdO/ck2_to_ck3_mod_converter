@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-10 17:00 by Claude session (coordinator)
+Updated: 2026-09-10 18:30 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -19,8 +19,8 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 ## Repos
 | repo | path | base | origin | state |
 |---|---|---|---|---|
-| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main c9bc250+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 15 steps (`--list-steps`), full run 72 s, 1368 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
-| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 12 2026-09-10 16:45; tiger fatal 0 / error 58; soaks alive, canary fired |
+| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main da5e199+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
+| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 13 2026-09-10 18:15; 16 steps, 1482 files; tiger fatal 0 / error 58; 240 s soak alive, canary fired |
 | forgotten_kings (submod) | `paradox/ck3/claudespace/mods/forgotten_kings` | main 3812924 | github.com/CorentinvdBdO/forgotten_kings (private, GPL-3.0) | skeleton + roadmap notes + `docs/design_dlc_gating.md` |
 | ck3_fantasy_assets | `paradox/ck3/ck3_fantasy_assets` | main | none (local by decision) | skeleton |
 | claudespace (workspace) | `paradox/ck3/claudespace` | master 17a247a | none | test harness, headless display, `/fk-push` `/fk-test` `/fk-errors`, `scripts/ck3_bisect.sh` |
@@ -41,6 +41,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-10 — **build 13, events step** (README §5 step 3, the `new` slice): 1704 of 1762 events emitted in 110 files / 97 namespaces — 160 live, 1544 inert stubs with the converted draft as `# draft:` comments, 58 skipped by scope. Gates keeping an event a stub: convertibility 1530, unsaved scope 550, call to a stubbed id 529, FROM scope 320. tiger fatal 0 / error 58 (baseline); **240 s headless soak alive, canary fired** — the class that crashed database init in the decisions build did not recur. Game error.log: 539 `Event X is orphaned` (live events with no caller yet — the on_actions lane wires them; until then every emitted event should carry `orphan = yes`, backlog) and 108 `Unrecognized loc key` from 5 knight-tournament events whose CK2 `EVTDESC` keys are among the 40 loc misses. `docs/step_events.md`, `docs/evidence/HANDOFF_events.md`.
 - 2026-09-10 — **build 12, eroded relief**: Perona–Malik de-terrace + stream-power erosion replace the Gaussian + isotropic fill. Interior band 0.05–0.2 c/km within 0.91–1.16× vanilla (was 0.23–0.54×), clamp-floor land 8.19 % → 0.35 %, cliffs kept (Thay/Spine 1.13/1.12), rivers in the drainage, detail pass 50 s. Seen in game: Thay's plateau escarpment and Thaymount, gullied Spine of the World ridges (`claudespace/docs/evidence/b12_thay_relief.png`, `b12_spine_relief.png`); soaks alive, canary fired. Accepted: 2.05× vanilla at 0.3 c/km, cliffs ~13 % sharper than source (`docs/DECISIONS.md`).
 - 2026-09-10 — **build 11, regional trees**: species sampled from vanilla's measured P(mesh | terrain, climate, latitude band), 17 of 18 generators; pine in the two northernmost bands 14 → 72 % (vanilla 93 %), jungle+palm in the two southernmost 52 → 75 %. Seen in game: Spine of the World conifer, Chult jungle canopy (`claudespace/docs/evidence/b11_spine_trees.png`, `b11_chult_trees.png`); two 200 s soaks alive, canary fired. Also fixed: `_map_config` read none of the `[map] trees*` keys.
 - 2026-09-10 — **build 10, province-history terrain**: 946 provinces take the CK2 author's `terrain =` override (farmlands 16 → 335; `coastal` kept on bitmap); soak alive. `docs/step_map_terrain.md`.
@@ -58,6 +59,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. **Events** (README §5 step 3): syntactic port of the 1762 `new` events with the decisions lessons — never emit half-converted script live, stub with `# draft:` comments, canary in every run, distinct mod `name` for test copies.
-2. User playtest 3 of build 12 (`docs/playtest.md`): unpause and play; look at Thay's terraces and the Spine at close zoom (cliff sharpness is a look call), clothes, traits, settlement positions, regional trees.
-3. Candidates from the report, one lane each, user's call: third low-weight paint material from neighbouring classes (2.0 → ~3 channels); a shoreline material on coastal land pixels; `resolution_factor = 2` heightmap; the 0.3 c/km residual risers.
+1. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3): wire CK2 on_action names to CK3's `common/on_action`, so the 160 live events fire; MTTH policy; `orphan = yes` on every emitted event without a live caller (539 game errors today); then the faith/culture value rewrite (un-rejects 1131 uses).
+2. **`modified` events lane** (2911, HANDOFF §2): override-of-vanilla path decided by the bridge table; filename collisions with the `new` slice.
+3. User playtest 3 of build 13 (`docs/playtest.md`): Thay's terraces and the Spine at close zoom, regional trees, settlement positions, and whether any of the 160 live events misbehaves.

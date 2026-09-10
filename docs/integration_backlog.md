@@ -27,3 +27,5 @@ Added by lane `events` (2026-09-10), coordinator decisions on the hand-off's ope
 - `events`: add the faith/culture **value** rewrite (CK2 `religion = x` / `culture = y` values → the generated `fae_*` ids, which already exist in the mod); un-rejects 1131 uses across the stubbed events. Own lane, after on_actions.
 - `events`/`loc`: `[loc] named_scope` stays as is until the on_actions lane; flip to `"reference"` there, with the events step's `unsaved_scope` gate re-measured.
 - `events`: `modified` (2911) and `common/on_actions` (197) are the next two lanes; `docs/evidence/HANDOFF_events.md` §2–§3 is their brief.
+- `events` (seen in game, build 13): 539 `jomini_eventmanager.cpp: Event X is orphaned` — live events with no caller; emit `orphan = yes` on every event not referenced by a live `trigger_event` until the on_actions lane wires them. 108 `jomini_dynamicdescription.cpp: Unrecognized loc key` from 5 `fae_kni.*` events: their CK2 `EVTDESC700xx` keys are among the 40 loc misses; stub an event whose `desc` key is missing, or mint the key.
+
