@@ -305,11 +305,21 @@ class HeightmapDetailConfig:
     #: 35-60 km relief on top of the CK2 author's own and put a 4,900-level
     #: mean trench beside Thay's escarpments -- the "plateaux dipping then
     #: coming back up" of playtest 3 (docs/step_map_heightmap.md §2d).
-    #: 0.05 cycles/km = 20 km: below that the CK2 source is fully resolved
+    #: 0.10 cycles/km = 10 km: below that the CK2 source is fully resolved
     #: (its own Nyquist is 0.172 cycles/km) and only quantised, and a
     #: quantiser adds broadband noise rather than removing macro relief, so
     #: a shortfall there is Faerun's content and not ours to invent.
-    fill_min_cycles_per_km: float = 0.05
+    #:
+    #: Raised from 0.05 on 2026-09-12 (docs/step_map_heightmap.md §2f).  At
+    #: 0.05 the fill still wrote outside the CK2 author's own surface on
+    #: **4.7 %** of Thay's land (more than one 277-level riser below the
+    #: source's own local minimum) and the §2f bound had to catch it; at 0.10
+    #: that is **1.6 %** and the backstop moves 2.6 % of all land.  The
+    #: interior spectrum *improves* at 6.7 and 10 km (1.13 / 1.14 x vanilla
+    #: against build 15's 0.65 / 0.92); the cost is the 14-25 km band, which
+    #: returns to the plain rescale's 0.4 x -- i.e. to Faerun's own macro
+    #: relief, which is what the argument above says it should be.
+    fill_min_cycles_per_km: float = 0.10
     #: pass 2/3b: the fraction of each pixel's own headroom the synthesised
     #: offset is allowed to saturate into.  1.0 is the pre-2026-09-10
     #: behaviour and still reaches the ``water_level + 1`` floor exactly,
@@ -318,11 +328,60 @@ class HeightmapDetailConfig:
     #: (docs/step_map_heightmap.md §2d).  0.5 keeps the last half of the
     #: range unused so the fill fades instead of clipping.
     headroom_fraction: float = 0.5
+    #: pass 2 (eroded): below this much *source* macro slope the stream-power
+    #: law is switched off and the model degenerates to texture, in
+    #: quantisation risers (277 levels) per CK2 source pixel (2.90 km).
+    #: 0 disables the gate and reproduces build 15.
+    #:
+    #: Why (docs/step_map_heightmap.md §2f).  A flat source has no macro
+    #: drainage, so the flow accumulation organises itself around the
+    #: *fractal seed* and the incision carves that seed's random valleys into
+    #: the plateau top; the uniform uplift then hands the mean back and what
+    #: is left is a field of closed depressions on a table.  That is
+    #: playtest 4's "Thay's pits are even larger".
+    erosion_slope_gate_steps: float = 1.0
+    #: pass 2 (§2g): the CK3 terrain classes whose relief is *ridged* --
+    #: sharp crests, smooth valleys -- rather than a symmetric Gaussian
+    #: field.  Playtest 4's "erosion is still creating smooth mountains
+    #: instead of sharp ones" is a shape complaint, and a Gaussian random
+    #: field has the same statistics up as down, so a mountain built from one
+    #: reads as dunes whatever its amplitude.
+    ridged_classes: tuple[str, ...] = (
+        "mountains", "desert_mountains", "hills", "terraced_hills",
+    )
+    #: pass 2 (§2g): how much of the relief seed is ridged on those classes,
+    #: 0..1.  Blended, not switched, and blurred by ``gain_blur_px`` like the
+    #: amplitude field, so a class border leaves no seam.
+    ridged_weight: float = 1.0
+    #: pass 2 (§2g): the crest exponent of ``(1 - |noise|) ** sharpness``.
+    #: 1 is a plain crease; higher sharpens the crest and flattens the valley.
+    ridged_sharpness: float = 3.0
+    #: pass 2 (§2g): multiplier on the hillslope diffusion over the ridged
+    #: classes.  Thermal diffusion is exactly the term that rounds a crest
+    #: off, so a mountain wants less of it than a plain does.
+    ridged_diffusion_scale: float = 0.15
+    #: pass 3b (§2f): the bound's window, canvas px.  One CK2 source pixel is
+    #: 1.9543 canvas px, so 3 covers it in every direction.
+    bound_window_px: int = 3
+    #: pass 3b (§2f): the bound's tolerance, as a multiple of the terrain
+    #: class's own vanilla high-frequency RMS (``hf_targets``, the table
+    #: measured in docs/evidence/map_fidelity/hf_by_terrain.csv).  The
+    #: finished map must satisfy ``source_local_min - tol <= out <=
+    #: source_local_max + tol`` over ``bound_window_px``: detail is texture
+    #: on the author's surface, never a hole in it.  0 disables the bound.
+    bound_tolerance_sigmas: float = 2.0
     #: pass 3 (river valleys): depth in 16-bit levels at the centreline
     river_depth: float = 900.0
     #: pass 4 (coast smoothing): land within this many canvas px of the coast
-    #: is blended toward the water level so beaches stay flat
+    #: is damped toward the source so beaches stay flat
     coast_smooth_px: float = 4.0
+    #: pass 4 mode.  ``"damp_detail"`` (default) damps the *synthesised
+    #: offset* over the first ``coast_smooth_px`` of land; ``"blend_to_water"``
+    #: is build 15's behaviour, which contracted the height itself toward the
+    #: water level and so dug an 8,000-level crater around every one of
+    #: Faerun's high-altitude CK2 lakes and river provinces
+    #: (docs/step_map_heightmap.md §2f).
+    coast_mode: str = "damp_detail"
 
 
 def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
@@ -385,10 +444,36 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
         headroom_fraction=float(
             raw.get("heightmap_detail_headroom_fraction", d.headroom_fraction)
         ),
+        erosion_slope_gate_steps=float(
+            raw.get("heightmap_detail_erosion_slope_gate_steps",
+                    d.erosion_slope_gate_steps)
+        ),
+        ridged_classes=tuple(
+            str(k) for k in raw.get("heightmap_detail_ridged_classes",
+                                    d.ridged_classes)
+        ),
+        ridged_weight=float(
+            raw.get("heightmap_detail_ridged_weight", d.ridged_weight)
+        ),
+        ridged_sharpness=float(
+            raw.get("heightmap_detail_ridged_sharpness", d.ridged_sharpness)
+        ),
+        ridged_diffusion_scale=float(
+            raw.get("heightmap_detail_ridged_diffusion_scale",
+                    d.ridged_diffusion_scale)
+        ),
+        bound_window_px=int(
+            raw.get("heightmap_detail_bound_window_px", d.bound_window_px)
+        ),
+        bound_tolerance_sigmas=float(
+            raw.get("heightmap_detail_bound_tolerance_sigmas",
+                    d.bound_tolerance_sigmas)
+        ),
         river_depth=float(raw.get("heightmap_detail_river_depth", d.river_depth)),
         coast_smooth_px=float(
             raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
         ),
+        coast_mode=str(raw.get("heightmap_detail_coast_mode", d.coast_mode)),
     )
 
 
@@ -440,8 +525,24 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         headroom_fraction=float(
             hmd.get("headroom_fraction", d.headroom_fraction)
         ),
+        erosion_slope_gate_steps=float(
+            hmd.get("erosion_slope_gate_steps", d.erosion_slope_gate_steps)
+        ),
+        ridged_classes=tuple(
+            str(k) for k in hmd.get("ridged_classes", d.ridged_classes)
+        ),
+        ridged_weight=float(hmd.get("ridged_weight", d.ridged_weight)),
+        ridged_sharpness=float(hmd.get("ridged_sharpness", d.ridged_sharpness)),
+        ridged_diffusion_scale=float(
+            hmd.get("ridged_diffusion_scale", d.ridged_diffusion_scale)
+        ),
+        bound_window_px=int(hmd.get("bound_window_px", d.bound_window_px)),
+        bound_tolerance_sigmas=float(
+            hmd.get("bound_tolerance_sigmas", d.bound_tolerance_sigmas)
+        ),
         river_depth=float(hmd.get("river_depth", d.river_depth)),
         coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
+        coast_mode=str(hmd.get("coast_mode", d.coast_mode)),
     )
 
 

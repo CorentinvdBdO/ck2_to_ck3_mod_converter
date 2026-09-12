@@ -1,0 +1,8 @@
+crop,map,grad_kurtosis,grad_p99_over_rms,grad_rms_levels_per_km,ridge_share,ridge_mean_run_px,ridge_p90_run_px,local_relief_p95,grad_kurtosis_vs_vanilla,grad_p99_over_rms_vs_vanilla,ridge_share_vs_vanilla,ridge_mean_run_px_vs_vanilla
+vanilla_mountains_0,ck3_vanilla,23.984,3.271,212.3,0.1198,125.68,34.3,3863.5,1.032,1.055,1.019,1.07
+vanilla_mountains_1,ck3_vanilla,17.098,2.772,214.8,0.1168,100.67,30.0,3828.0,0.736,0.894,0.994,0.857
+vanilla_mountains_2,ck3_vanilla,28.618,3.258,175.8,0.116,125.93,30.0,3309.0,1.232,1.051,0.987,1.072
+spine,plain_rescale,9.648,3.378,203.1,0.1651,173.85,25.0,3878.0,0.415,1.09,1.405,1.48
+thaymount,plain_rescale,16.644,3.159,218.6,0.1579,207.7,27.0,3602.0,0.716,1.019,1.343,1.769
+spine,build15,49.259,3.436,192.6,0.1296,137.54,31.0,3943.0,2.12,1.108,1.103,1.171
+thaymount,build15,66.054,4.208,372.3,0.1296,184.56,29.0,4500.0,2.843,1.357,1.103,1.572

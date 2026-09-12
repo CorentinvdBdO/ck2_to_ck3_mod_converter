@@ -1,0 +1,10 @@
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/shape_after.csv
+  vanilla_mountains_0    ck3_vanilla      kurt   23.98 ( 1.03x)  p99/rms  3.27 ( 1.05x)  ridge 0.1198 ( 1.02x)  run  125.68 ( 1.07x)
+  vanilla_mountains_1    ck3_vanilla      kurt   17.10 ( 0.74x)  p99/rms  2.77 ( 0.89x)  ridge 0.1168 ( 0.99x)  run  100.67 ( 0.86x)
+  vanilla_mountains_2    ck3_vanilla      kurt   28.62 ( 1.23x)  p99/rms  3.26 ( 1.05x)  ridge 0.1160 ( 0.99x)  run  125.93 ( 1.07x)
+  spine                  plain_rescale    kurt    9.81 ( 0.42x)  p99/rms  3.40 ( 1.10x)  ridge 0.1647 ( 1.40x)  run  162.49 ( 1.38x)
+  thaymount              plain_rescale    kurt   19.50 ( 0.84x)  p99/rms  3.16 ( 1.02x)  ridge 0.1591 ( 1.35x)  run  197.00 ( 1.68x)
+  spine                  build15          kurt    6.68 ( 0.29x)  p99/rms  3.52 ( 1.14x)  ridge 0.1289 ( 1.10x)  run  137.96 ( 1.18x)
+  thaymount              build15          kurt    2.99 ( 0.13x)  p99/rms  3.00 ( 0.97x)  ridge 0.1245 ( 1.06x)  run  101.58 ( 0.86x)
+  spine                  after            kurt   10.16 ( 0.44x)  p99/rms  3.94 ( 1.27x)  ridge 0.1220 ( 1.04x)  run  138.83 ( 1.18x)
+  thaymount              after            kurt   10.35 ( 0.45x)  p99/rms  3.46 ( 1.12x)  ridge 0.1203 ( 1.02x)  run   90.36 ( 0.77x)

@@ -1,0 +1,599 @@
+........................................................................ [  5%]
+........................................................................ [ 11%]
+........................................................................ [ 16%]
+........................................................................ [ 22%]
+........................................................................ [ 27%]
+........................................................................ [ 33%]
+........................................................................ [ 38%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 55%]
+........................................................................ [ 60%]
+........................................................................ [ 66%]
+........................................................................ [ 71%]
+........................................................................ [ 77%]
+........................................................................ [ 82%]
+........................................................................ [ 88%]
+........................................................................ [ 93%]
+........................................................................ [ 99%]
+.........                                                                [100%]
+=============================== warnings summary ===============================
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/00_customizable_localisation.txt: not valid UTF-8 (invalid start byte at byte 225571), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/00_customizable_localisation_DE.txt: not valid UTF-8 (invalid continuation byte at byte 1554), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/00_customizable_localisation_DE_Weapons.txt: not valid UTF-8 (invalid continuation byte at byte 514), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/00_customizable_localisation_ES.txt: not valid UTF-8 (invalid start byte at byte 61), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/00_customizable_localisation_FR.txt: not valid UTF-8 (invalid continuation byte at byte 30), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_loc_codes.py::test_faerun_defines_its_customizable_localisations
+tests/test_loc_step.py::test_the_whole_faerun_localisation_converts_cleanly
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/loc_codes.py:787: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/localisation/customizable_localisation/03_customizable_localisation_duels.txt: not valid UTF-8 (invalid start byte at byte 40572), decoded as cp1252
+    text, _ = read_text(path, "auto")
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/99_animals.txt: not valid UTF-8 (invalid continuation byte at byte 315), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/demihuman.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/dragons.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/dwarves.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/elves.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/giants.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/human.txt: not valid UTF-8 (invalid start byte at byte 14018), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/littlefolk.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/monsters.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/outsiders.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_cultures.py::test_outputs_match_what_the_step_writes
+tests/test_step_cultures.py::test_faerun_counts
+tests/test_step_cultures.py::test_group_slugs_are_unique
+tests/test_step_cultures.py::test_every_faerun_culture_gets_a_complete_ck3_block
+tests/test_step_cultures.py::test_every_faerun_culture_has_two_traditions_unless_deliberately_none
+tests/test_step_cultures.py::test_generated_culture_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/cultures/scalykind.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_religions.py::test_outputs_match_what_the_step_writes
+tests/test_step_religions.py::test_faerun_holy_sites_are_all_counties_and_within_the_cap
+tests/test_step_religions.py::test_a_holy_site_on_a_county_the_map_dropped_is_not_emitted
+tests/test_step_religions.py::test_faerun_run_counts
+tests/test_step_religions.py::test_generated_religion_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_landed_titles_counts
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/landed_titles/01_laerakond.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_step_religions.py::test_outputs_match_what_the_step_writes
+tests/test_step_religions.py::test_faerun_holy_sites_are_all_counties_and_within_the_cap
+tests/test_step_religions.py::test_a_holy_site_on_a_county_the_map_dropped_is_not_emitted
+tests/test_step_religions.py::test_faerun_run_counts
+tests/test_step_religions.py::test_generated_religion_files_round_trip
+tests/test_titles_ck2read.py::test_faerun_landed_titles_counts
+tests/test_titles_ck2read.py::test_faerun_every_cultural_name_key_is_a_culture_or_group
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/common/landed_titles/01_landed_titles.txt: not valid UTF-8 (invalid continuation byte at byte 51113), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/b_jaw_long.txt: not valid UTF-8 (invalid start byte at byte 248), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_atai.txt: not valid UTF-8 (invalid start byte at byte 129), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_bulobo.txt: not valid UTF-8 (invalid continuation byte at byte 106), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_chaikou_hills.txt: not valid UTF-8 (invalid start byte at byte 99), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_daong_forest.txt: not valid UTF-8 (invalid continuation byte at byte 88), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_elghal.txt: not valid UTF-8 (invalid continuation byte at byte 603), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_fertile_moon.txt: not valid UTF-8 (invalid continuation byte at byte 125), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_guihar.txt: not valid UTF-8 (invalid start byte at byte 99), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_hai_jungle.txt: not valid UTF-8 (invalid continuation byte at byte 88), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_halu.txt: not valid UTF-8 (invalid start byte at byte 129), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_hengfena.txt: not valid UTF-8 (invalid continuation byte at byte 125), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_jaria.txt: not valid UTF-8 (invalid start byte at byte 260), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_maerimydra.txt: not valid UTF-8 (invalid start byte at byte 134), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_palevash.txt: not valid UTF-8 (invalid start byte at byte 255), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_quchang.txt: not valid UTF-8 (invalid start byte at byte 126), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_saigai.txt: not valid UTF-8 (invalid continuation byte at byte 126), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_sumbria.txt: not valid UTF-8 (invalid continuation byte at byte 425), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/c_wellspring_hills.txt: not valid UTF-8 (invalid start byte at byte 126), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/d_silverymoon.txt: not valid UTF-8 (invalid continuation byte at byte 1127), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_ck2read.py::test_faerun_title_history_has_no_toplevel_keys_but_republics_are_baronies
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/titles/k_blade_kingdoms.txt: not valid UTF-8 (invalid continuation byte at byte 101), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/provinces/346 - Thentia.txt: not valid UTF-8 (invalid start byte at byte 224), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/1-1000 Miscellaneous.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/1001-2000 Deities.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/11001-13000 Dragon Coast and Inner Sea.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/13001-15000 Luskan.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/15001-17000 Neverwinter.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/17001-20000 Dwarves.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/20001-23000 Cormyr.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/2001-3000 Baldurs gate.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/23001-24000 Uthgardt.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/24001-26000 Impiltur.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/26001-28000 Dalelands.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/28001-30000 Tethyr.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/30001-30299 Narfelli.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/3001-5000 High Moor.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/30300-30599 Orcs.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/30600-30899 Gnomes.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/30900-31000 Thinguth.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/31001-32000 Erlkazar.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/32001-33000 Nelanther.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/33001-35000 Amn.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/35001-36000 Yikarians.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/36001-37000 Thinguth II.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/37001-38000 Tuigan.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/38001-39000 Semphar.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/39001-40000 Ra-Khati and Khazari.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/40001-40500 Mulhorand.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/40500-40749 Chessentan.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/40750-41000 Untheric.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/41001-42000 Savage Frontier.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/42001-44000 Calimshan.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/44001-45000 Arnaden.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/45001-46000 Evermeet.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/46001-47000 High Forest.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/47001-48000 Minor Elf Realms.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/48001-49000 Cormanthor.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/49001-50000 Vilhon Reach.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/50001-51000 Moonshae Isles.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/5001-7000 Silver Marches.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/51001-52000 Sembia.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52001-52100 Thinguth.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52101-52200 Vaasa.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52201-52400 Shaaran.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52401-52500 Sossrim.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52501-52800 Ulutiun.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/52801-53000 Chult.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/53001-54000 Thay.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/54001-55000 Border Kingdoms.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/55001-56000 Dambrath.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/56001-57000 Moonsea and Zhentilar.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/57001-58000 Najara and Serpentes.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/58001-58200 Luiren.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/58201-59000 Lapaliiya.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/59001-60000 Aglarond.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/60001-60100 Shou Lung offmap.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/61001-62000 Anauroch.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/62001-63000 Zakhara.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/63001-63500 Shao Shan and Sempadan.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/63501-63700 The Vast.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/63701-64000 Damara.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/64001-64500 Halruaa.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/64501-65000 Shining Lands.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/65001-65200 Ama Basin.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/65201-65500 Rashemi.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/65501-65800 Utter East.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/65801-66200 Shou Lung.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/66201-66400 Outsiders.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/66401-67000 Elven vassals.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/67001-68000 Shining Lands II.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/68001-69000 Akota.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/69001-70000 Laerakond.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/70001-71000 Thesk.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/7001-9000 Waterdeep.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/71001-72000 Magisters.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/90000-100000 Monsters.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+tests/test_titles_write.py::test_faerun_counts
+  /home/cvdbdo/git/paradox/ck3/wt/relief-pits/src/ck2ck3/pdx/parser.py:242: EncodingWarning: /home/cvdbdo/git/paradox/ck3/wt/relief-pits/Faerun/Faerun/history/characters/9001-11000 Western Heartlands.txt: not valid UTF-8 (invalid continuation byte at byte 3), decoded as cp1252
+    text, used = read_text(path, encoding)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1305 passed, 232 warnings in 54.67s

@@ -420,7 +420,10 @@ heightmap_detail_gain_mode = "deficit"
 # macro relief. Filling the shortfall down to 0.01 cycles/km, as build 13 did,
 # therefore invented 35-60 km relief on ground the CK2 author drew flat
 # (+-20,000 levels across Thay's plateaus). 0 reproduces build 13.
-heightmap_detail_fill_min_cycles_per_km = 0.05
+# Raised 0.05 -> 0.10 by lane relief-pits (§2f): at 0.05 the fill still wrote
+# more than one riser below the source's own local minimum on 4.7 % of Thay's
+# land; at 0.10 that is 1.6 %, and 6.7/10 km actually improve against vanilla.
+heightmap_detail_fill_min_cycles_per_km = 0.10
 
 # The rest default to the prototype's own numbers (docs/map_fidelity.md §4.2)
 # and are only worth overriding for an experiment:
@@ -432,6 +435,40 @@ heightmap_detail_fill_min_cycles_per_km = 0.05
 heightmap_detail_headroom_fraction = 0.5
 # heightmap_detail_river_depth = 900.0
 # heightmap_detail_coast_smooth_px = 4.0
+
+# --- playtest 4: the pits, and the bound that makes them impossible
+# (docs/step_map_heightmap.md §2f).
+# Pass 4 damps the synthesised *offset* over the first few pixels of land
+# instead of contracting the height itself toward the water level.
+# "blend_to_water" is build 15's behaviour, and it is what dug an 8,000-level
+# crater around every one of Faerun's high-altitude CK2 lakes and river
+# provinces: 8.4 % of Thay's land, pit p95 4086 levels against the plateau
+# interior's 290.
+heightmap_detail_coast_mode = "damp_detail"
+# The erosion may only run where the CK2 *source* has macro slope, in
+# quantisation risers (277 levels) per source pixel (2.90 km). A flat source
+# has no drainage, so the flow accumulation organises around the fractal seed
+# and the stream-power law carves that seed's random valleys into the plateau
+# top. 0 disables the gate and reproduces build 15.
+heightmap_detail_erosion_slope_gate_steps = 1.0
+# The hard bound: source_local_min - tol <= out <= source_local_max + tol over
+# one CK2 source pixel, tol = 2 x the terrain class's own vanilla
+# high-frequency RMS (plains 86, hills 213, mountains 311 levels). Detail is
+# texture on the author's surface, never a hole in it. 0 disables it.
+heightmap_detail_bound_window_px = 3
+heightmap_detail_bound_tolerance_sigmas = 2.0
+
+# --- pass 2, ridged relief on the mountain classes
+# (docs/step_map_heightmap.md §2g). Playtest 4: "erosion is still creating
+# smooth mountains instead of sharp ones". A Gaussian random field has the
+# same statistics up as down, so a mountain built from one reads as dunes;
+# (1 - |noise|)**sharpness creases every octave along its zero set, which is a
+# ridge line. Less hillslope diffusion there too, since that is the term that
+# rounds a crest off.
+heightmap_detail_ridged_classes = ["mountains", "desert_mountains", "hills", "terraced_hills"]
+heightmap_detail_ridged_weight = 1.0
+heightmap_detail_ridged_sharpness = 3.0
+heightmap_detail_ridged_diffusion_scale = 0.15
 
 [map.heightmap]
 # CK2 carries almost no bathymetry: Faerun's whole ocean rescales into

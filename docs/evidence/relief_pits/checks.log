@@ -1,0 +1,24 @@
+ok    bash -n scripts/make_paint_edges_before_config.sh
+ok    bash -n scripts/paint_variants.sh
+ok    bash -n scripts/relief_sharp_ablate.sh
+ok    bash -n scripts/tc_tiger_before_after.sh
+ok    bash -n scripts/tiger_characters.sh
+ok    bash -n scripts/validate_output_mod.sh
+ok    bash -n ci/checks.sh
+ok    python compileall
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1305 passed, 232 warnings in 77.88s (0:01:17)
+ok    pytest
+ok    ck2ck3 --list-steps
+ok    overrides/loc_keys.csv fresh
+ok    docs/PROJECT.md
+ok    docs/DECISIONS.md
+ok    STATUS.md
+ok    CLAUDE.md
+ok    docs/cli.md
+ok    docs/formats_pdx_quirks.md
+ok    docs/integration_run.md
+ok    STATUS.md filled
+ok    Faerun clone present
+checks green

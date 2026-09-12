@@ -1,0 +1,18 @@
+canvas (6784, 8320) land 46.9% terrain classes 11
+  thay   plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1108  bound  0.0000  MOAT    -44  dstd      0  ridge 0.153
+  spine  plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1385  bound  0.0000  MOAT    -24  dstd      0  ridge 0.129
+  thay   live_build15       pit p95     576 p99    2612 >riser  0.0934  sink p99   1041  bound  0.0884  MOAT   -122  dstd    753  ridge 0.128
+  spine  live_build15       pit p95     514 p99    1353 >riser  0.0880  sink p99   1420  bound  0.0788  MOAT   -129  dstd    714  ridge 0.114
+fix_coast_only: 62 s
+  thay   fix_coast_only     pit p95     310 p99     751 >riser  0.0559  sink p99   1184  bound  0.0498  MOAT   -108  dstd    423  ridge 0.134
+  spine  fix_coast_only     pit p95     379 p99     858 >riser  0.0677  sink p99   1444  bound  0.0585  MOAT   -148  dstd    519  ridge 0.120
+fix_coast_gate: 62 s
+  thay   fix_coast_gate     pit p95     337 p99     805 >riser  0.0606  sink p99   1393  bound  0.0526  MOAT   -112  dstd    436  ridge 0.133
+  spine  fix_coast_gate     pit p95     407 p99     919 >riser  0.0739  sink p99   1497  bound  0.0637  MOAT   -163  dstd    538  ridge 0.119
+fix_all: 64 s
+  thay   fix_all            pit p95     236 p99     507 >riser  0.0433  sink p99   1212  bound  0.0024  MOAT    -86  dstd    391  ridge 0.131
+  spine  fix_all            pit p95     236 p99     527 >riser  0.0442  sink p99   1468  bound  0.0013  MOAT    -95  dstd    475  ridge 0.118
+fix_all_fill010: 66 s
+  thay   fix_all_fill010    pit p95     113 p99     334 >riser  0.0144  sink p99   1170  bound  0.0019  MOAT   -113  dstd    266  ridge 0.132
+  spine  fix_all_fill010    pit p95     108 p99     324 >riser  0.0135  sink p99   1451  bound  0.0010  MOAT   -103  dstd    321  ridge 0.120
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/pits_ablate_after.csv
