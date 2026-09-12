@@ -1,0 +1,13 @@
+
+== thay window (639, 559) land 82.8% tol median 193 levels
+  plain_rescale    pit p95       0 p99       0 >riser  0.0000  sink p99  33243  bound-under  0.0000  ridge 0.153
+  build15          pit p95     576 p99    2612 >riser  0.0934  sink p99  30830  bound-under  0.0884  ridge 0.128
+  signed_diff_thay_build15.png  +-3358 levels full scale
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/transects_thay.csv
+
+== spine window (100, 283) land 98.3% tol median 427 levels
+  plain_rescale    pit p95       0 p99       0 >riser  0.0000  sink p99  23824  bound-under  0.0000  ridge 0.129
+  build15          pit p95     514 p99    1353 >riser  0.0880  sink p99  23891  bound-under  0.0788  ridge 0.114
+  signed_diff_spine_build15.png  +-2409 levels full scale
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/transects_spine.csv
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/pits_live_both.csv

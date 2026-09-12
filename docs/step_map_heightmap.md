@@ -77,10 +77,17 @@ crop:
    river-width index. Subtracted on **land only**, so a river valley can only
    ever cut a pixel lower than what passes 1–2 already built — it never
    raises one above its neighbours.
-4. **Coast smoothing** — land within `heightmap_detail_coast_smooth_px`
-   (default 4 canvas px) of the shoreline is blended toward the water level,
-   so beaches stay flat instead of gaining mountain-scale noise right at the
-   waterline.
+4. **Coast smoothing** — the synthesised offset is damped over the land
+   within `heightmap_detail_coast_smooth_px` (default 4 canvas px) of a
+   shoreline, so beaches stay flat instead of gaining mountain-scale noise
+   right at the waterline. Until 2026-09-12 this contracted the *height*
+   toward the water level, which dug a crater around every inland CK2 lake
+   (**§2f**); `heightmap_detail_coast_mode = "blend_to_water"` restores it.
+5. **The source bound** — the output is held inside
+   `[source_local_min − tol, source_local_max + tol]` over a window of one
+   CK2 source pixel, `tol` being that pixel's terrain class's own measured
+   vanilla high-frequency amplitude (**§2f**). Detail is texture on the CK2
+   author's surface, never a hole in it.
 
 ---
 
@@ -477,6 +484,8 @@ part of the moat fix.
 
 ---
 
+---
+
 ## 2e. `resolution_factor = 2`, measured (not shipped)
 
 Playtest 3's second finding: *"I see the erosion, but still too smooth, not
@@ -536,6 +545,393 @@ no cheap version.
 
 ---
 
+## 2f. Why build 15 still had pits — and the bound that makes them impossible
+
+**What playtest 4 said.** *"Thay's pits are even larger"*, after the §2d moat
+fix, and *"erosion is still creating smooth mountains instead of sharp ones"*
+(§2g). This section is the first half.
+
+### The metric §2d used could not see this
+
+§2d drove **MOAT** — cliff-foot undershoot *minus* the same statistic away
+from a cliff — from +2927 to −116 on Thay. Both that number and the
+playtest are right, and that is the lesson: MOAT is a **difference**, so a
+defect that digs holes *everywhere* raises its control as fast as it raises
+its signal and cancels out of it. It answers "is the trench correlated with
+the escarpment", which was the build-13 question, and it cannot answer "is
+there a trench".
+
+The metric this section drives is absolute and has a physical zero
+(`scripts/relief_pits_common.pit_depth`):
+
+> **pit depth** = `source_local_min − output`, the local minimum taken over a
+> window of **one CK2 source pixel** (1.9543 canvas px, so a 3 px square).
+
+Against the local *minimum* rather than the source value, so a real
+escarpment costs nothing: at a cliff the window already spans both sides, and
+the top of the drop is bounded below by the foot of it. On ground the author
+drew flat the two collapse together and the metric is exactly "how far below
+the author's own surface did we dig". Reported as p95, p99, and the fraction
+of land more than **one quantisation riser (277 levels)** down. The land mask
+is the province mask read off a finished map, never `plain_rescale >
+water_level` (§2d, and CLAUDE.md).
+
+### The ablation — one whole-canvas run per candidate
+
+**The ablation has to run at full canvas size**, which is a finding of its
+own. `relief_sharp_moat.py --mode isolate` toggles each pass on a 768 px
+crop; under build-15 settings that is degenerate. The crop holds no all-land
+256 px interior patch, so `_interior_patch_spectrum` returns nothing, the
+fall-back whole-crop spectrum of a terraced window already exceeds vanilla's
+curve everywhere above 0.05 cycles/km, the deficit comes out identically
+zero — and `eroded`, `isotropic` and `erosion_incision = 0` then produce
+**byte-identical** output (delta RMS 474.9 on all three, `verified`). A crop
+ablation cannot charge the fill or the erosion with anything.
+`scripts/relief_pits_ablate_canvas.py` runs each variant over the real
+8320 × 6784 sheet (~60 s, ~6 GB) and measures the two study windows.
+
+Thay window (canvas y 1583–2222, x 4752–5311), province land mask,
+`docs/evidence/relief_pits/pits_ablate_before.csv`, all `verified`:
+
+| variant | pit p95 | pit p99 | land > 1 riser down | Spine p95 | Spine p99 |
+|---|---|---|---|---|---|
+| plain rescale | 0 | 0 | 0 % | 0 | 0 |
+| **build 15, the shipped map** | **576** | **2612** | **9.34 %** | 514 | 1353 |
+| build 15 reproduced by this harness | 572 | 2611 | 9.29 % | 508 | 1345 |
+| (iii) pass 1 alone (Perona–Malik) | 4 | **76** | 0.01 % | −89 | 34 |
+| (i) `erosion_incision = 0` | 774 | 2818 | 11.84 % | 788 | 1928 |
+| (i) `relief_mode = "isotropic"` | 564 | 2622 | 9.78 % | 445 | 1098 |
+| (ii) `fill_min_cycles_per_km = 0.10` | 333 | 2604 | 5.58 % | 204 | 813 |
+| (ii) `fill_min_cycles_per_km = 0.172` | 282 | 2606 | 5.03 % | 145 | 648 |
+| (ii) `fill_gain = 0` (no fill at all) | 285 | 2614 | 5.06 % | 145 | 643 |
+| pass 3 off (`river_depth = 0`) | 491 | 2604 | 7.75 % | 428 | 1300 |
+| **pass 4 off (`coast_smooth_px = 0`)** | 344 | **823** | 6.31 % | 447 | 999 |
+
+**Candidate (iii), Perona–Malik, is acquitted outright**: on its own it digs
+76 levels at p99 against a 193-level tolerance.
+
+**Candidate (i), the erosion carving basins into the plateau top, is
+acquitted as the cause** — and this is the surprise. Removing the incision
+makes the pits *worse* (p95 572 → 774), and white noise in place of the
+eroded field changes nothing (564). The mechanism the brief suspected is
+real (a flat source has no macro drainage, so the model organises around its
+own fractal seed) but it is not what digs the holes: the radial equaliser
+downstream re-imposes the same spectrum whatever phase it is handed, and the
+erosion's own redistribution happens to *reduce* the extremes.
+
+**Candidate (ii), the fill, owns half the p95 and none of the tail.** Turn
+the fill off entirely and p95 falls 572 → 285 while p99 stays at 2614.
+
+**The tail is pass 4, the coast smoothing — a fourth candidate none of the
+three readings named.** Turning it off takes p99 2611 → 823. Split the
+window by zone (`docs/evidence/relief_pits/pits_zones_both.csv`, `verified`):
+
+| Thay zone | share of land | build 15 pit p95 / p99 / max | this build |
+|---|---|---|---|
+| within 5 px of a water province | 8.4 % | **4086 / 6644 / 8141** | **53 / 191 / 427** |
+| within 4 px of a traced river | 6.4 % | 748 / 1217 / 3279 | 427 / 618 / 623 |
+| plateau interior | 85.2 % | 290 / 788 / 3044 | 60 / 263 / 829 |
+
+(The river band is the one zone that is *meant* to sit below the source:
+pass 3 carves where CK2 says a river is. The bound now holds it to 618
+levels at p99 rather than 1217.)
+
+### The cause, in one sentence
+
+**Faerûn's CK2 lakes and river provinces sit on high ground, CK3's water
+level is global, and pass 4 dragged the ring of land around each one 55 % of
+the way down to it.**
+
+The median CK2 lake/river-province pixel in the Thay crop is at **14,301** in
+the plain rescale (§2d already records this, for a different reason). The
+heightmap owes CK3 a water pixel at or below `water_level` = 4883, so every
+such province is already a hole punched through a 20,000-level plateau —
+unavoidable, and the engine's rule, not ours. What was ours is the next
+line: `_smooth_coast` computed
+`water_level + (out − water_level) · factor` with `factor` = 0.45 at the
+shoreline, i.e. it pulled the first four pixels of land 55 % of the way down
+to sea level as well. On Thay that is an **8,000-level crater** around every
+lake, and Thay is full of them. The same code runs at the real ocean coast,
+where it is harmless because the CK2 source is already near sea level there
+— which is why it survived three builds unnoticed.
+
+"Even larger" than before the moat fix is consistent: §2d flattened the
+plateau interior, so the craters stopped competing with 20,000 levels of
+fabricated 47 km undulation and became the thing you see.
+
+### The four fixes
+
+1. **`heightmap_detail_coast_mode = "damp_detail"`** (new default). Pass 4
+   now damps the *synthesised offset* over the first `coast_smooth_px` of
+   land — `h2 + (out − h2)·factor` — instead of contracting the height
+   toward the water level. That is the whole of the pass's stated job ("a
+   beach does not gain mountain-scale noise at the waterline"), and it
+   leaves the shore at the height the CK2 author drew, so the drop into a
+   lake happens in the one pixel where the lake starts.
+   `"blend_to_water"` restores build 15.
+2. **`heightmap_detail_erosion_slope_gate_steps = 1.0`** (new). The
+   stream-power law may only run where the *source* has macro slope — one
+   quantisation riser per CK2 source pixel, 277 levels over 2.90 km,
+   measured on a one-source-pixel Gaussian of the de-terraced base, with a
+   smooth-step transition so the gate leaves no outline. Where it is 0 the
+   model degenerates to seed plus hillslope diffusion: texture, no carving.
+   This is the candidate-(i) mechanism closed by construction. It is a
+   correctness fix, not a pit fix — it costs a little on the metric (below),
+   for the same reason removing the incision did.
+3. **`heightmap_detail_bound_window_px = 3`,
+   `heightmap_detail_bound_tolerance_sigmas = 2.0`** (new): the hard bound,
+   below.
+4. **`heightmap_detail_fill_min_cycles_per_km` 0.05 → 0.10.** Not a new key —
+   §2d's own, moved one octave. It is the change that makes the bound a
+   backstop rather than a mechanism, and the measurement that justifies it is
+   the bound's own hit rate: at 0.05 the fill wants to leave the author's
+   surface often enough that the clamp is doing real work.
+
+### The bound
+
+> For every land pixel, over a window of one CK2 source pixel,
+> `source_local_min − tol ≤ output ≤ source_local_max + tol`,
+> with `tol` = `bound_tolerance_sigmas` × the pixel's own terrain class's
+> measured vanilla high-frequency RMS (`heightmap_detail_hf_targets`, from
+> `docs/evidence/map_fidelity/hf_by_terrain.csv`: plains 86, hills 213,
+> mountains 311, desert_mountains 323 levels). Median tolerance on Thay:
+> **193 levels**; on the Spine of the World **427**.
+
+Three things about it:
+
+* **The clamp is toward the source, not toward the water level.** §2c(d)'s
+  headroom limiter bounds the fill by the room between the pixel and the sea,
+  which is the right bound for *not drowning* land and the wrong one for *not
+  digging*: on a 20,000-level plateau it permits a 15,000-level pit.
+* **It is a `tanh` saturation over the last quarter of the tolerance**, not a
+  hard clip — a hard clip prints the bound's own shape into the map as a flat
+  spot, which is the artefact being removed. The saturation band is a
+  fraction of the **tolerance**, not of the interval: a fraction of the
+  interval squashes legal terrain (measured, and fixed: a 20,000-level
+  plateau beside a lake came out at 19,186).
+* **It is a backstop and its hit fraction is reported**, in the pass's stats
+  dict and in the `map` step's own summary line
+  (`bound_limited_pct_of_land`) — on the shipped build, **2.87 % of all
+  land** is moved by more than one level. The passes in front of it are
+  fixed so that it rarely binds; if that number climbs, the fill is writing
+  terrain the source has no basis for. "Hit" means the saturation actually
+  moved the pixel, not that it entered the soft band: counting entries
+  overstates the backstop's work by an order of magnitude (15.0 % of land at
+  `fill_min_cycles_per_km = 0.05`).
+
+`heightmap_detail_bound_tolerance_sigmas = 0` disables it.
+
+### Measured, whole canvas
+
+`scripts/relief_pits_ablate_canvas.py`,
+`docs/evidence/relief_pits/pits_ablate_staged.csv` and `pits_ablate_after.csv`,
+`verified`. "outside the bound" is the fraction of land more than one level
+(integer rounding) outside `[src_local_min − 2σ, src_local_max + 2σ]`.
+
+| build | Thay pit p95 | p99 | land > 1 riser down | outside the bound | Spine p95 | p99 | land > 1 riser down |
+|---|---|---|---|---|---|---|---|
+| plain rescale | 0 | 0 | 0 % | 0 % | 0 | 0 | 0 % |
+| **build 15, shipped** | 576 | 2612 | **9.34 %** | **8.81 %** | 514 | 1353 | **8.80 %** |
+| + `coast_mode = "damp_detail"` | 310 | 751 | 5.59 % | 4.98 % | 379 | 858 | 6.77 % |
+| + the erosion slope gate | 337 | 805 | 6.06 % | 5.26 % | 407 | 919 | 7.39 % |
+| + the bound + §2g ridged relief | 256 | 597 | 4.71 % | 0.02 % | 263 | 614 | 4.79 % |
+| + fill from 0.10 c/km | 125 | 376 | 1.59 % | 0.00 % | 140 | 372 | 1.53 % |
+| **the shipped build, whole `map` run** | **136** | **392** | **1.78 %** | **0.00 %** | **140** | **393** | **1.73 %** |
+
+The last row is a real conversion (`configs/faerun.toml` at the new
+defaults), the rest are the ablation harness on the same canvas; the two
+agree to within the seed. The `map` step costs **142.8 s**, against build
+15's 143 s — the bound is two morphological filters and the gate one
+Gaussian, and the ridged seed replaces a `standard_normal` it was already
+paying for.
+
+Read it as four independent changes, each with its own share:
+
+* the **coast mode** is the whole of the p99 tail — 2612 → 751 on its own;
+* the **slope gate** costs a little (310 → 337), the same way removing the
+  incision entirely did, and it is here for correctness: an erosion model
+  with no drainage to model is carving its own seed. Honest, and flagged;
+* the **bound** takes the residual to 4.7 % of land more than a riser down,
+  and to ~0 % outside the tolerance;
+* **`fill_min_cycles_per_km` 0.05 → 0.10** is the change that makes the bound
+  a backstop rather than a mechanism. At 0.05 the pass writes outside the
+  author's surface often enough that the bound has real work to do; at 0.10
+  the pits fall to 1.6 % of land and the backstop moves **2.6 % of all land**
+  by more than one level.
+
+**And the spectrum gets *better*, not worse.** 48 all-land 256 px interior
+patches, ratio to vanilla's own land spectrum
+(`docs/evidence/relief_pits/spectrum_bands.csv`, `verified`):
+
+| cycles/km | km | plain rescale | build 15 | this build |
+|---|---|---|---|---|
+| 0.021 | 47 | 0.55 | 0.54 | 0.54 |
+| 0.040 | 25 | 0.42 | 0.82 | 0.40 |
+| 0.050 | 20 | 0.42 | 0.96 | 0.39 |
+| 0.071 | 14 | 0.49 | 0.98 | 0.67 |
+| 0.100 | 10 | 0.70 | 0.92 | **1.14** |
+| 0.150 | 6.7 | 1.23 | **0.65** | **1.13** |
+| 0.200 | 5.0 | 1.35 | 0.84 | 1.03 |
+| 0.300 | 3.3 | 1.50 | 2.08 | 2.09 |
+
+The 14–25 km band goes back to the plain rescale, which is §2d's own
+argument carried one octave further: below the CK2 source's Nyquist the
+author's terrain is resolved, and a shortfall there is Faerûn's relief rather
+than ours to invent. In exchange, 6.7 km — "the one point that got worse" in
+§2d, at 0.65 × — comes back to 1.13 ×, and 10 km to 1.14 ×. 0.3 cycles/km is
+unchanged at 2.09 × (§7's standing item: that is the de-terraced base's own
+residual riser energy, not the fill).
+
+### Evidence and what to run
+
+`docs/evidence/relief_pits/`, produced by four scripts:
+
+| script | what |
+|---|---|
+| `scripts/relief_pits_common.py` | the pit metric, the closed-depression (sink) metric, the bound check, the shape metrics, and the per-pixel terrain class read back off a generated mod. Importable, no side effects; the invariant script and the unit tests use the same code. |
+| `scripts/relief_pits_diagnose.py` | `--mode live` (pit/bound/shape per map, signed-difference and hillshade PNGs, interior **and** rim transects), `--mode zones` (coast band / river band / interior), `--mode ablate` (the crop ablation, kept only to demonstrate that it is degenerate) |
+| `scripts/relief_pits_ablate_canvas.py` | the whole-canvas ablation, one `heightmap_detail.apply` per variant |
+| `scripts/relief_pits_shape.py` / `relief_pits_spectrum.py` | §2g's shape numbers and the interior spectrum, against vanilla |
+
+Figures: `signed_diff_{thay,spine}_build15.png` (the craters are the blue
+rings around every inland water province), `transects_{thay,spine}.png` (the
+plateau interior row and the steepest rim row, every map on one axis),
+`hillshade_{thay,spine,thaymount}_*.png`, `hillshade_vanilla_mountains.png`.
+
+### Still open
+
+* **The erosion slope gate costs a little on the pit metric** (Thay p95
+  310 → 337 with everything else equal). It is kept because an erosion model
+  with no drainage to model is carving its own seed, which is not a defensible
+  thing for the pass to do — but it is a correctness argument, not a
+  measured win, and it is flagged here rather than buried.
+* **A river valley is still a pit by this metric** (Thay river band p95 748 in
+  build 15). It is deliberate — pass 3 carves where CK2 says a river is — and
+  the bound permits it only within the tolerance, so a 900-level centreline
+  now costs the bound a hit on every river pixel. Whether `river_depth`
+  should be inside the tolerance instead is a look call, not a measurement.
+* **0.3 cycles/km stays at 2.09 × vanilla** (§7), and the 14-25 km band is now
+  deliberately Faerûn's own.
+
+---
+
+## 2g. Ridged relief — "smooth mountains instead of sharp ones"
+
+Playtest 4's second finding. It is **not** a spectrum complaint: §2c already
+measures us at 2.05 × vanilla's amplitude at 0.3 cycles/km and inside ±30 %
+from 0.05 to 0.2. Amplitude is not the problem, shape is.
+
+### What "shape" is, measured
+
+Four dimensionless numbers, all on the 8 px (12 km) high-pass so a crop's
+macro tilt cannot decide them, all in `scripts/relief_pits_common`:
+
+* `grad_kurtosis` — excess kurtosis of `|∇h|`. Long flat stretches with rare
+  steep ones give a large number; a landscape of constant-slope faces gives a
+  small one.
+* `grad_p99_over_rms` — the same question without the fourth power.
+* `ridge_share` — the fraction of land pixels that are **crests**: the
+  Hessian's most negative eigenvalue is negative and the pixel is at least as
+  high as the bilinear surface one pixel away in both directions along that
+  eigenvector. No amplitude threshold anywhere in it, so it is pure shape.
+* `ridge_mean_run_px` — pixel-weighted mean size of a connected crest
+  component: how far a ridge line runs before it breaks up.
+
+The reference is vanilla's own three highest-relief all-land 1024 px mountain
+windows (`heightmap_erosion_evidence.VANILLA_CROPS`), 2×2-averaged to our
+1.4839 km/px so both sides are sampled at the same ground scale, against two
+512 px (760 km) crops of ours: the Spine of the World, and Thaymount (located
+as the highest pixel of the plain rescale inside the Thay window).
+
+### The mechanism
+
+A **Gaussian random field is symmetric**: its peaks and its pits have the
+same shape, so a mountain built from one reads as dunes however tall it is.
+`fractal_seed` is exactly such a field, and the radial equaliser downstream
+changes no phase, so whatever the erosion does the crests stay round.
+
+`heightmap_erosion.ridged_seed` folds each octave through
+`(1 − |n|) ** sharpness`. `|n|` creases along the zero set of `n`, which is a
+set of *curves*, so every octave's zero crossing becomes a ridge line; the
+exponent sharpens the crease and flattens the valley floor. The octaves share
+one white field, as in `fractal_seed`, so the fine crests sit on the coarse
+ones rather than crossing them at random.
+
+On a 256 px unit-variance field (`verified`):
+
+| seed | skew | grad kurtosis | ridge share | ridge mean run px |
+|---|---|---|---|---|
+| `fractal_seed` (smooth) | 0.07 | 8.36 | 0.158 | 155 |
+| `ridged_seed`, sharpness 2 | **0.42** | **1.05** | **0.181** | **1663** |
+| `ridged_seed`, sharpness 3 | 0.67 | 1.31 | 0.187 | 3355 |
+
+Note the direction of the kurtosis: a ridged field's gradient is *less*
+kurtotic, because a V-shaped face has a nearly constant slope where a sum of
+Gaussian octaves has long flat stretches and rare steep ones. That matters,
+because our build-15 map is on the wrong side of vanilla on that number
+(below).
+
+Two config knobs apply it per terrain class, both blurred by
+`gain_blur_px` like the amplitude field so a class border leaves no seam:
+
+* `heightmap_detail_ridged_classes` (default `mountains`,
+  `desert_mountains`, `hills`, `terraced_hills`) and
+  `heightmap_detail_ridged_weight` (1.0) mix the ridged seed into the
+  erosion's initial relief;
+* `heightmap_detail_ridged_diffusion_scale` (0.15) cuts the hillslope
+  diffusion on those classes — thermal diffusion is precisely the term that
+  rounds a crest off, so a mountain wants less of it than a plain does.
+
+`heightmap_detail_ridged_sharpness` (3.0) is the crest exponent.
+
+### §2g measured
+
+Two 512 px (760 km) crops of ours against the mean of vanilla's three,
+high-passed at 8 px, **on the land mask eroded by 4 px**
+(`docs/evidence/relief_pits/shape_before.csv`, `shape_after.csv`,
+`scripts/relief_pits_shape.py`, all `verified`). Figures in brackets are the
+ratio to vanilla's own mean (23.2 / 3.10 / 0.1175 / 117.4).
+
+| crop | map | grad kurtosis | p99/RMS \|grad\| | ridge share | ridge run px |
+|---|---|---|---|---|---|
+| Spine | plain rescale | 9.8 (0.42) | 3.40 (1.10) | 0.165 (1.40) | 162 (1.38) |
+| Spine | build 15 | 6.7 (**0.29**) | 3.52 (1.14) | 0.129 (1.10) | 138 (1.18) |
+| Spine | this build | 10.2 (**0.44**) | 3.94 (1.27) | 0.122 (**1.04**) | 139 (**1.18**) |
+| Thaymount | plain rescale | 19.5 (0.84) | 3.16 (1.02) | 0.159 (1.35) | 197 (1.68) |
+| Thaymount | build 15 | 3.0 (**0.13**) | 3.00 (0.97) | 0.125 (1.06) | 102 (0.86) |
+| Thaymount | this build | 10.4 (**0.45**) | 3.46 (1.12) | 0.120 (**1.02**) | 90 (0.77) |
+
+**The masking is not a detail, it is the measurement.** Unmasked, build 15's
+own two crops read gradient kurtosis **49.3 and 66.1** — *twice* vanilla's
+23.2, and meaningless: CK3's water level is global, so a lake shore is a
+one-pixel drop of thousands of levels and one such edge dominates a fourth
+moment. On the same crops' interiors the same build reads **6.7 and 3.0**.
+Eroding the land mask by 4 px is the same rule §2c(b) already applies to the
+spectrum, and it inverts the answer: on the interior our mountains are **far
+smoother** than vanilla's, which is what the playtest said.
+
+**Result against the target.**
+
+* **`ridge_share` is met**: 1.02–1.04 × vanilla, inside ±20 %, from 1.06–1.10
+  in build 15. `ridge_mean_run_px` is 1.18 × on the Spine and 0.77 × on
+  Thaymount — Thaymount's crest lines break up more than vanilla's do, which
+  is the one shape number that got slightly worse than build 15's 0.86 ×.
+* **`grad_kurtosis` is not met**: 0.13–0.29 × vanilla in build 15, **0.44–0.45
+  × here**. The ridged seed roughly triples it and it is still less than half
+  of vanilla's. Two reasons, both `verified` and both structural: the metric
+  lives at the top of our band (an 8 px high-pass on a 1 × sheet whose
+  Nyquist is 0.337 cycles/km against vanilla's 0.674 — §7's standing limit,
+  quantified in §2e), and the §2b de-terrace deliberately spends the
+  quantisation risers that give the *plain rescale* its 0.42–0.84 ×.
+  `resolution_factor = 2` is the lever that moves it; nothing inside a 1 ×
+  pass got past 0.45 here.
+
+The ablation's own contribution, same crops: with `ridged_weight = 0` the
+build measures 0.40 / 0.40 × instead of 0.44 / 0.45 ×, and the pit metrics are
+unchanged (Thay p95 129 against 134). So the ridged seed is a shape change
+and costs nothing measurable elsewhere.
+---
+
 ## 3. Invariants — what cannot break, and why it cannot
 
 * **Every water pixel is returned byte-identical to the plain rescale.**
@@ -552,6 +948,34 @@ no cheap version.
   0.349 % of land rather than 8.193 %. `land_pct_on_clamp_floor` is in the
   stats dict and in the `map` step's summary for exactly this reason: if it
   climbs, the fill is writing terrain the map has no room for.
+* **The output never leaves the CK2 author's own surface, plus texture**
+  (§2f, since 2026-09-12). Over a window of one CK2 source pixel
+  (`heightmap_detail_bound_window_px` = 3 canvas px), every land pixel
+  satisfies `source_local_min - tol <= out <= source_local_max + tol`, with
+  `tol` = `heightmap_detail_bound_tolerance_sigmas` (2.0) times the pixel's
+  own terrain class's measured vanilla high-frequency RMS. `_bound_to_source`
+  is the last pass, and it saturates rather than clips, so the bound holds by
+  construction and leaves no flat spot where it binds. Checked independently
+  on a finished mod by `scripts/verify_heightmap_detail_invariants.py`, which
+  rebuilds the source from `topology.bmp` and reads the per-pixel terrain
+  class out of the mod's own `common/province_terrain`.
+  `bound_limited_pct_of_land` is in the stats dict and in the `map` step's
+  summary: it is a backstop, and a number that climbs means the passes in
+  front of it are writing terrain the source has no basis for. On the
+  shipped build: **0 land px below the bound and 0 above**, with 95,581 px
+  excluded because the plain rescale itself put them at or below the water
+  level and the land invariant above raises those to the pin (`verified`,
+  `docs/evidence/relief_pits/verify_invariants.log`).
+* **Detail near a shore is damped, never dragged down** (§2f). Pass 4 blends
+  the synthesised *offset* toward zero over the first
+  `heightmap_detail_coast_smooth_px` of land, so a lake on a plateau keeps
+  its shore at the height the CK2 author drew. `"blend_to_water"` restores
+  build 15's behaviour, which pulled that shore 55 % of the way down to the
+  global water level.
+* **The erosion only runs where the source drains** (§2f). The stream-power
+  law is gated on the *source's* own macro slope, one quantisation riser per
+  CK2 source pixel; on flat ground the model degenerates to seed plus
+  hillslope diffusion, which is texture.
 * **Rivers stay in valleys.** Pass 3 only subtracts, and only on land: a
   river pixel can end lower than the plain rescale gave it, never higher.
 * **Deterministic.** The same inputs and the same
@@ -593,8 +1017,16 @@ nearest-neighbour upsampled to the heightmap's own resolution first
 | `heightmap_detail_target_gain` | `1.0` | multiplier on that curve before the shortfall is taken |
 | `heightmap_detail_gain_mode` | `"deficit"` | pass 2 amplitude authority: the measured shortfall with the terrain table as a relative modulation (§2c e), or `"hf_target"`, the original per-class `sqrt(want² − have²)` |
 | `heightmap_detail_spectral_slope` | `-2.0` | pass 2 power-law exponent — only read by `"power_law"` |
-| `heightmap_detail_fill_min_cycles_per_km` | `0.05` | pass 2: where the fill reaches full strength, one-octave cosine roll-on below; `0` reproduces build 13 (§2d) |
+| `heightmap_detail_fill_min_cycles_per_km` | `0.10` | pass 2: where the fill reaches full strength, one-octave cosine roll-on below; `0` reproduces build 13 (§2d), `0.05` build 15 (§2f) |
 | `heightmap_detail_headroom_fraction` | `0.5` | pass 2: the fraction of a pixel's own headroom the offset may saturate into, so `tanh` cannot reach the clamp floor exactly (§2d) |
+| `heightmap_detail_erosion_slope_gate_steps` | `1.0` | pass 2: the erosion may only run where the *source* has macro slope, in 277-level risers per CK2 source pixel (2.90 km); `0` reproduces build 15 (§2f) |
+| `heightmap_detail_bound_window_px` | `3` | pass 5: the source bound's window, canvas px — one CK2 source pixel is 1.9543 (§2f) |
+| `heightmap_detail_bound_tolerance_sigmas` | `2.0` | pass 5: the bound's tolerance, as a multiple of the terrain class's own vanilla HF RMS; `0` disables the bound (§2f) |
+| `heightmap_detail_ridged_classes` | `["mountains", "desert_mountains", "hills", "terraced_hills"]` | pass 2: the classes that get a ridged relief seed (§2g) |
+| `heightmap_detail_ridged_weight` | `1.0` | pass 2: how much of the seed is ridged on those classes (§2g) |
+| `heightmap_detail_ridged_sharpness` | `3.0` | pass 2: the crest exponent of `(1 - abs(noise)) ** sharpness` (§2g) |
+| `heightmap_detail_ridged_diffusion_scale` | `0.15` | pass 2: multiplier on the hillslope diffusion over those classes (§2g) |
+| `heightmap_detail_coast_mode` | `"damp_detail"` | pass 4: damp the synthesised offset near a shore, or `"blend_to_water"` (build 15) which contracts the height toward the water level (§2f) |
 | `heightmap_detail_gain_blur_px` | `6.0` | pass 2 amplitude-seam blur |
 | `heightmap_detail_river_depth` | `900.0` | pass 3 valley depth |
 | `heightmap_detail_coast_smooth_px` | `4.0` | pass 4 beach-flattening distance |
@@ -664,6 +1096,12 @@ multiply, so a convolution in frequency), the river carve and the headroom
 `tanh` all touch it afterwards and together leave the finished map above the
 target. 0.70 is the number that brings 0.05–0.2 cycles/km inside ±30 %.
 Which of the three dominates is `assumed`, not isolated.
+
+**Gradient kurtosis is still 0.44-0.45 × vanilla on our mountain crops**
+(§2g). Ridge share and ridge-line connectivity are inside ±20 % of vanilla's
+own; the fourth moment of the slope is not, and nothing inside a 1 × pass got
+it past 0.45 here. It is the same standing limit as the item above, measured
+on shape instead of on spectrum.
 
 **The structure metrics do not settle the "dendritic" claim, and that is a
 finding.** Gradient-field coherence and drainage concentration were the two

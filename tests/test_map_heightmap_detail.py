@@ -482,6 +482,14 @@ def test_every_new_flat_map_key_reaches_the_config():
         "heightmap_detail_erosion_diffusion": 0.02,
         "heightmap_detail_erosion_slope_ceiling_steps": 3.5,
         "heightmap_detail_fill_min_cycles_per_km": 0.077,
+        "heightmap_detail_erosion_slope_gate_steps": 2.5,
+        "heightmap_detail_coast_mode": "blend_to_water",
+        "heightmap_detail_bound_window_px": 5,
+        "heightmap_detail_bound_tolerance_sigmas": 3.5,
+        "heightmap_detail_ridged_classes": ["hills"],
+        "heightmap_detail_ridged_weight": 0.33,
+        "heightmap_detail_ridged_sharpness": 1.5,
+        "heightmap_detail_ridged_diffusion_scale": 0.11,
     }
     cfg = heightmap_detail_config(raw)
     assert cfg.enabled
@@ -500,6 +508,14 @@ def test_every_new_flat_map_key_reaches_the_config():
     assert cfg.erosion_diffusion == 0.02
     assert cfg.erosion_slope_ceiling_steps == 3.5
     assert cfg.fill_min_cycles_per_km == 0.077
+    assert cfg.erosion_slope_gate_steps == 2.5
+    assert cfg.coast_mode == "blend_to_water"
+    assert cfg.bound_window_px == 5
+    assert cfg.bound_tolerance_sigmas == 3.5
+    assert cfg.ridged_classes == ("hills",)
+    assert cfg.ridged_weight == 0.33
+    assert cfg.ridged_sharpness == 1.5
+    assert cfg.ridged_diffusion_scale == 0.11
 
 
 def test_the_new_keys_also_work_in_the_standalone_nested_table():
@@ -515,6 +531,10 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
         "erosion_seed_amplitude": 9.0, "erosion_mfd_exponent": 1.5,
         "erosion_incision": 0.1, "erosion_diffusion": 0.01,
         "erosion_slope_ceiling_steps": 3.5, "fill_min_cycles_per_km": 0.077,
+        "erosion_slope_gate_steps": 2.5, "coast_mode": "blend_to_water",
+        "bound_window_px": 5, "bound_tolerance_sigmas": 3.5,
+        "ridged_classes": ["hills"], "ridged_weight": 0.33,
+        "ridged_sharpness": 1.5, "ridged_diffusion_scale": 0.11,
     })
     assert (cfg.deterrace_mode, cfg.relief_mode, cfg.target_mode) == (
         "gaussian", "isotropic", "power_law")
@@ -525,6 +545,12 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
     assert cfg.erosion_iterations == 3
     assert cfg.erosion_slope_ceiling_steps == 3.5
     assert cfg.fill_min_cycles_per_km == 0.077
+    assert cfg.erosion_slope_gate_steps == 2.5
+    assert cfg.coast_mode == "blend_to_water"
+    assert (cfg.bound_window_px, cfg.bound_tolerance_sigmas) == (5, 3.5)
+    assert cfg.ridged_classes == ("hills",)
+    assert (cfg.ridged_weight, cfg.ridged_sharpness) == (0.33, 1.5)
+    assert cfg.ridged_diffusion_scale == 0.11
 
 
 def test_the_defaults_are_the_ones_the_docs_claim():
@@ -540,7 +566,18 @@ def test_the_defaults_are_the_ones_the_docs_claim():
     assert d.deterrace_sigma_px == 2.2
     # §2d, the cliff-foot moat
     assert d.erosion_slope_ceiling_steps == 1.0    # 1 x 277.0125 levels/px
-    assert d.fill_min_cycles_per_km == 0.05        # 20 km
+    assert d.fill_min_cycles_per_km == 0.10        # 10 km (§2f)
+    # §2f, the pits
+    assert d.coast_mode == "damp_detail"
+    assert d.erosion_slope_gate_steps == 1.0       # 1 riser per source px
+    assert d.bound_window_px == 3                  # one CK2 source px (1.9543)
+    assert d.bound_tolerance_sigmas == 2.0
+    # §2g, sharp mountains
+    assert d.ridged_classes == (
+        "mountains", "desert_mountains", "hills", "terraced_hills")
+    assert d.ridged_weight == 1.0
+    assert d.ridged_sharpness == 3.0
+    assert d.ridged_diffusion_scale == 0.15
 
 
 # --------------------------------------------------------------------------- #
@@ -696,10 +733,15 @@ def test_the_build_13_settings_still_show_the_moat_this_fixture_catches():
 
     Build 13's own two settings -- no ceiling on the slope the stream-power
     law sees, and a fill that starts at `KEEP_STRUCTURE_BELOW_KM` -- put the
-    moat back.
+    moat back.  The §2f source bound has to be switched off as well, because
+    it makes a moat impossible by construction whatever pass 2 does: that is
+    the point of it, and it is asserted on its own below.  So does the §2f
+    erosion slope gate, which switches the stream-power law off entirely on a
+    fixture this flat -- also asserted on its own.
     """
     base, out, _, cx = _run_plateau(
-        erosion_slope_ceiling_steps=0.0, fill_min_cycles_per_km=0.01
+        erosion_slope_ceiling_steps=0.0, fill_min_cycles_per_km=0.01,
+        bound_tolerance_sigmas=0.0, erosion_slope_gate_steps=0.0,
     )
     at_cliff = _foot_undershoot(base, out, [cx])
     control = _foot_undershoot(base, out, [cx + 90, cx + 110, 40, 60])
@@ -741,3 +783,219 @@ def test_the_fill_band_weight_is_a_smooth_roll_on():
     assert 0.4 < mid < 0.6                               # half an octave up
     # 0 disables the band limit entirely (build 13's behaviour)
     assert (hd.fill_band_weight(k, 0.0) == 1.0).all()
+
+
+# --------------------------------------------------------------------------- #
+# §2f -- the pits: the bound that makes them impossible by construction
+# --------------------------------------------------------------------------- #
+from scipy.ndimage import grey_dilation, grey_erosion  # noqa: E402
+
+#: 2 x vanilla's own measured "plains" high-frequency RMS, the tolerance the
+#: fixture's single terrain class is entitled to
+PLAINS_TOL = 2.0 * 86.3
+
+
+def _fill_depth(a: np.ndarray, width_px: int = 9) -> np.ndarray:
+    """Depth of each pixel's closed depression, basins up to ``width_px``.
+
+    Morphological reconstruction by erosion, the same measurement
+    `scripts/relief_pits_common.closed_depression_depth` makes on the real
+    map: the marker is the dilation (so it sits at the rim over any pit
+    narrower than the window), relaxed down until it stops moving.
+    """
+    a32 = a.astype(np.float32)
+    f = grey_dilation(a32, size=width_px, mode="nearest")
+    for _ in range(2 * width_px + 2):
+        nb = np.minimum.reduce([
+            np.pad(f, ((1, 0), (0, 0)), mode="edge")[:-1, :],
+            np.pad(f, ((0, 1), (0, 0)), mode="edge")[1:, :],
+            np.pad(f, ((0, 0), (1, 0)), mode="edge")[:, :-1],
+            np.pad(f, ((0, 0), (0, 1)), mode="edge")[:, 1:],
+        ])
+        new = np.maximum(a32, nb)
+        if np.allclose(new, f, atol=1e-3):
+            return new - a32
+        f = new
+    return f - a32
+
+
+def _bound_excess(base, out, tol=PLAINS_TOL, window: int = 3):
+    """`(levels below the bound, levels above it)` over the whole fixture."""
+    b = base.astype(np.float32)
+    lo = grey_erosion(b, size=window, mode="nearest") - tol
+    hi = grey_dilation(b, size=window, mode="nearest") + tol
+    o = out.astype(np.float32)
+    return float(np.maximum(lo - o, 0).max()), float(np.maximum(o - hi, 0).max())
+
+
+def test_the_finished_plateau_never_leaves_the_sources_own_surface():
+    """§2f: `src_local_min - tol <= out <= src_local_max + tol` over one CK2
+    source pixel, tol = 2x the class's vanilla HF RMS.  This is the invariant
+    playtest 4's pits break, and it is checked on the same terraced-plateau
+    fixture §2d's moat test uses.
+    """
+    base, out, stats, _ = _run_plateau()
+    below, above = _bound_excess(base, out)
+    # one level of slack: the pass bounds a float array and then rounds it to
+    # uint16, so a pixel exactly on the bound can land half a level outside
+    assert below <= 1.0 and above <= 1.0, (
+        f"{below:.1f} levels below the bound, {above:.1f} above it"
+    )
+    assert stats["bound_limited_pct_of_land"] < 100.0
+
+
+def test_the_plateau_top_has_no_closed_depression_deeper_than_the_tolerance():
+    """A CK2 plateau is a table: whatever detail is synthesised on it, water
+    must not pond on it deeper than the texture the class is entitled to."""
+    base, out, _, _ = _run_plateau()
+    # against the source's own ponding, not against zero: the fixture's
+    # sawtooth ramp resets every 40 px, so the CK2 source itself closes
+    # depressions the output is entitled to keep
+    extra = float(_fill_depth(out).max()) - float(_fill_depth(base).max())
+    # two tolerances, not one: the bound lets a pit sit one tolerance below
+    # the source and its rim one tolerance above, and the pond is measured
+    # between the two
+    assert extra <= 2.0 * PLAINS_TOL, f"{extra:.0f} levels of new ponding"
+
+
+def test_the_bound_still_keeps_the_multi_step_cliff():
+    """The bound must cost a real escarpment (almost) nothing: its window is
+    one source pixel wide, so at a cliff it already spans both sides and the
+    interval there is the whole drop.
+
+    Measured against the same run with the bound switched off, because the
+    spectral fill itself costs this fixture ~20 % of the step and that is
+    §2c's trade, not this one's.
+    """
+    base, bounded, _, cx = _run_plateau()
+    _, free, _, _ = _run_plateau(bound_tolerance_sigmas=0.0)
+
+    def step(a):
+        return float(a[:, cx - 1].astype(np.float64).mean()
+                     - a[:, cx].astype(np.float64).mean())
+
+    assert step(bounded) / step(free) > 0.97
+    assert step(bounded) / step(base) > 0.75
+
+
+def test_the_fixture_catches_a_build_15_configuration_that_breaks_the_bound():
+    """The fixture has to be able to fail.  Build 15's coast mode, no gate and
+    no bound put the map back outside the author's surface."""
+    base, out, _, _ = _run_plateau(
+        coast_mode="blend_to_water", erosion_slope_gate_steps=0.0,
+        bound_tolerance_sigmas=0.0, fill_min_cycles_per_km=0.01,
+        erosion_slope_ceiling_steps=0.0,
+    )
+    below, _ = _bound_excess(base, out)
+    assert below > PLAINS_TOL
+
+
+def test_the_erosion_gate_is_off_on_a_flat_source_and_on_over_a_slope():
+    """§2f: the stream-power law may only run where the CK2 *source* has macro
+    slope.  A flat plateau has no drainage to model, so the model would be
+    carving its own fractal seed into the table."""
+    from ck2ck3.map import heightmap_erosion as he
+
+    flat = np.full((80, 80), 12000.0, dtype=np.float32)
+    gate_flat = he.macro_slope_gate(flat, KM_PER_PX, 1.0)
+    assert float(gate_flat.mean()) == 0.0
+    # one source step (277 levels) per source pixel (2.90 km) is the threshold
+    x = np.arange(80, dtype=np.float32)[None, :]
+    steep = 12000.0 + x * (3.0 * QUANT / (2.90 / KM_PER_PX))
+    gate_steep = he.macro_slope_gate(np.broadcast_to(steep, (80, 80)).copy(),
+                                     KM_PER_PX, 1.0)
+    assert float(gate_steep[:, 20:60].mean()) > 0.99
+
+
+def test_the_coast_pass_no_longer_drags_high_ground_toward_the_water_level():
+    """§2f, the dominant cause: Faerun's CK2 lakes sit on high ground, and the
+    old coast pass pulled the ring of land around one 55 % of the way down to
+    the water level -- an 8,000-level crater on a 20,000-level plateau."""
+    h = w = 80
+    land = np.ones((h, w), dtype=bool)
+    land[38:42, 38:42] = False                       # a lake on the plateau
+    heights = np.where(land, 20000, WATER).astype(np.uint16)
+    tc = np.zeros((h, w), dtype=np.uint8)
+    rb = np.zeros((h, w), dtype=bool)
+    rw = np.zeros((h, w), dtype=np.float32)
+    shore = np.zeros((h, w), dtype=bool)
+    shore[36:44, 36:44] = True
+    shore &= land
+    old, _ = _apply(heights, land, tc, rb, rw, coast_mode="blend_to_water")
+    new, _ = _apply(heights, land, tc, rb, rw)
+    assert 20000 - int(old[shore].min()) > 3000      # the crater
+    assert 20000 - int(new[shore].min()) < 3 * PLAINS_TOL
+
+
+# --------------------------------------------------------------------------- #
+# §2g -- ridged relief: sharp crests, smooth valleys
+# --------------------------------------------------------------------------- #
+def _skew(a: np.ndarray) -> float:
+    """Third standardised moment: crests up and broad valleys down give > 0."""
+    d = a.astype(np.float64) - float(a.mean())
+    return float((d ** 3).mean() / max(float(a.std()) ** 3, 1e-12))
+
+
+def test_the_ridged_seed_is_sharper_than_the_smooth_one():
+    """Shape, not amplitude: both fields are unit variance, so every
+    difference between them is in how that variance is distributed.
+
+    A Gaussian random field is symmetric -- its peaks and its pits have the
+    same shape -- so a mountain built from one reads as dunes.  Folding each
+    octave through ``(1 - |n|) ** sharpness`` creases it along the octave's
+    zero set: narrow crests above the mean, broad floors below it, which is
+    a positive skew and a *lower* gradient kurtosis (a V-shape has a nearly
+    constant slope, where a sum of Gaussian octaves has long flat stretches
+    and rare steep ones).
+    """
+    from ck2ck3.map import heightmap_erosion as he
+
+    smooth = he.fractal_seed((256, 256), np.random.default_rng(7))
+    ridged = he.ridged_seed((256, 256), np.random.default_rng(7))
+    assert abs(float(smooth.std()) - 1.0) < 0.01
+    assert abs(float(ridged.std()) - 1.0) < 0.01
+    assert abs(_skew(smooth)) < 0.15
+    assert _skew(ridged) > 0.3
+    # the crest is narrow: more of the field sits below its own mean
+    assert float((ridged < ridged.mean()).mean()) > 0.5
+    # sharper crests mean a *higher* exponent helps, monotonically
+    assert _skew(he.ridged_seed((256, 256), np.random.default_rng(7),
+                                sharpness=3.0)) > _skew(ridged)
+
+
+def test_the_ridged_classes_reach_the_erosion_and_change_its_shape():
+    """The per-class fields have to arrive: `apply` builds them from
+    `terrain_code`, and a class that is not in `ridged_classes` must be
+    untouched."""
+    from ck2ck3.map import heightmap_erosion as he
+
+    x = np.arange(192, dtype=np.float32)[None, :]
+    base = np.broadcast_to(
+        12000.0 + x * (3.0 * QUANT / (2.90 / KM_PER_PX)), (192, 192)
+    ).astype(np.float32).copy()
+    land = np.ones(base.shape, dtype=bool)
+    gate = he.macro_slope_gate(base, KM_PER_PX, 1.0)
+    smooth, d0 = he.eroded_relief(
+        base, land, np.random.default_rng(11), iterations=6,
+        incision_gate=gate, ridged_weight=0.0)
+    ridged, d1 = he.eroded_relief(
+        base, land, np.random.default_rng(11), iterations=6,
+        incision_gate=gate, ridged_weight=np.full(base.shape, 0.85, np.float32),
+        diffusion_scale=np.full(base.shape, 0.3, np.float32))
+    assert d0["erosion_ridged_land_mean"] == 0.0
+    assert d1["erosion_ridged_land_mean"] == pytest.approx(0.85, abs=1e-3)
+    assert _skew(ridged) > _skew(smooth) + 0.1
+
+
+def test_mountains_get_the_ridged_seed_and_wetlands_do_not():
+    """End to end through `apply`: two classes, one listed and one not."""
+    heights, land, tc, rb, rw = _terraced_island()
+    tc = tc.copy()
+    tc[:, : tc.shape[1] // 2] = 1                      # mountains on the west
+    _, stats = _apply(heights, land, tc, rb, rw,
+                      terrain_keys=("wetlands", "mountains"))
+    assert 0.2 < stats["erosion_ridged_land_mean"] < 0.85
+    _, none = _apply(heights, land, tc, rb, rw,
+                     terrain_keys=("wetlands", "mountains"),
+                     ridged_classes=())
+    assert none["erosion_ridged_land_mean"] == 0.0

@@ -1,0 +1,33 @@
+canvas (6784, 8320) land 46.9% terrain classes 11
+  thay   plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1108  bound  0.0000  MOAT    -44  dstd      0  ridge 0.153
+  spine  plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1385  bound  0.0000  MOAT    -24  dstd      0  ridge 0.129
+  thay   live_build15       pit p95     576 p99    2612 >riser  0.0934  sink p99   1041  bound  0.0884  MOAT   -122  dstd    753  ridge 0.128
+  spine  live_build15       pit p95     514 p99    1353 >riser  0.0880  sink p99   1420  bound  0.0788  MOAT   -129  dstd    714  ridge 0.114
+b15_default: 56 s
+  thay   b15_default        pit p95     572 p99    2611 >riser  0.0929  sink p99   1041  bound  0.0879  MOAT   -121  dstd    751  ridge 0.128
+  spine  b15_default        pit p95     508 p99    1345 >riser  0.0873  sink p99   1419  bound  0.0784  MOAT   -128  dstd    711  ridge 0.112
+pass1_only: 6 s
+  thay   pass1_only         pit p95       4 p99      76 >riser  0.0001  sink p99    798  bound  0.0007  MOAT   -122  dstd    181  ridge 0.104
+  spine  pass1_only         pit p95     -89 p99      34 >riser  0.0000  sink p99   1181  bound  0.0010  MOAT   -109  dstd    213  ridge 0.107
+no_incision: 51 s
+  thay   no_incision        pit p95     774 p99    2818 >riser  0.1184  sink p99   1187  bound  0.1150  MOAT     28  dstd    904  ridge 0.126
+  spine  no_incision        pit p95     788 p99    1928 >riser  0.1221  sink p99   1366  bound  0.1074  MOAT     -3  dstd    997  ridge 0.114
+isotropic_relief: 15 s
+  thay   isotropic_relief   pit p95     564 p99    2622 >riser  0.0978  sink p99   1405  bound  0.0974  MOAT   -173  dstd    713  ridge 0.142
+  spine  isotropic_relief   pit p95     445 p99    1098 >riser  0.0802  sink p99   1783  bound  0.0710  MOAT   -145  dstd    616  ridge 0.125
+fill_from_0.10: 51 s
+  thay   fill_from_0.10     pit p95     333 p99    2604 >riser  0.0558  sink p99   1219  bound  0.0506  MOAT   -121  dstd    641  ridge 0.129
+  spine  fill_from_0.10     pit p95     204 p99     813 >riser  0.0376  sink p99   1605  bound  0.0411  MOAT    -66  dstd    503  ridge 0.108
+fill_from_0.172: 53 s
+  thay   fill_from_0.172    pit p95     282 p99    2606 >riser  0.0503  sink p99   1199  bound  0.0478  MOAT   -125  dstd    606  ridge 0.111
+  spine  fill_from_0.172    pit p95     145 p99     648 >riser  0.0328  sink p99   1677  bound  0.0385  MOAT    -66  dstd    422  ridge 0.103
+no_fill: 53 s
+  thay   no_fill            pit p95     285 p99    2614 >riser  0.0506  sink p99   1205  bound  0.0477  MOAT   -154  dstd    603  ridge 0.106
+  spine  no_fill            pit p95     145 p99     643 >riser  0.0336  sink p99   1660  bound  0.0385  MOAT   -108  dstd    413  ridge 0.107
+no_rivers: 54 s
+  thay   no_rivers          pit p95     491 p99    2604 >riser  0.0775  sink p99    811  bound  0.0721  MOAT   -116  dstd    749  ridge 0.128
+  spine  no_rivers          pit p95     428 p99    1300 >riser  0.0686  sink p99   1092  bound  0.0539  MOAT   -116  dstd    703  ridge 0.113
+no_coast_smooth: 53 s
+  thay   no_coast_smooth    pit p95     344 p99     823 >riser  0.0631  sink p99   1020  bound  0.0580  MOAT    -98  dstd    500  ridge 0.129
+  spine  no_coast_smooth    pit p95     447 p99     999 >riser  0.0779  sink p99   1418  bound  0.0685  MOAT   -144  dstd    638  ridge 0.112
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/pits_ablate_canvas.csv

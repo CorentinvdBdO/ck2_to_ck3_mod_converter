@@ -1,0 +1,15 @@
+canvas (6784, 8320) land 46.9% terrain classes 11
+  thay   plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1108  bound  0.0000  MOAT      0  dstd      0  ridge 0.152
+  spine  plain_rescale      pit p95       0 p99       0 >riser  0.0000  sink p99   1385  bound  0.0000  MOAT      0  dstd      0  ridge 0.129
+  thay   live_build15       pit p95     576 p99    2612 >riser  0.0934  sink p99   1041  bound  0.0881  MOAT      0  dstd    753  ridge 0.122
+  spine  live_build15       pit p95     514 p99    1353 >riser  0.0880  sink p99   1420  bound  0.0788  MOAT      0  dstd    714  ridge 0.111
+ship: 71 s bound-limited 2.565 % gate 0.4503 ridged 0.2007
+  thay   ship               pit p95     125 p99     376 >riser  0.0159  sink p99   1188  bound  0.0000  MOAT      0  dstd    270  ridge 0.123
+  spine  ship               pit p95     140 p99     372 >riser  0.0153  sink p99   1475  bound  0.0009  MOAT      0  dstd    326  ridge 0.120
+ridge_sharp3: 65 s bound-limited 2.654 % gate 0.4503 ridged 0.2361
+  thay   ridge_sharp3       pit p95     134 p99     390 >riser  0.0175  sink p99   1206  bound  0.0000  MOAT      0  dstd    277  ridge 0.124
+  spine  ridge_sharp3       pit p95     140 p99     387 >riser  0.0169  sink p99   1483  bound  0.0010  MOAT      0  dstd    333  ridge 0.126
+ridge_off: 57 s bound-limited 2.682 % gate 0.4503 ridged 0.0
+  thay   ridge_off          pit p95     129 p99     385 >riser  0.0166  sink p99   1194  bound  0.0001  MOAT      0  dstd    271  ridge 0.124
+  spine  ridge_off          pit p95     140 p99     382 >riser  0.0162  sink p99   1511  bound  0.0010  MOAT      0  dstd    330  ridge 0.122
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/pits_ridge_sweep.csv

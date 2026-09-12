@@ -36,9 +36,17 @@ passes, vectorised for the whole canvas (``docs/map_fidelity.md`` §4.2):
    width by the CK2 river-width index. Applied on land only, so a river
    valley is never *raised* — only ever cut lower than its banks, which is
    what keeps water flowing downhill in valleys instead of ridges.
-4. **coast smoothing** — the first few pixels of land are blended toward the
-   water level so beaches stay flat instead of gaining mountain-scale noise
-   right at the shore.
+4. **coast smoothing** — the synthesised offset is damped over the first few
+   pixels of land, so a beach stays flat instead of gaining mountain-scale
+   noise right at the shore. It used to contract the *height* toward the
+   water level, which dug an 8,000-level crater around every one of Faerun's
+   high-altitude CK2 lakes (docs §2f); ``coast_mode = "blend_to_water"``
+   restores that.
+5. **the source bound** — the output is held inside
+   ``[source_local_min - tol, source_local_max + tol]`` over a window of one
+   CK2 source pixel, ``tol`` being the pixel's terrain class's own measured
+   vanilla high-frequency amplitude. Detail is texture on the CK2 author's
+   surface, never a hole in it (docs §2f).
 
 Invariants this module must never break (``docs/map_fidelity.md`` §4.2,
 ``CLAUDE.md``):
@@ -58,6 +66,10 @@ Invariants this module must never break (``docs/map_fidelity.md`` §4.2,
   (the same reasoning, the other direction: the plain rescale alone already
   leaves some land pixels at or below the pin), so a river valley or a
   de-terrace ripple can never sink land back under water either;
+* the output never leaves the source's own surface plus texture (pass 5,
+  docs §2f); the hit fraction of that backstop is reported as
+  ``bound_limited_pct_of_land``, because a backstop that binds often means
+  the passes in front of it are writing terrain the source has no basis for;
 * deterministic: the same inputs and the same ``HeightmapDetailConfig.seed``
   always produce the same output array.
 """
@@ -67,7 +79,12 @@ from __future__ import annotations
 import time
 
 import numpy as np
-from scipy.ndimage import distance_transform_edt, gaussian_filter
+from scipy.ndimage import (
+    distance_transform_edt,
+    gaussian_filter,
+    grey_dilation,
+    grey_erosion,
+)
 
 from . import heightmap_erosion as erosion
 from .config import HeightmapDetailConfig
@@ -93,6 +110,10 @@ KEEP_STRUCTURE_BELOW_KM = 0.01
 #: *resolved*; it is only *quantised*, to 277-level steps.  That matters for
 #: where the fill is allowed to work -- see ``FILL_FULL_ABOVE_KM``.
 SOURCE_NYQUIST_KM = 0.172
+#: Ground size of one CK2 source pixel, km (``docs/map_scale.md`` §7).  The
+#: §2f bound and the §2f erosion gate are both defined per source pixel, not
+#: per canvas pixel, so neither moves when the canvas resolution does.
+SOURCE_PX_KM = 2.90
 #: Default frequency at which the spectral fill reaches full strength, with a
 #: cosine roll-on over ``FILL_RAMP_OCTAVES`` below it (docs §2d).
 #:
@@ -162,6 +183,10 @@ _RIVER_MARGIN_PX = 2.0
 #: noise amplitude (0 would flatten the first pixel completely)
 _COAST_MIN_FACTOR = 0.45
 
+#: fraction of the source bound's own interval the tanh saturation uses, so
+#: the bound is approached smoothly instead of clipped flat (docs §2f)
+_BOUND_SOFT_FRACTION = 0.25
+
 
 def apply(
     heights: np.ndarray,
@@ -222,6 +247,22 @@ def apply(
     #    to each CK3 terrain class's own vanilla amplitude ---------------
     relief_diag: dict = {}
     if cfg.relief_mode == "eroded":
+        # §2f: the erosion may only run where the *source* has macro slope.
+        # §2g: mountains and hills get a ridged seed and less hillslope
+        # diffusion, both as per-pixel fields blurred like the amplitude one
+        # so a terrain-class border leaves no seam.
+        gate = erosion.macro_slope_gate(
+            h2, km_per_px, cfg.erosion_slope_gate_steps,
+            source_km=SOURCE_PX_KM,
+        )
+        ridged_w = _class_field(
+            terrain_code, terrain_keys, cfg.ridged_classes,
+            cfg.ridged_weight, 0.0, cfg.gain_blur_px,
+        )
+        diff_scale = _class_field(
+            terrain_code, terrain_keys, cfg.ridged_classes,
+            cfg.ridged_diffusion_scale, 1.0, cfg.gain_blur_px,
+        )
         field, relief_diag = erosion.eroded_relief(
             h2, land, rng,
             seed_amplitude=cfg.erosion_seed_amplitude,
@@ -231,7 +272,14 @@ def apply(
             incision=cfg.erosion_incision,
             diffusion=cfg.erosion_diffusion,
             slope_ceiling_steps=cfg.erosion_slope_ceiling_steps,
+            incision_gate=gate,
+            ridged_weight=ridged_w,
+            ridged_sharpness=cfg.ridged_sharpness,
+            diffusion_scale=diff_scale,
         )
+        del gate, ridged_w, diff_scale
+        relief_diag["erosion_slope_gate_steps"] = round(
+            float(cfg.erosion_slope_gate_steps), 2)
     elif cfg.relief_mode == "isotropic":
         field = None
     else:
@@ -308,10 +356,20 @@ def apply(
         fraction=cfg.headroom_fraction,
     )
     out = h2 + delta
-    del h2, delta
+    del delta
 
     # 4. coast smoothing -----------------------------------------------------
-    out = _smooth_coast(out, land, float(water_level), cfg.coast_smooth_px)
+    out = _smooth_coast(
+        out, h2, land, cfg.coast_smooth_px, cfg.coast_mode, float(water_level))
+    del h2
+
+    # 5. the hard bound: detail is texture on the author's surface, never a
+    #    hole in it.  Last, so what it guarantees is what the map ships with.
+    out, bound_diag = _bound_to_source(
+        out, h0, land, terrain_code, terrain_keys, cfg.hf_targets,
+        window_px=cfg.bound_window_px, sigmas=cfg.bound_tolerance_sigmas,
+        floor=float(water_level) + 1.0, ceiling=float(max_level),
+    )
 
     # --- invariants: land strictly above sea, water at or below it --------
     # Land is built from `out` (the synthesised array); water is the input
@@ -345,8 +403,14 @@ def apply(
         ),
         "land_px_at_ceiling": int((land_vals >= max_level).sum()),
         **headroom_diag,
+        **bound_diag,
         "deterrace_mode": cfg.deterrace_mode,
         "relief_mode": cfg.relief_mode,
+        "coast_mode": cfg.coast_mode,
+        "bound_window_px": cfg.bound_window_px,
+        "bound_tolerance_sigmas": cfg.bound_tolerance_sigmas,
+        "ridged_classes": ",".join(cfg.ridged_classes),
+        "ridged_weight": cfg.ridged_weight,
         "power_law_c": spec_diag["power_law_c"],
         "fit_band_bins": spec_diag["fit_band_bins"],
         "elapsed_s": round(time.time() - t0, 1),
@@ -354,7 +418,8 @@ def apply(
     }
     for key in ("erosion_iterations", "erosion_accum_iterations",
                 "erosion_uplift_levels", "erosion_field_rms_levels",
-                "erosion_slope_ceiling_steps",
+                "erosion_slope_ceiling_steps", "erosion_slope_gate_steps",
+                "erosion_gate_land_mean", "erosion_ridged_land_mean",
                 "target_mode", "target_anchor_scale", "fill_min_cycles_per_km",
                 "deficit_scale", "deficit_match_bins"):
         if key in spec_diag:
@@ -663,6 +728,133 @@ def _limit_excursion(
     }
 
 
+def _class_field(
+    terrain_code: np.ndarray,
+    terrain_keys: list[str],
+    classes: tuple[str, ...] | list[str],
+    value: float,
+    other: float,
+    blur_px: float,
+) -> np.ndarray:
+    """``value`` on the listed terrain classes, ``other`` elsewhere, blurred.
+
+    The blur is the one the amplitude field already uses: a hard per-class
+    switch would print the province-terrain mosaic into the relief as a
+    visible seam, and the terrain classes themselves are a majority vote per
+    province, not a smooth field.
+    """
+    want = {c for c in classes}
+    lut = np.array(
+        [value if k in want else other for k in terrain_keys], dtype=np.float32
+    )
+    if lut.size == 0:
+        return np.full(terrain_code.shape, other, dtype=np.float32)
+    idx = np.clip(terrain_code.astype(np.int32), 0, lut.size - 1)
+    out = lut[idx]
+    if blur_px > 0:
+        out = gaussian_filter(out, blur_px, mode="nearest")
+    return out.astype(np.float32)
+
+
+def _bound_to_source(
+    out: np.ndarray,
+    source: np.ndarray,
+    land: np.ndarray,
+    terrain_code: np.ndarray,
+    terrain_keys: list[str],
+    hf_targets: dict[str, float],
+    *,
+    window_px: int,
+    sigmas: float,
+    floor: float,
+    ceiling: float,
+) -> tuple[np.ndarray, dict]:
+    """Hold the output inside the CK2 author's own surface, plus texture (§2f).
+
+    ``source_local_min - tol <= out <= source_local_max + tol`` over a window
+    of one CK2 source pixel, with ``tol`` the terrain class's own measured
+    vanilla high-frequency amplitude times ``sigmas``
+    (``docs/evidence/map_fidelity/hf_by_terrain.csv``: plains 86, hills 213,
+    mountains 311 levels RMS).
+
+    **Why a local min and not the source value.**  The window is one source
+    pixel wide, so at a cliff it already spans both sides: the top of an
+    escarpment is bounded below by the *foot* of it, and the bound costs a
+    real cliff nothing.  On ground the author drew flat the two collapse
+    together and the bound is exactly "texture, no holes".
+
+    **Why toward the source and not to the water level.**  §2c(d)'s headroom
+    limiter bounds the fill by the room between the pixel and the sea, which
+    is the right bound for *not drowning* land and the wrong one for
+    *not digging*: on a 20,000-level plateau it permits a 15,000-level pit.
+
+    The approach is a ``tanh`` saturation over the last quarter of the
+    tolerance rather than a hard clip, for the same reason ``_limit_excursion``
+    saturates: a hard clip prints the bound's own shape into the map as a flat
+    spot, which is the artefact being removed.  The bound is still exact --
+    ``tanh`` tends to 1, so the output never leaves the interval.
+
+    The hit fraction is reported, not swallowed: this is a backstop, and if it
+    binds on more than a fraction of a percent of land the passes in front of
+    it are writing terrain the source has no basis for.
+    """
+    if sigmas <= 0 or window_px < 1:
+        return out, {"bound_limited_px": 0, "bound_limited_pct_of_land": 0.0}
+    default_target = hf_targets.get("plains", 90.0)
+    lut = np.array(
+        [float(hf_targets.get(k, default_target)) * float(sigmas)
+         for k in terrain_keys],
+        dtype=np.float32,
+    )
+    if lut.size == 0:
+        lut = np.array([default_target * float(sigmas)], dtype=np.float32)
+    tol_band = lut[np.clip(terrain_code.astype(np.int32), 0, lut.size - 1)]
+    src = source.astype(np.float32)
+    lo = np.maximum(
+        grey_erosion(src, size=window_px, mode="nearest") - tol_band, floor)
+    hi = np.minimum(
+        grey_dilation(src, size=window_px, mode="nearest") + tol_band, ceiling)
+    # keep the interval non-empty even where the floor/ceiling squeeze it
+    hi = np.maximum(hi, lo)
+    # The saturation band is a fraction of the *tolerance*, not of the whole
+    # interval: the interval is as tall as the local relief, so a fraction of
+    # it would squash perfectly legal terrain (measured: a 20,000-level
+    # plateau beside a lake came out at 19,186).  Half the interval is the cap
+    # for the rare pixel whose floor and ceiling nearly meet.
+    soft = np.minimum(_BOUND_SOFT_FRACTION * tol_band, 0.5 * (hi - lo))
+    soft = np.maximum(soft, 1.0)
+    mid_lo = lo + soft
+    mid_hi = hi - soft
+    res = out.astype(np.float32)
+    under = res < mid_lo
+    over = res > mid_hi
+    res = np.where(
+        under, mid_lo - soft * np.tanh((mid_lo - res) / soft), res)
+    res = np.where(
+        over, mid_hi + soft * np.tanh((res - mid_hi) / soft), res)
+    # "hit" means the saturation actually moved the pixel, not merely that it
+    # entered the soft band: the band starts a quarter of a tolerance from
+    # each end, so counting entries overstates the backstop's work by an
+    # order of magnitude (15.0 % of Faerun's land merely entered it).
+    moved = (np.abs(res - out.astype(np.float32)) > 1.0) & land
+    n_land = int(land.sum())
+    # how far outside the *hard* interval the unbounded field wanted to go
+    excess = np.maximum(lo - out.astype(np.float32), 0.0)
+    exc = excess[land] if n_land else np.empty(0, dtype=np.float32)
+    return np.where(land, res, out).astype(np.float32), {
+        "bound_limited_px": int(moved.sum()),
+        "bound_limited_pct_of_land": (
+            round(100.0 * float(moved.sum()) / n_land, 3) if n_land else 0.0
+        ),
+        "bound_excess_below_p99": (
+            round(float(np.percentile(exc, 99)), 1) if exc.size else 0.0
+        ),
+        "bound_excess_below_max": (
+            round(float(exc.max()), 1) if exc.size else 0.0
+        ),
+    }
+
+
 def _carve_rivers(
     out: np.ndarray,
     land: np.ndarray,
@@ -689,13 +881,50 @@ def _carve_rivers(
 
 
 def _smooth_coast(
-    out: np.ndarray, land: np.ndarray, water_level: float, smooth_px: float
+    out: np.ndarray,
+    reference: np.ndarray,
+    land: np.ndarray,
+    smooth_px: float,
+    mode: str = "damp_detail",
+    water_level: float = 0.0,
 ) -> np.ndarray:
-    """Blend the first few land pixels toward the water level so beaches stay flat."""
+    """Damp the *synthesised detail* over the first few land pixels of a shore.
+
+    The pass's job is that a beach does not gain mountain-scale noise at the
+    waterline, and damping the offset is all of that job.
+
+    **It used to contract the height itself toward the water level**
+    (``water_level + (out - water_level) * factor``, factor 0.45 at the
+    shoreline), and that is what playtest 4 saw as "Thay's pits are even
+    larger" (docs/step_map_heightmap.md §2f).  Faerun's CK2 lakes and river
+    provinces sit *on high ground* -- the median such pixel in the Thay crop
+    is at 14,301 -- and the heightmap owes CK3 a water pixel at or below the
+    4883 water level, so each one is already a hole in the plateau.  The old
+    coast pass then pulled the ring of land around it 55 % of the way down to
+    the water level as well, which on a 20,000-level plateau is an
+    8,000-level crater.  Measured on the Thay window: the 8.4 % of land
+    within 5 px of a water province carried pit p95 **4086** and max 8141
+    levels against the plateau interior's 290 (`verified`,
+    `docs/evidence/relief_pits/pits_zones_both.csv`).
+
+    Damping the offset instead leaves the shore at the height the CK2 author
+    drew, so the drop into a lake happens in the one pixel where the lake
+    starts -- which is what a lake shore is -- and the §2f source bound then
+    holds at a coast with no exemption.
+    """
+    if mode == "damp_detail":
+        toward = reference
+    elif mode == "blend_to_water":
+        toward = np.float32(water_level)
+    else:
+        raise ValueError(
+            f"unknown heightmap_detail_coast_mode {mode!r} "
+            f"(expected 'damp_detail' or 'blend_to_water')"
+        )
     d_sea = distance_transform_edt(land).astype(np.float32)
     coast = np.clip(d_sea / max(smooth_px, 1e-6), 0, 1)
     factor = _COAST_MIN_FACTOR + (1.0 - _COAST_MIN_FACTOR) * coast
-    return np.where(land, water_level + (out - water_level) * factor, out)
+    return np.where(land, toward + (out - toward) * factor, out)
 
 
 # --------------------------------------------------------------------------- #

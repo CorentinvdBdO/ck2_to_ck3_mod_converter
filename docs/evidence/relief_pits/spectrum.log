@@ -1,0 +1,13 @@
+48 all-land 256 px interior patches
+  cycles_per_km=0.0105  km=95.2  vanilla_levels=20308.6  plain_rescale=0.77  build15=0.767  fix_fill005=0.766  fix_fill010=0.766
+  cycles_per_km=0.0158  km=63.3  vanilla_levels=10945.0  plain_rescale=0.675  build15=0.668  fix_fill005=0.668  fix_fill010=0.667
+  cycles_per_km=0.0211  km=47.4  vanilla_levels=6958.2  plain_rescale=0.548  build15=0.54  fix_fill005=0.539  fix_fill010=0.538
+  cycles_per_km=0.029  km=34.5  vanilla_levels=3652.9  plain_rescale=0.438  build15=0.465  fix_fill005=0.46  fix_fill010=0.428
+  cycles_per_km=0.0395  km=25.3  vanilla_levels=1655.6  plain_rescale=0.415  build15=0.823  fix_fill005=0.741  fix_fill010=0.398
+  cycles_per_km=0.05  km=20.0  vanilla_levels=942.3  plain_rescale=0.421  build15=0.959  fix_fill005=0.89  fix_fill010=0.388
+  cycles_per_km=0.0711  km=14.1  vanilla_levels=457.9  plain_rescale=0.488  build15=0.976  fix_fill005=0.938  fix_fill010=0.671
+  cycles_per_km=0.1  km=10.0  vanilla_levels=215.5  plain_rescale=0.704  build15=0.922  fix_fill005=1.045  fix_fill010=1.141
+  cycles_per_km=0.15  km=6.7  vanilla_levels=86.0  plain_rescale=1.225  build15=0.646  fix_fill005=1.102  fix_fill010=1.131
+  cycles_per_km=0.2  km=5.0  vanilla_levels=45.0  plain_rescale=1.354  build15=0.843  fix_fill005=1.112  fix_fill010=1.033
+  cycles_per_km=0.3  km=3.3  vanilla_levels=19.5  plain_rescale=1.496  build15=2.083  fix_fill005=2.117  fix_fill010=2.089
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/spectrum_bands.csv

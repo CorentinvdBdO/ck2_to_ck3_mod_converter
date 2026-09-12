@@ -1,0 +1,13 @@
+out                     /home/cvdbdo/git/paradox/ck3/wt/_out/relief-pits/mod
+water level             4883
+land provinces checked  3915
+water provinces checked 361
+distinct height values  39458
+land px at/below water  0
+water px above water    0
+source bound            2.0x hf RMS over 3 px (median tol 194.4 levels)
+  land pinned, excluded 95581 px
+  land below the bound  0 px (max 0.0 levels)
+  land above the bound  0 px (max 0.0 levels)
+
+invariants hold

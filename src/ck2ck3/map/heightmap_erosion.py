@@ -91,6 +91,26 @@ _INCISION_SLOPE_CAP = 0.5
 #: reproduces build 13.
 DEFAULT_INCISION_SLOPE_CEILING_STEPS = 1.0
 
+#: Below how much *source* macro slope the stream-power law is switched off
+#: entirely, in ``QUANTISATION_STEP_LEVELS`` per CK2 source pixel
+#: (docs/step_map_heightmap.md §2f).
+#:
+#: The slope *ceiling* above stops the erosion re-carving an escarpment it
+#: was handed.  It does nothing about the opposite failure, which is what
+#: playtest 4 saw: on ground the CK2 author drew **flat** the model has no
+#: macro drainage at all, so the flow accumulation organises itself around
+#: the *fractal seed* and the stream-power law carves that seed's random
+#: valleys into the plateau top.  The uniform uplift then hands the mean
+#: back, and what is left is a field of closed depressions on a table -- a
+#: pit field, not a landscape.  An erosion model is only meaningful where
+#: water has somewhere to go; where the source is flat the honest output is
+#: texture.
+DEFAULT_EROSION_SLOPE_GATE_STEPS = 1.0
+
+#: Width of the smooth-step the gate uses, as a fraction of its threshold: a
+#: hard mask would print the gate's own outline into the map.
+_GATE_SOFTNESS = 0.5
+
 
 def _slices(shape: tuple[int, int], dy: int, dx: int):
     """Source and destination slices for a translation by ``(dy, dx)``."""
@@ -208,6 +228,76 @@ def fractal_seed(
     return out / max(float(out.std()), 1e-9)
 
 
+def ridged_seed(
+    shape: tuple[int, int],
+    rng: np.random.Generator,
+    sigmas_px: tuple[float, ...] = (0.8, 1.6, 3.2, 6.4, 12.0),
+    amplitudes: tuple[float, ...] = (0.4, 0.6, 0.8, 0.9, 1.0),
+    sharpness: float = 2.0,
+) -> np.ndarray:
+    """Unit-variance *ridged* fractal noise: sharp crests, smooth valleys.
+
+    Playtest 4's second finding was "erosion is still creating smooth
+    mountains instead of sharp ones", and that is a complaint about shape,
+    not about spectrum -- we already carry 2.05x vanilla's amplitude at
+    0.3 cycles/km (§2c).  A Gaussian random field is smooth *everywhere*: its
+    ridges and its valleys have the same statistics, so a mountain built out
+    of one reads as dunes.  Real mountains are not symmetric -- a crest is a
+    crease and a valley is a bowl.
+
+    The classic fix, and the one here: fold each octave through
+    ``(1 - |n|) ** sharpness``.  ``|n|`` creases along the zero set of ``n``,
+    which is a set of *curves*, so the fold turns every octave's zero
+    crossing into a ridge line; raising it to a power sharpens the crease and
+    flattens the valley floor.  Octaves share one white field, as in
+    :func:`fractal_seed`, so they stay phase-coherent and the fine crests sit
+    on the coarse ones instead of crossing them at random.
+    """
+    white = rng.standard_normal(shape).astype(np.float32)
+    out = np.zeros(shape, dtype=np.float32)
+    p = max(float(sharpness), 1e-3)
+    for sigma, amp in zip(sigmas_px, amplitudes):
+        octave = gaussian_filter(white, sigma, mode="nearest")
+        octave /= max(float(octave.std()), 1e-9)
+        ridged = np.abs(octave)
+        np.negative(ridged, out=ridged)
+        ridged += 1.0
+        np.maximum(ridged, 0.0, out=ridged)
+        if p != 1.0:
+            np.power(ridged, p, out=ridged)
+        ridged -= float(ridged.mean())
+        out += (amp / max(float(ridged.std()), 1e-9)) * ridged
+    return out / max(float(out.std()), 1e-9)
+
+
+def macro_slope_gate(
+    base: np.ndarray,
+    km_per_px: float,
+    steps: float = DEFAULT_EROSION_SLOPE_GATE_STEPS,
+    source_km: float = 2.90,
+    softness: float = _GATE_SOFTNESS,
+) -> np.ndarray:
+    """0 where the *source* is flat, 1 where it has real macro slope.
+
+    ``steps`` is in quantisation risers per CK2 source pixel: at the shipped
+    2.90 km source pixel, 1.0 step is 277 levels over 2.90 km = 95.5
+    levels/km.  The gradient is measured on ``base`` after a one-source-pixel
+    Gaussian, so a single quantisation riser is not mistaken for a slope, and
+    the transition is a smooth step over ``softness`` of the threshold so the
+    gate leaves no outline of its own in the map.
+    """
+    if steps <= 0:
+        return np.ones(base.shape, dtype=np.float32)
+    sigma = max(source_km / max(km_per_px, 1e-6), 0.5)
+    sm = gaussian_filter(base.astype(np.float32), sigma, mode="nearest")
+    gy, gx = np.gradient(sm, km_per_px)
+    g = np.hypot(gx, gy)
+    thr = float(steps) * QUANTISATION_STEP_LEVELS / max(source_km, 1e-6)
+    lo = thr * (1.0 - max(softness, 1e-3))
+    t = np.clip((g - lo) / max(thr - lo, 1e-6), 0.0, 1.0)
+    return (t * t * (3.0 - 2.0 * t)).astype(np.float32)
+
+
 def _pow_inplace(a: np.ndarray, exponent: float) -> None:
     """``a **= exponent`` -- by repeated squaring for 2 and 4, which are the
     ones the default config uses and which ``np.power`` is ~5x slower at."""
@@ -313,6 +403,10 @@ def eroded_relief(
     area_exponent: float = 0.5,
     diffusion: float = 0.06,
     slope_ceiling_steps: float = DEFAULT_INCISION_SLOPE_CEILING_STEPS,
+    incision_gate: np.ndarray | float = 1.0,
+    ridged_weight: np.ndarray | float = 0.0,
+    ridged_sharpness: float = 2.0,
+    diffusion_scale: np.ndarray | float = 1.0,
 ) -> tuple[np.ndarray, dict]:
     """Return ``(relief field, diagnostics)`` -- unit-variance over land.
 
@@ -321,14 +415,49 @@ def eroded_relief(
     the relief the 8-bit source never could.  The pair is run through a
     short landscape-evolution model and the *difference* from ``base`` is
     returned, so nothing of the macro survives into the caller's noise field.
+
+    ``incision_gate`` (0..1, per pixel) multiplies the stream-power term and
+    the uplift that balances it, so where it is 0 the model degenerates to
+    seed + hillslope diffusion: texture, no carving.  :func:`macro_slope_gate`
+    builds it from the source's own macro slope -- the erosion may only run
+    where the CK2 author drew a slope for the water to run down
+    (docs §2f).
+
+    ``ridged_weight`` (0..1, per pixel) mixes :func:`ridged_seed` into the
+    initial relief in place of :func:`fractal_seed`, and ``diffusion_scale``
+    (per pixel) multiplies the hillslope diffusion -- the two halves of §2g's
+    sharp-mountain treatment, applied per terrain class by the caller.
     """
     h0 = np.array(base, dtype=np.float32)
-    w = h0 + np.float32(seed_amplitude) * fractal_seed(h0.shape, rng)
+    rw = np.asarray(ridged_weight, dtype=np.float32)
+    if rw.size and float(rw.max()) <= 0.0:
+        seed = fractal_seed(h0.shape, rng)
+        ridged_land_frac = 0.0
+    else:
+        smooth = fractal_seed(h0.shape, rng)
+        ridged = ridged_seed(h0.shape, rng, sharpness=ridged_sharpness)
+        rwc = np.clip(rw, 0.0, 1.0)
+        seed = (1.0 - rwc) * smooth + rwc * ridged
+        del smooth, ridged
+        seed /= max(float(seed[land].std()) if land.any() else float(seed.std()),
+                    1e-9)
+        ridged_land_frac = (
+            float(np.broadcast_to(rwc, h0.shape)[land].mean()) if land.any() else 0.0
+        )
+    w = h0 + np.float32(seed_amplitude) * seed
+    del seed
     ceiling = (
         float(slope_ceiling_steps) * QUANTISATION_STEP_LEVELS
         if slope_ceiling_steps > 0 else 0.0
     )
     landf = land.astype(np.float32)
+    gate = np.asarray(incision_gate, dtype=np.float32)
+    gated = landf if gate.size == 1 and float(gate) >= 1.0 else landf * gate
+    gate_sum = float(gated.sum())
+    gate_land_frac = (
+        float(np.broadcast_to(gated, h0.shape)[land].mean()) if land.any() else 0.0
+    )
+    diff_scale = np.asarray(diffusion_scale, dtype=np.float32)
     n_land = int(land.sum())
     uplift_total = 0.0
     carried: np.ndarray | None = None
@@ -362,18 +491,24 @@ def eroded_relief(
         slope *= _INCISION_SLOPE_CAP
         np.minimum(acc, slope, out=acc)
         del slope
-        acc *= landf
-        uplift = float(acc.sum() / n_land) if n_land else 0.0
+        # the gate carries the land mask: no incision off land, and none where
+        # the source is flat enough that there is no drainage to model
+        acc *= gated
+        uplift = float(acc.sum() / gate_sum) if gate_sum > 0 else 0.0
         uplift_total += uplift
-        # uniform uplift on land, so incision redistributes relief instead of
-        # draining it away: without it a short run just lowers everything and
-        # the high-pass throws the whole result out
-        acc -= uplift * landf
+        # uplift where the incision ran, so incision redistributes relief
+        # instead of draining it away: without it a short run just lowers
+        # everything and the high-pass throws the whole result out.  Weighted
+        # by the same gate, so the net change over land is zero and the gate
+        # cannot tilt the flat ground it excused.
+        acc -= uplift * gated
         w -= acc
         del acc
         lap = _laplacian(w)
         lap *= np.float32(diffusion)
         lap *= landf
+        if diff_scale.size != 1 or float(diff_scale) != 1.0:
+            lap *= diff_scale
         w += lap
         del lap
     field = w - h0
@@ -386,4 +521,6 @@ def eroded_relief(
         "erosion_uplift_levels": round(uplift_total, 1),
         "erosion_slope_ceiling_steps": round(float(slope_ceiling_steps), 2),
         "erosion_field_rms_levels": round(sd, 1),
+        "erosion_gate_land_mean": round(gate_land_frac, 4),
+        "erosion_ridged_land_mean": round(ridged_land_frac, 4),
     }

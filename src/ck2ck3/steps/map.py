@@ -112,6 +112,12 @@ def run(ctx: Context) -> StepResult:
         f"/{hd.get('target_mode', 'power_law')}, "
         f"fill>={hd.get('fill_min_cycles_per_km', 0)} c/km, "
         f"slope ceiling {hd.get('erosion_slope_ceiling_steps', 0)} steps, "
+        f"slope gate {hd.get('erosion_slope_gate_steps', 0)} steps "
+        f"(erodes {hd.get('erosion_gate_land_mean', 0):.0%} of land), "
+        f"ridged seed on {hd.get('erosion_ridged_land_mean', 0):.0%} of land, "
+        f"source bound {hd.get('bound_tolerance_sigmas', 0)}x hf "
+        f"over {hd.get('bound_window_px', 0)} px hit on "
+        f"{hd.get('bound_limited_pct_of_land', 0)} % of land, "
         f"{hd['land_pct_on_clamp_floor']} % of land on the clamp floor"
         if hd else ""
     )
@@ -169,6 +175,9 @@ def run(ctx: Context) -> StepResult:
                     hd.get("fill_min_cycles_per_km", 0),
                 "heightmap_erosion_slope_ceiling_steps":
                     hd.get("erosion_slope_ceiling_steps", 0),
+                "heightmap_erosion_slope_gate_steps":
+                    hd.get("erosion_slope_gate_steps", 0),
+                "heightmap_bound_limited_px": hd.get("bound_limited_px", 0),
                 "heightmap_distinct_values": hd["distinct_values_after"],
                 "heightmap_clamp_floor_px": hd["land_px_on_clamp_floor"],
                 "heightmap_excursion_limited_px": hd["excursion_limited_px"],

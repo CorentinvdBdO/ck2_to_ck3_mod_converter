@@ -1,0 +1,23 @@
+
+== thay
+  plain_rescale    coast_band   share 0.084  pit p95        0 p99        0 max        0 >riser 0.0000
+  plain_rescale    river_band   share 0.064  pit p95        0 p99        0 max        0 >riser 0.0000
+  plain_rescale    interior     share 0.852  pit p95        0 p99        0 max        0 >riser 0.0000
+  build15          coast_band   share 0.084  pit p95     4086 p99     6644 max     8141 >riser 0.3766
+  build15          river_band   share 0.064  pit p95      748 p99     1217 max     3279 >riser 0.2672
+  build15          interior     share 0.852  pit p95      290 p99      788 max     3044 >riser 0.0525
+  after            coast_band   share 0.084  pit p95       53 p99      191 max      427 >riser 0.0066
+  after            river_band   share 0.064  pit p95      427 p99      618 max      623 >riser 0.1467
+  after            interior     share 0.852  pit p95       60 p99      263 max      829 >riser 0.0092
+
+== spine
+  plain_rescale    coast_band   share 0.040  pit p95        0 p99        0 max        0 >riser 0.0000
+  plain_rescale    river_band   share 0.114  pit p95        0 p99        0 max        0 >riser 0.0000
+  plain_rescale    interior     share 0.846  pit p95        0 p99        0 max        0 >riser 0.0000
+  build15          coast_band   share 0.040  pit p95     3127 p99     4801 max     5874 >riser 0.2773
+  build15          river_band   share 0.114  pit p95      691 p99     1126 max     1640 >riser 0.1911
+  build15          interior     share 0.846  pit p95      392 p99      999 max     2476 >riser 0.0651
+  after            coast_band   share 0.040  pit p95       77 p99      140 max      323 >riser 0.0009
+  after            river_band   share 0.114  pit p95      411 p99      550 max      825 >riser 0.0848
+  after            interior     share 0.846  pit p95        7 p99      260 max      623 >riser 0.0091
+wrote /home/cvdbdo/git/paradox/ck3/wt/relief-pits/docs/evidence/relief_pits/pits_zones_both.csv
