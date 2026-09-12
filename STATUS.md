@@ -1,12 +1,12 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-11 00:45 by Claude session (coordinator)
+Updated: 2026-09-12 19:00 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
 |---|---|---|---|---|---|
-| (none in flight) | | | | | |
+| province-edges | `lane/province-edges` | worker | organic province borders and coastlines (smooth label upsample, ≤ 1 CK2 px displacement, every downstream reader follows); tiger fatal 0 | in progress | — |
 
 Shipped 2026-09-08 (playtest-2 fixes, build 3): naked-fix (portrait_modifiers keep), traits-remap (removed CK2 vanilla traits mapped to CK3 traits: 400 live, 142 deduped, 7 dropped, 1 sexuality), map-paint-seeds (CK2 port-slot seeds, demoted 163→152; terrain paint TGA pair), map-heightmap-detail (212→44,390 levels, coast invariants clamped), events-provenance (13,457 ids classified, bridge table 56 %), research-dna (`docs/research_dna_races.md`). Mod build 483d1d8: **ck3-tiger fatal 0 / error 58; headless -test In Game in 54 s, 172/173 tests** (`claudespace/docs/evidence/tests_faerun_ck2_to_ck3_converted_2026-09-08_224531.md`).
 
@@ -19,8 +19,8 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 ## Repos
 | repo | path | base | origin | state |
 |---|---|---|---|---|
-| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main 808a790+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
-| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 15 2026-09-11 00:00; 16 steps, 1486 files; tiger fatal 0 / error 58; 8 soaks alive, 1 crash (0x141972299) |
+| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main 7bd86d3+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
+| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 16 2026-09-12 18:50; tiger fatal 0 / error 58; invariants hold; soak alive |
 | forgotten_kings (submod) | `paradox/ck3/claudespace/mods/forgotten_kings` | main 3812924 | github.com/CorentinvdBdO/forgotten_kings (private, GPL-3.0) | skeleton + roadmap notes + `docs/design_dlc_gating.md` |
 | ck3_fantasy_assets | `paradox/ck3/ck3_fantasy_assets` | main | none (local by decision) | skeleton |
 | claudespace (workspace) | `paradox/ck3/claudespace` | master 17a247a | none | test harness, headless display, `/fk-push` `/fk-test` `/fk-errors`, `scripts/ck3_bisect.sh` |
@@ -42,6 +42,7 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-12 — **build 16, playtest-4 relief fixes (offline study, no probes)**: Thay's pits were pass 4 — Faerûn's CK2 lakes sit on high plateaus, CK3's water level is global, so each lake is a hole through its plateau and the coast smoothing dragged the ring of land 55 % down to sea level (pit p95 4086 vs interior 290). The old "cliff-foot excess" metric was a difference and could not see it. Now: `coast_mode = "damp_detail"`, erosion gated on source slope, fill roll-on 0.10 c/km, and a hard bound `source_local_min − tol ≤ out ≤ source_local_max + tol` (tol = 2× class HF RMS) checked by the invariants script (0 px outside). Thay pit p95/p99 576/2612 → 136/392, lake rings 4086 → 53. Ridged relief on mountain classes: ridge share 1.04× vanilla, gradient kurtosis 0.13× → 0.45× (2× heightmap is the remaining lever). `docs/step_map_heightmap.md` §2f/§2g, `docs/evidence/relief_pits/`.
 - 2026-09-11 — **build 15, the playtest-3 fixes, all seen in game**: (1) *pixels* — the edges, not the resolution: distance-field class blend + third material per class + relief-modulated boundaries bounded to one CK2 pixel, smooth trees mask; blend now 3.23 channels/px (vanilla 3.47); full-res paint free (RLE 172 → 24 MB) — Wealdath's forest is organic (`claudespace/docs/evidence/b14_wealdath_paint.png`). (2) *Thay moat* — the stream-power erosion read the macro escarpment as slope and planed the rim; the fill also injected 35–60 km relief the CK2 source already resolves. `erosion_slope_ceiling_steps = 0.5`, `fill_min_cycles_per_km = 0.05`: cliff-foot excess +2927 → −116 levels, plateau flat again (`b15_thay_moat_fixed.png`). (3) *Europe under water* — `water/watercolor_rgb_waterspec_a.dds` is a painting of Eurasia; with `foam_map`, `snow_mask` and `surround_mask` now written for our canvas the deep sea is flat teal and shelves follow Faerûn's coast (`b15_deep_water.png`, `b15_shelf.png`). (4) *top border* — `surround_mask.dds` B channel made terrain transparent over up to 4545 of our rows; regenerated, the NW corner is drawn (`b15_north_edge.png`). 2× heightmap prototyped, not shipped: 182 MB pair, 348 s, 19.8 GB RSS (`docs/step_map_heightmap.md` §2e).
 - 2026-09-11 — **intermittent first-tick crash is back**: 1 of 17 soaks today died 7 s after In Game at 0x141972299 (`crashes/ck3_20260911_002242`), the same address as the 2026-09-09 flavorization crash that 10/10 launches had cleared. Not reproduced since; tracked in Blockers.
 - 2026-09-10 — **build 13, events step** (README §5 step 3, the `new` slice): 1704 of 1762 events emitted in 110 files / 97 namespaces — 160 live, 1544 inert stubs with the converted draft as `# draft:` comments, 58 skipped by scope. Gates keeping an event a stub: convertibility 1530, unsaved scope 550, call to a stubbed id 529, FROM scope 320. tiger fatal 0 / error 58 (baseline); **240 s headless soak alive, canary fired** — the class that crashed database init in the decisions build did not recur. Game error.log: 539 `Event X is orphaned` (live events with no caller yet — the on_actions lane wires them; until then every emitted event should carry `orphan = yes`, backlog) and 108 `Unrecognized loc key` from 5 knight-tournament events whose CK2 `EVTDESC` keys are among the 40 loc misses. `docs/step_events.md`, `docs/evidence/HANDOFF_events.md`.
@@ -62,6 +63,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. User playtest 4 of build 15 (`docs/playtest.md`): the four fixes at close zoom — Wealdath/Anauroch edges, Thay's plateau, open sea, the north edge — plus regional trees and settlement positions. Decide on the 2× heightmap (sharper mountains vs 182 MB / 6 min).
-2. Crash soak: 10 unattended soaks of build 15, correlate the 0x141972299 dying runs.
-3. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3), then `modified` events; backlog: `tests/test_cli.py` dirties evidence CSVs, shoreline material on coastal land, 0.3 c/km residual risers.
+1. Ship `province-edges` (in flight) → build 17; user playtest 5: Thay's plateau, mountain sharpness, borders at close zoom. Decide on the 2× heightmap (kurtosis 0.45× vanilla is the 1× ceiling).
+2. Crash soak: 10 unattended soaks, correlate the 0x141972299 dying runs (1 of 18 so far).
+3. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3), then `modified` events; backlog: `tests/test_cli.py` dirties evidence CSVs, shoreline material, `river_depth = 900` now spends the whole bound tolerance.
