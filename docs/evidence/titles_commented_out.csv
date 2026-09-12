@@ -1,7 +1,7 @@
 reason,count,first_ten
 "unbuilt: absent from barony_set.csv",11289,"b_aagul b_aah b_aalde b_aallamirs_keep b_aamlo b_aarnsgard b_ababadira b_abahanel b_abalada b_abalus"
 "CK2 patrician family (common/landed_titles/republics.txt): a root-level barony; CK3 forbids a barony outside a county and has no patrician families",161,"b_adebowalan b_adrian b_al_auni b_al_hawai b_al_hiyali b_al_jasir b_alibakkar b_alman b_anchev b_anteos"
-"demoted: barony_set.csv status = demoted",152,"b_al_anf b_alandor b_alaoran b_alarara b_alumm b_ankara b_ann_lenora b_arauth b_arcane_chambers b_argith"
+"demoted: barony_set.csv status = demoted",153,"b_al_anf b_alandor b_alaoran b_alarara b_alumm b_ankara b_ann_lenora b_arauth b_arcane_chambers b_argith"
 "ancestor c_zokir commented out",7,"b_allyns_anvil b_canyon_of_kush b_dao_delvings b_eye_tyrant_cliffs b_oldonnar b_pevadaas b_zokir"
 "ancestor c_xothaerin commented out",7,"b_arjotun b_blackbanner b_brasshelm b_deepmines b_dwarfdelve b_pyromancer_hall b_xothaerin"
 "ancestor c_kossuths_eye commented out",7,"b_azerkin b_brassforge b_firegate b_kossuths_eye b_lava_tunnels b_warmdepths b_xandar"

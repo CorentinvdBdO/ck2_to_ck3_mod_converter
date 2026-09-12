@@ -1,0 +1,17 @@
+../_out/province-edges: canvas 8320x6784, 4275 province colours, 174 of them with a centroid outside their own shape (concave; the fallback placement's own limit)
+  building_locators.txt             3704 instances, 2074 off their centroid (worst 100.31 px), 5 outside their own province (5 of them concave-centroid ids)
+  special_building_locators.txt     3704 instances, 3641 off their centroid (worst 95.08 px), 2 outside their own province (2 of them concave-centroid ids)
+  player_stack_locators.txt         4066 instances, 3947 off their centroid (worst 94.37 px), 49 outside their own province (49 of them concave-centroid ids)
+  other_stack_locators.txt          4066 instances, 3915 off their centroid (worst 96.10 px), 45 outside their own province (45 of them concave-centroid ids)
+  siege_locators.txt                3704 instances, 3625 off their centroid (worst 108.97 px), 3 outside their own province (3 of them concave-centroid ids)
+  combat_locators.txt               4066 instances, 3636 off their centroid (worst 87.56 px), 44 outside their own province (44 of them concave-centroid ids)
+  activities.txt                    3704 instances, 3640 off their centroid (worst 95.39 px), 2 outside their own province (2 of them concave-centroid ids)
+  distance to the same province's `buildings` instance:
+  locator                           ours med  ours p95  vanilla med  vanilla p95
+  building_locators.txt                 0.00      0.00         0.00         0.00
+  special_building_locators.txt         9.05      9.05         9.05        18.70
+  player_stack_locators.txt             7.10      7.10         7.10        12.09
+  other_stack_locators.txt              7.69      7.70         7.69        12.87
+  siege_locators.txt                    9.98      9.98         9.98        11.50
+  combat_locators.txt                  13.63     13.63        13.63        21.66
+  activities.txt                        9.40      9.40         9.40        38.97

@@ -32,3 +32,8 @@ Added by lane `events` (2026-09-10), coordinator decisions on the hand-off's ope
 
 Added by lane `water-border` (2026-09-10).
 - `tests/test_cli.py` runs real steps that rewrite other lanes' `docs/evidence/*.csv` on every `pytest` (decisions convertibility, terrain-history baronies, …): point those evidence writes at `tmp_path` in the test, or make the steps write evidence only when the real CLI runs. Own small lane.
+
+Added by lane `province-edges` (2026-09-12).
+- `map`: `deepen_sea` runs before the detail pass and ramps its shelf from the plain-rescale coast; 159,494 px (0.28 %) of shelf sit off the final (smoothed) coastline. Move the shelf after the coast is final, or feed it the smoothed mask.
+- `map`: inside counties the barony borders are still L1 one-pixel steps (4-connected geodesic BFS growth); a smoothed growth front is its own lane (`docs/evidence/HANDOFF_province_edges.md` §4).
+- `map`: 21 barony status changes (3705 → 3704 placed, 152 → 153 demoted) trace to `capacity = county_px // 400`, not to the smoothing; review the one demotion in the next barony sheet pass.

@@ -107,6 +107,17 @@ def run(ctx: Context) -> StepResult:
     # were read, which a key under the wrong header silently is not
     # (docs/step_map_heightmap.md §5)
     hd = report.get("heightmap_detail", {})
+    # same reasoning for the organic-border pass: the summary line is the
+    # proof that `[map.provinces] smooth_edges` was read at all
+    # (docs/step_map_baronies.md §10)
+    pe = report.get("province_edges", {})
+    pe_summary = (
+        f"; organic province borders sigma {pe['sigma_src_px']} source px, "
+        f"relief warp {pe['relief_warped_px']} px, "
+        f"{pe['changed_px']} px changed id (max {pe['max_shift_px']} / p95 "
+        f"{pe['p95_shift_px']} canvas px, bound {pe['bound_px']})"
+        if pe else ""
+    )
     hd_summary = (
         f"; heightmap detail {hd['deterrace_mode']}/{hd['relief_mode']}"
         f"/{hd.get('target_mode', 'power_law')}, "
@@ -122,7 +133,7 @@ def run(ctx: Context) -> StepResult:
             f"{cfg.scale.vanilla_km_per_px} km/px): "
             f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
             f"{bar['counties']} counties, {bar['demoted']} demoted, "
-            f"{prov['lost']} lost" + hd_summary
+            f"{prov['lost']} lost" + pe_summary + hd_summary
         ),
         counts={
             "provinces": prov["ck3_total"],
@@ -136,6 +147,16 @@ def run(ctx: Context) -> StepResult:
             "impassable": prov["impassable"],
             "lost": prov["lost"],
             "regrown": prov["regrown"],
+            **(
+                {
+                    "province_edges_changed_px": pe["changed_px"],
+                    "province_edges_max_shift_px": pe["max_shift_px"],
+                    "province_edges_p95_shift_px": pe["p95_shift_px"],
+                    "province_edges_reverted_px": pe["reverted_px"],
+                }
+                if pe
+                else {}
+            ),
             "adjacencies": report["adjacencies"]["kept"],
             **({"trees_placed": trees["placed"], "trees_dropped": trees["dropped_no_mesh"]}
                if trees else {}),
@@ -231,6 +252,31 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             ocean_rgb=tuple(int(v) for v in pr.get("ocean_rgb", (0, 0, 96))),  # type: ignore[arg-type]
             ocean_name=str(pr.get("ocean_name", "Padding Ocean")),
             regrow_lost=bool(pr.get("regrow_lost", True)),
+            # lane `province-edges`: organic borders. Flat `[map]` aliases are
+            # accepted too, because every other edge key of the paint lane
+            # lives flat under `[map]` and a reader should not have to
+            # remember which table this one is in.
+            smooth_edges=bool(
+                pr.get("smooth_edges", raw.get("province_edges", True))
+            ),
+            smooth_sigma_src_px=float(
+                pr.get(
+                    "smooth_sigma_src_px",
+                    raw.get("province_edges_sigma_src_px", 0.6),
+                )
+            ),
+            smooth_max_shift_source_px=float(
+                pr.get(
+                    "smooth_max_shift_source_px",
+                    raw.get("province_edges_max_shift_source_px", 1.0),
+                )
+            ),
+            smooth_relief_shift_px=float(
+                pr.get(
+                    "smooth_relief_shift_px",
+                    raw.get("province_edges_relief_shift_px", 1.0),
+                )
+            ),
         ),
         baronies=map_config.barony_config(
             {
