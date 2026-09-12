@@ -132,14 +132,62 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         "source_km_per_px": cfg.scale.source_km_per_px,
     }
 
-    log("rasterising provinces (NEAREST on the id array)")
+    # lane `province-edges`: the province borders bend with the ground using
+    # the same `paint_edges.relief_warp` field the terrain-paint class edges
+    # use, so paint and provinces move together.  It has to be derived from
+    # the BASE heightmap here, before the raster exists, because the raster is
+    # what the detail pass's land mask is made of — the detailed heights the
+    # paint warp uses cannot exist yet.  One extra LANCZOS resize of
+    # topology.bmp (~4 s, freed immediately); the land mask is topology's own
+    # water level, which needs no province map.  docs/step_map_baronies.md §10.
+    prov_warp = None
+    if cfg.provinces.smooth_edges and cfg.provinces.smooth_relief_shift_px > 0:
+        log("relief warp for the province borders (from the base heightmap)")
+        base_heights = heightmap.build(src / "topology.bmp", canvas, cfg.heightmap)
+        hf = cfg.heightmap.resolution_factor
+        prov_warp = paint_edges.relief_warp(
+            base_heights,
+            (canvas.height, canvas.width),
+            shift_px=cfg.provinces.smooth_relief_shift_px,
+            sigma_px=cfg.terrain_paint_relief_sigma_px,
+            land_mask=(
+                base_heights[::hf, ::hf] > cfg.heightmap.ck3_water_level
+            )[: canvas.height, : canvas.width],
+            gradient_percentile=cfg.terrain_paint_relief_percentile,
+        )
+        del base_heights
+
+    log(
+        "rasterising provinces "
+        + (
+            "(smooth argmax upsample, bounded to "
+            f"{cfg.provinces.smooth_max_shift_source_px} CK2 source px)"
+            if cfg.provinces.smooth_edges
+            else "(NEAREST on the id array)"
+        )
+    )
     raster = provinces.build_raster(
         src / "provinces.bmp",
         ck2_provs,
         canvas,
         min_pixels=cfg.provinces.min_pixels,
         regrow=cfg.provinces.regrow_lost,
+        smooth_edges=cfg.provinces.smooth_edges,
+        smooth_sigma_src_px=cfg.provinces.smooth_sigma_src_px,
+        max_shift_source_px=cfg.provinces.smooth_max_shift_source_px,
+        warp=prov_warp,
     )
+    del prov_warp
+    if raster.edges:
+        report["province_edges"] = dict(raster.edges)
+        log(
+            "smooth province edges: "
+            f"{raster.edges['changed_px']} px changed id "
+            f"({100 * float(raster.edges['changed_share']):.2f} % of the canvas), "
+            f"max {raster.edges['max_shift_px']} canvas px / "
+            f"p95 {raster.edges['p95_shift_px']}, "
+            f"{raster.edges['reverted_px']} px reverted by the bound"
+        )
     log(
         f"{len(raster.surviving)} provinces survived, {len(raster.lost)} lost, "
         f"{len(raster.regrown)} regrown, "

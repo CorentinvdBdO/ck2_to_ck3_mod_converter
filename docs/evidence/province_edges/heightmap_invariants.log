@@ -1,0 +1,9 @@
+out                     ../_out/province-edges
+water level             4883
+land provinces checked  3914
+water provinces checked 361
+distinct height values  39714
+land px at/below water  0
+water px above water    0
+
+invariants hold

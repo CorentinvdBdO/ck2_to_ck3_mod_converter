@@ -1,0 +1,7 @@
+map,crop,km_per_px,width,height,boundary,border_px,axis_step_frac,corner_per_100px,mean_crack_run_px,length_ratio
+before,,1.4839,8320,6784,all,1812314,0.5305,18.12,3.386,
+before,,1.4839,8320,6784,coast,545495,0.4851,17.54,3.349,1.0715
+after,,1.4839,8320,6784,all,1559562,0.4689,36.1,1.912,
+after,,1.4839,8320,6784,coast,451693,0.417,38.32,1.788,1.0622
+vanilla,,1.4839,9216,4608,all,2237349,0.3398,40.85,1.763,
+vanilla,,1.4839,9216,4608,coast,458885,0.329,40.03,1.707,1.2267

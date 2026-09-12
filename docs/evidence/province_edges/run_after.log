@@ -1,0 +1,14 @@
+CK2 province 2314 dropped (1 source pixels)
+CK2 province 2316 dropped (1 source pixels)
+CK2 province 2698 dropped (0 source pixels)
+75607 county pixels were unreachable from any seed (a detached piece of the county); attached to the nearest barony
+rivers: 19 of 350 sources did not survive (they fall on a pixel the province map says is water)
+rivers: 24 of 308 merges did not survive (they fall on a pixel the province map says is water)
+adjacency 1691->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1687->1686 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+adjacency 1690->1687 (major_river): CK2 gives no Through province and CK3 requires one; row dropped
+ck2ck3 Faerun (CK2 conversion, raw) — writing to /home/cvdbdo/git/paradox/ck3/wt/_out/province-edges
+  map            map 8320x6784 at scale 1.9543 (2.9 -> 1.4839 km/px): 4275 provinces, 3704 baronies in 2125 counties, 153 demoted, 3 lost; organic province borders sigma 0.6 source px, relief warp 5847180 px, 455890 px changed id (max 1.414 / p95 1.0 canvas px, bound 1.9543); heightmap detail cliff_aware/eroded/vanilla_curve, fill>=0.05 c/km, slope ceiling 0.5 steps, 0.353 % of land on the clamp floor [167.50s]
+59 files written, 10 warnings
+run log: /home/cvdbdo/git/paradox/ck3/wt/province-edges/docs/evidence/last_run.md

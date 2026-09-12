@@ -626,6 +626,23 @@ class ProvincesConfig:
     regrow_lost: bool = True
     #: crop the canvas to the bounding box of the source's painted pixels
     crop_to_painted: bool = True
+    #: replace the NEAREST id resize with the bounded smooth argmax of
+    #: `ck2ck3.map.province_edges`, so borders and coastlines are curves
+    #: instead of the 2x2 staircase the 1.9543x upsample draws
+    #: (`docs/step_map_baronies.md` §10).  False = the pre-lane behaviour.
+    smooth_edges: bool = True
+    #: Gaussian width of each province indicator, in CK2 **source** pixels, so
+    #: the shape of a border does not change when the canvas does.  0 = the
+    #: tightest smooth ramp (bilinear indicator only)
+    smooth_sigma_src_px: float = 0.6
+    #: enforced bound: a pixel may only take an id NEAREST already painted
+    #: within this many CK2 source pixels of it.  Same rule and same code as
+    #: the paint lane's `terrain_paint_max_shift_source_px`
+    smooth_max_shift_source_px: float = 1.0
+    #: bend the province borders with the ground, using the same
+    #: `paint_edges.relief_warp` field as the terrain-paint class edges.
+    #: Canvas pixels; 0 disables the warp and keeps the smoothing
+    smooth_relief_shift_px: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -911,6 +928,12 @@ def load(path: str | Path) -> MapConfig:
             ocean_name=str(pr.get("ocean_name", "Padding Ocean")),
             regrow_lost=bool(pr.get("regrow_lost", True)),
             crop_to_painted=bool(pr.get("crop_to_painted", True)),
+            smooth_edges=bool(pr.get("smooth_edges", True)),
+            smooth_sigma_src_px=float(pr.get("smooth_sigma_src_px", 0.6)),
+            smooth_max_shift_source_px=float(
+                pr.get("smooth_max_shift_source_px", 1.0)
+            ),
+            smooth_relief_shift_px=float(pr.get("smooth_relief_shift_px", 1.0)),
         ),
         baronies=barony_config(raw.get("baronies", {})),
         ck2_mod_dir=_path(inp["ck2_mod_dir"]) if inp.get("ck2_mod_dir") else None,

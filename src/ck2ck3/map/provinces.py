@@ -1,16 +1,29 @@
 """``provinces.bmp`` (CK2) -> ``provinces.png`` (CK3), with a lost-province report.
 
-The resize is NEAREST — any interpolation invents colours that are not province
-ids.  Upscaling cannot lose a province, but the converter still runs the
-survival check because the scale factor is a config value and someone will
-eventually point it downwards.
+The resize is NEAREST on the *id* array by default — any interpolation of the
+RGB invents colours that are not province ids.  Upscaling cannot lose a
+province, but the converter still runs the survival check because the scale
+factor is a config value and someone will eventually point it downwards.
+
+NEAREST has a cost the user saw at close zoom: CK2's bitmap is 2.90 km per
+pixel and the canvas is 1.9543x finer, so every border comes out as a 2x2
+staircase (`verified`: the mean straight run of a boundary crack is 3.39
+canvas px against vanilla's 1.76 — the upsample factor, exactly).
+``[map.provinces] smooth_edges`` routes the resize through
+:mod:`ck2ck3.map.province_edges` instead: each province's own indicator is
+upsampled smoothly and the winner at each pixel takes it.  That is still an
+id — the argmax of indicators can only return a label that exists — and it is
+bounded to one CK2 source pixel by the same reachability check the paint lane
+uses.  Everything below (the survival check, the regrow, the lost report)
+then runs on the smoothed array unchanged.
 
 CK3 wants provinces.png as 24-bit RGB (vanilla is; a palette image is rejected,
 `assumed`), and every colour in ``definition.csv`` must own at least one pixel or
 the game logs a province error.  So the pipeline is:
 
 1. index the CK2 bitmap by colour once (a colour -> id lookup on a 24-bit key);
-2. resize the *id* array, not the RGB array, so the survival check is exact;
+2. resize the *id* array, not the RGB array, so the survival check is exact
+   (NEAREST, or the bounded smooth argmax of ``smooth_edges``);
 3. re-grow any province that fell under ``min_pixels`` by dilating it inside its
    own CK2 footprint;
 4. anything still missing is dropped from the CK3 output and listed in
@@ -21,12 +34,13 @@ from __future__ import annotations
 
 import csv
 import io
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
 
+from . import paint_edges, province_edges
 from .ck2read import Ck2Province
 from .config import Canvas
 
@@ -51,6 +65,8 @@ class ProvinceRaster:
     regrown: list[int]
     #: CK2 colours found in the bitmap but absent from definition.csv
     undefined_colours: dict[tuple[int, int, int], int]
+    #: what the smooth-edge pass did, empty when it is off (docs/step_map_baronies.md §10)
+    edges: dict[str, float | int | str] = field(default_factory=dict)
 
 
 def rgb_key(arr: np.ndarray) -> np.ndarray:
@@ -66,7 +82,21 @@ def build_raster(
     *,
     min_pixels: int = 16,
     regrow: bool = True,
+    smooth_edges: bool = False,
+    smooth_sigma_src_px: float = 0.6,
+    max_shift_source_px: float = 1.0,
+    warp: tuple[np.ndarray, np.ndarray] | None = None,
 ) -> ProvinceRaster:
+    """Rasterise ``provinces.bmp`` onto ``canvas``.
+
+    ``smooth_edges`` replaces the NEAREST resize with
+    :func:`ck2ck3.map.province_edges.smooth_resize_ids` and, if ``warp`` is
+    given, samples the result through that relief field before bounding the
+    whole displacement to ``max_shift_source_px`` CK2 source pixels against
+    the NEAREST raster.  ``warp`` is the ``(dy, dx)`` pair from
+    :func:`ck2ck3.map.paint_edges.relief_warp`, so the province borders and
+    the terrain-paint class edges bend with the same ground.
+    """
     with Image.open(ck2_provinces_bmp) as im:
         src_rgb = np.asarray(im.convert("RGB"))
 
@@ -79,6 +109,16 @@ def build_raster(
     src_counts = _counts(src_ids)
 
     tgt = _resize_ids(src_ids, canvas)
+    edges: dict[str, float | int | str] = {}
+    if smooth_edges:
+        tgt, edges = _smooth_edges(
+            src_ids,
+            tgt,
+            canvas,
+            sigma_src_px=smooth_sigma_src_px,
+            max_shift_source_px=max_shift_source_px,
+            warp=warp,
+        )
     counts = _counts(tgt)
 
     regrown: list[int] = []
@@ -117,7 +157,61 @@ def build_raster(
         lost=lost,
         regrown=regrown,
         undefined_colours=undefined,
+        edges=edges,
     )
+
+
+def _smooth_edges(
+    src_ids: np.ndarray,
+    nearest: np.ndarray,
+    canvas: Canvas,
+    *,
+    sigma_src_px: float,
+    max_shift_source_px: float,
+    warp: tuple[np.ndarray, np.ndarray] | None,
+) -> tuple[np.ndarray, dict[str, float | int | str]]:
+    """Smooth argmax upsample, optional relief warp, bounded against NEAREST.
+
+    The bound is enforced, not hoped for: a pixel keeps its smoothed id only
+    if NEAREST already painted that id within ``max_shift_source_px`` CK2
+    source pixels of it.  Everything else reverts, so no province can reach
+    ground CK2 never gave it — which is what keeps the province *set* and the
+    macro geography identical while the outline changes shape.
+    """
+    smooth = province_edges.smooth_resize_ids(
+        src_ids, canvas, sigma_src_px=sigma_src_px
+    )
+    warped_px = 0
+    if warp is not None:
+        dy, dx = warp
+        if dy.shape != smooth.shape:
+            raise ValueError(
+                f"relief warp {dy.shape} does not match the canvas {smooth.shape}"
+            )
+        warped_px = int(((dy != 0) | (dx != 0)).sum())
+        smooth = paint_edges.warp_apply(smooth, dy, dx)
+
+    radius = float(max_shift_source_px) * canvas.factor
+    ok = paint_edges.within_radius(nearest, smooth, radius)
+    reverted = int((~ok).sum())
+    out = np.where(ok, smooth, nearest).astype(np.int32)
+
+    stats = paint_edges.class_displacement_stats(
+        nearest, out, km_per_px=1.0, max_radius=4
+    )
+    return out, {
+        "smooth": 1,
+        "sigma_src_px": float(sigma_src_px),
+        "max_shift_source_px": float(max_shift_source_px),
+        "bound_px": round(radius, 4),
+        "relief_warped_px": warped_px,
+        "reverted_px": reverted,
+        "changed_px": int(stats["changed_px"]),
+        "changed_share": float(stats["changed_share"]),
+        "max_shift_px": float(stats["max_px"]),
+        "p95_shift_px": float(stats["p95_px"]),
+        "beyond_bound_px": float(stats["beyond_radius_px"]),
+    }
 
 
 def _keys_to_ids(

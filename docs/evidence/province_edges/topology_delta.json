@@ -1,0 +1,430 @@
+{
+  "adjacencies_csv_after": {
+    "endpoints_without_pixels": 0,
+    "examples": [],
+    "rows": 320
+  },
+  "adjacencies_csv_before": {
+    "endpoints_without_pixels": 0,
+    "examples": [],
+    "rows": 320
+  },
+  "adjacency_graph": {
+    "pairs_added": 240,
+    "pairs_after": 12565,
+    "pairs_before": 12557,
+    "pairs_removed": 232
+  },
+  "after": "../_out/province-edges",
+  "baronies": {
+    "baronies_after": 3857,
+    "baronies_before": 3857,
+    "beyond_tolerance_n": 71,
+    "only_after": [],
+    "only_before": [],
+    "status_changed": [
+      "b_captains_court",
+      "b_chund_peak",
+      "b_durdel_anatha",
+      "b_ferugehk",
+      "b_golden_grove",
+      "b_llandeilo",
+      "b_magkstok",
+      "b_marsember",
+      "b_nasad",
+      "b_oakengrove",
+      "b_orefall_cavern",
+      "b_orlimmin",
+      "b_paneo",
+      "b_rassalantars_keep",
+      "b_ring_caverns",
+      "b_rosekeep",
+      "b_suzail",
+      "b_tantras",
+      "b_torvudd",
+      "b_westdelve",
+      "b_whitesails_harbour"
+    ],
+    "status_changed_n": 21,
+    "tolerance": 0.2
+  },
+  "before": "../claudespace/mods/faerun_ck2_to_ck3_converted",
+  "coast_shift_px": {
+    "changed_px": 149937,
+    "changed_share": 0.002656,
+    "max_px": 1.414,
+    "mean_px": 1.002,
+    "p95_px": 1.0
+  },
+  "definition": {
+    "added": [
+      "b_chund_peak",
+      "b_durdel_anatha",
+      "b_ferugehk",
+      "b_golden_grove",
+      "b_orefall_cavern",
+      "b_orlimmin",
+      "b_paneo",
+      "b_suzail",
+      "b_westdelve",
+      "b_whitesails_harbour"
+    ],
+    "added_n": 10,
+    "ids_renumbered": 3522,
+    "provinces_after": 4276,
+    "provinces_before": 4277,
+    "recoloured": [],
+    "recoloured_n": 0,
+    "removed": [
+      "b_captains_court",
+      "b_llandeilo",
+      "b_magkstok",
+      "b_marsember",
+      "b_nasad",
+      "b_oakengrove",
+      "b_rassalantars_keep",
+      "b_ring_caverns",
+      "b_rosekeep",
+      "b_tantras",
+      "b_torvudd"
+    ],
+    "removed_n": 11
+  },
+  "heightmap_coast": {
+    "disagreeing_px": 0,
+    "heightmap_land_px": 26468177,
+    "land_but_under_water": 0,
+    "plain_rescale": {
+      "disagreeing_px": 159494,
+      "disagreeing_share": 0.002826,
+      "land_but_under_water": 90038,
+      "water_but_above_level": 69456
+    },
+    "province_land_px": 26468177,
+    "resolution_factor": 1,
+    "water_but_above_level": 0,
+    "water_level": 4883
+  },
+  "keyed_by": "definition.csv column 5 (province name), not the numeric id",
+  "province_area": {
+    "beyond_tolerance": 73,
+    "ids_after": 4275,
+    "ids_before": 4276,
+    "tolerance": 0.2,
+    "vanished": [
+      691,
+      898,
+      989,
+      1112,
+      1958,
+      2092,
+      2211,
+      2723,
+      3281,
+      3642,
+      3646
+    ],
+    "worst": [
+      [
+        3577,
+        897,
+        2737,
+        2.0513
+      ],
+      [
+        2410,
+        1858,
+        3826,
+        1.0592
+      ],
+      [
+        2846,
+        820,
+        1651,
+        1.0134
+      ],
+      [
+        691,
+        401,
+        0,
+        -1.0
+      ],
+      [
+        898,
+        414,
+        0,
+        -1.0
+      ],
+      [
+        989,
+        406,
+        0,
+        -1.0
+      ],
+      [
+        1112,
+        595,
+        0,
+        -1.0
+      ],
+      [
+        1958,
+        688,
+        0,
+        -1.0
+      ],
+      [
+        2092,
+        406,
+        0,
+        -1.0
+      ],
+      [
+        2211,
+        403,
+        0,
+        -1.0
+      ],
+      [
+        2723,
+        437,
+        0,
+        -1.0
+      ],
+      [
+        3281,
+        403,
+        0,
+        -1.0
+      ],
+      [
+        3642,
+        546,
+        0,
+        -1.0
+      ],
+      [
+        3646,
+        649,
+        0,
+        -1.0
+      ],
+      [
+        3641,
+        587,
+        1087,
+        0.8518
+      ],
+      [
+        1701,
+        1939,
+        3349,
+        0.7272
+      ],
+      [
+        2409,
+        1689,
+        2893,
+        0.7128
+      ],
+      [
+        690,
+        545,
+        933,
+        0.7119
+      ],
+      [
+        2996,
+        4559,
+        7583,
+        0.6633
+      ],
+      [
+        2371,
+        1146,
+        1888,
+        0.6475
+      ],
+      [
+        1146,
+        605,
+        996,
+        0.6463
+      ],
+      [
+        3640,
+        1233,
+        484,
+        -0.6075
+      ],
+      [
+        991,
+        526,
+        840,
+        0.597
+      ],
+      [
+        2643,
+        951,
+        1514,
+        0.592
+      ],
+      [
+        3552,
+        607,
+        962,
+        0.5848
+      ],
+      [
+        2721,
+        714,
+        1104,
+        0.5462
+      ],
+      [
+        2408,
+        5993,
+        2861,
+        -0.5226
+      ],
+      [
+        343,
+        1847,
+        961,
+        -0.4797
+      ],
+      [
+        3578,
+        4254,
+        2254,
+        -0.4701
+      ],
+      [
+        2210,
+        844,
+        1223,
+        0.4491
+      ],
+      [
+        3399,
+        1020,
+        1476,
+        0.4471
+      ],
+      [
+        2779,
+        909,
+        1314,
+        0.4455
+      ],
+      [
+        565,
+        1279,
+        719,
+        -0.4378
+      ],
+      [
+        1144,
+        844,
+        484,
+        -0.4265
+      ],
+      [
+        2644,
+        1215,
+        717,
+        -0.4099
+      ],
+      [
+        3280,
+        841,
+        1182,
+        0.4055
+      ],
+      [
+        1952,
+        923,
+        556,
+        -0.3976
+      ],
+      [
+        345,
+        1079,
+        1505,
+        0.3948
+      ],
+      [
+        897,
+        1049,
+        1463,
+        0.3947
+      ],
+      [
+        3551,
+        1790,
+        1086,
+        -0.3933
+      ],
+      [
+        2997,
+        6621,
+        4043,
+        -0.3894
+      ],
+      [
+        2845,
+        2249,
+        1396,
+        -0.3793
+      ],
+      [
+        228,
+        2125,
+        1321,
+        -0.3784
+      ],
+      [
+        2093,
+        562,
+        772,
+        0.3737
+      ],
+      [
+        337,
+        789,
+        500,
+        -0.3663
+      ],
+      [
+        344,
+        1160,
+        1578,
+        0.3603
+      ],
+      [
+        3609,
+        1075,
+        701,
+        -0.3479
+      ],
+      [
+        227,
+        2058,
+        2771,
+        0.3465
+      ],
+      [
+        4267,
+        24,
+        16,
+        -0.3333
+      ],
+      [
+        979,
+        635,
+        425,
+        -0.3307
+      ]
+    ]
+  }
+}

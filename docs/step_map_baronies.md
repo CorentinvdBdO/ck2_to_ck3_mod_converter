@@ -24,16 +24,16 @@ pre-lane value in parentheses for comparison.
 | **defined** baronies | 15,356 (15,195 inside a county) | `verified` |
 | **built** holdings at 1357.1.1 ∪ 1501.1.1 | **3857** | `verified` |
 | of those, built only by a later bookmark | 79 | `verified` |
-| baronies placed as CK3 provinces | **3705** (was 3694) | `verified` |
-| baronies demoted to comments | **152** (was 163), in fewer of 2125 counties | `verified` |
-| CK3 provinces total | 4276 = 3705 baronies + county-less land + water (padding ocean included) | `verified` |
+| baronies placed as CK3 provinces | **3704** (3705 before lane `province-edges`, 3694 before `map-paint-seeds`) | `verified` |
+| baronies demoted to comments | **153** (152, then 163), in fewer of 2125 counties | `verified` |
+| CK3 provinces total | 4275 = 3704 baronies + county-less land + water (padding ocean included) | `verified` |
 | seeds from `positions.txt` **city** slot (capital) | 2112 | `verified` |
 | seeds from `positions.txt` **port** slot (§3, new) | 758 | `verified` |
 | seeds farthest-point sampled | 835 (was 1584) | `verified` |
 | seeds from overrides / gazetteer | 0 (the files ship empty) | `verified` |
 | median barony area | 2554 px ≈ 5,600 km² | `verified` |
 | smallest placed barony | 128 px (a county whose only holding it is) | `verified` |
-| run time, whole `map` step | ~60 s (46 s without the barony split, +5 s for terrain paint — `docs/step_map_paint.md`) | `verified` |
+| run time, whole `map` step | **167–200 s** over four runs (128.4 s with `smooth_edges = false`, §10; the rest is the heightmap detail pass and the terrain paint) | `verified` 2026-09-12 |
 | two runs → identical `provinces.png` sha256 | yes | `verified` |
 
 Reproduce: `uv run ck2ck3 --config configs/faerun.toml --steps map`.
@@ -335,3 +335,220 @@ since `steps/map.py` merges it under the `[map]` default).
 * **The gazetteer ships empty.** Every named place in Faerûn whose location is
   known from lore is a row nobody has written yet; that is the highest-value
   human input this step can take.
+
+## 10. Organic borders (lane `province-edges`)
+
+**Question.** Playtest 4, build 15: *"pixelisation is better, if still not
+great when zoomed in."* The paint lane had already fixed the terrain-class
+edges (`docs/step_map_paint.md` §10). What was left is `provinces.png`
+itself.
+
+**Answer, measured: the same defect one file upstream.** CK2's
+`provinces.bmp` is 2.90 km per pixel and this canvas is 1.9543× finer
+(`docs/map_scale.md`), so `provinces._resize_ids`'s NEAREST resample drew
+every province border and every coastline as a staircase of 2×2 canvas
+pixels. The number that says so is the **mean straight run of a boundary
+crack** — the length of an unbroken horizontal or vertical run of unit edges
+between two differing pixels:
+
+| `provinces.png` | all borders | coastline |
+|---|---|---|
+| build 15 (NEAREST) | **3.386 px** | 3.349 px |
+| this lane (smooth argmax) | **1.912 px** | 1.788 px |
+| vanilla CK3 1.19 | 1.763 px | 1.707 px |
+
+3.386 / 1.763 = 1.92, which is the upsample factor 1.9543 to within a
+percent: our borders were vanilla-shaped borders **stretched**, and nothing
+else. `verified`, `scripts/province_edges_metrics.py`,
+`docs/evidence/province_edges/staircase.csv`; both maps are at the same
+1.4839 km per pixel by construction, so the numbers compare directly.
+
+Two more metrics from the same run, and **both are read the other way
+round**: they reward *fine* detail, and a staircase is coarse, not noisy.
+
+| | build 15 | this lane | vanilla |
+|---|---|---|---|
+| 90°-corner pixels per 100 border px | 18.12 | **36.10** | 40.85 |
+| boundary normals within 11.25° of an axis | 0.5305 | **0.4689** | 0.3398 |
+| coast crack perimeter ÷ its own σ = 2 smoothing | 1.0715 | 1.0622 | 1.2267 |
+
+A hand-drawn vanilla border wiggles at single-pixel scale, which a 2.90 km
+source cannot carry and this lane does not invent; that is why vanilla scores
+*higher* on corner density and length ratio, and why those two are the guard
+rail on how much smoothing is honest rather than a target to climb. The
+boundary-normal share is the one that still has room: 0.47 against vanilla's
+0.34, because CK2's own borders were drawn on a coarse grid and their macro
+shape stays more axis-aligned than vanilla's however the sub-pixel outline is
+redrawn.
+
+### 10.1 What replaces NEAREST (`ck2ck3.map.province_edges`)
+
+The one interpolation that is safe on a label array: **upsample each
+province's own 0/1 indicator smoothly and give every canvas pixel to
+whichever indicator is largest there**. An argmax of indicators is still a
+label — no colour is invented — the boundary between two provinces becomes
+the curve where their two blurred indicators cross, and no pixel is left
+unassigned. Four properties, each a property of the code:
+
+1. **Bounded.** A pixel may only take an id NEAREST already painted within
+   `smooth_max_shift_source_px` CK2 source pixels of it — `within_radius`,
+   the same reachability check and the same default (1.0) the paint lane
+   uses (`docs/step_map_paint.md` §10.2). Anything further reverts to
+   NEAREST.
+2. **The province set does not change here.** The weak-province regrow, the
+   survival check and `docs/evidence/lost_provinces.csv` all run *after* the
+   smoothing, on the smoothed array, exactly as they ran on the NEAREST one.
+3. **Deterministic.** No RNG; ties in the argmax go to the lowest CK2 id,
+   the same tie-break rule as the barony growth (§4).
+4. **Relief-aware.** With `smooth_relief_shift_px > 0` the smoothed labels
+   are sampled through `paint_edges.relief_warp` before the bound is
+   enforced, so a province border bends with the ground using **the same
+   field function and the same `[map] terrain_paint_relief_*` sigma and
+   percentile** as the terrain-paint class edges.
+
+**Pixel-centre alignment, and a bonus.** The smooth sample point for target
+pixel `t` is `(t + 0.5) / factor - 0.5` in source coordinates — the
+area-preserving convention, the one `paint_edges.forest_coverage` already
+uses and the one `PIL.Image.resize` uses for the heightmap. NEAREST used
+`floor(t / factor)`, about a quarter of a source pixel off it. So the
+smoothed province map is *better* registered against the LANCZOS heightmap
+than the NEAREST one was, not worse.
+
+**Cost.** Naively this is one blurred indicator plane per province over a
+56 Mpx canvas, 2132 times. It is tiled instead: inside a 1024-pixel canvas
+tile only a handful of provinces exist and only those are built, with a halo
+wide enough that the tile boundary never shows (a test asserts the result is
+independent of `tile_px`). Measured on the same machine, same config, same
+day: the whole `map` step went **128.4 s with `smooth_edges = false` to
+167–200 s with it on** (four runs, the spread is machine load), which is the
+per-province upsample, the extra `topology.bmp` rescale the relief warp
+needs, and the displacement statistics the run prints.
+
+**And `smooth_edges = false` is exactly the old code**: the control run
+(`scripts/make_province_edges_before_config.sh` →
+`configs/faerun_province_edges_before.toml`) produced a `provinces.png` whose
+sha256 is **identical to build 15's shipped file**
+(`7d9a7f78e6f85fa74eda9a52aceaa0e97e62ab8c872e76b54997d5c668b0ef60`,
+`verified` 2026-09-12). The lane is one switch, and the switch is reversible.
+
+### 10.2 Where the smoothing is applied, and why there
+
+**At the CK2-province level — the counties — not on the finished barony
+map.** `provinces.build_raster` returns `raster.ids`, the CK2-id raster at
+canvas resolution, and that one array is the source of truth for everything
+after it: the barony growth's county masks (§4), the water mask, the terrain
+vote, the locator centroids, the climate and island regions, the tree
+eligibility. Smoothing it once means every one of those reads the same
+smooth coastline; smoothing the finished barony map instead would have left
+the county masks — and therefore the growth — on the old staircase, and
+would have needed its own bound against a different baseline.
+
+The relief warp has to be derived from the **base** heightmap, before the
+raster exists, because the detailed heights the paint warp uses are built
+from a land mask that is made *out of* the raster. `build.py` therefore
+calls `heightmap.build` once early, takes the warp, and frees the array;
+the land mask there is `topology.bmp`'s own water level, which needs no
+province map.
+
+### 10.3 What it cost, province by province
+
+`scripts/province_edges_report.py`, build 15 against this lane
+(`docs/evidence/province_edges/topology_delta.json`, `verified`). Everything
+is compared by `definition.csv` **column 5** (the barony title id or the CK2
+province slug), never by the numeric id: ids are dense and hierarchy-ordered,
+so one barony changing status renumbers every province after it.
+
+| | value |
+|---|---|
+| provinces | 4277 → **4276** (10 added, 11 removed, all of them status changes in §10.4) |
+| `definition.csv` colours that moved under a surviving name | **0** |
+| CK2 provinces dropped as too small | **3** before and after (the same three: 0–1 source pixel each) |
+| 4-connected neighbour pairs | 12,557 → 12,565 (**+240 / −232**, 1.9 % churn) |
+| `adjacencies.csv` rows with an endpoint that owns no pixel | **0** before, **0** after (320 rows) |
+| canvas pixels that changed province against NEAREST | 455,890 (**0.81 %** of the canvas) |
+| of those, reverted by the enforced bound | 20,271 |
+| **total displacement** (smoothing + warp), canvas px | max **1.414**, p95 **1.0**, bound 1.9543 (= 1.0 CK2 source px) |
+| canvas pixels the relief warp moved at all | 5,847,180 (10.4 %; nothing on flat ground) |
+| coastline pixels that changed side | 149,937 (**0.27 %** of the canvas) |
+| **how far the coastline moved** | **max 1.414 canvas px = 2.10 km = 0.72 CK2 source px**, p95 1.0, mean 1.0 |
+| `heightmap.png` pixels that disagree with the new coastline | **0** |
+
+That last row is not luck. `heightmap_detail.apply` takes `land_mask` from
+the province raster and clamps every land pixel above and every water pixel
+at or below `water_level`, so `provinces.png`'s coast **is**
+`heightmap.png`'s coast by the detail pass's own invariant — the smoothed
+shoreline propagates into the heightmap, the colormap, the water rasters and
+the tree eligibility for free. One ordering caveat, pre-existing and not
+introduced here: `deepen_sea` runs *before* the detail pass and ramps its
+24 px shelf from the **plain rescale's** shoreline, which disagrees with the
+province shoreline on 159,494 pixels (0.28 % of the canvas, `verified`), so
+the shelf ramp can start a pixel or two off the finished coast. See
+`docs/evidence/HANDOFF_province_edges.md`.
+
+### 10.4 What it cost the baronies
+
+Every one of the 3857 built holdings still exists in
+`docs/evidence/barony_set.csv` — **none was lost and none was added**. What
+moved is the placed/demoted split:
+
+* **3705 → 3704 placed, 152 → 153 demoted.** 21 baronies changed status in
+  both directions (`b_suzail`, `b_marsember`, `b_tantras`,
+  `b_whitesails_harbour`, … — the full list is in `topology_delta.json`).
+* **71 of 3704 placed baronies (1.9 %) changed area by more than 20 %**,
+  listed worst-first in `docs/evidence/province_edges/barony_area_change.csv`.
+* 75,607 county pixels were unreachable from any seed and attached to the
+  nearest barony, against 79,338 before (§4) — the smoother county masks cut
+  a fifth of the detached strips the rescale used to create.
+
+The mechanism is §2, not the smoothing: `capacity = county_pixels //
+min_barony_pixels` is a threshold, so a county whose pixel count crosses a
+multiple of 400 gains or loses a holding, and the whole county then
+re-partitions around a different seed set. It is the same sensitivity every
+change of canvas size has. The seeds themselves are unaffected: CK2 slot 0
+and slot 4 are source coordinates put through the canvas transform, and the
+`snap_radius_px = 48` snap absorbs a one-pixel coastline move.
+
+### 10.5 What is still stepped, and it is not this pass
+
+Inside a county the barony borders come from the 4-connected geodesic BFS of
+§4, whose equidistant set between two seeds is an L1 diagonal — a staircase
+of **one**-pixel steps, not two. That is what is left in the `inland` panel
+of `docs/evidence/province_edges/fig_inland_before_after.png` and it is why
+the boundary-normal share stops at 0.47 rather than reaching vanilla's 0.34.
+Fixing it means a different growth metric (an 8-connected or chamfer BFS, or
+a distance-field partition), which changes every barony's shape and is a
+lane of its own, not a config key here.
+
+### 10.6 Config keys (`[map.provinces]`, read by `steps/map.py`)
+
+Each also has a flat `[map]` alias, because every other edge key of the paint
+lane lives flat under `[map]`. A key `_map_config` never reads is a silent
+no-op — the `[map] colormap = false` and `[map] trees*` bugs, twice over — so
+all four are asserted in `tests/test_map_province_edges.py`, in both tables
+and in `map_config.load`'s separate standalone reader.
+
+| key | flat `[map]` alias | default | meaning |
+|---|---|---|---|
+| `smooth_edges` | `province_edges` | `true` | smooth argmax instead of NEAREST. `false` restores build 15's raster byte for byte |
+| `smooth_sigma_src_px` | `province_edges_sigma_src_px` | `0.6` | Gaussian width of each province indicator, in CK2 **source** pixels. `0` = bilinear indicator only |
+| `smooth_max_shift_source_px` | `province_edges_max_shift_source_px` | `1.0` | enforced reachability bound, CK2 source pixels |
+| `smooth_relief_shift_px` | `province_edges_relief_shift_px` | `1.0` | maximum relief warp, canvas px. `0` keeps the smoothing, drops the warp |
+
+The warp reuses `[map] terrain_paint_relief_sigma_px` and
+`terrain_paint_relief_percentile` rather than duplicating them, which is what
+makes "paint and provinces move together" true rather than approximately
+true.
+
+### 10.7 Reproduce
+
+```
+uv run ck2ck3 --config configs/faerun.toml --steps map --out <scratch>
+uv run scripts/province_edges_metrics.py \
+    --map before=<build 15>/map_data --map after=<scratch>/map_data \
+    --map vanilla=../claudespace/game_files/map_data \
+    --out docs/evidence/province_edges/staircase.csv
+uv run scripts/province_edges_report.py --before <build 15> --after <scratch> \
+    --barony-set-before <build 15 barony_set.csv> --ck2-map-dir Faerun/Faerun/map
+uv run scripts/province_edges_crops.py \
+    --before <build 15>/map_data --after <scratch>/map_data
+```
