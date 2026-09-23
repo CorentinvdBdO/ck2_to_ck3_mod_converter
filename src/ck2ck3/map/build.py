@@ -43,6 +43,7 @@ from . import (
     heightmap,
     holdings,
     idmap,
+    lake_to_land,
     locators,
     provinces,
     rivers,
@@ -200,6 +201,46 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     lake_ids = dm.lake_ids(cfg.lake_region_names)
     river_ids = set(dm.major_rivers)
     ck2_names = {p.id: p.name for p in ck2_provs}
+
+    # -------------------------------------------- overrides/lake_to_land.csv
+    # A CK2 lake drawn on a plateau is a hole through CK3's single global
+    # water level (docs/step_map_heightmap.md §2f/§2h iii). Pulling the
+    # overridden ids out of lake_ids/river_ids here, before anything else
+    # reads them, makes every downstream pass -- barony planning, the id
+    # remap, the terrain vote, the heightmap land mask -- treat the province
+    # as ordinary land from this point on; ck2ck3.map.lake_to_land patches
+    # the per-pixel terrain codes and the heightmap elevation separately,
+    # below, because neither is province-classification-derived.
+    lake_to_land_rules: dict[int, lake_to_land.LakeToLandRule] = {}
+    if cfg.lake_to_land:
+        rules_path = _repo_path(cfg, cfg.lake_to_land_csv)
+        lake_to_land_rules = lake_to_land.read_overrides(rules_path)
+        if lake_to_land_rules:
+            # a CK2 lake id is ALSO a sea_zones id (it is a sea zone inside a
+            # `Lakes`-named ocean_region) -- pulling it from lake_ids alone
+            # does not make it land, it makes it a *true sea province*
+            # instead, since idmap.build's own is_sea rule is
+            # `in sea_ids and not in lake_ids and not in river_ids`. Must
+            # discard from all three (`verified`: the coordinator's second
+            # real conversion run found `sea_zones` still listing every
+            # overridden id, `sea` count +5 while `lakes` -5).
+            sea_ids, lake_ids, river_ids = lake_to_land.patch_water_ids(
+                lake_to_land_rules,
+                sea_ids=sea_ids, lake_ids=lake_ids, river_ids=river_ids,
+                warn=sink.warn,
+            )
+            log(
+                f"lake_to_land: {len(lake_to_land_rules)} CK2 provinces "
+                f"reclassified from {rules_path} "
+                f"({sum(1 for r in lake_to_land_rules.values() if r.action == 'marsh')} marsh, "
+                f"{sum(1 for r in lake_to_land_rules.values() if r.action == 'land')} land)"
+            )
+            report["lake_to_land"] = {
+                "rules": len(lake_to_land_rules),
+                "marsh": sum(1 for r in lake_to_land_rules.values() if r.action == "marsh"),
+                "land": sum(1 for r in lake_to_land_rules.values() if r.action == "land"),
+            }
+
     ck2_water = sea_ids | lake_ids | river_ids
     ck2_land = raster.surviving - ck2_water
 
@@ -338,6 +379,22 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     # ------------------------------------------- terrain vote, per CK3 province
     log("terrain majority vote (per CK3 province, target resolution)")
     codes_tgt = _resize_codes(codes_src, canvas)
+    if lake_to_land_rules:
+        # patch BEFORE the vote: both the gameplay-terrain majority vote and
+        # the paint pass read this same array, so one patch fixes both
+        # (ck2ck3.map.lake_to_land module docstring).
+        water_ck3_now = {p.id for p in ids.provinces if p.is_water}
+        water_mask_now = (
+            np.isin(ck3_raster, list(water_ck3_now)) if water_ck3_now
+            else np.zeros(ck3_raster.shape, dtype=bool)
+        )
+        codes_tgt, l2l_code_stats = lake_to_land.patch_codes(
+            codes_tgt, ck3_raster, ids.ck2_to_ck3, lake_to_land_rules,
+            code_names, water_mask_now, warn=sink.warn,
+        )
+        del water_mask_now
+        log(f"lake_to_land terrain codes: {l2l_code_stats}")
+        report.setdefault("lake_to_land", {})["codes"] = l2l_code_stats
     land_ck3 = {
         p.id for p in ids.provinces if not p.is_water and p.ck2_id is not None
     }
@@ -527,6 +584,21 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
 
         log("building heightmap")
         heights = heightmap.build(src / "topology.bmp", canvas, cfg.heightmap)
+
+        if lake_to_land_rules:
+            # BEFORE deepen_sea: CK2 draws a lake's own topology.bmp pixels
+            # near sea level regardless of the plateau under it (Lake
+            # Thaylambar is 85-92 of 255), so deepen_sea's own water test
+            # (`heights <= water_level`, no province lookup at all) would
+            # flatten these pixels to the sea floor whether or not the
+            # province is reclassified -- reclassifying the province alone
+            # is not enough (docs/step_map_heightmap.md §2h iii).
+            heights, l2l_height_stats = lake_to_land.inpaint_heights(
+                heights, ck3_raster, ids.ck2_to_ck3, lake_to_land_rules,
+                water_mask,
+            )
+            log(f"lake_to_land heightmap inpaint: {l2l_height_stats}")
+            report.setdefault("lake_to_land", {})["heights"] = l2l_height_stats
 
         if cfg.heightmap.deepen_sea:
             # CK2 carries almost no bathymetry; CK3 paints shallow water as

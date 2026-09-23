@@ -87,6 +87,12 @@ strip_vanilla_foliage = true
 # CK2 labels its lakes only by the ocean_region comment text in default.map.
 lake_names = ["Lakes"]
 
+# overrides/lake_to_land.csv: a CK2 lake province drawn on a plateau becomes
+# CK3 land or marsh instead of a hole down to the global water level
+# (docs/step_map_heightmap.md §2h iii, the user's 2026-09-23 decision).
+lake_to_land = true
+lake_to_land_csv = "overrides/lake_to_land.csv"
+
 # Seed the county capital barony from CK2 positions.txt slot 0 and the
 # county's non-capital city_holding (the port) from slot 4, ahead of
 # farthest-point sampling. docs/step_map_baronies.md §3, docs/map_fidelity.md

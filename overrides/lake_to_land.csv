@@ -1,0 +1,27 @@
+# overrides/lake_to_land.csv -- human input, hand-edited from here.
+#
+# A CK2 lake province drawn on high ground: CK3's single global water level
+# turns it into a hole down to the pin, and CK2 itself draws a lake's own
+# topology.bmp pixels near sea level regardless of the plateau under it, so
+# the shore's own elevation carries the only real signal
+# (`scripts/measure_high_lakes.py`, `docs/step_map_heightmap.md` §2h iii).
+#
+# Columns:
+#   ck2_id  - the CK2 province numeric id (docs/evidence/province_id_map.csv
+#             has the CK2<->CK3 mapping; lake_to_land_candidates.csv has the
+#             measurement every row here was proposed from)
+#   action  - marsh (CK3 terrain forced to `wetlands`, both gameplay and
+#             paint) or land (terrain code becomes the mode of the
+#             surrounding land's own paint codes)
+#   reason  - why, free text
+#
+# Pre-filled with the Thay-window lakes this lane's renders show as vertical
+# shafts (`docs/evidence/thay_relief/`). Every other measured candidate,
+# whole canvas, is a *proposal* in docs/evidence/lake_to_land_proposed.csv --
+# add a row here yourself to accept one.
+ck2_id,action,reason
+1904,marsh,"Lake Thaylambar: measured 8.0 risers above the water level (7099.0 vs 4883), renders as a shaft in docs/evidence/thay_relief/"
+1906,marsh,"Lake Tirulag: measured 4.0 risers above the water level (5991.0 vs 4883), renders as a shaft in docs/evidence/thay_relief/"
+1973,marsh,"Yeshelmaar Lake: measured 4.0 risers above the water level (5991.0 vs 4883), renders as a shaft in docs/evidence/thay_relief/"
+1972,marsh,"Lake Murthil: measured 3.0 risers above the water level (5714.0 vs 4883), renders as a shaft in docs/evidence/thay_relief/"
+1974,marsh,"Lake Flamm: measured 3.0 risers above the water level (5714.0 vs 4883), renders as a shaft in docs/evidence/thay_relief/"

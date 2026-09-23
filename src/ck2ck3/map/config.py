@@ -785,6 +785,12 @@ class MapConfig:
     terrain_history_weak: tuple[str, ...] = ("plains", "farmlands")
     #: CK2 ocean_region comment texts that mean "lake" rather than "sea"
     lake_region_names: tuple[str, ...] = ("Lakes",)
+    #: honour `overrides/lake_to_land.csv`: a CK2 lake/river province drawn
+    #: on a plateau becomes CK3 land or marsh instead of a hole down to the
+    #: global water level (`docs/step_map_heightmap.md` §2h iii, the user's
+    #: 2026-09-23 decision). false = the pre-lane behaviour.
+    lake_to_land: bool = True
+    lake_to_land_csv: Path = Path("overrides/lake_to_land.csv")
     #: trees.bmp palette indices that count as forest (CK2 default.map `tree`)
     tree_indices: tuple[int, ...] = ()
     #: file prefix for generated CK3 files
@@ -1066,6 +1072,10 @@ def load(path: str | Path) -> MapConfig:
             )
         ),
         lake_region_names=tuple(raw.get("regions", {}).get("lake_names", ("Lakes",))),
+        lake_to_land=bool(raw.get("lake_to_land", True)),
+        lake_to_land_csv=Path(
+            str(raw.get("lake_to_land_csv", "overrides/lake_to_land.csv"))
+        ),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
         title_scaffolding=bool(out.get("title_scaffolding", False)),

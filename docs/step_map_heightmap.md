@@ -1405,13 +1405,96 @@ do not invent):
    a rendering mock-up of the idea, not a real classification change):
    `hillshade_lake_marsh_fill.png`, `oblique_lake_marsh_fill.png`.
 
-Neither is implemented here (`scripts/thay_lake_treatments.py` renders both
-ideas cheaply, output-side, over the current heightmap only). **Question for
-the user**: which of the two, if either — the wider ramp keeps every lake as
-water and only softens its shore over a longer distance; the marsh/land
-conversion removes the water province (and its holy sites/adjacencies)
-entirely from the highest lakes, which is a bigger, per-county change a
-human should review one county at a time, not a blanket rule.
+**The user's decision (2026-09-23): option 2, marsh/land via
+`overrides/lake_to_land.csv`.** Not the ramp.
+
+**Implementation** (`src/ck2ck3/map/lake_to_land.py`, wired into
+`ck2ck3.map.build` at three independent points, each patching an array a
+DIFFERENT downstream pass reads, because none of the three is derived from
+the others):
+
+1. **Province classification.** `patch_water_ids` removes the overridden
+   CK2 id from `lake_ids` **and** `river_ids` **and** `sea_ids`, before
+   baronies/`idmap`/`default.map` ever see them. A CK2 lake id is *also* a
+   `sea_zones` id (CK2 defines a lake as a sea zone inside a `Lakes`-named
+   `ocean_region`, `ck2read.Ck2DefaultMap.lake_ids`), and
+   `ck2ck3.map.idmap.build`'s own rule is `is_sea = in sea_ids and not in
+   lake_ids and not in river_ids` -- so removing the id from `lake_ids`
+   alone does not make it land, it makes it a *different kind of water*
+   (`verified`, twice: the first real conversion run found the override
+   silently had no effect at all because the CLI's own config builder
+   never read the two new keys, §2h iii below; the second found
+   `default.map` still listing every overridden province, now under
+   `sea_zones` instead of `lakes`, because only `lake_ids` had been
+   patched). All three sets have to move together. From here the existing
+   untitled-land rule (`docs/step_map_baronies.md`) forces
+   `impassable_mountains` unless CK2 happens to give the province a real
+   title -- the same identity every other titleless CK2 land province
+   already gets, no new CK3-identity code.
+2. **Terrain.** `patch_codes` forces every one of the province's own pixels
+   to one CK2 terrain-category code, in the *same* per-pixel grid both the
+   gameplay-terrain majority vote and the paint pass read (one patch fixes
+   both): `marsh` -> CK2's own `marsh` category (Faerûn's `terrain.txt`
+   index 15, -> CK3 `wetlands`); `land` -> the mode of the codes among the
+   already-land pixels in a ring around the province.
+3. **Heightmap.** `inpaint_heights` -- the actual fix for the shaft, and
+   the reason "reclassify the province" is not enough on its own: CK2 draws
+   a lake's own `topology.bmp` pixels near sea level *regardless of the
+   plateau under it* (Lake Thaylambar is raw bytes 85-92 of 255, whatever
+   is around it -- `scripts/measure_high_lakes.py`'s first version measured
+   the lake's own pixels and found all 95 of Faerûn's lakes within 0.1
+   riser of each other for exactly this reason). So `deepen_sea`'s own
+   water test (`heights <= water_level`, a raw-height threshold with no
+   province lookup at all) would flatten these pixels to the sea floor
+   whether or not the province is reclassified. `inpaint_heights` runs a
+   harmonic (Laplace) fill from the surrounding land's own plain-rescale
+   elevation, *before* `deepen_sea`, so the pin never fires and the
+   detail pass's own source bound (§2f) sees plateau-height pixels like any
+   other land.
+
+**The measurement, and why the 5 Thay lakes are in the file anyway.**
+`scripts/measure_high_lakes.py` cannot use the lake's own pixels (see
+above); it measures a `--ring-px` (15) dilation ring of *land* pixels
+around each lake instead, plain-rescale elevation, in risers above
+`water_level`. Whole-canvas distribution over Faerûn's 95 lakes: p50 6.0,
+p75 8.5, p90 12.0, p95 15.0, p99 19.0, max 27.0. `--min-risers 10` gates
+`docs/evidence/lake_to_land_proposed.csv` (12 rows, everywhere else on the
+map) -- roughly the p75-p90 boundary, a defensible "clearly on elevated
+ground" cutoff given the median lake (6 risers, ~1,662 levels above the
+pin) is an ordinary valley pond. **The 5 Thay lakes measure only 3-8
+risers** (Lake Thaylambar 8, Tirulag/Yeshelmaar 4, Murthil/Flamm 3) --
+*below* that threshold, and are in `overrides/lake_to_land.csv` anyway,
+because the render evidence, not the riser count, is what put them there:
+`oblique_build17.png`/`hillshade_build17.png` show them as shafts, measured
+independently by the whole-canvas closed-depression/pit metrics in §2h(a).
+The two measurements answer different questions -- "how much higher is the
+shore than the water level" (a lake sitting in its own local dip can score
+low on this even on a genuinely high plateau, since a lake occupies the
+*lowest* point of its immediate surroundings almost by definition) against
+"does the render show a shaft" -- and only the second is what the user
+asked to fix. **`--min-risers` should not drop to catch them by the same
+rule**: lowering it to 3 to sweep in Thay's own lakes would also sweep in
+every ordinary valley pond within a few hundred levels of the water line
+that never had a render problem in the first place (`docs/evidence/lake_to_land_proposed.csv`
+at `--min-risers 3` would have been the whole `candidates.csv` file, 80 of
+95 lakes). The whole-canvas proposals list stays threshold-gated; a Thay-like
+case elsewhere on the map should be added to `overrides/lake_to_land.csv`
+the same way Thay's own five were -- because a render showed it, not
+because a number crossed a line.
+
+**Bugs found on the way to a working fix, both by real conversion runs, not
+by the unit tests** (`docs/DECISIONS.md`): (1) the CLI-facing config
+builder (`ck2ck3.steps.map._map_config`) never read the two new `[map]`
+keys -- a documented, named failure mode in this repo
+(`test_cli_config_builder_reads_the_key`, an established pattern this
+module should have used from the start and now does); (2) `patch_water_ids`
+originally only touched `lake_ids`/`river_ids`, leaving the id in
+`sea_ids` and flipping it to a *true sea* province instead of land. Both
+are now regression-tested (`tests/test_map_lake_to_land.py`) and both are
+checked independently of the unit tests on a finished mod:
+`scripts/verify_heightmap_detail_invariants.py` check 7 reads
+`overrides/lake_to_land.csv` and `default.map` directly and fails if any
+overridden province is still in `sea_zones`/`lakes`/`river_provinces`.
 
 ### Whole-canvas regression
 
@@ -1448,3 +1531,17 @@ ck3-tiger, full mod: `docs/evidence/thay_relief_tiger2.txt` -- this lane
 touches only heightmap raster synthesis, no generated script/history/loc
 content, so the fatal/error counts are unchanged from the pre-lane baseline
 (fatal 0, error 58).
+
+### §2h (d) The rings are CK2 river provinces (coordinator, 2026-09-23)
+
+After the wall fix and the lake override, Thay's oblique render still showed the
+closed escarpment loop. Overlaying the water-pinned pixels (`heightmap <= 4883`) on
+the hillshade (`docs/evidence/thay_relief/diag_water_pin.png`) settles it
+(`verified`): every ring is a CK2 **river province** — `RIVER_MURGHOL`,
+`LOWER_RIVER_MURGHOL`, `RIVER_UMBER`, `UPPER_`/`LOWER_RAUTHENFLOW_RIVER` — a 2–4 px
+water province that the detail pass pins to CK3's single global water level, so it
+is cut as a canyon thousands of levels deep all the way round the plateau. Same
+mechanism as the lake shafts, in linear form; it is what "plateaux dipping then
+coming back up" has been since playtest 3. `rivers.png` (the drawn river) is a
+different, thinner line and is not the cause (`diag_rivers_borders.png`). Next:
+decide the treatment for high-ground river provinces (lane follow-up).

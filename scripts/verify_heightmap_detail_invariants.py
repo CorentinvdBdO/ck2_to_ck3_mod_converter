@@ -173,6 +173,55 @@ def check_wall_concentration(source: np.ndarray, heights: np.ndarray,
     return row
 
 
+def check_lake_to_land_left_every_water_list(
+    overrides_path: Path, id_map_path: Path, water_ids_ck3: set[int],
+) -> list[str]:
+    """Check 7 (docs/step_map_heightmap.md §2h iii): every province
+    `overrides/lake_to_land.csv` names is land in `default.map`, not merely
+    not-a-lake.
+
+    The exact bug two real conversion runs caught, in order: (1) the
+    override was silently never read by the real CLI at all (§2h iii
+    "the override did not take effect"); (2) once it *was* read, removing a
+    CK2 id from `lake_ids` alone left it in `sea_zones` (a CK2 lake is a sea
+    zone inside a `Lakes`-named `ocean_region`), so it became a *true sea*
+    province instead of land. Both looked fine from the run-report counters
+    alone; only reading `default.map` itself catches either.
+    """
+    if not overrides_path.exists() or not id_map_path.exists():
+        return []
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).resolve().parent))
+    _sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from ck2ck3.map import lake_to_land as l2l
+
+    rules = l2l.read_overrides(overrides_path)
+    if not rules:
+        return []
+    ck2_to_ck3: dict[int, int] = {}
+    with id_map_path.open(newline="", encoding="utf-8") as fh:
+        import csv as _csv
+        for row in _csv.DictReader(fh):
+            # rows for CK2 provinces with no CK3 id (demoted/lost) carry an empty ck3_id
+            if row.get("ck2_id", "").isdigit() and row.get("ck3_id", "").isdigit():
+                ck2_to_ck3[int(row["ck2_id"])] = int(row["ck3_id"])
+    problems = []
+    for ck2_id, rule in rules.items():
+        ck3_id = ck2_to_ck3.get(ck2_id)
+        if ck3_id is None:
+            problems.append(
+                f"lake_to_land: CK2 province {ck2_id} ({rule.action}) has no "
+                f"CK3 id in {id_map_path.name}"
+            )
+        elif ck3_id in water_ids_ck3:
+            problems.append(
+                f"lake_to_land: CK2 province {ck2_id} -> CK3 {ck3_id} "
+                f"({rule.action}) is STILL in a default.map water list "
+                "(sea_zones/lakes/river_provinces)"
+            )
+    return problems
+
+
 def main(argv: list[str]) -> int:
     args = [a for a in argv[1:] if not a.startswith("--")]
     flags = [a for a in argv[1:] if a.startswith("--")]
@@ -199,6 +248,12 @@ def main(argv: list[str]) -> int:
     for key in ("sea_zones", "lakes", "river_provinces"):
         water_ids |= expand_ranges(dm[key])
 
+    lake_to_land_problems = check_lake_to_land_left_every_water_list(
+        Path(__file__).resolve().parents[1] / "overrides/lake_to_land.csv",
+        Path(__file__).resolve().parents[1] / "docs/evidence/province_id_map.csv",
+        water_ids,
+    )
+
     with (out / "map_data/provinces.png").open("rb") as fh:
         prov = np.asarray(Image.open(fh).convert("RGB"))
     with (out / "map_data/heightmap.png").open("rb") as fh:
@@ -215,7 +270,13 @@ def main(argv: list[str]) -> int:
 
     key = (prov[..., 0].astype(np.int64) << 16) | (prov[..., 1].astype(np.int64) << 8) | prov[..., 2]
 
-    problems: list[str] = []
+    problems: list[str] = list(lake_to_land_problems)
+    if lake_to_land_problems:
+        print(f"lake_to_land          {len(lake_to_land_problems)} problem(s) "
+              "(see INVARIANT BROKEN below)")
+    else:
+        print("lake_to_land          clean (no overridden province left in "
+              "a default.map water list)")
     land_below = 0
     land_provinces_checked = 0
     water_above = 0
