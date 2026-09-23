@@ -44,6 +44,35 @@ too, or "land" just means "a flat pit that used to be blue".
    treats these pixels exactly like the ordinary land beside them --
    the sloped-shore treatment `docs/step_map_heightmap.md` §2h iii
    originally proposed, achieved by construction rather than a special case.
+
+**A fourth action, ``valley`` (`docs/step_map_heightmap.md` §2h (d), the
+coordinator's 2026-09-23 diagnosis): a CK2 *river* province on a plateau, not
+a lake.** The coordinator found Thay's remaining closed loop is five 2-4 px
+CK2 river provinces (``RIVER_MURGHOL`` and neighbours), each pinned flat --
+`verified` the same way as the lakes: every one of their `topology.bmp`
+pixels is a flat 92 of 255, CK2's sea-level anchor, regardless of the
+plateau. Unlike a lake, the user wants these to **stay** river provinces
+(navigable, in `river_provinces`/`sea_zones` exactly as CK2 had them) with a
+heightmap that is *not* pinned to the water level -- a shallow valley cut
+into the plateau, not a hole through it. `scripts/measure_vanilla_river_provinces.py`
+checked whether vanilla itself ever draws a `river_provinces` pixel above its
+own water level first: it does (`verified`, 433 of 424,016 px in 14 of 224
+provinces, up to +1,028 levels), but only barely and rarely (0.10 %) --
+vanilla's own river-province heights otherwise range freely from 0 to
+4,960 (median 2,676, well *below* its 3,932 water level), which is the real
+finding: vanilla's rivers are not flatly pinned at all, ours were only
+because `heightmap_detail.apply`'s blanket water clamp treats every water
+province (sea, lake, river) identically. `valley` rows therefore do not
+touch province classification at all (:func:`patch_water_ids` skips them);
+they widen the *heightmap*'s own land mask to include these pixels (so the
+normal cliff-aware/bound/wall-spread pipeline runs on them, same as any
+land) after :func:`carve_valleys` seeds them with a local bank estimate (a
+ring-dilation search for the nearest true land, not a canvas-wide diffusion
+-- see that function's own docstring for why the first cut measured the
+wrong number) minus a shallow, bounded depth -- the existing river-carve
+pass's own idea (`heightmap_detail._carve_rivers`, `river_depth` default
+900 levels), generalised from the traced `rivers.png` line to the whole
+province.
 """
 
 from __future__ import annotations
@@ -57,7 +86,11 @@ from scipy.ndimage import binary_dilation, gaussian_filter
 
 MARSH = "marsh"
 LAND = "land"
-ACTIONS = (MARSH, LAND)
+VALLEY = "valley"
+ACTIONS = (MARSH, LAND, VALLEY)
+#: actions that leave the province's default.map classification unchanged
+#: (still water) -- only the heightmap treatment differs
+WATER_STAYING_ACTIONS = (VALLEY,)
 
 #: CK2 terrain.txt category name a `marsh` row forces every pixel to
 #: (`ck2ck3.map.terrain.CK2_TO_CK3_TERRAIN["marsh"] == "wetlands"`)
@@ -133,7 +166,12 @@ def patch_water_ids(
     sea_ids = set(sea_ids)
     lake_ids = set(lake_ids)
     river_ids = set(river_ids)
-    for ck2_id in rules:
+    for ck2_id, rule in rules.items():
+        if rule.action in WATER_STAYING_ACTIONS:
+            # `valley`: stays a water province exactly as CK2 had it -- only
+            # the heightmap treatment differs (see `valley_mask`/
+            # `carve_valleys`, called separately in `ck2ck3.map.build`)
+            continue
         was_lake_or_river = ck2_id in lake_ids or ck2_id in river_ids
         if ck2_id in sea_ids and not was_lake_or_river:
             warn(
@@ -256,4 +294,138 @@ def inpaint_heights(
     }
     result = heights.copy()
     result[holes] = np.rint(out[holes]).astype(heights.dtype)
+    return result, stats
+
+
+# --------------------------------------------------------------------------- #
+# `valley`: a river province that stays water, but is not pinned
+# --------------------------------------------------------------------------- #
+def valley_rules(rules: dict[int, LakeToLandRule]) -> dict[int, LakeToLandRule]:
+    return {cid: r for cid, r in rules.items() if r.action == VALLEY}
+
+
+def valley_mask(
+    ck3_raster: np.ndarray,
+    ck2_to_ck3: dict[int, int],
+    rules: dict[int, LakeToLandRule],
+) -> np.ndarray:
+    """Canvas-resolution boolean mask of every `valley`-flagged province's
+    own pixels -- used to widen the *heightmap*'s land mask only; province
+    classification (`is_water`) is untouched (:func:`patch_water_ids` skips
+    `valley` rows on purpose)."""
+    ids = {ck2_to_ck3[cid] for cid in rules if cid in ck2_to_ck3}
+    if not ids:
+        return np.zeros(ck3_raster.shape, dtype=bool)
+    return np.isin(ck3_raster, list(ids))
+
+
+def carve_valleys(
+    heights: np.ndarray,
+    ck3_raster: np.ndarray,
+    ck2_to_ck3: dict[int, int],
+    rules: dict[int, LakeToLandRule],
+    land_mask: np.ndarray,
+    water_level: int,
+    *,
+    depth: float = 300.0,
+    ring_px: int = 15,
+    ring_max_px: int = 240,
+) -> tuple[np.ndarray, dict]:
+    """Carve a shallow valley for every `valley`-flagged province: a *local*
+    bank estimate from the surrounding land, minus a shallow, bounded
+    ``depth`` -- never pinned to ``water_level``, never allowed to reach it
+    either.
+
+    ``depth`` (300 levels) is deliberately smaller than
+    `heightmap_detail_river_depth` (900, the traced-river-line carve) and
+    close to the smaller end of the §2f per-terrain-class tolerance
+    (193-427 levels measured on Thay/Spine, `docs/step_map_heightmap.md`
+    §2f): a valley wide enough to be a whole province is not the same
+    feature as a 2-3 px traced river line, and should read as a dip in the
+    plateau, not a second river-depth trench on top of one. Run *before*
+    `heightmap.deepen_sea` (like :func:`inpaint_heights`), so its own
+    raw-height water test never fires here either.
+
+    **Second attempt, first one measured wrong** (docs/step_map_heightmap.md
+    §2h (d), the coordinator's bed-vs-bank catch): the first cut of this
+    function used the same iterative Gaussian blur-and-restore as
+    :func:`inpaint_heights`, seeded from ``land_mask`` alone (true land,
+    excluding every water province). That measured `bank_median` **5347.6**
+    against the ring-measured 6545-7653 these same six provinces were
+    proposed from (`scripts/measure_high_rivers.py`) -- off by a plateau. The
+    reason: every non-land pixel (every sea, lake and river on the canvas,
+    not just these six holes) was simultaneously "free" in that diffusion,
+    so a hole's neighbourhood was effectively the whole connected water
+    network it drains into, not its own bank -- 400 iterations at sigma 1.5
+    px (effective radius ~30 px) cannot reach real land through that, and
+    the un-reached interior stayed near its ``water_level`` fallback
+    (`verified`, `docs/evidence/thay_relief_map_debug1.log`). A per-pixel
+    Laplace solve is the wrong tool for a thin, winding, kilometers-long
+    channel; a **direct spatial search** for the nearest true land, exactly
+    :func:`scripts.measure_high_rivers`'s own already-verified ring-dilation
+    method, is not -- it finds land by proximity, never by having to
+    diffuse *through* a possibly-enormous connected water body to get
+    there. One bank value per province (the ring's median), widened in
+    powers of two from ``ring_px`` up to ``ring_max_px`` on the rare
+    province boxed in by other water at the starting radius, so no hole is
+    ever silently left uncarved.
+    """
+    rules = valley_rules(rules)
+    if not rules:
+        return heights, {}
+    original = heights.astype(np.float32)
+    result = heights.copy()
+    holes_total = 0
+    banks: list[float] = []
+    befores: list[float] = []
+    carved_vals: list[float] = []
+    rings_widened = 0
+    stranded: list[int] = []
+    for ck2_id, rule in rules.items():
+        ck3_id = ck2_to_ck3.get(ck2_id)
+        if ck3_id is None:
+            continue
+        mask = ck3_raster == ck3_id
+        n = int(mask.sum())
+        if n == 0:
+            continue
+        px = ring_px
+        ring = None
+        while px <= ring_max_px:
+            candidate = binary_dilation(mask, iterations=px) & land_mask & ~mask
+            if candidate.any():
+                ring = candidate
+                if px != ring_px:
+                    rings_widened += 1
+                break
+            px *= 2
+        if ring is None:
+            # boxed in by other water even at ring_max_px (never seen on
+            # Faerun's own six, but a future province could be) -- leave it
+            # exactly as `heights` already has it (still water-pinned) and
+            # report it, rather than guess at a bank that was never found
+            stranded.append(ck2_id)
+            continue
+        bank = float(np.median(original[ring]))
+        carved = max(bank - depth, float(water_level) + 1.0)
+        result[mask] = np.uint16(round(carved))
+        holes_total += n
+        banks.append(bank)
+        befores.append(float(np.median(original[mask])))
+        carved_vals.append(carved)
+    if holes_total == 0:
+        return heights, {"holes_px": 0, "stranded_ck2_ids": stranded}
+    stats = {
+        "holes_px": holes_total,
+        "provinces_carved": len(banks),
+        "before_median": round(float(np.median(befores)), 1),
+        "bank_median": round(float(np.median(banks)), 1),
+        "bank_min": round(float(np.min(banks)), 1),
+        "carved_median": round(float(np.median(carved_vals)), 1),
+        "carved_min": round(float(np.min(carved_vals)), 1),
+        "depth": depth,
+        "ring_px": ring_px,
+        "rings_widened": rings_widened,
+        "stranded_ck2_ids": stranded,
+    }
     return result, stats

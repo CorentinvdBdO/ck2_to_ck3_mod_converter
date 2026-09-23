@@ -241,6 +241,30 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 "land": sum(1 for r in lake_to_land_rules.values() if r.action == "land"),
             }
 
+    # -------------------------------------------- overrides/river_valleys.csv
+    # A `valley`-flagged CK2 river province stays exactly the water province
+    # CK2 had (docs/step_map_heightmap.md §2h (d)) -- sea_ids/lake_ids/
+    # river_ids are untouched here, on purpose. Only the pixel footprint is
+    # needed this early, to widen the heightmap's own land mask later; the
+    # actual heightmap carve (`lake_to_land.carve_valleys`) needs the plain
+    # rescale, which does not exist yet at this point in the pipeline.
+    river_valley_rules: dict[int, lake_to_land.LakeToLandRule] = {}
+    if cfg.river_valleys:
+        rv_path = _repo_path(cfg, cfg.river_valleys_csv)
+        river_valley_rules = lake_to_land.read_overrides(rv_path)
+        if river_valley_rules:
+            bad = [cid for cid in river_valley_rules if cid not in (sea_ids | lake_ids | river_ids)]
+            if bad:
+                sink.warn(
+                    f"river_valleys: {len(bad)} CK2 provinces in {rv_path} are "
+                    f"not currently water (sea/lake/river): {bad[:10]}"
+                )
+            log(
+                f"river_valleys: {len(river_valley_rules)} CK2 river provinces "
+                f"from {rv_path} will carve a valley instead of a water pin"
+            )
+            report["river_valleys"] = {"rules": len(river_valley_rules)}
+
     ck2_water = sea_ids | lake_ids | river_ids
     ck2_land = raster.surviving - ck2_water
 
@@ -375,6 +399,12 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
     )
     ck3_raster = _paint_ck3_ids(raster, plan, ids)
     log(f"{len(ids.provinces)} CK3 provinces (padding ocean is id {ids.padding.id})")
+    # canvas-resolution footprint of every `valley`-flagged river province;
+    # widens the heightmap's own land mask only (below), never province
+    # classification (docs/step_map_heightmap.md §2h (d))
+    valley_mask_arr = lake_to_land.valley_mask(
+        ck3_raster, ids.ck2_to_ck3, river_valley_rules
+    )
 
     # ------------------------------------------- terrain vote, per CK3 province
     log("terrain majority vote (per CK3 province, target resolution)")
@@ -600,6 +630,27 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             log(f"lake_to_land heightmap inpaint: {l2l_height_stats}")
             report.setdefault("lake_to_land", {})["heights"] = l2l_height_stats
 
+        if river_valley_rules:
+            # BEFORE deepen_sea, same reason as the lake inpaint above: CK2
+            # draws these river provinces' own pixels flat too (every one of
+            # RIVER_MURGHOL's is topology.bmp byte 92, `verified`,
+            # scripts/measure_high_lakes.py-style check). `land_mask` here
+            # is `~water_mask`, ordinary land only -- the valley's own bank
+            # seed must not include any other still-pinned water province
+            # (docs/step_map_heightmap.md §2h (d)).
+            heights, valley_stats = lake_to_land.carve_valleys(
+                heights, ck3_raster, ids.ck2_to_ck3, river_valley_rules,
+                land_mask=~water_mask, water_level=cfg.heightmap.ck3_water_level,
+            )
+            log(f"river_valleys heightmap carve: {valley_stats}")
+            report.setdefault("river_valleys", {})["heights"] = valley_stats
+            if valley_stats.get("stranded_ck2_ids"):
+                sink.warn(
+                    f"river_valleys: {valley_stats['stranded_ck2_ids']} found no "
+                    "true land within ring_max_px -- left pinned to the water "
+                    "level, still a canyon (docs/step_map_heightmap.md §2h (d))"
+                )
+
         if cfg.heightmap.deepen_sea:
             # CK2 carries almost no bathymetry; CK3 paints shallow water as
             # sand (docs/step_map_heightmap.md, 2026-09-10 in-game check).
@@ -659,9 +710,16 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 ck3_raster, terrain_ck3, cfg.terrain_default
             )
             river_body = (riv >= rivers.BODY_MIN) & (riv <= rivers.BODY_MAX)
+            # a `valley` river province stays classified as water
+            # (default.map/`water_mask`), but its heightmap must run the
+            # normal land pipeline (cliff-aware de-terrace, wall-spread, the
+            # source bound) on top of `carve_valleys`'s own carved base, or
+            # the closing invariant below pins it right back to the water
+            # level regardless (docs/step_map_heightmap.md §2h (d)).
+            heightmap_land_mask = ~water_mask | valley_mask_arr
             heights, detail_stats = heightmap_detail.apply(
                 heights,
-                land_mask=_nn_upsample(~water_mask, f),
+                land_mask=_nn_upsample(heightmap_land_mask, f),
                 terrain_code=_nn_upsample(terrain_code, f),
                 terrain_keys=terrain_keys,
                 river_body=_nn_upsample(river_body, f),

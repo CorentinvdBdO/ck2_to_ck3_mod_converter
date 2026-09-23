@@ -93,6 +93,14 @@ lake_names = ["Lakes"]
 lake_to_land = true
 lake_to_land_csv = "overrides/lake_to_land.csv"
 
+# overrides/river_valleys.csv: a `valley`-flagged CK2 river province stays a
+# water province exactly as CK2 had it, but its heightmap is a carved valley
+# instead of a pin to the water level (docs/step_map_heightmap.md §2h (d),
+# the coordinator's 2026-09-23 diagnosis: Thay's remaining closed loop was
+# five 2-4 px river provinces cut as canyons).
+river_valleys = true
+river_valleys_csv = "overrides/river_valleys.csv"
+
 # Seed the county capital barony from CK2 positions.txt slot 0 and the
 # county's non-capital city_holding (the port) from slot 4, ahead of
 # farthest-point sampling. docs/step_map_baronies.md §3, docs/map_fidelity.md

@@ -1,0 +1,9 @@
+ck2_id,name,pixel_count,approx_width_px,ring_px,shore_median_level,risers_above_water,canvas_centroid_y,canvas_centroid_x,region
+2017,Fire River,637,28.5,15,9315.0,16.0,1593.3,4110.5,other
+2047,River Xon,880,33.5,15,7930.0,11.0,3103.8,6167.8,other
+2028,River Umber,867,33.2,15,7653.0,10.0,1906.5,4724.2,thay
+1983,Lower Rauthenflow River,1673,46.2,15,7099.0,8.0,2303.8,5244.3,thay
+1978,River Murghol,1620,45.4,15,6545.0,6.0,2035.2,5407.1,thay
+1984,Lower River Murghol,1507,43.8,15,6545.0,6.0,2207.5,5360.8,thay
+1982,Upper Rauthenflow River,2436,55.7,15,5991.0,4.0,2355.8,5474.8,thay
+2029,Lake Umber,2120,52.0,15,5714.0,3.0,1881.1,4832.7,thay

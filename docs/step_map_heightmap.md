@@ -1545,3 +1545,232 @@ mechanism as the lake shafts, in linear form; it is what "plateaux dipping then
 coming back up" has been since playtest 3. `rivers.png` (the drawn river) is a
 different, thinner line and is not the cause (`diag_rivers_borders.png`). Next:
 decide the treatment for high-ground river provinces (lane follow-up).
+
+### §2h (d) implementation: `valley` -- a river stays a river, its bed stops being pinned
+
+**1. Measurement, whole canvas, same ring method as the lakes**
+(`scripts/measure_high_rivers.py`, `docs/evidence/river_valley_candidates.csv`):
+surrounding-land elevation (15 px dilation ring, excluding all water) minus
+the water level, in risers. 86 CK2 river provinces on the canvas; p50 5.0
+risers, p90 8.0, p99 11.7, max 16.0. Eight provinces read >= 10 risers, six
+of them the coordinator's own five Thay rivers plus a newly-measured
+geographic neighbour (`Lake Umber`, CK2 id 2029, `kind=river` despite the
+name -- confusingly named but the same defect). The other two (`Fire River`,
+`River Xon`) sit outside Thay and are left as proposals, not applied
+(`docs/evidence/river_valleys_proposed.csv`), matching the lake lane's own
+precedent of only touching the region the render actually shows broken.
+Every one of these six provinces' own `topology.bmp` pixels is CK2's flat
+sea-level anchor (raw byte 92/255, the same value the Thay lakes measured),
+`verified` the same way `scripts/measure_high_lakes.py` first found it for
+lakes -- so this is the identical mechanism, not a coincidence.
+
+**2. Vanilla check, before deciding the treatment**
+(`scripts/measure_vanilla_river_provinces.py`): is a `river_provinces`
+pixel above `WATERLEVEL` legal in CK3 at all? Read vanilla's own
+`WATERLEVEL` define (`../claudespace/game_files/common/defines/00_defines.txt`,
+`3.0/50 * 65535` = 3932 in 16-bit levels) and vanilla's own
+`map_data/{provinces.png,heightmap.png,definition.csv,default.map}`
+directly (2x upsampling the province-id raster to match the 2x heightmap).
+Result, `verified`: 224 vanilla river provinces, 424,016 px; heights range
+0-4,960 (p50 2,676, p99 3,642), and **433 px (0.10 %) in 14 of 224
+provinces sit above the water level**, up to +1,028 levels. So yes, it is
+legal -- CK3 renders it exactly like any other land-adjacent water pixel;
+there is no separate "river above water" shader path, because the engine's
+water surface is the same whole-map plane `jomini_water_default.fxh`
+already paints everywhere (CLAUDE.md's own water-surface invariant). The
+larger finding is the useful one: vanilla river provinces are **not**
+flatly pinned at all -- they follow real terrain (rivers run downhill,
+hence mostly below water), with rare small excursions above it where the
+terrain does. Ours were only flat because `heightmap_detail.apply`'s
+land/water clamp treats every water province (sea, lake, river) identically
+regardless of kind. This is the evidence base for `valley`: it is not
+fabricated behaviour, it restores what a river province is allowed to look
+like and CK2 itself never modelled.
+
+**3. The `valley` action** (`src/ck2ck3/map/lake_to_land.py`,
+`overrides/river_valleys.csv`, schema identical to `lake_to_land.csv`:
+`ck2_id,action,reason`, `read_overrides` is shared). Unlike `marsh`/`land`,
+a `valley` row:
+- is **skipped** by `patch_water_ids` (`WATER_STAYING_ACTIONS = (VALLEY,)`)
+  -- `sea_ids`/`lake_ids`/`river_ids` are untouched, so the province stays
+  exactly the water province CK2 had it as: navigable, in
+  `river_provinces`/`sea_zones`, `is_water=True` all the way through
+  `idmap.build`;
+- is carved, not inpainted (`carve_valleys`): a harmonic bank estimate
+  seeded from **true land only** (`land_mask = ~water_mask`, excluding
+  every other still-pinned water province, unlike `inpaint_heights`'s
+  looser boundary) via normalized-convolution + iterative blur-restore,
+  minus a shallow `depth` (300 levels, deliberately smaller than
+  `heightmap_detail_river_depth`'s 900-level traced-line carve and within
+  the §2f per-terrain tolerance band of 193-427), clipped to
+  `(water_level, bank]` so the result is never level with the bank and
+  never at or below the water level either;
+- runs **before** `heightmap.deepen_sea`, same reason as the lake inpaint:
+  `deepen_sea`'s own water test is a raw-height threshold with no province
+  lookup (`heights <= water_level`), so the height has to be raised before
+  it runs or the pin reappears regardless of classification;
+- widens the **heightmap-detail land mask only** (`valley_mask`,
+  `heightmap_land_mask = ~water_mask | valley_mask_arr` in `build.py`) so
+  the normal cliff-aware/wall-spread/source-bound pipeline treats these
+  pixels like ordinary land on top of the carved base -- the province
+  classification (`water_mask`, what `default.map` and the terrain vote
+  read) is left alone, only what `heightmap_detail.apply`'s closing clamp
+  is allowed to do to these pixels changes.
+- `rivers.png` needed no extra work: `rivers.render` paints
+  `out[water_mask] = WATER` directly, and a `valley` province's
+  `water_mask` bit is still set (`patch_water_ids` never touched it), so
+  its course was already drawn there before this change and stays drawn.
+
+CLI wiring followed the lake lane's own established lesson (`docs/DECISIONS.md`,
+Bug #1): `river_valleys`/`river_valleys_csv` were added to
+`ck2ck3.steps.map._map_config` -- the real CLI config builder -- in the same
+commit as the module code, proven by
+`tests/test_map_lake_to_land.py::test_cli_config_builder_reads_the_key`
+(extended, not duplicated) before `build.py` was ever wired to read them.
+Run-report counters (`river_valleys_rules`, `river_valleys_heights_holes_px`,
+`river_valleys_depth`) and a summary-line fragment were added to
+`ck2ck3.steps.map.run` in the same commit as the CLI-config change, not
+after a run caught them missing -- applying Bug #1's lesson proactively
+this time instead of repeating it.
+
+**4. Invariants** (`scripts/verify_heightmap_detail_invariants.py`):
+- check 7 (`overrides/lake_to_land.csv`) is unchanged: a `marsh`/`land`
+  province must have LEFT every `default.map` water list.
+- **check 8** (`overrides/river_valleys.csv`, new): the opposite assertion
+  -- a `valley` province must have STAYED in a `default.map` water list
+  (fails loudly if a future change to `patch_water_ids` ever stops skipping
+  `WATER_STAYING_ACTIONS`), and must have NO pixel at or below the water
+  level any more, and must not be perfectly flat (a std-dev-zero result
+  would read as a new pin at a different level, not a carved bed). Its
+  province-id set is also handed back to `main()` so the generic check 2
+  loop (every water province <= water level) skips exactly these ids --
+  they are supposed to violate that rule now, by design.
+- **check 9** (new, "no narrow water-pinned canyon"): a standing regression
+  check generalising the diagnostic above, run over *every* water province
+  on the canvas, named in an override or not. True width is
+  `2 x distance_transform_edt(mask).max()` (the widest inscribed circle's
+  diameter) -- not `measure_high_rivers.py`'s circle-equivalent-diameter
+  area proxy, which reads 28-56 px for these same five provinces because it
+  folds their *length* into the estimate. Calibrated directly off the
+  pre-fix 22:26 mod (`docs/evidence/thay_relief/`): the five named rivers
+  measured true width 8.5-10.0 px, ring risers (same 15 px ring, same
+  formula as the measurement script) 4.0-10.0, 100 % of their own pixels
+  pinned; `Lake Umber` (30 px wide, 3.0 risers) is the nearest miss and is
+  correctly excluded by the width gate alone. Gate:
+  `NARROW_CANYON_WIDTH_PX = 12.0`, `NARROW_CANYON_MIN_RISERS = 3.0`,
+  `NARROW_CANYON_RING_PX = 15`. A province only trips it while **still
+  fully pinned** (`(own_vals <= water_level).all()`), so a `valley` row
+  that carved correctly no longer matches at all -- this check is a
+  regression gate for the *next* unnoticed high water province, not a
+  duplicate of check 8.
+
+**5. The coordinator's catch: "min > water_level" passed while the canyon
+was unchanged.** The first cut of `carve_valleys` (§ above) reported
+`bank_median 5347.6` -- measured, not merely claimed, `docs/evidence/thay_relief_map_debug1.log`
+-- against the 6545-7653 these same six provinces were proposed from
+(`scripts/measure_high_rivers.py`). Root cause: that first cut seeded a
+harmonic (iterative Gaussian blur-and-restore) fill from `land_mask` alone
+(true land, excluding *every* water province on the canvas, not only the
+six holes). That made every OTHER water province -- every sea, every
+still-pinned river -- simultaneously "free" in the same diffusion, so a
+hole's effective neighbourhood was the whole connected water network it
+drains into, not its own bank; 400 iterations at sigma 1.5 px (effective
+reach ~30 px) cannot cross that to reach real land, and the un-reached
+interior stayed near its `water_level` fallback. `carve_valleys` is
+rewritten (`src/ck2ck3/map/lake_to_land.py`): a direct ring-dilation search
+per province, widened in powers of two from `ring_px=15` (identical to
+`measure_high_rivers.py`'s own already-verified method) up to
+`ring_max_px=240` for the rare province boxed in by other water --
+proximity search, never diffusion through a possibly enormous shared water
+body. Re-measured: `bank_median 6545.0` (matches the proposal exactly),
+`carved_median 6245.0` -- `bank - depth`, on the nose
+(`docs/evidence/thay_relief_map_debug2.log`).
+
+**Check 8 is now the hard gate the coordinator asked for**: bed vs bank,
+not "not pinned". `scripts/verify_heightmap_detail_invariants.py`
+measures each province's own bed median against a 15 px land ring around
+it (the same measurement, so a bank number here is directly comparable to
+the one a row was proposed from) and fails if `bank - bed` exceeds
+`depth (300) + tol (1000, headroom for heightmap_detail's own texture
+synthesis on top of the carve)`. This is the check that actually caught
+the bug above once written -- "min > water_level" and "not perfectly flat"
+both passed on the broken run.
+
+Two more bugs the hard gate's own first run surfaced, both in the
+*invariants script*, not the pipeline: (1) `check_source_bound` (existing
+check 3) flagged 264 land px "above the bound" for the first time ever,
+because it independently rebuilds "source" from the raw, un-carved
+`topology.bmp` and a valley province's own source there is still near the
+water level -- excluded now by province classification (dilated by the
+bound's own `window_px`, since a bank pixel's local window can still reach
+one step into the valley) alongside the existing per-pixel `source <=
+water_level` rule. (2) that exclusion first did nothing at all (264 stayed
+264): `np.isin(key, list(valley_ids))` compared packed provinces.png RGB
+keys against small integer province ids from `definition.csv` -- never
+equal by construction. Fixed by mapping id -> rgb -> packed key through
+`definition` first, the same lookup every other per-province check in this
+script already does.
+
+**6. Full run, invariants, ck3-tiger** (`wt/_out/thay-relief`,
+`docs/evidence/thay_relief_full_run4.log`): `map` step summary line names
+`river_valleys 6 CK2 river provinces carved (10223 px, depth 300.0)`.
+`scripts/verify_heightmap_detail_invariants.py`
+(`docs/evidence/thay_relief_invariants8.log`): **invariants hold** -- check
+7 (lake_to_land) clean, check 8 (river_valleys, bed-vs-bank hard gate)
+clean, check 9 (narrow canyon) "none on a province this lane's overrides
+target" (+ 77 elsewhere, informational, out of scope -- DECISIONS.md), the
+pre-existing source bound (check 3) 0 px under / 0 px over. Direct sample
+of the six provinces' own pixels in the finished `heightmap.png`
+(`verified`): min 5015-6216 (all above the 4883 water level), median
+5408-7239 -- e.g. River Umber min 6216 / median 7239 / max 7525, Lower
+Rauthenflow River 6129 / 6740 / 6931 -- against 100%
+at-or-below-water-level before any fix. ck3-tiger
+(`docs/evidence/thay_relief_tiger4.txt`): fatal 0, error 58 -- unchanged
+from the pre-lane baseline.
+
+**7. Renders: fixed numerically, and the ring in them is a different,
+already-known defect.** `scripts/thay_render.py --extra
+final_v2=<heightmap.png>` -> `docs/evidence/thay_relief/{hillshade,oblique}_final_v2.png`.
+Looked at directly, as instructed: `final_v2` still shows the same-looking
+ring as every earlier render. `scripts/thay_water_pin_overlay.py` (the
+coordinator's own ad hoc water-pin-in-red diagnostic, now a script)
+settles what the ring's pixels actually are on the *finished* mod
+(`docs/evidence/thay_relief/diag_water_pin_v2.png`): every still-pinned
+(red) pixel in the Thay crop belongs to `NORTHERN_ALAMBER_SEA`,
+`EASTERN_WIZARDS_REACH`, `TRACKLESS_DEEP`, `LAKE_ASHANE`, `ALAMBER_SEA`,
+`WESTERN_WIZARDS_REACH`, `SEA_OF_DLURG` -- real seas and one real lake,
+correctly pinned; none of the six carved provinces appear in that tally at
+all. A second, geometric diagnostic settles it beyond doubt
+(`docs/evidence/thay_relief/diag_valley_mask_v2.png`): the six carved
+provinces' own pixels, highlighted directly on the same hillshade the ring
+appears in, are two small, thin features off to the side (one river
+mouth, one short reach) -- nowhere near the ring's own path around the
+central peak. The ring is therefore the already-documented Thaymount
+escarpment/closed depression (§2h: 7,480-9,521 levels in the CK2 source
+itself, `heightmap_detail_source_adaptive_gain` cuts the excess ~20-30%,
+does not close it -- a real, if harsh, cliff, not a canyon this task's
+provinces caused) plus the real coastline against Lake Ashane and the
+surrounding seas. The coordinator's original §2h (d) diagnosis named these
+six rivers as *the* cause of the ring; the evidence above says they were
+never large enough to be visible in it at all (a 300-level shallow valley
+against an escarpment reading in the thousands) -- a second, independent
+defect was misattributed to the first. Reopening the escarpment closure is
+outside this task's own stated scope (the five/six named river provinces),
+so it is recorded here, not attempted.
+
+### §2h (e) The rings were black lines in CK2's provinces.bmp (coordinator, 2026-09-24)
+
+`verified`: the thin water-pinned ring pixels around Thaymount all belong to
+`TRACKLESS_DEEP` (id 4275), the padding ocean — not to any river province.
+Faerûn's CK2 `provinces.bmp` carries **16,786 pure-black pixels in 50 thin
+components** that `definition.csv` does not define; around Thay they trace the
+plateau escarpments. `provinces._keys_to_ids` sent every undefined colour to
+`PADDING`, so each drawn line became a one-pixel strip of ocean inside the land,
+pinned to CK3's global water level: the canyon rings every Thay playtest since
+playtest 3 reported, and the "1-px walls" of §2h (b). Fix:
+`provinces.fill_undefined_lines` gives every undefined *non-white* pixel its
+nearest defined province (white stays padding ocean). Result: the rings and the
+slabs are gone from the render (`hillshade_final_v3.png`, `oblique_final_v3.png`);
+3710 baronies placed (was 3704), invariants hold, ck3-tiger fatal 0 / error 58.
+Lesson: every earlier pass moved its own metric while the render stayed broken —
+the defect was in the id raster, upstream of every relief pass.

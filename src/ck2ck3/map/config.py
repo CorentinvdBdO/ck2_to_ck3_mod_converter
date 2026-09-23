@@ -791,6 +791,18 @@ class MapConfig:
     #: 2026-09-23 decision). false = the pre-lane behaviour.
     lake_to_land: bool = True
     lake_to_land_csv: Path = Path("overrides/lake_to_land.csv")
+    #: honour `overrides/river_valleys.csv`: a `valley`-flagged CK2 river
+    #: province stays a water province exactly as CK2 had it, but its
+    #: heightmap is a carved valley, not a pin to the water level
+    #: (`docs/step_map_heightmap.md` §2h (d), the coordinator's 2026-09-23
+    #: diagnosis). A sibling file to `lake_to_land.csv`, not a shared one:
+    #: a `valley` row's whole point is that it does NOT touch province
+    #: classification the way `marsh`/`land` do, and keeping the two
+    #: override files apart keeps a human editor from adding a `valley` row
+    #: to the file `ck2ck3.map.lake_to_land.patch_water_ids` reads for
+    #: reclassification and being surprised nothing reclassifies.
+    river_valleys: bool = True
+    river_valleys_csv: Path = Path("overrides/river_valleys.csv")
     #: trees.bmp palette indices that count as forest (CK2 default.map `tree`)
     tree_indices: tuple[int, ...] = ()
     #: file prefix for generated CK3 files
@@ -1075,6 +1087,10 @@ def load(path: str | Path) -> MapConfig:
         lake_to_land=bool(raw.get("lake_to_land", True)),
         lake_to_land_csv=Path(
             str(raw.get("lake_to_land_csv", "overrides/lake_to_land.csv"))
+        ),
+        river_valleys=bool(raw.get("river_valleys", True)),
+        river_valleys_csv=Path(
+            str(raw.get("river_valleys_csv", "overrides/river_valleys.csv"))
         ),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),

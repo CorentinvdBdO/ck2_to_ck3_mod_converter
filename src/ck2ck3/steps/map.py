@@ -119,6 +119,17 @@ def run(ctx: Context) -> StepResult:
         f"({l2l.get('marsh', 0)} marsh, {l2l.get('land', 0)} land)"
         if l2l.get("rules") else ""
     )
+    # same reasoning again for `overrides/river_valleys.csv` (§2h (d)): name
+    # the rule count and the carved-pixel count in the summary/counts so a
+    # run report is proof the CLI builder read `[map] river_valleys`/
+    # `river_valleys_csv`, not just that `lake_to_land.py` has the function.
+    rv = report.get("river_valleys", {})
+    rv_summary = (
+        f"; river_valleys {rv.get('rules', 0)} CK2 river provinces "
+        f"carved ({rv.get('heights', {}).get('holes_px', 0)} px, "
+        f"depth {rv.get('heights', {}).get('depth', 0)})"
+        if rv.get("rules") else ""
+    )
     # same reasoning for the organic-border pass: the summary line is the
     # proof that `[map.provinces] smooth_edges` was read at all
     # (docs/step_map_baronies.md §10)
@@ -152,6 +163,7 @@ def run(ctx: Context) -> StepResult:
             f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
             f"{bar['counties']} counties, {bar['demoted']} demoted, "
             f"{prov['lost']} lost" + pe_summary + hd_summary + l2l_summary
+            + rv_summary
         ),
         counts={
             "provinces": prov["ck3_total"],
@@ -222,6 +234,10 @@ def run(ctx: Context) -> StepResult:
                 "lake_to_land_codes_no_ck3_id": l2l.get("codes", {}).get("no_ck3_id", 0),
                 "lake_to_land_heights_holes_px": l2l.get("heights", {}).get("holes_px", 0)}
                if l2l.get("rules") else {}),
+            **({"river_valleys_rules": rv["rules"],
+                "river_valleys_heights_holes_px": rv.get("heights", {}).get("holes_px", 0),
+                "river_valleys_depth": rv.get("heights", {}).get("depth", 0)}
+               if rv.get("rules") else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),
@@ -347,6 +363,13 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         lake_to_land=bool(raw.get("lake_to_land", True)),
         lake_to_land_csv=Path(
             str(raw.get("lake_to_land_csv", "overrides/lake_to_land.csv"))
+        ),
+        # `[map] river_valleys` (docs/step_map_heightmap.md §2h (d)). Same
+        # reasoning, same test convention, read HERE from the start this
+        # time.
+        river_valleys=bool(raw.get("river_valleys", True)),
+        river_valleys_csv=Path(
+            str(raw.get("river_valleys_csv", "overrides/river_valleys.csv"))
         ),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,
