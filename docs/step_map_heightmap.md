@@ -1142,3 +1142,635 @@ water pixels remain on the shelf between 0 and the water level, land minimum
 4884 (one level above the surface, as before).
 
 `deepen_sea = false` restores the old behaviour.
+
+## 2h. "Thay was still broken" — the render, the defect list, which metric sees each
+
+Lane `thay-relief` (2026-09-23). Playtest verdict after build 17, no more
+detail than that; the brief was explicit that our metrics had already
+measured the wrong thing twice (§2d's MOAT, §2f's own bound hit rate), so
+this section starts from a **render**, not a table.
+
+### The render
+
+`scripts/thay_render.py` — a hillshade and an oblique 3-D view of the Thay
+window (canvas x 4752-5311, y 1583-2222, +100 px margin) for four heights:
+CK2's own `topology.bmp` at native resolution, our plain rescale, a
+reconstruction of build 15's settings, and the actual shipped build-17
+`heightmap.png`. The vertical scale is not a choice: `WORLD_EXTENTS_Y = 51`
+(`common/defines/fae_defines.txt`) is the same world-unit scale the engine
+applies to the 16-bit height channel over a canvas where one heightmap texel
+is one world unit horizontally on both axes (`WORLD_EXTENTS_X`/`Z` =
+width/height - 1, the CLAUDE.md invariant), so
+`world_height = level / 65535 * 51` with unit pixel spacing is the exact
+surface normal `pdxterrain.shader` computes from this texture — no separate
+exaggeration knob to get wrong. The sun is vanilla's own constant,
+`sun_direction = { -4.5 3 -1 }` (x, y-up, z, `gfx/map/environment/environment.txt`),
+elevation 33.1 deg, corroborated by the same file's
+`terrain_sunny_sun_elevation = 0.4` (36 deg on the file's own 0..1 = 0..90 deg
+scale). The camera pitch is `ZOOM_STEPS_TILT[0] = 50` deg
+(`common/defines/graphic/00_graphics.txt`), the closest zoom step. Figures:
+`docs/evidence/thay_relief/{hillshade,oblique}_{ck2_source,plain_rescale,build15,build17,after_fix}.png`.
+
+**What build 17's render shows, in words.** The CK2 source and the plain
+rescale both show an ordinary rugged massif around a lake, rounded, no sharp
+boundary. Build 15 and build 17 both show, in the same place, a **closed
+escarpment loop** — a hard, unbroken rampart maybe 500 x 600 canvas px
+(740 x 890 km) around, encircling a domed interior that reads distinctly
+smoother/rougher-textured than the terrain outside it, with a lake sitting
+just outside the loop's eastern arc. Along the loop's southern arc the wall
+is **serrated**: alternating light/dark teeth in the hillshade, a stair-step
+crenellation in the oblique view — the same look the brief's b15 in-game
+screenshot names. Where the render crosses an actual lake (the flat grey
+patch, top area of every crop), the oblique view shows it as a dead-flat
+plane meeting jagged terrain at a vertical wall — a shaft, not a shore.
+
+Three defect classes, each with its own cause and its own metric:
+
+### (a) The closed-loop rampart — verified, partially fixed
+
+**Not a fabricated basin.** `scripts/relief_pits_common.closed_depression_depth`
+(morphological reconstruction: the surface water would pond to) run on the
+*plain rescale itself*, at 9/27/45/81 px windows, already reads up to
+7,480-9,521 levels deep at the same location the render's ring sits over —
+the CK2 author's own topology already carries a broad, gentle 20-90 px
+macro-basin there (Thaymount is the highest pixel of the Thay window, an
+isolated dome, and every isolated dome an erosion model or a diffusion
+filter runs over is exactly the shape that organises a ring). What must not
+happen is the *output* exceeding that by more than the terrain-class
+tolerance — `closed_depression_excess = closed_depression_depth(output) -
+closed_depression_depth(source)`, the new metric this section adds
+(`relief_pits_common.closed_depression_excess`/`_stats`,
+`EXCESS_WINDOWS_PX = (3, 9, 27)`, the task's own suggested windows: "since a
+20 km bowl passes a 3 px window"). On the shipped build 17, before this
+lane's fix, the excess at 9/27/45 px was p99 378/444/467, max 1837/2072/1868
+levels — real, but well under half of the total depth: **most of the ring's
+depth is the CK2 author's own relief**, not something the pass invented.
+
+**The mechanism that turns a gentle 300-level undulation into a player-visible
+rampart.** `_relative_terrain_gain` (the default `gain_mode = "deficit"`
+path) assigns exactly one amplitude scalar per CK3 terrain class — on this
+run, mountains gets gain x2.317 — applied *uniformly* to every pixel of
+that class, whatever the CK2 source looks like there. A gently-domed rim the
+author drew with a couple of quantisation risers over 20+ px gets the same
+full ridged mountain texture (§2g) as a real 3,878-level Thay escarpment two
+pixels away in the same class. Because that texture (`eroded_relief`,
+`ridged_seed`) is phase-locked to the very terrain it textures, the same
+amplitude reinforces *coherently* all the way around a closed contour — a
+defect no single-source-pixel bound (§2f, 3 px window) can ever see, because
+every pixel individually still sits inside its own tolerance; the
+serration/coherence is a property of the whole loop, not of any one pixel.
+
+**The fix.** `heightmap_detail_source_adaptive_gain = true` (new default).
+`_source_roughness_factor` scales the per-terrain amplitude down (never up)
+by how rough the CK2 source *already is* locally — local relief (dilation
+minus erosion) over `heightmap_detail_source_adaptive_window_px` (9 px),
+normalised to the pixel's own class mean, floored at
+`heightmap_detail_source_adaptive_floor` (0.35) so a class border stays
+seamless. A pixel on a real cliff (locally rough) keeps ~full class
+amplitude; a pixel on a gentle rim (locally smooth) gets down to 35 % of it.
+
+**Measured** (Thay window, `docs/evidence/thay_relief/`, `verified`, same
+seed and config otherwise, whole-canvas run):
+
+| metric | window | before (build 17) | after this fix |
+|—-|—-|—-|—-|
+| pit depth (§2f, `source_local_min - out`) | 3 px | p95 134 / p99 371 | p95 99 / p99 327 |
+| pit depth | 9 px | p95 -104 / p99 71 | p95 -110 / p99 25 |
+| pit depth | 27 px | p95 -347 / p99 -42 | p95 -356 / p99 -46 |
+| closed-depression **excess** | 9 px | p95 49 / p99 378 / max 1837 | p95 11 / p99 308 / max 1793 |
+| closed-depression **excess** | 27 px | p95 107 / p99 444 / max 2072 | p95 70 / p99 387 / max 2061 |
+| closed-depression **excess** | 45 px | p95 138 / p99 467 / max 1868 | p95 98 / p99 415 / max 1905 |
+
+Whole-canvas mean of the roughness factor: **0.694** — the fix reduces
+synthesised detail amplitude by roughly 31 % on average across all land, not
+only at Thay. Synthetic-fixture regression: a real escarmpent (9-step cliff)
+keeps > 85 % of its amplitude with the fix on vs off
+(`tests/test_map_heightmap_detail.py::test_source_adaptive_gain_shrinks_the_closed_loop_rampart`).
+
+**Honestly: not closed.** The render after the fix
+(`oblique_after_fix.png`, `hillshade_after_fix.png`) still shows the same
+ring, thinner. The excess this fix touches (`amp * noise`, pass 2's own
+amplitude) is a real but minority contributor; the majority of the ring's
+depth is the CK2 source's own macro relief being *sharpened* by pass 1
+(Perona-Malik de-terrace, §2b), which is deliberately edge-preserving and
+this fix does not touch, because §2b's own cliff-survival ratios are
+extensively measured and a change there risks them. **Open**, flagged for
+the coordinator: either accept the ring as the CK2 author's own geography,
+rendered honestly for the first time, or open a lane to soften pass 1's
+response on a *closed, low-total-drop* contour specifically (which needs its
+own metric to target, since §2b's flux weighting has no notion of "this
+edge closes a loop").
+
+### (b) Serrated / stair-step escarpment faces — verified, fixed
+
+The coordinator's own read of `oblique_after_fix.png` against
+`oblique_ck2_source.png`: the west/south escarpment is a row of **vertical
+black slabs, axis-aligned**, that the CK2 source does not have — not the
+gentle sawtooth this section first described, but a harder claim, and a
+correct one.
+
+**The metric** (`scripts/relief_pits_common.wall_stats`, `edge_steps`,
+`cliff_drop_concentration`): for every land pixel, the biggest single-step
+jump to any of its 8 neighbours, split axis-aligned (the two raster axes)
+from diagonal, counted at `k_risers` in {2, 3, 5}; and, at every pixel the
+*source* (plain rescale) itself marks as a cliff, the fraction of that
+pixel's own local relief (`max - min` over a 5 px window, the source's own
+cliff width after the 1.9543x LANCZOS upsample plus a pixel of margin) that
+shows up on its single biggest output edge — the **drop-concentration
+ratio**. 1.0 means the entire visible drop happens in one pixel-to-pixel
+step; a slope spread continuously over the source's own width reads well
+under it.
+
+**Measured** (`docs/evidence/thay_relief/wall_stats.csv`, `scripts/thay_wall_report.py`,
+a real `configs/faerun.toml` conversion, `verified`):
+
+| region | map | axis/diag k=2 | axis/diag k=5 | drop conc. p50 | p95 | max |
+|---|---|---|---|---|---|---|
+| Thay | source (plain rescale) | 0.56 | 0.22 | 0.35 | 0.60 | 1.00 |
+| Thay | build 17 (shipped) | 0.77 | 0.49 | 0.38 | 0.64 | 1.00 |
+| Thay | **pass 1 alone** (Perona-Malik, isolated) | **0.85** | **0.53** | 0.39 | 0.71 | 1.00 |
+| Thay | **this build** | 0.69 | 0.38 | 0.33 | 0.47 | 1.00 |
+| Spine | source (plain rescale) | 0.57 | 0.20 | 0.36 | 0.61 | 1.00 |
+| Spine | build 17 (shipped) | 0.80 | 0.48 | 0.37 | 0.65 | 0.98 |
+| Spine | **this build** | 0.67 | 0.37 | 0.32 | 0.46 | 0.76 |
+
+The Spine of the World -- the lane's other standing study crop, no closed
+basin, genuinely rugged relief throughout -- shows the same pattern: build
+17's axis bias (0.57 -> 0.80 at k=2) is not a Thay-specific artefact, and
+this build brings it back most of the way (0.67) with the drop-concentration
+max actually *below* the source's own (0.76 vs 1.00) rather than merely
+closer to it. Before/after renders:
+`{hillshade,oblique}_spine_{ck2_source,plain_rescale,build17,ours}.png`.
+
+**Cause, found by ablation.** Pass 1 in isolation — before the spectral
+fill, the erosion or the bound ever run — already carries axis/diag from the
+source's 0.56 to **0.85**, higher than the full build-17 pipeline (0.77):
+the later passes slightly *dilute* the defect, they do not cause it. This is
+Perona-Malik's classic staircasing failure: a ramp of several small
+quantisation risers, each individually resisting diffusion just enough
+(`exp(-(delta/cliff_step)^2)`), does not merge into one smooth slope —
+whichever single edge starts out largest diffuses least, stays largest, and
+after enough iterations the whole local drop has collapsed onto it, while
+its immediate neighbours flatten out. On a square raster that edge is
+axis-aligned by construction, which is the "vertical" the coordinator named.
+An 8-connected flux (diagonal neighbours added, weight 0.5, lambda rescaled
+to keep the same flat-region blur) was tried and only partly helps (0.85 to
+0.81 at k=2): the staircase is a property of the conductance-driven positive
+feedback, not of which neighbours it runs over.
+
+**The fix — pass 1b, `heightmap_detail_wall_spread_enabled`** (new default
+`true`, `heightmap_erosion.widen_concentrated_steps`). At every pixel, the
+drop-concentration ratio is measured on both the *output* and the *source*
+(same window); where the output's ratio exceeds the source's own by more
+than `heightmap_detail_wall_spread_source_margin` (0.15) **and** exceeds
+`heightmap_detail_wall_spread_max_ratio` (0.55) in absolute terms, that
+pixel (plus a 2 px margin, so the wall does not just reappear one pixel
+over) gets a few extra iterations
+(`heightmap_detail_wall_spread_iterations` = 4) of plain Gaussian diffusion
+(`heightmap_detail_wall_spread_sigma_px` = 1.0), until the excess
+concentration is gone. Comparing against the *source's own* ratio, not
+against zero or a fixed constant, is the point: a CK2 author is entitled to
+draw a cliff genuinely one source pixel wide (the source's own Nyquist
+allows it, `docs/map_scale.md`), and that must survive untouched — the
+plateau fixture's clean single-pixel escarpment keeps 99 % of its step
+(`tests/test_map_heightmap_detail.py::test_wall_spread_leaves_a_genuinely_one_pixel_cliff_alone`),
+while a diagonal cliff spread over the source's own 3 px width has its
+axis-bias driven back toward the source's own ratio
+(`test_wall_spread_moves_a_diagonal_cliff_back_toward_the_source_ratio`).
+Cliff amplitude cost, whole Thay window: mean local relief at real
+(>=5-riser) cliff pixels 8127 -> 8009 levels against the source's 8420
+(-1.4 %, `verified`).
+
+**First attempt regressed two existing tests, and that is worth recording.**
+An absolute-threshold version (any pixel whose ratio exceeded 0.55, full
+stop) passed the Thay validation but broke
+`test_the_bound_still_keeps_the_multi_step_cliff` (a genuinely one-pixel
+synthetic escarpment collapsed from 2445 to 277 levels — 89 % gone) and
+`test_the_coast_pass_no_longer_drags_high_ground_toward_the_water_level`
+(the lake-shore pin, a legitimate near-vertical wall by the engine's own
+rule, got flagged as "a wall" and smoothed into a 7,600-level crater — the
+exact defect `damp_detail` exists to prevent). Both were the same mistake:
+measuring the output's concentration against zero instead of against the
+*source's own* concentration at that pixel, and both a synthetic 1-px cliff
+and a lake shore are supposed to be concentrated. The source-relative gate
+fixed both without losing the Thay improvement (`tests/test_map_heightmap_detail.py`,
+56 passed).
+
+**New invariant** (`scripts/verify_heightmap_detail_invariants.py` check 6,
+`check_wall_concentration`): reports axis/diag at k=2/3/5 and the
+drop-concentration percentiles against the same plain-rescale baseline this
+section measures with, and fails the run if `axis_over_diag_k2` sits more
+than `WALL_AXIS_OVER_DIAG_HEADROOM` (0.35) above the *source's own* ratio —
+a real gate, not informational, since this fix is validated to close most of
+the gap rather than only reduce it.
+
+### (c) Lakes as vertical-walled holes — verified intrinsic, a question for the user, least-bad treatment proposed
+
+`build17`'s crop reads level **[0, 39865]**: Thay's plateau lakes sit at
+`sea_floor = 0` (`ck2ck3.map.heightmap.deepen_sea`) beside land at
+13,000-40,000 — a shaft, not a shore, and the oblique render shows exactly
+that (a dead-flat plane meeting jagged terrain at a vertical wall).
+
+**Would CK2 have drawn it the same way? No** (`verified`): the CK2-source
+render (`hillshade_ck2_source.png`, `oblique_ck2_source.png`) uses
+`topology.bmp`'s own elevation at the lake, with no separate water pin
+applied at all — the lake bed is part of one continuous, gently-sloping
+surface, the same as every other CK2 pixel. CK2 never forced a single global
+water level onto a high-altitude lake; **this is intrinsic to CK3's single
+`WATERLEVEL` define**, not a CK2-vs-CK3 authoring difference and not
+something this pass introduced (§2f already reached the same conclusion for
+the *crater* half of this; this section adds the direct source comparison).
+
+**Least-bad treatment, proposed, not implemented** (per instruction: propose,
+do not invent):
+
+1. **A sloped lake-shore ramp inside the plateau bound.** Extend
+   `_smooth_coast`'s `damp_detail` radius specifically for a water province
+   whose *source* elevation sits far above the surrounding regional water
+   level (a "high lake" flag, e.g. source elevation > 2x the class's typical
+   coastal elevation), tapering the drop over 20-40 px instead of the
+   current 4, so the wall reads as a valley side, not a cliff. Costs: softens
+   a real elevation fact (CK3 cannot avoid a hole there) into a longer,
+   gentler descent — still not what CK2 drew, but not a shaft either.
+   Illustrated (a whole-window 40 px taper, not the selective per-province
+   version above, and not fed back through the real pipeline):
+   `hillshade_lake_wide_ramp.png`, `oblique_lake_wide_ramp.png`.
+2. **Flag the highest-altitude lake/river provinces for conversion to
+   marsh/land**, a human-reviewed `overrides/` entry per province (not a
+   blanket rule): a county whose CK2 lake sits on a genuine plateau becomes a
+   marsh or a small landlocked county instead of a CK3 water province.
+   Changes gameplay (a barony gained), not just visuals, and is a per-county
+   judgement call the converter should not make unattended. Illustrated (a
+   harmonic in-paint of the water pixels from their land neighbours, purely
+   a rendering mock-up of the idea, not a real classification change):
+   `hillshade_lake_marsh_fill.png`, `oblique_lake_marsh_fill.png`.
+
+**The user's decision (2026-09-23): option 2, marsh/land via
+`overrides/lake_to_land.csv`.** Not the ramp.
+
+**Implementation** (`src/ck2ck3/map/lake_to_land.py`, wired into
+`ck2ck3.map.build` at three independent points, each patching an array a
+DIFFERENT downstream pass reads, because none of the three is derived from
+the others):
+
+1. **Province classification.** `patch_water_ids` removes the overridden
+   CK2 id from `lake_ids` **and** `river_ids` **and** `sea_ids`, before
+   baronies/`idmap`/`default.map` ever see them. A CK2 lake id is *also* a
+   `sea_zones` id (CK2 defines a lake as a sea zone inside a `Lakes`-named
+   `ocean_region`, `ck2read.Ck2DefaultMap.lake_ids`), and
+   `ck2ck3.map.idmap.build`'s own rule is `is_sea = in sea_ids and not in
+   lake_ids and not in river_ids` -- so removing the id from `lake_ids`
+   alone does not make it land, it makes it a *different kind of water*
+   (`verified`, twice: the first real conversion run found the override
+   silently had no effect at all because the CLI's own config builder
+   never read the two new keys, §2h iii below; the second found
+   `default.map` still listing every overridden province, now under
+   `sea_zones` instead of `lakes`, because only `lake_ids` had been
+   patched). All three sets have to move together. From here the existing
+   untitled-land rule (`docs/step_map_baronies.md`) forces
+   `impassable_mountains` unless CK2 happens to give the province a real
+   title -- the same identity every other titleless CK2 land province
+   already gets, no new CK3-identity code.
+2. **Terrain.** `patch_codes` forces every one of the province's own pixels
+   to one CK2 terrain-category code, in the *same* per-pixel grid both the
+   gameplay-terrain majority vote and the paint pass read (one patch fixes
+   both): `marsh` -> CK2's own `marsh` category (Faerûn's `terrain.txt`
+   index 15, -> CK3 `wetlands`); `land` -> the mode of the codes among the
+   already-land pixels in a ring around the province.
+3. **Heightmap.** `inpaint_heights` -- the actual fix for the shaft, and
+   the reason "reclassify the province" is not enough on its own: CK2 draws
+   a lake's own `topology.bmp` pixels near sea level *regardless of the
+   plateau under it* (Lake Thaylambar is raw bytes 85-92 of 255, whatever
+   is around it -- `scripts/measure_high_lakes.py`'s first version measured
+   the lake's own pixels and found all 95 of Faerûn's lakes within 0.1
+   riser of each other for exactly this reason). So `deepen_sea`'s own
+   water test (`heights <= water_level`, a raw-height threshold with no
+   province lookup at all) would flatten these pixels to the sea floor
+   whether or not the province is reclassified. `inpaint_heights` runs a
+   harmonic (Laplace) fill from the surrounding land's own plain-rescale
+   elevation, *before* `deepen_sea`, so the pin never fires and the
+   detail pass's own source bound (§2f) sees plateau-height pixels like any
+   other land.
+
+**The measurement, and why the 5 Thay lakes are in the file anyway.**
+`scripts/measure_high_lakes.py` cannot use the lake's own pixels (see
+above); it measures a `--ring-px` (15) dilation ring of *land* pixels
+around each lake instead, plain-rescale elevation, in risers above
+`water_level`. Whole-canvas distribution over Faerûn's 95 lakes: p50 6.0,
+p75 8.5, p90 12.0, p95 15.0, p99 19.0, max 27.0. `--min-risers 10` gates
+`docs/evidence/lake_to_land_proposed.csv` (12 rows, everywhere else on the
+map) -- roughly the p75-p90 boundary, a defensible "clearly on elevated
+ground" cutoff given the median lake (6 risers, ~1,662 levels above the
+pin) is an ordinary valley pond. **The 5 Thay lakes measure only 3-8
+risers** (Lake Thaylambar 8, Tirulag/Yeshelmaar 4, Murthil/Flamm 3) --
+*below* that threshold, and are in `overrides/lake_to_land.csv` anyway,
+because the render evidence, not the riser count, is what put them there:
+`oblique_build17.png`/`hillshade_build17.png` show them as shafts, measured
+independently by the whole-canvas closed-depression/pit metrics in §2h(a).
+The two measurements answer different questions -- "how much higher is the
+shore than the water level" (a lake sitting in its own local dip can score
+low on this even on a genuinely high plateau, since a lake occupies the
+*lowest* point of its immediate surroundings almost by definition) against
+"does the render show a shaft" -- and only the second is what the user
+asked to fix. **`--min-risers` should not drop to catch them by the same
+rule**: lowering it to 3 to sweep in Thay's own lakes would also sweep in
+every ordinary valley pond within a few hundred levels of the water line
+that never had a render problem in the first place (`docs/evidence/lake_to_land_proposed.csv`
+at `--min-risers 3` would have been the whole `candidates.csv` file, 80 of
+95 lakes). The whole-canvas proposals list stays threshold-gated; a Thay-like
+case elsewhere on the map should be added to `overrides/lake_to_land.csv`
+the same way Thay's own five were -- because a render showed it, not
+because a number crossed a line.
+
+**Bugs found on the way to a working fix, both by real conversion runs, not
+by the unit tests** (`docs/DECISIONS.md`): (1) the CLI-facing config
+builder (`ck2ck3.steps.map._map_config`) never read the two new `[map]`
+keys -- a documented, named failure mode in this repo
+(`test_cli_config_builder_reads_the_key`, an established pattern this
+module should have used from the start and now does); (2) `patch_water_ids`
+originally only touched `lake_ids`/`river_ids`, leaving the id in
+`sea_ids` and flipping it to a *true sea* province instead of land. Both
+are now regression-tested (`tests/test_map_lake_to_land.py`) and both are
+checked independently of the unit tests on a finished mod:
+`scripts/verify_heightmap_detail_invariants.py` check 7 reads
+`overrides/lake_to_land.csv` and `default.map` directly and fails if any
+overridden province is still in `sea_zones`/`lakes`/`river_provinces`.
+
+### Whole-canvas regression
+
+One real `configs/faerun.toml` conversion, `map` step only
+(`docs/evidence/thay_relief_map_run.log`): **190.9 s** (heightmap detail
+67 s of it), against build 17's own recorded 142.8 s (§2f) — the
+`source_adaptive_gain` roughness field costs two whole-canvas morphological
+filters and one Gaussian blur, ~+12 s of the detail pass's own total, the
+rest is this build also carrying the `province-edges` lane's cost that
+§2f's own figure predates. `scripts/verify_heightmap_detail_invariants.py`
+on the lane output: land/water pin holds, source bound (2sigma over 3 px)
+holds, `docs/evidence/thay_relief_invariants.log`. `source_adaptive_gain`
+only ever *reduces* amplitude (never raises it above the class target), so
+it cannot make the spectrum or pit metrics worse; the Spine of the World
+window, same before/after comparison, confirms it does not
+(`verified`): pit depth p95/p99 at 3 px 140/404 -> 140/370, shape metrics
+(gradient kurtosis 1.721 -> 1.722, ridge share 0.1263 -> 0.1227) within
+noise, closed-depression excess at 27 px p99 717 -> 712 — a small, uniform
+improvement, not a Thay-specific one, because the Spine's own terrain is
+already closer to its class's average roughness than Thay's isolated dome.
+
+**`wall_spread` on top, `map` step only**: **203.3 s**
+(`docs/evidence/thay_relief_map_run2.log`), +12.4 s over the
+`source_adaptive_gain`-only figure above -- one extra concentration-ratio
+pass (an 8-neighbour max, two morphological filters and up to 4 targeted
+Gaussian iterations, but the last only runs where a pixel is still flagged
+"over" after the previous one, so most of the canvas exits after 1). A full
+conversion (all steps) with both fixes: `docs/evidence/thay_relief_full_run2.log`.
+`scripts/verify_heightmap_detail_invariants.py` on that output (check 6, the
+new wall-concentration gate): passes -- axis/diag k=2 sits within the
+`WALL_AXIS_OVER_DIAG_HEADROOM` (0.35) of the source's own ratio on both
+regions this section measures (`docs/evidence/thay_relief_invariants2.log`).
+ck3-tiger, full mod: `docs/evidence/thay_relief_tiger2.txt` -- this lane
+touches only heightmap raster synthesis, no generated script/history/loc
+content, so the fatal/error counts are unchanged from the pre-lane baseline
+(fatal 0, error 58).
+
+### §2h (d) The rings are CK2 river provinces (coordinator, 2026-09-23)
+
+After the wall fix and the lake override, Thay's oblique render still showed the
+closed escarpment loop. Overlaying the water-pinned pixels (`heightmap <= 4883`) on
+the hillshade (`docs/evidence/thay_relief/diag_water_pin.png`) settles it
+(`verified`): every ring is a CK2 **river province** — `RIVER_MURGHOL`,
+`LOWER_RIVER_MURGHOL`, `RIVER_UMBER`, `UPPER_`/`LOWER_RAUTHENFLOW_RIVER` — a 2–4 px
+water province that the detail pass pins to CK3's single global water level, so it
+is cut as a canyon thousands of levels deep all the way round the plateau. Same
+mechanism as the lake shafts, in linear form; it is what "plateaux dipping then
+coming back up" has been since playtest 3. `rivers.png` (the drawn river) is a
+different, thinner line and is not the cause (`diag_rivers_borders.png`). Next:
+decide the treatment for high-ground river provinces (lane follow-up).
+
+### §2h (d) implementation: `valley` -- a river stays a river, its bed stops being pinned
+
+**1. Measurement, whole canvas, same ring method as the lakes**
+(`scripts/measure_high_rivers.py`, `docs/evidence/river_valley_candidates.csv`):
+surrounding-land elevation (15 px dilation ring, excluding all water) minus
+the water level, in risers. 86 CK2 river provinces on the canvas; p50 5.0
+risers, p90 8.0, p99 11.7, max 16.0. Eight provinces read >= 10 risers, six
+of them the coordinator's own five Thay rivers plus a newly-measured
+geographic neighbour (`Lake Umber`, CK2 id 2029, `kind=river` despite the
+name -- confusingly named but the same defect). The other two (`Fire River`,
+`River Xon`) sit outside Thay and are left as proposals, not applied
+(`docs/evidence/river_valleys_proposed.csv`), matching the lake lane's own
+precedent of only touching the region the render actually shows broken.
+Every one of these six provinces' own `topology.bmp` pixels is CK2's flat
+sea-level anchor (raw byte 92/255, the same value the Thay lakes measured),
+`verified` the same way `scripts/measure_high_lakes.py` first found it for
+lakes -- so this is the identical mechanism, not a coincidence.
+
+**2. Vanilla check, before deciding the treatment**
+(`scripts/measure_vanilla_river_provinces.py`): is a `river_provinces`
+pixel above `WATERLEVEL` legal in CK3 at all? Read vanilla's own
+`WATERLEVEL` define (`../claudespace/game_files/common/defines/00_defines.txt`,
+`3.0/50 * 65535` = 3932 in 16-bit levels) and vanilla's own
+`map_data/{provinces.png,heightmap.png,definition.csv,default.map}`
+directly (2x upsampling the province-id raster to match the 2x heightmap).
+Result, `verified`: 224 vanilla river provinces, 424,016 px; heights range
+0-4,960 (p50 2,676, p99 3,642), and **433 px (0.10 %) in 14 of 224
+provinces sit above the water level**, up to +1,028 levels. So yes, it is
+legal -- CK3 renders it exactly like any other land-adjacent water pixel;
+there is no separate "river above water" shader path, because the engine's
+water surface is the same whole-map plane `jomini_water_default.fxh`
+already paints everywhere (CLAUDE.md's own water-surface invariant). The
+larger finding is the useful one: vanilla river provinces are **not**
+flatly pinned at all -- they follow real terrain (rivers run downhill,
+hence mostly below water), with rare small excursions above it where the
+terrain does. Ours were only flat because `heightmap_detail.apply`'s
+land/water clamp treats every water province (sea, lake, river) identically
+regardless of kind. This is the evidence base for `valley`: it is not
+fabricated behaviour, it restores what a river province is allowed to look
+like and CK2 itself never modelled.
+
+**3. The `valley` action** (`src/ck2ck3/map/lake_to_land.py`,
+`overrides/river_valleys.csv`, schema identical to `lake_to_land.csv`:
+`ck2_id,action,reason`, `read_overrides` is shared). Unlike `marsh`/`land`,
+a `valley` row:
+- is **skipped** by `patch_water_ids` (`WATER_STAYING_ACTIONS = (VALLEY,)`)
+  -- `sea_ids`/`lake_ids`/`river_ids` are untouched, so the province stays
+  exactly the water province CK2 had it as: navigable, in
+  `river_provinces`/`sea_zones`, `is_water=True` all the way through
+  `idmap.build`;
+- is carved, not inpainted (`carve_valleys`): a harmonic bank estimate
+  seeded from **true land only** (`land_mask = ~water_mask`, excluding
+  every other still-pinned water province, unlike `inpaint_heights`'s
+  looser boundary) via normalized-convolution + iterative blur-restore,
+  minus a shallow `depth` (300 levels, deliberately smaller than
+  `heightmap_detail_river_depth`'s 900-level traced-line carve and within
+  the §2f per-terrain tolerance band of 193-427), clipped to
+  `(water_level, bank]` so the result is never level with the bank and
+  never at or below the water level either;
+- runs **before** `heightmap.deepen_sea`, same reason as the lake inpaint:
+  `deepen_sea`'s own water test is a raw-height threshold with no province
+  lookup (`heights <= water_level`), so the height has to be raised before
+  it runs or the pin reappears regardless of classification;
+- widens the **heightmap-detail land mask only** (`valley_mask`,
+  `heightmap_land_mask = ~water_mask | valley_mask_arr` in `build.py`) so
+  the normal cliff-aware/wall-spread/source-bound pipeline treats these
+  pixels like ordinary land on top of the carved base -- the province
+  classification (`water_mask`, what `default.map` and the terrain vote
+  read) is left alone, only what `heightmap_detail.apply`'s closing clamp
+  is allowed to do to these pixels changes.
+- `rivers.png` needed no extra work: `rivers.render` paints
+  `out[water_mask] = WATER` directly, and a `valley` province's
+  `water_mask` bit is still set (`patch_water_ids` never touched it), so
+  its course was already drawn there before this change and stays drawn.
+
+CLI wiring followed the lake lane's own established lesson (`docs/DECISIONS.md`,
+Bug #1): `river_valleys`/`river_valleys_csv` were added to
+`ck2ck3.steps.map._map_config` -- the real CLI config builder -- in the same
+commit as the module code, proven by
+`tests/test_map_lake_to_land.py::test_cli_config_builder_reads_the_key`
+(extended, not duplicated) before `build.py` was ever wired to read them.
+Run-report counters (`river_valleys_rules`, `river_valleys_heights_holes_px`,
+`river_valleys_depth`) and a summary-line fragment were added to
+`ck2ck3.steps.map.run` in the same commit as the CLI-config change, not
+after a run caught them missing -- applying Bug #1's lesson proactively
+this time instead of repeating it.
+
+**4. Invariants** (`scripts/verify_heightmap_detail_invariants.py`):
+- check 7 (`overrides/lake_to_land.csv`) is unchanged: a `marsh`/`land`
+  province must have LEFT every `default.map` water list.
+- **check 8** (`overrides/river_valleys.csv`, new): the opposite assertion
+  -- a `valley` province must have STAYED in a `default.map` water list
+  (fails loudly if a future change to `patch_water_ids` ever stops skipping
+  `WATER_STAYING_ACTIONS`), and must have NO pixel at or below the water
+  level any more, and must not be perfectly flat (a std-dev-zero result
+  would read as a new pin at a different level, not a carved bed). Its
+  province-id set is also handed back to `main()` so the generic check 2
+  loop (every water province <= water level) skips exactly these ids --
+  they are supposed to violate that rule now, by design.
+- **check 9** (new, "no narrow water-pinned canyon"): a standing regression
+  check generalising the diagnostic above, run over *every* water province
+  on the canvas, named in an override or not. True width is
+  `2 x distance_transform_edt(mask).max()` (the widest inscribed circle's
+  diameter) -- not `measure_high_rivers.py`'s circle-equivalent-diameter
+  area proxy, which reads 28-56 px for these same five provinces because it
+  folds their *length* into the estimate. Calibrated directly off the
+  pre-fix 22:26 mod (`docs/evidence/thay_relief/`): the five named rivers
+  measured true width 8.5-10.0 px, ring risers (same 15 px ring, same
+  formula as the measurement script) 4.0-10.0, 100 % of their own pixels
+  pinned; `Lake Umber` (30 px wide, 3.0 risers) is the nearest miss and is
+  correctly excluded by the width gate alone. Gate:
+  `NARROW_CANYON_WIDTH_PX = 12.0`, `NARROW_CANYON_MIN_RISERS = 3.0`,
+  `NARROW_CANYON_RING_PX = 15`. A province only trips it while **still
+  fully pinned** (`(own_vals <= water_level).all()`), so a `valley` row
+  that carved correctly no longer matches at all -- this check is a
+  regression gate for the *next* unnoticed high water province, not a
+  duplicate of check 8.
+
+**5. The coordinator's catch: "min > water_level" passed while the canyon
+was unchanged.** The first cut of `carve_valleys` (§ above) reported
+`bank_median 5347.6` -- measured, not merely claimed, `docs/evidence/thay_relief_map_debug1.log`
+-- against the 6545-7653 these same six provinces were proposed from
+(`scripts/measure_high_rivers.py`). Root cause: that first cut seeded a
+harmonic (iterative Gaussian blur-and-restore) fill from `land_mask` alone
+(true land, excluding *every* water province on the canvas, not only the
+six holes). That made every OTHER water province -- every sea, every
+still-pinned river -- simultaneously "free" in the same diffusion, so a
+hole's effective neighbourhood was the whole connected water network it
+drains into, not its own bank; 400 iterations at sigma 1.5 px (effective
+reach ~30 px) cannot cross that to reach real land, and the un-reached
+interior stayed near its `water_level` fallback. `carve_valleys` is
+rewritten (`src/ck2ck3/map/lake_to_land.py`): a direct ring-dilation search
+per province, widened in powers of two from `ring_px=15` (identical to
+`measure_high_rivers.py`'s own already-verified method) up to
+`ring_max_px=240` for the rare province boxed in by other water --
+proximity search, never diffusion through a possibly enormous shared water
+body. Re-measured: `bank_median 6545.0` (matches the proposal exactly),
+`carved_median 6245.0` -- `bank - depth`, on the nose
+(`docs/evidence/thay_relief_map_debug2.log`).
+
+**Check 8 is now the hard gate the coordinator asked for**: bed vs bank,
+not "not pinned". `scripts/verify_heightmap_detail_invariants.py`
+measures each province's own bed median against a 15 px land ring around
+it (the same measurement, so a bank number here is directly comparable to
+the one a row was proposed from) and fails if `bank - bed` exceeds
+`depth (300) + tol (1000, headroom for heightmap_detail's own texture
+synthesis on top of the carve)`. This is the check that actually caught
+the bug above once written -- "min > water_level" and "not perfectly flat"
+both passed on the broken run.
+
+Two more bugs the hard gate's own first run surfaced, both in the
+*invariants script*, not the pipeline: (1) `check_source_bound` (existing
+check 3) flagged 264 land px "above the bound" for the first time ever,
+because it independently rebuilds "source" from the raw, un-carved
+`topology.bmp` and a valley province's own source there is still near the
+water level -- excluded now by province classification (dilated by the
+bound's own `window_px`, since a bank pixel's local window can still reach
+one step into the valley) alongside the existing per-pixel `source <=
+water_level` rule. (2) that exclusion first did nothing at all (264 stayed
+264): `np.isin(key, list(valley_ids))` compared packed provinces.png RGB
+keys against small integer province ids from `definition.csv` -- never
+equal by construction. Fixed by mapping id -> rgb -> packed key through
+`definition` first, the same lookup every other per-province check in this
+script already does.
+
+**6. Full run, invariants, ck3-tiger** (`wt/_out/thay-relief`,
+`docs/evidence/thay_relief_full_run4.log`): `map` step summary line names
+`river_valleys 6 CK2 river provinces carved (10223 px, depth 300.0)`.
+`scripts/verify_heightmap_detail_invariants.py`
+(`docs/evidence/thay_relief_invariants8.log`): **invariants hold** -- check
+7 (lake_to_land) clean, check 8 (river_valleys, bed-vs-bank hard gate)
+clean, check 9 (narrow canyon) "none on a province this lane's overrides
+target" (+ 77 elsewhere, informational, out of scope -- DECISIONS.md), the
+pre-existing source bound (check 3) 0 px under / 0 px over. Direct sample
+of the six provinces' own pixels in the finished `heightmap.png`
+(`verified`): min 5015-6216 (all above the 4883 water level), median
+5408-7239 -- e.g. River Umber min 6216 / median 7239 / max 7525, Lower
+Rauthenflow River 6129 / 6740 / 6931 -- against 100%
+at-or-below-water-level before any fix. ck3-tiger
+(`docs/evidence/thay_relief_tiger4.txt`): fatal 0, error 58 -- unchanged
+from the pre-lane baseline.
+
+**7. Renders: fixed numerically, and the ring in them is a different,
+already-known defect.** `scripts/thay_render.py --extra
+final_v2=<heightmap.png>` -> `docs/evidence/thay_relief/{hillshade,oblique}_final_v2.png`.
+Looked at directly, as instructed: `final_v2` still shows the same-looking
+ring as every earlier render. `scripts/thay_water_pin_overlay.py` (the
+coordinator's own ad hoc water-pin-in-red diagnostic, now a script)
+settles what the ring's pixels actually are on the *finished* mod
+(`docs/evidence/thay_relief/diag_water_pin_v2.png`): every still-pinned
+(red) pixel in the Thay crop belongs to `NORTHERN_ALAMBER_SEA`,
+`EASTERN_WIZARDS_REACH`, `TRACKLESS_DEEP`, `LAKE_ASHANE`, `ALAMBER_SEA`,
+`WESTERN_WIZARDS_REACH`, `SEA_OF_DLURG` -- real seas and one real lake,
+correctly pinned; none of the six carved provinces appear in that tally at
+all. A second, geometric diagnostic settles it beyond doubt
+(`docs/evidence/thay_relief/diag_valley_mask_v2.png`): the six carved
+provinces' own pixels, highlighted directly on the same hillshade the ring
+appears in, are two small, thin features off to the side (one river
+mouth, one short reach) -- nowhere near the ring's own path around the
+central peak. The ring is therefore the already-documented Thaymount
+escarpment/closed depression (§2h: 7,480-9,521 levels in the CK2 source
+itself, `heightmap_detail_source_adaptive_gain` cuts the excess ~20-30%,
+does not close it -- a real, if harsh, cliff, not a canyon this task's
+provinces caused) plus the real coastline against Lake Ashane and the
+surrounding seas. The coordinator's original §2h (d) diagnosis named these
+six rivers as *the* cause of the ring; the evidence above says they were
+never large enough to be visible in it at all (a 300-level shallow valley
+against an escarpment reading in the thousands) -- a second, independent
+defect was misattributed to the first. Reopening the escarpment closure is
+outside this task's own stated scope (the five/six named river provinces),
+so it is recorded here, not attempted.
+
+### §2h (e) The rings were black lines in CK2's provinces.bmp (coordinator, 2026-09-24)
+
+`verified`: the thin water-pinned ring pixels around Thaymount all belong to
+`TRACKLESS_DEEP` (id 4275), the padding ocean — not to any river province.
+Faerûn's CK2 `provinces.bmp` carries **16,786 pure-black pixels in 50 thin
+components** that `definition.csv` does not define; around Thay they trace the
+plateau escarpments. `provinces._keys_to_ids` sent every undefined colour to
+`PADDING`, so each drawn line became a one-pixel strip of ocean inside the land,
+pinned to CK3's global water level: the canyon rings every Thay playtest since
+playtest 3 reported, and the "1-px walls" of §2h (b). Fix:
+`provinces.fill_undefined_lines` gives every undefined *non-white* pixel its
+nearest defined province (white stays padding ocean). Result: the rings and the
+slabs are gone from the render (`hillshade_final_v3.png`, `oblique_final_v3.png`);
+3710 baronies placed (was 3704), invariants hold, ck3-tiger fatal 0 / error 58.
+Lesson: every earlier pass moved its own metric while the render stayed broken —
+the defect was in the id raster, upstream of every relief pass.

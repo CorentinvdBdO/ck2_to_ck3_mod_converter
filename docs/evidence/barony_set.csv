@@ -187,15 +187,15 @@ c_kalathtyr,b_wulen,church_holding,500.1.1,sampled,1184,placed,75,Kalathtyr,no,n
 c_kalathtyr,b_sassalt,castle_holding,700.1.1,sampled,997,placed,75,Kalathtyr,no,no
 c_purskul,b_purskul,castle_holding,initial,capital_position,2384,placed,237,Purskul,yes,no
 c_purskul,b_karastra,city_holding,250.1.1,port_position,1402,placed,237,Purskul,no,no
-c_crimmor,b_crimmor,city_holding,initial,capital_position,736,placed,77,Crimmor,yes,no
-c_crimmor,b_crytrapper,castle_holding,1000.1.1,sampled,631,placed,77,Crimmor,no,no
+c_crimmor,b_crimmor,city_holding,initial,capital_position,758,placed,77,Crimmor,yes,no
+c_crimmor,b_crytrapper,castle_holding,1000.1.1,sampled,633,placed,77,Crimmor,no,no
 c_crimmor,b_chaunteas_cradle,church_holding,400.1.1,sampled,591,placed,77,Crimmor,no,no
 c_hamlar_hills,b_arnise,castle_holding,initial,capital_position,1681,placed,1571,Hamlar Hills,yes,no
 c_hamlar_hills,b_st_carwells_vale,church_holding,500.1.1,sampled,1353,placed,1571,Hamlar Hills,no,no
-c_nashkel,b_nashkel,city_holding,initial,capital_position,3167,placed,64,Nashkel,yes,no
-c_nashkel,b_high_song,church_holding,1000.1.1,sampled,953,placed,64,Nashkel,no,no
+c_nashkel,b_nashkel,city_holding,initial,capital_position,3172,placed,64,Nashkel,yes,no
+c_nashkel,b_high_song,church_holding,1000.1.1,sampled,1077,placed,64,Nashkel,no,no
 c_lake_weng,b_minsor_vale,tribal_holding,initial,capital_position,2332,placed,2531,Lake Weng,yes,no
-c_lake_weng,b_citadel_rashturl,castle_holding,1107.1.1,sampled,846,placed,2531,Lake Weng,no,no
+c_lake_weng,b_citadel_rashturl,castle_holding,1107.1.1,sampled,909,placed,2531,Lake Weng,no,no
 c_eshpurta,b_eshpurta,castle_holding,initial,capital_position,1060,placed,78,Eshpurta,yes,no
 c_eshpurta,b_golden_fortress,castle_holding,1000.1.1,sampled,1254,placed,78,Eshpurta,no,no
 c_eshpurta,b_towers_of_the_vengeful_hand,church_holding,550.1.1,sampled,1033,placed,78,Eshpurta,no,no
@@ -221,7 +221,7 @@ c_imnescar,b_hydcont_hall,castle_holding,initial,sampled,1642,placed,79,Imnescar
 c_imnescar,b_battlescarred_bard,church_holding,400.1.1,sampled,1407,placed,79,Imnescar,no,no
 c_the_imnescourse,b_esford,city_holding,initial,capital_position,1443,placed,2434,The Imnescourse,yes,no
 c_the_imnescourse,b_shepardston,castle_holding,initial,sampled,1475,placed,2434,The Imnescourse,no,no
-c_windspear_hills,b_hillfort_ishla,castle_holding,initial,capital_position,2761,placed,2535,Windspear Hills,yes,no
+c_windspear_hills,b_hillfort_ishla,castle_holding,initial,capital_position,2765,placed,2535,Windspear Hills,yes,no
 c_windspear_hills,b_zinner,city_holding,523.1.1,port_position,1318,placed,2535,Windspear Hills,no,no
 c_west_tejarn,b_hillfort_torbold,castle_holding,initial,capital_position,5633,placed,136,West Tejarn,yes,no
 c_west_tejarn,b_archring,city_holding,523.1.1,port_position,3310,placed,136,West Tejarn,no,no
@@ -233,12 +233,12 @@ c_cortrynn,b_valash,castle_holding,initial,capital_position,4646,placed,200,Cort
 c_cortrynn,b_kingard,city_holding,491.1.1,port_position,3043,placed,200,Cortrynn,no,no
 c_murann,b_murann,castle_holding,initial,capital_position,2771,placed,82,Murann,yes,no
 c_murann,b_ommlur_hills,city_holding,460.1.1,port_position,1321,placed,82,Murann,no,no
-c_brost,b_brost,castle_holding,initial,capital_position,4065,placed,84,Brost,yes,no
+c_brost,b_brost,castle_holding,initial,capital_position,4105,placed,84,Brost,yes,no
 c_brost,b_imnesvale,city_holding,initial,port_position,2748,placed,84,Brost,no,no
 c_trademeet,b_trademeet,castle_holding,initial,capital_position,2068,placed,83,Trademeet,yes,no
 c_trademeet,b_bormton,city_holding,360.1.1,port_position,1435,placed,83,Trademeet,no,no
 c_trademeet,b_twin_towers,church_holding,920.1.1,sampled,2036,placed,83,Trademeet,no,no
-c_finger_pass,b_chapterhouse,tribal_holding,1089.1.1,capital_position,1121,placed,2551,Finger Pass,yes,no
+c_finger_pass,b_chapterhouse,tribal_holding,1089.1.1,capital_position,1125,placed,2551,Finger Pass,yes,no
 c_finger_pass,b_finger_pass,city_holding,initial,port_position,0,demoted,2551,Finger Pass,no,no
 c_riatavin,b_riatavin,castle_holding,initial,capital_position,2922,placed,1234,Riatavin,yes,no
 c_riatavin,b_tannitton,city_holding,340.1.1,port_position,1905,placed,1234,Riatavin,no,no
@@ -279,8 +279,8 @@ c_olomaa,b_olomaa,castle_holding,initial,capital_position,10631,placed,1097,Olom
 c_vuerthyl,b_vuerthyl,castle_holding,initial,capital_position,11240,placed,1065,Vuerthyl,yes,no
 c_the_throat,b_delia,castle_holding,initial,capital_position,7891,placed,1066,The Throat,yes,no
 c_lundeth,b_lundeth,castle_holding,initial,capital_position,4649,placed,1103,Lundeth,yes,no
-c_great_sands,b_maatar,tribal_holding,initial,capital_position,14900,placed,1101,Great Sands,yes,no
-c_quarter_of_emptiness,b_lions_eye,tribal_holding,initial,capital_position,14393,placed,1105,Quarter of Emptiness,yes,no
+c_great_sands,b_maatar,tribal_holding,initial,capital_position,15066,placed,1101,Great Sands,yes,no
+c_quarter_of_emptiness,b_lions_eye,tribal_holding,initial,capital_position,14527,placed,1105,Quarter of Emptiness,yes,no
 c_the_flats,b_argent_rock,tribal_holding,initial,capital_position,5878,placed,2411,The Flats,yes,no
 c_amazandar,b_amazandar,tribal_holding,initial,capital_position,1455,placed,1104,Amazandar,yes,no
 c_amazandar,b_hlithal,city_holding,initial,port_position,1129,placed,1104,Amazandar,no,no
@@ -335,8 +335,8 @@ c_calimport,b_muzad,castle_holding,initial,sampled,687,placed,142,Calimport,no,n
 c_calimport,b_khandaq,city_holding,initial,sampled,657,placed,142,Calimport,no,no
 c_calimport,b_calimport,church_holding,initial,sampled,523,placed,142,Calimport,no,no
 c_keltar,b_keltar,castle_holding,initial,capital_position,1347,placed,147,Keltar,yes,no
-c_keltar,b_evenstar,city_holding,initial,port_position,1113,placed,147,Keltar,no,no
-c_keltar,b_yuram,church_holding,initial,sampled,586,placed,147,Keltar,no,no
+c_keltar,b_evenstar,city_holding,initial,port_position,1099,placed,147,Keltar,no,no
+c_keltar,b_yuram,church_holding,initial,sampled,636,placed,147,Keltar,no,no
 c_teshburl,b_teshburl,castle_holding,initial,capital_position,1559,placed,143,Teshburl,yes,no
 c_teshburl,b_st_noradnars,city_holding,initial,port_position,1092,placed,143,Teshburl,no,no
 c_teshburl,b_st_litwans,church_holding,initial,sampled,1955,placed,143,Teshburl,no,no
@@ -353,8 +353,8 @@ c_memnon,b_naval_sabban,castle_holding,initial,sampled,0,demoted,144,Memnon,no,n
 c_memnon,b_golden_grove,church_holding,initial,sampled,424,placed,144,Memnon,no,no
 c_memnon,b_scarlet_gate,castle_holding,initial,sampled,823,placed,144,Memnon,no,no
 c_memnon,b_vesparal,city_holding,initial,port_position,500,placed,144,Memnon,no,no
-c_amkethran,b_amkethran,castle_holding,initial,capital_position,2522,placed,235,Amkethran,yes,no
-c_amkethran,b_assar,city_holding,initial,port_position,2120,placed,235,Amkethran,no,no
+c_amkethran,b_amkethran,castle_holding,initial,capital_position,2518,placed,235,Amkethran,yes,no
+c_amkethran,b_assar,city_holding,initial,port_position,2270,placed,235,Amkethran,no,no
 c_amkethran,b_kemal,church_holding,initial,sampled,1032,placed,235,Amkethran,no,no
 c_calimban,b_calimban_knoll,castle_holding,initial,capital_position,3131,placed,2598,Calimban,yes,no
 c_manshaka,b_manshaka,castle_holding,initial,capital_position,1319,placed,145,Manshaka,yes,no
@@ -374,17 +374,17 @@ c_volothamp,b_marratesh,castle_holding,initial,sampled,1732,placed,150,Volothamp
 c_almraiven,b_almraiven,castle_holding,initial,capital_position,4423,placed,151,Almraiven,yes,no
 c_almraiven,b_st_fanal,church_holding,initial,sampled,0,demoted,151,Almraiven,no,no
 c_almraiven,b_st_ihrvyn,church_holding,initial,sampled,2490,placed,151,Almraiven,no,no
-c_alamirs_end,b_alamir_rock,castle_holding,initial,capital_position,3586,placed,161,Alamirs End,yes,no
+c_alamirs_end,b_alamir_rock,castle_holding,initial,capital_position,3768,placed,161,Alamirs End,yes,no
 c_alamirs_end,b_cliffcrest,city_holding,initial,port_position,1130,placed,161,Alamirs End,no,no
-c_alamirs_end,b_wensin,church_holding,initial,sampled,1869,placed,161,Alamirs End,no,no
+c_alamirs_end,b_wensin,church_holding,initial,sampled,1945,placed,161,Alamirs End,no,no
 c_spider_swamp,b_ajhuutal,tribal_holding,initial,capital_position,3448,placed,1198,Spider Swamp,yes,no
-c_nykkar,b_nykkar,castle_holding,initial,capital_position,768,placed,2592,Nykkar,yes,no
-c_nykkar,b_st_faelar,church_holding,1277.1.1,sampled,568,placed,2592,Nykkar,no,no
+c_nykkar,b_nykkar,castle_holding,initial,capital_position,807,placed,2592,Nykkar,yes,no
+c_nykkar,b_st_faelar,church_holding,1277.1.1,sampled,569,placed,2592,Nykkar,no,no
 c_nykkar,b_olympus_dag,castle_holding,1385.4.29,sampled,483,placed,2592,Nykkar,no,yes
 c_kochar_steppe,b_kochar_steppe,tribal_holding,initial,capital_position,2311,placed,2593,Kochar Steppe,yes,no
 c_kochar_steppe,b_zains_crossing,castle_holding,1467.1.1,sampled,1599,placed,2593,Kochar Steppe,no,yes
 c_kochar_steppe,b_two_falls_end,church_holding,1467.1.1,sampled,1752,placed,2593,Kochar Steppe,no,yes
-c_faeressar,b_faeressar,castle_holding,initial,capital_position,2082,placed,2591,Faeressar,yes,no
+c_faeressar,b_faeressar,castle_holding,initial,capital_position,2261,placed,2591,Faeressar,yes,no
 c_valshada,b_valshada,castle_holding,initial,capital_position,1173,placed,148,Valshada,yes,no
 c_valshada,b_traispek,city_holding,initial,port_position,794,placed,148,Valshada,no,no
 c_valshada,b_st_doblas,church_holding,initial,sampled,1368,placed,148,Valshada,no,no
@@ -399,11 +399,11 @@ c_saelmur,b_vodariim,city_holding,450.1.1,port_position,4079,placed,172,Saelmur,
 c_yhep,b_yhep,castle_holding,initial,capital_position,8985,placed,174,Yhep,yes,no
 c_yhep,b_forvane,city_holding,300.1.1,port_position,5648,placed,174,Yhep,no,no
 c_arnrock,b_arnrock,castle_holding,initial,capital_position,316,placed,2308,Arnrock,yes,no
-c_suldolphor,b_suldolphor,castle_holding,initial,capital_position,3170,placed,159,Suldolphor,yes,no
+c_suldolphor,b_suldolphor,castle_holding,initial,capital_position,3174,placed,159,Suldolphor,yes,no
 c_suldolphor,b_talagath,city_holding,initial,port_position,1333,placed,159,Suldolphor,no,no
 c_beasts_coast,b_olodel,tribal_holding,initial,capital_position,2314,placed,1197,Beasts Coast,yes,no
-c_yeshpek,b_yeshpek,city_holding,initial,capital_position,3582,placed,160,Yeshpek,yes,no
-c_yeshpek,b_bezrim_bay,castle_holding,initial,sampled,1823,placed,160,Yeshpek,no,no
+c_yeshpek,b_yeshpek,city_holding,initial,capital_position,3630,placed,160,Yeshpek,yes,no
+c_yeshpek,b_bezrim_bay,castle_holding,initial,sampled,1826,placed,160,Yeshpek,no,no
 c_tulmon,b_sultans_citadel,castle_holding,initial,capital_position,1473,placed,2569,Tulmon,yes,no
 c_tulmon,b_tulmon,city_holding,initial,port_position,782,placed,2569,Tulmon,no,no
 c_tulmon,b_skullspire,church_holding,initial,sampled,963,placed,2569,Tulmon,no,no
@@ -448,7 +448,7 @@ c_qurth_forest,b_qurthing,tribal_holding,initial,capital_position,5648,placed,54
 c_the_duskwood,b_hesparin,tribal_holding,initial,capital_position,9835,placed,542,The Duskwood,yes,no
 c_magis_tor,b_magis_tor,castle_holding,initial,capital_position,3828,placed,2596,Magis Tor,yes,no
 c_iskashyoll,b_iskashyoll,castle_holding,initial,capital_position,5663,placed,139,Iskashyoll,yes,no
-c_iskashyoll,b_khanall,city_holding,initial,port_position,2713,placed,139,Iskashyoll,no,no
+c_iskashyoll,b_khanall,city_holding,initial,port_position,2712,placed,139,Iskashyoll,no,no
 c_alisiwhann,b_alisiwhann,castle_holding,initial,capital_position,1345,placed,140,Alisiwhann,yes,no
 c_alisiwhann,b_adarthir,city_holding,initial,port_position,755,placed,140,Alisiwhann,no,no
 c_alisiwhann,b_ragkyls_hold,city_holding,initial,sampled,741,placed,140,Alisiwhann,no,no
@@ -566,7 +566,7 @@ c_ormath,b_stessarun,city_holding,initial,port_position,6361,placed,197,Ormath,n
 c_the_wetwoods,b_urml,tribal_holding,initial,capital_position,11648,placed,206,The Wetwoods,yes,no
 c_assam,b_assam,city_holding,initial,capital_position,5847,placed,195,Assam,yes,no
 c_assam,b_khearan,castle_holding,initial,sampled,4007,placed,195,Assam,no,no
-c_karlyns_vale,b_quarrelshigh,tribal_holding,initial,capital_position,2232,placed,192,Karlyns Vale,yes,no
+c_karlyns_vale,b_quarrelshigh,tribal_holding,initial,capital_position,2320,placed,192,Karlyns Vale,yes,no
 c_giants_run,b_iisilmark,castle_holding,initial,capital_position,11993,placed,201,Giants Run,yes,no
 c_karmsteppe,b_karmhold,tribal_holding,initial,capital_position,12207,placed,1711,Karmsteppe,yes,no
 c_widestep,b_qord,tribal_holding,initial,capital_position,10213,placed,193,Widestep,yes,no
@@ -599,7 +599,7 @@ c_elbulder,b_eveshades,castle_holding,300.1.1,sampled,2838,placed,608,Elbulder,n
 c_elbulder,b_perlshaw,church_holding,779.1.1,sampled,2701,placed,608,Elbulder,no,no
 c_golden_road,b_nagaford,tribal_holding,initial,capital_position,8847,placed,609,Golden Road,yes,no
 c_golden_crossing,b_aurinstrat,tribal_holding,initial,capital_position,9508,placed,1719,Golden Crossing,yes,no
-c_torsch,b_torsch,castle_holding,initial,capital_position,6054,placed,547,Torsch,yes,no
+c_torsch,b_torsch,castle_holding,initial,capital_position,6709,placed,547,Torsch,yes,no
 c_torsch,b_araric,city_holding,1250.1.1,port_position,2737,placed,547,Torsch,no,no
 c_old_road,b_tolling_hill,tribal_holding,initial,capital_position,10817,placed,548,Old Road,yes,no
 c_firesteap_woods,b_firepost,tribal_holding,initial,capital_position,7142,placed,1721,Firesteap Woods,yes,no
@@ -797,18 +797,18 @@ c_xul_jarak,b_gray_citadel,city_holding,initial,port_position,975,placed,2546,Xu
 c_hawksroost,b_hawksroost,tribal_holding,initial,capital_position,4356,placed,348,Hawksroost,yes,no
 c_glister,b_glister,castle_holding,initial,capital_position,3243,placed,1584,Glister,yes,no
 c_mirror_lake,b_etuabe,tribal_holding,initial,capital_position,7771,placed,360,Mirror Lake,yes,no
-c_bottomless_bog,b_moortown,tribal_holding,initial,capital_position,3700,placed,384,Bottomless Bog,yes,no
+c_bottomless_bog,b_moortown,tribal_holding,initial,capital_position,3789,placed,384,Bottomless Bog,yes,no
 c_bottomless_bog,b_kond,city_holding,1441.1.1,port_position,2017,placed,384,Bottomless Bog,no,yes
 c_bottomless_bog,b_giants_stone,church_holding,1453.1.1,sampled,2648,placed,384,Bottomless Bog,no,yes
 c_stillmoors,b_granite_tower,castle_holding,initial,capital_position,5667,placed,358,Stillmoors,yes,no
-c_darmshall,b_darmshall,city_holding,initial,capital_position,703,placed,357,Darmshall,yes,no
+c_darmshall,b_darmshall,city_holding,initial,capital_position,623,placed,357,Darmshall,yes,no
 c_darmshall,b_maur_eturo,castle_holding,initial,sampled,1003,placed,357,Darmshall,no,no
-c_darmshall,b_nigels_ford,church_holding,1400.1.1,sampled,667,placed,357,Darmshall,no,yes
-c_darmshall,b_iron_divide,castle_holding,1450.1.1,sampled,527,placed,357,Darmshall,no,yes
+c_darmshall,b_nigels_ford,church_holding,1400.1.1,sampled,675,placed,357,Darmshall,no,yes
+c_darmshall,b_iron_divide,castle_holding,1450.1.1,sampled,678,placed,357,Darmshall,no,yes
 c_haatar_baen,b_hillsafar_hall,castle_holding,initial,capital_position,2377,placed,1575,Haatar Baen,yes,no
-c_haatar_baen,b_black_hole,city_holding,initial,port_position,1495,placed,1575,Haatar Baen,no,no
+c_haatar_baen,b_black_hole,city_holding,initial,port_position,1507,placed,1575,Haatar Baen,no,no
 c_haatar_baen,b_mt_throndor,church_holding,initial,sampled,2946,placed,1575,Haatar Baen,no,no
-c_cinnabar,b_telos,city_holding,1430.1.1,capital_position,1831,placed,359,Cinnabar,yes,yes
+c_cinnabar,b_telos,city_holding,1430.1.1,capital_position,1854,placed,359,Cinnabar,yes,yes
 c_cinnabar,b_iron_sky,castle_holding,1430.1.1,sampled,1610,placed,359,Cinnabar,no,yes
 c_cinnabar,b_cinnabar_wastes,castle_holding,initial,sampled,1409,placed,359,Cinnabar,no,no
 c_cinnabar,b_dead_mans_bridge,church_holding,1430.1.1,sampled,1544,placed,359,Cinnabar,no,yes
@@ -890,18 +890,18 @@ c_elven_court,b_elven_court,castle_holding,initial,capital_position,3675,placed,
 c_elven_court,b_xenphal,church_holding,initial,sampled,1502,placed,335,Elven Court,no,no
 c_darkwoods,b_minauthkeep,castle_holding,initial,capital_position,4740,placed,339,Darkwoods,yes,no
 c_liswood,b_halvans_wood,tribal_holding,initial,capital_position,4612,placed,340,Liswood,yes,no
-c_tangled_trees,b_the_tangled_trees,tribal_holding,initial,capital_position,4239,placed,336,Tangled Trees,yes,no
+c_tangled_trees,b_the_tangled_trees,tribal_holding,initial,capital_position,4241,placed,336,Tangled Trees,yes,no
 c_tangled_trees,b_gielaph,castle_holding,initial,sampled,2368,placed,336,Tangled Trees,no,no
 c_heartwood,b_standing_stone,castle_holding,initial,capital_position,2295,placed,2419,Heartwood,yes,no
 c_heartwood,b_greatstone,city_holding,initial,port_position,1282,placed,2419,Heartwood,no,no
 c_vale_of_lost_voices,b_vale_of_lost_voices,tribal_holding,initial,capital_position,3641,placed,337,Vale of Lost Voices,yes,no
-c_semberholme,b_sember,tribal_holding,initial,capital_position,647,placed,333,Semberholme,yes,no
-c_semberholme,b_zulmas,city_holding,initial,port_position,1132,placed,333,Semberholme,no,no
+c_semberholme,b_sember,tribal_holding,initial,capital_position,696,placed,333,Semberholme,yes,no
+c_semberholme,b_zulmas,city_holding,initial,port_position,1115,placed,333,Semberholme,no,no
 c_semberholme,b_caer_cadrin,church_holding,initial,sampled,765,placed,333,Semberholme,no,no
-c_mosstrunks,b_arauvuddelve,tribal_holding,initial,capital_position,2228,placed,334,Mosstrunks,yes,no
-c_mosstrunks,b_the_old_stone,city_holding,initial,port_position,1678,placed,334,Mosstrunks,no,no
+c_mosstrunks,b_arauvuddelve,tribal_holding,initial,capital_position,2232,placed,334,Mosstrunks,yes,no
+c_mosstrunks,b_the_old_stone,city_holding,initial,port_position,1677,placed,334,Mosstrunks,no,no
 c_ssrenshen,b_ssrenshen,tribal_holding,initial,capital_position,3874,placed,1154,Ssrenshen,yes,no
-c_beast_country,b_beast_country,tribal_holding,initial,capital_position,3241,placed,2606,Beast Country,yes,no
+c_beast_country,b_beast_country,tribal_holding,initial,capital_position,3264,placed,2606,Beast Country,yes,no
 c_spiderhaunt_woods,b_finders_keep,castle_holding,initial,capital_position,3497,placed,372,Spiderhaunt Woods,yes,no
 c_spiderhaunt_woods,b_stormpenhauder,city_holding,1130.1.1,port_position,1826,placed,372,Spiderhaunt Woods,no,no
 c_highmoon,b_highmoon,city_holding,1070.1.1,capital_position,1296,placed,275,Highmoon,yes,no
@@ -917,30 +917,30 @@ c_harrowdale,b_two_rocks,castle_holding,1356.11.1,sampled,583,placed,277,Harrowd
 c_harrowdale,b_lanfroe,church_holding,1428.1.1,sampled,0,demoted,277,Harrowdale,no,yes
 c_velarswood,b_velarswood,city_holding,initial,capital_position,954,placed,2601,Velarswood,yes,no
 c_velarswood,b_harvest_moon,church_holding,1365.1.1,sampled,1223,placed,2601,Velarswood,no,yes
-c_cold_field,b_cold_field,castle_holding,initial,capital_position,3346,placed,2602,Cold Field,yes,no
+c_cold_field,b_cold_field,castle_holding,initial,capital_position,3349,placed,2602,Cold Field,yes,no
 c_shadowdale,b_twisted_tower,castle_holding,initial,capital_position,893,placed,282,Shadowdale,yes,no
 c_shadowdale,b_shadowdale,city_holding,940.1.1,port_position,732,placed,282,Shadowdale,no,no
 c_shadowdale,b_elminster_tower,castle_holding,941.1.1,sampled,570,placed,282,Shadowdale,no,no
 c_shadowdale,b_castle_grimstead,church_holding,1000.1.1,sampled,0,demoted,282,Shadowdale,no,no
 c_freedale,b_freedale,city_holding,initial,capital_position,2787,placed,2603,Freedale,yes,no
 c_shadowglade,b_shadowglade,city_holding,initial,capital_position,3646,placed,2604,Shadowglade,yes,no
-c_ashabenford,b_ashabenford,city_holding,1040.1.1,capital_position,635,placed,279,Ashabenford,yes,no
+c_ashabenford,b_ashabenford,city_holding,1040.1.1,capital_position,621,placed,279,Ashabenford,yes,no
 c_ashabenford,b_mistletarn,castle_holding,initial,sampled,657,placed,279,Ashabenford,no,no
-c_ashabenford,b_the_golden_sheaf,church_holding,1100.1.1,sampled,463,placed,279,Ashabenford,no,no
-c_barrowfield,b_peldans_helm,city_holding,initial,capital_position,1463,placed,2607,Barrowfield,yes,no
-c_barrowfield,b_oakengrove,church_holding,initial,sampled,0,demoted,2607,Barrowfield,no,no
+c_ashabenford,b_the_golden_sheaf,church_holding,1100.1.1,sampled,496,placed,279,Ashabenford,no,no
+c_barrowfield,b_peldans_helm,city_holding,initial,capital_position,1108,placed,2607,Barrowfield,yes,no
+c_barrowfield,b_oakengrove,church_holding,initial,sampled,477,placed,2607,Barrowfield,no,no
 c_essembra,b_essembra,castle_holding,initial,capital_position,1509,placed,272,Essembra,yes,no
 c_essembra,b_tangled_trees,church_holding,1050.1.1,sampled,543,placed,272,Essembra,no,no
 c_essembra,b_oaknoll,city_holding,1030.1.1,port_position,903,placed,272,Essembra,no,no
-c_hap,b_hap,city_holding,initial,capital_position,1545,placed,2608,Hap,yes,no
+c_hap,b_hap,city_holding,initial,capital_position,1558,placed,2608,Hap,yes,no
 c_hap,b_tower_of_dracandros,castle_holding,1354.1.1,sampled,864,placed,2608,Hap,no,no
 c_scardale,b_scardale_town,castle_holding,initial,capital_position,575,placed,280,Scardale,yes,no
 c_scardale,b_scarsdeep,church_holding,950.1.1,sampled,785,placed,280,Scardale,no,no
 c_scardale,b_scar_harbor,city_holding,950.1.1,port_position,630,placed,280,Scardale,no,no
 c_chandlerscross,b_chandlerscross,castle_holding,initial,capital_position,1230,placed,2611,Chandlerscross,yes,no
 c_chandlerscross,b_wyverns_rift,castle_holding,1358.1.1,sampled,628,placed,2611,Chandlerscross,no,yes
-c_wrights_ferry,b_wrights_ferry,city_holding,initial,capital_position,2635,placed,2610,Wright's Ferry,yes,no
-c_blackfeather_bridge,b_blackfeather_bridge,castle_holding,initial,capital_position,1779,placed,276,Blackfeather Bridge,yes,no
+c_wrights_ferry,b_wrights_ferry,city_holding,initial,capital_position,2726,placed,2610,Wright's Ferry,yes,no
+c_blackfeather_bridge,b_blackfeather_bridge,castle_holding,initial,capital_position,1782,placed,276,Blackfeather Bridge,yes,no
 c_daggerdale,b_white_chalk_hollow,city_holding,1000.1.1,capital_position,1056,placed,274,Daggerdale,yes,no
 c_daggerdale,b_teshmere,castle_holding,initial,sampled,790,placed,274,Daggerdale,no,no
 c_daggerdale,b_dordrien_keep,castle_holding,850.1.1,sampled,667,placed,274,Daggerdale,no,no
@@ -1022,9 +1022,9 @@ c_suzail,b_gray_oaks,city_holding,1019.1.1,sampled,450,placed,249,Suzail,no,no
 c_wyvernwater,b_wheloon,city_holding,250.1.1,capital_position,852,placed,250,Wyvernwater,yes,no
 c_wyvernwater,b_redstone,castle_holding,initial,sampled,623,placed,250,Wyvernwater,no,no
 c_wyvernwater,b_immersea,church_holding,900.1.1,sampled,587,placed,250,Wyvernwater,no,no
-c_warmshores,b_warmshores,castle_holding,initial,capital_position,1477,placed,255,Warmshores,yes,no
+c_warmshores,b_warmshores,castle_holding,initial,capital_position,1519,placed,255,Warmshores,yes,no
 c_warmshores,b_zundle,city_holding,500.1.1,port_position,0,demoted,255,Warmshores,no,no
-c_kings_forest,b_waymoot,castle_holding,initial,capital_position,2245,placed,301,Kings Forest,yes,no
+c_kings_forest,b_waymoot,castle_holding,initial,capital_position,2252,placed,301,Kings Forest,yes,no
 c_kings_forest,b_stag_steads,city_holding,250.1.1,port_position,1685,placed,301,Kings Forest,no,no
 c_marsember,b_marsember,city_holding,initial,capital_position,0,demoted,252,Marsember,yes,no
 c_marsember,b_sharmran_isle,church_holding,230.1.1,sampled,559,placed,252,Marsember,no,no
@@ -1052,9 +1052,9 @@ c_arabel,b_yeoman_bridge,castle_holding,1360.1.1,sampled,877,placed,253,Arabel,n
 c_redspring,b_castle_kilgrave,castle_holding,initial,capital_position,1210,placed,331,Redspring,yes,no
 c_redspring,b_castle_crag,castle_holding,1357.1.1,sampled,1243,placed,331,Redspring,no,no
 c_redspring,b_redspring,church_holding,1160.1.1,sampled,1099,placed,331,Redspring,no,no
-c_eveningstar,b_eveningstar,castle_holding,initial,capital_position,824,placed,251,Eveningstar,yes,no
+c_eveningstar,b_eveningstar,castle_holding,initial,capital_position,949,placed,251,Eveningstar,yes,no
 c_eveningstar,b_espar,city_holding,310.1.1,port_position,584,placed,251,Eveningstar,no,no
-c_eveningstar,b_tyrluk,church_holding,810.1.1,sampled,869,placed,251,Eveningstar,no,no
+c_eveningstar,b_tyrluk,church_holding,810.1.1,sampled,772,placed,251,Eveningstar,no,no
 c_eveningstar,b_harkstead,castle_holding,1410.1.1,sampled,460,placed,251,Eveningstar,no,yes
 c_high_horn,b_high_horn,castle_holding,initial,capital_position,2015,placed,2516,High Horn,yes,no
 c_high_horn,b_huthduth,church_holding,237.1.1,sampled,874,placed,2516,High Horn,no,no
@@ -1101,13 +1101,13 @@ c_emmech,b_emmech,castle_holding,initial,capital_position,1258,placed,1028,Emmec
 c_emmech,b_viedana,city_holding,initial,port_position,1202,placed,1028,Emmech,no,no
 c_dlusk,b_dlusk,castle_holding,initial,capital_position,1803,placed,1025,Dlusk,yes,no
 c_dlusk,b_mesring,city_holding,initial,port_position,1667,placed,1025,Dlusk,no,no
-c_watchwall,b_thayguard,castle_holding,initial,capital_position,809,placed,1427,Watchwall,yes,no
+c_watchwall,b_thayguard,castle_holding,initial,capital_position,948,placed,1427,Watchwall,yes,no
 c_watchwall,b_glarondar,castle_holding,initial,sampled,560,placed,1427,Watchwall,no,no
 c_watchwall,b_shyver_pass,castle_holding,initial,sampled,0,demoted,1427,Watchwall,no,no
 c_relkaths_foot,b_royal_hall,castle_holding,initial,capital_position,1552,placed,2437,Relkaths Foot,yes,no
 c_relkaths_foot,b_relkaths_foot,city_holding,initial,port_position,1792,placed,2437,Relkaths Foot,no,no
 c_relkaths_foot,b_house_of_the_leaflord,church_holding,initial,sampled,1523,placed,2437,Relkaths Foot,no,no
-c_sunglade,b_sunglade,castle_holding,initial,capital_position,5336,placed,1241,Sunglade,yes,no
+c_sunglade,b_sunglade,castle_holding,initial,capital_position,5362,placed,1241,Sunglade,yes,no
 c_yuirwood,b_yuirin,castle_holding,initial,capital_position,2456,placed,1057,Yuirwood,yes,no
 c_yuirwood,b_caer_malla,city_holding,initial,port_position,2460,placed,1057,Yuirwood,no,no
 c_yuirwood,b_enens,church_holding,initial,sampled,2482,placed,1057,Yuirwood,no,no
@@ -1156,20 +1156,20 @@ c_amry,b_amry,castle_holding,initial,capital_position,2227,placed,303,Amry,yes,n
 c_amry,b_strestead,city_holding,initial,port_position,1305,placed,303,Amry,no,no
 c_telpir,b_telpir,city_holding,initial,capital_position,2209,placed,248,Telpir,yes,no
 c_telpir,b_st_caham,church_holding,initial,sampled,1025,placed,248,Telpir,no,no
-c_tantras,b_the_sea_tower,castle_holding,initial,capital_position,492,placed,262,Tantras,yes,no
+c_tantras,b_the_sea_tower,castle_holding,initial,capital_position,519,placed,262,Tantras,yes,no
 c_tantras,b_tantras,city_holding,initial,port_position,0,demoted,262,Tantras,no,no
-c_tantras,b_house_of_glory,church_holding,initial,sampled,495,placed,262,Tantras,no,no
-c_tantras,b_orlimmin,castle_holding,initial,sampled,564,placed,262,Tantras,no,no
-c_tantras,b_highbank_forest,city_holding,initial,sampled,451,placed,262,Tantras,no,no
-c_calaunt,b_fortress_of_the_five_vultures,castle_holding,initial,capital_position,953,placed,264,Calaunt,yes,no
+c_tantras,b_house_of_glory,church_holding,initial,sampled,537,placed,262,Tantras,no,no
+c_tantras,b_orlimmin,castle_holding,initial,sampled,527,placed,262,Tantras,no,no
+c_tantras,b_highbank_forest,city_holding,initial,sampled,481,placed,262,Tantras,no,no
+c_calaunt,b_fortress_of_the_five_vultures,castle_holding,initial,capital_position,979,placed,264,Calaunt,yes,no
 c_calaunt,b_calaunt,city_holding,initial,port_position,0,demoted,264,Calaunt,no,no
 c_calaunt,b_moonsilver_house,church_holding,initial,sampled,1826,placed,264,Calaunt,no,no
 c_ravens_bluff,b_ravendark_castle,castle_holding,initial,capital_position,644,placed,263,Ravens Bluff,yes,no
 c_ravens_bluff,b_altarside,church_holding,initial,sampled,765,placed,263,Ravens Bluff,no,no
 c_ravens_bluff,b_bitterstone,city_holding,initial,port_position,781,placed,263,Ravens Bluff,no,no
 c_ravens_bluff,b_seaglimpse,castle_holding,initial,sampled,614,placed,263,Ravens Bluff,no,no
-c_hlintar,b_hlintar,city_holding,initial,capital_position,4763,placed,381,Hlintar,yes,no
-c_fire_river,b_dragon_falls,castle_holding,initial,capital_position,2433,placed,379,Fire River,yes,no
+c_hlintar,b_hlintar,city_holding,initial,capital_position,4866,placed,381,Hlintar,yes,no
+c_fire_river,b_dragon_falls,castle_holding,initial,capital_position,2607,placed,379,Fire River,yes,no
 c_fire_river,b_goldenford,city_holding,1242.1.1,port_position,933,placed,379,Fire River,no,no
 c_procampur,b_procampur,castle_holding,initial,capital_position,3086,placed,265,Procampur,yes,no
 c_procampur,b_high_haspur,city_holding,initial,port_position,1223,placed,265,Procampur,no,no
@@ -1179,9 +1179,9 @@ c_tsurlagol,b_tsurlagol,city_holding,initial,capital_position,1356,placed,404,Ts
 c_tsurlagol,b_sevencho,castle_holding,initial,sampled,1280,placed,404,Tsurlagol,no,no
 c_tsurlagol,b_graypike,church_holding,initial,sampled,812,placed,404,Tsurlagol,no,no
 c_brynwood,b_duras_vale,tribal_holding,initial,capital_position,3650,placed,1582,Brynwood,yes,no
-c_kings_reach,b_kings_reach,castle_holding,initial,capital_position,6240,placed,380,Kings Reach,yes,no
+c_kings_reach,b_kings_reach,castle_holding,initial,capital_position,6247,placed,380,Kings Reach,yes,no
 c_kings_reach,b_swords_pool,city_holding,initial,port_position,2546,placed,380,Kings Reach,no,no
-c_karondar,b_karon,tribal_holding,initial,capital_position,6212,placed,1581,Karondar,yes,no
+c_karondar,b_karon,tribal_holding,initial,capital_position,6344,placed,1581,Karondar,yes,no
 c_earthfast,b_earthfast,castle_holding,initial,capital_position,1004,placed,1569,Earthfast,yes,no
 c_earthfast,b_halrunedar,city_holding,initial,port_position,463,placed,1569,Earthfast,no,no
 c_ylraphon,b_ylraphon,city_holding,initial,capital_position,2846,placed,271,Ylraphon,yes,no
@@ -1268,7 +1268,7 @@ c_sandsrun,b_pharsul,castle_holding,initial,sampled,2303,placed,773,Sandsrun,no,
 c_saekolath,b_saekolath,castle_holding,initial,capital_position,2391,placed,2552,Saekolath,yes,no
 c_saekolath,b_place_of_shade,church_holding,initial,sampled,602,placed,2552,Saekolath,no,no
 c_saekolath,b_vinetrunks,city_holding,initial,port_position,804,placed,2552,Saekolath,no,no
-c_vaelan,b_vaelan,city_holding,initial,capital_position,2052,placed,764,Vaelan,yes,no
+c_vaelan,b_vaelan,city_holding,initial,capital_position,2061,placed,764,Vaelan,yes,no
 c_vaelan,b_assur,castle_holding,1103.1.1,sampled,1455,placed,764,Vaelan,no,no
 c_vaelan,b_atarem,church_holding,1103.1.1,sampled,1274,placed,764,Vaelan,no,no
 c_durgach,b_durgach,castle_holding,initial,capital_position,2586,placed,772,Durgach,yes,no
@@ -1370,9 +1370,9 @@ c_sunset_rocks,b_vathel,castle_holding,initial,,0,demoted,1140,Sunset Rocks,no,n
 c_errusk,b_errusk,tribal_holding,initial,capital_position,19321,placed,550,Errusk,yes,no
 c_harngel,b_harngel,tribal_holding,initial,capital_position,16028,placed,1744,Harngel,yes,no
 c_redstar,b_bloodstark,castle_holding,initial,capital_position,17177,placed,558,Redstar,yes,no
-c_beast_lands,b_karat,tribal_holding,initial,capital_position,7512,placed,763,Beast Lands,yes,no
-c_xiltor,b_xiltor,tribal_holding,initial,capital_position,4439,placed,760,Xiltor,yes,no
-c_lastarr,b_lastarr,tribal_holding,initial,capital_position,7867,placed,761,Lastarr,yes,no
+c_beast_lands,b_karat,tribal_holding,initial,capital_position,7656,placed,763,Beast Lands,yes,no
+c_xiltor,b_xiltor,tribal_holding,initial,capital_position,4548,placed,760,Xiltor,yes,no
+c_lastarr,b_lastarr,tribal_holding,initial,capital_position,7910,placed,761,Lastarr,yes,no
 c_bloodlake,b_faeniel,tribal_holding,initial,capital_position,13393,placed,1745,Bloodlake,yes,no
 c_sharawood,b_sharawood,tribal_holding,initial,capital_position,13210,placed,486,Sharawood,yes,no
 c_everwide,b_alhanar,church_holding,initial,capital_position,19159,placed,549,Everwide,yes,no
@@ -1511,8 +1511,8 @@ c_couatls_landing,b_feathered_port,tribal_holding,initial,capital_position,4067,
 c_fatuta_chuba,b_fatuta_chuba,castle_holding,initial,capital_position,17261,placed,975,Fatuta Chuba,yes,no
 c_neachal,b_neachal_fountain,castle_holding,initial,capital_position,13960,placed,976,Neachal,yes,no
 c_neachal,b_moranth,city_holding,initial,port_position,6366,placed,976,Neachal,no,no
-c_shih_tuh,b_shih_tuh,castle_holding,initial,capital_position,7739,placed,1274,Shih Tuh,yes,no
-c_shih_tuh,b_naxu,city_holding,initial,port_position,4628,placed,1274,Shih Tuh,no,no
+c_shih_tuh,b_shih_tuh,castle_holding,initial,capital_position,7879,placed,1274,Shih Tuh,yes,no
+c_shih_tuh,b_naxu,city_holding,initial,port_position,5293,placed,1274,Shih Tuh,no,no
 c_tsaparang,b_tsaparang,castle_holding,initial,capital_position,9627,placed,966,Tsaparang,yes,no
 c_tsaparang,b_wanpa,city_holding,1460.1.1,port_position,3794,placed,966,Tsaparang,no,yes
 c_zanda_tholing,b_zanda_tholing,church_holding,initial,capital_position,23130,placed,965,Zanda Tholing,yes,no
@@ -1531,14 +1531,14 @@ c_wild_yak_meadows,b_loeng,tribal_holding,initial,capital_position,29050,placed,
 c_yudol,b_yudol,castle_holding,initial,capital_position,37041,placed,1764,Yudol,yes,no
 c_punakha_dzong,b_punakha_dzong,church_holding,initial,capital_position,17921,placed,967,Punakha Dzong,yes,no
 c_shey_chorten,b_shey_chorten,castle_holding,initial,capital_position,17815,placed,973,Shey Chorten,yes,no
-c_takt_muren,b_sangal,castle_holding,initial,capital_position,26325,placed,988,Takt Muren,yes,no
+c_takt_muren,b_sangal,castle_holding,initial,capital_position,27090,placed,988,Takt Muren,yes,no
 c_yarlhang_la,b_yarlhang_la,tribal_holding,initial,capital_position,19476,placed,974,Yarlhang La,yes,no
 c_alashan,b_alashan,castle_holding,initial,capital_position,1313,placed,977,Alashan,yes,no
 c_alashan,b_keldam,city_holding,initial,port_position,701,placed,977,Alashan,no,no
 c_alashan,b_dokpak,church_holding,initial,sampled,1432,placed,977,Alashan,no,no
 c_alashan,b_wangdun,castle_holding,initial,sampled,670,placed,977,Alashan,no,no
 c_broken_wall_pass,b_luntse_dzong,castle_holding,initial,capital_position,5134,placed,980,Broken Wall Pass,yes,no
-c_broken_wall_pass,b_barkhul,city_holding,initial,port_position,2697,placed,980,Broken Wall Pass,no,no
+c_broken_wall_pass,b_barkhul,city_holding,initial,port_position,2731,placed,980,Broken Wall Pass,no,no
 c_manass,b_manass,castle_holding,initial,capital_position,1571,placed,979,Manass,yes,no
 c_manass,b_dampab,city_holding,initial,port_position,1791,placed,979,Manass,no,no
 c_manass,b_ngdengp,church_holding,initial,sampled,1253,placed,979,Manass,no,no
@@ -1633,11 +1633,11 @@ c_skuld,b_uthragkan,city_holding,initial,port_position,757,placed,680,Skuld,no,n
 c_skuld,b_donar,church_holding,initial,sampled,1193,placed,680,Skuld,no,no
 c_skuld,b_selag,castle_holding,initial,sampled,916,placed,680,Skuld,no,no
 c_skuld,b_ganathari,city_holding,initial,sampled,1016,placed,680,Skuld,no,no
-c_golden_shore,b_pharus,castle_holding,initial,capital_position,7404,placed,2457,Golden Shore,yes,no
-c_golden_shore,b_zassatam,city_holding,initial,port_position,1160,placed,2457,Golden Shore,no,no
-c_rauthgor,b_equan,castle_holding,initial,capital_position,1828,placed,684,Rauthgor,yes,no
-c_rauthgor,b_narvi,city_holding,initial,port_position,1514,placed,684,Rauthgor,no,no
-c_rauthgor,b_narqa,city_holding,1403.1.1,sampled,1366,placed,684,Rauthgor,no,yes
+c_golden_shore,b_pharus,castle_holding,initial,capital_position,7463,placed,2457,Golden Shore,yes,no
+c_golden_shore,b_zassatam,city_holding,initial,port_position,1164,placed,2457,Golden Shore,no,no
+c_rauthgor,b_equan,castle_holding,initial,capital_position,1909,placed,684,Rauthgor,yes,no
+c_rauthgor,b_narvi,city_holding,initial,port_position,1589,placed,684,Rauthgor,no,no
+c_rauthgor,b_narqa,city_holding,1403.1.1,sampled,1462,placed,684,Rauthgor,no,yes
 c_nisalin,b_nisalin,castle_holding,initial,capital_position,3872,placed,1756,Nisalin,yes,no
 c_nisalin,b_alirmote,city_holding,initial,port_position,2549,placed,1756,Nisalin,no,no
 c_mulharahold,b_mulharahold,castle_holding,initial,capital_position,7783,placed,687,Mulharahold,yes,no
@@ -1665,9 +1665,9 @@ c_jhalhoran,b_jhalhoran,castle_holding,initial,capital_position,5961,placed,681,
 c_jhalhoran,b_dimish,city_holding,initial,port_position,3574,placed,681,Jhalhoran,no,no
 c_kesh,b_asham,castle_holding,initial,capital_position,6653,placed,1142,Kesh,yes,no
 c_kesh,b_sumelel,city_holding,initial,port_position,3607,placed,1142,Kesh,no,no
-c_sultim,b_sultim,castle_holding,initial,capital_position,2202,placed,683,Sultim,yes,no
-c_sultim,b_vursanj,city_holding,initial,port_position,2518,placed,683,Sultim,no,no
-c_sultim,b_haripan,church_holding,initial,sampled,4542,placed,683,Sultim,no,no
+c_sultim,b_sultim,castle_holding,initial,capital_position,2248,placed,683,Sultim,yes,no
+c_sultim,b_vursanj,city_holding,initial,port_position,2647,placed,683,Sultim,no,no
+c_sultim,b_haripan,church_holding,initial,sampled,4552,placed,683,Sultim,no,no
 c_vintal,b_vintal,castle_holding,initial,capital_position,2200,placed,682,Vintal,yes,no
 c_vintal,b_kethar,city_holding,initial,port_position,2828,placed,682,Vintal,no,no
 c_neldorild,b_neldorild,castle_holding,initial,capital_position,1698,placed,657,Neldorild,yes,no
@@ -1788,27 +1788,27 @@ c_haqar,b_askamal,castle_holding,initial,capital_position,18711,placed,727,Haqar
 c_thaymount,b_thaymount_citadel,castle_holding,initial,capital_position,1476,placed,1426,Thaymount,yes,no
 c_thaymount,b_bolchal,church_holding,initial,sampled,500,placed,1426,Thaymount,no,no
 c_thaymount,b_csim,city_holding,initial,port_position,743,placed,1426,Thaymount,no,no
-c_dmir,b_dmir,castle_holding,initial,capital_position,2280,placed,1045,Dmir,yes,no
-c_dmir,b_komikor,city_holding,initial,port_position,2567,placed,1045,Dmir,no,no
-c_dmir,b_alharera,church_holding,initial,sampled,1144,placed,1045,Dmir,no,no
-c_szul,b_szul,castle_holding,initial,capital_position,2155,placed,1044,Szul,yes,no
-c_szul,b_rautham,city_holding,initial,port_position,1663,placed,1044,Szul,no,no
-c_umbthal,b_umbthal,castle_holding,initial,capital_position,2096,placed,1043,Umbthal,yes,no
-c_umbthal,b_eltab,city_holding,initial,port_position,1908,placed,1043,Umbthal,no,no
-c_umratharos,b_umratharos,castle_holding,initial,capital_position,5143,placed,1035,Umratharos,yes,no
-c_umratharos,b_umatula,city_holding,initial,port_position,3070,placed,1035,Umratharos,no,no
-c_umratharos,b_gulduk,church_holding,initial,sampled,2353,placed,1035,Umratharos,no,no
+c_dmir,b_dmir,castle_holding,initial,capital_position,2456,placed,1045,Dmir,yes,no
+c_dmir,b_komikor,city_holding,initial,port_position,2770,placed,1045,Dmir,no,no
+c_dmir,b_alharera,church_holding,initial,sampled,1324,placed,1045,Dmir,no,no
+c_szul,b_szul,castle_holding,initial,capital_position,2370,placed,1044,Szul,yes,no
+c_szul,b_rautham,city_holding,initial,port_position,1943,placed,1044,Szul,no,no
+c_umbthal,b_umbthal,castle_holding,initial,capital_position,2435,placed,1043,Umbthal,yes,no
+c_umbthal,b_eltab,city_holding,initial,port_position,1968,placed,1043,Umbthal,no,no
+c_umratharos,b_umratharos,castle_holding,initial,capital_position,5179,placed,1035,Umratharos,yes,no
+c_umratharos,b_umatula,city_holding,initial,port_position,3230,placed,1035,Umratharos,no,no
+c_umratharos,b_gulduk,church_holding,initial,sampled,2389,placed,1035,Umratharos,no,no
 c_keluthar,b_keluthar,castle_holding,initial,capital_position,2071,placed,1172,Keluthar,yes,no
 c_keluthar,b_bez_eska,city_holding,initial,port_position,2876,placed,1172,Keluthar,no,no
 c_keluthar,b_naldiskor,church_holding,initial,sampled,2468,placed,1172,Keluthar,no,no
 c_eltabbar,b_eltabbar,castle_holding,initial,capital_position,804,placed,1034,Eltabbar,yes,no
-c_eltabbar,b_daerath,city_holding,initial,port_position,884,placed,1034,Eltabbar,no,no
+c_eltabbar,b_daerath,city_holding,initial,port_position,902,placed,1034,Eltabbar,no,no
 c_eltabbar,b_venaros,church_holding,initial,sampled,816,placed,1034,Eltabbar,no,no
-c_eltabbar,b_pargethos,castle_holding,initial,sampled,832,placed,1034,Eltabbar,no,no
-c_rathmar,b_thossos,castle_holding,initial,capital_position,8503,placed,1051,Rathmar,yes,no
-c_sefriszar,b_sefriszar,castle_holding,initial,capital_position,2952,placed,1046,Sefriszar,yes,no
-c_sefriszar,b_thaldax,city_holding,initial,port_position,2238,placed,1046,Sefriszar,no,no
-c_sefriszar,b_zuldana,church_holding,initial,sampled,2322,placed,1046,Sefriszar,no,no
+c_eltabbar,b_pargethos,castle_holding,initial,sampled,821,placed,1034,Eltabbar,no,no
+c_rathmar,b_thossos,castle_holding,initial,capital_position,10181,placed,1051,Rathmar,yes,no
+c_sefriszar,b_sefriszar,castle_holding,initial,capital_position,3114,placed,1046,Sefriszar,yes,no
+c_sefriszar,b_thaldax,city_holding,initial,port_position,2358,placed,1046,Sefriszar,no,no
+c_sefriszar,b_zuldana,church_holding,initial,sampled,2484,placed,1046,Sefriszar,no,no
 c_gauros,b_gauros_keep,castle_holding,initial,capital_position,2953,placed,1039,Gauros,yes,no
 c_gauros,b_achnizu,city_holding,initial,port_position,4316,placed,1039,Gauros,no,no
 c_denzar,b_denzar,city_holding,initial,capital_position,1124,placed,700,Denzar,yes,no
@@ -1816,62 +1816,62 @@ c_denzar,b_chur_gathos,castle_holding,initial,sampled,3354,placed,700,Denzar,no,
 c_escalant,b_escalant,castle_holding,initial,capital_position,1015,placed,1040,Escalant,yes,no
 c_escalant,b_asha_masdak,city_holding,initial,port_position,623,placed,1040,Escalant,no,no
 c_escalant,b_stal_masdak,church_holding,initial,sampled,731,placed,1040,Escalant,no,no
-c_amruthar,b_amruthar,castle_holding,initial,capital_position,5962,placed,1048,Amruthar,yes,no
-c_amruthar,b_nethwatch,city_holding,initial,port_position,4915,placed,1048,Amruthar,no,no
-c_anhaurz,b_anhaurz,castle_holding,initial,capital_position,2830,placed,1038,Anhaurz,yes,no
-c_anhaurz,b_mithana,city_holding,initial,port_position,1121,placed,1038,Anhaurz,no,no
-c_nethentir,b_nethentir,castle_holding,initial,capital_position,2545,placed,1012,Nethentir,yes,no
-c_nethentir,b_the_fanfare,city_holding,initial,port_position,1723,placed,1012,Nethentir,no,no
-c_nethjet,b_nethjet,castle_holding,initial,capital_position,1591,placed,1011,Nethjet,yes,no
-c_nethjet,b_eshyas,city_holding,initial,port_position,1106,placed,1011,Nethjet,no,no
+c_amruthar,b_amruthar,castle_holding,initial,capital_position,6595,placed,1048,Amruthar,yes,no
+c_amruthar,b_nethwatch,city_holding,initial,port_position,5449,placed,1048,Amruthar,no,no
+c_anhaurz,b_anhaurz,castle_holding,initial,capital_position,2860,placed,1038,Anhaurz,yes,no
+c_anhaurz,b_mithana,city_holding,initial,port_position,1259,placed,1038,Anhaurz,no,no
+c_nethentir,b_nethentir,castle_holding,initial,capital_position,2573,placed,1012,Nethentir,yes,no
+c_nethentir,b_the_fanfare,city_holding,initial,port_position,2083,placed,1012,Nethentir,no,no
+c_nethjet,b_nethjet,castle_holding,initial,capital_position,1676,placed,1011,Nethjet,yes,no
+c_nethjet,b_eshyas,city_holding,initial,port_position,1233,placed,1011,Nethjet,no,no
 c_nethjet,b_melmas,church_holding,initial,sampled,608,placed,1011,Nethjet,no,no
-c_pyarados,b_pyrados,castle_holding,initial,capital_position,2052,placed,1041,Pyarados,yes,no
-c_pyarados,b_moduhur,city_holding,initial,port_position,1391,placed,1041,Pyarados,no,no
-c_pyarados,b_eracaz,church_holding,initial,sampled,1946,placed,1041,Pyarados,no,no
-c_pyarados,b_delluk,castle_holding,initial,sampled,1403,placed,1041,Pyarados,no,no
+c_pyarados,b_pyrados,castle_holding,initial,capital_position,2163,placed,1041,Pyarados,yes,no
+c_pyarados,b_moduhur,city_holding,initial,port_position,1453,placed,1041,Pyarados,no,no
+c_pyarados,b_eracaz,church_holding,initial,sampled,2231,placed,1041,Pyarados,no,no
+c_pyarados,b_delluk,castle_holding,initial,sampled,1448,placed,1041,Pyarados,no,no
 c_the_surague,b_onnaghi,castle_holding,initial,capital_position,4444,placed,1059,The Surague,yes,no
 c_the_surague,b_ishtamir,city_holding,initial,port_position,4234,placed,1059,The Surague,no,no
-c_surthay,b_surtowers,castle_holding,initial,capital_position,1319,placed,1023,Surthay,yes,no
-c_surthay,b_westsulkh,city_holding,initial,port_position,823,placed,1023,Surthay,no,no
-c_surthay,b_true_surthay,church_holding,initial,sampled,758,placed,1023,Surthay,no,no
+c_surthay,b_surtowers,castle_holding,initial,capital_position,1425,placed,1023,Surthay,yes,no
+c_surthay,b_westsulkh,city_holding,initial,port_position,954,placed,1023,Surthay,no,no
+c_surthay,b_true_surthay,church_holding,initial,sampled,824,placed,1023,Surthay,no,no
 c_mulsanyaar,b_rikthana,tribal_holding,initial,capital_position,8479,placed,1022,Mulsanyaar,yes,no
-c_surmarsh,b_dagleth,castle_holding,initial,capital_position,4528,placed,1009,Surmarsh,yes,no
-c_moszabbar,b_moszabbar,castle_holding,initial,capital_position,4837,placed,1042,Moszabbar,yes,no
+c_surmarsh,b_dagleth,castle_holding,initial,capital_position,5132,placed,1009,Surmarsh,yes,no
+c_moszabbar,b_moszabbar,castle_holding,initial,capital_position,4896,placed,1042,Moszabbar,yes,no
 c_moszabbar,b_thazar,castle_holding,initial,sampled,1931,placed,1042,Moszabbar,no,no
 c_thazar,b_thazar_keep,castle_holding,initial,capital_position,3131,placed,2497,Thazar,yes,no
 c_thazar,b_hebe,city_holding,initial,port_position,1678,placed,2497,Thazar,no,no
-c_thazarim,b_krenlith,castle_holding,initial,capital_position,2256,placed,1047,Thazarim,yes,no
+c_thazarim,b_krenlith,castle_holding,initial,capital_position,2407,placed,1047,Thazarim,yes,no
 c_thazarim,b_zunthra,city_holding,initial,port_position,1920,placed,1047,Thazarim,no,no
 c_the_alaor,b_thund_greatharbor_anchorage,castle_holding,initial,capital_position,694,placed,1033,The Alaor,yes,no
 c_the_alaor,b_alaoran,city_holding,initial,,0,demoted,1033,The Alaor,no,no
 c_the_alaor,b_raeldreth,church_holding,1358.4.1,,0,demoted,1033,The Alaor,no,yes
-c_bezantur,b_bezantur,castle_holding,initial,capital_position,1141,placed,1032,Bezantur,yes,no
-c_bezantur,b_unnakan,city_holding,initial,port_position,811,placed,1032,Bezantur,no,no
-c_bezantur,b_hexcidon,church_holding,initial,sampled,1025,placed,1032,Bezantur,no,no
-c_bezantur,b_balber,castle_holding,initial,sampled,922,placed,1032,Bezantur,no,no
-c_bezantur,b_thrakhos,city_holding,initial,sampled,1022,placed,1032,Bezantur,no,no
-c_murbant,b_murbant,castle_holding,initial,capital_position,4725,placed,1037,Murbant,yes,no
+c_bezantur,b_bezantur,castle_holding,initial,capital_position,1343,placed,1032,Bezantur,yes,no
+c_bezantur,b_unnakan,city_holding,initial,port_position,1684,placed,1032,Bezantur,no,no
+c_bezantur,b_hexcidon,church_holding,initial,sampled,616,placed,1032,Bezantur,no,no
+c_bezantur,b_balber,castle_holding,initial,sampled,1107,placed,1032,Bezantur,no,no
+c_bezantur,b_thrakhos,city_holding,initial,sampled,693,placed,1032,Bezantur,no,no
+c_murbant,b_murbant,castle_holding,initial,capital_position,5013,placed,1037,Murbant,yes,no
 c_murbant,b_pytharigla,city_holding,initial,port_position,2008,placed,1037,Murbant,no,no
-c_thasselen,b_thasselen,castle_holding,initial,capital_position,1868,placed,1036,Thasselen,yes,no
+c_thasselen,b_thasselen,castle_holding,initial,capital_position,1910,placed,1036,Thasselen,yes,no
 c_thasselen,b_sekbrax,city_holding,initial,port_position,1569,placed,1036,Thasselen,no,no
-c_thasselen,b_nishkashes,church_holding,initial,sampled,1655,placed,1036,Thasselen,no,no
+c_thasselen,b_nishkashes,church_holding,initial,sampled,1751,placed,1036,Thasselen,no,no
 c_tyraturos,b_tyraturos,castle_holding,initial,capital_position,617,placed,1031,Tyraturos,yes,no
 c_tyraturos,b_delabbar,city_holding,initial,port_position,1004,placed,1031,Tyraturos,no,no
 c_tyraturos,b_belizir,church_holding,initial,sampled,848,placed,1031,Tyraturos,no,no
 c_tyraturos,b_sekelmur,castle_holding,initial,sampled,890,placed,1031,Tyraturos,no,no
 c_tyraturos,b_nythgoro,city_holding,initial,sampled,742,placed,1031,Tyraturos,no,no
-c_ankhur,b_ankhur,castle_holding,initial,capital_position,3184,placed,2496,Ankhur,yes,no
-c_ankhur,b_dranikmor,city_holding,initial,port_position,1015,placed,2496,Ankhur,no,no
-c_ankhur,b_yadara,church_holding,initial,sampled,1285,placed,2496,Ankhur,no,no
-c_nuthretos,b_nuthretos,castle_holding,initial,capital_position,1821,placed,1050,Nuthretos,yes,no
-c_nuthretos,b_hurkh,city_holding,initial,port_position,2320,placed,1050,Nuthretos,no,no
-c_nuthretos,b_mophur,church_holding,initial,sampled,1899,placed,1050,Nuthretos,no,no
+c_ankhur,b_ankhur,castle_holding,initial,capital_position,3364,placed,2496,Ankhur,yes,no
+c_ankhur,b_dranikmor,city_holding,initial,port_position,1079,placed,2496,Ankhur,no,no
+c_ankhur,b_yadara,church_holding,initial,sampled,1327,placed,2496,Ankhur,no,no
+c_nuthretos,b_nuthretos,castle_holding,initial,capital_position,1831,placed,1050,Nuthretos,yes,no
+c_nuthretos,b_hurkh,city_holding,initial,port_position,2463,placed,1050,Nuthretos,no,no
+c_nuthretos,b_mophur,church_holding,initial,sampled,2003,placed,1050,Nuthretos,no,no
 c_surag,b_surag,castle_holding,initial,capital_position,1187,placed,1425,Surag,yes,no
 c_surag,b_thazrumaros,city_holding,initial,port_position,2001,placed,1425,Surag,no,no
 c_surag,b_kurkha,church_holding,initial,sampled,980,placed,1425,Surag,no,no
-c_zolum,b_zolum,castle_holding,initial,capital_position,2941,placed,1049,Zolum,yes,no
-c_zolum,b_solzepar,city_holding,initial,port_position,2040,placed,1049,Zolum,no,no
-c_zolum,b_arkira,city_holding,initial,sampled,1984,placed,1049,Zolum,no,no
+c_zolum,b_zolum,castle_holding,initial,capital_position,4640,placed,1049,Zolum,yes,no
+c_zolum,b_solzepar,city_holding,initial,port_position,1447,placed,1049,Zolum,no,no
+c_zolum,b_arkira,city_holding,initial,sampled,1351,placed,1049,Zolum,no,no
 c_bildoobaris,b_bildoobaris,tribal_holding,initial,capital_position,2079,placed,992,Bildoobaris,yes,no
 c_bildoobaris,b_runalundr,church_holding,initial,sampled,1181,placed,992,Bildoobaris,no,no
 c_the_teardrops,b_muirenon,tribal_holding,initial,capital_position,5880,placed,922,The Teardrops,yes,no
@@ -1939,7 +1939,7 @@ c_ethvale,b_ethvale,castle_holding,initial,capital_position,8056,placed,1013,Eth
 c_ethvale,b_avargand,city_holding,initial,port_position,3629,placed,1013,Ethvale,no,no
 c_phsant,b_phsant,city_holding,initial,capital_position,2991,placed,1003,Phsant,yes,no
 c_phsant,b_klonna,castle_holding,initial,sampled,1571,placed,1003,Phsant,no,no
-c_surcross,b_surcross,city_holding,initial,capital_position,11649,placed,1004,Surcross,yes,no
+c_surcross,b_surcross,city_holding,initial,capital_position,12118,placed,1004,Surcross,yes,no
 c_tammar,b_tammar,city_holding,initial,capital_position,5083,placed,1005,Tammar,yes,no
 c_tammar,b_simbath,castle_holding,initial,sampled,2938,placed,1005,Tammar,no,no
 c_silverymoon,b_silverymoon,city_holding,initial,capital_position,433,placed,25,Silverymoon,yes,no
@@ -1947,7 +1947,7 @@ c_silverymoon,b_rauvinwatch,castle_holding,637.1.1,sampled,610,placed,25,Silvery
 c_silverymoon,b_everdusk_hall,church_holding,637.1.1,sampled,547,placed,25,Silverymoon,no,no
 c_silverymoon,b_ladys_hand,church_holding,637.1.1,sampled,535,placed,25,Silverymoon,no,no
 c_silverymoon,b_khelb,city_holding,637.1.1,port_position,526,placed,25,Silverymoon,no,no
-c_rivermoot,b_rivermoot,city_holding,initial,capital_position,2614,placed,28,Rivermoot,yes,no
+c_rivermoot,b_rivermoot,city_holding,initial,capital_position,2660,placed,28,Rivermoot,yes,no
 c_rivermoot,b_winter_edge,city_holding,637.1.1,port_position,808,placed,28,Rivermoot,no,no
 c_silvermoon_pass,b_hawks_nest,castle_holding,initial,capital_position,857,placed,30,Silvermoon Pass,yes,no
 c_silvermoon_pass,b_auvandell,city_holding,1235.9.1,port_position,1184,placed,30,Silvermoon Pass,no,no
@@ -1964,13 +1964,13 @@ c_ascore,b_ascore_gates,castle_holding,initial,capital_position,2606,placed,2461
 c_arn_forest,b_graevelwood,castle_holding,initial,capital_position,3644,placed,53,Arn Forest,yes,no
 c_the_fork,b_deadsnows,tribal_holding,initial,capital_position,4957,placed,479,The Fork,yes,no
 c_vordrorn_forest,b_vordrorn,castle_holding,initial,capital_position,3485,placed,1436,Vordrorn Forest,yes,no
-c_mithral_hall,b_mithral_hall,castle_holding,initial,capital_position,470,placed,32,Mithral Hall,yes,no
-c_mithral_hall,b_fourthpeak,city_holding,initial,port_position,480,placed,32,Mithral Hall,no,no
-c_mithral_hall,b_hall_of_dumathoin,church_holding,initial,sampled,489,placed,32,Mithral Hall,no,no
-c_mithral_hall,b_garumns_gorge,castle_holding,initial,sampled,453,placed,32,Mithral Hall,no,no
+c_mithral_hall,b_mithral_hall,castle_holding,initial,capital_position,468,placed,32,Mithral Hall,yes,no
+c_mithral_hall,b_fourthpeak,city_holding,initial,port_position,495,placed,32,Mithral Hall,no,no
+c_mithral_hall,b_hall_of_dumathoin,church_holding,initial,sampled,504,placed,32,Mithral Hall,no,no
+c_mithral_hall,b_garumns_gorge,castle_holding,initial,sampled,486,placed,32,Mithral Hall,no,no
 c_selskar_vale,b_andalbruin,tribal_holding,initial,capital_position,3323,placed,2511,Selskar Vale,yes,no
-c_settlestone,b_settlestone,castle_holding,initial,capital_position,500,placed,1413,Settlestone,yes,no
-c_settlestone,b_keepers_dale,city_holding,initial,port_position,590,placed,1413,Settlestone,no,no
+c_settlestone,b_settlestone,castle_holding,initial,capital_position,529,placed,1413,Settlestone,yes,no
+c_settlestone,b_keepers_dale,city_holding,initial,port_position,612,placed,1413,Settlestone,no,no
 c_settlestone,b_northlook,church_holding,initial,sampled,509,placed,1413,Settlestone,no,no
 c_sundabar,b_masters_hall_sbr,castle_holding,initial,capital_position,3503,placed,38,Sundabar,yes,no
 c_sundabar,b_sundabar,city_holding,initial,port_position,1956,placed,38,Sundabar,no,no
@@ -1986,17 +1986,17 @@ c_jalanthar,b_jalanthar,city_holding,initial,capital_position,2171,placed,473,Ja
 c_jalanthar,b_moon_pass,castle_holding,882.1.1,sampled,1092,placed,473,Jalanthar,no,no
 c_maer_dualdon,b_maer_dualdon,city_holding,277.1.1,capital_position,673,placed,2614,Maer Dualdon,yes,no
 c_maer_dualdon,b_jarlmoot,castle_holding,initial,sampled,788,placed,2614,Maer Dualdon,no,no
-c_lac_dinneshere,b_easthaven,city_holding,initial,capital_position,1074,placed,46,Lac Dinneshere,yes,no
-c_lac_dinneshere,b_caer_dineval,castle_holding,1050.1.1,sampled,692,placed,46,Lac Dinneshere,no,no
+c_lac_dinneshere,b_easthaven,city_holding,initial,capital_position,1065,placed,46,Lac Dinneshere,yes,no
+c_lac_dinneshere,b_caer_dineval,castle_holding,1050.1.1,sampled,749,placed,46,Lac Dinneshere,no,no
 c_redwaters,b_good_mead,church_holding,1239.1.1,capital_position,574,placed,2615,Redwaters,yes,no
 c_redwaters,b_dougans_hole,city_holding,1212.1.1,port_position,853,placed,2615,Redwaters,no,no
 c_redwaters,b_redwaters,tribal_holding,initial,sampled,0,demoted,2615,Redwaters,no,no
-c_kelvins_cairn,b_kelvins_cairn,castle_holding,initial,capital_position,2486,placed,45,Kelvins Cairn,yes,no
-c_dwarven_valley,b_dwarven_valley,castle_holding,initial,capital_position,657,placed,2616,Dwarven Valley,yes,no
+c_kelvins_cairn,b_kelvins_cairn,castle_holding,initial,capital_position,2608,placed,45,Kelvins Cairn,yes,no
+c_dwarven_valley,b_dwarven_valley,castle_holding,initial,capital_position,659,placed,2616,Dwarven Valley,yes,no
 c_dwarven_valley,b_termalaine,castle_holding,1345.1.1,sampled,0,demoted,2616,Dwarven Valley,no,no
 c_dwarven_valley,b_lonelywood,city_holding,1279.1.1,port_position,635,placed,2616,Dwarven Valley,no,no
-c_highplume_station,b_highplume_station,tribal_holding,initial,capital_position,2302,placed,2617,Highplume Station,yes,no
-c_fireshear,b_windlyne_fort,castle_holding,initial,capital_position,5102,placed,23,Fireshear,yes,no
+c_highplume_station,b_highplume_station,tribal_holding,initial,capital_position,2306,placed,2617,Highplume Station,yes,no
+c_fireshear,b_windlyne_fort,castle_holding,initial,capital_position,5144,placed,23,Fireshear,yes,no
 c_fireshear,b_fireshear,city_holding,initial,port_position,1562,placed,23,Fireshear,no,no
 c_ironmaster,b_ironmaster,castle_holding,initial,capital_position,2680,placed,43,Ironmaster,yes,no
 c_ironmaster,b_firestone,city_holding,1248.1.1,port_position,1097,placed,43,Ironmaster,no,no
@@ -2004,7 +2004,7 @@ c_hosttower_of_the_arcane,b_mirar_green,tribal_holding,806.1.1,capital_position,
 c_hosttower_of_the_arcane,b_central_spire,castle_holding,initial,sampled,579,placed,2571,Hosttower,no,no
 c_the_icefields,b_the_icefields,tribal_holding,initial,capital_position,8210,placed,2620,The Icefields,yes,no
 c_icewind_coast,b_icewind_coast,tribal_holding,initial,capital_position,6446,placed,2561,Icewind Coast,yes,no
-c_evermelt,b_evermelt,tribal_holding,initial,capital_position,8035,placed,51,Evermelt,yes,no
+c_evermelt,b_evermelt,tribal_holding,initial,capital_position,8100,placed,51,Evermelt,yes,no
 c_prints_floe,b_prints_floe,tribal_holding,initial,capital_position,5261,placed,1175,Prints Floe,yes,no
 c_ruriks_end,b_rurikar,tribal_holding,initial,capital_position,10694,placed,1433,Ruriks End,yes,no
 c_outer_reghed,b_outer_reghed,tribal_holding,initial,capital_position,9913,placed,2567,Outer Reghed,yes,no
@@ -2017,10 +2017,10 @@ c_skytower_shelter,b_skytower_shelter,tribal_holding,initial,capital_position,10
 c_wyrms_tooth,b_wyrms_tooth,castle_holding,initial,capital_position,556,placed,2424,Wyrms Tooth,yes,no
 c_wyrms_tooth,b_dorns_deep,city_holding,initial,port_position,578,placed,2424,Wyrms Tooth,no,no
 c_wyrms_tooth,b_durdel_anatha,church_holding,initial,sampled,410,placed,2424,Wyrms Tooth,no,no
-c_hundelstone,b_hundelstone,castle_holding,initial,capital_position,1109,placed,44,Hundelstone,yes,no
+c_hundelstone,b_hundelstone,castle_holding,initial,capital_position,1126,placed,44,Hundelstone,yes,no
 c_hundelstone,b_chevlarin,city_holding,1306.1.1,port_position,482,placed,44,Hundelstone,no,no
-c_severed_hand,b_severed_hand,castle_holding,initial,capital_position,413,placed,2566,Severed Hand,yes,no
-c_severed_hand,b_vale_of_shadows,church_holding,initial,sampled,458,placed,2566,Severed Hand,no,no
+c_severed_hand,b_severed_hand,castle_holding,initial,capital_position,438,placed,2566,Severed Hand,yes,no
+c_severed_hand,b_vale_of_shadows,church_holding,initial,sampled,495,placed,2566,Severed Hand,no,no
 c_luskan,b_captains_court,castle_holding,initial,capital_position,0,demoted,17,Luskan,yes,no
 c_luskan,b_whitesails_harbour,city_holding,initial,port_position,616,placed,17,Luskan,no,no
 c_luskan,b_dragon_beach,city_holding,initial,sampled,602,placed,17,Luskan,no,no
@@ -2030,7 +2030,7 @@ c_blackford,b_blackford,tribal_holding,initial,capital_position,2282,placed,42,B
 c_blackford,b_icemelt,city_holding,initial,port_position,1097,placed,42,Blackford,no,no
 c_lyntara,b_port_wyn,tribal_holding,initial,capital_position,2960,placed,472,Lyntara,yes,no
 c_lyntara,b_valarholm,city_holding,initial,port_position,1068,placed,472,Lyntara,no,no
-c_the_fell_wood,b_blackstars,tribal_holding,initial,capital_position,5559,placed,234,The Fell Wood,yes,no
+c_the_fell_wood,b_blackstars,tribal_holding,initial,capital_position,5572,placed,234,The Fell Wood,yes,no
 c_mirabar,b_mirabar,city_holding,initial,capital_position,1231,placed,40,Mirabar,yes,no
 c_mirabar,b_duronds_town,city_holding,initial,port_position,1159,placed,40,Mirabar,no,no
 c_mirabar,b_alemaster,church_holding,initial,sampled,964,placed,40,Mirabar,no,no
@@ -2050,13 +2050,13 @@ c_shining_white,b_shining_white,tribal_holding,initial,capital_position,5523,pla
 c_grunwald,b_grunwald,tribal_holding,initial,capital_position,4261,placed,1200,Grunwald,yes,no
 c_the_crags,b_orglaunt,tribal_holding,initial,capital_position,5248,placed,169,The Crags,yes,no
 c_wild_hills,b_white_tree,tribal_holding,initial,capital_position,5635,placed,2532,Wild Hills,yes,no
-c_nesme,b_nesme,city_holding,initial,capital_position,1699,placed,582,Nesme,yes,no
-c_nesme,b_mornbryns_shield,castle_holding,1307.1.1,sampled,1396,placed,582,Nesme,no,no
+c_nesme,b_nesme,city_holding,initial,capital_position,1685,placed,582,Nesme,yes,no
+c_nesme,b_mornbryns_shield,castle_holding,1307.1.1,sampled,1509,placed,582,Nesme,no,no
 c_the_evermoors,b_startop,tribal_holding,initial,capital_position,9195,placed,27,The Evermoors,yes,no
-c_flint_rock,b_flint_rock,tribal_holding,initial,capital_position,4021,placed,2509,Flint Rock,yes,no
+c_flint_rock,b_flint_rock,tribal_holding,initial,capital_position,4035,placed,2509,Flint Rock,yes,no
 c_druarwood,b_frostrill,castle_holding,initial,capital_position,4092,placed,33,Druarwood,yes,no
 c_coldwood,b_thradulf,tribal_holding,initial,capital_position,11105,placed,35,Coldwood,yes,no
-c_moonwood,b_quaervarr,tribal_holding,initial,capital_position,7717,placed,34,Moonwood,yes,no
+c_moonwood,b_quaervarr,tribal_holding,initial,capital_position,7767,placed,34,Moonwood,yes,no
 c_night_trees,b_beorunnas_well,castle_holding,initial,capital_position,3693,placed,47,Night Trees,yes,no
 c_hartsvale,b_stagwick,castle_holding,initial,capital_position,7345,placed,48,Hartsvale,yes,no
 c_endless_blizzard,b_fir_palace,church_holding,initial,capital_position,7832,placed,52,Endless Blizzard,yes,no
@@ -2107,7 +2107,7 @@ c_the_old_trees,b_starshadow,tribal_holding,initial,capital_position,7838,placed
 c_the_old_trees,b_old_trees,city_holding,initial,port_position,2196,placed,1403,The Old Trees,no,no
 c_centaur_run,b_nordahaeril,tribal_holding,initial,capital_position,3529,placed,1152,Centaur Run,yes,no
 c_centaur_run,b_morynarth,city_holding,initial,port_position,3173,placed,1152,Centaur Run,no,no
-c_centaur_run,b_far_forount,church_holding,initial,sampled,2398,placed,1152,Centaur Run,no,no
+c_centaur_run,b_far_forount,church_holding,initial,sampled,2416,placed,1152,Centaur Run,no,no
 c_unicorn_run,b_caerilcarn,tribal_holding,initial,capital_position,2272,placed,70,Unicorn Run,yes,no
 c_unicorn_run,b_ellatharion,city_holding,initial,port_position,1786,placed,70,Unicorn Run,no,no
 c_pharren,b_pharren,tribal_holding,initial,capital_position,5887,placed,1568,Pharren,yes,no
@@ -2151,11 +2151,11 @@ c_turlangs_wood,b_orlgotha,city_holding,initial,port_position,2357,placed,37,Tur
 c_turlangs_wood,b_shilrua,church_holding,initial,sampled,1862,placed,37,Turlangs Wood,no,no
 c_turlangs_wood,b_darkmaidens_leap,castle_holding,initial,sampled,1489,placed,37,Turlangs Wood,no,no
 c_star_mounts,b_hartblood_spring,tribal_holding,initial,capital_position,1949,placed,2547,Star Mounts,yes,no
-c_waterdeep,b_castle_waterdeep,castle_holding,initial,capital_position,583,placed,1,Waterdeep,yes,no
-c_waterdeep,b_castle_ward,castle_holding,974.1.1,sampled,509,placed,1,Waterdeep,no,no
+c_waterdeep,b_castle_waterdeep,castle_holding,initial,capital_position,591,placed,1,Waterdeep,yes,no
+c_waterdeep,b_castle_ward,castle_holding,974.1.1,sampled,535,placed,1,Waterdeep,no,no
 c_waterdeep,b_sea_ward,city_holding,1010.1.1,port_position,0,demoted,1,Waterdeep,no,no
-c_waterdeep,b_north_ward,city_holding,1010.1.1,sampled,487,placed,1,Waterdeep,no,no
-c_waterdeep,b_the_plinth,church_holding,952.1.1,sampled,504,placed,1,Waterdeep,no,no
+c_waterdeep,b_north_ward,city_holding,1010.1.1,sampled,505,placed,1,Waterdeep,no,no
+c_waterdeep,b_the_plinth,church_holding,952.1.1,sampled,479,placed,1,Waterdeep,no,no
 c_waterdeep,b_trades_ward,church_holding,1350.1.1,,0,demoted,1,Waterdeep,no,no
 c_zundbridge,b_zundbridge,castle_holding,initial,capital_position,0,demoted,1445,Zundbridge,yes,no
 c_zundbridge,b_roaring_dragon_house,city_holding,1280.1.1,port_position,815,placed,1445,Zundbridge,no,no
@@ -2164,11 +2164,11 @@ c_zundbridge,b_phylund_lodge,castle_holding,1280.1.1,,0,demoted,1445,Zundbridge,
 c_rassalantar,b_rassalantars_keep,castle_holding,initial,capital_position,0,demoted,1406,Rassalantar,yes,no
 c_rassalantar,b_rassalantar,city_holding,1032.1.1,port_position,772,placed,1406,Rassalantar,no,no
 c_rassalantar,b_maidens_tomb_tor,church_holding,1032.1.1,sampled,607,placed,1406,Rassalantar,no,no
-c_mount_sar,b_mount_sar,castle_holding,initial,capital_position,564,placed,2548,Mount Sar,yes,no
+c_mount_sar,b_mount_sar,castle_holding,initial,capital_position,586,placed,2548,Mount Sar,yes,no
 c_mount_sar,b_melairrin,city_holding,initial,,0,demoted,2548,Mount Sar,no,no
-c_red_cliffs,b_hespheira,castle_holding,initial,capital_position,1636,placed,5,Red Cliffs,yes,no
+c_red_cliffs,b_hespheira,castle_holding,initial,capital_position,1749,placed,5,Red Cliffs,yes,no
 c_kryptgarden_forest,b_southkrypt,tribal_holding,initial,capital_position,7121,placed,20,Kryptgarden Forest,yes,no
-c_westwood,b_kheldell,church_holding,initial,capital_position,2749,placed,307,Westwood,yes,no
+c_westwood,b_kheldell,church_holding,initial,capital_position,2819,placed,307,Westwood,yes,no
 c_mount_illefarn,b_illefarn_keep,tribal_holding,initial,capital_position,583,placed,2195,Mount Illefarn,yes,no
 c_mount_illefarn,b_laughing_hollow,city_holding,initial,port_position,518,placed,2195,Mount Illefarn,no,no
 c_forlorn_hills,b_firehammer_hold,tribal_holding,initial,capital_position,3397,placed,468,Forlorn Hills,yes,no
@@ -2184,7 +2184,7 @@ c_icespire_peak,b_icespire_peak,tribal_holding,initial,capital_position,2153,pla
 c_conyberry,b_conyberry,city_holding,initial,capital_position,2880,placed,2623,Conyberry,yes,no
 c_mere_of_dead_men,b_uthtower,church_holding,initial,capital_position,875,placed,9,Mere of Dead Men,yes,no
 c_mere_of_dead_men,b_west_harbor,city_holding,146.1.1,port_position,1360,placed,9,Mere of Dead Men,no,no
-c_thornhold,b_thornhold,castle_holding,initial,capital_position,2468,placed,2553,Thornhold,yes,no
+c_thornhold,b_thornhold,castle_holding,initial,capital_position,2499,placed,2553,Thornhold,yes,no
 c_ardeep_forest,b_greentree_haven,tribal_holding,initial,capital_position,1053,placed,233,Ardeep Forest,yes,no
 c_ardeep_forest,b_glen_of_aloevan,city_holding,initial,port_position,606,placed,233,Ardeep Forest,no,no
 c_ardeep_forest,b_deepening_moon,church_holding,initial,sampled,944,placed,233,Ardeep Forest,no,no
@@ -2227,13 +2227,13 @@ c_urlingwood,b_taporan,city_holding,initial,port_position,1742,placed,1019,Urlin
 c_beacon_cairn,b_beacon_cairn,castle_holding,initial,capital_position,7465,placed,914,Beacon Cairn,yes,no
 c_tane,b_tane,tribal_holding,initial,capital_position,26145,placed,849,Tane,yes,no
 c_clearflow_vale,b_clearflow_keep,castle_holding,initial,capital_position,12938,placed,2498,Clearflow Vale,yes,no
-c_nathoud,b_nathoud,castle_holding,initial,capital_position,14177,placed,916,Nathoud,yes,no
+c_nathoud,b_nathoud,castle_holding,initial,capital_position,14363,placed,916,Nathoud,yes,no
 c_horaholm,b_horaholm,castle_holding,initial,capital_position,11540,placed,919,Horaholm,yes,no
 c_kalish,b_kalish,castle_holding,initial,capital_position,11504,placed,917,Kalish,yes,no
 c_nenvar,b_nenvar,castle_holding,initial,capital_position,9347,placed,918,Nenvar,yes,no
 c_galuka,b_galuka,tribal_holding,initial,capital_position,20605,placed,835,Galuka,yes,no
 c_talukhi,b_talukhi,tribal_holding,initial,capital_position,16627,placed,836,Talukhi,yes,no
-c_satous,b_satous,tribal_holding,initial,capital_position,12113,placed,1786,Satous,yes,no
+c_satous,b_satous,tribal_holding,initial,capital_position,12173,placed,1786,Satous,yes,no
 c_soranda,b_soranda,tribal_holding,initial,capital_position,21036,placed,1784,Soranda,yes,no
 c_deraala,b_deraala,tribal_holding,initial,capital_position,24000,placed,1785,Deraala,yes,no
 c_almorel,b_almorel,city_holding,initial,capital_position,2844,placed,913,Almorel,yes,no
@@ -2247,7 +2247,7 @@ c_panforza,b_panforza,tribal_holding,initial,capital_position,22415,placed,1777,
 c_ejen_horo,b_cassiddifel,tribal_holding,initial,capital_position,22713,placed,701,Ejen Horo,yes,no
 c_khopet_dag,b_buukhinkh,tribal_holding,initial,capital_position,29260,placed,842,Khopet-Dag,yes,no
 c_mortens_gap,b_morten,tribal_holding,initial,capital_position,10470,placed,695,Mortens Gap,yes,no
-c_mangangan,b_mangangan,tribal_holding,initial,capital_position,29234,placed,830,Mangangan,yes,no
+c_mangangan,b_mangangan,tribal_holding,initial,capital_position,29405,placed,830,Mangangan,yes,no
 c_avyn,b_avyn,tribal_holding,initial,capital_position,23226,placed,840,Avyn,yes,no
 c_kholaa,b_murmaan,tribal_holding,initial,capital_position,21727,placed,832,Kholaa,yes,no
 c_naiganga,b_naiganga,tribal_holding,initial,capital_position,32929,placed,839,Naiganga,yes,no
@@ -2260,37 +2260,37 @@ c_khaa,b_khaa,tribal_holding,initial,capital_position,32960,placed,837,Khaa,yes,
 c_shay_hills,b_akhrasut_nath,tribal_holding,initial,capital_position,29290,placed,838,Shay Hills,yes,no
 c_syevyer_forest,b_ouranalathas_tower,tribal_holding,initial,capital_position,13356,placed,866,Syevyer Forest,yes,no
 c_zoy_zando,b_zoy_zando,tribal_holding,initial,capital_position,11879,placed,1782,Zoy Zando,yes,no
-c_underhome,b_the_gates,castle_holding,initial,capital_position,859,placed,585,Underhome,yes,no
-c_underhome,b_underhome,city_holding,initial,port_position,718,placed,585,Underhome,no,no
-c_underhome,b_scaaminter,church_holding,initial,sampled,1054,placed,585,Underhome,no,no
-c_underhome,b_tumar,castle_holding,initial,sampled,771,placed,585,Underhome,no,no
-c_eartheart,b_eartheart,castle_holding,initial,capital_position,1377,placed,489,Eartheart,yes,no
-c_eartheart,b_riftedge,city_holding,initial,port_position,1667,placed,489,Eartheart,no,no
-c_eartheart,b_lowstair,church_holding,initial,sampled,1262,placed,489,Eartheart,no,no
-c_quarat,b_firecaverns,castle_holding,initial,capital_position,3789,placed,586,Quarat,yes,no
-c_quarat,b_quarat,city_holding,initial,port_position,1119,placed,586,Quarat,no,no
-c_quarat,b_vendy,church_holding,initial,sampled,1140,placed,586,Quarat,no,no
-c_shadows_end,b_hall_of_echoes,castle_holding,initial,capital_position,1351,placed,587,Shadows End,yes,no
-c_shadows_end,b_oldfast,city_holding,initial,port_position,1310,placed,587,Shadows End,no,no
-c_shadows_end,b_jurunvalt,church_holding,initial,sampled,1046,placed,587,Shadows End,no,no
-c_rimmator,b_rimmator,castle_holding,initial,capital_position,1483,placed,588,Rimmator,yes,no
-c_rimmator,b_nargabuz,city_holding,initial,port_position,750,placed,588,Rimmator,no,no
-c_rimmator,b_nalatho,church_holding,initial,sampled,593,placed,588,Rimmator,no,no
-c_daunting,b_daunting,castle_holding,initial,capital_position,1157,placed,590,Daunting,yes,no
-c_daunting,b_earthwar,city_holding,initial,port_position,0,demoted,590,Daunting,no,no
-c_glitterdelve,b_glitterdelve,castle_holding,initial,capital_position,1188,placed,592,Glitterdelve,yes,no
-c_glitterdelve,b_thuulurn,church_holding,initial,sampled,0,demoted,592,Glitterdelve,no,no
-c_harlending,b_harlending,castle_holding,initial,capital_position,978,placed,591,Harlending,yes,no
-c_harlending,b_orpool,city_holding,initial,port_position,414,placed,591,Harlending,no,no
-c_harlending,b_nulukkhol,church_holding,initial,sampled,762,placed,591,Harlending,no,no
-c_sundasz,b_sundasz,castle_holding,initial,capital_position,1223,placed,593,Sundasz,yes,no
-c_sundasz,b_magkstok,city_holding,initial,port_position,0,demoted,593,Sundasz,no,no
-c_tarnhall,b_tarnhall,castle_holding,initial,capital_position,1309,placed,589,Tarnhall,yes,no
+c_underhome,b_the_gates,castle_holding,initial,capital_position,1003,placed,585,Underhome,yes,no
+c_underhome,b_underhome,city_holding,initial,port_position,840,placed,585,Underhome,no,no
+c_underhome,b_scaaminter,church_holding,initial,sampled,1122,placed,585,Underhome,no,no
+c_underhome,b_tumar,castle_holding,initial,sampled,876,placed,585,Underhome,no,no
+c_eartheart,b_eartheart,castle_holding,initial,capital_position,1602,placed,489,Eartheart,yes,no
+c_eartheart,b_riftedge,city_holding,initial,port_position,2024,placed,489,Eartheart,no,no
+c_eartheart,b_lowstair,church_holding,initial,sampled,1254,placed,489,Eartheart,no,no
+c_quarat,b_firecaverns,castle_holding,initial,capital_position,4344,placed,586,Quarat,yes,no
+c_quarat,b_quarat,city_holding,initial,port_position,1267,placed,586,Quarat,no,no
+c_quarat,b_vendy,church_holding,initial,sampled,1582,placed,586,Quarat,no,no
+c_shadows_end,b_hall_of_echoes,castle_holding,initial,capital_position,1521,placed,587,Shadows End,yes,no
+c_shadows_end,b_oldfast,city_holding,initial,port_position,1451,placed,587,Shadows End,no,no
+c_shadows_end,b_jurunvalt,church_holding,initial,sampled,1117,placed,587,Shadows End,no,no
+c_rimmator,b_rimmator,castle_holding,initial,capital_position,1726,placed,588,Rimmator,yes,no
+c_rimmator,b_nargabuz,city_holding,initial,port_position,844,placed,588,Rimmator,no,no
+c_rimmator,b_nalatho,church_holding,initial,sampled,637,placed,588,Rimmator,no,no
+c_daunting,b_daunting,castle_holding,initial,capital_position,991,placed,590,Daunting,yes,no
+c_daunting,b_earthwar,city_holding,initial,port_position,509,placed,590,Daunting,no,no
+c_glitterdelve,b_glitterdelve,castle_holding,initial,capital_position,1175,placed,592,Glitterdelve,yes,no
+c_glitterdelve,b_thuulurn,church_holding,initial,sampled,457,placed,592,Glitterdelve,no,no
+c_harlending,b_harlending,castle_holding,initial,capital_position,1115,placed,591,Harlending,yes,no
+c_harlending,b_orpool,city_holding,initial,port_position,599,placed,591,Harlending,no,no
+c_harlending,b_nulukkhol,church_holding,initial,sampled,843,placed,591,Harlending,no,no
+c_sundasz,b_sundasz,castle_holding,initial,capital_position,1093,placed,593,Sundasz,yes,no
+c_sundasz,b_magkstok,city_holding,initial,port_position,569,placed,593,Sundasz,no,no
+c_tarnhall,b_tarnhall,castle_holding,initial,capital_position,1440,placed,589,Tarnhall,yes,no
 c_tarnhall,b_hithlade,city_holding,initial,port_position,0,demoted,589,Tarnhall,no,no
-c_tarnhall,b_nargabar,church_holding,initial,sampled,601,placed,589,Tarnhall,no,no
-c_llurth_dreier,b_llurth_dreier,church_holding,initial,capital_position,681,placed,2562,Llurth Dreier,yes,no
-c_llurth_dreier,b_oozing_city,city_holding,initial,port_position,771,placed,2562,Llurth Dreier,no,no
-c_llurth_dreier,b_overflowing_pit,castle_holding,initial,sampled,542,placed,2562,Llurth Dreier,no,no
+c_tarnhall,b_nargabar,church_holding,initial,sampled,715,placed,589,Tarnhall,no,no
+c_llurth_dreier,b_llurth_dreier,church_holding,initial,capital_position,800,placed,2562,Llurth Dreier,yes,no
+c_llurth_dreier,b_oozing_city,city_holding,initial,port_position,930,placed,2562,Llurth Dreier,no,no
+c_llurth_dreier,b_overflowing_pit,castle_holding,initial,sampled,647,placed,2562,Llurth Dreier,no,no
 c_llurth_dreier,b_mudflats,city_holding,initial,sampled,0,demoted,2562,Llurth Dreier,no,no
 c_buldamar,b_buldamar,city_holding,initial,capital_position,2528,placed,567,Buldamar,yes,no
 c_buldamar,b_clayglen,city_holding,initial,port_position,5523,placed,567,Buldamar,no,no
@@ -2307,7 +2307,7 @@ c_legionsway,b_five_guard,tribal_holding,initial,capital_position,20611,placed,5
 c_warfields,b_wemskall,tribal_holding,initial,capital_position,17893,placed,1748,Warfields,yes,no
 c_the_scarland,b_jullatgrave,tribal_holding,initial,capital_position,20245,placed,560,The Scarland,yes,no
 c_turmans,b_turmans,tribal_holding,initial,capital_position,16310,placed,1749,Turmans,yes,no
-c_eskat,b_true_eskat,tribal_holding,initial,capital_position,24557,placed,559,Eskat,yes,no
+c_eskat,b_true_eskat,tribal_holding,initial,capital_position,24762,placed,559,Eskat,yes,no
 c_delzimmer,b_delzimmer,city_holding,initial,capital_position,6183,placed,490,Delzimmer,yes,no
 c_delzimmer,b_sacoth,castle_holding,initial,sampled,4169,placed,490,Delzimmer,no,no
 c_delzimmer,b_avasta,church_holding,initial,sampled,4330,placed,490,Delzimmer,no,no
@@ -2322,31 +2322,31 @@ c_council_hills,b_hillgard,church_holding,initial,capital_position,6524,placed,4
 c_council_hills,b_azil,city_holding,initial,port_position,4788,placed,482,Council Hills,no,no
 c_asher_plain,b_irahat,tribal_holding,initial,capital_position,19706,placed,562,Asher Plain,yes,no
 c_brightfields,b_brightfields,tribal_holding,initial,capital_position,17388,placed,484,Brightfields,yes,no
-c_hardcastle,b_hardcastle,castle_holding,initial,capital_position,6690,placed,485,Hardcastle,yes,no
+c_hardcastle,b_hardcastle,castle_holding,initial,capital_position,6695,placed,485,Hardcastle,yes,no
 c_hardcastle,b_naporia,city_holding,initial,port_position,4833,placed,485,Hardcastle,no,no
-c_hardcastle,b_bilgunar,church_holding,initial,sampled,4805,placed,485,Hardcastle,no,no
+c_hardcastle,b_bilgunar,church_holding,initial,sampled,5383,placed,485,Hardcastle,no,no
 c_jeradin,b_jeradin,tribal_holding,initial,capital_position,23674,placed,483,Jeradin,yes,no
-c_yorash,b_yorash,tribal_holding,initial,capital_position,20035,placed,566,Yorash,yes,no
+c_yorash,b_yorash,tribal_holding,initial,capital_position,20775,placed,566,Yorash,yes,no
 c_skouth,b_skouth,tribal_holding,initial,capital_position,13914,placed,1752,Skouth,yes,no
-c_balaj,b_balaj,tribal_holding,initial,capital_position,22528,placed,487,Balaj,yes,no
-c_tensteps,b_cirik,tribal_holding,initial,capital_position,16434,placed,563,Tensteps,yes,no
-c_kholtar,b_kholtar,city_holding,initial,capital_position,2534,placed,491,Kholtar,yes,no
-c_kholtar,b_basincross,castle_holding,initial,sampled,985,placed,491,Kholtar,no,no
-c_kholtar,b_narakib,church_holding,initial,sampled,1492,placed,491,Kholtar,no,no
-c_kollyat,b_kollyat,tribal_holding,initial,capital_position,20069,placed,564,Kollyat,yes,no
-c_the_vensal,b_hammer_and_anvil,city_holding,initial,capital_position,6454,placed,510,The Vensal,yes,no
-c_the_vensal,b_hellash,castle_holding,initial,sampled,2745,placed,510,The Vensal,no,no
-c_the_vensal,b_shizdusharb,church_holding,1385.5.9,sampled,2971,placed,510,The Vensal,no,yes
-c_three_swords,b_three_swords,city_holding,initial,capital_position,19670,placed,492,Three Swords,yes,no
-c_channathgate,b_channathgate,castle_holding,initial,capital_position,4746,placed,493,Channathgate,yes,no
-c_channathgate,b_lordsthrone,city_holding,initial,port_position,5619,placed,493,Channathgate,no,no
-c_channathgate,b_rosebridge,church_holding,initial,sampled,3411,placed,493,Channathgate,no,no
-c_channathwood,b_yeshi,tribal_holding,initial,capital_position,7693,placed,494,Channathwood,yes,no
-c_lowfork,b_midstride,tribal_holding,initial,capital_position,9651,placed,536,Lowfork,yes,no
-c_rethmar,b_rethmar,city_holding,initial,capital_position,5384,placed,527,Rethmar,yes,no
-c_rethmar,b_teewick,castle_holding,initial,sampled,3615,placed,527,Rethmar,no,no
-c_channath_rise,b_hartvold,castle_holding,initial,capital_position,2312,placed,1727,Channath Rise,yes,no
-c_channath_rise,b_rochdale,city_holding,initial,port_position,1545,placed,1727,Channath Rise,no,no
+c_balaj,b_balaj,tribal_holding,initial,capital_position,23176,placed,487,Balaj,yes,no
+c_tensteps,b_cirik,tribal_holding,initial,capital_position,17648,placed,563,Tensteps,yes,no
+c_kholtar,b_kholtar,city_holding,initial,capital_position,2614,placed,491,Kholtar,yes,no
+c_kholtar,b_basincross,castle_holding,initial,sampled,1166,placed,491,Kholtar,no,no
+c_kholtar,b_narakib,church_holding,initial,sampled,1624,placed,491,Kholtar,no,no
+c_kollyat,b_kollyat,tribal_holding,initial,capital_position,21781,placed,564,Kollyat,yes,no
+c_the_vensal,b_hammer_and_anvil,city_holding,initial,capital_position,6829,placed,510,The Vensal,yes,no
+c_the_vensal,b_hellash,castle_holding,initial,sampled,2776,placed,510,The Vensal,no,no
+c_the_vensal,b_shizdusharb,church_holding,1385.5.9,sampled,2984,placed,510,The Vensal,no,yes
+c_three_swords,b_three_swords,city_holding,initial,capital_position,20855,placed,492,Three Swords,yes,no
+c_channathgate,b_channathgate,castle_holding,initial,capital_position,4811,placed,493,Channathgate,yes,no
+c_channathgate,b_lordsthrone,city_holding,initial,port_position,5648,placed,493,Channathgate,no,no
+c_channathgate,b_rosebridge,church_holding,initial,sampled,3535,placed,493,Channathgate,no,no
+c_channathwood,b_yeshi,tribal_holding,initial,capital_position,7716,placed,494,Channathwood,yes,no
+c_lowfork,b_midstride,tribal_holding,initial,capital_position,9740,placed,536,Lowfork,yes,no
+c_rethmar,b_rethmar,city_holding,initial,capital_position,5378,placed,527,Rethmar,yes,no
+c_rethmar,b_teewick,castle_holding,initial,sampled,3824,placed,527,Rethmar,no,no
+c_channath_rise,b_hartvold,castle_holding,initial,capital_position,2682,placed,1727,Channath Rise,yes,no
+c_channath_rise,b_rochdale,city_holding,initial,port_position,1687,placed,1727,Channath Rise,no,no
 c_scrabbleground,b_teths_stand,tribal_holding,initial,capital_position,20516,placed,521,Scrabbleground,yes,no
 c_broken_swords,b_swordsbane,tribal_holding,initial,capital_position,12770,placed,522,Broken Swords,yes,no
 c_deadstars,b_wasterun,tribal_holding,initial,capital_position,18740,placed,523,Deadstars,yes,no
@@ -2359,7 +2359,7 @@ c_urula,b_urula,tribal_holding,initial,capital_position,12463,placed,539,Urula,y
 c_the_wyrmbones,b_wyrmbone,tribal_holding,initial,capital_position,7633,placed,1428,The Wyrmbones,yes,no
 c_flatshield,b_flatshield_rise,tribal_holding,initial,capital_position,25774,placed,538,Flatshield,yes,no
 c_kuraakim,b_kuraakim,tribal_holding,initial,capital_position,8760,placed,1699,Kuraakim,yes,no
-c_mangale,b_mangale,tribal_holding,initial,capital_position,15901,placed,1728,Mangale,yes,no
+c_mangale,b_mangale,tribal_holding,initial,capital_position,16048,placed,1728,Mangale,yes,no
 c_shaarmid,b_shaarmid,city_holding,initial,capital_position,7678,placed,530,Shaarmid,yes,no
 c_shaarmid,b_stewich,castle_holding,initial,sampled,6450,placed,530,Shaarmid,no,no
 c_shaarmid,b_hurtlepool,church_holding,initial,sampled,5969,placed,530,Shaarmid,no,no
@@ -2374,15 +2374,15 @@ c_kormul,b_kinbarukth,city_holding,1426.1.1,port_position,4043,placed,532,Kormul
 c_kormul,b_boyhill,church_holding,1426.1.1,sampled,4231,placed,532,Kormul,no,yes
 c_lhespenbog,b_khephal,castle_holding,initial,capital_position,11022,placed,533,Lhespenbog,yes,no
 c_sebben,b_sebben,tribal_holding,initial,capital_position,14070,placed,528,Sebben,yes,no
-c_jelvak,b_hedrun,church_holding,initial,capital_position,17858,placed,565,Jelvak,yes,no
+c_jelvak,b_hedrun,church_holding,initial,capital_position,18503,placed,565,Jelvak,yes,no
 c_riverride,b_ashanva,tribal_holding,initial,capital_position,11727,placed,534,Riverride,yes,no
-c_shaargald,b_shaargald,tribal_holding,initial,capital_position,10553,placed,1725,Shaargald,yes,no
-c_skywall,b_archerpost,church_holding,initial,capital_position,5886,placed,544,Skywall,yes,no
-c_skywall,b_gunala,city_holding,initial,port_position,3289,placed,544,Skywall,no,no
-c_skywall,b_noriande,church_holding,initial,sampled,3937,placed,544,Skywall,no,no
+c_shaargald,b_shaargald,tribal_holding,initial,capital_position,10902,placed,1725,Shaargald,yes,no
+c_skywall,b_archerpost,church_holding,initial,capital_position,6212,placed,544,Skywall,yes,no
+c_skywall,b_gunala,city_holding,initial,port_position,3429,placed,544,Skywall,no,no
+c_skywall,b_noriande,church_holding,initial,sampled,4049,placed,544,Skywall,no,no
 c_horizons,b_cerrek,tribal_holding,initial,capital_position,24241,placed,545,Horizons,yes,no
-c_the_shaarwood,b_sendail,tribal_holding,initial,capital_position,9982,placed,529,The Shaarwood,yes,no
-c_leaping_grasses,b_leaping_hold,tribal_holding,initial,capital_position,19847,placed,1724,Leaping Grasses,yes,no
+c_the_shaarwood,b_sendail,tribal_holding,initial,capital_position,9997,placed,529,The Shaarwood,yes,no
+c_leaping_grasses,b_leaping_hold,tribal_holding,initial,capital_position,21498,placed,1724,Leaping Grasses,yes,no
 c_tempat_larang,b_tempat_larang,castle_holding,initial,capital_position,14455,placed,1275,Tempat Larang,yes,no
 c_kelereng_valley,b_kelereng,tribal_holding,initial,capital_position,13134,placed,1276,Kelereng Valley,yes,no
 c_kumandang,b_sumitra,church_holding,initial,capital_position,6959,placed,1278,Kumandang,yes,no
@@ -2484,19 +2484,19 @@ c_rethild_shore,b_mudhill,tribal_holding,initial,capital_position,12472,placed,1
 c_the_red_giant,b_red_cove,castle_holding,initial,capital_position,205,placed,1122,The Red Giant,yes,no
 c_wards_islands,b_wards_port,tribal_holding,initial,capital_position,467,placed,1123,Wards Islands,yes,no
 c_hethar,b_hethar,castle_holding,initial,capital_position,2861,placed,797,Hethar,yes,no
-c_hethar,b_gahyrst,city_holding,initial,port_position,2893,placed,797,Hethar,no,no
+c_hethar,b_gahyrst,city_holding,initial,port_position,2911,placed,797,Hethar,no,no
 c_hethar,b_ghikuli,church_holding,initial,sampled,3826,placed,797,Hethar,no,no
 c_dancing_dolphins,b_dolphin_waters,castle_holding,initial,capital_position,395,placed,1171,Dancing Dolphins,yes,no
 c_dancing_dolphins,b_mush,city_holding,initial,,0,demoted,1171,Dancing Dolphins,no,no
-c_darmesh,b_darmesh,castle_holding,initial,capital_position,2470,placed,798,Darmesh,yes,no
-c_darmesh,b_far_outpost,city_holding,initial,port_position,2674,placed,798,Darmesh,no,no
+c_darmesh,b_darmesh,castle_holding,initial,capital_position,2847,placed,798,Darmesh,yes,no
+c_darmesh,b_far_outpost,city_holding,initial,port_position,2720,placed,798,Darmesh,no,no
 c_irestone,b_evth,tribal_holding,initial,capital_position,16785,placed,618,Irestone,yes,no
-c_vargath,b_karns,tribal_holding,initial,capital_position,10931,placed,619,Vargath,yes,no
+c_vargath,b_karns,tribal_holding,initial,capital_position,11685,placed,619,Vargath,yes,no
 c_molken,b_molken,tribal_holding,initial,capital_position,14206,placed,1737,Molken,yes,no
-c_aznawood,b_azna_camp,tribal_holding,initial,capital_position,22627,placed,1738,Aznawood,yes,no
-c_addak,b_vetkth,tribal_holding,initial,capital_position,14547,placed,621,Addak,yes,no
+c_aznawood,b_azna_camp,tribal_holding,initial,capital_position,22995,placed,1738,Aznawood,yes,no
+c_addak,b_vetkth,tribal_holding,initial,capital_position,14575,placed,621,Addak,yes,no
 c_gnollhomes,b_ouargh,tribal_holding,initial,capital_position,16483,placed,622,Gnollhomes,yes,no
-c_wolfwoods,b_helmsa,tribal_holding,initial,capital_position,12678,placed,620,Wolfwoods,yes,no
+c_wolfwoods,b_helmsa,tribal_holding,initial,capital_position,13366,placed,620,Wolfwoods,yes,no
 c_halarahh,b_halarahh,castle_holding,initial,capital_position,2254,placed,635,Halarahh,yes,no
 c_halarahh,b_lath,city_holding,initial,port_position,1246,placed,635,Halarahh,no,no
 c_halarahh,b_halabar,church_holding,initial,sampled,1490,placed,635,Halarahh,no,no
@@ -2580,7 +2580,7 @@ c_north_fornaluit,b_sethemyne,tribal_holding,initial,capital_position,13054,plac
 c_south_fornaluit,b_blue_pana,tribal_holding,initial,capital_position,21785,placed,1735,South Fornaluit,yes,no
 c_shining_gap,b_evus,tribal_holding,initial,capital_position,12195,placed,555,Shining Gap,yes,no
 c_halruaan_heights,b_broken_helms,tribal_holding,initial,capital_position,12038,placed,1213,Halruaan Heights,yes,no
-c_kindle,b_kindle,tribal_holding,initial,capital_position,15997,placed,537,Kindle,yes,no
+c_kindle,b_kindle,tribal_holding,initial,capital_position,16347,placed,537,Kindle,yes,no
 c_baldurs_gate,b_high_hall,city_holding,initial,capital_position,895,placed,13,Baldurs Gate,yes,no
 c_baldurs_gate,b_ulgoths_beard,castle_holding,1045.1.1,sampled,1159,placed,13,Baldurs Gate,no,no
 c_baldurs_gate,b_bloomridge,city_holding,1090.1.1,port_position,888,placed,13,Baldurs Gate,no,no
@@ -2631,7 +2631,7 @@ c_iriaebor,b_iriaebor,city_holding,870.1.1,port_position,1687,placed,92,Iriaebor
 c_iriaebor,b_dragonrise_keep,castle_holding,870.1.1,sampled,1163,placed,92,Iriaebor,no,no
 c_iriaebor,b_blacktalon,church_holding,870.1.1,sampled,960,placed,92,Iriaebor,no,no
 c_easting,b_easting,castle_holding,initial,capital_position,5576,placed,1429,Easting,yes,no
-c_starfields,b_chatlarhune,tribal_holding,initial,capital_position,7590,placed,196,Starfields,yes,no
+c_starfields,b_chatlarhune,tribal_holding,initial,capital_position,7589,placed,196,Starfields,yes,no
 c_asbravn,b_asbravn,city_holding,initial,capital_position,6860,placed,95,Asbravn,yes,no
 c_berdusk,b_berdusk,castle_holding,initial,capital_position,1092,placed,66,Berdusk,yes,no
 c_berdusk,b_qheldins_mask,city_holding,850.1.1,port_position,1121,placed,66,Berdusk,no,no
@@ -2640,7 +2640,7 @@ c_greenest,b_greenest,castle_holding,initial,capital_position,3682,placed,73,Gre
 c_greenest,b_millstone,city_holding,1356.1.1,port_position,3615,placed,73,Greenest,no,no
 c_fendarls_gate,b_fendarls_gate,castle_holding,initial,capital_position,6159,placed,1700,Fendarls Gate,yes,no
 c_firewine,b_firewine_bridge,castle_holding,initial,capital_position,5409,placed,85,Firewine,yes,no
-c_firewine,b_gullykin,city_holding,initial,port_position,3581,placed,85,Firewine,no,no
+c_firewine,b_gullykin,city_holding,initial,port_position,3596,placed,85,Firewine,no,no
 c_uldoon,b_uldoon_post,tribal_holding,initial,capital_position,4453,placed,1182,Uldoon,yes,no
 c_uldoon,b_merrydales,city_holding,1372.1.1,port_position,5711,placed,1182,Uldoon,no,yes
 c_green_fields,b_astranar,tribal_holding,initial,capital_position,10861,placed,1701,Green Fields,yes,no
@@ -2706,12 +2706,12 @@ c_greenshores,b_kirgard,castle_holding,initial,capital_position,1520,placed,118,
 c_greenshores,b_kirlyntar,city_holding,initial,port_position,1395,placed,118,Greenshores,no,no
 c_greenshores,b_st_domin,church_holding,initial,sampled,1357,placed,118,Greenshores,no,no
 c_morninggold,b_morninggold_keep,castle_holding,initial,capital_position,5359,placed,133,Morninggold,yes,no
-c_morninggold,b_mt_noblesse,church_holding,initial,sampled,2519,placed,133,Morninggold,no,no
-c_morninggold,b_lyllburg,city_holding,initial,port_position,2746,placed,133,Morninggold,no,no
+c_morninggold,b_mt_noblesse,church_holding,initial,sampled,2488,placed,133,Morninggold,no,no
+c_morninggold,b_lyllburg,city_holding,initial,port_position,2799,placed,133,Morninggold,no,no
 c_elbencort,b_elbencort,castle_holding,initial,capital_position,3548,placed,1716,Elbencort,yes,no
 c_elbencort,b_tagarath,city_holding,initial,port_position,1821,placed,1716,Elbencort,no,no
-c_hazamarch,b_mourning_stones,castle_holding,initial,capital_position,4484,placed,132,Hazamarch,yes,no
-c_hazamarch,b_chevangard,city_holding,initial,port_position,1847,placed,132,Hazamarch,no,no
+c_hazamarch,b_mourning_stones,castle_holding,initial,capital_position,4547,placed,132,Hazamarch,yes,no
+c_hazamarch,b_chevangard,city_holding,initial,port_position,2040,placed,132,Hazamarch,no,no
 c_valashar,b_caer_dusk,castle_holding,initial,capital_position,6393,placed,134,Valashar,yes,no
 c_valashar,b_nomerritin,city_holding,initial,port_position,3719,placed,134,Valashar,no,no
 c_starspur,b_zazesspur,castle_holding,initial,capital_position,773,placed,119,Starspur,yes,no
@@ -2733,12 +2733,12 @@ c_bardshyr,b_alemanders_needle,city_holding,initial,port_position,1970,placed,12
 c_bardshyr,b_castle_tethir,castle_holding,initial,sampled,1963,placed,121,Bardshyr,no,no
 c_elemetar,b_myratma,city_holding,initial,capital_position,2104,placed,122,Elemetar,yes,no
 c_elemetar,b_khaarysaim,castle_holding,initial,sampled,1938,placed,122,Elemetar,no,no
-c_surkazar,b_saradush,castle_holding,initial,capital_position,4584,placed,130,Surkazar,yes,no
-c_surkazar,b_colbertann,city_holding,initial,port_position,4018,placed,130,Surkazar,no,no
+c_surkazar,b_saradush,castle_holding,initial,capital_position,4679,placed,130,Surkazar,yes,no
+c_surkazar,b_colbertann,city_holding,initial,port_position,4138,placed,130,Surkazar,no,no
 c_surkazar,b_spires_against_the_stars,church_holding,initial,sampled,3300,placed,130,Surkazar,no,no
-c_alonmarch,b_barakmordin,city_holding,initial,capital_position,4186,placed,129,Alonmarch,yes,no
+c_alonmarch,b_barakmordin,city_holding,initial,capital_position,4157,placed,129,Alonmarch,yes,no
 c_alonmarch,b_st_teresa,church_holding,initial,sampled,2559,placed,129,Alonmarch,no,no
-c_alonmarch,b_thrynnars_hold,castle_holding,initial,sampled,2643,placed,129,Alonmarch,no,no
+c_alonmarch,b_thrynnars_hold,castle_holding,initial,sampled,2731,placed,129,Alonmarch,no,no
 c_clovis_fields,b_clovis_fields,castle_holding,initial,capital_position,2675,placed,128,Clovis Fields,yes,no
 c_clovis_fields,b_ezzagard,city_holding,initial,port_position,1672,placed,128,Clovis Fields,no,no
 c_shalanar,b_khlarsamryn,castle_holding,initial,capital_position,4903,placed,164,Shalanar,yes,no
@@ -2771,15 +2771,15 @@ c_moonglade,b_eldaths_gate,church_holding,initial,sampled,2018,placed,158,Moongl
 c_nymphwood,b_nymphwood,tribal_holding,initial,capital_position,8520,placed,1715,Nymphwood,yes,no
 c_mytharan_woods,b_myth_rhynn,castle_holding,initial,capital_position,6961,placed,138,Mytharan Woods,yes,no
 c_mytharan_woods,b_cairn_wheel,city_holding,initial,port_position,3289,placed,138,Mytharan Woods,no,no
-c_kalmins_grove,b_kalmins_grove,castle_holding,initial,capital_position,1805,placed,1164,Kalmins Grove,yes,no
+c_kalmins_grove,b_kalmins_grove,castle_holding,initial,capital_position,1873,placed,1164,Kalmins Grove,yes,no
 c_kalmins_grove,b_old_oak_dell,city_holding,initial,port_position,1963,placed,1164,Kalmins Grove,no,no
-c_kalmins_grove,b_hunters_tree,church_holding,initial,sampled,1779,placed,1164,Kalmins Grove,no,no
-c_the_shield,b_council_glade,castle_holding,initial,capital_position,4556,placed,157,The Shield,yes,no
+c_kalmins_grove,b_hunters_tree,church_holding,initial,sampled,1848,placed,1164,Kalmins Grove,no,no
+c_the_shield,b_council_glade,castle_holding,initial,capital_position,4573,placed,157,The Shield,yes,no
 c_the_shield,b_tall_trees,city_holding,initial,port_position,2178,placed,157,The Shield,no,no
-c_ust_natha,b_ust_natha,castle_holding,initial,capital_position,0,demoted,2507,Ust Natha,yes,no
-c_ust_natha,b_baenth,city_holding,initial,port_position,761,placed,2507,Ust Natha,no,no
-c_ust_natha,b_ichein,church_holding,initial,sampled,715,placed,2507,Ust Natha,no,no
-c_thargill,b_thargill,tribal_holding,initial,capital_position,816,placed,2588,Thargill,yes,no
+c_ust_natha,b_ust_natha,castle_holding,initial,capital_position,830,placed,2507,Ust Natha,yes,no
+c_ust_natha,b_baenth,city_holding,initial,port_position,0,demoted,2507,Ust Natha,no,no
+c_ust_natha,b_ichein,church_holding,initial,sampled,793,placed,2507,Ust Natha,no,no
+c_thargill,b_thargill,tribal_holding,initial,capital_position,839,placed,2588,Thargill,yes,no
 c_ruathym,b_ruathym,castle_holding,initial,capital_position,3191,placed,224,Ruathym,yes,no
 c_ruathym,b_holgerstead,city_holding,initial,port_position,1845,placed,224,Ruathym,no,no
 c_ruathym,b_hastor,church_holding,initial,sampled,0,demoted,224,Ruathym,no,no
@@ -2952,7 +2952,7 @@ c_tilbrand,b_tilbrand,city_holding,initial,capital_position,3204,placed,1053,Til
 c_tilbrand,b_ritherhithe,castle_holding,initial,sampled,2127,placed,1053,Tilbrand,no,no
 c_nethra,b_nethra,castle_holding,initial,capital_position,1396,placed,2495,Nethra,yes,no
 c_nethra,b_teth,city_holding,initial,port_position,1651,placed,2495,Nethra,no,no
-c_umber_marsh,b_autumant,tribal_holding,initial,capital_position,3819,placed,1014,Umber Marsh,yes,no
+c_umber_marsh,b_autumant,tribal_holding,initial,capital_position,3923,placed,1014,Umber Marsh,yes,no
 c_cimbar,b_palace_of_the_sceptanar,castle_holding,initial,capital_position,2396,placed,579,Cimbar,yes,no
 c_cimbar,b_old_cimbar,church_holding,initial,sampled,744,placed,579,Cimbar,no,no
 c_cimbar,b_new_cimbar,city_holding,initial,port_position,638,placed,579,Cimbar,no,no
@@ -3019,46 +3019,46 @@ c_trollbark_forest,b_fiddlers_pass,city_holding,523.1.1,port_position,2312,place
 c_trollbark_forest,b_banshee_woods,church_holding,523.1.1,sampled,2271,placed,58,Trollbark Forest,no,no
 c_orbedal,b_orbedal_tower,castle_holding,initial,capital_position,1313,placed,1696,Orbedal,yes,no
 c_misty_forest,b_altand,tribal_holding,initial,capital_position,3035,placed,385,Misty Forest,yes,no
-c_misty_forest,b_elderstone,city_holding,initial,port_position,3250,placed,385,Misty Forest,no,no
-c_eldaths_water,b_eldaths_water,tribal_holding,initial,capital_position,5322,placed,1707,Eldaths Water,yes,no
-c_evereska,b_cloudcrown,castle_holding,initial,capital_position,889,placed,112,Evereska,yes,no
-c_evereska,b_evereska,city_holding,initial,port_position,1046,placed,112,Evereska,no,no
-c_evereska,b_shaeradim,castle_holding,initial,sampled,1126,placed,112,Evereska,no,no
-c_evereska,b_the_sisters,city_holding,initial,sampled,873,placed,112,Evereska,no,no
-c_evereska,b_fountainheart_of_shimmering_gold,church_holding,initial,sampled,958,placed,112,Evereska,no,no
-c_greycloak_hills,b_greyhome,castle_holding,initial,capital_position,3650,placed,113,Greycloak Hills,yes,no
-c_greycloak_hills,b_halfway_inn,city_holding,1335.1.1,port_position,1751,placed,113,Greycloak Hills,no,no
+c_misty_forest,b_elderstone,city_holding,initial,port_position,3409,placed,385,Misty Forest,no,no
+c_eldaths_water,b_eldaths_water,tribal_holding,initial,capital_position,5463,placed,1707,Eldaths Water,yes,no
+c_evereska,b_cloudcrown,castle_holding,initial,capital_position,903,placed,112,Evereska,yes,no
+c_evereska,b_evereska,city_holding,initial,port_position,1114,placed,112,Evereska,no,no
+c_evereska,b_shaeradim,castle_holding,initial,sampled,1148,placed,112,Evereska,no,no
+c_evereska,b_the_sisters,city_holding,initial,sampled,1082,placed,112,Evereska,no,no
+c_evereska,b_fountainheart_of_shimmering_gold,church_holding,initial,sampled,995,placed,112,Evereska,no,no
+c_greycloak_hills,b_greyhome,castle_holding,initial,capital_position,3677,placed,113,Greycloak Hills,yes,no
+c_greycloak_hills,b_halfway_inn,city_holding,1335.1.1,port_position,1757,placed,113,Greycloak Hills,no,no
 c_najara,b_ssthartissssum,castle_holding,initial,capital_position,12471,placed,101,Najara,yes,no
 c_yarthrain,b_yarthrain,tribal_holding,initial,capital_position,10875,placed,96,Yarthrain,yes,no
 c_forest_of_wyrms,b_serpents_cowl,tribal_holding,initial,capital_position,9807,placed,102,Forest of Wyrms,yes,no
-c_serpent_hills,b_sskhanaja,tribal_holding,initial,capital_position,13199,placed,97,Serpent Hills,yes,no
+c_serpent_hills,b_sskhanaja,tribal_holding,initial,capital_position,13306,placed,97,Serpent Hills,yes,no
 c_chelimber,b_dunkapple_castle,castle_holding,initial,capital_position,12928,placed,111,Chelimber,yes,no
 c_serpents_tail,b_kasidikals_keep,castle_holding,initial,capital_position,7241,placed,1215,Serpents Tail,yes,no
 c_lonely_moor,b_aumvors_castle,castle_holding,initial,capital_position,8029,placed,109,Lonely Moor,yes,no
 c_forgotten_forest,b_oaksong_tower,tribal_holding,initial,capital_position,4364,placed,110,Forgotten Forest,yes,no
 c_battle_of_bones,b_keep_of_pale_night,castle_holding,initial,capital_position,4421,placed,1238,Battle of Bones,yes,no
-c_pelleors_prairie,b_gavelstone,tribal_holding,initial,capital_position,13116,placed,114,Pelleors Prairie,yes,no
+c_pelleors_prairie,b_gavelstone,tribal_holding,initial,capital_position,13131,placed,114,Pelleors Prairie,yes,no
 c_well_of_dragons,b_well_of_dragons,city_holding,1385.1.1,capital_position,3016,placed,115,Well of Dragons,yes,yes
 c_well_of_dragons,b_lady_dove,castle_holding,initial,sampled,1971,placed,115,Well of Dragons,no,no
 c_well_of_dragons,b_skull_gorge,church_holding,1481.1.1,sampled,2435,placed,115,Well of Dragons,no,yes
 c_endar_aglandtor,b_endar_aglandtor,church_holding,initial,capital_position,5872,placed,1708,Endar Aglandtor,yes,no
 c_endar_aglandtor,b_mansfield,castle_holding,initial,sampled,2953,placed,1708,Endar Aglandtor,no,no
-c_dragonspear,b_dragonspear_castle,church_holding,initial,capital_position,10491,placed,6,Dragonspear,yes,no
+c_dragonspear,b_dragonspear_castle,church_holding,initial,capital_position,10517,placed,6,Dragonspear,yes,no
 c_the_tradeway,b_the_way_inn,city_holding,initial,capital_position,10232,placed,1404,The Tradeway,yes,no
-c_ebenfar,b_ebenfar,tribal_holding,initial,capital_position,6715,placed,68,Ebenfar,yes,no
-c_ebenfar,b_hark,city_holding,initial,port_position,2558,placed,68,Ebenfar,no,no
+c_ebenfar,b_ebenfar,tribal_holding,initial,capital_position,6773,placed,68,Ebenfar,yes,no
+c_ebenfar,b_hark,city_holding,initial,port_position,2685,placed,68,Ebenfar,no,no
 c_hammer_hall,b_hammer_hall,castle_holding,initial,capital_position,5491,placed,98,Hammer Hall,yes,no
-c_the_rockshaws,b_greenleaf_vale,tribal_holding,initial,capital_position,6987,placed,99,The Rockshaws,yes,no
-c_westfells,b_mistfells,tribal_holding,initial,capital_position,9207,placed,2439,Westfells,yes,no
+c_the_rockshaws,b_greenleaf_vale,tribal_holding,initial,capital_position,7017,placed,99,The Rockshaws,yes,no
+c_westfells,b_mistfells,tribal_holding,initial,capital_position,9352,placed,2439,Westfells,yes,no
 c_orogoth,b_orogoth,castle_holding,initial,capital_position,8706,placed,1706,Orogoth,yes,no
 c_llorkh,b_llorkh,city_holding,initial,capital_position,4411,placed,104,Llorkh,yes,no
 c_llorkh,b_iron_hill,castle_holding,initial,sampled,2534,placed,104,Llorkh,no,no
 c_dawn_pass,b_parnast,city_holding,initial,capital_position,3132,placed,1151,Dawn Pass,yes,no
 c_dawn_pass,b_dawn_pass,castle_holding,initial,sampled,1600,placed,1151,Dawn Pass,no,no
 c_loudwater,b_loudwater,city_holding,initial,capital_position,973,placed,54,Loudwater,yes,no
-c_loudwater,b_kauth,castle_holding,1100.1.1,sampled,1436,placed,54,Loudwater,no,no
+c_loudwater,b_kauth,castle_holding,1100.1.1,sampled,1447,placed,54,Loudwater,no,no
 c_loudwater,b_veltienorethal,church_holding,1100.1.1,sampled,803,placed,54,Loudwater,no,no
-c_southwood,b_highluthholt,tribal_holding,initial,capital_position,9755,placed,60,Southwood,yes,no
+c_southwood,b_highluthholt,tribal_holding,initial,capital_position,9924,placed,60,Southwood,yes,no
 c_secomber,b_undarls_tower,castle_holding,initial,capital_position,2239,placed,7,Secomber,yes,no
 c_secomber,b_secomber,city_holding,initial,port_position,2382,placed,7,Secomber,no,no
 c_uluvin,b_uluvin,castle_holding,initial,capital_position,3161,placed,24,Uluvin,yes,no
@@ -3073,25 +3073,25 @@ c_yenching,b_shaozuishan,city_holding,initial,port_position,4442,placed,1302,Yen
 c_yenching,b_mianqihar,church_holding,initial,sampled,6805,placed,1302,Yenching,no,no
 c_yenching,b_pude,castle_holding,initial,sampled,3321,placed,1302,Yenching,no,no
 c_fields_of_salt,b_tonglish,tribal_holding,initial,capital_position,39966,placed,1395,Fields of Salt,yes,no
-c_lo_tu,b_lo_tu,castle_holding,initial,capital_position,15116,placed,810,Lo Tu,yes,no
-c_lo_tu,b_zoachong,city_holding,initial,port_position,9705,placed,810,Lo Tu,no,no
-c_lo_tu,b_xumay,church_holding,initial,sampled,12767,placed,810,Lo Tu,no,no
+c_lo_tu,b_lo_tu,castle_holding,initial,capital_position,15783,placed,810,Lo Tu,yes,no
+c_lo_tu,b_zoachong,city_holding,initial,port_position,9954,placed,810,Lo Tu,no,no
+c_lo_tu,b_xumay,church_holding,initial,sampled,12946,placed,810,Lo Tu,no,no
 c_ochre_hills,b_qugong,church_holding,initial,capital_position,34692,placed,1303,Ochre Hills,yes,no
 c_sorghum_fields,b_lo_pan,castle_holding,initial,capital_position,28951,placed,1304,Sorghum Fields,yes,no
 c_sorghum_fields,b_xinhai,city_holding,initial,port_position,8892,placed,1304,Sorghum Fields,no,no
-c_jade_gate,b_jade_gate,castle_holding,initial,capital_position,7938,placed,1337,Jade Gate,yes,no
+c_jade_gate,b_jade_gate,castle_holding,initial,capital_position,8483,placed,1337,Jade Gate,yes,no
 c_jade_gate,b_panchun,city_holding,initial,port_position,3955,placed,1337,Jade Gate,no,no
-c_shanshu,b_shanshu,castle_holding,initial,capital_position,46060,placed,1305,Shanshu,yes,no
+c_shanshu,b_shanshu,castle_holding,initial,capital_position,46946,placed,1305,Shanshu,yes,no
 c_shanshu,b_xuanchai,city_holding,initial,port_position,18400,placed,1305,Shanshu,no,no
-c_suzhai,b_suzhai,castle_holding,initial,capital_position,28837,placed,1346,Suzhai,yes,no
-c_zoahua,b_zoahua,castle_holding,initial,capital_position,29913,placed,1307,Zoahua,yes,no
-c_zoahua,b_jiaoyang,city_holding,initial,port_position,14566,placed,1307,Zoahua,no,no
+c_suzhai,b_suzhai,castle_holding,initial,capital_position,29784,placed,1346,Suzhai,yes,no
+c_zoahua,b_zoahua,castle_holding,initial,capital_position,31813,placed,1307,Zoahua,yes,no
+c_zoahua,b_jiaoyang,city_holding,initial,port_position,14890,placed,1307,Zoahua,no,no
 c_minlow,b_minlow,castle_holding,initial,capital_position,5628,placed,2484,Minlow,yes,no
 c_minlow,b_tangqihar,city_holding,initial,port_position,3535,placed,2484,Minlow,no,no
 c_minlow,b_edgeforest,church_holding,initial,sampled,3067,placed,2484,Minlow,no,no
 c_guihar,b_guihar,tribal_holding,initial,capital_position,24131,placed,2479,Guihar,yes,no
-c_east_rendai,b_yuanqihar,castle_holding,initial,capital_position,17526,placed,2332,East Rendai,yes,no
-c_east_rendai,b_shanshan,city_holding,initial,port_position,10371,placed,2332,East Rendai,no,no
+c_east_rendai,b_yuanqihar,castle_holding,initial,capital_position,17787,placed,2332,East Rendai,yes,no
+c_east_rendai,b_shanshan,city_holding,initial,port_position,10919,placed,2332,East Rendai,no,no
 c_east_rendai,b_tengcheng,church_holding,initial,sampled,8373,placed,2332,East Rendai,no,no
 c_middle_rendai,b_shengyi,tribal_holding,initial,capital_position,25932,placed,1139,Middle Rendai,yes,no
 c_west_rendai,b_tongwei,tribal_holding,initial,capital_position,38431,placed,1306,West Rendai,yes,no
@@ -3148,31 +3148,31 @@ c_nanxun,b_yueh,city_holding,initial,port_position,12315,placed,1311,Nanxun,no,n
 c_sky_fields,b_jiaoguan,castle_holding,initial,capital_position,12177,placed,1309,Sky Fields,yes,no
 c_sky_fields,b_sharbei,city_holding,initial,port_position,6038,placed,1309,Sky Fields,no,no
 c_sky_fields,b_changzhou,church_holding,initial,sampled,6412,placed,1309,Sky Fields,no,no
-c_yellow_serpent,b_jingong,castle_holding,initial,capital_position,12465,placed,815,Yellow Serpent,yes,no
-c_qinyi,b_qinyi,castle_holding,initial,capital_position,18711,placed,1766,Qinyi,yes,no
-c_hame,b_hame,castle_holding,initial,capital_position,26341,placed,1765,Hame,yes,no
-c_chao_yang,b_chao_yang,castle_holding,initial,capital_position,12403,placed,1343,Chao Yang,yes,no
-c_chao_yang,b_yincha,city_holding,initial,port_position,15634,placed,1343,Chao Yang,no,no
-c_chao_yang,b_jiaxian,church_holding,initial,sampled,10585,placed,1343,Chao Yang,no,no
-c_west_road,b_qingliang,castle_holding,initial,capital_position,26439,placed,1308,West Road,yes,no
-c_west_road,b_guangtou,city_holding,initial,port_position,12135,placed,1308,West Road,no,no
-c_loulan,b_loulan,castle_holding,initial,capital_position,18067,placed,1345,Loulan,yes,no
-c_loulan,b_putai,city_holding,initial,port_position,8036,placed,1345,Loulan,no,no
-c_loulan,b_suizhou,church_holding,initial,sampled,9259,placed,1345,Loulan,no,no
-c_taotie,b_jinchou,castle_holding,initial,capital_position,20202,placed,1382,Taotie,yes,no
-c_taotie,b_guanghai,city_holding,initial,port_position,8398,placed,1382,Taotie,no,no
+c_yellow_serpent,b_jingong,castle_holding,initial,capital_position,13564,placed,815,Yellow Serpent,yes,no
+c_qinyi,b_qinyi,castle_holding,initial,capital_position,19373,placed,1766,Qinyi,yes,no
+c_hame,b_hame,castle_holding,initial,capital_position,26367,placed,1765,Hame,yes,no
+c_chao_yang,b_chao_yang,castle_holding,initial,capital_position,13035,placed,1343,Chao Yang,yes,no
+c_chao_yang,b_yincha,city_holding,initial,port_position,16072,placed,1343,Chao Yang,no,no
+c_chao_yang,b_jiaxian,church_holding,initial,sampled,10880,placed,1343,Chao Yang,no,no
+c_west_road,b_qingliang,castle_holding,initial,capital_position,27543,placed,1308,West Road,yes,no
+c_west_road,b_guangtou,city_holding,initial,port_position,12621,placed,1308,West Road,no,no
+c_loulan,b_loulan,castle_holding,initial,capital_position,18494,placed,1345,Loulan,yes,no
+c_loulan,b_putai,city_holding,initial,port_position,8319,placed,1345,Loulan,no,no
+c_loulan,b_suizhou,church_holding,initial,sampled,9412,placed,1345,Loulan,no,no
+c_taotie,b_jinchou,castle_holding,initial,capital_position,21867,placed,1382,Taotie,yes,no
+c_taotie,b_guanghai,city_holding,initial,port_position,9030,placed,1382,Taotie,no,no
 c_fukiow,b_fukiow,castle_holding,initial,capital_position,13681,placed,1381,Fukiow,yes,no
 c_fukiow,b_donggyi,city_holding,initial,port_position,10364,placed,1381,Fukiow,no,no
 c_kuo_meilan,b_kuo_meilan,castle_holding,initial,capital_position,28168,placed,1695,Kuo Meilan,yes,no
-c_delliun,b_delliun,castle_holding,initial,capital_position,21862,placed,2346,Delliun,yes,no
+c_delliun,b_delliun,castle_holding,initial,capital_position,23235,placed,2346,Delliun,yes,no
 c_delliun,b_pingliang,church_holding,initial,sampled,5317,placed,2346,Delliun,no,no
 c_delliun,b_darkvale,city_holding,initial,port_position,6356,placed,2346,Delliun,no,no
-c_generals_stand,b_ermani,tribal_holding,initial,capital_position,8411,placed,1313,Generals Stand,yes,no
-c_kuang_chu_road,b_zhouramay,castle_holding,initial,capital_position,27385,placed,1344,Kuang Chu Road,yes,no
+c_generals_stand,b_ermani,tribal_holding,initial,capital_position,9107,placed,1313,Generals Stand,yes,no
+c_kuang_chu_road,b_zhouramay,castle_holding,initial,capital_position,27444,placed,1344,Kuang Chu Road,yes,no
 c_kuang_chu_road,b_shanchun,city_holding,initial,port_position,8010,placed,1344,Kuang Chu Road,no,no
 c_kangste,b_kangste,castle_holding,initial,capital_position,34396,placed,1378,Kangste,yes,no
 c_kangste,b_anzhoun,city_holding,initial,port_position,11818,placed,1378,Kangste,no,no
-c_qudao,b_qudao,tribal_holding,initial,capital_position,29400,placed,1315,Qudao,yes,no
+c_qudao,b_qudao,tribal_holding,initial,capital_position,29938,placed,1315,Qudao,yes,no
 c_kai_shan,b_kai_shan,city_holding,initial,capital_position,5646,placed,1364,Kai Shan,yes,no
 c_kai_shan,b_qinggong,castle_holding,initial,sampled,5307,placed,1364,Kai Shan,no,no
 c_kai_shan,b_donghua,church_holding,initial,sampled,3952,placed,1364,Kai Shan,no,no
@@ -3246,9 +3246,9 @@ c_iceroot_forest,b_bura,tribal_holding,initial,capital_position,24797,placed,855
 c_bulangalant,b_bulangalant,tribal_holding,initial,capital_position,22103,placed,857,Bulangalant,yes,no
 c_shirc,b_shirc,tribal_holding,initial,capital_position,16883,placed,856,Shirc,yes,no
 c_banda,b_banda,tribal_holding,initial,capital_position,46889,placed,887,Banda,yes,no
-c_bitter_well,b_charig,tribal_holding,initial,capital_position,34676,placed,891,Bitter Well,yes,no
+c_bitter_well,b_charig,tribal_holding,initial,capital_position,35635,placed,891,Bitter Well,yes,no
 c_horseshoe_oasis,b_bogon,church_holding,initial,capital_position,57890,placed,888,Horseshoe Oasis,yes,no
-c_nagoo,b_nagoo,tribal_holding,initial,capital_position,43825,placed,876,Nagoo,yes,no
+c_nagoo,b_nagoo,tribal_holding,initial,capital_position,45948,placed,876,Nagoo,yes,no
 c_tatanulgts,b_tatanulgts,tribal_holding,initial,capital_position,32176,placed,889,Tatanulgts,yes,no
 c_ansi,b_ansi,city_holding,initial,capital_position,49723,placed,877,Ansi,yes,no
 c_bara,b_bara,tribal_holding,initial,capital_position,36800,placed,893,Bara,yes,no
@@ -3260,7 +3260,7 @@ c_quaraqand,b_quaraqand,city_holding,initial,capital_position,18524,placed,1272,
 c_thunder_hills,b_zoachang,tribal_holding,initial,capital_position,34686,placed,1380,Thunder Hills,yes,no
 c_kwachow,b_kwachow,castle_holding,initial,capital_position,6161,placed,1317,Kwachow,yes,no
 c_nagai_terrace,b_nagai,tribal_holding,initial,capital_position,11050,placed,1318,Nagai Terrace,yes,no
-c_taikho_gaze,b_taikho,tribal_holding,initial,capital_position,23055,placed,1316,Taikho Gaze,yes,no
+c_taikho_gaze,b_taikho,tribal_holding,initial,capital_position,24112,placed,1316,Taikho Gaze,yes,no
 c_yohun_fields,b_yohun,tribal_holding,initial,capital_position,4801,placed,1319,Yohun Fields,yes,no
 c_hulan,b_hulan,tribal_holding,initial,capital_position,23010,placed,1314,Hulan,yes,no
 c_banai,b_banai,tribal_holding,initial,capital_position,30834,placed,1279,Banai,yes,no
@@ -3713,7 +3713,7 @@ c_mergu_saah,b_madirah,tribal_holding,initial,capital_position,1070,placed,2163,
 c_jezarh_mah_alewd,b_amudani,tribal_holding,initial,capital_position,1023,placed,2162,Jezarh Mah Alewd,yes,no
 c_serzeman_bamar,b_al_salakamah,tribal_holding,initial,capital_position,991,placed,1535,Serzeman Bamar,yes,no
 c_jezarh_restakhaz,b_karza,tribal_holding,initial,capital_position,1648,placed,2164,Jezarh Restakhaz,yes,no
-c_menzoberranzan,b_quellarzorl,castle_holding,initial,capital_position,579,placed,2493,Menzoberranzan,yes,no
+c_menzoberranzan,b_quellarzorl,castle_holding,initial,capital_position,778,placed,2493,Menzoberranzan,yes,no
 c_menzoberranzan,b_eastmyr,city_holding,initial,,0,demoted,2493,Menzoberranzan,no,no
 c_menzoberranzan,b_duthcloim,church_holding,initial,,0,demoted,2493,Menzoberranzan,no,no
 c_menzoberranzan,b_narbondellyn,city_holding,initial,,0,demoted,2493,Menzoberranzan,no,no
@@ -3721,23 +3721,23 @@ c_menzoberranzan,b_west_wall,castle_holding,initial,,0,demoted,2493,Menzoberranz
 c_ched_nasad,b_ched_nasad,castle_holding,initial,capital_position,1090,placed,2503,Ched Nasad,yes,no
 c_ched_nasad,b_rhomdal,city_holding,initial,port_position,0,demoted,2503,Ched Nasad,no,no
 c_ched_nasad,b_argith,church_holding,initial,,0,demoted,2503,Ched Nasad,no,no
-c_bauthwaf,b_the_mantle,castle_holding,initial,capital_position,903,placed,2494,Bauthwaf,yes,no
+c_bauthwaf,b_the_mantle,castle_holding,initial,capital_position,922,placed,2494,Bauthwaf,yes,no
 c_bauthwaf,b_filarran,church_holding,initial,sampled,0,demoted,2494,Bauthwaf,no,no
 c_bauthwaf,b_quiet_doom,city_holding,initial,,0,demoted,2494,Bauthwaf,no,no
 c_mt_hotenow,b_glaurimm_keep,castle_holding,initial,capital_position,1357,placed,306,Mt. Hotenow,yes,no
 c_mt_hotenow,b_gauntlgrym,castle_holding,114.1.1,sampled,1125,placed,306,Mt. Hotenow,no,no
-c_gracklstugh,b_gracklstugh,castle_holding,initial,capital_position,918,placed,2502,Gracklstugh,yes,no
-c_gracklstugh,b_northfurrow,city_holding,initial,port_position,0,demoted,2502,Gracklstugh,no,no
+c_gracklstugh,b_gracklstugh,castle_holding,initial,capital_position,643,placed,2502,Gracklstugh,yes,no
+c_gracklstugh,b_northfurrow,city_holding,initial,port_position,483,placed,2502,Gracklstugh,no,no
 c_gracklstugh,b_southfurrow,church_holding,initial,,0,demoted,2502,Gracklstugh,no,no
-c_eryndlyn,b_eryndlyn,castle_holding,initial,capital_position,935,placed,2443,Eryndlyn,yes,no
-c_eryndlyn,b_five_pillars,city_holding,initial,port_position,453,placed,2443,Eryndlyn,no,no
-c_kanaglym,b_kanaglym,castle_holding,initial,capital_position,866,placed,2445,Kanaglym,yes,no
-c_kanaglym,b_nepenthe_basin,city_holding,initial,port_position,773,placed,2445,Kanaglym,no,no
-c_kanaglym,b_hunnabar,church_holding,initial,sampled,760,placed,2445,Kanaglym,no,no
+c_eryndlyn,b_eryndlyn,castle_holding,initial,capital_position,1083,placed,2443,Eryndlyn,yes,no
+c_eryndlyn,b_five_pillars,city_holding,initial,port_position,535,placed,2443,Eryndlyn,no,no
+c_kanaglym,b_kanaglym,castle_holding,initial,capital_position,1011,placed,2445,Kanaglym,yes,no
+c_kanaglym,b_nepenthe_basin,city_holding,initial,port_position,811,placed,2445,Kanaglym,no,no
+c_kanaglym,b_hunnabar,church_holding,initial,sampled,833,placed,2445,Kanaglym,no,no
 c_dolblunde,b_dolblunde,tribal_holding,initial,capital_position,568,placed,2241,Dolblunde,yes,no
-c_splendarrmornn,b_adamantine_palace,castle_holding,initial,capital_position,701,placed,2441,Splendarrmornn,yes,no
+c_splendarrmornn,b_adamantine_palace,castle_holding,initial,capital_position,717,placed,2441,Splendarrmornn,yes,no
 c_splendarrmornn,b_splendarrmornn,castle_holding,initial,sampled,745,placed,2441,Splendarrmornn,no,no
-c_splendarrmornn,b_westdelve,church_holding,initial,sampled,400,placed,2441,Splendarrmornn,no,no
+c_splendarrmornn,b_westdelve,church_holding,initial,sampled,439,placed,2441,Splendarrmornn,no,no
 c_loagrann,b_deadstone_cleft,tribal_holding,initial,capital_position,3101,placed,1408,Loagrann,yes,no
 c_loagrann,b_orlbar,city_holding,1348.1.1,port_position,1374,placed,1408,Loagrann,no,no
 c_east_keep,b_east_keep,castle_holding,initial,capital_position,751,placed,2474,East Keep,yes,no
@@ -3783,9 +3783,9 @@ c_khaelud,b_khaelud,castle_holding,initial,capital_position,762,placed,2522,Khae
 c_khaelud,b_thordenak,city_holding,initial,port_position,485,placed,2522,Khaelud,no,no
 c_khaelud,b_axebite,church_holding,initial,sampled,0,demoted,2522,Khaelud,no,no
 c_traaskl_thorog,b_traaskl_thorog,tribal_holding,initial,capital_position,3161,placed,2549,Traaskl Thorog,yes,no
-c_deep_imaskar,b_planners_citadel,castle_holding,initial,capital_position,1539,placed,2558,Deep Imaskar,yes,no
-c_deep_imaskar,b_deep_imaskar,city_holding,initial,port_position,1652,placed,2558,Deep Imaskar,no,no
-c_deep_imaskar,b_purple_library,church_holding,initial,sampled,603,placed,2558,Deep Imaskar,no,no
+c_deep_imaskar,b_planners_citadel,castle_holding,initial,capital_position,1646,placed,2558,Deep Imaskar,yes,no
+c_deep_imaskar,b_deep_imaskar,city_holding,initial,port_position,1850,placed,2558,Deep Imaskar,no,no
+c_deep_imaskar,b_purple_library,church_holding,initial,sampled,684,placed,2558,Deep Imaskar,no,no
 c_qarlondrar,b_qarlondrar,castle_holding,initial,capital_position,2107,placed,2518,Qarlondrar,yes,no
 c_qarlondrar,b_cave_of_sighs,city_holding,initial,port_position,1638,placed,2518,Qarlondrar,no,no
 c_qarlondrar,b_gorfaern,church_holding,initial,sampled,1493,placed,2518,Qarlondrar,no,no
@@ -3810,14 +3810,14 @@ c_harheldur,b_harheldur,castle_holding,initial,capital_position,709,placed,2519,
 c_harheldur,b_mordinsonn,city_holding,initial,port_position,803,placed,2519,Harheldur,no,no
 c_harheldur,b_firedelves,church_holding,initial,sampled,531,placed,2519,Harheldur,no,no
 c_thazar_pass,b_thazar_pass,castle_holding,initial,capital_position,2072,placed,2570,Thazar Pass,yes,no
-c_maerimydra,b_castle_maerimydra,castle_holding,initial,capital_position,1019,placed,2450,Maerimydra,yes,no
+c_maerimydra,b_castle_maerimydra,castle_holding,initial,capital_position,1179,placed,2450,Maerimydra,yes,no
 c_maerimydra,b_maerimydra,city_holding,initial,port_position,0,demoted,2450,Maerimydra,no,no
 c_maerimydra,b_courtyard_of_lolth,church_holding,initial,,0,demoted,2450,Maerimydra,no,no
-c_zanhoriloch,b_castle_zanhoriloch,castle_holding,initial,capital_position,864,placed,2451,Zanhoriloch,yes,no
+c_zanhoriloch,b_castle_zanhoriloch,castle_holding,initial,capital_position,914,placed,2451,Zanhoriloch,yes,no
 c_zanhoriloch,b_zanhoriloch,city_holding,initial,port_position,0,demoted,2451,Zanhoriloch,no,no
-c_zanhoriloch,b_mhorilot,church_holding,initial,sampled,462,placed,2451,Zanhoriloch,no,no
+c_zanhoriloch,b_mhorilot,church_holding,initial,sampled,522,placed,2451,Zanhoriloch,no,no
 c_szith_morcane,b_szith_morcane,church_holding,initial,capital_position,1184,placed,2628,Szith Morcane,yes,no
-c_sschindylryn,b_house_of_lolth,church_holding,initial,capital_position,902,placed,2557,Sschindylryn,yes,no
+c_sschindylryn,b_house_of_lolth,church_holding,initial,capital_position,967,placed,2557,Sschindylryn,yes,no
 c_sschindylryn,b_high_houses,city_holding,initial,port_position,0,demoted,2557,Sschindylryn,no,no
 c_sschindylryn,b_gatehouses,castle_holding,initial,,0,demoted,2557,Sschindylryn,no,no
 c_thunderholme,b_thunderholme,castle_holding,initial,capital_position,879,placed,2463,Thunderholme,yes,no
@@ -3840,19 +3840,19 @@ c_iltkazar,b_iltkazar,castle_holding,initial,sampled,771,placed,2594,Iltkazar,ye
 c_iltkazar,b_mith_baraks_hall,city_holding,initial,sampled,640,placed,2594,Iltkazar,no,no
 c_mount_sarengard,b_sarengard_keep,castle_holding,initial,capital_position,1811,placed,2440,Mount Sarengard,yes,no
 c_mount_sarengard,b_vault_of_cloaked_midnight,church_holding,1320.1.1,sampled,974,placed,2440,Mount Sarengard,no,no
-c_brightaxe_hall,b_brightaxe_hall,castle_holding,initial,sampled,734,placed,2652,Brightaxe Hall,yes,no
-c_guallidurth,b_guallidurth,castle_holding,initial,sampled,859,placed,2651,Guallidurth,yes,no
-c_guallidurth,b_rringlor_north,city_holding,initial,sampled,0,demoted,2651,Guallidurth,no,no
-c_undermountain,b_the_mad_wizards_lair,castle_holding,302.1.1,sampled,795,placed,2694,Undermountain,yes,no
-c_undermountain,b_the_dungeon_level,city_holding,initial,,0,demoted,2694,Undermountain,no,no
+c_brightaxe_hall,b_brightaxe_hall,castle_holding,initial,sampled,840,placed,2652,Brightaxe Hall,yes,no
+c_guallidurth,b_guallidurth,castle_holding,initial,sampled,569,placed,2651,Guallidurth,yes,no
+c_guallidurth,b_rringlor_north,city_holding,initial,sampled,552,placed,2651,Guallidurth,no,no
+c_undermountain,b_the_mad_wizards_lair,castle_holding,302.1.1,sampled,830,placed,2694,Undermountain,yes,no
+c_undermountain,b_the_dungeon_level,city_holding,initial,sampled,0,demoted,2694,Undermountain,no,no
 c_undermountain,b_arcane_chambers,castle_holding,initial,,0,demoted,2694,Undermountain,no,no
 c_undermountain,b_twisted_caverns,church_holding,initial,,0,demoted,2694,Undermountain,no,no
-c_lair_of_the_eye,b_lair_of_the_eye,city_holding,initial,sampled,643,placed,2697,Lair of the Eye,yes,no
+c_lair_of_the_eye,b_lair_of_the_eye,city_holding,initial,sampled,765,placed,2697,Lair of the Eye,yes,no
 c_lair_of_the_eye,b_the_sewers_of_waterdeep,castle_holding,initial,,0,demoted,2697,Lair of the Eye,no,no
-c_skullport,b_the_port,city_holding,initial,sampled,417,placed,2696,Skullport,yes,no
+c_skullport,b_the_port,city_holding,initial,sampled,453,placed,2696,Skullport,yes,no
 c_skullport,b_skull_island,castle_holding,initial,,0,demoted,2696,Skullport,no,no
 c_skullport,b_the_trade_lanes,city_holding,initial,,0,demoted,2696,Skullport,no,no
-c_sargauth,b_the_promenade,church_holding,initial,sampled,299,placed,2695,Sargauth,yes,no
+c_sargauth,b_the_promenade,church_holding,initial,sampled,349,placed,2695,Sargauth,yes,no
 c_sargauth,b_cavern_of_song,castle_holding,1355.1.1,,0,demoted,2695,Sargauth,no,no
 c_sargauth,b_pit_of_ghaunadaur,church_holding,302.1.1,,0,demoted,2695,Sargauth,no,no
 c_sargauth,b_trobriands_graveyard,castle_holding,1379.1.1,,0,demoted,2695,Sargauth,no,yes

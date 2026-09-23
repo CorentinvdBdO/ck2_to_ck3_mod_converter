@@ -106,6 +106,7 @@ def build_raster(
 
     keys = rgb_key(src_rgb)
     src_ids, undefined = _keys_to_ids(keys, colour_to_id)
+    src_ids = fill_undefined_lines(src_ids, keys)
     src_counts = _counts(src_ids)
 
     tgt = _resize_ids(src_ids, canvas)
@@ -212,6 +213,35 @@ def _smooth_edges(
         "p95_shift_px": float(stats["p95_px"]),
         "beyond_bound_px": float(stats["beyond_radius_px"]),
     }
+
+
+#: CK2's own "no province here" colour. Faerun paints its open ocean white
+#: (2,949,448 px, 21 % of the bitmap) and that stays padding ocean.
+UNPAINTED_KEY = 0xFFFFFF
+
+
+def fill_undefined_lines(src_ids: np.ndarray, keys: np.ndarray) -> np.ndarray:
+    """Give every undefined, non-white CK2 pixel its nearest province.
+
+    Faerun's `provinces.bmp` carries 16,786 pure-black pixels in 50 thin
+    components that `definition.csv` does not define (`verified` 2026-09-24).
+    They are drawn lines, not territory: around Thay they trace the plateau
+    escarpments. Sent to padding they became ocean inside the land, pinned to
+    CK3's global water level - the canyon rings every Thay playtest reported.
+    A drawn line has no owner of its own, so it takes the nearest defined
+    province (Euclidean); white stays padding.
+    """
+    lines = (src_ids == PADDING) & (keys != UNPAINTED_KEY)
+    if not lines.any():
+        return src_ids
+    from scipy import ndimage
+
+    _, (iy, ix) = ndimage.distance_transform_edt(
+        src_ids == PADDING, return_indices=True
+    )
+    out = src_ids.copy()
+    out[lines] = src_ids[iy[lines], ix[lines]]
+    return out
 
 
 def _keys_to_ids(

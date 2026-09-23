@@ -382,6 +382,52 @@ class HeightmapDetailConfig:
     #: Faerun's high-altitude CK2 lakes and river provinces
     #: (docs/step_map_heightmap.md §2f).
     coast_mode: str = "damp_detail"
+    #: pass 2 (§2h): scale the per-terrain amplitude by how rough the CK2
+    #: source *already is*, locally, relative to its own class's mean --
+    #: never above the class target (``1.0``), only down toward
+    #: ``source_adaptive_floor`` where the source is smoother than its class
+    #: average.  Without this, a terrain class's amplitude is a single
+    #: scalar applied everywhere in that class (``_relative_terrain_gain``),
+    #: so a gently-domed CK2 plateau a few hundred levels tall gets exactly
+    #: the same ridged mountain-scale texture as a real escarpment beside
+    #: it -- and because the ridged relief (§2g) is phase-locked to the
+    #: source's own drainage, that uniform amplitude is applied *coherently*
+    #: all the way around a closed basin the source only gently suggests,
+    #: turning it into a sharp, unbroken rampart no single-window bound (one
+    #: CK2 source pixel, §2f) ever sees, because every pixel individually
+    #: stays inside its own tolerance. ``docs/step_map_heightmap.md`` §2h.
+    source_adaptive_gain: bool = True
+    #: pass 2 (§2h): the window (canvas px) the local source roughness is
+    #: measured over.  9 = ~13 km: wide enough to separate "this pixel sits
+    #: on a real cliff" from "this pixel sits on a gentle rim", narrow
+    #: enough to still be inside the closed-depression scale the defect was
+    #: found at (27 px, docs/step_map_heightmap.md §2h).
+    source_adaptive_window_px: float = 9.0
+    #: pass 2 (§2h): the minimum fraction of the class amplitude a patch of
+    #: source the class's own mean roughness calls perfectly smooth still
+    #: receives, so a terrain-class border does not read as a texture seam.
+    source_adaptive_floor: float = 0.35
+    #: pass 1b (§2h ii): spread a cliff's whole drop back out over its own
+    #: width wherever pass 1 collapsed it onto a single pixel-pair edge (a
+    #: "vertical black slab" the CK2 source never draws -- the source's own
+    #: cliff width after the 1.9543x LANCZOS upsample is 2-3 canvas px, not
+    #: one). `heightmap_erosion.widen_concentrated_steps`.
+    wall_spread_enabled: bool = True
+    #: pass 1b: local-relief window, canvas px (5 = the source's own cliff
+    #: width plus a pixel of margin).
+    wall_spread_window_px: int = 5
+    #: pass 1b: a pixel is "a wall" once its single biggest neighbour edge
+    #: exceeds this fraction of its own local relief over the window above.
+    wall_spread_max_ratio: float = 0.55
+    #: pass 1b: the output's own concentration ratio must exceed the
+    #: *source*'s (the plain rescale's) same ratio by this much before a
+    #: pixel counts as "ours" -- a source drawn genuinely one pixel wide
+    #: (the source's own Nyquist allows it) is left alone either way.
+    wall_spread_source_margin: float = 0.15
+    #: pass 1b: how many extra targeted-blur iterations may run.
+    wall_spread_iterations: int = 4
+    #: pass 1b: the Gaussian sigma (canvas px) of each targeted iteration.
+    wall_spread_sigma_px: float = 1.0
 
 
 def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
@@ -474,6 +520,40 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
             raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
         ),
         coast_mode=str(raw.get("heightmap_detail_coast_mode", d.coast_mode)),
+        source_adaptive_gain=bool(
+            raw.get("heightmap_detail_source_adaptive_gain", d.source_adaptive_gain)
+        ),
+        source_adaptive_window_px=float(
+            raw.get("heightmap_detail_source_adaptive_window_px",
+                    d.source_adaptive_window_px)
+        ),
+        source_adaptive_floor=float(
+            raw.get("heightmap_detail_source_adaptive_floor",
+                    d.source_adaptive_floor)
+        ),
+        wall_spread_enabled=bool(
+            raw.get("heightmap_detail_wall_spread_enabled", d.wall_spread_enabled)
+        ),
+        wall_spread_window_px=int(
+            raw.get("heightmap_detail_wall_spread_window_px",
+                    d.wall_spread_window_px)
+        ),
+        wall_spread_max_ratio=float(
+            raw.get("heightmap_detail_wall_spread_max_ratio",
+                    d.wall_spread_max_ratio)
+        ),
+        wall_spread_source_margin=float(
+            raw.get("heightmap_detail_wall_spread_source_margin",
+                    d.wall_spread_source_margin)
+        ),
+        wall_spread_iterations=int(
+            raw.get("heightmap_detail_wall_spread_iterations",
+                    d.wall_spread_iterations)
+        ),
+        wall_spread_sigma_px=float(
+            raw.get("heightmap_detail_wall_spread_sigma_px",
+                    d.wall_spread_sigma_px)
+        ),
     )
 
 
@@ -543,6 +623,33 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         river_depth=float(hmd.get("river_depth", d.river_depth)),
         coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
         coast_mode=str(hmd.get("coast_mode", d.coast_mode)),
+        source_adaptive_gain=bool(
+            hmd.get("source_adaptive_gain", d.source_adaptive_gain)
+        ),
+        source_adaptive_window_px=float(
+            hmd.get("source_adaptive_window_px", d.source_adaptive_window_px)
+        ),
+        source_adaptive_floor=float(
+            hmd.get("source_adaptive_floor", d.source_adaptive_floor)
+        ),
+        wall_spread_enabled=bool(
+            hmd.get("wall_spread_enabled", d.wall_spread_enabled)
+        ),
+        wall_spread_window_px=int(
+            hmd.get("wall_spread_window_px", d.wall_spread_window_px)
+        ),
+        wall_spread_max_ratio=float(
+            hmd.get("wall_spread_max_ratio", d.wall_spread_max_ratio)
+        ),
+        wall_spread_source_margin=float(
+            hmd.get("wall_spread_source_margin", d.wall_spread_source_margin)
+        ),
+        wall_spread_iterations=int(
+            hmd.get("wall_spread_iterations", d.wall_spread_iterations)
+        ),
+        wall_spread_sigma_px=float(
+            hmd.get("wall_spread_sigma_px", d.wall_spread_sigma_px)
+        ),
     )
 
 
@@ -678,6 +785,24 @@ class MapConfig:
     terrain_history_weak: tuple[str, ...] = ("plains", "farmlands")
     #: CK2 ocean_region comment texts that mean "lake" rather than "sea"
     lake_region_names: tuple[str, ...] = ("Lakes",)
+    #: honour `overrides/lake_to_land.csv`: a CK2 lake/river province drawn
+    #: on a plateau becomes CK3 land or marsh instead of a hole down to the
+    #: global water level (`docs/step_map_heightmap.md` §2h iii, the user's
+    #: 2026-09-23 decision). false = the pre-lane behaviour.
+    lake_to_land: bool = True
+    lake_to_land_csv: Path = Path("overrides/lake_to_land.csv")
+    #: honour `overrides/river_valleys.csv`: a `valley`-flagged CK2 river
+    #: province stays a water province exactly as CK2 had it, but its
+    #: heightmap is a carved valley, not a pin to the water level
+    #: (`docs/step_map_heightmap.md` §2h (d), the coordinator's 2026-09-23
+    #: diagnosis). A sibling file to `lake_to_land.csv`, not a shared one:
+    #: a `valley` row's whole point is that it does NOT touch province
+    #: classification the way `marsh`/`land` do, and keeping the two
+    #: override files apart keeps a human editor from adding a `valley` row
+    #: to the file `ck2ck3.map.lake_to_land.patch_water_ids` reads for
+    #: reclassification and being surprised nothing reclassifies.
+    river_valleys: bool = True
+    river_valleys_csv: Path = Path("overrides/river_valleys.csv")
     #: trees.bmp palette indices that count as forest (CK2 default.map `tree`)
     tree_indices: tuple[int, ...] = ()
     #: file prefix for generated CK3 files
@@ -959,6 +1084,14 @@ def load(path: str | Path) -> MapConfig:
             )
         ),
         lake_region_names=tuple(raw.get("regions", {}).get("lake_names", ("Lakes",))),
+        lake_to_land=bool(raw.get("lake_to_land", True)),
+        lake_to_land_csv=Path(
+            str(raw.get("lake_to_land_csv", "overrides/lake_to_land.csv"))
+        ),
+        river_valleys=bool(raw.get("river_valleys", True)),
+        river_valleys_csv=Path(
+            str(raw.get("river_valleys_csv", "overrides/river_valleys.csv"))
+        ),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=str(out.get("prefix", "fae")),
         title_scaffolding=bool(out.get("title_scaffolding", False)),

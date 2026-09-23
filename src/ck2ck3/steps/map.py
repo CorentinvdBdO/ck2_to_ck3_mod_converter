@@ -107,6 +107,29 @@ def run(ctx: Context) -> StepResult:
     # were read, which a key under the wrong header silently is not
     # (docs/step_map_heightmap.md §5)
     hd = report.get("heightmap_detail", {})
+    # same reasoning for `overrides/lake_to_land.csv`: the coordinator's
+    # first real conversion run found the override had no effect and
+    # `last_run.md` had no counter to say so either way -- both are now
+    # named in the summary/counts, which is the proof the CLI builder
+    # actually read `[map] lake_to_land`/`lake_to_land_csv`
+    # (docs/step_map_heightmap.md §2h iii).
+    l2l = report.get("lake_to_land", {})
+    l2l_summary = (
+        f"; lake_to_land {l2l.get('rules', 0)} CK2 provinces "
+        f"({l2l.get('marsh', 0)} marsh, {l2l.get('land', 0)} land)"
+        if l2l.get("rules") else ""
+    )
+    # same reasoning again for `overrides/river_valleys.csv` (§2h (d)): name
+    # the rule count and the carved-pixel count in the summary/counts so a
+    # run report is proof the CLI builder read `[map] river_valleys`/
+    # `river_valleys_csv`, not just that `lake_to_land.py` has the function.
+    rv = report.get("river_valleys", {})
+    rv_summary = (
+        f"; river_valleys {rv.get('rules', 0)} CK2 river provinces "
+        f"carved ({rv.get('heights', {}).get('holes_px', 0)} px, "
+        f"depth {rv.get('heights', {}).get('depth', 0)})"
+        if rv.get("rules") else ""
+    )
     # same reasoning for the organic-border pass: the summary line is the
     # proof that `[map.provinces] smooth_edges` was read at all
     # (docs/step_map_baronies.md §10)
@@ -139,7 +162,8 @@ def run(ctx: Context) -> StepResult:
             f"{cfg.scale.vanilla_km_per_px} km/px): "
             f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
             f"{bar['counties']} counties, {bar['demoted']} demoted, "
-            f"{prov['lost']} lost" + pe_summary + hd_summary
+            f"{prov['lost']} lost" + pe_summary + hd_summary + l2l_summary
+            + rv_summary
         ),
         counts={
             "provinces": prov["ck3_total"],
@@ -204,6 +228,16 @@ def run(ctx: Context) -> StepResult:
                 "heightmap_excursion_limited_px": hd["excursion_limited_px"],
                 "heightmap_detail_seconds": int(hd["elapsed_s"])}
                if hd else {}),
+            **({"lake_to_land_rules": l2l["rules"],
+                "lake_to_land_marsh": l2l["marsh"],
+                "lake_to_land_land": l2l["land"],
+                "lake_to_land_codes_no_ck3_id": l2l.get("codes", {}).get("no_ck3_id", 0),
+                "lake_to_land_heights_holes_px": l2l.get("heights", {}).get("holes_px", 0)}
+               if l2l.get("rules") else {}),
+            **({"river_valleys_rules": rv["rules"],
+                "river_valleys_heights_holes_px": rv.get("heights", {}).get("holes_px", 0),
+                "river_valleys_depth": rv.get("heights", {}).get("depth", 0)}
+               if rv.get("rules") else {}),
         },
         warnings=list(sink.warnings),
         written=list(sink.written),
@@ -317,6 +351,26 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             for v in raw.get("terrain_history_weak_classes", ("plains", "farmlands"))
         ),
         lake_region_names=tuple(raw.get("lake_names", ("Lakes",))),
+        # `[map] lake_to_land` (lane `thay-relief`, docs/step_map_heightmap.md
+        # §2h iii). Read HERE as well as in `ck2ck3.map.config.load`: a key
+        # this CLI-facing builder never reads is a silent no-op whatever the
+        # TOML says -- the coordinator caught exactly this for this key (the
+        # override read fine in isolation but the real `ck2ck3` CLI never
+        # passed it to `ck2ck3.map.build`, so default.map still listed the
+        # overridden lakes as water on the first real conversion run).
+        # tests/test_map_lake_to_land.py::test_cli_config_builder_reads_the_key
+        # pins it.
+        lake_to_land=bool(raw.get("lake_to_land", True)),
+        lake_to_land_csv=Path(
+            str(raw.get("lake_to_land_csv", "overrides/lake_to_land.csv"))
+        ),
+        # `[map] river_valleys` (docs/step_map_heightmap.md §2h (d)). Same
+        # reasoning, same test convention, read HERE from the start this
+        # time.
+        river_valleys=bool(raw.get("river_valleys", True)),
+        river_valleys_csv=Path(
+            str(raw.get("river_valleys_csv", "overrides/river_valleys.csv"))
+        ),
         tree_indices=tuple(int(v) for v in tr.get("tree_indices", ())),
         prefix=ctx.config.prefix,
         title_scaffolding=bool(raw.get("title_scaffolding", False)),

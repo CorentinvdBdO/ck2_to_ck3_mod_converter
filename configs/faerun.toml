@@ -87,6 +87,20 @@ strip_vanilla_foliage = true
 # CK2 labels its lakes only by the ocean_region comment text in default.map.
 lake_names = ["Lakes"]
 
+# overrides/lake_to_land.csv: a CK2 lake province drawn on a plateau becomes
+# CK3 land or marsh instead of a hole down to the global water level
+# (docs/step_map_heightmap.md §2h iii, the user's 2026-09-23 decision).
+lake_to_land = true
+lake_to_land_csv = "overrides/lake_to_land.csv"
+
+# overrides/river_valleys.csv: a `valley`-flagged CK2 river province stays a
+# water province exactly as CK2 had it, but its heightmap is a carved valley
+# instead of a pin to the water level (docs/step_map_heightmap.md §2h (d),
+# the coordinator's 2026-09-23 diagnosis: Thay's remaining closed loop was
+# five 2-4 px river provinces cut as canyons).
+river_valleys = true
+river_valleys_csv = "overrides/river_valleys.csv"
+
 # Seed the county capital barony from CK2 positions.txt slot 0 and the
 # county's non-capital city_holding (the port) from slot 4, ahead of
 # farthest-point sampling. docs/step_map_baronies.md §3, docs/map_fidelity.md
@@ -469,6 +483,41 @@ heightmap_detail_ridged_classes = ["mountains", "desert_mountains", "hills", "te
 heightmap_detail_ridged_weight = 1.0
 heightmap_detail_ridged_sharpness = 3.0
 heightmap_detail_ridged_diffusion_scale = 0.15
+
+# --- pass 2, source-adaptive amplitude (docs/step_map_heightmap.md §2h).
+# "Thay was still broken" after build 17: a gentle, genuine macro basin the
+# CK2 author already drew around Thaymount (closed-depression depth in the
+# plain rescale itself up to 7,480-9,521 levels over 9-81 px windows) was
+# getting the SAME per-terrain-class ridged texture as a real cliff, applied
+# coherently all the way around the closed contour -- a sharp, unbroken
+# rampart no single-source-pixel bound (heightmap_detail_bound_window_px)
+# can see, because every pixel individually stays inside its own tolerance.
+# Scale the amplitude down (never up) where the source is locally smoother
+# than its own class's mean; 0.35 floor so a class border stays seamless.
+heightmap_detail_source_adaptive_gain = true
+heightmap_detail_source_adaptive_window_px = 9.0
+heightmap_detail_source_adaptive_floor = 0.35
+
+# --- pass 1b, wall spread (docs/step_map_heightmap.md §2h ii). Playtest:
+# "the west/south escarpment is a row of vertical black slabs (1-px walls,
+# axis-aligned)". Cause, isolated by ablation: pass 1 (Perona-Malik) ALONE,
+# before any other pass, already shifts the axis-aligned/diagonal giant-step
+# ratio from the source's own 0.56 to 0.85 at Thay -- a classic anisotropic-
+# diffusion staircase, a ramp of small risers collapsing onto one edge
+# instead of smoothing into it. 8-connected flux only partly fixes it
+# (0.85 -> 0.81); this instead detects a pixel whose single biggest
+# neighbour edge holds more than heightmap_detail_wall_spread_max_ratio of
+# its own local relief and blurs it (and a 2px margin) back toward the
+# source's own spread, iterating until it is not concentrated any more.
+# Measured on Thay: axis/diag ratio 0.85 -> 0.66, drop-concentration p95
+# 0.71 -> 0.45 (source 0.60), max 1.0 -> 0.55; cliff drop kept (mean local
+# relief at real cliff pixels 8127 -> 8009 vs source 8420, -1.4 %).
+heightmap_detail_wall_spread_enabled = true
+heightmap_detail_wall_spread_window_px = 5
+heightmap_detail_wall_spread_max_ratio = 0.55
+heightmap_detail_wall_spread_source_margin = 0.15
+heightmap_detail_wall_spread_iterations = 4
+heightmap_detail_wall_spread_sigma_px = 1.0
 
 [map.heightmap]
 # CK2 carries almost no bathymetry: Faerun's whole ocean rescales into

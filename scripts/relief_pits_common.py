@@ -145,6 +145,173 @@ def closed_depression_depth(a: np.ndarray, land: np.ndarray,
     return np.where(land, f - a32, 0.0).astype(np.float32)
 
 
+#: widths (canvas px) the closed-depression *excess* is checked at.  3 is one
+#: CK2 source pixel (the §2f bound's own window); 9 and 27 catch a basin the
+#: 3 px window cannot, since a 20 km bowl (27 px) or a 13 km one (9 px) both
+#: pass a 3 px local-min/max test at every individual pixel while still
+#: being, as a whole, a closed loop far deeper than anything the CK2 source
+#: draws there (docs/step_map_heightmap.md §2h).
+EXCESS_WINDOWS_PX = (3, 9, 27)
+
+
+def closed_depression_excess(
+    source: np.ndarray, output: np.ndarray, land: np.ndarray,
+    width_px: int,
+) -> np.ndarray:
+    """``closed_depression_depth(output) - closed_depression_depth(source)``.
+
+    Elevation alone is not enough to tell "the CK2 author already drew a
+    gentle macro basin here" from "the detail pass invented a rampart": a
+    genuine 40-90 px CK2 basin can be 7,000+ levels deep in the plain
+    rescale too (`verified`, Thaymount). What must not happen is the
+    *output*'s own closed-depression reading exceeding the *source*'s own,
+    at the same window -- that is depth the pass added on top of what the
+    author drew, whatever the total depth already was.
+    """
+    dep_out = closed_depression_depth(output, land, width_px=width_px)
+    dep_src = closed_depression_depth(source, land, width_px=width_px)
+    return dep_out - dep_src
+
+
+def closed_depression_excess_stats(
+    source: np.ndarray, output: np.ndarray, land: np.ndarray,
+    widths: tuple[int, ...] = EXCESS_WINDOWS_PX,
+) -> dict:
+    """p95/p99/max/frac>1-riser of the excess, one row of keys per width."""
+    row: dict = {}
+    for w in widths:
+        excess = closed_depression_excess(source, output, land, w)[land]
+        if excess.size == 0:
+            continue
+        row[f"cd_excess_{w}px_p95"] = round(float(np.percentile(excess, 95)), 1)
+        row[f"cd_excess_{w}px_p99"] = round(float(np.percentile(excess, 99)), 1)
+        row[f"cd_excess_{w}px_max"] = round(float(excess.max()), 1)
+        row[f"cd_excess_{w}px_frac_gt_riser"] = round(
+            float((excess > QUANT_LEVELS).mean()), 5)
+    return row
+
+
+# --------------------------------------------------------------------------- #
+# "vertical black slabs" -- a cliff rendered as a 1-px wall (docs §2h ii)
+# --------------------------------------------------------------------------- #
+#: the 8 neighbour offsets, axis-aligned first (the coordinator's split)
+_AXIS_OFFSETS = ((1, 0), (0, 1))
+_DIAG_OFFSETS = ((1, 1), (1, -1))
+
+
+def _shift(a: np.ndarray, dy: int, dx: int) -> np.ndarray:
+    """``a`` shifted by ``(dy, dx)``, edge-padded (never wraps)."""
+    return np.pad(a, ((max(dy, 0), max(-dy, 0)), (max(dx, 0), max(-dx, 0))),
+                  mode="edge")[
+        max(-dy, 0): max(-dy, 0) + a.shape[0],
+        max(-dx, 0): max(-dx, 0) + a.shape[1],
+    ]
+
+
+def edge_steps(h: np.ndarray, land: np.ndarray,
+               offsets: tuple[tuple[int, int], ...]) -> np.ndarray:
+    """Max ``|h[p] - h[neighbour]|`` over ``offsets``, land-to-land pairs only."""
+    h = h.astype(np.float64)
+    out = np.zeros(h.shape, dtype=np.float64)
+    for dy, dx in offsets:
+        nb = _shift(h, dy, dx)
+        nb_land = _shift(land.astype(np.float64), dy, dx) > 0.5
+        d = np.abs(h - nb)
+        d[~(land & nb_land)] = 0.0
+        np.maximum(out, d, out=out)
+        # the other direction of the same offset (pixel on the low side)
+        nb2 = _shift(h, -dy, -dx)
+        nb2_land = _shift(land.astype(np.float64), -dy, -dx) > 0.5
+        d2 = np.abs(h - nb2)
+        d2[~(land & nb2_land)] = 0.0
+        np.maximum(out, d2, out=out)
+    return out
+
+
+def edge_step_orientation_counts(h: np.ndarray, land: np.ndarray,
+                                 k_risers: float,
+                                 quant: float = QUANT_LEVELS) -> dict:
+    """Land pixels touching a >= ``k_risers`` step, split axis-aligned vs
+    diagonal (`_AXIS_OFFSETS` / `_DIAG_OFFSETS`).
+
+    A "vertical black slab" in an oblique render is a near-vertical wall
+    face over one pixel of horizontal run -- an *axis-aligned* giant edge,
+    counted once whichever of the two axes it runs along, since either one
+    reads as a slab from an oblique camera. A real escarpment 2-3 canvas px
+    wide (the CK2 source's own cliff width) should split its drop over
+    several *diagonal-inclusive* steps, not concentrate it on one
+    axis-aligned pair.
+    """
+    thr = k_risers * quant
+    axis = edge_steps(h, land, _AXIS_OFFSETS) >= thr
+    diag = edge_steps(h, land, _DIAG_OFFSETS) >= thr
+    n_land = max(int(land.sum()), 1)
+    return {
+        "k_risers": k_risers,
+        "axis_aligned_px": int(axis.sum()),
+        "diagonal_px": int(diag.sum()),
+        "axis_aligned_frac_of_land": round(float(axis.sum()) / n_land, 5),
+        "diagonal_frac_of_land": round(float(diag.sum()) / n_land, 5),
+        # the ratio the brief asks for: how much more common an axis-aligned
+        # giant step is than a diagonal one, at the same threshold
+        "axis_over_diag": round(
+            float(axis.sum()) / max(float(diag.sum()), 1.0), 2),
+    }
+
+
+#: window (canvas px) the "local relief" a cliff's drop is measured over --
+#: the CK2 source's own cliff width after the 1.9543x LANCZOS upsample
+#: (2-3 canvas px, docs/step_map_heightmap.md §2h) plus a pixel of margin
+CLIFF_WIDTH_PX = 5
+
+
+def cliff_drop_concentration(source: np.ndarray, output: np.ndarray,
+                             land: np.ndarray,
+                             cliff_steps: float = 2.0,
+                             window: int = CLIFF_WIDTH_PX) -> np.ndarray:
+    """Per source-cliff pixel: the output's single biggest neighbour step,
+    as a fraction of the output's own local relief over ``window`` px.
+
+    1.0 means the *entire* visible drop at that pixel happens in one
+    pixel-to-pixel edge -- a wall, not a slope. A drop spread continuously
+    over the source's own ~3 px cliff width reads close to
+    ``1 / (pixels along the profile)``, well under 1.
+
+    ``source`` locates *where* a cliff is (so the same set of pixels is
+    compared across maps); the ratio itself is read off ``output``, so this
+    is comparable between the plain rescale (source, where it is close to 1
+    by construction -- a rescaled 8-bit riser lands on exactly one canvas
+    pixel pair before any de-terrace), build 17 and any candidate fix.
+    """
+    cliff = (edge_steps(source, land, _AXIS_OFFSETS + _DIAG_OFFSETS)
+             >= cliff_steps * QUANT_LEVELS) & land
+    max_step = edge_steps(output, land, _AXIS_OFFSETS + _DIAG_OFFSETS)
+    relief = (maximum_filter(output.astype(np.float32), size=window, mode="nearest")
+              - grey_erosion(output.astype(np.float32), size=window, mode="nearest"))
+    ratio = np.divide(max_step, relief, out=np.zeros_like(max_step),
+                      where=relief > 1e-6)
+    return np.clip(ratio, 0.0, 1.0)[cliff]
+
+
+def wall_stats(source: np.ndarray, output: np.ndarray, land: np.ndarray,
+              k_list: tuple[float, ...] = (2.0, 3.0, 5.0)) -> dict:
+    """One row: orientation counts at each ``k_risers``, plus the drop
+    concentration ratio's p50/p95/max on the source's own cliff pixels."""
+    row: dict = {}
+    for k in k_list:
+        oc = edge_step_orientation_counts(output, land, k)
+        row[f"axis_over_diag_k{k:g}"] = oc["axis_over_diag"]
+        row[f"axis_frac_k{k:g}"] = oc["axis_aligned_frac_of_land"]
+        row[f"diag_frac_k{k:g}"] = oc["diagonal_frac_of_land"]
+    conc = cliff_drop_concentration(source, output, land)
+    if conc.size:
+        row["drop_concentration_px"] = int(conc.size)
+        row["drop_concentration_p50"] = round(float(np.percentile(conc, 50)), 3)
+        row["drop_concentration_p95"] = round(float(np.percentile(conc, 95)), 3)
+        row["drop_concentration_max"] = round(float(conc.max()), 3)
+    return row
+
+
 # --------------------------------------------------------------------------- #
 # the bound (docs §2f)
 # --------------------------------------------------------------------------- #

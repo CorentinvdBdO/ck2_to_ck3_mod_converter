@@ -1,0 +1,35 @@
+# overrides/river_valleys.csv -- human input, hand-edited from here.
+#
+# A CK2 river province drawn on high ground: CK3's single global water level
+# turns its 2-4 px line into a canyon down to the pin, and CK2 itself draws a
+# river province's own topology.bmp pixels near sea level regardless of the
+# plateau under it, the same flat-pin behaviour already found for lakes
+# (`scripts/measure_high_rivers.py`, `docs/step_map_heightmap.md` §2h (d)).
+#
+# `valley` is the only action this file uses: unlike
+# overrides/lake_to_land.csv, the province STAYS a river (navigable, kept in
+# river_provinces/sea_zones exactly as CK2 had it) -- only its heightmap
+# stops being pinned to the water level. Verified against vanilla first
+# (scripts/measure_vanilla_river_provinces.py): a real river province is
+# legally allowed above WATERLEVEL and vanilla ships some, so this is not
+# fabricated behaviour.
+#
+# Columns:
+#   ck2_id  - the CK2 province numeric id (docs/evidence/province_id_map.csv
+#             has the CK2<->CK3 mapping; river_valley_candidates.csv has the
+#             measurement every row here was proposed from)
+#   action  - valley (the only action; kept as a column for schema parity
+#             with lake_to_land.csv, which read_overrides() shares)
+#   reason  - why, free text
+#
+# Pre-filled with the Thay-window rivers this lane's renders show as
+# canyons (`docs/evidence/thay_relief/`). Every other measured candidate,
+# whole canvas, is a *proposal* in docs/evidence/river_valleys_proposed.csv
+# -- add a row here yourself to accept one.
+ck2_id,action,reason
+2028,valley,"River Umber: measured 10.0 risers above the water level (7653.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
+1983,valley,"Lower Rauthenflow River: measured 8.0 risers above the water level (7099.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
+1978,valley,"River Murghol: measured 6.0 risers above the water level (6545.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
+1984,valley,"Lower River Murghol: measured 6.0 risers above the water level (6545.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
+1982,valley,"Upper Rauthenflow River: measured 4.0 risers above the water level (5991.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
+2029,valley,"Lake Umber: measured 3.0 risers above the water level (5714.0 vs 4883), renders as a canyon in docs/evidence/thay_relief/"
