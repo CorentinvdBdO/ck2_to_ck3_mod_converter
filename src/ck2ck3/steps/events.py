@@ -140,6 +140,13 @@ EVENT_TARGET_RE = re.compile(r"^event_target:([A-Za-z_][A-Za-z_0-9]*)$")
 #: first live build (`docs/evidence/tiger_events_2026-09-10_summary.txt`, 2026-09-10), so
 #: they are commented out here and the event is demoted with the rest.
 #: Resolving them properly is `docs/step_events.md` §9 open question 1.
+#:
+#: `religion`, `religion_group`, `set_religion`, `culture`, `set_culture` used
+#: to be here too (blanket-rejected) - they are now rewritten by
+#: :func:`make_faith_culture_hook` (`docs/step_events.md` §5b), because the
+#: vocabulary table's own `religion -> faith` / `culture -> culture` rows
+#: were already correct for the *key*; the bug was the missing `faith:`/
+#: `culture:` value prefix, not the key mapping.
 REJECT_CK2_KEYS: dict[str, str] = {
     # `common/modifiers` is emitted by no step; every CK2 modifier id is a
     # dangling reference (`error(missing-item): modifier X not defined`).
@@ -151,18 +158,14 @@ REJECT_CK2_KEYS: dict[str, str] = {
     "has_province_modifier": "CK2 modifier id; no step emits common/modifiers",
     "add_holding_modifier": "CK2 modifier id; no step emits common/modifiers",
     "remove_holding_modifier": "CK2 modifier id; no step emits common/modifiers",
-    # A CK3 faith/culture argument is a *prefixed* reference (`faith:x`,
-    # `culture:x`); this step only ever rewrites keys, never values
-    # (docs/step_decisions.md §3 limitation 3), so the bare CK2 id reaches
-    # CK3 as `error(unknown-field): unknown token x`.
-    "religion": "CK3 wants `faith = faith:<id>`; this step does not rewrite values",
-    "religion_group": "CK3 wants `religion = religion:<id>`; this step does not rewrite values",
-    "set_religion": "CK3 wants `set_faith = faith:<id>`; this step does not rewrite values",
-    "secret_religion": "CK3 wants `faith:<id>`; this step does not rewrite values",
-    "set_secret_religion": "CK3 wants `faith:<id>`; this step does not rewrite values",
-    "culture": "CK3 wants `culture = culture:<id>`; this step does not rewrite values",
+    # CK3 dropped secret/hidden faith and per-character graphical culture
+    # outright (`verified`: no `secret_faith`/`set_character_faith`-secret
+    # counterpart and no per-character graphical-culture effect exist in the
+    # 1.19 vocabulary sample) - unlike `religion`/`culture`, there is no
+    # value rewrite that fixes these; they would need a new mechanic.
+    "secret_religion": "CK3 has no secret/hidden faith mechanic",
+    "set_secret_religion": "CK3 has no secret/hidden faith mechanic",
     "culture_group": "CK3 has no culture group; heritage/language pillars replace it",
-    "set_culture": "CK3 wants `set_culture = culture:<id>`; this step does not rewrite values",
     "set_graphical_culture": "CK3 graphical culture is a culture field, not an effect",
     # CK2 spells a modifier's lifetime `duration = N` (-1 = forever); CK3
     # spells it `years`/`months`/`days` inside the effect block.
@@ -171,6 +174,79 @@ REJECT_CK2_KEYS: dict[str, str] = {
     "has_dlc": "CK2 DLC name; CK3 dlc_metadata has no counterpart",
     "lacks_dlc": "CK2 DLC name; CK3 dlc_metadata has no counterpart",
 }
+
+#: CK2 keys :func:`make_faith_culture_hook` owns. `religion`/`culture` are
+#: overloaded in CK2 - the identical spelling is a trigger comparison *and*
+#: an effect setter, disambiguated only by which block it sits in (`kind`).
+FAITH_CULTURE_KEYS = frozenset({"religion", "religion_group", "set_religion", "culture", "set_culture"})
+
+
+def make_faith_culture_hook(
+    ck2_key: str,
+    *,
+    faiths: dict[str, str],
+    religions: dict[str, str],
+    cultures: dict[str, str],
+):
+    """Rewrite a CK2 `religion`/`culture`-family key into its CK3 form.
+
+    `docs/step_events.md` §5b (backlog: un-rejects 1131 `culture`+`religion`
+    uses). The `religions`/`cultures` steps keep CK2 ids unchanged
+    (`religions.faith_id`, `cultures.culture_id` - both identity functions,
+    `verified` against their own docstrings), so a CK2 faith/culture id is
+    also its CK3 id; only the religion *group* is renamed
+    (`religions.religion_id`). Trigger and effect use different CK3 keys for
+    the same CK2 spelling:
+
+    | CK2 | kind | CK3 |
+    |---|---|---|
+    | `religion = X` | trigger | `faith = faith:X` (`verified`, `game/events/varangian_events.txt:37` faith comparison shape, `mappings/triggers.csv` row `religion -> faith`) |
+    | `religion = X` / `set_religion = X` | effect | `set_character_faith = faith:X` (`verified`, `game/events/bookmark_events.txt:2441`) |
+    | `religion_group = X` | trigger | `religion = religion:X` (`verified`, `game/events/varangian_events.txt:35` religion-group comparison shape) |
+    | `culture = X` | trigger | `culture = culture:X` (`verified`, `game/common/decisions/10_culture_conversion_decisions.txt:268`) |
+    | `culture = X` / `set_culture = X` | effect | `set_culture = culture:X` (`verified`, `game/common/decisions/80_major_decisions_middle_europe.txt:1082`) |
+
+    An id not in the relevant map (a vanilla CK2 religion/culture this run's
+    `religions`/`cultures` steps did not port) stays a `# CK2-unmapped`
+    comment, same as any other unresolved reference.
+    """
+
+    def hook(entry: Node, kind: str) -> tuple[Node | None, str]:
+        if isinstance(entry.value, Block):
+            return None, f"{ck2_key}: expected a plain id, got a block"
+        value = str(entry.value)
+        if kind == "trigger":
+            if ck2_key == "religion":
+                target = faiths.get(value) or faiths.get(value.lower())
+                if target is None:
+                    return None, f"unknown CK2 religion id {value!r} (not ported by the religions step)"
+                return Node(key="faith", op=entry.op, value=f"faith:{target}"), ""
+            if ck2_key == "religion_group":
+                target = religions.get(value) or religions.get(value.lower())
+                if target is None:
+                    return None, f"unknown CK2 religion group id {value!r} (not ported by the religions step)"
+                return Node(key="religion", op=entry.op, value=f"religion:{target}"), ""
+            if ck2_key == "culture":
+                target = cultures.get(value) or cultures.get(value.lower())
+                if target is None:
+                    return None, f"unknown CK2 culture id {value!r} (not ported by the cultures step)"
+                return Node(key="culture", op=entry.op, value=f"culture:{target}"), ""
+            return None, f"{ck2_key}: no CK3 trigger for this key (use in an effect instead)"
+        if kind == "effect":
+            if ck2_key in ("religion", "set_religion"):
+                target = faiths.get(value) or faiths.get(value.lower())
+                if target is None:
+                    return None, f"unknown CK2 religion id {value!r} (not ported by the religions step)"
+                return Node(key="set_character_faith", op="=", value=f"faith:{target}"), ""
+            if ck2_key in ("culture", "set_culture"):
+                target = cultures.get(value) or cultures.get(value.lower())
+                if target is None:
+                    return None, f"unknown CK2 culture id {value!r} (not ported by the cultures step)"
+                return Node(key="set_culture", op="=", value=f"culture:{target}"), ""
+            return None, f"{ck2_key}: CK2 does not set a religion group as an effect"
+        return None, f"{ck2_key}: used outside a trigger/effect block"
+
+    return hook
 
 #: Why an event may not go live even at score 1.0. Each is a real failure
 #: mode, not a style preference - see `docs/step_events.md` §4.
@@ -193,6 +269,12 @@ GATE_REASONS: dict[str, str] = {
     "unsaved_scope": (
         "reads a saved scope this event never saves; a CK3 saved scope does "
         "not outlive its event, unlike a CK2 event_target on the character"
+    ),
+    "missing_loc": (
+        "a desc/title/option-name loc key this event uses is not in the "
+        "ported localisation - a live event must have every loc key it uses "
+        "(docs/step_events.md §1, generalised from the 5 fae_kni.* events "
+        "whose EVTDESC keys were among the 40 loc misses)"
     ),
 }
 
@@ -435,6 +517,7 @@ class ConvertedEvent:
     gates: list[str] = field(default_factory=list)
     calls: list[str] = field(default_factory=list)
     loc_keys: list[str] = field(default_factory=list)
+    loc_misses: list[str] = field(default_factory=list)
     hidden: bool = False
     body: Block = field(default_factory=Block)
     source_file: str = ""
@@ -594,8 +677,19 @@ def convert_event(
     scoped_out: dict[str, str],
     min_score: float,
     source_file: str = "",
+    loc_keys_available: frozenset[str] | None = None,
+    faiths: dict[str, str] | None = None,
+    religions: dict[str, str] | None = None,
+    cultures: dict[str, str] | None = None,
 ) -> ConvertedEvent:
-    """Convert one CK2 event; the caller decides live vs stub from `.gates`."""
+    """Convert one CK2 event; the caller decides live vs stub from `.gates`.
+
+    ``loc_keys_available`` gates ``missing_loc`` (``None`` skips the gate,
+    for callers - mostly tests - with no loc data). ``faiths``/``religions``/
+    ``cultures`` feed :func:`make_faith_culture_hook`; an empty/``None`` map
+    means every `religion`/`culture`-family reference is left unmapped, same
+    as before this lane.
+    """
     stats = ConvertStats()
     loc_keys: list[str] = []
     hook = make_event_hook(ck3_id_of=ck3_id_of, live_ids=live_ids, scoped_out=scoped_out)
@@ -615,7 +709,15 @@ def convert_event(
             trailing_comment=entry.trailing_comment,
         ), ""
 
-    ctxargs["hooks"] = EventHooks({k: hook for k in EVENT_FIRING_KEYS}, scope_hook)
+    faith_culture_hooks = {
+        k: make_faith_culture_hook(
+            k, faiths=faiths or {}, religions=religions or {}, cultures=cultures or {},
+        )
+        for k in FAITH_CULTURE_KEYS
+    }
+    ctxargs["hooks"] = EventHooks(
+        {**{k: hook for k in EVENT_FIRING_KEYS}, **faith_culture_hooks}, scope_hook,
+    )
 
     body = Block(multiline=True)
     trailing: list[str] = []
@@ -788,18 +890,35 @@ def convert_event(
     saved, used = scope_usage(body)
     if used - saved:
         gates.append("unsaved_scope")
+    loc_misses = (
+        sorted({k for k in loc_keys if k not in loc_keys_available})
+        if loc_keys_available is not None else []
+    )
+    if loc_misses:
+        gates.append("missing_loc")
 
     return ConvertedEvent(
         ck2_id=ck2_id, ck3_id=ck3_id, namespace=event_namespace(prefix, ck2_id),
         kind=kind, ck3_type=ck3_type, theme=theme, score=score,
         mapped=stats.mapped, total=stats.total, gates=gates,
         calls=list(hook.calls),  # type: ignore[attr-defined]
-        loc_keys=loc_keys, hidden=hidden, body=body, source_file=source_file,
+        loc_keys=loc_keys, loc_misses=loc_misses, hidden=hidden, body=body,
+        source_file=source_file,
     )
 
 
-def render_event(converted: ConvertedEvent) -> Node:
-    """The Node actually written: the live body, or an inert stub + draft."""
+def render_event(converted: ConvertedEvent, reachable_ids: frozenset[str] = frozenset()) -> Node:
+    """The Node actually written: the live body, or an inert stub + draft.
+
+    ``reachable_ids`` is every event id something live actually calls - either
+    another live event's `trigger_event` (:func:`event_calls_within_live`) or
+    a live `common/on_action` hookup (the `on_actions` step). A live event
+    outside that set gets `orphan = yes`, exactly like a stub
+    (`game/events/_events.info:242`), so CK3 does not log it unreferenced
+    (`docs/step_events.md` §1). Call this again once `on_actions` has run -
+    it is idempotent and cheap (no re-parsing, just re-rendering an already
+    converted body).
+    """
     header = [
         f"# CK2: {converted.ck2_id} ({converted.kind} -> {converted.ck3_type}) "
         f"from {converted.source_file}",
@@ -811,10 +930,21 @@ def render_event(converted: ConvertedEvent) -> Node:
     ]
     if converted.live:
         body = converted.body
-        body.entries and setattr(
-            body.entries[0], "leading_comments",
-            [*header, *body.entries[0].leading_comments],
-        )
+        # Idempotent either direction, so a second call (once `on_actions`
+        # knows more) can both add and remove the flag.
+        body.entries = [e for e in body.entries if not (isinstance(e, Node) and e.key == "orphan")]
+        if converted.ck3_id not in reachable_ids:
+            insert_at = 0
+            for entry in body.entries:
+                if isinstance(entry, Node) and entry.key in ("type", "sender"):
+                    insert_at += 1
+                else:
+                    break
+            body.entries.insert(insert_at, Node(key="orphan", op="=", value=True))
+        if body.entries and body.entries[0].leading_comments[: len(header)] != header:
+            # Deterministic header, so a second render_events() call (once
+            # `on_actions` knows more) does not duplicate it.
+            body.entries[0].leading_comments = [*header, *body.entries[0].leading_comments]
         return Node(key=converted.ck3_id, op="=", value=body, blank_before=True)
 
     header.append(
@@ -847,6 +977,56 @@ def render_event(converted: ConvertedEvent) -> Node:
     ))
     stub.append(Node(key="immediate", op="=", value=Block()))
     return Node(key=converted.ck3_id, op="=", value=stub, blank_before=True)
+
+
+def event_calls_within_live(
+    converted: dict[str, ConvertedEvent], live_ids: set[str], ck3_id_of: dict[str, str],
+) -> frozenset[str]:
+    """CK3 ids reachable from *another live event's* `trigger_event`.
+
+    A first, self-contained answer to "does anything call this event" - the
+    `on_actions` step adds its own on_action hookups on top
+    (`ctx.data["events"]["reachable_ids"]`). Never a false positive:
+    `.calls` (CK2 ids - `make_event_hook` never learns the CK3 id) only
+    records a `trigger_event` the event-firing hook actually accepted, which
+    already requires the target to be live.
+    """
+    out: set[str] = set()
+    for conv in converted.values():
+        if conv.live:
+            out.update(ck3_id_of[c] for c in conv.calls if c in live_ids)
+    return frozenset(out)
+
+
+def write_events(
+    ctx: Context,
+    prefix: str,
+    by_file: dict[str, list[ConvertedEvent]],
+    reachable_ids: frozenset[str],
+) -> tuple[list[Path], dict[str, int]]:
+    """Render and write every `events/<prefix>_*.txt` file.
+
+    Split out of `run()` so a later step (`on_actions`) can call it a second
+    time, once it knows which live events an on_action hookup makes
+    reachable, and get the `orphan` flag right without re-parsing any CK2
+    source (`docs/step_events.md` §1).
+    """
+    written: list[Path] = []
+    counts = {"live": 0, "stub": 0}
+    for source_rel, group in sorted(by_file.items()):
+        top = Block(multiline=True)
+        file_namespaces = sorted({c.namespace for c in group})
+        for ns in file_namespaces:
+            top.append(Node(key="namespace", op="=", value=ns))
+        for conv in sorted(group, key=lambda c: (c.namespace, _num(c.ck3_id))):
+            top.append(render_event(conv, reachable_ids))
+            counts["live" if conv.live else "stub"] += 1
+        stem = _file_stem(source_rel)
+        written.append(ctx.write_script(
+            f"events/{prefix}_{stem}.txt", top,
+            source=f"{ctx.ck2_mod.name}/{source_rel}",
+        ))
+    return written, counts
 
 
 def find_event_block(doc_block: Block, kind: str, event_id_value: str) -> Block | None:
@@ -921,6 +1101,17 @@ def run(ctx: Context) -> StepResult:
     # be re-allocated inside its namespace, which only the whole set can do.
     ck3_id_of = build_event_id_map(prefix, (row.id for row, _ in sources))
 
+    faiths_map = dict(ctx.data.get("religions", {}).get("faiths", {}))
+    religion_group_map = dict(ctx.data.get("religions", {}).get("religions", {}))
+    cultures_map = {c: c for c in ctx.data.get("cultures", {}).get("cultures", {})}
+    if not faiths_map or not cultures_map:
+        ctx.warn(
+            "events: no religions/cultures data from steps `religions`/`cultures` "
+            "in this pass; religion/culture values will show as unmapped comments "
+            "(run religions, cultures and events in the same pass)"
+        )
+    loc_keys_frozen = frozenset(loc_keys_available) if loc_keys_available else None
+
     # -- fixpoint: a call to a stubbed event is itself unmapped, which can
     # -- demote the caller. The live set only ever shrinks, so this converges.
     live_ids: set[str] = set(ck3_id_of)
@@ -935,6 +1126,8 @@ def run(ctx: Context) -> StepResult:
                 themes=themes, default_theme=config.default_theme,
                 ck3_id_of=ck3_id_of, live_ids=live_ids, scoped_out=scoped_out,
                 min_score=config.min_score, source_file=row.faerun_file,
+                loc_keys_available=loc_keys_frozen, faiths=faiths_map,
+                religions=religion_group_map, cultures=cultures_map,
             )
         new_live = {i for i, c in converted.items() if c.live}
         if new_live == live_ids:
@@ -945,23 +1138,15 @@ def run(ctx: Context) -> StepResult:
     by_file: dict[str, list[ConvertedEvent]] = {}
     for row, _ in sources:
         by_file.setdefault(row.faerun_file, []).append(converted[row.id])
+    namespaces: set[str] = {c.namespace for c in converted.values()}
 
-    written: list[Path] = []
-    namespaces: set[str] = set()
-    for source_rel, group in sorted(by_file.items()):
-        top = Block(multiline=True)
-        file_namespaces = sorted({c.namespace for c in group})
-        namespaces.update(file_namespaces)
-        for ns in file_namespaces:
-            top.append(Node(key="namespace", op="=", value=ns))
-        for conv in sorted(group, key=lambda c: (c.namespace, _num(c.ck3_id))):
-            top.append(render_event(conv))
-            counts["live" if conv.live else "stub"] += 1
-        stem = _file_stem(source_rel)
-        written.append(ctx.write_script(
-            f"events/{prefix}_{stem}.txt", top,
-            source=f"{ctx.ck2_mod.name}/{source_rel}",
-        ))
+    # Self-contained reachability only (event -> event `trigger_event`); the
+    # `on_actions` step re-renders with the fuller set once it knows which
+    # live events an on_action hookup reaches (docs/step_events.md §1).
+    reachable_ids = event_calls_within_live(converted, live_ids, ck3_id_of)
+    written, write_counts = write_events(ctx, prefix, by_file, reachable_ids)
+    counts["live"] += write_counts["live"]
+    counts["stub"] += write_counts["stub"]
 
     # -- evidence ------------------------------------------------------------
     unmapped: Counter = Counter()
@@ -970,8 +1155,7 @@ def run(ctx: Context) -> StepResult:
         for line in _all_comments(conv.body):
             if line.startswith("# CK2-unmapped: "):
                 unmapped[line[len("# CK2-unmapped: "):].split(":")[0].strip()] += 1
-        if loc_keys_available:
-            loc_misses.update(k for k in conv.loc_keys if k not in loc_keys_available)
+        loc_misses.update(conv.loc_misses)
 
     config.evidence.parent.mkdir(parents=True, exist_ok=True)
     with open(config.evidence, "w", newline="", encoding="utf-8") as handle:
@@ -1006,19 +1190,36 @@ def run(ctx: Context) -> StepResult:
         for key, n in unmapped.most_common():
             writer.writerow([key, n])
 
+    orphaned_live = live_ids - reachable_ids
     counts |= {
         "files": len(written),
         "namespaces": len(namespaces),
         "fixpoint_passes": passes,
         "unmapped_keys": len(unmapped),
         "loc_key_misses": len(loc_misses),
+        "orphaned_live": len(orphaned_live),
     }
+
+    # Cross-step handoff for `on_actions` (docs/step_events.md §1, §7): the
+    # converted bodies plus everything needed to call `write_events` again
+    # with a fuller `reachable_ids`, without re-parsing any CK2 source.
+    ctx.data["events"] = {
+        "prefix": prefix,
+        "by_file": by_file,
+        "converted": converted,
+        "ck3_id_of": ck3_id_of,
+        "live_ids": live_ids,
+        "scoped_out": scoped_out,
+        "reachable_ids": reachable_ids,
+    }
+
     top_unmapped = ", ".join(f"{k}({n})" for k, n in unmapped.most_common(5))
     return StepResult(
         summary=(
             f"{counts['live']} events live, {counts['stub']} inert stubs, "
             f"{counts['skipped_scope']} skipped by scope, {len(written)} files, "
-            f"{len(namespaces)} namespaces; top unmapped: {top_unmapped or 'none'}"
+            f"{len(namespaces)} namespaces, {len(orphaned_live)} live events still "
+            f"orphaned (no on_actions lane run yet); top unmapped: {top_unmapped or 'none'}"
         ),
         counts=counts,
     )

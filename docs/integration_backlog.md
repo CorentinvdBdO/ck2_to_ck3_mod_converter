@@ -24,14 +24,16 @@ Added by lane `report-paint` (2026-09-10), from `docs/report_map_paint.md` §6.
 - `map` heightmap detail: the pass moves land p95 +9.4 % / p99 +20.2 %; decide whether the tails should be clamped to the CK2 source's.
 
 Added by lane `events` (2026-09-10), coordinator decisions on the hand-off's open questions.
-- `events`: add the faith/culture **value** rewrite (CK2 `religion = x` / `culture = y` values → the generated `fae_*` ids, which already exist in the mod); un-rejects 1131 uses across the stubbed events. Own lane, after on_actions.
-- `events`/`loc`: `[loc] named_scope` stays as is until the on_actions lane; flip to `"reference"` there, with the events step's `unsaved_scope` gate re-measured.
-- `events`: `modified` (2911) and `common/on_actions` (197) are the next two lanes; `docs/evidence/HANDOFF_events.md` §2–§3 is their brief.
-- `events` (seen in game, build 13): 539 `jomini_eventmanager.cpp: Event X is orphaned` — live events with no caller; emit `orphan = yes` on every event not referenced by a live `trigger_event` until the on_actions lane wires them. 108 `jomini_dynamicdescription.cpp: Unrecognized loc key` from 5 `fae_kni.*` events: their CK2 `EVTDESC700xx` keys are among the 40 loc misses; stub an event whose `desc` key is missing, or mint the key.
+- `events`/`loc`: `[loc] named_scope` stays as is until an event actually runs `save_scope_as` at wire-up time; flip to `"reference"` there, with the events step's `unsaved_scope` gate re-measured. Still open after lane `on-actions` (that lane wired 1 event with no saved scope of its own).
+- `events`: `modified` (2911) is the next lane; `docs/evidence/HANDOFF_events.md` §2 is its brief. `common/on_actions` is done (lane `on-actions`, `docs/evidence/HANDOFF_on_actions.md`).
+
+Added by lane `on-actions` (2026-09-23); `docs/evidence/HANDOFF_on_actions.md` is the full brief.
+- `on_actions`: extend `mappings/on_actions_ck2_ck3.csv` past its 13/90 mapped `modified` rows — 43 `not researched`, 12 `combat-side scope` (needs a scope hop), 4 `war-ended scope` (needs a scope hop), the rest have no CK3 concept (societies, crusades). `docs/evidence/HANDOFF_on_actions.md` §2.
+- `decisions`: same faith/culture value-rewrite gap `events.py` just fixed (`docs/step_decisions.md` §3.3) — `convert_block` still only rewrites keys, never values. Small, mechanical follow-up.
 
 
 Added by lane `water-border` (2026-09-10).
-- `tests/test_cli.py` runs real steps that rewrite other lanes' `docs/evidence/*.csv` on every `pytest` (decisions convertibility, terrain-history baronies, …): point those evidence writes at `tmp_path` in the test, or make the steps write evidence only when the real CLI runs. Own small lane.
+- `tests/test_cli.py` runs real steps that rewrite other lanes' `docs/evidence/*.csv` on every `pytest` (decisions convertibility, terrain-history baronies, …): point those evidence writes at `tmp_path` in the test, or make the steps write evidence only when the real CLI runs. Own small lane. **Root cause found by lane `on-actions`**: `test_cli_dry_run` (`tests/test_cli.py`) calls `main([..., "--dry-run", "--no-evidence"])` with the default step order and a `config` fixture whose `[events]`/`[on_actions]`/etc. sections are absent, so those steps fall back to the *real* `docs/evidence/*.csv` default paths — and their evidence CSVs are written with a raw `open(path, "w")`, never gated by `ctx.dry_run` the way `ctx.write_script` gates the mod output. Every `uv run pytest -q` (including `ci/checks.sh`) therefore leaves `events_convertibility.csv`/`events_unmapped_keys.csv`/`on_actions_convertibility.csv`/`decisions_convertibility.csv` holding a near-empty fixture result, not real data — a real conversion run (`uv run ck2ck3 --config configs/faerun.toml`) must run *after* the last `pytest` invocation to leave meaningful evidence for a commit. Fix: gate every step's raw evidence `open(..., "w")` behind `if not ctx.dry_run:`, same as `ctx.write_script`.
 
 Added by lane `province-edges` (2026-09-12).
 - `map`: `deepen_sea` runs before the detail pass and ramps its shelf from the plain-rescale coast; 159,494 px (0.28 %) of shelf sit off the final (smoothed) coastline. Move the shelf after the coast is final, or feed it the smoothed mask.

@@ -58,6 +58,10 @@ def convert(
     ck3_id_of: dict[str, str] | None = None,
     scoped_out: dict[str, str] | None = None,
     min_score: float = 1.0,
+    loc_keys_available: frozenset[str] | None = None,
+    faiths: dict[str, str] | None = None,
+    religions: dict[str, str] | None = None,
+    cultures: dict[str, str] | None = None,
 ) -> step.ConvertedEvent:
     ck3_id_of = ck3_id_of if ck3_id_of is not None else {ck2_id: ids.event_id("tst", ck2_id)}
     return step.convert_event(
@@ -66,7 +70,8 @@ def convert(
         themes=THEMES, default_theme="default", ck3_id_of=ck3_id_of,
         live_ids=live_ids if live_ids is not None else set(ck3_id_of),
         scoped_out=scoped_out or {}, min_score=min_score,
-        source_file="events/test.txt",
+        source_file="events/test.txt", loc_keys_available=loc_keys_available,
+        faiths=faiths, religions=religions, cultures=cultures,
     )
 
 
@@ -486,6 +491,143 @@ def test_ck2_at_variable_is_never_live() -> None:
         "id = TST.1 hide_window = yes immediate = { add_gold = duel@FROM }"
     )
     assert "ck2_variable" in conv.gates
+
+
+# -- missing_loc gate ---------------------------------------------------------
+
+def test_missing_loc_gate_stubs_an_otherwise_live_event() -> None:
+    """A live event must have every loc key it uses (docs/step_events.md §1)."""
+    conv = convert(
+        "id = TST.1 desc = EVTDESC_TST_1 trigger = { age = 16 } "
+        "option = { name = EVTOPTA_MISSING add_gold = 5 }",
+        loc_keys_available=frozenset({"EVTDESC_TST_1"}),
+    )
+    assert "missing_loc" in conv.gates
+    assert not conv.live
+
+
+def test_missing_loc_gate_clears_when_every_key_is_present() -> None:
+    conv = convert(
+        "id = TST.1 desc = EVTDESC_TST_1 trigger = { age = 16 } "
+        "option = { name = EVTOPTA_TST_1 add_gold = 5 }",
+        loc_keys_available=frozenset({"EVTDESC_TST_1", "EVTOPTA_TST_1"}),
+    )
+    assert "missing_loc" not in conv.gates
+    assert conv.live
+
+
+def test_missing_loc_gate_is_skipped_when_no_loc_data_is_given() -> None:
+    """`loc_keys_available=None` (the default) never gates - unlike tests, a
+    real run always has `ctx.data["loc"]["keys"]` by the time `events` runs."""
+    conv = convert(
+        "id = TST.1 desc = EVTDESC_TST_1 trigger = { age = 16 } "
+        "option = { name = EVTOPTA_MISSING add_gold = 5 }",
+    )
+    assert "missing_loc" not in conv.gates
+
+
+# -- faith/culture value rewrite (docs/step_events.md §5b) -------------------
+
+def test_religion_trigger_becomes_faith_scope_comparison() -> None:
+    conv = convert(
+        "id = TST.1 hide_window = yes trigger = { religion = eilistraee } "
+        "immediate = { add_gold = 1 }",
+        faiths={"eilistraee": "eilistraee"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "faith = faith:eilistraee" in text
+    assert conv.live
+
+
+def test_religion_effect_becomes_set_character_faith() -> None:
+    conv = convert(
+        "id = TST.1 hide_window = yes immediate = { religion = eilistraee }",
+        faiths={"eilistraee": "eilistraee"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "set_character_faith = faith:eilistraee" in text
+    assert conv.live
+
+
+def test_culture_trigger_and_effect_are_prefixed() -> None:
+    conv = convert(
+        "id = TST.1 hide_window = yes trigger = { culture = dark_elf } "
+        "immediate = { culture = dark_elf }",
+        cultures={"dark_elf": "dark_elf"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "culture = culture:dark_elf" in text     # trigger form, unchanged key
+    assert "set_culture = culture:dark_elf" in text  # effect form
+    assert conv.live
+
+
+def test_religion_group_trigger_uses_the_renamed_religion_id() -> None:
+    conv = convert(
+        "id = TST.1 hide_window = yes trigger = { religion_group = elven_pantheon } "
+        "immediate = { add_gold = 1 }",
+        religions={"elven_pantheon": "tst_elven_pantheon_religion"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "religion = religion:tst_elven_pantheon_religion" in text
+
+
+def test_unknown_religion_or_culture_id_stays_unmapped() -> None:
+    conv = convert(
+        "id = TST.1 hide_window = yes trigger = { religion = not_ported } "
+        "immediate = { add_gold = 1 }",
+        faiths={"eilistraee": "eilistraee"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "faith = faith:not_ported" not in text
+    assert "# CK2-unmapped: religion" in text
+
+
+def test_culture_group_and_secret_religion_stay_rejected() -> None:
+    """No CK3 concept for either - the value rewrite does not invent one."""
+    conv = convert(
+        "id = TST.1 hide_window = yes trigger = { culture_group = elven } "
+        "immediate = { set_secret_religion = eilistraee }",
+        cultures={"elven": "elven"}, faiths={"eilistraee": "eilistraee"},
+    )
+    text = write(Block(entries=[Node(key=conv.ck3_id, value=conv.body)]))
+    assert "# CK2-unmapped: culture_group" in text
+    assert "# CK2-unmapped: set_secret_religion" in text
+
+
+# -- orphan reachability (docs/step_events.md §1) -----------------------------
+
+def test_event_calls_within_live_finds_only_live_targets() -> None:
+    caller = convert(
+        "id = TST.1 hide_window = yes immediate = { character_event = { id = TST.2 } }",
+        ck3_id_of={"TST.1": "tst_tst.1", "TST.2": "tst_tst.2"},
+        live_ids={"TST.1", "TST.2"},
+    )
+    converted = {"TST.1": caller}
+    reachable = step.event_calls_within_live(
+        converted, {"TST.1", "TST.2"}, {"TST.1": "tst_tst.1", "TST.2": "tst_tst.2"},
+    )
+    assert reachable == frozenset({"tst_tst.2"})
+
+
+def test_render_event_flags_a_live_event_orphan_unless_reachable() -> None:
+    conv = convert("id = TST.1 hide_window = yes immediate = { add_gold = 1 }")
+    unreachable = write(Block(entries=[step.render_event(conv, frozenset())]))
+    assert "orphan = yes" in unreachable
+
+    reachable = write(Block(entries=[step.render_event(conv, frozenset({conv.ck3_id}))]))
+    assert "orphan = yes" not in reachable
+
+
+def test_render_event_is_idempotent_either_direction() -> None:
+    """A second write_events() call (from `on_actions`) can flip the flag
+    either way without duplicating the header comment."""
+    conv = convert("id = TST.1 hide_window = yes immediate = { add_gold = 1 }")
+    step.render_event(conv, frozenset())
+    once = write(Block(entries=[step.render_event(conv, frozenset({conv.ck3_id}))]))
+    twice = write(Block(entries=[step.render_event(conv, frozenset({conv.ck3_id}))]))
+    assert once == twice
+    assert once.count("# CK2: TST.1") == 1
+    assert "orphan = yes" not in once
 
 
 def test_rejected_keys_are_commented_even_though_the_table_maps_them() -> None:

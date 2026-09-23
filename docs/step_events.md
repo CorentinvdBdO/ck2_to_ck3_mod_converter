@@ -125,17 +125,67 @@ the 1704 emitted (one event can fail several):
 
 | gate | events | why it is a hard gate |
 |---|---|---|
-| `score` | 1530 | below `[events] min_score` (1.0): some trigger/effect key did not map |
+| `score` | 1525 | below `[events] min_score` (1.0): some trigger/effect key did not map |
 | `unsaved_scope` | 550 | the body reads `scope:x` without a `save_scope_as = x` of its own. **A CK3 saved scope dies with its event**; a CK2 `event_target` is stored on the character and survives, so the literal translation is broken at runtime |
-| `dead_call` | 529 | it fires an event that is itself stubbed, out of scope, or not part of this slice — a `trigger_event` to an id CK3 cannot resolve fails validation at load and is what crashed the decisions build (`docs/step_decisions.md` §3b.2) |
+| `dead_call` | 528 | it fires an event that is itself stubbed, out of scope, or not part of this slice — a `trigger_event` to an id CK3 cannot resolve fails validation at load and is what crashed the decisions build (`docs/step_decisions.md` §3b.2) |
 | `from_scope` | 320 | it uses CK2's `FROM`/`FROMFROM`. CK3 has no `FROM`; the converter rewrites it to `scope:ck2_from` (the name the `loc` step already uses, `docs/loc_codes.md`) and nothing saves that scope yet |
+| `missing_loc` | 62 | a `desc`/`title`/option-`name` loc key the event uses is not in the ported localisation (§1b). Generalised from the 5 `fae_kni.*` events whose CK2 `EVTDESC700xx` keys were among the 40 loc misses (lane `on-actions` goal 1) |
 | `ck2_variable` | 15 | a CK2 `@` reader variable or `@`-concatenated flag name (`remove_character_flag = nomadrule_duel@FROM`) survived. This breaks CK3's **reader**, not just its script engine, so the rest of the file goes with it |
-| `mtth` | 3 | CK3 has no `mean_time_to_happen` on events. The CK2 block is kept as a comment; the CK3 shape is an on_action pulse, and on_actions are the next lane. **No on_action hookup is invented** |
+| `mtth` | 3 | CK3 has no `mean_time_to_happen` on events. The CK2 block is kept as a comment; the CK3 shape is an on_action pulse (§on_actions, "MTTH pulse formula") |
 | `no_option` | 0 | a shown CK3 event needs at least one option (a `hidden` one needs none — `game/events/misc_events.txt:3`) |
 
-`live = 160` (145 `character_event` + 15 `letter_event`), `stub = 1544`.
-174 events reach score 1.0; 14 of those are held back by a gate.
-Score mean 0.410, median 0.375.
+`live = 159` (down from the pre-lane `on-actions` baseline of 160: the
+faith/culture value rewrite (§1a) unblocked 5 more events to score 1.0, and
+the new `missing_loc` gate (§1b) demoted 6 previously-live events —
+`FaerunSorcerer.3` and the 5 `fae_kni.700{24,25,38,39,40}` events, net −1).
+`stub = 1545`. 179 events reach score 1.0; 20 of those are held back by
+another gate. Score mean unchanged at three decimal places.
+
+### 1a. Faith/culture value rewrite (goal 4, `verified`)
+
+`religion`/`religion_group`/`set_religion`/`culture`/`set_culture` used to be
+blanket-rejected (`REJECT_CK2_KEYS`) even though `mappings/triggers.csv`
+already carried a correct `religion -> faith` / `culture -> culture` row for
+the **trigger** context — the bug was the missing `faith:`/`culture:` value
+prefix, not the key mapping, and CK2 overloads the same spelling as an
+*effect* setter too. `make_faith_culture_hook` (`events.py`) now resolves the
+id through `ctx.data["religions"]`/`["cultures"]` (never re-derived — both
+`faith_id`/`culture_id` are identity functions, so a CK2 id is also its CK3
+id, `verified` against their own docstrings) and picks the CK3 key by
+context:
+
+| CK2 | kind | CK3 | evidence |
+|---|---|---|---|
+| `religion = X` | trigger | `faith = faith:X` | `game/events/varangian_events.txt:37` |
+| `religion = X` / `set_religion = X` | effect | `set_character_faith = faith:X` | `game/events/bookmark_events.txt:2441` |
+| `religion_group = X` | trigger | `religion = religion:X` | `game/events/varangian_events.txt:35` |
+| `culture = X` | trigger | `culture = culture:X` | `game/common/decisions/10_culture_conversion_decisions.txt:268` |
+| `culture = X` / `set_culture = X` | effect | `set_culture = culture:X` | `game/common/decisions/80_major_decisions_middle_europe.txt:1082` |
+
+`culture_group` (no CK3 culture-group concept), `secret_religion` /
+`set_secret_religion` (CK3 dropped hidden/secret faith) and
+`set_graphical_culture` (a culture field, not a per-character effect) stay
+rejected — there is no CK3 target to rewrite them onto, verified by a search
+of the whole 1.19 `common/`/`events/` tree.
+
+Effect: 636 `culture` + 495 `religion` = 1131 uses un-rejected (the backlog
+item's own count), plus 103 `religion_group`; unmapped-key counts moved from
+636/495/103 to whatever the fixpoint settles the surviving `# CK2-unmapped`
+comments at (a use inside an already-dead-scored event stays a comment
+regardless — `docs/evidence/events_unmapped_keys.csv` after this run).
+
+### 1b. `missing_loc` gate (goal 1, `verified`)
+
+A live event must have every loc key it uses. `KNI.70024`/`70025`/`70038`/
+`70039`/`70040` (the `fae_kni.*` events named in the lane brief) scored 1.0
+but their `desc` used a CK2 `EVTDESC700xx` key `loc` never ported — CK3
+answered with `Unrecognized loc key`, 108 log lines at runtime
+(STATUS.md 2026-09-10). `convert_event` now checks every collected
+`desc`/`title`/option-`name` key against `ctx.data["loc"]["keys"]` (only
+when that data is present — a caller with no loc data, e.g. most unit tests,
+never gates) and adds `missing_loc` to `.gates` if any is absent. Generalised
+rather than special-cased to those 5 ids, so the same protection covers any
+future event with the same defect.
 
 ## 6. What a stub looks like
 
@@ -244,47 +294,43 @@ the silent-no-op class that has bitten this repo three times: it asserts that
 - 1762 `new` events in `docs/evidence/events_provenance.csv`; **1704
   emitted** (110 files, 97 namespaces), 58 skipped by scope (32
   `province_event`, 26 `society_quest_event`), 0 not found.
-- **160 live, 1544 inert stubs.** 81 ids remapped for the number ceiling
-  (94 numbers rewritten in all, counting leading zeros).
-  1499 CK2 event-firing calls seen; only those to a live target become
-  `trigger_event`.
-- **40 loc-key misses** out of every `desc`/`title`/option-`name` key emitted,
-  measured against the `loc` step's own english key set
-  (`ctx.data["loc"]["keys"]`, 112,569 keys) — 16 of them reach a live event
-  and show as `warning(missing-localization)`.
-- Top unmapped CK2 keys (`docs/evidence/events_unmapped_keys.csv`, 1330
-  distinct): `character_event` 1345 (a call to a stubbed event),
-  `trait` 990 / `add_trait` 710 (a CK2 trait with no CK3 counterpart),
-  `mother_even_if_dead` 907, `true_father_even_if_dead` 857, `culture` 636,
-  `ai` 617, `religion` 495, `opinion` 429, `hidden_tooltip` 404.
-- **ck3-tiger over the whole generated mod: fatal 0, error 58** — exactly the
-  build-3/build-12 baseline (`docs/evidence/tiger_events_2026-09-10_summary.txt`,
-  `docs/evidence/tiger_build3_2026-09-08.txt`). **No error comes from
-  `events/`**; the lane's whole tiger footprint is 18 warnings (16
-  `missing-localization`, 1 `use-of-this`, 1 `scopes`).
-- `uv run pytest -q` — the full suite green, 27 of them in
-  `tests/test_events.py`.
-- Full run: 16 steps (the 15 shipped ones plus `events`), **1482 files, 116 s**
-  (`docs/evidence/events_fullrun.log`); no other step's counts moved.
-- **No in-game soak was run from this lane.** `claudespace/scripts/ck3_soak.sh`
-  needs the mod registered under `claudespace/mods/` and rewrites the Proton
-  prefix's `dlc_load.json`; both are outside this worktree's write scope. The
-  coordinator's command is
-  `claudespace/scripts/ck3_soak.sh <name> --secs 120` against a copy of
-  `wt/_out/events` with a distinct mod `name` and the canary in its `tests/`
-  (`claudespace/docs/ck3_test_framework.md` §8.1).
+- **159 live, 1545 inert stubs** (before lane `on-actions`: 160/1544 — §1a/§1b
+  explain the −1). 81 ids remapped for the number ceiling (94 numbers
+  rewritten in all, counting leading zeros). 1499 CK2 event-firing calls
+  seen; only those to a live target become `trigger_event`.
+- **62 `missing_loc` gates**, 6 of them the *only* thing keeping an
+  otherwise-live event (score 1.0) a stub — §1b.
+- Top unmapped CK2 keys (`docs/evidence/events_unmapped_keys.csv`): the
+  faith/culture rewrite (§1a) removed `culture`/`religion`/`religion_group`
+  from the list; `character_event` (a call to a stubbed event), `trait` /
+  `add_trait` (a CK2 trait with no CK3 counterpart) and
+  `mother_even_if_dead`/`true_father_even_if_dead` remain the largest.
+- **ck3-tiger over the whole generated mod: fatal 0, error 58** — unchanged
+  from the build-3/build-12/events-lane baseline
+  (`docs/evidence/tiger_on_actions_2026-09-23.txt`,
+  `docs/evidence/tiger_on_actions_2026-09-23_summary.txt`). Findings located
+  under `events/` **dropped from 10 to 3** (the `missing_loc` gate caught the
+  loc misses ck3-tiger used to flag as `warning(missing-localization)`
+  post-hoc); `common/on_action/` has **zero** findings.
+- `uv run pytest -q` — the full suite green (1344 total after lane
+  `on-actions`; 42 in `tests/test_events.py`, 8 in `tests/test_on_actions.py`).
+- Full run: 18 steps (the 16 events-lane-baseline steps plus `on_actions`),
+  **1597 files, 3m25s** (`docs/evidence/last_run.md`); no step before `events`
+  moved.
+- **No in-game soak was run from this lane** (same constraint as `events`:
+  `claudespace/scripts/ck3_soak.sh` needs the mod registered under
+  `claudespace/mods/`, outside this worktree's write scope). The
+  coordinator's soak list — which live events now fire from which on_action,
+  with their trigger's first line, per the safety rule — is
+  `docs/evidence/on_actions_convertibility.csv` (`wired = yes` rows) and the
+  file-level comment block at the end of `common/on_action/fae_on_actions.txt`.
 
 ## 11. Open questions for the human
 
-1. **Rewrite faith/culture/religion *values*** (§7). The `religions` and
-   `cultures` steps keep the CK2 ids (`verified`:
-   `common/religion/religion_types/fae_elven_pantheon.txt` defines
-   `eilistraee`; `common/culture/cultures/fae_elves.txt` defines
-   `dark_elf`), so `religion = eilistraee` → `faith = faith:eilistraee`
-   through `ctx.data["religions"]`/`["cultures"]` is a small job that would
-   un-reject nine of the highest-frequency keys (1131 uses of
-   `culture`+`religion` alone). Same fix clears `docs/step_decisions.md`
-   §3.3.
+1. ~~Rewrite faith/culture/religion *values*~~ **done, lane `on-actions`**
+   (§1a). `docs/step_decisions.md` §3.3 is the same gap in `decisions.py`
+   and is still open — that step's `convert_block` does not (yet) take the
+   `religions`/`cultures` maps `events.py` now does.
 2. **Growing the vocabulary tables with the events survey was measured and
    is not worth much on its own**: of the 685 trigger and 1573 effect keys
    `scripts/events_vocab_survey.py` found, only 31 and 63 are absent from the
@@ -303,6 +349,140 @@ the silent-no-op class that has bitten this repo three times: it asserts that
    `character_event` window.** CK3 has `window = big_event_window` for the
    full-screen look; picking it per event is a design call, not a conversion
    one (60 events).
-5. **Nothing fires these events yet** (they are all `is_triggered_only` in
-   CK2, and `orphan = yes` here). That is the on_actions lane —
-   `docs/evidence/HANDOFF_events.md` §3.
+5. ~~Nothing fires these events yet~~ **partially done, lane `on-actions`**
+   (§on_actions below) — 1 of 159 live events is now reachable from a CK3
+   on_action; the rest wait on wider `mappings/on_actions_ck2_ck3.csv`
+   coverage and the `modified`-events lane (most on_action hookups point at
+   a vanilla CK2 event, not a `new` one).
+
+## on_actions
+
+Lane `on-actions`, `docs/evidence/HANDOFF_events.md` §3. Code:
+`src/ck2ck3/steps/on_actions.py`, registry position: right after `events`.
+Makes a live event **reachable**: CK2's `is_triggered_only` events fire only
+because *something* names them in `common/on_actions`, and until this step
+ran nothing did (§2/§6 `orphan = yes`, the 539 `Event X is orphaned` log
+lines STATUS.md 2026-09-10 recorded).
+
+### Orphan reachability, end to end
+
+`orphan = yes` is no longer a static stub-only flag. `write_events` (moved
+out of `events.run()` so it can be called twice) renders it on **any** live
+event outside `reachable_ids` — reachable meaning "another live event's
+`trigger_event` calls it" (`event_calls_within_live`, computed by `events`
+itself) **or** "a live `common/on_action` hookup calls it" (computed by
+`on_actions`, added on top). `on_actions.run()` re-renders `events`'s own
+output files with the fuller set, which is idempotent (`render_event` adds
+*or* removes the flag, and never duplicates the header comment — pinned by
+`test_render_event_is_idempotent_either_direction`) and cheap: no
+re-parsing, just re-rendering already-converted Python objects. Running
+`events` alone (`--steps events`) still gets a safe, conservative answer;
+running the two together (the default order) gets the real one.
+
+### `mappings/on_actions_ck2_ck3.csv`
+
+197 rows (`scripts/build_on_actions_map.py`, regenerate after editing
+`CURATED`/`BUCKETS`): 107 `kept` (Faerûn's on_action block is byte-identical
+to vanilla CK2 — nothing to port, `docs/events_provenance.md` §2) and 90
+`modified`. Of the 90, **13 have a CK3 counterpart, individually verified**
+against `../claudespace/game_files/common/on_action/*.txt` (name, root
+scope, one piece of evidence per row — see the table's own `note` column);
+the other 77 are `confidence = none` with a reason bucket (`society`: CK3 has
+no societies, 9 ids; `combat-side scope`: CK3's `on_combat_end_winner`/
+`_loser` root is the winning/losing *combat side*, not a character,
+`verified` `game/common/on_action/combat_on_actions.txt:14` "Root = Winning
+combat side" — firing a character-scope body there needs a scope hop this
+pass does not synthesize, 12 ids; `war-ended scope`: `on_war_won_attacker`/
+`_defender`/`_white_peace`/`_invalidated` document no character root at all,
+4 ids; `crusade`: CK3 replaced crusades with great holy wars, 9 ids;
+`not researched`: the remaining 43 — same per-name check as the 13 curated
+rows, just not done this pass, `docs/evidence/HANDOFF_on_actions.md`).
+
+Not a semantic-search guess: every mapped row's evidence is a vanilla
+`common/on_action` file:line quote (`docs/step_events.md`'s own table in
+`scripts/build_on_actions_map.py`'s `CURATED` docstring), the same bar
+CLAUDE.md's invariants hold format facts to.
+
+### Additive merge, verified for CK3 (not just CK2)
+
+`docs/events_provenance.md` §1 already proved CK2 merges same-name
+on_actions across files. **CK3 does too**, `verified` on the vanilla install
+itself: `game/common/on_action/yearly_on_actions.txt:1975` and `:2915` both
+declare `three_year_playable_pulse = { events = { ... } }` — two separate
+declarations, each contributing its own `events` list, both fire (there is
+no third file to check against; this is vanilla redeclaring its own
+on_action, which only makes sense if the engine appends rather than
+overwrites). `on_actions.py`'s output file therefore never writes anything
+but `events =`/`random_events =` keys — never `trigger`/`effect`/other
+fields — so it cannot delete a vanilla hookup the way a full redefinition
+would.
+
+### The wiring rule: live only, everything else stays a comment
+
+For each mapped CK2 on_action, `collect_faerun_on_actions` merges every
+Faerûn declaration of that name (across `common/on_actions/*.txt`, same
+additive rule) and `extract_event_refs` walks its `events =`/`random_events
+=` lists. Each referenced id is one of three things:
+
+1. **Not a `new` event this converter ports** — a vanilla CK2 kept/modified
+   id, or an id outside this run's scope entirely. Stays a `#` comment; the
+   `modified`-events lane owns it.
+2. **A `new` event, but stubbed** (`fae_unported`). Stays a `#` comment —
+   the same rule `make_event_hook` already enforces for event-to-event
+   calls, one level up: a hookup to an id CK3 cannot resolve is what crashed
+   the decisions build (`docs/step_decisions.md` §3b.2).
+3. **Live.** Appended to the matching CK3 on_action's `events`/
+   `random_events` list, with a `# CK2 <id> via <on_action>` trailing
+   comment, and folded into `reachable_ids` so `events`'s own `orphan` flag
+   clears.
+
+This run: **1 live event wired** (`fae_frmaint.20`, via
+`on_character_convert_religion` -> `on_character_faith_change`) out of 185
+hookups the 13 mapped on_actions carry — 137 point at a vanilla CK2 event
+(bucket 1), 47 at a stubbed `new` event (bucket 2). The small number is the
+honest consequence of two narrow gates multiplying (13/90 on_actions mapped
+× 159/1704 events live), not a bug — `docs/evidence/on_actions_convertibility.csv`
+has the row for every hookup this pass looked at, wired or not, with a
+`reason` column.
+
+### MTTH pulse (goal 3): formula documented, not wired
+
+CK3 has no `mean_time_to_happen`; the shape is an on_action pulse with
+`random_events` weights, `game/common/on_action/yearly_on_actions.txt:840`
+`yearly_playable_pulse` (root = the playable character, fires once a year
+on their birthday, `game/common/on_action/_on_actions.info`) or `:2483`
+`quarterly_playable_pulse` (same, every quarter, both names `verified`
+against the install — the `_on_actions.info` doc names them
+`on_yearly_playable`/`quarterly_playable_pulse`, but the *id* actually
+declared is `yearly_playable_pulse`, not `on_yearly_playable`; anyone citing
+the `.info` comment name instead of the real id would point at nothing).
+
+Formula, for when it is needed: `weight = round(12000 / mean_months)`,
+clamped to a floor of 1, attached to `yearly_playable_pulse`'s
+`random_events` (a 12-month MTTH gets weight 1000; a monthly one 12000,
+correctly dominant since it only gets one roll a year instead of twelve).
+`mean_months` is the CK2 block's base `months =`/`years = N × 12` only — any
+`modifier = { factor = ... }` sub-block is dropped, the same treated-as-a-
+weight-not-a-value limitation `docs/step_decisions.md` §3b already accepted
+for `ai_chance`. `quarterly_playable_pulse` is the finer-grained alternative
+for `mean_months` below ~4.
+
+**Recounted this run** (goal 3's ask): still exactly **3** CK2 `new` events
+carry `mean_time_to_happen` (`conv.70100`, `localleaders.1`,
+`localleaders.5`), and all three also fail `score` (0.32–0.35) —
+none is "live except for MTTH". Wiring a pulse hookup for a 32 %-mapped body
+is exactly what the stabilisation policy forbids (`docs/step_decisions.md`
+§3b), so **no on_action pulse hookup is emitted**. The formula above is
+ready for the `modified`-events lane, which will raise both the count and
+(via the shared vocabulary tables) some of these scores.
+
+### Safety-rule soak list
+
+Per the goal's safety rule: the one live event this run wires, its target
+on_action, and its trigger's first line, is
+`docs/evidence/on_actions_convertibility.csv` (`wired = yes` row) and
+restated as a file-level comment at the end of
+`common/on_action/fae_on_actions.txt`. ck3-tiger over the whole generated
+mod: **fatal 0, error 58** (unchanged), zero findings under
+`common/on_action/`. In-game soak is the coordinator's
+(`docs/evidence/HANDOFF_on_actions.md`).

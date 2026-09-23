@@ -1,0 +1,198 @@
+ck2_on_action,status,ck3_on_action,ck3_root_scope,confidence,note
+on_absorb_clan_attempted_started_war,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_acquire_nickname,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_adolescence,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_adolescence_pulse,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_adulthood,modified,on_birthday_adulthood,character (coming of age),verified,"game/common/on_action/birthday.txt:1-2,323 'character having its birthday in root scope', called from on_birthday's on_actions chain (scope carries over)"
+on_ai_end_raid,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_alternate_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_approve_de_jure_law,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_approve_law,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_artifact_inheritance,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_artifact_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_assassination,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_assassination_disc,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_avoided_imprison_fled_country,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_avoided_imprison_started_war,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_battle_lost,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_battle_lost_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_battle_lost_owner,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_battle_won,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_battle_won_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_battle_won_owner,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_became_imprisoned,modified,on_imprison,character (the one imprisoned),verified,game/common/on_action/prison_on_actions.txt:5-7 'character being imprisoned in root scope'
+on_become_doge,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_become_imprisoned_any_reason,modified,on_imprison,character (the one imprisoned),verified,"same target as on_became_imprisoned; CK3 on_imprison covers every imprisonment reason, matching CK2's 'any_reason' variant"
+on_betrothal,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_bi_yearly_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_birth,modified,on_birth_mother,character (mother),verified,"game/common/on_action/child_birth_on_actions.txt:1-8 'called for the mother'; CK2 on_birth ROOT is also the mother. CK3 additionally splits into on_birth_child/on_birth_father, not wired here (single-target mapping only)"
+on_blood_brother_death,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_bloodline_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_character_ask_to_join_society,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_convert_culture,modified,on_character_culture_change,character,verified,game/common/on_action/culture_on_actions.txt:29-30 'Root = character'
+on_character_convert_religion,modified,on_character_faith_change,character,verified,game/common/on_action/religion_on_actions.txt:388-391 'Root is the character'
+on_character_convert_secret_religion,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_character_event_message,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_character_join_society,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_kicked_from_society,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_leave_society,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_character_society_rank_down,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_society_rank_up,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_character_stop_showing_interest,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_character_switch_society_interest,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_childhood_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_chronicle_owner_change,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_chronicle_start,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_combat_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_combat_starting,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_command_sub_unit,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_command_unit,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_county_religion_change,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_create_chronicle_if_empty,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_create_title,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_crusade_canceled,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_creation,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_failure,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_crusade_invalid,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_launches,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_monthly,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_preparation_starts,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_crusade_success,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_crusade_target_changes,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_death,modified,on_death,character (dying),verified,exact name match; game/common/on_action/death.txt:1 'character just about to die in root scope'
+on_decade_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_defect_from_rebels,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_defect_to_rebels,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_divorce,modified,on_divorce,character (major partner),verified,"exact name match; game/common/on_action/marriage_concubinage.txt:176, same shape as on_marriage"
+on_elective_gavelkind_succession,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_employer_change,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_enforce_peace,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_enforce_peace_six_vassals,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_enforce_peace_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_entering_port,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_eu4_conversion_done,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_eu4_conversion_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_excommunicate_interaction,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_executed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_exiled,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_failed_assassination,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_failed_assassination_disc,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_feud_ended,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_feud_started,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_five_year_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_focus_pulse,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_focus_selected,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_forced_consort,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_fort_construction_completed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_fort_construction_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_heresy_takeover,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_holding_building_start,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_holy_order_leave,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_hospital_construction_completed,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_hospital_construction_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_host_change,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_law_vote_failed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_law_vote_passed,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_letter_event_message,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_loot_province,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_loot_settlement,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_major_battle_lost,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_major_battle_lost_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_major_battle_won,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_major_battle_won_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_marriage,modified,on_marriage,character (major partner),verified,exact name match; game/common/on_action/marriage_concubinage.txt:2-4 'root = Major partner of the marriage'
+on_merc_leave,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_merc_rampage,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_merc_turn_coat_from,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_merc_turn_coat_to,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_mercenary_captain_replacement,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_mercenary_dismissed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_mercenary_hired,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_navy_returns_with_loot,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_new_holder,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_new_holder_inheritance,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_new_holder_usurpation,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_offmap_governor_changed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_offmap_monthly_pulse,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_offmap_policy_changed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_offmap_ruler_changed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_offmap_status_changed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_offmap_yearly_pulse,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_outbreak,modified,disease_outbreak_pulse,"character (assumed: per-character disease pulse, same shape as CK2 on_outbreak)",verified,"game/common/on_action/health_on_actions.txt:343, no explicit root comment - medium confidence"
+on_over_vassal_limit_succession,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_player_mercenary_income,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_pledge_crusade_defense,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_pledge_crusade_participation,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_post_birth,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_post_birth_stillbirth,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_pregnancy,modified,on_pregnancy_mother,character (mother),verified,game/common/on_action/child_birth_on_actions.txt:1165-1169 'called for the mother when a pregnancy reaches revealed status'
+on_prepared_invasion_aborts,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_prepared_invasion_expires,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_prepared_invasion_monthly,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_province_major_modifier,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_province_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_quest_failure,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_quest_success,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_rebel_revolt,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_reform_religion,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_rel_elector_chosen,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_rel_head_chosen,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_released_from_prison,modified,on_release_from_prison,character (the one released),verified,game/common/on_action/prison_on_actions.txt:252-253 'character released from prison in root scope'
+on_retract_vassal_attempted_started_war,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_revoke_attempted_started_war,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_settlement_construction_completed,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_settlement_construction_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_settlement_looted,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_lost_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_siege_lost_leader_fort,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_lost_leader_trade_post,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_over_loc_chars,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_siege_over_loc_chars_fort,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_over_loc_chars_trade_post,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_over_winner,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_siege_over_winner_fort,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_over_winner_trade_post,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_siege_won_leader,modified,,,none,"CK3's combat_on_actions.txt on_combat_end_winner/loser root is the winning/losing COMBAT SIDE, not a character (verified, 'Root = Winning combat side'); a ported character-scope event body cannot fire from there without a scope hop this pass does not synthesize"
+on_siege_won_leader_fort,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_siege_won_leader_trade_post,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_society_bi_yearly_pulse,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_society_created,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_society_destroyed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_society_failed_to_find_new_leader,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_society_progress_full,modified,,,none,"societies do not exist in CK3 (docs/mechanics_inventory.md), matches events step OUT_OF_SCOPE_REASONS['society_quest_event']"
+on_society_progress_zero,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_split_clan_attempted_started_war,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_startup,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_title_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_trade_post_construction_completed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_trade_post_construction_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_tyranny_gained,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_tyranny_gained_tyrant_only,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_unit_entering_province,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_unlanded,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_unpledge_crusade_defense,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_unpledge_crusade_participation,modified,,,none,CK3 replaced crusades with great holy wars; no per-event counterpart researched this pass
+on_vassal_accepts_religious_conversion,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_war_ended_defeat,modified,,,none,"game/common/on_action/war_on_actions.txt on_war_won_attacker/defender/white_peace/invalidated document no character root (only scope:attacker/scope:defender/scope:war); guessing the root risks firing a character-scope body in the wrong scope (safety rule, docs/step_decisions.md §3b)"
+on_war_ended_invalid,modified,,,none,"game/common/on_action/war_on_actions.txt on_war_won_attacker/defender/white_peace/invalidated document no character root (only scope:attacker/scope:defender/scope:war); guessing the root risks firing a character-scope body in the wrong scope (safety rule, docs/step_decisions.md §3b)"
+on_war_ended_victory,modified,,,none,"game/common/on_action/war_on_actions.txt on_war_won_attacker/defender/white_peace/invalidated document no character root (only scope:attacker/scope:defender/scope:war); guessing the root risks firing a character-scope body in the wrong scope (safety rule, docs/step_decisions.md §3b)"
+on_war_ended_whitepeace,modified,,,none,"game/common/on_action/war_on_actions.txt on_war_won_attacker/defender/white_peace/invalidated document no character root (only scope:attacker/scope:defender/scope:war); guessing the root risks firing a character-scope body in the wrong scope (safety rule, docs/step_decisions.md §3b)"
+on_war_started,modified,on_war_started,"character (assumed: CB declarant, same as on_declaration)",verified,exact name match; game/common/on_action/war_on_actions.txt:309-312 'same scopes as the CBs on_declaration'
+on_warleader_death,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_construction_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_destroyed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_loot_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_owner_change,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_renamed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_restore_finish,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_restore_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_stage_finish,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_stage_loot_finish,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_stage_loot_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_upgrade_destroyed,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_upgrade_finish,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_wonder_upgrade_start,kept,,,n/a,"kept: identical to vanilla CK2, nothing new to port"
+on_yearly_childhood_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)
+on_yearly_pulse,modified,,,none,not researched this pass; needs the same per-on_action name+root+scope check as the CURATED rows (docs/evidence/HANDOFF_on_actions.md)

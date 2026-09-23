@@ -50,6 +50,11 @@ DEFAULT_ORDER: tuple[str, ...] = (
     # and `decisions.convert_block`; after `loc` and `traits` for the same
     # reasons `decisions` is (docs/step_events.md).
     "events",
+    # Right after `events`: it reads `ctx.data["events"]` (the converted
+    # bodies, the live-id map) to wire live events into CK3 `common/on_action`
+    # hookups, and re-renders `events`'s own output so the `orphan` flag
+    # reflects the fuller reachability (docs/step_events.md §on_actions).
+    "on_actions",
     # Last on purpose: `tests` asserts what the earlier steps wrote, by
     # reading the generated mod back.
     "tests",

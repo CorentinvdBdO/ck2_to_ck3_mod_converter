@@ -1,12 +1,10 @@
 ck2_key,unmapped_uses
-character_event,1345
+character_event,1343
 trait,990
 mother_even_if_dead,907
 true_father_even_if_dead,857
 add_trait,710
-culture,636
 ai,617
-religion,495
 opinion,429
 hidden_tooltip,404
 reverse_opinion,397
@@ -29,7 +27,6 @@ spawn_unit,122
 add_friend,117
 create_character,117
 any_society_member,105
-religion_group,103
 wealth,103
 culture_group,102
 break,100
@@ -94,7 +91,9 @@ combat_rating_diff,33
 has_minor_title,32
 controls_religion,32
 can_join_society,32
+religion,32
 is_inaccessible_trigger,31
+culture,31
 random_courtier_or_vassal,30
 any_demesne_title,30
 is_patrician,30
@@ -183,6 +182,7 @@ random_demesne_province,11
 plot_target_char,11
 is_tribal,11
 has_artifact,11
+religion_group,11
 remove_all_race_traits,11
 log,11
 is_primary_heir,10
