@@ -470,6 +470,20 @@ heightmap_detail_ridged_weight = 1.0
 heightmap_detail_ridged_sharpness = 3.0
 heightmap_detail_ridged_diffusion_scale = 0.15
 
+# --- pass 2, source-adaptive amplitude (docs/step_map_heightmap.md §2h).
+# "Thay was still broken" after build 17: a gentle, genuine macro basin the
+# CK2 author already drew around Thaymount (closed-depression depth in the
+# plain rescale itself up to 7,480-9,521 levels over 9-81 px windows) was
+# getting the SAME per-terrain-class ridged texture as a real cliff, applied
+# coherently all the way around the closed contour -- a sharp, unbroken
+# rampart no single-source-pixel bound (heightmap_detail_bound_window_px)
+# can see, because every pixel individually stays inside its own tolerance.
+# Scale the amplitude down (never up) where the source is locally smoother
+# than its own class's mean; 0.35 floor so a class border stays seamless.
+heightmap_detail_source_adaptive_gain = true
+heightmap_detail_source_adaptive_window_px = 9.0
+heightmap_detail_source_adaptive_floor = 0.35
+
 [map.heightmap]
 # CK2 carries almost no bathymetry: Faerun's whole ocean rescales into
 # [1439, 4883], a median only 39 % of the way below the water surface, and CK3

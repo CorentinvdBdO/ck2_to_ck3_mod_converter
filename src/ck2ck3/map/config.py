@@ -382,6 +382,31 @@ class HeightmapDetailConfig:
     #: Faerun's high-altitude CK2 lakes and river provinces
     #: (docs/step_map_heightmap.md §2f).
     coast_mode: str = "damp_detail"
+    #: pass 2 (§2h): scale the per-terrain amplitude by how rough the CK2
+    #: source *already is*, locally, relative to its own class's mean --
+    #: never above the class target (``1.0``), only down toward
+    #: ``source_adaptive_floor`` where the source is smoother than its class
+    #: average.  Without this, a terrain class's amplitude is a single
+    #: scalar applied everywhere in that class (``_relative_terrain_gain``),
+    #: so a gently-domed CK2 plateau a few hundred levels tall gets exactly
+    #: the same ridged mountain-scale texture as a real escarpment beside
+    #: it -- and because the ridged relief (§2g) is phase-locked to the
+    #: source's own drainage, that uniform amplitude is applied *coherently*
+    #: all the way around a closed basin the source only gently suggests,
+    #: turning it into a sharp, unbroken rampart no single-window bound (one
+    #: CK2 source pixel, §2f) ever sees, because every pixel individually
+    #: stays inside its own tolerance. ``docs/step_map_heightmap.md`` §2h.
+    source_adaptive_gain: bool = True
+    #: pass 2 (§2h): the window (canvas px) the local source roughness is
+    #: measured over.  9 = ~13 km: wide enough to separate "this pixel sits
+    #: on a real cliff" from "this pixel sits on a gentle rim", narrow
+    #: enough to still be inside the closed-depression scale the defect was
+    #: found at (27 px, docs/step_map_heightmap.md §2h).
+    source_adaptive_window_px: float = 9.0
+    #: pass 2 (§2h): the minimum fraction of the class amplitude a patch of
+    #: source the class's own mean roughness calls perfectly smooth still
+    #: receives, so a terrain-class border does not read as a texture seam.
+    source_adaptive_floor: float = 0.35
 
 
 def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
@@ -474,6 +499,17 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
             raw.get("heightmap_detail_coast_smooth_px", d.coast_smooth_px)
         ),
         coast_mode=str(raw.get("heightmap_detail_coast_mode", d.coast_mode)),
+        source_adaptive_gain=bool(
+            raw.get("heightmap_detail_source_adaptive_gain", d.source_adaptive_gain)
+        ),
+        source_adaptive_window_px=float(
+            raw.get("heightmap_detail_source_adaptive_window_px",
+                    d.source_adaptive_window_px)
+        ),
+        source_adaptive_floor=float(
+            raw.get("heightmap_detail_source_adaptive_floor",
+                    d.source_adaptive_floor)
+        ),
     )
 
 
@@ -543,6 +579,15 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         river_depth=float(hmd.get("river_depth", d.river_depth)),
         coast_smooth_px=float(hmd.get("coast_smooth_px", d.coast_smooth_px)),
         coast_mode=str(hmd.get("coast_mode", d.coast_mode)),
+        source_adaptive_gain=bool(
+            hmd.get("source_adaptive_gain", d.source_adaptive_gain)
+        ),
+        source_adaptive_window_px=float(
+            hmd.get("source_adaptive_window_px", d.source_adaptive_window_px)
+        ),
+        source_adaptive_floor=float(
+            hmd.get("source_adaptive_floor", d.source_adaptive_floor)
+        ),
     )
 
 

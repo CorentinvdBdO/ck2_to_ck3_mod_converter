@@ -490,6 +490,9 @@ def test_every_new_flat_map_key_reaches_the_config():
         "heightmap_detail_ridged_weight": 0.33,
         "heightmap_detail_ridged_sharpness": 1.5,
         "heightmap_detail_ridged_diffusion_scale": 0.11,
+        "heightmap_detail_source_adaptive_gain": False,
+        "heightmap_detail_source_adaptive_window_px": 15.0,
+        "heightmap_detail_source_adaptive_floor": 0.2,
     }
     cfg = heightmap_detail_config(raw)
     assert cfg.enabled
@@ -516,6 +519,9 @@ def test_every_new_flat_map_key_reaches_the_config():
     assert cfg.ridged_weight == 0.33
     assert cfg.ridged_sharpness == 1.5
     assert cfg.ridged_diffusion_scale == 0.11
+    assert cfg.source_adaptive_gain is False
+    assert cfg.source_adaptive_window_px == 15.0
+    assert cfg.source_adaptive_floor == 0.2
 
 
 def test_the_new_keys_also_work_in_the_standalone_nested_table():
@@ -535,6 +541,8 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
         "bound_window_px": 5, "bound_tolerance_sigmas": 3.5,
         "ridged_classes": ["hills"], "ridged_weight": 0.33,
         "ridged_sharpness": 1.5, "ridged_diffusion_scale": 0.11,
+        "source_adaptive_gain": False, "source_adaptive_window_px": 15.0,
+        "source_adaptive_floor": 0.2,
     })
     assert (cfg.deterrace_mode, cfg.relief_mode, cfg.target_mode) == (
         "gaussian", "isotropic", "power_law")
@@ -551,6 +559,9 @@ def test_the_new_keys_also_work_in_the_standalone_nested_table():
     assert cfg.ridged_classes == ("hills",)
     assert (cfg.ridged_weight, cfg.ridged_sharpness) == (0.33, 1.5)
     assert cfg.ridged_diffusion_scale == 0.11
+    assert cfg.source_adaptive_gain is False
+    assert cfg.source_adaptive_window_px == 15.0
+    assert cfg.source_adaptive_floor == 0.2
 
 
 def test_the_defaults_are_the_ones_the_docs_claim():
@@ -578,6 +589,10 @@ def test_the_defaults_are_the_ones_the_docs_claim():
     assert d.ridged_weight == 1.0
     assert d.ridged_sharpness == 3.0
     assert d.ridged_diffusion_scale == 0.15
+    # §2h, the closed-loop rampart
+    assert d.source_adaptive_gain is True
+    assert d.source_adaptive_window_px == 9.0
+    assert d.source_adaptive_floor == 0.35
 
 
 # --------------------------------------------------------------------------- #
@@ -999,3 +1014,121 @@ def test_mountains_get_the_ridged_seed_and_wetlands_do_not():
                      terrain_keys=("wetlands", "mountains"),
                      ridged_classes=())
     assert none["erosion_ridged_land_mean"] == 0.0
+
+
+# --------------------------------------------------------------------------- #
+# §2h -- "Thay was still broken": a closed-loop rampart no small window sees
+# --------------------------------------------------------------------------- #
+def _thay_like_fixture(h: int = 240, w: int = 240):
+    """Flat plateau top + a lake hole + a multi-step cliff, all in one.
+
+    The render this lane produced showed a closed escarpment loop around a
+    gently-domed CK2 plateau that no single-CK2-source-pixel bound (§2f)
+    ever caught, because every pixel individually stayed inside its own
+    tolerance -- the defect is the ring's *coherence*, not any one pixel.
+    This fixture reproduces the three ingredients the render found at once:
+    a broad, gentle dome the CK2 source itself only barely suggests (all
+    ``mountains``, so it is entitled to the class's full ridged texture), a
+    circular lake punched through the plateau off to one side, and a real
+    multi-step escarpment along one edge so a fix here cannot be "just
+    flatten everything".
+    """
+    y, x = np.mgrid[0:h, 0:w].astype(np.float64)
+    cy, cx = h * 0.45, w * 0.45
+    r = np.hypot(y - cy, x - cx)
+    dome_radius, dome_height = 70.0, 6.0 * QUANT   # a gentle, wide dome
+    dome = dome_height * np.exp(-(r / dome_radius) ** 2)
+    ramp = 4.0 * QUANT * ((x.astype(int) % 40) / 40.0)  # ordinary 8-bit terracing
+    cliff = 9.0 * QUANT * (x > w * 0.85)                # a real escarpment
+    field = 14000.0 + dome + ramp + cliff
+    heights = (np.round(field / QUANT) * QUANT).astype(np.uint16)
+    land = np.ones((h, w), dtype=bool)
+    lake_y, lake_x, lake_r = h * 0.6, w * 0.25, 10.0
+    lake = np.hypot(y - lake_y, x - lake_x) <= lake_r
+    land[lake] = False
+    heights[lake] = WATER - 200
+    terrain_code = np.zeros((h, w), dtype=np.uint8)     # all "mountains"
+    river_body = np.zeros((h, w), dtype=bool)
+    river_width_index = np.zeros((h, w), dtype=np.float32)
+    return heights, land, terrain_code, river_body, river_width_index, (cy, cx)
+
+
+def _run_thay_like(**over):
+    heights, land, tcode, rb, rw, centre = _thay_like_fixture()
+    out, stats = hd.apply(
+        heights, land_mask=land, terrain_code=tcode, terrain_keys=["mountains"],
+        river_body=rb, river_width_index=rw, km_per_px=KM_PER_PX,
+        water_level=WATER, max_level=MAXLVL,
+        cfg=HeightmapDetailConfig(enabled=True, **over),
+    )
+    return heights, land, out, stats, centre
+
+
+def test_the_lake_hole_and_the_cliff_survive_the_combined_fixture():
+    """The three ingredients do not interfere: water stays water, land stays
+    strictly above it, and the escarpment is still a multi-step drop."""
+    base, land, out, stats, _ = _run_thay_like()
+    assert (out[~land] == base[~land]).all()
+    assert (out[land].astype(np.int64) > WATER).all()
+    w = out.shape[1]
+    step_col = int(w * 0.85)  # where `cliff = 9 * QUANT * (x > w * 0.85)` steps up
+    edge_rise = (float(out[:, step_col + 2:step_col + 6].astype(np.float64).mean())
+                 - float(out[:, step_col - 6:step_col - 2].astype(np.float64).mean()))
+    assert edge_rise > 5.0 * QUANT   # most of the 9-step cliff survives
+
+
+def test_source_adaptive_gain_shrinks_the_closed_loop_rampart():
+    """The metric this section adds: `closed_depression_excess` (a
+    morphological reconstruction, not a local window) is what the render's
+    ring showed up as. `source_adaptive_gain` must reduce it on the gentle
+    dome without being asked to zero it -- most of a real basin's depth is
+    the CK2 source's own (docs/step_map_heightmap.md §2h).
+    """
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+    import relief_pits_common as P
+
+    base, land, on, _, _ = _run_thay_like(source_adaptive_gain=True)
+    _, _, off, _, _ = _run_thay_like(source_adaptive_gain=False)
+    for w in (9, 27):
+        excess_on = P.closed_depression_excess(base, on, land, w)[land]
+        excess_off = P.closed_depression_excess(base, off, land, w)[land]
+        assert float(excess_on.max()) <= float(excess_off.max()) + 1.0, (
+            f"width {w}: on={excess_on.max():.0f} off={excess_off.max():.0f}"
+        )
+    # and it must not be a free lunch: a genuine cliff pixel (not the dome)
+    # keeps essentially the same amplitude either way
+    step_col = int(base.shape[1] * 0.85)
+    on_step = float(on[:, step_col + 2:step_col + 6].astype(np.float64).mean()
+                    - on[:, step_col - 6:step_col - 2].astype(np.float64).mean())
+    off_step = float(off[:, step_col + 2:step_col + 6].astype(np.float64).mean()
+                     - off[:, step_col - 6:step_col - 2].astype(np.float64).mean())
+    assert on_step / max(off_step, 1.0) > 0.85
+
+
+def test_source_adaptive_gain_never_boosts_above_the_class_amplitude():
+    """The factor is a brake, never an accelerator: on a perfectly uniform
+    source (no local relief anywhere) every pixel is at the class's own
+    mean, so the factor must be exactly 1 and the pass must reproduce the
+    unmodulated output bit for bit."""
+    heights, land, tcode, rb, rw = _terraced_island()
+    on, _ = hd.apply(
+        heights, land_mask=land, terrain_code=tcode, terrain_keys=["plains"],
+        river_body=rb, river_width_index=rw, km_per_px=KM_PER_PX,
+        water_level=WATER, max_level=MAXLVL,
+        cfg=HeightmapDetailConfig(enabled=True, source_adaptive_gain=True),
+    )
+    off, _ = hd.apply(
+        heights, land_mask=land, terrain_code=tcode, terrain_keys=["plains"],
+        river_body=rb, river_width_index=rw, km_per_px=KM_PER_PX,
+        water_level=WATER, max_level=MAXLVL,
+        cfg=HeightmapDetailConfig(enabled=True, source_adaptive_gain=False),
+    )
+    # a single terrain class over the whole island: the roughness factor
+    # cannot exceed 1 anywhere, so the modulated run is never *rougher*
+    assert float(np.abs(on[land].astype(np.float64)
+                        - heights[land].astype(np.float64)).mean()) <= float(
+        np.abs(off[land].astype(np.float64)
+              - heights[land].astype(np.float64)).mean()) + 1.0

@@ -1142,3 +1142,200 @@ water pixels remain on the shelf between 0 and the water level, land minimum
 4884 (one level above the surface, as before).
 
 `deepen_sea = false` restores the old behaviour.
+
+## 2h. "Thay was still broken" — the render, the defect list, which metric sees each
+
+Lane `thay-relief` (2026-09-23). Playtest verdict after build 17, no more
+detail than that; the brief was explicit that our metrics had already
+measured the wrong thing twice (§2d's MOAT, §2f's own bound hit rate), so
+this section starts from a **render**, not a table.
+
+### The render
+
+`scripts/thay_render.py` — a hillshade and an oblique 3-D view of the Thay
+window (canvas x 4752-5311, y 1583-2222, +100 px margin) for four heights:
+CK2's own `topology.bmp` at native resolution, our plain rescale, a
+reconstruction of build 15's settings, and the actual shipped build-17
+`heightmap.png`. The vertical scale is not a choice: `WORLD_EXTENTS_Y = 51`
+(`common/defines/fae_defines.txt`) is the same world-unit scale the engine
+applies to the 16-bit height channel over a canvas where one heightmap texel
+is one world unit horizontally on both axes (`WORLD_EXTENTS_X`/`Z` =
+width/height - 1, the CLAUDE.md invariant), so
+`world_height = level / 65535 * 51` with unit pixel spacing is the exact
+surface normal `pdxterrain.shader` computes from this texture — no separate
+exaggeration knob to get wrong. The sun is vanilla's own constant,
+`sun_direction = { -4.5 3 -1 }` (x, y-up, z, `gfx/map/environment/environment.txt`),
+elevation 33.1 deg, corroborated by the same file's
+`terrain_sunny_sun_elevation = 0.4` (36 deg on the file's own 0..1 = 0..90 deg
+scale). The camera pitch is `ZOOM_STEPS_TILT[0] = 50` deg
+(`common/defines/graphic/00_graphics.txt`), the closest zoom step. Figures:
+`docs/evidence/thay_relief/{hillshade,oblique}_{ck2_source,plain_rescale,build15,build17,after_fix}.png`.
+
+**What build 17's render shows, in words.** The CK2 source and the plain
+rescale both show an ordinary rugged massif around a lake, rounded, no sharp
+boundary. Build 15 and build 17 both show, in the same place, a **closed
+escarpment loop** — a hard, unbroken rampart maybe 500 x 600 canvas px
+(740 x 890 km) around, encircling a domed interior that reads distinctly
+smoother/rougher-textured than the terrain outside it, with a lake sitting
+just outside the loop's eastern arc. Along the loop's southern arc the wall
+is **serrated**: alternating light/dark teeth in the hillshade, a stair-step
+crenellation in the oblique view — the same look the brief's b15 in-game
+screenshot names. Where the render crosses an actual lake (the flat grey
+patch, top area of every crop), the oblique view shows it as a dead-flat
+plane meeting jagged terrain at a vertical wall — a shaft, not a shore.
+
+Three defect classes, each with its own cause and its own metric:
+
+### (a) The closed-loop rampart — verified, partially fixed
+
+**Not a fabricated basin.** `scripts/relief_pits_common.closed_depression_depth`
+(morphological reconstruction: the surface water would pond to) run on the
+*plain rescale itself*, at 9/27/45/81 px windows, already reads up to
+7,480-9,521 levels deep at the same location the render's ring sits over —
+the CK2 author's own topology already carries a broad, gentle 20-90 px
+macro-basin there (Thaymount is the highest pixel of the Thay window, an
+isolated dome, and every isolated dome an erosion model or a diffusion
+filter runs over is exactly the shape that organises a ring). What must not
+happen is the *output* exceeding that by more than the terrain-class
+tolerance — `closed_depression_excess = closed_depression_depth(output) -
+closed_depression_depth(source)`, the new metric this section adds
+(`relief_pits_common.closed_depression_excess`/`_stats`,
+`EXCESS_WINDOWS_PX = (3, 9, 27)`, the task's own suggested windows: "since a
+20 km bowl passes a 3 px window"). On the shipped build 17, before this
+lane's fix, the excess at 9/27/45 px was p99 378/444/467, max 1837/2072/1868
+levels — real, but well under half of the total depth: **most of the ring's
+depth is the CK2 author's own relief**, not something the pass invented.
+
+**The mechanism that turns a gentle 300-level undulation into a player-visible
+rampart.** `_relative_terrain_gain` (the default `gain_mode = "deficit"`
+path) assigns exactly one amplitude scalar per CK3 terrain class — on this
+run, mountains gets gain x2.317 — applied *uniformly* to every pixel of
+that class, whatever the CK2 source looks like there. A gently-domed rim the
+author drew with a couple of quantisation risers over 20+ px gets the same
+full ridged mountain texture (§2g) as a real 3,878-level Thay escarpment two
+pixels away in the same class. Because that texture (`eroded_relief`,
+`ridged_seed`) is phase-locked to the very terrain it textures, the same
+amplitude reinforces *coherently* all the way around a closed contour — a
+defect no single-source-pixel bound (§2f, 3 px window) can ever see, because
+every pixel individually still sits inside its own tolerance; the
+serration/coherence is a property of the whole loop, not of any one pixel.
+
+**The fix.** `heightmap_detail_source_adaptive_gain = true` (new default).
+`_source_roughness_factor` scales the per-terrain amplitude down (never up)
+by how rough the CK2 source *already is* locally — local relief (dilation
+minus erosion) over `heightmap_detail_source_adaptive_window_px` (9 px),
+normalised to the pixel's own class mean, floored at
+`heightmap_detail_source_adaptive_floor` (0.35) so a class border stays
+seamless. A pixel on a real cliff (locally rough) keeps ~full class
+amplitude; a pixel on a gentle rim (locally smooth) gets down to 35 % of it.
+
+**Measured** (Thay window, `docs/evidence/thay_relief/`, `verified`, same
+seed and config otherwise, whole-canvas run):
+
+| metric | window | before (build 17) | after this fix |
+|—-|—-|—-|—-|
+| pit depth (§2f, `source_local_min - out`) | 3 px | p95 134 / p99 371 | p95 99 / p99 327 |
+| pit depth | 9 px | p95 -104 / p99 71 | p95 -110 / p99 25 |
+| pit depth | 27 px | p95 -347 / p99 -42 | p95 -356 / p99 -46 |
+| closed-depression **excess** | 9 px | p95 49 / p99 378 / max 1837 | p95 11 / p99 308 / max 1793 |
+| closed-depression **excess** | 27 px | p95 107 / p99 444 / max 2072 | p95 70 / p99 387 / max 2061 |
+| closed-depression **excess** | 45 px | p95 138 / p99 467 / max 1868 | p95 98 / p99 415 / max 1905 |
+
+Whole-canvas mean of the roughness factor: **0.694** — the fix reduces
+synthesised detail amplitude by roughly 31 % on average across all land, not
+only at Thay. Synthetic-fixture regression: a real escarmpent (9-step cliff)
+keeps > 85 % of its amplitude with the fix on vs off
+(`tests/test_map_heightmap_detail.py::test_source_adaptive_gain_shrinks_the_closed_loop_rampart`).
+
+**Honestly: not closed.** The render after the fix
+(`oblique_after_fix.png`, `hillshade_after_fix.png`) still shows the same
+ring, thinner. The excess this fix touches (`amp * noise`, pass 2's own
+amplitude) is a real but minority contributor; the majority of the ring's
+depth is the CK2 source's own macro relief being *sharpened* by pass 1
+(Perona-Malik de-terrace, §2b), which is deliberately edge-preserving and
+this fix does not touch, because §2b's own cliff-survival ratios are
+extensively measured and a change there risks them. **Open**, flagged for
+the coordinator: either accept the ring as the CK2 author's own geography,
+rendered honestly for the first time, or open a lane to soften pass 1's
+response on a *closed, low-total-drop* contour specifically (which needs its
+own metric to target, since §2b's flux weighting has no notion of "this
+edge closes a loop").
+
+### (b) Serrated / stair-step escarpment faces — observed, mechanism assumed, not fixed
+
+The sawtooth banding along the ring's southern arc (and, at close zoom, any
+Thay escarpment) sits 38-109 canvas px from the nearest water province
+(`verified`, `scipy.ndimage.distance_transform_edt` on the province land
+mask) — **not** explained by the province-edges smoothed coast/lake mask
+disagreeing with the heightmap's own steps, since there is no coast or lake
+edge anywhere near it; ruled out, per the brief's own suggested check.
+
+**Plausible mechanism** (`assumed`, not isolated by a dedicated ablation in
+the time available): `heightmap_erosion.deterrace_cliff_aware`'s
+Perona-Malik flux is computed over exactly the four axis-aligned neighbours
+(`for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1))`, `verified` at
+`heightmap_erosion.py:199`) — a textbook 4-connected anisotropic diffusion,
+which is known to under-smooth a curved or diagonal boundary asymmetrically
+between its x- and y-components, printing a staircase instead of a curve.
+Not fixed this lane: re-deriving the flux over 8 neighbours (or a true
+gradient-magnitude edge stopping function) touches the same pass §2b's
+cliff-survival ratios (1.13x on Thay, `verified`, measured extensively) and
+needs its own re-validation pass. Flagged for a follow-up lane.
+
+### (c) Lakes as vertical-walled holes — verified intrinsic, least-bad treatment proposed
+
+`build17`'s crop reads level **[0, 39865]**: Thay's plateau lakes sit at
+`sea_floor = 0` (`ck2ck3.map.heightmap.deepen_sea`) beside land at
+13,000-40,000 — a shaft, not a shore, and the oblique render shows exactly
+that (a dead-flat plane meeting jagged terrain at a vertical wall).
+
+**Would CK2 have drawn it the same way? No** (`verified`): the CK2-source
+render (`hillshade_ck2_source.png`, `oblique_ck2_source.png`) uses
+`topology.bmp`'s own elevation at the lake, with no separate water pin
+applied at all — the lake bed is part of one continuous, gently-sloping
+surface, the same as every other CK2 pixel. CK2 never forced a single global
+water level onto a high-altitude lake; **this is intrinsic to CK3's single
+`WATERLEVEL` define**, not a CK2-vs-CK3 authoring difference and not
+something this pass introduced (§2f already reached the same conclusion for
+the *crater* half of this; this section adds the direct source comparison).
+
+**Least-bad treatment, proposed, not implemented** (per instruction: propose,
+do not invent):
+
+1. **A sloped lake-shore ramp inside the plateau bound.** Extend
+   `_smooth_coast`'s `damp_detail` radius specifically for a water province
+   whose *source* elevation sits far above the surrounding regional water
+   level (a "high lake" flag, e.g. source elevation > 2x the class's typical
+   coastal elevation), tapering the drop over 20-40 px instead of the
+   current 4, so the wall reads as a valley side, not a cliff. Costs: softens
+   a real elevation fact (CK3 cannot avoid a hole there) into a longer,
+   gentler descent — still not what CK2 drew, but not a shaft either.
+2. **Flag the highest-altitude lake/river provinces for conversion to
+   marsh/land**, a human-reviewed `overrides/` entry per province (not a
+   blanket rule): a county whose CK2 lake sits on a genuine plateau becomes a
+   marsh or a small landlocked county instead of a CK3 water province.
+   Changes gameplay (a barony gained), not just visuals, and is a per-county
+   judgement call the converter should not make unattended.
+
+Neither is implemented here; both are options for the coordinator to choose
+between, or reject in favour of accepting the shaft as an engine limit.
+
+### Whole-canvas regression
+
+One real `configs/faerun.toml` conversion, `map` step only
+(`docs/evidence/thay_relief_map_run.log`): **190.9 s** (heightmap detail
+67 s of it), against build 17's own recorded 142.8 s (§2f) — the
+`source_adaptive_gain` roughness field costs two whole-canvas morphological
+filters and one Gaussian blur, ~+12 s of the detail pass's own total, the
+rest is this build also carrying the `province-edges` lane's cost that
+§2f's own figure predates. `scripts/verify_heightmap_detail_invariants.py`
+on the lane output: land/water pin holds, source bound (2sigma over 3 px)
+holds, `docs/evidence/thay_relief_invariants.log`. `source_adaptive_gain`
+only ever *reduces* amplitude (never raises it above the class target), so
+it cannot make the spectrum or pit metrics worse; the Spine of the World
+window, same before/after comparison, confirms it does not
+(`verified`): pit depth p95/p99 at 3 px 140/404 -> 140/370, shape metrics
+(gradient kurtosis 1.721 -> 1.722, ridge share 0.1263 -> 0.1227) within
+noise, closed-depression excess at 27 px p99 717 -> 712 — a small, uniform
+improvement, not a Thay-specific one, because the Spine's own terrain is
+already closer to its class's average roughness than Thay's isolated dome.

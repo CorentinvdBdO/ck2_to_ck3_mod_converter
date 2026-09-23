@@ -344,6 +344,18 @@ def apply(
             f"unknown heightmap_detail_gain_mode {cfg.gain_mode!r} "
             f"(expected 'deficit' or 'hf_target')"
         )
+    if cfg.source_adaptive_gain:
+        rough = _source_roughness_factor(
+            h2, land, terrain_code, terrain_keys,
+            window_px=cfg.source_adaptive_window_px,
+            floor=cfg.source_adaptive_floor,
+            blur_px=cfg.gain_blur_px,
+        )
+        amp = amp * rough
+        spec_diag["source_adaptive_gain_mean"] = (
+            round(float(rough[land].mean()), 3) if land.any() else 1.0
+        )
+        del rough
     delta = amp * noise
     del amp, noise
 
@@ -421,9 +433,10 @@ def apply(
                 "erosion_slope_ceiling_steps", "erosion_slope_gate_steps",
                 "erosion_gate_land_mean", "erosion_ridged_land_mean",
                 "target_mode", "target_anchor_scale", "fill_min_cycles_per_km",
-                "deficit_scale", "deficit_match_bins"):
+                "deficit_scale", "deficit_match_bins", "source_adaptive_gain_mean"):
         if key in spec_diag:
             stats[key] = spec_diag[key]
+    stats["source_adaptive_gain"] = cfg.source_adaptive_gain
     return result, stats
 
 
@@ -1060,3 +1073,45 @@ def _relative_terrain_gain(
                      "gain": round(want / max(mean_target, 1e-6), 3)})
     amp = gaussian_filter(amp, blur_px, mode="nearest")
     return amp, rows
+
+
+def _source_roughness_factor(
+    h2: np.ndarray,
+    land: np.ndarray,
+    terrain_code: np.ndarray,
+    terrain_keys: list[str],
+    window_px: float,
+    floor: float,
+    blur_px: float,
+) -> np.ndarray:
+    """How rough the CK2 source *already is* here, relative to its own
+    terrain class's own mean -- 1.0 where a patch is at or above its class's
+    average local relief, down to ``floor`` where the source drew it dead
+    flat (docs/step_map_heightmap.md §2h).
+
+    ``_relative_terrain_gain``/``_terrain_gain`` set one amplitude per
+    terrain *class*, so a smooth CK2 rim of a barely-suggested basin gets
+    exactly the same ridged mountain texture as a real cliff a few pixels
+    away in the same class -- and because the ridged relief (§2g) is
+    phase-locked to that same source, the same amplitude stacks coherently
+    all the way around a closed contour, turning a few-hundred-level
+    undulation into a several-thousand-level rampart no single-window bound
+    (§2f, one CK2 source pixel) can see, since every pixel is individually
+    inside its own tolerance. This only ever turns amplitude *down*: never
+    above 1.0, so a genuine cliff keeps its full class texture.
+    """
+    size = max(int(round(window_px)), 1)
+    local_relief = (
+        grey_dilation(h2, size=size, mode="nearest")
+        - grey_erosion(h2, size=size, mode="nearest")
+    )
+    factor = np.ones(h2.shape, dtype=np.float32)
+    for i, key in enumerate(terrain_keys):
+        m = (terrain_code == i) & land
+        if not m.any():
+            continue
+        class_mean = float(local_relief[m].mean())
+        if class_mean <= 1e-6:
+            continue
+        factor[m] = np.clip(local_relief[m] / class_mean, floor, 1.0)
+    return gaussian_filter(factor, blur_px, mode="nearest").clip(floor, 1.0)

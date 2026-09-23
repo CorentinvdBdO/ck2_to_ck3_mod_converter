@@ -113,6 +113,39 @@ def check_source_bound(out: Path, heights: np.ndarray, land: np.ndarray,
     return row
 
 
+def check_closed_depression_excess(heights: np.ndarray, land: np.ndarray) -> dict:
+    """Check 5 (docs/step_map_heightmap.md §2h): a closed loop no single
+    small window can see.
+
+    A 3 px (one CK2 source pixel) local-min/max bound -- check 3 above --
+    cannot tell "the detail pass sharpened a real cliff" from "the detail
+    pass turned a gentle 20-90 px CK2 basin into a several-thousand-level
+    rampart no single pixel-pair ever individually violates its own
+    tolerance over". `closed_depression_excess` (a morphological
+    reconstruction, not a local window) is the metric that found this:
+    Thaymount's plain rescale itself already carries a closed depression up
+    to ~9,500 levels deep at a 45-81 px window, and what must not happen is
+    the *output* exceeding that by more than the terrain tolerance -- i.e.
+    the pass adding a rampart on top of what the CK2 author drew, whatever
+    that already was.
+
+    Reported, not a hard gate: the fix shipped with this check
+    (`heightmap_detail_source_adaptive_gain`) measurably reduces the excess
+    (~30 % at every window, docs §2h) but does not zero it -- most of the
+    total depth is the CK2 source's own macro relief, sharpened by pass 1
+    (Perona-Malik), which this check does not touch. A hard hallmark of
+    regression is `cd_excess_27px_max` climbing past the evidence baseline
+    in `docs/evidence/thay_relief/closed_depression_excess.csv`.
+    """
+    import relief_pits_common as P
+    import relief_sharp_common as C
+
+    source = C.plain_rescale_canvas()
+    if source.shape != heights.shape:
+        return {"skipped": f"source {source.shape} != heightmap {heights.shape}"}
+    return P.closed_depression_excess_stats(source, heights, land)
+
+
 def main(argv: list[str]) -> int:
     args = [a for a in argv[1:] if not a.startswith("--")]
     flags = [a for a in argv[1:] if a.startswith("--")]
@@ -124,6 +157,7 @@ def main(argv: list[str]) -> int:
     bound_sigmas = 2.0
     bound_window = 3
     do_bound = "--no-bound" not in flags
+    do_closed_depression = "--no-closed-depression" not in flags
     for f in flags:
         if f.startswith("--bound-sigmas="):
             bound_sigmas = float(f.split("=", 1)[1])
@@ -219,6 +253,26 @@ def main(argv: list[str]) -> int:
                 f"source bound broken on {bound_row['bound_under_px']} land px "
                 f"below / {bound_row['bound_over_px']} above"
             )
+
+    if do_closed_depression:
+        try:
+            land_mask = heights > water_level
+            cd_row = check_closed_depression_excess(heights, land_mask)
+            if cd_row.get("skipped"):
+                print(f"closed-depression excess SKIPPED ({cd_row['skipped']})")
+            else:
+                print("closed-depression excess (§2h, informational -- "
+                      "compare to docs/evidence/thay_relief/):")
+                for w in (3, 9, 27):
+                    p95 = cd_row.get(f"cd_excess_{w}px_p95")
+                    p99 = cd_row.get(f"cd_excess_{w}px_p99")
+                    mx = cd_row.get(f"cd_excess_{w}px_max")
+                    if p95 is None:
+                        continue
+                    print(f"  {w:3d}px  p95 {p95:7.0f}  p99 {p99:7.0f}  "
+                          f"max {mx:7.0f}")
+        except Exception as exc:                        # noqa: BLE001
+            print(f"closed-depression excess SKIPPED ({type(exc).__name__}: {exc})")
 
     if problems:
         print("\nINVARIANT BROKEN")

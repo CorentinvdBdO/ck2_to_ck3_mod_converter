@@ -145,6 +145,52 @@ def closed_depression_depth(a: np.ndarray, land: np.ndarray,
     return np.where(land, f - a32, 0.0).astype(np.float32)
 
 
+#: widths (canvas px) the closed-depression *excess* is checked at.  3 is one
+#: CK2 source pixel (the §2f bound's own window); 9 and 27 catch a basin the
+#: 3 px window cannot, since a 20 km bowl (27 px) or a 13 km one (9 px) both
+#: pass a 3 px local-min/max test at every individual pixel while still
+#: being, as a whole, a closed loop far deeper than anything the CK2 source
+#: draws there (docs/step_map_heightmap.md §2h).
+EXCESS_WINDOWS_PX = (3, 9, 27)
+
+
+def closed_depression_excess(
+    source: np.ndarray, output: np.ndarray, land: np.ndarray,
+    width_px: int,
+) -> np.ndarray:
+    """``closed_depression_depth(output) - closed_depression_depth(source)``.
+
+    Elevation alone is not enough to tell "the CK2 author already drew a
+    gentle macro basin here" from "the detail pass invented a rampart": a
+    genuine 40-90 px CK2 basin can be 7,000+ levels deep in the plain
+    rescale too (`verified`, Thaymount). What must not happen is the
+    *output*'s own closed-depression reading exceeding the *source*'s own,
+    at the same window -- that is depth the pass added on top of what the
+    author drew, whatever the total depth already was.
+    """
+    dep_out = closed_depression_depth(output, land, width_px=width_px)
+    dep_src = closed_depression_depth(source, land, width_px=width_px)
+    return dep_out - dep_src
+
+
+def closed_depression_excess_stats(
+    source: np.ndarray, output: np.ndarray, land: np.ndarray,
+    widths: tuple[int, ...] = EXCESS_WINDOWS_PX,
+) -> dict:
+    """p95/p99/max/frac>1-riser of the excess, one row of keys per width."""
+    row: dict = {}
+    for w in widths:
+        excess = closed_depression_excess(source, output, land, w)[land]
+        if excess.size == 0:
+            continue
+        row[f"cd_excess_{w}px_p95"] = round(float(np.percentile(excess, 95)), 1)
+        row[f"cd_excess_{w}px_p99"] = round(float(np.percentile(excess, 99)), 1)
+        row[f"cd_excess_{w}px_max"] = round(float(excess.max()), 1)
+        row[f"cd_excess_{w}px_frac_gt_riser"] = round(
+            float((excess > QUANT_LEVELS).mean()), 5)
+    return row
+
+
 # --------------------------------------------------------------------------- #
 # the bound (docs §2f)
 # --------------------------------------------------------------------------- #
