@@ -1,0 +1,8 @@
+sun elevation 33.1 deg, azimuth 167.5 deg (gfx/map/environment/environment.txt sun_direction)
+camera tilt 50 deg (common/defines/graphic/00_graphics.txt ZOOM_STEPS_TILT[0])
+  ck2 source native box (topology.bmp px) = (906, 88, 1158, 246), crop shape (158, 252)
+  ck2_source: shape (158, 252), level [3701, 34800]
+  plain_rescale: shape (300, 483), level [3752, 34800]
+  build17: shape (300, 483), level [0, 34654]
+  ours: shape (300, 483), level [0, 34646]
+done in 3.1s -> /home/cvdbdo/git/paradox/ck3/wt/thay-relief/docs/evidence/thay_relief

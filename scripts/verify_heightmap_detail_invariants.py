@@ -146,6 +146,33 @@ def check_closed_depression_excess(heights: np.ndarray, land: np.ndarray) -> dic
     return P.closed_depression_excess_stats(source, heights, land)
 
 
+#: check 6's gate: the output's axis-aligned/diagonal giant-step ratio must
+#: not run away from the source's own -- a real, if imprecise, bound on "the
+#: escarpment reads as a picket fence" (docs §2h ii). The source itself
+#: (after the 1.9543x LANCZOS upsample) measures ~0.5-0.6 on Faerun's own
+#: cliffs; `axis_over_diag_headroom` is how far above the *source's own*
+#: ratio, at the same k, the output may sit before this is a regression.
+WALL_AXIS_OVER_DIAG_HEADROOM = 0.35
+
+
+def check_wall_concentration(source: np.ndarray, heights: np.ndarray,
+                             land: np.ndarray) -> dict:
+    """Check 6 (docs/step_map_heightmap.md §2h ii): a cliff rendered as a
+    1-px axis-aligned wall, not a continuous slope over its own width.
+
+    `scripts/relief_pits_common.wall_stats`: the axis-aligned/diagonal
+    giant-step ratio (`axis_over_diag_k*`) and the drop-concentration
+    percentiles, output against the plain rescale on the same land pixels.
+    """
+    import relief_pits_common as P
+
+    row = P.wall_stats(source, heights, land)
+    src_row = P.wall_stats(source, source, land)
+    row["axis_over_diag_k2_source"] = src_row.get("axis_over_diag_k2")
+    row["axis_over_diag_k5_source"] = src_row.get("axis_over_diag_k5")
+    return row
+
+
 def main(argv: list[str]) -> int:
     args = [a for a in argv[1:] if not a.startswith("--")]
     flags = [a for a in argv[1:] if a.startswith("--")]
@@ -158,6 +185,7 @@ def main(argv: list[str]) -> int:
     bound_window = 3
     do_bound = "--no-bound" not in flags
     do_closed_depression = "--no-closed-depression" not in flags
+    do_wall = "--no-wall" not in flags
     for f in flags:
         if f.startswith("--bound-sigmas="):
             bound_sigmas = float(f.split("=", 1)[1])
@@ -273,6 +301,39 @@ def main(argv: list[str]) -> int:
                           f"max {mx:7.0f}")
         except Exception as exc:                        # noqa: BLE001
             print(f"closed-depression excess SKIPPED ({type(exc).__name__}: {exc})")
+
+    if do_wall:
+        try:
+            import relief_sharp_common as C
+
+            land_mask = heights > water_level
+            source = C.plain_rescale_canvas()
+            if source.shape != heights.shape:
+                print(f"wall concentration      SKIPPED (source {source.shape} "
+                      f"!= heightmap {heights.shape})")
+            else:
+                wall_row = check_wall_concentration(source, heights, land_mask)
+                print("wall concentration (§2h ii, a cliff as a 1-px axis-aligned "
+                      "slab vs a continuous slope):")
+                for k in (2.0, 3.0, 5.0):
+                    out_r = wall_row.get(f"axis_over_diag_k{k:g}")
+                    print(f"  k={k:g}  axis/diag {out_r}")
+                print(f"  source k=2 {wall_row.get('axis_over_diag_k2_source')}  "
+                      f"k=5 {wall_row.get('axis_over_diag_k5_source')}")
+                print(f"  drop concentration p50/p95/max "
+                      f"{wall_row.get('drop_concentration_p50')}/"
+                      f"{wall_row.get('drop_concentration_p95')}/"
+                      f"{wall_row.get('drop_concentration_max')}")
+                src2 = wall_row.get("axis_over_diag_k2_source") or 0.0
+                out2 = wall_row.get("axis_over_diag_k2") or 0.0
+                if out2 > src2 + WALL_AXIS_OVER_DIAG_HEADROOM:
+                    problems.append(
+                        f"wall concentration regressed: axis/diag k=2 is "
+                        f"{out2} against the source's own {src2} "
+                        f"(headroom {WALL_AXIS_OVER_DIAG_HEADROOM})"
+                    )
+        except Exception as exc:                        # noqa: BLE001
+            print(f"wall concentration SKIPPED ({type(exc).__name__}: {exc})")
 
     if problems:
         print("\nINVARIANT BROKEN")

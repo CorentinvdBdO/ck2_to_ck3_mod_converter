@@ -1,0 +1,23 @@
+out                     /home/cvdbdo/git/paradox/ck3/wt/_out/thay-relief
+water level             4883
+land provinces checked  3914
+water provinces checked 361
+distinct height values  39388
+land px at/below water  0
+water px above water    0
+source bound            2.0x hf RMS over 3 px (median tol 194.4 levels)
+  land pinned, excluded 90038 px
+  land below the bound  0 px (max 0.0 levels)
+  land above the bound  0 px (max 0.0 levels)
+closed-depression excess (§2h, informational -- compare to docs/evidence/thay_relief/):
+    3px  p95       0  p99      24  max    1496
+    9px  p95       5  p99     152  max    2142
+   27px  p95      61  p99     286  max    2397
+wall concentration (§2h ii, a cliff as a 1-px axis-aligned slab vs a continuous slope):
+  k=2  axis/diag 0.64
+  k=3  axis/diag 0.54
+  k=5  axis/diag 0.36
+  source k=2 0.48  k=5 0.26
+  drop concentration p50/p95/max 0.323/0.477/1.0
+
+invariants hold

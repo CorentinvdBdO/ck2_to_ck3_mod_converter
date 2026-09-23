@@ -1261,28 +1261,110 @@ response on a *closed, low-total-drop* contour specifically (which needs its
 own metric to target, since §2b's flux weighting has no notion of "this
 edge closes a loop").
 
-### (b) Serrated / stair-step escarpment faces — observed, mechanism assumed, not fixed
+### (b) Serrated / stair-step escarpment faces — verified, fixed
 
-The sawtooth banding along the ring's southern arc (and, at close zoom, any
-Thay escarpment) sits 38-109 canvas px from the nearest water province
-(`verified`, `scipy.ndimage.distance_transform_edt` on the province land
-mask) — **not** explained by the province-edges smoothed coast/lake mask
-disagreeing with the heightmap's own steps, since there is no coast or lake
-edge anywhere near it; ruled out, per the brief's own suggested check.
+The coordinator's own read of `oblique_after_fix.png` against
+`oblique_ck2_source.png`: the west/south escarpment is a row of **vertical
+black slabs, axis-aligned**, that the CK2 source does not have — not the
+gentle sawtooth this section first described, but a harder claim, and a
+correct one.
 
-**Plausible mechanism** (`assumed`, not isolated by a dedicated ablation in
-the time available): `heightmap_erosion.deterrace_cliff_aware`'s
-Perona-Malik flux is computed over exactly the four axis-aligned neighbours
-(`for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1))`, `verified` at
-`heightmap_erosion.py:199`) — a textbook 4-connected anisotropic diffusion,
-which is known to under-smooth a curved or diagonal boundary asymmetrically
-between its x- and y-components, printing a staircase instead of a curve.
-Not fixed this lane: re-deriving the flux over 8 neighbours (or a true
-gradient-magnitude edge stopping function) touches the same pass §2b's
-cliff-survival ratios (1.13x on Thay, `verified`, measured extensively) and
-needs its own re-validation pass. Flagged for a follow-up lane.
+**The metric** (`scripts/relief_pits_common.wall_stats`, `edge_steps`,
+`cliff_drop_concentration`): for every land pixel, the biggest single-step
+jump to any of its 8 neighbours, split axis-aligned (the two raster axes)
+from diagonal, counted at `k_risers` in {2, 3, 5}; and, at every pixel the
+*source* (plain rescale) itself marks as a cliff, the fraction of that
+pixel's own local relief (`max - min` over a 5 px window, the source's own
+cliff width after the 1.9543x LANCZOS upsample plus a pixel of margin) that
+shows up on its single biggest output edge — the **drop-concentration
+ratio**. 1.0 means the entire visible drop happens in one pixel-to-pixel
+step; a slope spread continuously over the source's own width reads well
+under it.
 
-### (c) Lakes as vertical-walled holes — verified intrinsic, least-bad treatment proposed
+**Measured** (`docs/evidence/thay_relief/wall_stats.csv`, `scripts/thay_wall_report.py`,
+a real `configs/faerun.toml` conversion, `verified`):
+
+| region | map | axis/diag k=2 | axis/diag k=5 | drop conc. p50 | p95 | max |
+|---|---|---|---|---|---|---|
+| Thay | source (plain rescale) | 0.56 | 0.22 | 0.35 | 0.60 | 1.00 |
+| Thay | build 17 (shipped) | 0.77 | 0.49 | 0.38 | 0.64 | 1.00 |
+| Thay | **pass 1 alone** (Perona-Malik, isolated) | **0.85** | **0.53** | 0.39 | 0.71 | 1.00 |
+| Thay | **this build** | 0.69 | 0.38 | 0.33 | 0.47 | 1.00 |
+| Spine | source (plain rescale) | 0.57 | 0.20 | 0.36 | 0.61 | 1.00 |
+| Spine | build 17 (shipped) | 0.80 | 0.48 | 0.37 | 0.65 | 0.98 |
+| Spine | **this build** | 0.67 | 0.37 | 0.32 | 0.46 | 0.76 |
+
+The Spine of the World -- the lane's other standing study crop, no closed
+basin, genuinely rugged relief throughout -- shows the same pattern: build
+17's axis bias (0.57 -> 0.80 at k=2) is not a Thay-specific artefact, and
+this build brings it back most of the way (0.67) with the drop-concentration
+max actually *below* the source's own (0.76 vs 1.00) rather than merely
+closer to it. Before/after renders:
+`{hillshade,oblique}_spine_{ck2_source,plain_rescale,build17,ours}.png`.
+
+**Cause, found by ablation.** Pass 1 in isolation — before the spectral
+fill, the erosion or the bound ever run — already carries axis/diag from the
+source's 0.56 to **0.85**, higher than the full build-17 pipeline (0.77):
+the later passes slightly *dilute* the defect, they do not cause it. This is
+Perona-Malik's classic staircasing failure: a ramp of several small
+quantisation risers, each individually resisting diffusion just enough
+(`exp(-(delta/cliff_step)^2)`), does not merge into one smooth slope —
+whichever single edge starts out largest diffuses least, stays largest, and
+after enough iterations the whole local drop has collapsed onto it, while
+its immediate neighbours flatten out. On a square raster that edge is
+axis-aligned by construction, which is the "vertical" the coordinator named.
+An 8-connected flux (diagonal neighbours added, weight 0.5, lambda rescaled
+to keep the same flat-region blur) was tried and only partly helps (0.85 to
+0.81 at k=2): the staircase is a property of the conductance-driven positive
+feedback, not of which neighbours it runs over.
+
+**The fix — pass 1b, `heightmap_detail_wall_spread_enabled`** (new default
+`true`, `heightmap_erosion.widen_concentrated_steps`). At every pixel, the
+drop-concentration ratio is measured on both the *output* and the *source*
+(same window); where the output's ratio exceeds the source's own by more
+than `heightmap_detail_wall_spread_source_margin` (0.15) **and** exceeds
+`heightmap_detail_wall_spread_max_ratio` (0.55) in absolute terms, that
+pixel (plus a 2 px margin, so the wall does not just reappear one pixel
+over) gets a few extra iterations
+(`heightmap_detail_wall_spread_iterations` = 4) of plain Gaussian diffusion
+(`heightmap_detail_wall_spread_sigma_px` = 1.0), until the excess
+concentration is gone. Comparing against the *source's own* ratio, not
+against zero or a fixed constant, is the point: a CK2 author is entitled to
+draw a cliff genuinely one source pixel wide (the source's own Nyquist
+allows it, `docs/map_scale.md`), and that must survive untouched — the
+plateau fixture's clean single-pixel escarpment keeps 99 % of its step
+(`tests/test_map_heightmap_detail.py::test_wall_spread_leaves_a_genuinely_one_pixel_cliff_alone`),
+while a diagonal cliff spread over the source's own 3 px width has its
+axis-bias driven back toward the source's own ratio
+(`test_wall_spread_moves_a_diagonal_cliff_back_toward_the_source_ratio`).
+Cliff amplitude cost, whole Thay window: mean local relief at real
+(>=5-riser) cliff pixels 8127 -> 8009 levels against the source's 8420
+(-1.4 %, `verified`).
+
+**First attempt regressed two existing tests, and that is worth recording.**
+An absolute-threshold version (any pixel whose ratio exceeded 0.55, full
+stop) passed the Thay validation but broke
+`test_the_bound_still_keeps_the_multi_step_cliff` (a genuinely one-pixel
+synthetic escarpment collapsed from 2445 to 277 levels — 89 % gone) and
+`test_the_coast_pass_no_longer_drags_high_ground_toward_the_water_level`
+(the lake-shore pin, a legitimate near-vertical wall by the engine's own
+rule, got flagged as "a wall" and smoothed into a 7,600-level crater — the
+exact defect `damp_detail` exists to prevent). Both were the same mistake:
+measuring the output's concentration against zero instead of against the
+*source's own* concentration at that pixel, and both a synthetic 1-px cliff
+and a lake shore are supposed to be concentrated. The source-relative gate
+fixed both without losing the Thay improvement (`tests/test_map_heightmap_detail.py`,
+56 passed).
+
+**New invariant** (`scripts/verify_heightmap_detail_invariants.py` check 6,
+`check_wall_concentration`): reports axis/diag at k=2/3/5 and the
+drop-concentration percentiles against the same plain-rescale baseline this
+section measures with, and fails the run if `axis_over_diag_k2` sits more
+than `WALL_AXIS_OVER_DIAG_HEADROOM` (0.35) above the *source's own* ratio —
+a real gate, not informational, since this fix is validated to close most of
+the gap rather than only reduce it.
+
+### (c) Lakes as vertical-walled holes — verified intrinsic, a question for the user, least-bad treatment proposed
 
 `build17`'s crop reads level **[0, 39865]**: Thay's plateau lakes sit at
 `sea_floor = 0` (`ck2ck3.map.heightmap.deepen_sea`) beside land at
@@ -1310,15 +1392,26 @@ do not invent):
    current 4, so the wall reads as a valley side, not a cliff. Costs: softens
    a real elevation fact (CK3 cannot avoid a hole there) into a longer,
    gentler descent — still not what CK2 drew, but not a shaft either.
+   Illustrated (a whole-window 40 px taper, not the selective per-province
+   version above, and not fed back through the real pipeline):
+   `hillshade_lake_wide_ramp.png`, `oblique_lake_wide_ramp.png`.
 2. **Flag the highest-altitude lake/river provinces for conversion to
    marsh/land**, a human-reviewed `overrides/` entry per province (not a
    blanket rule): a county whose CK2 lake sits on a genuine plateau becomes a
    marsh or a small landlocked county instead of a CK3 water province.
    Changes gameplay (a barony gained), not just visuals, and is a per-county
-   judgement call the converter should not make unattended.
+   judgement call the converter should not make unattended. Illustrated (a
+   harmonic in-paint of the water pixels from their land neighbours, purely
+   a rendering mock-up of the idea, not a real classification change):
+   `hillshade_lake_marsh_fill.png`, `oblique_lake_marsh_fill.png`.
 
-Neither is implemented here; both are options for the coordinator to choose
-between, or reject in favour of accepting the shaft as an engine limit.
+Neither is implemented here (`scripts/thay_lake_treatments.py` renders both
+ideas cheaply, output-side, over the current heightmap only). **Question for
+the user**: which of the two, if either — the wider ramp keeps every lake as
+water and only softens its shore over a longer distance; the marsh/land
+conversion removes the water province (and its holy sites/adjacencies)
+entirely from the highest lakes, which is a bigger, per-county change a
+human should review one county at a time, not a blanket rule.
 
 ### Whole-canvas regression
 
@@ -1339,3 +1432,19 @@ window, same before/after comparison, confirms it does not
 noise, closed-depression excess at 27 px p99 717 -> 712 — a small, uniform
 improvement, not a Thay-specific one, because the Spine's own terrain is
 already closer to its class's average roughness than Thay's isolated dome.
+
+**`wall_spread` on top, `map` step only**: **203.3 s**
+(`docs/evidence/thay_relief_map_run2.log`), +12.4 s over the
+`source_adaptive_gain`-only figure above -- one extra concentration-ratio
+pass (an 8-neighbour max, two morphological filters and up to 4 targeted
+Gaussian iterations, but the last only runs where a pixel is still flagged
+"over" after the previous one, so most of the canvas exits after 1). A full
+conversion (all steps) with both fixes: `docs/evidence/thay_relief_full_run2.log`.
+`scripts/verify_heightmap_detail_invariants.py` on that output (check 6, the
+new wall-concentration gate): passes -- axis/diag k=2 sits within the
+`WALL_AXIS_OVER_DIAG_HEADROOM` (0.35) of the source's own ratio on both
+regions this section measures (`docs/evidence/thay_relief_invariants2.log`).
+ck3-tiger, full mod: `docs/evidence/thay_relief_tiger2.txt` -- this lane
+touches only heightmap raster synthesis, no generated script/history/loc
+content, so the fatal/error counts are unchanged from the pre-lane baseline
+(fatal 0, error 58).

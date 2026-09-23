@@ -407,6 +407,27 @@ class HeightmapDetailConfig:
     #: source the class's own mean roughness calls perfectly smooth still
     #: receives, so a terrain-class border does not read as a texture seam.
     source_adaptive_floor: float = 0.35
+    #: pass 1b (§2h ii): spread a cliff's whole drop back out over its own
+    #: width wherever pass 1 collapsed it onto a single pixel-pair edge (a
+    #: "vertical black slab" the CK2 source never draws -- the source's own
+    #: cliff width after the 1.9543x LANCZOS upsample is 2-3 canvas px, not
+    #: one). `heightmap_erosion.widen_concentrated_steps`.
+    wall_spread_enabled: bool = True
+    #: pass 1b: local-relief window, canvas px (5 = the source's own cliff
+    #: width plus a pixel of margin).
+    wall_spread_window_px: int = 5
+    #: pass 1b: a pixel is "a wall" once its single biggest neighbour edge
+    #: exceeds this fraction of its own local relief over the window above.
+    wall_spread_max_ratio: float = 0.55
+    #: pass 1b: the output's own concentration ratio must exceed the
+    #: *source*'s (the plain rescale's) same ratio by this much before a
+    #: pixel counts as "ours" -- a source drawn genuinely one pixel wide
+    #: (the source's own Nyquist allows it) is left alone either way.
+    wall_spread_source_margin: float = 0.15
+    #: pass 1b: how many extra targeted-blur iterations may run.
+    wall_spread_iterations: int = 4
+    #: pass 1b: the Gaussian sigma (canvas px) of each targeted iteration.
+    wall_spread_sigma_px: float = 1.0
 
 
 def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
@@ -510,6 +531,29 @@ def heightmap_detail_config(raw: dict) -> HeightmapDetailConfig:
             raw.get("heightmap_detail_source_adaptive_floor",
                     d.source_adaptive_floor)
         ),
+        wall_spread_enabled=bool(
+            raw.get("heightmap_detail_wall_spread_enabled", d.wall_spread_enabled)
+        ),
+        wall_spread_window_px=int(
+            raw.get("heightmap_detail_wall_spread_window_px",
+                    d.wall_spread_window_px)
+        ),
+        wall_spread_max_ratio=float(
+            raw.get("heightmap_detail_wall_spread_max_ratio",
+                    d.wall_spread_max_ratio)
+        ),
+        wall_spread_source_margin=float(
+            raw.get("heightmap_detail_wall_spread_source_margin",
+                    d.wall_spread_source_margin)
+        ),
+        wall_spread_iterations=int(
+            raw.get("heightmap_detail_wall_spread_iterations",
+                    d.wall_spread_iterations)
+        ),
+        wall_spread_sigma_px=float(
+            raw.get("heightmap_detail_wall_spread_sigma_px",
+                    d.wall_spread_sigma_px)
+        ),
     )
 
 
@@ -587,6 +631,24 @@ def _heightmap_detail_from_table(hmd: dict) -> HeightmapDetailConfig:
         ),
         source_adaptive_floor=float(
             hmd.get("source_adaptive_floor", d.source_adaptive_floor)
+        ),
+        wall_spread_enabled=bool(
+            hmd.get("wall_spread_enabled", d.wall_spread_enabled)
+        ),
+        wall_spread_window_px=int(
+            hmd.get("wall_spread_window_px", d.wall_spread_window_px)
+        ),
+        wall_spread_max_ratio=float(
+            hmd.get("wall_spread_max_ratio", d.wall_spread_max_ratio)
+        ),
+        wall_spread_source_margin=float(
+            hmd.get("wall_spread_source_margin", d.wall_spread_source_margin)
+        ),
+        wall_spread_iterations=int(
+            hmd.get("wall_spread_iterations", d.wall_spread_iterations)
+        ),
+        wall_spread_sigma_px=float(
+            hmd.get("wall_spread_sigma_px", d.wall_spread_sigma_px)
         ),
     )
 

@@ -1132,3 +1132,123 @@ def test_source_adaptive_gain_never_boosts_above_the_class_amplitude():
                         - heights[land].astype(np.float64)).mean()) <= float(
         np.abs(off[land].astype(np.float64)
               - heights[land].astype(np.float64)).mean()) + 1.0
+
+
+# --------------------------------------------------------------------------- #
+# §2h ii -- "a row of vertical black slabs (1-px walls, axis-aligned)"
+# --------------------------------------------------------------------------- #
+def _wall_ridge_fixture(h: int = 200, w: int = 200):
+    """A CK2 cliff spread over its own ~3 px width (the source's own cliff
+    width after the 1.9543x LANCZOS upsample, docs §2h ii), on a diagonal
+    line, with the usual 8-bit quantisation ramp either side.
+
+    A diagonal cliff is the case that shows an axis-aligned staircase most
+    clearly: a continuous slope along a 45-degree line has no reason to
+    prefer one raster axis over the other, so any excess preference for
+    axis-aligned giant steps over diagonal ones is the artefact, not the
+    source.
+    """
+    y, x = np.mgrid[0:h, 0:w].astype(np.float64)
+    # signed distance (px) from the diagonal line x == y + 20, spread over 3 px
+    dist = (x - y - 20.0) / np.sqrt(2.0)
+    cliff = 9.0 * QUANT * np.clip((dist + 1.5) / 3.0, 0.0, 1.0)
+    ramp = 4.0 * QUANT * ((x.astype(int) % 40) / 40.0)
+    field = 12000.0 + cliff + ramp
+    heights = (np.round(field / QUANT) * QUANT).astype(np.uint16)
+    land = np.ones((h, w), dtype=bool)
+    terrain_code = np.zeros((h, w), dtype=np.uint8)
+    river_body = np.zeros((h, w), dtype=bool)
+    river_width_index = np.zeros((h, w), dtype=np.float32)
+    return heights, land, terrain_code, river_body, river_width_index
+
+
+def test_wall_spread_moves_a_diagonal_cliff_back_toward_the_source_ratio():
+    """The metric this section adds (`relief_pits_common.wall_stats`): the
+    axis-aligned/diagonal giant-step ratio, output against the source. Pass 1
+    alone (Perona-Malik, 4-connected) must NOT match the source's own ratio
+    on a diagonal cliff -- the fixture has to be able to fail, the same rule
+    every other fixture in this file follows -- and `wall_spread_enabled`
+    must bring it back down.
+    """
+    import sys as _sys
+    from pathlib import Path as _Path
+
+    _sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "scripts"))
+    import relief_pits_common as P
+    from ck2ck3.map import heightmap_erosion as he
+
+    heights, land, tcode, rb, rw = _wall_ridge_fixture()
+    base = heights.astype(np.float32)
+    pass1_only = he.deterrace_cliff_aware(base, 2.2, 415.5)
+    spread = he.widen_concentrated_steps(
+        pass1_only, base, land, window_px=5, max_ratio=0.55,
+        source_margin=0.15, iterations=4, sigma_px=1.0,
+    )
+
+    def axis_k2(arr):
+        return P.wall_stats(heights, arr, land, k_list=(2.0,))["axis_over_diag_k2"]
+
+    src_ratio = axis_k2(heights)
+    pass1_ratio = axis_k2(pass1_only)
+    spread_ratio = axis_k2(spread)
+    assert pass1_ratio > src_ratio + 0.05, (
+        "the fixture must fail before the fix: pass 1 alone should already "
+        f"prefer axis-aligned steps ({pass1_ratio} vs source {src_ratio})"
+    )
+    assert spread_ratio <= pass1_ratio, (
+        f"wall spread did not reduce the axis bias: {spread_ratio} vs "
+        f"pass-1-only {pass1_ratio}"
+    )
+    assert spread_ratio <= src_ratio + 0.35, (
+        f"wall spread left the ratio too far from the source's own: "
+        f"{spread_ratio} vs source {src_ratio}"
+    )
+
+
+def test_wall_spread_leaves_a_genuinely_one_pixel_cliff_alone():
+    """A CK2 author is entitled to draw a cliff one source pixel wide (the
+    source's own Nyquist allows it, docs/map_scale.md); `wall_spread` must
+    not soften it, because its own source-relative ratio is not elevated.
+    This is the plateau fixture §2d's moat test uses, at the shipped
+    defaults (`_run_plateau` -> `hd.apply` with `wall_spread_enabled=True`).
+    """
+    base, out, _, cx = _run_plateau()
+    _, off, _, _ = _run_plateau(wall_spread_enabled=False)
+
+    def step(a):
+        return float(a[:, cx - 1].astype(np.float64).mean()
+                     - a[:, cx].astype(np.float64).mean())
+
+    # within the same tolerance test_the_bound_still_keeps_the_multi_step_cliff
+    # already holds pass 2 (the spectral fill) to
+    assert step(out) / step(base) > 0.75
+    assert step(out) / step(off) > 0.9, (
+        "wall_spread softened a cliff the source itself drew one pixel wide"
+    )
+
+
+def test_wall_spread_config_is_read():
+    from ck2ck3.map.config import HeightmapDetailConfig, heightmap_detail_config
+
+    cfg = heightmap_detail_config({
+        "heightmap_detail": True,
+        "heightmap_detail_wall_spread_enabled": False,
+        "heightmap_detail_wall_spread_window_px": 7,
+        "heightmap_detail_wall_spread_max_ratio": 0.4,
+        "heightmap_detail_wall_spread_source_margin": 0.2,
+        "heightmap_detail_wall_spread_iterations": 2,
+        "heightmap_detail_wall_spread_sigma_px": 1.5,
+    })
+    assert cfg.wall_spread_enabled is False
+    assert cfg.wall_spread_window_px == 7
+    assert cfg.wall_spread_max_ratio == 0.4
+    assert cfg.wall_spread_source_margin == 0.2
+    assert cfg.wall_spread_iterations == 2
+    assert cfg.wall_spread_sigma_px == 1.5
+    d = HeightmapDetailConfig()
+    assert d.wall_spread_enabled is True
+    assert d.wall_spread_window_px == 5
+    assert d.wall_spread_max_ratio == 0.55
+    assert d.wall_spread_source_margin == 0.15
+    assert d.wall_spread_iterations == 4
+    assert d.wall_spread_sigma_px == 1.0

@@ -62,8 +62,16 @@ Image.MAX_IMAGE_PIXELS = None
 # --------------------------------------------------------------------------- #
 # geometry
 # --------------------------------------------------------------------------- #
-#: the Thay window the brief names, canvas px (y0, x0, y1, x1), no margin
-THAY_CORE = (1583, 4752, 2222, 5311)
+#: escarpment windows, canvas px (y0, x0, y1, x1), no margin. `thay` is the
+#: brief's own window; `spine` is `relief_pits_diagnose.WINDOWS["spine"]`,
+#: the lane's other standing study crop, used here as the "one other
+#: escarpment region" a wall-spread claim has to hold up on too.
+REGIONS: dict[str, tuple[int, int, int, int]] = {
+    "thay": (1583, 4752, 2222, 5311),
+    "spine": (416, 2032, 516, 2315),
+}
+#: back-compat for callers that still import the old single-region name
+THAY_CORE = REGIONS["thay"]
 MARGIN_PX = 100
 
 #: WORLD_EXTENTS_Y for Faerun (common/defines/fae_defines.txt), world units
@@ -95,6 +103,8 @@ BUILD15_OVERRIDES = dict(
     bound_tolerance_sigmas=0.0,           # the source bound (§2f) postdates build 15
     coast_mode="blend_to_water",          # build 15's coast pass (contracts to water level)
     coast_smooth_px=4.0, river_depth=900.0, seed=1357,
+    source_adaptive_gain=False,           # §2h postdates build 15
+    wall_spread_enabled=False,            # §2h ii postdates build 15
 )
 
 
@@ -122,15 +132,15 @@ def hillshade(z: np.ndarray, sun_elev_deg: float = SUN_ELEV_DEG,
     return np.clip(shade, 0.0, 1.0)
 
 
-def crop_slices(margin: int = MARGIN_PX) -> tuple[slice, slice]:
-    y0, x0, y1, x1 = THAY_CORE
+def crop_slices(region: str = "thay", margin: int = MARGIN_PX) -> tuple[slice, slice]:
+    y0, x0, y1, x1 = REGIONS[region]
     return slice(y0 - margin, y1 + margin), slice(x0 - margin, x1 + margin)
 
 
 # --------------------------------------------------------------------------- #
 # the four sources
 # --------------------------------------------------------------------------- #
-def ck2_source_truth_crop() -> np.ndarray:
+def ck2_source_truth_crop(region: str = "thay") -> np.ndarray:
     """CK2's own ``topology.bmp``, at its NATIVE resolution, LUT-applied.
 
     Native, not LANCZOS-upsampled onto the canvas: this is the author's own
@@ -147,7 +157,7 @@ def ck2_source_truth_crop() -> np.ndarray:
         ck2_sea_level=C.CK2_SEA_LEVEL, ck3_water_level=C.WATER_LEVEL,
         ck3_max_level=C.MAX_LEVEL,
     ))
-    ys, xs = crop_slices()
+    ys, xs = crop_slices(region)
     y0, y1, x0, x1 = ys.start, ys.stop, xs.start, xs.stop
     # canvas -> scaled-topology (LANCZOS target) -> native topology.bmp
     sy0, sy1 = y0 - C.OFFSET_Y, y1 - C.OFFSET_Y
@@ -191,20 +201,25 @@ def build15_reconstruction_canvas(cache_dir: Path) -> np.ndarray:
     return out
 
 
-def load_sources(cache_dir: Path) -> dict[str, np.ndarray]:
-    ys, xs = crop_slices()
-    ck2_crop, native_box = ck2_source_truth_crop()
+def load_sources(cache_dir: Path, region: str = "thay",
+                 include_build15: bool = True,
+                 extra: dict[str, Path] | None = None) -> dict[str, np.ndarray]:
+    ys, xs = crop_slices(region)
+    ck2_crop, native_box = ck2_source_truth_crop(region)
     print(f"  ck2 source native box (topology.bmp px) = {native_box}, "
           f"crop shape {ck2_crop.shape}")
     plain = C.plain_rescale_canvas()[ys, xs]
-    build15 = build15_reconstruction_canvas(cache_dir)[ys, xs]
     build17 = C.load16(C.LIVE_MOD / "map_data/heightmap.png")[ys, xs]
-    return {
+    out = {
         "ck2_source": ck2_crop,
         "plain_rescale": plain,
-        "build15": build15,
         "build17": build17,
     }
+    if include_build15:
+        out["build15"] = build15_reconstruction_canvas(cache_dir)[ys, xs]
+    for name, path in (extra or {}).items():
+        out[name] = C.load16(path)[ys, xs]
+    return out
 
 
 # --------------------------------------------------------------------------- #
@@ -259,11 +274,21 @@ def main() -> None:
     ap.add_argument("--cache-dir",
                     default="/home/cvdbdo/git/paradox/ck3/wt/_out/thay-relief")
     ap.add_argument("--skip-3d", action="store_true")
+    ap.add_argument("--region", choices=sorted(REGIONS), default="thay")
+    ap.add_argument("--no-build15", action="store_true",
+                    help="skip the ~1 min build-15 reconstruction")
+    ap.add_argument("--extra", nargs="*", default=[],
+                    help="name=path/to/heightmap.png, rendered alongside the "
+                         "four standard sources")
     args = ap.parse_args()
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     cache_dir = Path(args.cache_dir)
+    extra = {}
+    for spec in args.extra:
+        name, _, path = spec.partition("=")
+        extra[name] = Path(path)
 
     print(f"sun elevation {SUN_ELEV_DEG:.1f} deg, azimuth {SUN_AZ_DEG:.1f} deg "
           f"(gfx/map/environment/environment.txt sun_direction)")
@@ -271,15 +296,21 @@ def main() -> None:
           f"(common/defines/graphic/00_graphics.txt ZOOM_STEPS_TILT[0])")
 
     t0 = time.time()
-    sources = load_sources(cache_dir)
+    sources = load_sources(cache_dir, args.region,
+                           include_build15=not args.no_build15, extra=extra)
+    label = args.region.capitalize()
+    # "thay" keeps the original (unprefixed) filenames this lane's docs
+    # already reference; any other region gets its own name in the file so
+    # the two do not collide.
+    tag = "" if args.region == "thay" else f"{args.region}_"
     for name, arr in sources.items():
         print(f"  {name}: shape {arr.shape}, level "
               f"[{int(arr.min())}, {int(arr.max())}]")
-        save_hillshade(arr, out / f"hillshade_{name}.png",
-                        f"Thay - {name} (hillshade, sun {SUN_ELEV_DEG:.0f} deg)")
+        save_hillshade(arr, out / f"hillshade_{tag}{name}.png",
+                        f"{label} - {name} (hillshade, sun {SUN_ELEV_DEG:.0f} deg)")
         if not args.skip_3d:
-            save_oblique(arr, out / f"oblique_{name}.png",
-                         f"Thay - {name} (oblique, tilt {CAMERA_TILT_DEG:.0f} deg)")
+            save_oblique(arr, out / f"oblique_{tag}{name}.png",
+                         f"{label} - {name} (oblique, tilt {CAMERA_TILT_DEG:.0f} deg)")
     print(f"done in {time.time() - t0:.1f}s -> {out}")
 
 

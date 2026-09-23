@@ -40,7 +40,12 @@ in, same array out.
 from __future__ import annotations
 
 import numpy as np
-from scipy.ndimage import gaussian_filter
+from scipy.ndimage import (
+    binary_dilation,
+    gaussian_filter,
+    grey_erosion,
+    maximum_filter,
+)
 
 #: 8-neighbour offsets ``(dy, dx, distance in pixels)``
 NEIGHBOURS: tuple[tuple[int, int, float], ...] = (
@@ -203,6 +208,91 @@ def deterrace_cliff_aware(
             acc += d * np.exp(-(d * d) / k2)
         h += lam * acc
     return h
+
+
+#: the 8 neighbour offsets used to measure a wall (axis-aligned first, then
+#: diagonal), matching `scripts/relief_pits_common._AXIS_OFFSETS`/`_DIAG_OFFSETS`
+_WALL_OFFSETS = ((1, 0), (0, 1), (1, 1), (1, -1))
+
+
+def _max_neighbour_step(h: np.ndarray, land: np.ndarray) -> np.ndarray:
+    """Max ``|h[p] - h[q]|`` over every land neighbour ``q`` of land pixel
+    ``p`` -- a water edge is the sea pin, a real feature, never a "wall"."""
+    out = np.zeros(h.shape, dtype=np.float32)
+    land_f = land.astype(np.float32)
+    for dy, dx in _WALL_OFFSETS:
+        for sy, sx in ((dy, dx), (-dy, -dx)):
+            nb = np.empty_like(h)
+            _shift_into(nb, h, sy, sx)
+            _clamp_border(nb, h, sy, sx)
+            nb_land = np.empty_like(land_f)
+            _shift_into(nb_land, land_f, sy, sx)
+            _clamp_border(nb_land, land_f, sy, sx)
+            d = np.abs(h - nb)
+            d[(nb_land < 0.5) | ~land] = 0.0
+            np.maximum(out, d, out=out)
+    return out
+
+
+def widen_concentrated_steps(
+    h: np.ndarray,
+    source: np.ndarray,
+    land: np.ndarray,
+    window_px: int = 5,
+    max_ratio: float = 0.55,
+    source_margin: float = 0.15,
+    iterations: int = 4,
+    sigma_px: float = 1.0,
+) -> np.ndarray:
+    """Spread a "wall" -- a cliff's whole drop concentrated on one pixel-pair
+    edge -- back out over its own local width, docs/step_map_heightmap.md §2h.
+
+    Perona-Malik de-terrace keeps a real cliff by *not* diffusing across it
+    (docs §2b), but that is a per-edge decision on a square raster, and a
+    ramp of several small quantisation risers under it can each individually
+    resist diffusion just enough that the whole drop collapses onto whichever
+    single edge happens to start out largest -- a "staircase" artefact, and
+    because a raster's edges are axis-aligned by construction it reads as a
+    near-vertical 1-px wall, not the source's own multi-pixel cliff face.
+
+    Measured by how much of a pixel's own local relief (max - min over
+    ``window_px``) shows up on its single biggest neighbour edge -- the
+    *concentration ratio*. **Compared against the same ratio on ``source``
+    (the plain rescale), not against zero**: a CK2 author can draw a
+    genuinely one-pixel-wide step (the source's own Nyquist allows it), and
+    that must survive untouched -- only a pixel whose *output* ratio exceeds
+    its own *source* ratio by more than ``source_margin`` is "ours", i.e. the
+    pass concentrated a drop the source itself did not have concentrated
+    there. Those pixels (and a 2-px margin, so the wall does not simply
+    reappear one pixel over) get a few extra iterations of plain Gaussian
+    diffusion until the excess concentration is gone. A genuine cliff -- one
+    pixel wide in the source, or already spread over its own width -- is
+    left untouched either way, and a water edge is never touched (`land`
+    masks both the source and the output ratio).
+    """
+    if iterations <= 0 or not land.any():
+        return h
+    out = h.astype(np.float32, copy=True)
+    src = source.astype(np.float32)
+
+    def concentration(a: np.ndarray) -> np.ndarray:
+        step = _max_neighbour_step(a, land)
+        relief = (
+            maximum_filter(a, size=window_px, mode="nearest")
+            - grey_erosion(a, size=window_px, mode="nearest")
+        )
+        return step / np.maximum(relief, 1.0)
+
+    ratio_src = concentration(src)
+    for _ in range(iterations):
+        ratio_out = concentration(out)
+        over = land & (ratio_out > max_ratio) & (ratio_out > ratio_src + source_margin)
+        if not over.any():
+            break
+        over_margin = binary_dilation(over, iterations=2) & land
+        blurred = gaussian_filter(out, sigma_px, mode="nearest")
+        out = np.where(over_margin, blurred, out)
+    return out
 
 
 # --------------------------------------------------------------------------- #

@@ -240,6 +240,19 @@ def apply(
             f"unknown heightmap_detail_deterrace_mode {cfg.deterrace_mode!r} "
             f"(expected 'cliff_aware' or 'gaussian')"
         )
+    # 1b. wall spread -- de-terrace kept a real cliff by not diffusing across
+    # it, but on a square raster that is a per-edge decision, and a ramp of
+    # small risers under it can collapse the whole drop onto one axis-aligned
+    # pixel-pair edge (docs §2h ii). Spread it back over its own width.
+    if cfg.wall_spread_enabled:
+        smooth = erosion.widen_concentrated_steps(
+            smooth, h0, land,
+            window_px=cfg.wall_spread_window_px,
+            max_ratio=cfg.wall_spread_max_ratio,
+            source_margin=cfg.wall_spread_source_margin,
+            iterations=cfg.wall_spread_iterations,
+            sigma_px=cfg.wall_spread_sigma_px,
+        )
     h2 = np.where(land, smooth, h0)
     del smooth
 
@@ -417,6 +430,7 @@ def apply(
         **headroom_diag,
         **bound_diag,
         "deterrace_mode": cfg.deterrace_mode,
+        "wall_spread_enabled": cfg.wall_spread_enabled,
         "relief_mode": cfg.relief_mode,
         "coast_mode": cfg.coast_mode,
         "bound_window_px": cfg.bound_window_px,

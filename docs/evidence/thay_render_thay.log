@@ -1,0 +1,13 @@
+Downloading fonttools (5.1MiB)
+ Downloaded fonttools
+Installed 11 packages in 5ms
+sun elevation 33.1 deg, azimuth 167.5 deg (gfx/map/environment/environment.txt sun_direction)
+camera tilt 50 deg (common/defines/graphic/00_graphics.txt ZOOM_STEPS_TILT[0])
+  ck2 source native box (topology.bmp px) = (2298, 685, 2691, 1119), crop shape (434, 393)
+  build15 reconstruction: 68.3s, stats={'seed': 1357, 'water_px_clamped': 69456, 'land_px_raised_to_pin': 90038, 'distinct_values_before': 212, 'distinct_values_after': 39390, 'land_px_on_clamp_floor': 5378, 'land_pct_on_clamp_floor': 0.02, 'land_px_at_ceiling': 0, 'excursion_limited_px': 147309, 'excursion_limited_pct_of_land': 0.557, 'bound_limited_px': 0, 'bound_limited_pct_of_land': 0.0, 'deterrace_mode': 'cliff_aware', 'wall_spread_enabled': True, 'relief_mode': 'eroded', 'coast_mode': 'blend_to_water', 'bound_window_px': 3, 'bound_tolerance_sigmas': 0.0, 'ridged_classes': 'mountains,desert_mountains,hills,terraced_hills', 'ridged_weight': 0.0, 'power_law_c': 1.5, 'fit_band_bins': 112, 'elapsed_s': 68.3, 'terrain_gain': [{'terrain': 'desert', 'px': 2971761, 'vanilla_hf_rms': 91.2, 'gain': 0.679}, {'terrain': 'drylands', 'px': 383, 'vanilla_hf_rms': 96.9, 'gain': 0.721}, {'terrain': 'farmlands', 'px': 598235, 'vanilla_hf_rms': 96.7, 'gain': 0.719}, {'terrain': 'forest', 'px': 2320668, 'vanilla_hf_rms': 110.7, 'gain': 0.824}, {'terrain': 'hills', 'px': 3020471, 'vanilla_hf_rms': 213.3, 'gain': 1.587}, {'terrain': 'jungle', 'px': 2485582, 'vanilla_hf_rms': 120.7, 'gain': 0.898}, {'terrain': 'mountains', 'px': 3323798, 'vanilla_hf_rms': 311.4, 'gain': 2.317}, {'terrain': 'plains', 'px': 4362546, 'vanilla_hf_rms': 86.3, 'gain': 0.642}, {'terrain': 'steppe', 'px': 3624640, 'vanilla_hf_rms': 97.2, 'gain': 0.723}, {'terrain': 'taiga', 'px': 3334166, 'vanilla_hf_rms': 70.1, 'gain': 0.522}, {'terrain': 'wetlands', 'px': 425927, 'vanilla_hf_rms': 70.4, 'gain': 0.524}], 'erosion_iterations': 16, 'erosion_accum_iterations': 3, 'erosion_uplift_levels': 358.1, 'erosion_field_rms_levels': 360.4, 'erosion_slope_ceiling_steps': 0.5, 'erosion_slope_gate_steps': 0.0, 'erosion_gate_land_mean': 1.0, 'erosion_ridged_land_mean': 0.0, 'target_mode': 'vanilla_curve', 'target_anchor_scale': 1.0, 'fill_min_cycles_per_km': 0.05, 'deficit_scale': 304.1454, 'deficit_match_bins': 95, 'source_adaptive_gain_mean': 0.695, 'source_adaptive_gain': True}
+  ck2_source: shape (434, 393), level [3598, 39510]
+  plain_rescale: shape (839, 759), level [3598, 40341]
+  build17: shape (839, 759), level [0, 39865]
+  build15: shape (839, 759), level [3598, 38142]
+  ours: shape (839, 759), level [0, 39819]
+done in 117.1s -> /home/cvdbdo/git/paradox/ck3/wt/thay-relief/docs/evidence/thay_relief
