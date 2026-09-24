@@ -548,8 +548,20 @@ def main(argv: list[str]) -> int:
 
     with (out / "map_data/provinces.png").open("rb") as fh:
         prov = np.asarray(Image.open(fh).convert("RGB"))
-    with (out / "map_data/heightmap.png").open("rb") as fh:
-        heights = np.asarray(Image.open(fh))
+    hm_png = out / "map_data/heightmap.png"
+    side_png = out.parent / f"{out.name}.sidecar" / "map_data/heightmap.png"
+    if not hm_png.exists() and side_png.exists():
+        hm_png = side_png  # ship_heightmap_png = false: build.sidecar_dir
+    if hm_png.exists():
+        with hm_png.open("rb") as fh:
+            heights = np.asarray(Image.open(fh))
+    else:
+        # `[map.heightmap] ship_heightmap_png = false` (2x builds): read the
+        # packed pair the game itself reads; decode_packed returns the same
+        # orientation write_packed was given (tests/test_map_packed_heightmap.py).
+        from ck2ck3.map import packed_heightmap
+
+        heights, _ = packed_heightmap.decode_packed(out / "map_data")
     if heights.dtype != np.uint16:
         print(f"heightmap.png is not 16-bit (got {heights.dtype})")
         return 1
