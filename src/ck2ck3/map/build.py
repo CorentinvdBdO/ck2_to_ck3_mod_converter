@@ -914,6 +914,15 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             log("skipping map_data/heightmap.png (ship_heightmap_png=false: "
                 "not read by the engine, dropped to stay under GitHub's "
                 "100 MB file limit at this resolution_factor)")
+            # ...but keep the exact pre-pack array next to the mod (never in
+            # it) for scripts/verify_heightmap_detail_invariants.py: the
+            # packed pair is lossy per tile, so it cannot stand in for the
+            # pass's own output when checking the pass's own invariants.
+            side = sidecar_dir(sink)
+            if side is not None and not getattr(sink, "dry_run", False):
+                (side / "map_data").mkdir(parents=True, exist_ok=True)
+                heightmap.save_png(heights, side / "map_data" / "heightmap.png")
+                log(f"wrote the full-resolution heightmap to {side}/map_data/heightmap.png")
 
         log("packing heightmap")
         meta = _write_packed(sink, heights, cfg)
@@ -2044,3 +2053,17 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def sidecar_dir(sink) -> Path | None:
+    """``<mod dir>.sidecar``: a sibling of the output mod for build products
+    the mod must not ship (the full-resolution heightmap at 2x)."""
+    root = getattr(sink, "root", None)
+    if root is None:
+        ctx = getattr(sink, "ctx", None)
+        if ctx is None or not hasattr(ctx, "out_path"):
+            return None
+        root = Path(ctx.out_path("descriptor.mod")).parent
+    root = Path(root)
+    return root.parent / f"{root.name}.sidecar"
+

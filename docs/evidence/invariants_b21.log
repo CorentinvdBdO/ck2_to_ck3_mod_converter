@@ -1,0 +1,25 @@
+resolution_factor 2 detected (heightmap 16640x13568 vs provinces 8320x6784)
+lake_to_land          clean (no overridden province left in a default.map water list)
+river_valleys         clean (6 valley province(s) still water, none pinned)
+out                     ../claudespace/mods/faerun_ck2_to_ck3_converted
+water level             4883
+land provinces checked  3924
+water provinces checked 350
+distinct height values  40268
+land px at/below water  0
+water px above water    0
+source bound            2.0x hf RMS over 6 px (median tol 194.4 levels)
+  land pinned, excluded 481681 px
+  land below the bound  0 px (max 0.0 levels)
+  land above the bound  0 px (max 0.0 levels)
+wall concentration (§2h ii, a cliff as a 1-px axis-aligned slab vs a continuous slope):
+  k=2  axis/diag 0.3
+  k=3  axis/diag 0.19
+  k=5  axis/diag 0.55
+  source k=2 0.25  k=5 0.66
+  drop concentration p50/p95/max 0.279/0.364/1.0
+narrow water-pinned canyons none on a province this lane's overrides target
+  + 79 elsewhere on the map (informational, out of this lane's scope, docs/evidence/narrow_water_pinned_canyons.csv)
+
+invariants hold
+INV_EXIT 0

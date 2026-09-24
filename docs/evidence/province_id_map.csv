@@ -2982,1304 +2982,1303 @@ ck2_id,ck3_id,r,g,b,name,kind,barony,county,holding
 1307,2981,255,246,97,b_jiaoyang,barony,b_jiaoyang,c_zoahua,city_holding
 2484,2982,34,153,40,b_minlow,barony,b_minlow,c_minlow,castle_holding
 2484,2983,237,104,52,b_tangqihar,barony,b_tangqihar,c_minlow,city_holding
-2484,2984,169,236,15,b_edgeforest,barony,b_edgeforest,c_minlow,church_holding
-2479,2985,196,146,93,b_guihar,barony,b_guihar,c_guihar,tribal_holding
-2332,2986,6,232,13,b_yuanqihar,barony,b_yuanqihar,c_east_rendai,castle_holding
-2332,2987,122,2,134,b_shanshan,barony,b_shanshan,c_east_rendai,city_holding
-2332,2988,143,151,131,b_tengcheng,barony,b_tengcheng,c_east_rendai,church_holding
-1139,2989,172,112,127,b_shengyi,barony,b_shengyi,c_middle_rendai,tribal_holding
-1306,2990,134,149,146,b_tongwei,barony,b_tongwei,c_west_rendai,tribal_holding
-1772,2991,27,94,141,b_zhoman,barony,b_zhoman,c_zhoman,tribal_holding
-1373,2992,77,54,222,b_seikung,barony,b_seikung,c_seikung,castle_holding
-1373,2993,175,12,11,b_mianxiang,barony,b_mianxiang,c_seikung,city_holding
-1373,2994,192,104,91,b_shizuiguan,barony,b_shizuiguan,c_seikung,church_holding
-1373,2995,5,68,27,b_meiyuan,barony,b_meiyuan,c_seikung,castle_holding
-1372,2996,148,111,56,b_akshu,barony,b_akshu,c_akshu,castle_holding
-1372,2997,16,63,49,b_mudanxing,barony,b_mudanxing,c_akshu,city_holding
-1372,2998,1,57,71,b_qingmay,barony,b_qingmay,c_akshu,church_holding
-1374,2999,5,149,204,b_feifeng,barony,b_feifeng,c_feifeng,castle_holding
-1374,3000,113,197,160,b_itu,barony,b_itu,c_feifeng,city_holding
-1375,3001,95,142,132,b_po,barony,b_po,c_herders_crook,castle_holding
-1375,3002,142,251,81,b_tanggong,barony,b_tanggong,c_herders_crook,city_holding
-1376,3003,94,15,199,b_atai,barony,b_atai,c_atai,tribal_holding
-1377,3004,71,61,228,b_guizen,barony,b_guizen,c_halu,tribal_holding
-1383,3005,22,245,7,b_shou_kuan,barony,b_shou_kuan,c_shou_kuan,castle_holding
-1383,3006,202,219,222,b_xinging,barony,b_xinging,c_shou_kuan,city_holding
-1383,3007,242,181,203,b_xutou,barony,b_xutou,c_shou_kuan,church_holding
-1394,3008,59,177,230,b_beijiangm,barony,b_beijiangm,c_wellspring_hills,tribal_holding
-1768,3009,216,83,189,b_xuheing,barony,b_xuheing,c_xuheing,castle_holding
-2213,3010,94,17,63,b_taicheng,barony,b_taicheng,c_kuan_road,castle_holding
-2213,3011,23,74,39,b_nangong,barony,b_nangong,c_kuan_road,city_holding
-2213,3012,106,23,57,b_mudanramay,barony,b_mudanramay,c_kuan_road,church_holding
-2480,3013,233,198,182,b_quchang,barony,b_quchang,c_quchang,tribal_holding
-2482,3014,217,136,39,b_zoajing,barony,b_zoajing,c_zoajing,castle_holding
-2482,3015,171,32,195,b_guirao,barony,b_guirao,c_zoajing,city_holding
-2482,3016,201,237,232,b_shangxing,barony,b_shangxing,c_zoajing,church_holding
-1767,3017,236,205,207,b_hengfena,barony,b_hengfena,c_hengfena,tribal_holding
-1393,3018,128,186,102,b_chaikou,barony,b_chaikou,c_chaikou_hills,tribal_holding
-1392,3019,183,126,165,b_meiliang,barony,b_meiliang,c_fertile_moon,tribal_holding
-2481,3020,173,228,164,b_tongchun,barony,b_tongchun,c_tongchun,castle_holding
-2481,3021,105,7,93,b_shizuitong,barony,b_shizuitong,c_tongchun,church_holding
-2481,3022,8,232,94,b_shizuiliang,barony,b_shizuiliang,c_tongchun,city_holding
-1363,3023,91,188,13,b_toming,barony,b_toming,c_toming,castle_holding
-1363,3024,0,212,69,b_guusai,barony,b_guusai,c_toming,city_holding
-1363,3025,135,216,49,b_jiangjin,barony,b_jiangjin,c_toming,church_holding
-1367,3026,140,40,97,b_mishan,barony,b_mishan,c_mishan,castle_holding
-1367,3027,74,167,167,b_hangping,barony,b_hangping,c_mishan,city_holding
-1379,3028,8,236,145,b_laiwei,barony,b_laiwei,c_laiwei,castle_holding
-1379,3029,240,153,147,b_jiangyi,barony,b_jiangyi,c_laiwei,city_holding
-1770,3030,27,102,147,b_naon,barony,b_naon,c_naon,castle_holding
-2483,3031,43,48,169,b_shangtao,barony,b_shangtao,c_shangtao,castle_holding
-2483,3032,212,240,67,b_qindong,barony,b_qindong,c_shangtao,city_holding
-1310,3033,111,71,16,b_shihfang,barony,b_shihfang,c_shihfang,castle_holding
-1310,3034,6,214,46,b_zhongzhou,barony,b_zhongzhou,c_shihfang,city_holding
-1769,3035,206,84,155,b_huai,barony,b_huai,c_huai,castle_holding
-1312,3036,27,157,170,b_tapenga,barony,b_tapenga,c_tapenga,castle_holding
-1312,3037,20,233,62,b_guangqiu,barony,b_guangqiu,c_tapenga,city_holding
-1312,3038,184,211,29,b_suchun,barony,b_suchun,c_tapenga,church_holding
-1311,3039,111,0,41,b_nanxun,barony,b_nanxun,c_nanxun,castle_holding
-1311,3040,133,37,83,b_yueh,barony,b_yueh,c_nanxun,city_holding
-1309,3041,222,112,216,b_jiaoguan,barony,b_jiaoguan,c_sky_fields,castle_holding
-1309,3042,103,29,170,b_sharbei,barony,b_sharbei,c_sky_fields,city_holding
-1309,3043,222,29,63,b_changzhou,barony,b_changzhou,c_sky_fields,church_holding
-815,3044,162,93,244,b_jingong,barony,b_jingong,c_yellow_serpent,castle_holding
-1766,3045,95,147,19,b_qinyi,barony,b_qinyi,c_qinyi,castle_holding
-1765,3046,107,110,174,b_hame,barony,b_hame,c_hame,castle_holding
-1343,3047,162,99,17,b_chao_yang,barony,b_chao_yang,c_chao_yang,castle_holding
-1343,3048,210,35,228,b_yincha,barony,b_yincha,c_chao_yang,city_holding
-1343,3049,187,21,126,b_jiaxian,barony,b_jiaxian,c_chao_yang,church_holding
-1308,3050,136,255,183,b_qingliang,barony,b_qingliang,c_west_road,castle_holding
-1308,3051,225,20,93,b_guangtou,barony,b_guangtou,c_west_road,city_holding
-1345,3052,144,117,126,b_loulan,barony,b_loulan,c_loulan,castle_holding
-1345,3053,25,178,4,b_putai,barony,b_putai,c_loulan,city_holding
-1345,3054,64,12,213,b_suizhou,barony,b_suizhou,c_loulan,church_holding
-1382,3055,68,74,57,b_jinchou,barony,b_jinchou,c_taotie,castle_holding
-1382,3056,100,252,62,b_guanghai,barony,b_guanghai,c_taotie,city_holding
-1381,3057,226,242,220,b_fukiow,barony,b_fukiow,c_fukiow,castle_holding
-1381,3058,111,161,71,b_donggyi,barony,b_donggyi,c_fukiow,city_holding
-1695,3059,212,147,23,b_kuo_meilan,barony,b_kuo_meilan,c_kuo_meilan,castle_holding
-2346,3060,50,207,189,b_delliun,barony,b_delliun,c_delliun,castle_holding
-2346,3061,156,11,56,b_pingliang,barony,b_pingliang,c_delliun,church_holding
-2346,3062,241,136,135,b_darkvale,barony,b_darkvale,c_delliun,city_holding
-1313,3063,72,64,169,b_ermani,barony,b_ermani,c_generals_stand,tribal_holding
-1344,3064,226,38,104,b_zhouramay,barony,b_zhouramay,c_kuang_chu_road,castle_holding
-1344,3065,136,243,49,b_shanchun,barony,b_shanchun,c_kuang_chu_road,city_holding
-1378,3066,122,203,247,b_kangste,barony,b_kangste,c_kangste,castle_holding
-1378,3067,61,183,226,b_anzhoun,barony,b_anzhoun,c_kangste,city_holding
-1315,3068,144,140,188,b_qudao,barony,b_qudao,c_qudao,tribal_holding
-1364,3069,52,72,244,b_kai_shan,barony,b_kai_shan,c_kai_shan,city_holding
-1364,3070,200,150,6,b_qinggong,barony,b_qinggong,c_kai_shan,castle_holding
-1364,3071,188,202,48,b_donghua,barony,b_donghua,c_kai_shan,church_holding
-1364,3072,74,226,44,b_guijiang,barony,b_guijiang,c_kai_shan,city_holding
-1366,3073,227,171,193,b_kochung,barony,b_kochung,c_kochung,church_holding
-1366,3074,124,134,3,b_hengwei,barony,b_hengwei,c_kochung,castle_holding
-1369,3075,225,203,195,b_weifei,barony,b_weifei,c_weifei,castle_holding
-1369,3076,104,130,174,b_zhaojing,barony,b_zhaojing,c_weifei,city_holding
-1369,3077,241,189,93,b_hengliang,barony,b_hengliang,c_weifei,church_holding
-1415,3078,22,124,66,b_zhouang,barony,b_zhouang,c_white_hills,castle_holding
-1415,3079,160,48,112,b_guaoun,barony,b_guaoun,c_white_hills,city_holding
-1415,3080,219,38,205,b_shutong,barony,b_shutong,c_white_hills,church_holding
-1365,3081,18,44,1,b_yao_sai,barony,b_yao_sai,c_yao_sai,castle_holding
-1365,3082,201,224,39,b_baohou,barony,b_baohou,c_yao_sai,city_holding
-1368,3083,20,13,247,b_wang,barony,b_wang,c_wang,castle_holding
-1368,3084,234,130,235,b_qinshu,barony,b_qinshu,c_wang,city_holding
-1771,3085,31,76,174,b_meinan,barony,b_meinan,c_meinan,castle_holding
-2485,3086,28,214,17,b_changdao,barony,b_changdao,c_changdao,tribal_holding
-2486,3087,73,171,207,b_jianggong,barony,b_jianggong,c_forests_edge,tribal_holding
-1370,3088,252,125,16,b_taishan,barony,b_taishan,c_taishan,castle_holding
-1370,3089,24,160,209,b_nanxing,barony,b_nanxing,c_taishan,city_holding
-1371,3090,217,213,110,b_saigai,barony,b_saigai,c_saigai,church_holding
-1371,3091,247,125,219,b_tenghai,barony,b_tenghai,c_saigai,castle_holding
-1371,3092,118,170,72,b_hunhai,barony,b_hunhai,c_saigai,church_holding
-905,3093,218,81,241,b_kourmira,barony,b_kourmira,c_kourmira,tribal_holding
-905,3094,184,174,40,b_balenulalik,barony,b_balenulalik,c_kourmira,city_holding
-905,3095,249,220,120,b_tenji,barony,b_tenji,c_kourmira,church_holding
-905,3096,5,72,172,b_nanshark,barony,b_nanshark,c_kourmira,castle_holding
-904,3097,228,53,60,b_banlm,barony,b_banlm,c_banlm,tribal_holding
-904,3098,126,99,28,b_sago,barony,b_sago,c_banlm,city_holding
-903,3099,1,148,183,b_winterkeep,barony,b_winterkeep,c_winterkeep,castle_holding
-1787,3100,144,116,112,b_seshano,barony,b_seshano,c_seshano,tribal_holding
-894,3101,250,158,218,b_teri,barony,b_teri,c_teri,tribal_holding
-897,3102,116,189,162,b_qorkh,barony,b_qorkh,c_qorkh,tribal_holding
-895,3103,230,239,151,b_tuma,barony,b_tuma,c_tuma,tribal_holding
-896,3104,164,9,158,b_daynk,barony,b_daynk,c_daynk,tribal_holding
-901,3105,5,65,114,b_nanhu,barony,b_nanhu,c_nanhu,tribal_holding
-915,3106,160,225,247,b_yegororyanen,barony,b_yegororyanen,c_yegororyanen,tribal_holding
-899,3107,144,71,205,b_quaraband,barony,b_quaraband,c_quaraband,tribal_holding
-902,3108,241,69,96,b_darakh,barony,b_darakh,c_darakh,tribal_holding
-902,3109,149,49,30,b_taynligola,barony,b_taynligola,c_darakh,city_holding
-900,3110,87,111,60,b_salira,barony,b_salira,c_salira,tribal_holding
-900,3111,161,168,46,b_natangoj,barony,b_natangoj,c_salira,city_holding
-1776,3112,228,27,84,b_vral,barony,b_vral,c_vral,tribal_holding
-1779,3113,69,226,125,b_bukhouk,barony,b_bukhouk,c_bukhouk,tribal_holding
-1778,3114,15,211,118,b_kituzeelal,barony,b_kituzeelal,c_kituzeelal,tribal_holding
-898,3115,107,33,176,b_terva,barony,b_terva,c_flowery_well,tribal_holding
-906,3116,180,188,138,b_atoratgins,barony,b_atoratgins,c_atoratgins,tribal_holding
-850,3117,226,242,27,b_borich,barony,b_borich,c_borich,tribal_holding
-853,3118,16,208,70,b_saintkho,barony,b_saintkho,c_iris_spring,castle_holding
-852,3119,208,83,58,b_jarir,barony,b_jarir,c_jarir,tribal_holding
-854,3120,152,68,32,b_fortress_of_the_old_man,barony,b_fortress_of_the_old_man,c_sentinel_spire,church_holding
-854,3121,73,99,12,b_budaarcha,barony,b_budaarcha,c_sentinel_spire,castle_holding
-854,3122,3,51,129,b_chintshen,barony,b_chintshen,c_sentinel_spire,church_holding
-826,3123,189,243,211,b_leopard_shan,barony,b_leopard_shan,c_leopard_shan,tribal_holding
-933,3124,94,66,179,b_akashay,barony,b_akashay,c_akashay,tribal_holding
-827,3125,219,253,77,b_amassa,barony,b_amassa,c_amassa,tribal_holding
-828,3126,218,24,193,b_jelnesh,barony,b_jelnesh,c_jelnesh,tribal_holding
-1331,3127,25,34,35,b_li_raz,barony,b_li_raz,c_li_raz,city_holding
-879,3128,13,134,14,b_sakh,barony,b_sakh,c_sakh,tribal_holding
-1271,3129,124,115,233,b_haxkhun,barony,b_haxkhun,c_haxkhun,city_holding
-882,3130,159,246,66,b_munli,barony,b_munli,c_munli,tribal_holding
-880,3131,183,226,241,b_bariya,barony,b_bariya,c_bariya,tribal_holding
-881,3132,214,251,188,b_tariatooroi,barony,b_tariatooroi,c_tariatooroi,tribal_holding
-886,3133,199,128,41,b_nogoonraat,barony,b_nogoonraat,c_nogoonraat,tribal_holding
-884,3134,27,85,82,b_bulaantaro,barony,b_bulaantaro,c_bulaantaro,tribal_holding
-883,3135,11,152,252,b_gurvandene,barony,b_gurvandene,c_gurvandene,tribal_holding
-885,3136,195,55,212,b_hatgiainli,barony,b_hatgiainli,c_hatgiainli,tribal_holding
-1780,3137,55,201,20,b_abarun,barony,b_abarun,c_abarun,tribal_holding
-855,3138,255,120,64,b_bura,barony,b_bura,c_iceroot_forest,tribal_holding
-857,3139,107,191,65,b_bulangalant,barony,b_bulangalant,c_bulangalant,tribal_holding
-856,3140,11,228,54,b_shirc,barony,b_shirc,c_shirc,tribal_holding
-887,3141,144,40,89,b_banda,barony,b_banda,c_banda,tribal_holding
-891,3142,20,12,152,b_charig,barony,b_charig,c_bitter_well,tribal_holding
-888,3143,81,186,131,b_bogon,barony,b_bogon,c_horseshoe_oasis,church_holding
-876,3144,117,187,202,b_nagoo,barony,b_nagoo,c_nagoo,tribal_holding
-889,3145,2,100,103,b_tatanulgts,barony,b_tatanulgts,c_tatanulgts,tribal_holding
-877,3146,141,20,40,b_ansi,barony,b_ansi,c_ansi,city_holding
-893,3147,197,158,72,b_bara,barony,b_bara,c_bara,tribal_holding
-870,3148,67,189,191,b_chegoyui,barony,b_chegoyui,c_chegoyui,city_holding
-878,3149,11,123,88,b_deraiairgak,barony,b_deraiairgak,c_deraiairgak,tribal_holding
-892,3150,28,140,129,b_taria,barony,b_taria,c_pigeon_rock,tribal_holding
-1334,3151,35,164,194,b_jugicha,barony,b_jugicha,c_jugicha,city_holding
-1272,3152,194,144,151,b_quaraqand,barony,b_quaraqand,c_quaraqand,city_holding
-1380,3153,84,203,117,b_zoachang,barony,b_zoachang,c_thunder_hills,tribal_holding
-1317,3154,33,80,38,b_kwachow,barony,b_kwachow,c_kwachow,castle_holding
-1318,3155,219,194,16,b_nagai,barony,b_nagai,c_nagai_terrace,tribal_holding
-1316,3156,92,247,252,b_taikho,barony,b_taikho,c_taikho_gaze,tribal_holding
-1319,3157,110,133,63,b_yohun,barony,b_yohun,c_yohun_fields,tribal_holding
-1314,3158,222,247,232,b_hulan,barony,b_hulan,c_hulan,tribal_holding
-1279,3159,174,231,66,b_banai,barony,b_banai,c_banai,tribal_holding
-1335,3160,148,187,166,b_ondene,barony,b_ondene,c_ondene,tribal_holding
-1336,3161,96,63,167,b_xair,barony,b_xair,c_xair,tribal_holding
-868,3162,172,29,1,b_chan_liu_shui,barony,b_chan_liu_shui,c_chan_liu_shui,tribal_holding
-869,3163,245,246,244,b_bakhuk,barony,b_bakhuk,c_bakhuk,tribal_holding
-862,3164,87,140,222,b_mata_bol,barony,b_mata_bol,c_mata,tribal_holding
-859,3165,128,85,221,b_ni_ko,barony,b_ni_ko,c_ni_ko,tribal_holding
-867,3166,174,34,141,b_tonli,barony,b_tonli,c_tonli,tribal_holding
-861,3167,194,6,42,b_burich,barony,b_burich,c_burich,tribal_holding
-865,3168,205,196,16,b_bisoturi,barony,b_bisoturi,c_bisoturi,tribal_holding
-863,3169,74,184,102,b_khol,barony,b_khol,c_khol,tribal_holding
-864,3170,103,219,219,b_qantun,barony,b_qantun,c_qantun,tribal_holding
-860,3171,52,14,15,b_gukh,barony,b_gukh,c_gukh,castle_holding
-911,3172,45,29,31,b_noondai,barony,b_noondai,c_noondai,castle_holding
-858,3173,104,37,216,b_byog,barony,b_byog,c_umberwood,castle_holding
-1783,3174,145,77,220,b_bahat,barony,b_bahat,c_bahat,castle_holding
-2307,3175,173,152,237,b_treley,barony,b_treley,c_the_great_spire,castle_holding
-871,3176,142,195,45,b_tungtairira,barony,b_tungtairira,c_tungtairira,tribal_holding
-873,3177,90,83,229,b_bunshin,barony,b_bunshin,c_bunshin,tribal_holding
-872,3178,93,68,144,b_kholassa,barony,b_kholassa,c_kholassa,tribal_holding
-875,3179,124,48,131,b_shota,barony,b_shota,c_shota,tribal_holding
-1277,3180,84,237,205,b_lajang,barony,b_lajang,c_lajang,castle_holding
-1322,3181,208,118,216,b_simbilan,barony,b_simbilan,c_kuning,tribal_holding
-1762,3182,50,98,97,b_potong,barony,b_potong,c_aval,tribal_holding
-1285,3183,55,66,156,b_muara,barony,b_muara,c_muara,castle_holding
-2488,3184,92,26,73,b_thapadan,barony,b_thapadan,c_jakadiri,tribal_holding
-2487,3185,253,73,54,b_kanori,barony,b_kanori,c_panjang_river,tribal_holding
-2489,3186,66,168,141,b_saridang,barony,b_saridang,c_detar_land,tribal_holding
-2490,3187,139,139,56,b_barit,barony,b_barit,c_chulacca,tribal_holding
-2491,3188,121,41,245,b_tapakgan,barony,b_tapakgan,c_lunru,tribal_holding
-1167,3189,193,79,62,b_funashi,barony,b_funashi,c_hernes_wood,castle_holding
-1190,3190,113,71,255,b_anktarina,barony,b_anktarina,c_anktarina,tribal_holding
-1761,3191,129,43,133,b_amithiph,barony,b_amithiph,c_upper_sempadan,castle_holding
-1170,3192,249,230,160,b_tshalkha,barony,b_tshalkha,c_tshalkha,castle_holding
-2331,3193,132,137,228,b_senia,barony,b_senia,c_senia_plateau,tribal_holding
-1168,3194,245,168,179,b_jhalolokati,barony,b_jhalolokati,c_jhalolokati,tribal_holding
-1166,3195,250,9,223,b_adapra,barony,b_adapra,c_segaran_swamp,castle_holding
-1169,3196,58,200,200,b_battachi,barony,b_battachi,c_odesh,castle_holding
-1520,3197,20,20,244,b_bukitega,barony,b_bukitega,c_bukitega,tribal_holding
-1519,3198,144,172,8,b_narodara,barony,b_narodara,c_narodara,tribal_holding
-1389,3199,148,8,4,b_silapathar,barony,b_silapathar,c_silapathar,tribal_holding
-1390,3200,133,125,216,b_narari,barony,b_narari,c_narari,tribal_holding
-1512,3201,162,171,246,b_limjung,barony,b_limjung,c_limjung,tribal_holding
-1511,3202,203,27,0,b_jeranjah,barony,b_jeranjah,c_jeranjah,tribal_holding
-1510,3203,111,139,28,b_samphos,barony,b_samphos,c_samphos,tribal_holding
-1518,3204,0,4,56,b_tayabuk,barony,b_tayabuk,c_tayabuk,tribal_holding
-1517,3205,146,163,213,b_nathenje,barony,b_nathenje,c_nathenje,tribal_holding
-1505,3206,56,113,36,b_kajiaruti,barony,b_kajiaruti,c_kajiaruti,tribal_holding
-1506,3207,123,29,42,b_hudariyah,barony,b_hudariyah,c_hudariyah,tribal_holding
-1508,3208,232,53,35,b_sigram,barony,b_sigram,c_sigram,tribal_holding
-1504,3209,100,135,239,b_al_hanieh,barony,b_al_hanieh,c_al_hanieh,castle_holding
-1507,3210,125,210,39,b_giniracha,barony,b_giniracha,c_giniracha,tribal_holding
-1514,3211,176,192,205,b_nawal,barony,b_nawal,c_nawal,tribal_holding
-1513,3212,108,212,77,b_tadabbur,barony,b_tadabbur,c_tadabbur,tribal_holding
-1513,3213,213,181,52,b_al_hamidiyah,barony,b_al_hamidiyah,c_tadabbur,castle_holding
-1513,3214,187,206,52,b_ronralal,barony,b_ronralal,c_tadabbur,city_holding
-1515,3215,28,168,85,b_gimise,barony,b_gimise,c_gimise,tribal_holding
-1516,3216,164,208,61,b_qanadad,barony,b_qanadad,c_qanadad,tribal_holding
-1509,3217,249,128,146,b_sariban,barony,b_sariban,c_sariban,tribal_holding
-1467,3218,68,120,167,b_huzuz,barony,b_huzuz,c_huzuz,castle_holding
-1467,3219,33,10,48,b_gamremah,barony,b_gamremah,c_huzuz,church_holding
-1467,3220,74,202,226,b_sadabad,barony,b_sadabad,c_huzuz,castle_holding
-1557,3221,196,24,101,b_magrib,barony,b_magrib,c_magrib,castle_holding
-1557,3222,63,164,83,b_jeral,barony,b_jeral,c_magrib,city_holding
-1557,3223,45,112,215,b_bareel,barony,b_bareel,c_magrib,church_holding
-1468,3224,98,152,195,b_saraq,barony,b_saraq,c_saraq,castle_holding
-1468,3225,155,253,130,b_mahan,barony,b_mahan,c_saraq,city_holding
-1468,3226,179,134,66,b_dirhan,barony,b_dirhan,c_saraq,church_holding
-1469,3227,79,91,110,b_zayir,barony,b_zayir,c_zayir,castle_holding
-1469,3228,203,251,24,b_farwuraq,barony,b_farwuraq,c_zayir,city_holding
-1466,3229,11,124,215,b_wadurah,barony,b_wadurah,c_al_sarif,tribal_holding
-1464,3230,154,33,40,b_halwa,barony,b_halwa,c_halwa,castle_holding
-1464,3231,160,204,170,b_qurtai,barony,b_qurtai,c_halwa,city_holding
-1464,3232,128,20,196,b_shinuraiq,barony,b_shinuraiq,c_halwa,church_holding
-1465,3233,115,63,106,b_zarif,barony,b_zarif,c_zarif,castle_holding
-1465,3234,11,250,22,b_rawdat_thematah,barony,b_rawdat_thematah,c_zarif,city_holding
-1465,3235,205,69,91,b_shahaid,barony,b_shahaid,c_zarif,church_holding
-1463,3236,217,71,111,b_sadul,barony,b_sadul,c_al_malih,castle_holding
-1463,3237,48,143,245,b_arehla,barony,b_arehla,c_al_malih,city_holding
-1458,3238,129,121,0,b_fereej_al_amail,barony,b_fereej_al_amail,c_golden_falcon,tribal_holding
-1461,3239,48,199,66,b_wasat,barony,b_wasat,c_wasat,castle_holding
-1461,3240,39,253,181,b_wusan,barony,b_wusan,c_wasat,city_holding
-1461,3241,138,248,129,b_huwaga,barony,b_huwaga,c_wasat,church_holding
-1461,3242,32,184,72,b_qalat,barony,b_qalat,c_wasat,castle_holding
-1460,3243,122,184,190,b_hayyir,barony,b_hayyir,c_hayyir,castle_holding
-1460,3244,100,161,210,b_busaib,barony,b_busaib,c_hayyir,city_holding
-1460,3245,160,218,111,b_jahrarak,barony,b_jahrarak,c_hayyir,church_holding
-1460,3246,53,75,183,b_winalus,barony,b_winalus,c_hayyir,castle_holding
-1556,3247,152,191,39,b_al_nuziyyah,barony,b_al_nuziyyah,c_al_nuziyyah,castle_holding
-1556,3248,149,88,33,b_suwut,barony,b_suwut,c_al_nuziyyah,city_holding
-1459,3249,111,62,214,b_haimaq,barony,b_haimaq,c_jibal_al_taif,tribal_holding
-1462,3250,22,97,132,b_zill,barony,b_zill,c_zill,castle_holding
-1462,3251,229,204,110,b_abrura,barony,b_abrura,c_zill,city_holding
-1455,3252,132,162,191,b_shakham,barony,b_shakham,c_shakham,castle_holding
-1455,3253,49,249,154,b_wubufi,barony,b_wubufi,c_shakham,church_holding
-1453,3254,228,200,126,b_hiyal,barony,b_hiyal,c_hiyal,castle_holding
-1453,3255,107,90,73,b_jurdaiya,barony,b_jurdaiya,c_hiyal,city_holding
-1453,3256,191,107,80,b_hamuwa,barony,b_hamuwa,c_hiyal,church_holding
-1453,3257,178,214,246,b_sabus,barony,b_sabus,c_hiyal,church_holding
-1555,3258,27,234,97,b_aib,barony,b_aib,c_aib,castle_holding
-1555,3259,4,110,63,b_abu_azada,barony,b_abu_azada,c_aib,city_holding
-1555,3260,201,218,36,b_maraj,barony,b_maraj,c_aib,church_holding
-1554,3261,18,75,144,b_karzuwa,barony,b_karzuwa,c_karzuwa,tribal_holding
-1452,3262,224,6,216,b_budiya,barony,b_budiya,c_al_wahl,castle_holding
-1452,3263,252,11,142,b_halura,barony,b_halura,c_al_wahl,city_holding
-1454,3264,30,181,128,b_dubegat,barony,b_dubegat,c_dubegat,castle_holding
-1477,3265,36,98,11,b_itiraf,barony,b_itiraf,c_itiraf,castle_holding
-1477,3266,4,84,137,b_samaybi,barony,b_samaybi,c_itiraf,church_holding
-1477,3267,86,233,115,b_umm_kulaf,barony,b_umm_kulaf,c_itiraf,city_holding
-1477,3268,94,103,87,b_badais,barony,b_badais,c_itiraf,church_holding
-1474,3269,47,120,237,b_fahhas,barony,b_fahhas,c_fahhas,castle_holding
-1474,3270,213,170,88,b_sabam,barony,b_sabam,c_fahhas,city_holding
-1474,3271,218,53,14,b_shamai,barony,b_shamai,c_fahhas,church_holding
-1591,3272,118,49,112,b_hahami,barony,b_hahami,c_hahami,castle_holding
-1591,3273,137,208,155,b_hazar,barony,b_hazar,c_hahami,city_holding
-1473,3274,24,111,107,b_dakan,barony,b_dakan,c_dakan,castle_holding
-1473,3275,90,207,226,b_hamail,barony,b_hamail,c_dakan,church_holding
-1479,3276,163,179,34,b_burj,barony,b_burj,c_burj,castle_holding
-1479,3277,124,226,243,b_bahlalah,barony,b_bahlalah,c_burj,city_holding
-1479,3278,141,135,223,b_shaga,barony,b_shaga,c_burj,church_holding
-1482,3279,109,49,233,b_fanus,barony,b_fanus,c_fanus,castle_holding
-1482,3280,241,175,114,b_haralus,barony,b_haralus,c_fanus,city_holding
-1476,3281,3,37,112,b_sibbaqiyah,barony,b_sibbaqiyah,c_hitan_island,castle_holding
-1475,3282,242,69,129,b_alarah,barony,b_alarah,c_sumuk_island,castle_holding
-2375,3283,68,148,241,b_al_jarracha,barony,b_al_jarracha,c_risha,tribal_holding
-1483,3284,115,53,137,b_faihakus,barony,b_faihakus,c_al_faraq_islands,tribal_holding
-1480,3285,238,205,242,b_mahabba,barony,b_mahabba,c_mahabba,castle_holding
-1480,3286,194,110,131,b_hamz_al_jasrail,barony,b_hamz_al_jasrail,c_mahabba,city_holding
-1480,3287,156,240,220,b_khaligat,barony,b_khaligat,c_mahabba,church_holding
-1480,3288,117,247,145,b_mirbifi,barony,b_mirbifi,c_mahabba,city_holding
-1481,3289,64,5,153,b_hudid,barony,b_hudid,c_hudid,castle_holding
-1481,3290,137,233,74,b_araitan,barony,b_araitan,c_hudid,city_holding
-1481,3291,116,144,230,b_hususan,barony,b_hususan,c_hudid,church_holding
-1481,3292,216,45,6,b_nuzheem,barony,b_nuzheem,c_hudid,castle_holding
-1478,3293,252,166,78,b_biduraq,barony,b_biduraq,c_al_munamma,castle_holding
-1478,3294,159,112,125,b_umm_salal_barata,barony,b_umm_salal_barata,c_al_munamma,church_holding
-1484,3295,98,81,54,b_al_harmah,barony,b_al_harmah,c_al_harmah,tribal_holding
-1484,3296,177,103,5,b_tetari,barony,b_tetari,c_al_harmah,city_holding
-1471,3297,237,76,2,b_hilm,barony,b_hilm,c_hilm,castle_holding
-1471,3298,246,69,178,b_zarwuya,barony,b_zarwuya,c_hilm,city_holding
-1471,3299,142,38,216,b_raleem,barony,b_raleem,c_hilm,church_holding
-1471,3300,163,212,52,b_as_bidbiyat,barony,b_as_bidbiyat,c_hilm,church_holding
-1472,3301,30,204,177,b_talab,barony,b_talab,c_talab,castle_holding
-1472,3302,188,7,204,b_jurdabis,barony,b_jurdabis,c_talab,city_holding
-1472,3303,2,179,249,b_zabrila,barony,b_zabrila,c_talab,church_holding
-1470,3304,164,64,175,b_fujegat,barony,b_fujegat,c_fujegat,castle_holding
-1470,3305,57,14,6,b_banad,barony,b_banad,c_fujegat,church_holding
-1396,3306,126,162,190,b_qudra,barony,b_qudra,c_qudra,castle_holding
-1396,3307,151,59,59,b_hamsaad,barony,b_hamsaad,c_qudra,city_holding
-1396,3308,51,42,63,b_jawfah,barony,b_jawfah,c_qudra,church_holding
-1396,3309,169,98,36,b_ain_smafarik,barony,b_ain_smafarik,c_qudra,castle_holding
-1338,3310,253,166,229,b_liham,barony,b_liham,c_liham,castle_holding
-1338,3311,183,145,77,b_al_sari,barony,b_al_sari,c_liham,city_holding
-1338,3312,35,31,78,b_umm_rahud,barony,b_umm_rahud,c_liham,church_holding
-1338,3313,109,135,41,b_rabali,barony,b_rabali,c_liham,castle_holding
-1400,3314,143,34,95,b_el_khrouled,barony,b_el_khrouled,c_al_faddi,tribal_holding
-1397,3315,233,218,42,b_taliat,barony,b_taliat,c_taliat,castle_holding
-1397,3316,192,236,233,b_omidihreza,barony,b_omidihreza,c_taliat,city_holding
-1397,3317,181,143,192,b_salmaqqah,barony,b_salmaqqah,c_taliat,church_holding
-1397,3318,204,251,58,b_qatimis,barony,b_qatimis,c_taliat,castle_holding
-1398,3319,97,83,41,b_adhal,barony,b_adhal,c_adhal,castle_holding
-1398,3320,45,217,3,b_yagrah,barony,b_yagrah,c_adhal,city_holding
-2170,3321,26,200,214,b_kaslaib,barony,b_kaslaib,c_kaslaib,tribal_holding
-1450,3322,40,95,210,b_zuwaruk,barony,b_zuwaruk,c_zuwaruk,castle_holding
-1451,3323,160,215,186,b_rago,barony,b_rago,c_rago,castle_holding
-1553,3324,247,14,237,b_malualti,barony,b_malualti,c_malualti,tribal_holding
-1399,3325,118,24,18,b_mina,barony,b_mina,c_mina,castle_holding
-1399,3326,176,87,129,b_muyar,barony,b_muyar,c_mina,city_holding
-1399,3327,164,27,195,b_gokorhisar,barony,b_gokorhisar,c_mina,church_holding
-1536,3328,53,55,126,b_goulous,barony,b_goulous,c_lizards_tongue_pass,tribal_holding
-1537,3329,204,48,57,b_nouarada,barony,b_nouarada,c_nouarada,tribal_holding
-1347,3330,206,231,157,b_krak_al_niraan,barony,b_krak_al_niraan,c_krak_al_niraan,castle_holding
-1347,3331,77,190,69,b_ghaliha,barony,b_ghaliha,c_krak_al_niraan,city_holding
-1349,3332,84,20,110,b_sokkar,barony,b_sokkar,c_sokkar,castle_holding
-1352,3333,85,189,61,b_taham,barony,b_taham,c_taham,castle_holding
-1352,3334,50,199,132,b_al_qufag,barony,b_al_qufag,c_taham,city_holding
-1273,3335,123,246,29,b_genies_garden,barony,b_genies_garden,c_genies_garden,tribal_holding
-2125,3336,226,133,179,b_ubar,barony,b_ubar,c_ubar,castle_holding
-2125,3337,173,215,186,b_baqarm,barony,b_baqarm,c_ubar,city_holding
-2125,3338,224,251,225,b_akhmedo,barony,b_akhmedo,c_ubar,church_holding
-2126,3339,192,158,116,b_midnight_waters,barony,b_midnight_waters,c_midnight_waters,tribal_holding
-2123,3340,31,150,252,b_krak_al_mazhar,barony,b_krak_al_mazhar,c_krak_al_mazhar,castle_holding
-1348,3341,226,18,175,b_moradask,barony,b_moradask,c_moradask,castle_holding
-1348,3342,174,46,128,b_sugola,barony,b_sugola,c_moradask,city_holding
-2425,3343,78,44,162,b_khor_biligat,barony,b_khor_biligat,c_sea_of_salt,castle_holding
-953,3344,245,182,213,b_al_anwahr,barony,b_al_anwahr,c_al_anwahr,tribal_holding
-1457,3345,160,107,123,b_surireb,barony,b_surireb,c_hand_of_the_sky,tribal_holding
-1456,3346,91,115,165,b_adrila,barony,b_adrila,c_adrila,castle_holding
-2124,3347,9,35,162,b_jabal_sarahin,barony,b_jabal_sarahin,c_jabal_sarahin,castle_holding
-1563,3348,233,132,219,b_tajar,barony,b_tajar,c_tajar,castle_holding
-1563,3349,223,217,8,b_baharoud,barony,b_baharoud,c_tajar,city_holding
-1563,3350,110,57,142,b_miladis,barony,b_miladis,c_tajar,church_holding
-1587,3351,196,204,81,b_al_suweb,barony,b_al_suweb,c_al_abib,tribal_holding
-2171,3352,8,87,36,b_sinna,barony,b_sinna,c_sinna,tribal_holding
-1562,3353,152,206,53,b_takeyef,barony,b_takeyef,c_takeyef,castle_holding
-1559,3354,17,35,223,b_ar_rasumah,barony,b_ar_rasumah,c_ar_rasumah,castle_holding
-1558,3355,178,226,21,b_gamruhan,barony,b_gamruhan,c_gamruhan,tribal_holding
-1539,3356,209,45,57,b_telah,barony,b_telah,c_telah,tribal_holding
-1552,3357,60,165,123,b_aman,barony,b_aman,c_aman,tribal_holding
-1560,3358,237,218,89,b_hamid,barony,b_hamid,c_hamid,tribal_holding
-1561,3359,154,177,176,b_jamal,barony,b_jamal,c_jamal,tribal_holding
-1541,3360,152,115,124,b_hulm,barony,b_hulm,c_hulm,tribal_holding
-1551,3361,160,244,102,b_raziz,barony,b_raziz,c_raziz,tribal_holding
-1550,3362,188,220,71,b_yarrat,barony,b_yarrat,c_yarrat,tribal_holding
-1549,3363,205,166,191,b_wakrawa,barony,b_wakrawa,c_wakrawa,tribal_holding
-1545,3364,110,2,101,b_sadazeh,barony,b_sadazeh,c_sadazeh,tribal_holding
-945,3365,217,33,121,b_muluk,barony,b_muluk,c_muluk,castle_holding
-945,3366,250,197,40,b_ashfah,barony,b_ashfah,c_muluk,city_holding
-945,3367,159,98,97,b_athuw,barony,b_athuw,c_muluk,church_holding
-947,3368,66,197,93,b_talv,barony,b_talv,c_sakina,tribal_holding
-2501,3369,120,11,208,b_maharas_vale,barony,b_maharas_vale,c_maharas_vale,castle_holding
-951,3370,154,239,160,b_qadib,barony,b_qadib,c_qadib,castle_holding
-951,3371,21,113,31,b_ruwa,barony,b_ruwa,c_qadib,city_holding
-952,3372,21,193,12,b_al_haul,barony,b_al_haul,c_al_haul,tribal_holding
-950,3373,51,53,35,b_hafaya,barony,b_hafaya,c_hafaya,castle_holding
-950,3374,226,26,250,b_yabah,barony,b_yabah,c_hafaya,city_holding
-950,3375,205,227,175,b_umm_gafago,barony,b_umm_gafago,c_hafaya,church_holding
-950,3376,16,157,10,b_dammaydah,barony,b_dammaydah,c_hafaya,castle_holding
-959,3377,90,193,58,b_rana,barony,b_rana,c_al_kidr,tribal_holding
-954,3378,122,195,138,b_utaqa,barony,b_utaqa,c_utaqa,castle_holding
-954,3379,238,130,167,b_muqdawja,barony,b_muqdawja,c_utaqa,city_holding
-954,3380,147,197,99,b_khaniw,barony,b_khaniw,c_utaqa,church_holding
-960,3381,58,244,228,b_tujul,barony,b_tujul,c_jasan_pass,castle_holding
-1350,3382,86,170,79,b_surardaha,barony,b_surardaha,c_burning_shore,tribal_holding
-948,3383,121,57,254,b_jahaai,barony,b_jahaai,c_bladed_coast,tribal_holding
-946,3384,164,202,107,b_simbaya,barony,b_simbaya,c_simbaya,castle_holding
-946,3385,157,118,111,b_ghumra,barony,b_ghumra,c_simbaya,city_holding
-949,3386,150,239,251,b_umara,barony,b_umara,c_umara,castle_holding
-949,3387,53,33,36,b_khenlal,barony,b_khenlal,c_umara,city_holding
-949,3388,123,39,132,b_rinina,barony,b_rinina,c_umara,church_holding
-2500,3389,118,186,127,b_mazat,barony,b_mazat,c_mazat,castle_holding
-940,3390,76,116,72,b_hawa,barony,b_hawa,c_hawa,castle_holding
-940,3391,232,38,189,b_safe_cove,barony,b_safe_cove,c_hawa,city_holding
-940,3392,191,160,154,b_diraraht,barony,b_diraraht,c_hawa,church_holding
-940,3393,111,135,69,b_tissemgara,barony,b_tissemgara,c_hawa,castle_holding
-939,3394,46,63,44,b_ghajar,barony,b_ghajar,c_ghajar,castle_holding
-939,3395,63,155,229,b_muscat,barony,b_muscat,c_ghajar,city_holding
-941,3396,114,164,114,b_al_oyun,barony,b_al_oyun,c_the_eyes,castle_holding
-941,3397,166,171,108,b_mabb,barony,b_mabb,c_the_eyes,castle_holding
-942,3398,130,18,77,b_al_azra,barony,b_al_azra,c_al_azra,castle_holding
-942,3399,164,47,231,b_khanala,barony,b_khanala,c_al_azra,city_holding
-943,3400,239,84,49,b_al_harir,barony,b_al_harir,c_al_harir,castle_holding
-943,3401,248,151,254,b_sedfan,barony,b_sedfan,c_al_harir,city_holding
-944,3402,68,30,52,b_ghadal,barony,b_ghadal,c_the_wizards_reach,castle_holding
-944,3403,232,106,115,b_kaha,barony,b_kaha,c_the_wizards_reach,city_holding
-1218,3404,195,88,203,b_nemoree_high,barony,b_nemoree_high,c_nemoree_isles,tribal_holding
-1124,3405,129,28,102,b_far_nemoree,barony,b_far_nemoree,c_far_nemoree,castle_holding
-934,3406,98,227,194,b_al_tir,barony,b_al_tir,c_the_bird,castle_holding
-934,3407,36,74,62,b_quyah,barony,b_quyah,c_the_bird,city_holding
-1351,3408,221,218,135,b_lahib,barony,b_lahib,c_lahib_island,castle_holding
-935,3409,23,118,8,b_al_raqsa,barony,b_al_raqsa,c_the_dancer,castle_holding
-935,3410,58,60,63,b_kerkejez,barony,b_kerkejez,c_the_dancer,city_holding
-1339,3411,32,85,143,b_al_qalat,barony,b_al_qalat,c_the_fortress,castle_holding
-1339,3412,28,70,144,b_rouinet,barony,b_rouinet,c_the_fortress,city_holding
-1538,3413,90,233,201,b_al_fujinat,barony,b_al_fujinat,c_dahab_island,tribal_holding
-936,3414,46,7,157,b_jarazah,barony,b_jarazah,c_the_dune,city_holding
-938,3415,122,139,139,b_ravenwing,barony,b_ravenwing,c_the_camels_hump,castle_holding
-938,3416,74,71,70,b_daramabar,barony,b_daramabar,c_the_camels_hump,city_holding
-937,3417,161,6,247,b_muzefroun,barony,b_muzefroun,c_the_chador,castle_holding
-937,3418,224,44,76,b_as_saniyah,barony,b_as_saniyah,c_the_chador,city_holding
-2122,3419,154,31,226,b_sembabule,barony,b_sembabule,c_sembabule,castle_holding
-2122,3420,183,34,176,b_karuyaga,barony,b_karuyaga,c_sembabule,church_holding
-2121,3421,208,14,28,b_zeibiley,barony,b_zeibiley,c_zeibiley,castle_holding
-2121,3422,155,1,195,b_cyanbungo,barony,b_cyanbungo,c_zeibiley,city_holding
-2121,3423,32,171,152,b_byri,barony,b_byri,c_zeibiley,church_holding
-2120,3424,28,43,100,b_lugabi,barony,b_lugabi,c_lugabi,castle_holding
-2120,3425,48,29,118,b_nyachedo,barony,b_nyachedo,c_lugabi,city_holding
-2120,3426,118,17,238,b_mabansenyi,barony,b_mabansenyi,c_lugabi,church_holding
-2389,3427,97,238,181,b_giteyosha,barony,b_giteyosha,c_giteyosha,castle_holding
-2389,3428,141,176,138,b_godaayacado,barony,b_godaayacado,c_giteyosha,city_holding
-2389,3429,79,19,206,b_kibongari,barony,b_kibongari,c_giteyosha,church_holding
-2119,3430,190,39,94,b_kiasia,barony,b_kiasia,c_kiasia,castle_holding
-2119,3431,249,191,36,b_maligi,barony,b_maligi,c_kiasia,city_holding
-2119,3432,13,77,51,b_gisetara,barony,b_gisetara,c_kiasia,church_holding
-2118,3433,45,135,165,b_babado,barony,b_babado,c_babado,castle_holding
-2118,3434,169,220,119,b_lino,barony,b_lino,c_babado,city_holding
-2118,3435,182,84,190,b_nyaroto,barony,b_nyaroto,c_babado,church_holding
-2117,3436,132,66,66,b_mekebat,barony,b_mekebat,c_mekebat,castle_holding
-2117,3437,119,51,3,b_indole,barony,b_indole,c_mekebat,church_holding
-2117,3438,173,98,44,b_kinana,barony,b_kinana,c_mekebat,city_holding
-2372,3439,114,53,198,b_morgala,barony,b_morgala,c_ndoto,tribal_holding
-2373,3440,142,56,80,b_chalasam,barony,b_chalasam,c_nyangumi,castle_holding
-2369,3441,206,196,230,b_kupote,barony,b_kupote,c_kupoteza,tribal_holding
-2370,3442,202,60,229,b_emu,barony,b_emu,c_damu,tribal_holding
-2371,3443,186,38,174,b_morgu,barony,b_morgu,c_mnyama,tribal_holding
-2368,3444,219,200,51,b_kufa,barony,b_kufa,c_amekufa,castle_holding
-2368,3445,147,124,46,b_amekufa,barony,b_amekufa,c_amekufa,city_holding
-2368,3446,198,3,148,b_mukafa,barony,b_mukafa,c_amekufa,church_holding
-2366,3447,81,195,123,b_kavu,barony,b_kavu,c_ardhi_kavu,city_holding
-2366,3448,57,147,82,b_luvu,barony,b_luvu,c_ardhi_kavu,castle_holding
-2367,3449,227,17,37,b_shasira,barony,b_shasira,c_hasira,castle_holding
-2367,3450,196,227,167,b_kashira,barony,b_kashira,c_hasira,city_holding
-2367,3451,95,124,99,b_loshina,barony,b_loshina,c_hasira,church_holding
-2116,3452,213,59,135,b_belhancol,barony,b_belhancol,c_belhancol,castle_holding
-2116,3453,88,64,228,b_morosi,barony,b_morosi,c_belhancol,city_holding
-2116,3454,189,113,106,b_mtwabako,barony,b_mtwabako,c_belhancol,church_holding
-2390,3455,150,44,204,b_moraan,barony,b_moraan,c_moraan,castle_holding
-2390,3456,55,147,47,b_rini,barony,b_rini,c_moraan,city_holding
-2390,3457,224,89,219,b_babondo,barony,b_babondo,c_moraan,church_holding
-1624,3458,19,217,223,b_wanrifa,barony,b_wanrifa,c_wahasha,tribal_holding
-1622,3459,0,228,167,b_marmadani,barony,b_marmadani,c_almawt,tribal_holding
-1623,3460,64,186,134,b_farahah,barony,b_farahah,c_sharira,tribal_holding
-1546,3461,52,40,228,b_akota,barony,b_akota,c_medina_akota,castle_holding
-1546,3462,176,159,177,b_yawoon,barony,b_yawoon,c_medina_akota,city_holding
-1546,3463,154,78,54,b_regdaruk,barony,b_regdaruk,c_medina_akota,church_holding
-1547,3464,209,190,27,b_fida,barony,b_fida,c_fida,tribal_holding
-1544,3465,19,141,55,b_sabrasha,barony,b_sabrasha,c_sabrasha,tribal_holding
-1548,3466,122,133,9,b_sumedhimiya,barony,b_sumedhimiya,c_marching_camels_road,tribal_holding
-1543,3467,44,61,69,b_naqayna,barony,b_naqayna,c_naqayna,tribal_holding
-1542,3468,61,114,55,b_teladem,barony,b_teladem,c_teladem,tribal_holding
-1528,3469,106,60,50,b_medina_al_afyal,barony,b_medina_al_afyal,c_medina_al_afyal,castle_holding
-1528,3470,94,54,83,b_gimba,barony,b_gimba,c_medina_al_afyal,city_holding
-1528,3471,152,114,22,b_kayunhunga,barony,b_kayunhunga,c_medina_al_afyal,church_holding
-1527,3472,234,24,46,b_kasal,barony,b_kasal,c_kasal,castle_holding
-1527,3473,147,100,69,b_lyareka,barony,b_lyareka,c_kasal,church_holding
-1521,3474,95,12,115,b_al_kurtum,barony,b_al_kurtum,c_al_kurtum,castle_holding
-1522,3475,217,181,55,b_bab_al_gaba,barony,b_bab_al_gaba,c_bab_al_gaba,castle_holding
-1522,3476,111,157,120,b_gadin,barony,b_gadin,c_bab_al_gaba,city_holding
-1525,3477,249,98,209,b_al_asirr,barony,b_al_asirr,c_al_asirr,castle_holding
-1525,3478,140,180,54,b_bashera,barony,b_bashera,c_al_asirr,city_holding
-1525,3479,93,35,123,b_taxal,barony,b_taxal,c_al_asirr,church_holding
-1523,3480,226,89,61,b_the_calves,barony,b_the_calves,c_the_calves,castle_holding
-1524,3481,244,162,95,b_nahr_al_fil,barony,b_nahr_al_fil,c_nahr_al_fil,castle_holding
-1524,3482,150,121,75,b_bahandri,barony,b_bahandri,c_nahr_al_fil,city_holding
-1526,3483,203,159,91,b_horn_of_afyal,barony,b_horn_of_afyal,c_horn_of_afyal,castle_holding
-1526,3484,33,203,123,b_wazikkar,barony,b_wazikkar,c_horn_of_afyal,city_holding
-1598,3485,170,114,166,b_gana,barony,b_gana,c_gana,castle_holding
-1598,3486,60,184,137,b_kache,barony,b_kache,c_gana,city_holding
-1598,3487,205,232,89,b_wad_menar,barony,b_wad_menar,c_gana,church_holding
-1597,3488,240,122,250,b_krak_al_shidda,barony,b_krak_al_shidda,c_krak_al_shidda,tribal_holding
-1599,3489,149,213,166,b_taam,barony,b_taam,c_taam,tribal_holding
-1592,3490,79,1,251,b_sikak,barony,b_sikak,c_sikak,castle_holding
-1592,3491,199,121,107,b_sahazz,barony,b_sahazz,c_sikak,city_holding
-1592,3492,139,119,157,b_al_tudah,barony,b_al_tudah,c_sikak,church_holding
-1588,3493,18,0,28,b_turab,barony,b_turab,c_turab,castle_holding
-1588,3494,208,127,240,b_el_boudouaou,barony,b_el_boudouaou,c_turab,church_holding
-1588,3495,250,177,208,b_sralanca,barony,b_sralanca,c_turab,church_holding
-1588,3496,10,230,121,b_al_manurah,barony,b_al_manurah,c_turab,church_holding
-1593,3497,51,107,35,b_samak,barony,b_samak,c_maribar_island,castle_holding
-1594,3498,186,128,228,b_jumlat,barony,b_jumlat,c_jumlat,castle_holding
-1594,3499,169,1,41,b_zaralfa,barony,b_zaralfa,c_jumlat,church_holding
-1594,3500,182,35,224,b_dibba_qorewah,barony,b_dibba_qorewah,c_jumlat,church_holding
-1595,3501,3,228,226,b_safaq,barony,b_safaq,c_safaq,castle_holding
-1595,3502,214,253,66,b_rawdat_azizair,barony,b_rawdat_azizair,c_safaq,city_holding
-1596,3503,236,46,57,b_durrar,barony,b_durrar,c_pearl_banks,castle_holding
-1605,3504,230,208,165,b_ajayib,barony,b_ajayib,c_ajayib,castle_holding
-1605,3505,172,159,61,b_sadabulus,barony,b_sadabulus,c_ajayib,city_holding
-1605,3506,0,216,191,b_buni,barony,b_buni,c_ajayib,church_holding
-1602,3507,86,13,189,b_araneh,barony,b_araneh,c_araneh,castle_holding
-1602,3508,24,7,195,b_sabakan,barony,b_sabakan,c_araneh,church_holding
-1604,3509,155,154,123,b_intibah,barony,b_intibah,c_intibah,castle_holding
-1604,3510,177,227,198,b_noubin,barony,b_noubin,c_intibah,city_holding
-1603,3511,42,118,192,b_al_mahabanah,barony,b_al_mahabanah,c_al_mahabanah,tribal_holding
-1600,3512,17,20,142,b_msalin,barony,b_msalin,c_msalin,castle_holding
-1600,3513,252,2,32,b_ifbat,barony,b_ifbat,c_msalin,city_holding
-1606,3514,152,114,116,b_regdasaid,barony,b_regdasaid,c_regdasaid,tribal_holding
-1609,3515,252,51,235,b_ibreb,barony,b_ibreb,c_ibreb,castle_holding
-1589,3516,64,89,61,b_zaym,barony,b_zaym,c_zaym,tribal_holding
-1589,3517,147,148,57,b_khaldun,barony,b_khaldun,c_zaym,church_holding
-1590,3518,245,9,251,b_hakim,barony,b_hakim,c_hakim,tribal_holding
-1601,3519,98,237,229,b_murr,barony,b_murr,c_murr,tribal_holding
-1496,3520,180,98,30,b_rogosto,barony,b_rogosto,c_rogosto,castle_holding
-1496,3521,34,175,44,b_hadirma,barony,b_hadirma,c_rogosto,city_holding
-1496,3522,249,19,175,b_taleik,barony,b_taleik,c_rogosto,church_holding
-1492,3523,143,98,162,b_yinazzil,barony,b_yinazzil,c_yinazzil,castle_holding
-1492,3524,200,68,165,b_hasdames,barony,b_hasdames,c_yinazzil,city_holding
-1492,3525,229,176,231,b_ar_rahiriyah,barony,b_ar_rahiriyah,c_yinazzil,church_holding
-1497,3526,252,208,115,b_mafrad,barony,b_mafrad,c_mafrad,castle_holding
-1497,3527,68,165,147,b_hutan,barony,b_hutan,c_mafrad,city_holding
-1497,3528,130,134,178,b_anaah,barony,b_anaah,c_mafrad,church_holding
-1495,3529,39,248,193,b_sagat,barony,b_sagat,c_dawihi_island,tribal_holding
-1498,3530,93,215,187,b_krak_al_uruj,barony,b_krak_al_uruj,c_krak_al_uruj,castle_holding
-1498,3531,52,159,53,b_sahala,barony,b_sahala,c_krak_al_uruj,city_holding
-1499,3532,255,63,173,b_ankatatra,barony,b_ankatatra,c_ankatatra,tribal_holding
-1500,3533,150,35,227,b_mahazaka,barony,b_mahazaka,c_mahazaka,tribal_holding
-1503,3534,121,47,3,b_tayaraan,barony,b_tayaraan,c_tayaraan,castle_holding
-1503,3535,72,22,230,b_momayo,barony,b_momayo,c_tayaraan,city_holding
-1503,3536,185,199,8,b_senza,barony,b_senza,c_tayaraan,church_holding
-1501,3537,1,172,126,b_kitbezi,barony,b_kitbezi,c_kitbezi,tribal_holding
-1502,3538,234,27,192,b_kapuli,barony,b_kapuli,c_kapuli,tribal_holding
-1494,3539,30,249,67,b_kadarasto,barony,b_kadarasto,c_kadarasto,castle_holding
-1494,3540,37,149,116,b_milaydah,barony,b_milaydah,c_kadarasto,city_holding
-1494,3541,240,134,13,b_taqqa,barony,b_taqqa,c_kadarasto,church_holding
-1494,3542,66,115,68,b_salname,barony,b_salname,c_kadarasto,church_holding
-2172,3543,240,216,240,b_sendalam,barony,b_sendalam,c_sendalam,castle_holding
-2172,3544,69,239,232,b_metawet,barony,b_metawet,c_sendalam,city_holding
-1493,3545,50,196,215,b_krak_al_sajjaan,barony,b_krak_al_sajjaan,c_krak_al_sajjaan,castle_holding
-1493,3546,12,85,103,b_qudsamanah,barony,b_qudsamanah,c_krak_al_sajjaan,city_holding
-1493,3547,72,71,46,b_touinana,barony,b_touinana,c_krak_al_sajjaan,church_holding
-1491,3548,9,204,82,b_qudalla,barony,b_qudalla,c_qudalla,castle_holding
-1491,3549,8,100,126,b_wad_bangola,barony,b_wad_bangola,c_qudalla,city_holding
-1488,3550,44,172,123,b_dihliz,barony,b_dihliz,c_dihliz,castle_holding
-1488,3551,38,122,14,b_tescahaqd,barony,b_tescahaqd,c_dihliz,city_holding
-1488,3552,48,91,190,b_jura,barony,b_jura,c_dihliz,church_holding
-2173,3553,170,133,28,b_sorib,barony,b_sorib,c_sorib,tribal_holding
-1487,3554,112,28,209,b_bisatare,barony,b_bisatare,c_bisatare,tribal_holding
-1487,3555,118,131,46,b_byoranga,barony,b_byoranga,c_bisatare,church_holding
-1489,3556,95,193,49,b_sidi,barony,b_sidi,c_sidi_island,castle_holding
-1490,3557,85,136,126,b_elne,barony,b_elne,c_elne,castle_holding
-1486,3558,191,156,62,b_ysawis,barony,b_ysawis,c_ysawis,castle_holding
-1486,3559,54,193,219,b_areef,barony,b_areef,c_ysawis,city_holding
-1486,3560,171,244,55,b_qurirah,barony,b_qurirah,c_ysawis,church_holding
-1485,3561,146,54,247,b_qosodera,barony,b_qosodera,c_qosodera,tribal_holding
-2175,3562,210,17,249,b_ragado,barony,b_ragado,c_ragado,tribal_holding
-1613,3563,70,67,176,b_al_ralilah,barony,b_al_ralilah,c_naqq_and_qutil,tribal_holding
-1615,3564,147,118,48,b_al_bariya,barony,b_al_bariya,c_eayan_aljunun,tribal_holding
-1614,3565,193,182,118,b_al_dawhawa,barony,b_al_dawhawa,c_thueban,tribal_holding
-2169,3566,77,227,162,b_saasakhoura,barony,b_saasakhoura,c_dirs,tribal_holding
-1611,3567,92,25,148,b_tall_fallunawa,barony,b_tall_fallunawa,c_anklis_and_qusur,tribal_holding
-1612,3568,234,152,83,b_al_hamim,barony,b_al_hamim,c_manhus_and_saliam,tribal_holding
-1610,3569,150,165,171,b_al_sisarran,barony,b_al_sisarran,c_dabab,tribal_holding
-2166,3570,9,252,77,b_qudana,barony,b_qudana,c_al_zabdiyat,castle_holding
-2167,3571,141,222,199,b_bandar_al_saadat,barony,b_bandar_al_saadat,c_masud_jazayir,castle_holding
-1607,3572,6,132,0,b_bidbooth,barony,b_bidbooth,c_al_tarik_islands,tribal_holding
-2374,3573,182,29,223,b_mahaireb,barony,b_mahaireb,c_sayf,tribal_holding
-1608,3574,77,138,127,b_kharaifat,barony,b_kharaifat,c_tarikat_island,tribal_holding
-2168,3575,126,250,147,b_suralah,barony,b_suralah,c_jazayir_al_alfar,tribal_holding
-1531,3576,4,154,101,b_uruk,barony,b_uruk,c_uruk,tribal_holding
-1531,3577,8,44,141,b_jemdet,barony,b_jemdet,c_uruk,city_holding
-1531,3578,180,18,127,b_warka,barony,b_warka,c_uruk,church_holding
-1532,3579,245,181,36,b_misbahd,barony,b_misbahd,c_misbahd,castle_holding
-1532,3580,105,189,97,b_lakar,barony,b_lakar,c_misbahd,city_holding
-1532,3581,111,185,221,b_adaba,barony,b_adaba,c_misbahd,church_holding
-1530,3582,190,122,138,b_jinutt,barony,b_jinutt,c_jinutt,tribal_holding
-1530,3583,158,107,133,b_sarhak,barony,b_sarhak,c_jinutt,city_holding
-1530,3584,2,255,160,b_aprech,barony,b_aprech,c_jinutt,church_holding
-1533,3585,117,99,78,b_al_maralem,barony,b_al_maralem,c_rubbans_tears,tribal_holding
-1529,3586,122,112,63,b_kilad,barony,b_kilad,c_mergu,tribal_holding
-1618,3587,68,161,36,b_jebafi,barony,b_jebafi,c_jezarh_jadew,tribal_holding
-1621,3588,112,89,178,b_tall_kuthah,barony,b_tall_kuthah,c_bender_adewah,tribal_holding
-1619,3589,52,64,222,b_al_qusanawat,barony,b_al_qusanawat,c_jezarh_shemshar,tribal_holding
-1620,3590,135,38,82,b_el_gamahimiya,barony,b_el_gamahimiya,c_bender_berdh,tribal_holding
-2165,3591,72,78,184,b_bidburaq,barony,b_bidburaq,c_leneta,tribal_holding
-1534,3592,9,138,172,b_dawarout,barony,b_dawarout,c_jezarh_mar,tribal_holding
-2163,3593,2,218,189,b_madirah,barony,b_madirah,c_mergu_saah,tribal_holding
-2162,3594,85,145,24,b_amudani,barony,b_amudani,c_jezarh_mah_alewd,tribal_holding
-1535,3595,18,42,176,b_al_salakamah,barony,b_al_salakamah,c_serzeman_bamar,tribal_holding
-2164,3596,254,37,57,b_karza,barony,b_karza,c_jezarh_restakhaz,tribal_holding
-2493,3597,222,251,102,b_quellarzorl,barony,b_quellarzorl,c_menzoberranzan,castle_holding
-2503,3598,81,211,40,b_ched_nasad,barony,b_ched_nasad,c_ched_nasad,castle_holding
-2494,3599,68,98,153,b_the_mantle,barony,b_the_mantle,c_bauthwaf,castle_holding
-306,3600,152,51,148,b_glaurimm_keep,barony,b_glaurimm_keep,c_mt_hotenow,castle_holding
-306,3601,53,1,52,b_gauntlgrym,barony,b_gauntlgrym,c_mt_hotenow,castle_holding
-2502,3602,152,115,145,b_gracklstugh,barony,b_gracklstugh,c_gracklstugh,castle_holding
-2502,3603,242,80,103,b_northfurrow,barony,b_northfurrow,c_gracklstugh,city_holding
-2443,3604,241,30,231,b_eryndlyn,barony,b_eryndlyn,c_eryndlyn,castle_holding
-2443,3605,22,117,29,b_five_pillars,barony,b_five_pillars,c_eryndlyn,city_holding
-2445,3606,21,161,106,b_kanaglym,barony,b_kanaglym,c_kanaglym,castle_holding
-2445,3607,94,228,42,b_nepenthe_basin,barony,b_nepenthe_basin,c_kanaglym,city_holding
-2445,3608,50,111,65,b_hunnabar,barony,b_hunnabar,c_kanaglym,church_holding
-2241,3609,244,126,73,b_dolblunde,barony,b_dolblunde,c_dolblunde,tribal_holding
-2441,3610,95,209,82,b_adamantine_palace,barony,b_adamantine_palace,c_splendarrmornn,castle_holding
-2441,3611,163,104,188,b_splendarrmornn,barony,b_splendarrmornn,c_splendarrmornn,castle_holding
-2441,3612,72,165,107,b_westdelve,barony,b_westdelve,c_splendarrmornn,church_holding
-1408,3613,108,16,193,b_deadstone_cleft,barony,b_deadstone_cleft,c_loagrann,tribal_holding
-1408,3614,17,4,60,b_orlbar,barony,b_orlbar,c_loagrann,city_holding
-2474,3615,140,166,184,b_east_keep,barony,b_east_keep,c_east_keep,castle_holding
-2474,3616,81,132,76,b_wyrmstrike_mines,barony,b_wyrmstrike_mines,c_east_keep,city_holding
-2474,3617,176,54,122,b_mithril_pick_hall,barony,b_mithril_pick_hall,c_east_keep,church_holding
-2477,3618,193,141,37,b_north_peak,barony,b_north_peak,c_north_peak,castle_holding
-2477,3619,91,61,101,b_fellridge,barony,b_fellridge,c_north_peak,city_holding
-2477,3620,69,161,153,b_vigilant_towers,barony,b_vigilant_towers,c_north_peak,church_holding
-1407,3621,216,234,52,b_obrynns_landing,barony,b_obrynns_landing,c_high_gap,castle_holding
-1407,3622,205,158,87,b_lothamar,barony,b_lothamar,c_high_gap,church_holding
-2442,3623,209,225,135,b_nether_keep,barony,b_nether_keep,c_nether_mountains,tribal_holding
-2442,3624,112,75,171,b_ammarindar,barony,b_ammarindar,c_nether_mountains,city_holding
-2446,3625,203,8,187,b_citadel_yaunoroth,barony,b_citadel_yaunoroth,c_yaunoroth,tribal_holding
-2446,3626,42,97,227,b_yaunoroth,barony,b_yaunoroth,c_yaunoroth,city_holding
-2446,3627,154,10,181,b_helmmas_hall,barony,b_helmmas_hall,c_yaunoroth,church_holding
-1449,3628,185,178,203,b_dekanter,barony,b_dekanter,c_dekanter,tribal_holding
-1449,3629,160,196,168,b_dethdor,barony,b_dethdor,c_dekanter,city_holding
-1150,3630,167,151,147,b_rrinlurgh,barony,b_rrinlurgh,c_naurogloth,tribal_holding
-1150,3631,130,83,167,b_sstharalam,barony,b_sstharalam,c_naurogloth,city_holding
-1150,3632,209,227,179,b_sstissamuun,barony,b_sstissamuun,c_naurogloth,church_holding
-1340,3633,79,111,233,b_ironfang_deep,barony,b_ironfang_deep,c_ironfang_deep,castle_holding
-1340,3634,129,40,73,b_thogh,barony,b_thogh,c_ironfang_deep,city_holding
-1340,3635,144,245,52,b_zigila,barony,b_zigila,c_ironfang_deep,church_holding
-1340,3636,170,9,232,b_dhoggari,barony,b_dhoggari,c_ironfang_deep,castle_holding
-1342,3637,75,248,47,b_bronzehelms,barony,b_bronzehelms,c_bronzehelms,castle_holding
-1342,3638,208,132,213,b_bigwahr,barony,b_bigwahr,c_bronzehelms,city_holding
-1341,3639,218,163,168,b_drivendelve,barony,b_drivendelve,c_old_drivendelve,tribal_holding
-1341,3640,136,146,198,b_khagkohldur,barony,b_khagkohldur,c_old_drivendelve,city_holding
-2506,3641,177,58,187,b_dunspeirrin,barony,b_dunspeirrin,c_dunspeirrin,castle_holding
-2505,3642,137,223,55,b_drik_hargunen,barony,b_drik_hargunen,c_drik_hargunen,castle_holding
-2505,3643,147,54,182,b_ferugehk,barony,b_ferugehk,c_drik_hargunen,city_holding
-2505,3644,12,153,209,b_orefall_cavern,barony,b_orefall_cavern,c_drik_hargunen,church_holding
-2504,3645,98,96,11,b_oryndoll,barony,b_oryndoll,c_oryndoll,castle_holding
-2504,3646,180,250,221,b_thrall_caverns,barony,b_thrall_caverns,c_oryndoll,church_holding
-2560,3647,238,8,244,b_undraeth,barony,b_undraeth,c_undraeth,castle_holding
-2523,3648,50,199,150,b_fireforges,barony,b_fireforges,c_fireforges,castle_holding
-2523,3649,188,199,91,b_chund_peak,barony,b_chund_peak,c_fireforges,city_holding
-2522,3650,89,53,35,b_khaelud,barony,b_khaelud,c_khaelud,castle_holding
-2522,3651,208,21,51,b_thordenak,barony,b_thordenak,c_khaelud,city_holding
-2549,3652,36,11,83,b_traaskl_thorog,barony,b_traaskl_thorog,c_traaskl_thorog,tribal_holding
-2558,3653,55,166,49,b_planners_citadel,barony,b_planners_citadel,c_deep_imaskar,castle_holding
-2558,3654,34,144,222,b_deep_imaskar,barony,b_deep_imaskar,c_deep_imaskar,city_holding
-2558,3655,247,237,77,b_purple_library,barony,b_purple_library,c_deep_imaskar,church_holding
-2518,3656,246,222,208,b_qarlondrar,barony,b_qarlondrar,c_qarlondrar,castle_holding
-2518,3657,210,145,244,b_cave_of_sighs,barony,b_cave_of_sighs,c_qarlondrar,city_holding
-2518,3658,18,84,46,b_gorfaern,barony,b_gorfaern,c_qarlondrar,church_holding
-851,3659,162,44,62,b_siremun,barony,b_siremun,c_firepeaks,castle_holding
-851,3660,179,76,72,b_natoigo,barony,b_natoigo,c_firepeaks,city_holding
-851,3661,129,254,236,b_diarintarj,barony,b_diarintarj,c_firepeaks,church_holding
-2521,3662,206,247,2,b_raskuldin,barony,b_raskuldin,c_raskuldin,castle_holding
-2521,3663,88,60,35,b_gorduun,barony,b_gorduun,c_raskuldin,city_holding
-2521,3664,150,82,136,b_skull_peak,barony,b_skull_peak,c_raskuldin,church_holding
-2525,3665,167,169,11,b_utuerth,barony,b_utuerth,c_utuerth,castle_holding
-2525,3666,221,43,65,b_white_sand,barony,b_white_sand,c_utuerth,city_holding
-2559,3667,177,85,124,b_makthar,barony,b_makthar,c_ikemmu,castle_holding
-2559,3668,177,148,147,b_pyton,barony,b_pyton,c_ikemmu,city_holding
-2520,3669,239,70,6,b_ahruukar,barony,b_ahruukar,c_ahruukar,castle_holding
-2520,3670,107,107,227,b_arau,barony,b_arau,c_ahruukar,city_holding
-2520,3671,74,166,190,b_vardetor,barony,b_vardetor,c_ahruukar,church_holding
-847,3672,133,131,251,b_songfarla,barony,b_songfarla,c_songfarla,castle_holding
-847,3673,167,17,14,b_gilded_nugget,barony,b_gilded_nugget,c_songfarla,city_holding
-847,3674,181,223,94,b_covarrkar_cave,barony,b_covarrkar_cave,c_songfarla,church_holding
-1774,3675,217,188,210,b_thelaena,barony,b_thelaena,c_oyargh,tribal_holding
-2519,3676,7,223,212,b_harheldur,barony,b_harheldur,c_harheldur,castle_holding
-2519,3677,59,96,213,b_mordinsonn,barony,b_mordinsonn,c_harheldur,city_holding
-2519,3678,129,123,48,b_firedelves,barony,b_firedelves,c_harheldur,church_holding
-2570,3679,47,190,85,b_thazar_pass,barony,b_thazar_pass,c_thazar_pass,castle_holding
-2450,3680,89,35,50,b_castle_maerimydra,barony,b_castle_maerimydra,c_maerimydra,castle_holding
-2451,3681,69,248,60,b_castle_zanhoriloch,barony,b_castle_zanhoriloch,c_zanhoriloch,castle_holding
-2451,3682,71,20,153,b_mhorilot,barony,b_mhorilot,c_zanhoriloch,church_holding
-2628,3683,159,183,198,b_szith_morcane,barony,b_szith_morcane,c_szith_morcane,church_holding
-2557,3684,101,138,214,b_house_of_lolth,barony,b_house_of_lolth,c_sschindylryn,church_holding
-2463,3685,238,164,205,b_thunderholme,barony,b_thunderholme,c_thunderholme,castle_holding
-2463,3686,61,167,1,b_high_crimmond,barony,b_high_crimmond,c_thunderholme,city_holding
-2415,3687,18,32,228,b_tethyamar,barony,b_tethyamar,c_tethyamar,castle_holding
-2415,3688,215,156,54,b_ironthrone,barony,b_ironthrone,c_tethyamar,city_holding
-2415,3689,58,146,251,b_helgrinns_arch,barony,b_helgrinns_arch,c_tethyamar,castle_holding
-2469,3690,47,255,229,b_aefarn_citadel,barony,b_aefarn_citadel,c_turnback_mountain,church_holding
-2469,3691,16,72,166,b_aefarn,barony,b_aefarn,c_turnback_mountain,castle_holding
-2469,3692,107,214,166,b_house_of_gold,barony,b_house_of_gold,c_turnback_mountain,city_holding
-356,3693,33,157,88,b_ondathel,barony,b_ondathel,c_ondathel,tribal_holding
-356,3694,77,22,64,b_esham,barony,b_esham,c_ondathel,city_holding
-356,3695,169,67,2,b_brightfalls,barony,b_brightfalls,c_ondathel,church_holding
-353,3696,32,176,199,b_forharn,barony,b_forharn,c_forharn,castle_holding
-353,3697,248,142,199,b_kossuths_ire,barony,b_kossuths_ire,c_forharn,church_holding
-353,3698,62,153,219,b_geshun,barony,b_geshun,c_forharn,city_holding
-2589,3699,181,27,79,b_smokespire,barony,b_smokespire,c_smokespire,tribal_holding
-2594,3700,233,83,242,b_iltkazar,barony,b_iltkazar,c_iltkazar,castle_holding
-2594,3701,202,159,128,b_mith_baraks_hall,barony,b_mith_baraks_hall,c_iltkazar,city_holding
-2440,3702,126,62,189,b_sarengard_keep,barony,b_sarengard_keep,c_mount_sarengard,castle_holding
-2440,3703,172,132,193,b_vault_of_cloaked_midnight,barony,b_vault_of_cloaked_midnight,c_mount_sarengard,church_holding
-2652,3704,49,193,51,b_brightaxe_hall,barony,b_brightaxe_hall,c_brightaxe_hall,castle_holding
-2651,3705,76,219,186,b_guallidurth,barony,b_guallidurth,c_guallidurth,castle_holding
-2651,3706,157,155,110,b_rringlor_north,barony,b_rringlor_north,c_guallidurth,city_holding
-2694,3707,26,81,222,b_the_mad_wizards_lair,barony,b_the_mad_wizards_lair,c_undermountain,castle_holding
-2697,3708,171,12,187,b_lair_of_the_eye,barony,b_lair_of_the_eye,c_lair_of_the_eye,city_holding
-2696,3709,210,155,49,b_the_port,barony,b_the_port,c_skullport,city_holding
-2695,3710,176,29,255,b_the_promenade,barony,b_the_promenade,c_sargauth,church_holding
-222,3711,131,206,143,Grampalt Highlands,impassable,,,
-1586,3712,144,5,42,Orsraun Mountains,impassable,,,
-1791,3713,223,157,218,Coast of Moray,sea,,,
-1792,3714,194,213,228,Sea of Swords,sea,,,
-1793,3715,232,251,68,Trackless Sea,sea,,,
-1794,3716,157,200,255,Lantan Coast,sea,,,
-1795,3717,242,212,245,Lantan Coast,sea,,,
-1796,3718,119,187,206,Sea of Swords,sea,,,
-1797,3719,246,226,209,Middle Shining Sea,sea,,,
-1798,3720,143,180,182,Lapal Coast,sea,,,
-1799,3721,127,236,188,Lake of Steam,sea,,,
-1800,3722,185,191,213,Far Northern Sea of Swords,sea,,,
-1801,3723,143,164,161,Northern Sea of Swords,sea,,,
-1802,3724,188,200,225,Sea of Swords,sea,,,
-1803,3725,216,222,213,Western Frozenfar,sea,,,
-1804,3726,164,191,173,Eastern Frozenfar,sea,,,
-1805,3727,197,219,234,Middle Frozenfar,sea,,,
-1806,3728,146,182,200,Southern Frozenfar,sea,,,
-1807,3729,179,219,237,Korinn Archipelago,sea,,,
-1808,3730,128,173,225,Southern Sea of Swords,sea,,,
-1809,3731,200,170,197,Flamsterd Coast,sea,,,
-1810,3732,213,197,194,Sea of Moonshae,sea,,,
-1811,3733,161,237,197,Norland Coast,sea,,,
-1812,3734,225,216,234,Wave Rocks,sea,,,
-1813,3735,231,179,197,Snowdown Coast,sea,,,
-1814,3736,149,170,182,The Teeth,sea,,,
-1815,3737,197,185,161,Tashtan Coast,sea,,,
-1816,3738,237,213,188,Dolphingulph,sea,,,
-1817,3739,167,194,185,Calim Coast,sea,,,
-1818,3740,213,216,213,Eastern Calim Coast,sea,,,
-1819,3741,173,173,179,Lapal Coast,sea,,,
-1820,3742,197,191,228,The Singing Rocks,sea,,,
-1821,3743,164,222,185,Talagaths Gauntlet,sea,,,
-1822,3744,170,231,219,Eastern Lake of Steam,sea,,,
-1823,3745,234,231,170,Western Lake of Steam,sea,,,
-1824,3746,237,200,170,Nelanther Isles,sea,,,
-1825,3747,228,228,206,Firedrake Bay,sea,,,
-1826,3748,209,222,173,Western Shining Sea,sea,,,
-1827,3749,188,191,228,Chultan Coast,sea,,,
-1828,3750,206,209,191,Araksa,sea,,,
-1829,3751,206,252,206,Lantan Coast,sea,,,
-1830,3752,182,203,161,Outer Shining Sea,sea,,,
-1831,3753,194,228,200,Coast of Mists,sea,,,
-1832,3754,219,222,185,Wild Coast,sea,,,
-1833,3755,234,182,158,Thindol Coast,sea,,,
-1834,3756,234,228,200,Bay of Taertal,sea,,,
-1835,3757,167,197,234,Lake Halruaa,sea,,,
-1836,3758,240,216,219,Nimlith Coast,sea,,,
-1837,3759,209,209,191,Farmeadows Coast,sea,,,
-1838,3760,231,185,206,Evermeet Approach,sea,,,
-1839,3761,182,219,170,Taltempla Coast,sea,,,
-1840,3762,240,197,209,Beacon Rocks Passage,sea,,,
-1841,3763,161,231,182,Northern Nimbral Coast,sea,,,
-1842,3764,170,206,231,Southern Nimbral Coast,sea,,,
-1843,3765,219,206,228,Konigheim Coast,sea,,,
-1844,3766,170,228,209,Bay of Pirates,sea,,,
-1845,3767,206,167,222,Coast of Pearls,sea,,,
-1846,3768,188,219,194,Utter Eastern Coast,sea,,,
-1847,3769,188,194,255,Estagund Coast,sea,,,
-1848,3770,222,216,206,Bay of the Dancing Dolphins,sea,,,
-1849,3771,246,200,173,Inner Golden Water,sea,,,
-1850,3772,246,237,182,Outer Golden Water,sea,,,
-1851,3773,158,206,234,Luiren Coast,sea,,,
-1852,3774,170,182,170,Corsair Straits,sea,,,
-1853,3775,237,219,194,Trackless Sea,sea,,,
-1854,3776,237,115,176,River Mirar,river,,,
-1855,3777,158,228,246,Lower River Chionthar,river,,,
-1856,3778,182,155,167,River Chionthar,river,,,
-1857,3779,191,219,197,Eastern Segara Sea,sea,,,
-1858,3780,158,237,100,Esmel River,river,,,
-1859,3781,115,219,200,Lake Esmel,river,,,
-1860,3782,158,219,55,Lower Sulduskoon River,river,,,
-1861,3783,52,179,155,Sulduskoon River,river,,,
-1862,3784,246,167,131,Lower River Ith,river,,,
-1863,3785,134,228,58,River Ith,river,,,
-1864,3786,121,143,146,River Olung,river,,,
-1865,3787,182,206,203,Lake Luo,river,,,
-1866,3788,231,225,158,River Shaar,river,,,
-1867,3789,137,231,188,Lake Lhespen,river,,,
-1868,3790,219,179,103,Upper River Shaar,river,,,
-1869,3791,237,237,231,River Talar,river,,,
-1870,3792,18,170,207,Istishias Respite,sea,,,
-1871,3793,21,64,169,Sashela's Fountain,sea,,,
-1872,3794,213,225,219,River Delimbiyr,river,,,
-1873,3795,249,200,158,Lower River Dessarin,river,,,
-1874,3796,228,164,106,River Dessarin,river,,,
-1875,3797,209,209,231,Golden Coast,sea,,,
-1876,3798,137,216,216,Corsair Sea,sea,,,
-1877,3799,246,228,134,Haunted Coast,sea,,,
-1878,3800,185,222,200,Corsair Passage,sea,,,
-1879,3801,228,219,219,Middle Shining Sea,sea,,,
-1880,3802,176,200,206,Sea of Nemoree,sea,,,
-1881,3803,179,182,161,Lapalgulph,sea,,,
-1882,3804,203,222,176,River Panka,river,,,
-1883,3805,12,188,225,Lapal Sea,river,,,
-1884,3806,222,222,234,Lapal Flow,river,,,
-1885,3807,243,216,252,Reaching River,river,,,
-1886,3808,203,237,237,Upper River Chionthar,river,,,
-1887,3809,219,203,237,Amstel River,river,,,
-1888,3810,237,252,240,River Maeru,river,,,
-1889,3811,209,216,185,River Halar,river,,,
-1890,3812,228,206,231,River Aluar,river,,,
-1891,3813,55,124,91,Lake Maeru,river,,,
-1892,3814,219,243,249,Highridden River,river,,,
-1893,3815,209,191,12,River Agis,river,,,
-1894,3816,112,228,219,Bay of Chult,sea,,,
-1895,3817,200,182,134,Samarach Coast,sea,,,
-1896,3818,203,234,155,Zakharan Coast,sea,,,
-1897,3819,193,203,244,Bay of Bormul,sea,,,
-1898,3820,240,209,219,Nelanther Isles,sea,,,
-1899,3821,213,206,231,Xontuil Bay,sea,,,
-1900,3822,197,217,185,Rauvin River,river,,,
-1901,3823,29,14,100,Trollcrag Mountains,impassable,,,
-1902,3824,222,149,124,The Riftlake,lake,,,
-1903,3825,185,179,176,Icerim Lake,lake,,,
-1904,3826,128,131,131,Lake Thaylambar,impassable,,,
-1905,3827,43,191,246,Lake Woe,lake,,,
-1906,3828,143,155,149,Lake Tirulag,impassable,,,
-1907,3829,216,203,216,Lake Musker,lake,,,
-1908,3830,161,164,173,Lake Mereth,lake,,,
-1909,3831,91,109,112,Lake Muirenon,lake,,,
-1910,3832,213,219,228,Huta Lake,lake,,,
-1911,3833,85,73,79,Pelauvir Lake,lake,,,
-1912,3834,143,121,131,Ice Lakes,lake,,,
-1913,3835,109,61,70,Redwaters,lake,,,
-1914,3836,149,124,112,Lac Dinneshere,lake,,,
-1915,3837,39,55,52,Maer Dualdon,lake,,,
-1916,3838,27,76,67,Everlake,lake,,,
-1917,3839,85,118,152,Highstar Lake,lake,,,
-1918,3840,155,188,203,Lake Weng,lake,,,
-1919,3841,112,155,173,Lake of the Snake,lake,,,
-1920,3842,70,76,73,Redwater,lake,,,
-1921,3843,97,112,188,Lake Sember,lake,,,
-1922,3844,52,176,200,Pool of Yeven,lake,,,
-1923,3845,149,206,170,Lake Icemelt,lake,,,
-1924,3846,64,79,118,Impresk Lake,lake,,,
-1925,3847,24,39,164,Shalane Lake,lake,,,
-1926,3848,161,61,61,Bloodlake,lake,,,
-1927,3849,30,209,21,Evenstar Lake,lake,,,
-1928,3850,58,46,219,Beastburn Lake,lake,,,
-1929,3851,33,24,146,Nor Tso,lake,,,
-1930,3852,33,203,191,Nor Yudol,lake,,,
-1931,3853,15,36,149,Nor Zanskra,lake,,,
-1932,3854,209,200,55,Nor Takt,lake,,,
-1933,3855,58,131,55,Nor Subra,lake,,,
-1934,3856,109,206,161,Nor Gubol,lake,,,
-1935,3857,131,58,170,Lonely Lake,lake,,,
-1936,3858,222,176,73,Lake Ashane,lake,,,
-1937,3859,237,191,197,Lugotak Sea,lake,,,
-1938,3860,194,109,97,Umaylu Lake,lake,,,
-1939,3861,124,46,55,Igotak Sea,lake,,,
-1940,3862,234,216,176,Nakalpgotak Sea,lake,,,
-1941,3863,112,85,49,Lugalpgotak Sea,lake,,,
-1942,3864,170,167,152,Nukqup Lake,lake,,,
-1943,3865,97,55,36,Ahtahqugotak Sea,lake,,,
-1944,3866,228,134,124,Angsaas Lake,lake,,,
-1945,3867,185,100,36,Lake of Dreams,lake,,,
-1946,3868,246,79,185,Myrloch,lake,,,
-1947,3869,219,185,222,Lake Sunder,lake,,,
-1948,3870,149,85,146,Norfen Lake,lake,,,
-1949,3871,203,128,185,Vasty Drink,lake,,,
-1950,3872,164,234,200,Cherrapuni Nor,lake,,,
-1951,3873,88,203,82,Manasowar,lake,,,
-1952,3874,243,228,149,Norasil,lake,,,
-1953,3875,213,197,206,Akundi,lake,,,
-1954,3876,155,158,231,Dharbang,lake,,,
-1955,3877,243,170,185,The Lost King,lake,,,
-1956,3878,206,219,88,Hungste,lake,,,
-1957,3879,185,225,64,Lake of Palms,lake,,,
-1958,3880,128,252,188,Lake of Drifting Stars,lake,,,
-1959,3881,152,36,158,Taak Lake,lake,,,
-1960,3882,70,200,36,Akpahlurik Lake,lake,,,
-1961,3883,43,33,64,Risuak Lake,lake,,,
-1962,3884,30,85,30,Nyu Lake,lake,,,
-1963,3885,173,219,213,Llashloch,lake,,,
-1964,3886,216,21,179,Nad Ho Ting,lake,,,
-1965,3887,30,21,179,Nam Tso,lake,,,
-1966,3888,206,106,39,Lake Menuap,lake,,,
-1967,3889,197,161,252,Lake Serampa,lake,,,
-1968,3890,121,49,182,Lake Pasar,lake,,,
-1969,3891,234,225,200,Lake Panjang,lake,,,
-1970,3892,234,228,143,Lake Dingin,lake,,,
-1971,3893,43,58,228,Lake Halu,lake,,,
-1972,3894,67,240,216,Lake Murthil,impassable,,,
-1973,3895,121,52,182,Yeshelmaar Lake,impassable,,,
-1974,3896,213,106,209,Lake Flamm,impassable,,,
-1975,3897,161,231,140,Lake Aryana,lake,,,
-1976,3898,213,64,131,Nebulae Pool,lake,,,
-1977,3899,149,213,167,Clearflow River,river,,,
-1978,3900,246,176,185,River Murghol,river,,,
-1979,3901,191,225,206,Lake of Mists,river,,,
-1980,3902,179,209,225,Brightstar Lake,sea,,,
-1981,3903,191,219,206,Semphar Water,sea,,,
-1982,3904,128,231,246,Upper Rauthenflow River,river,,,
-1983,3905,206,155,188,Lower Rauthenflow River,river,,,
-1984,3906,234,240,112,Lower River Murghol,river,,,
-1985,3907,164,203,234,The Goldenflow,river,,,
-1986,3908,231,228,240,Sempharin,river,,,
-1987,3909,196,240,197,Aldani Basin,lake,,,
-1988,3910,114,216,244,Arch Basin,lake,,,
-1989,3911,41,100,203,Lake of the Ghuls,lake,,,
-1990,3912,2,176,38,Lake of the Winter Spirits,lake,,,
-1991,3913,98,176,195,Lake Oraundil,lake,,,
-1992,3914,62,161,250,Ulvarr Water,lake,,,
-1993,3915,226,207,170,Lake Miir,lake,,,
-1994,3916,51,154,206,Bloodmuck,lake,,,
-1995,3917,128,203,186,Lake Tabat,lake,,,
-1996,3918,61,46,236,Shadow Sea,lake,,,
-1997,3919,228,228,228,Icelace Lake,lake,,,
-1998,3920,202,172,202,Alamber Sea,sea,,,
-1999,3921,188,230,232,Eastern Moonsea,sea,,,
-2000,3922,222,216,228,Easting Reach,sea,,,
-2001,3923,137,164,167,Northern Alamber Sea,sea,,,
-2002,3924,179,206,200,Eastern Wizards Reach,sea,,,
-2003,3925,134,161,146,Bay of Chessenta,sea,,,
-2004,3926,200,213,213,Southern Alamber Sea,sea,,,
-2005,3927,185,194,255,Lake of Dragons,sea,,,
-2006,3928,134,146,200,Dragon Reach,sea,,,
-2007,3929,128,206,225,Inner Vilhon Reach,sea,,,
-2008,3930,70,155,209,Outer Vilhon Reach,sea,,,
-2009,3931,109,155,176,Chessentan Coast,sea,,,
-2010,3932,149,152,203,Sea of Dlurg,sea,,,
-2011,3933,88,191,209,Turmish Coast,sea,,,
-2012,3934,131,161,167,Starmantle Reach,sea,,,
-2013,3935,118,176,170,Thousand Swords,sea,,,
-2014,3936,118,200,182,Sea of Fallen Stars,sea,,,
-2015,3937,203,246,155,River Lis,sea,,,
-2016,3938,176,225,216,Western Moonsea,sea,,,
-2017,3939,246,140,18,Fire River,river,,,
-2018,3940,246,182,234,Traders Bay,river,,,
-2019,3941,170,231,203,River of Metals,river,,,
-2020,3942,112,106,134,Methmere,river,,,
-2021,3943,219,219,167,River of Swords,river,,,
-2022,3944,231,228,231,Azulduth,river,,,
-2023,3945,237,167,176,Adder River,river,,,
-2024,3946,228,219,194,River Akax,river,,,
-2025,3947,64,225,46,The Akanamere,river,,,
-2026,3948,222,213,234,The Nagaflow,river,,,
-2027,3949,39,112,231,Nagawater,river,,,
-2028,3950,237,179,197,River Umber,river,,,
-2029,3951,76,73,85,Lake Umber,river,,,
-2030,3952,176,185,188,Lower Wet River,river,,,
-2031,3953,225,237,225,Wet River,river,,,
-2032,3954,49,82,140,Lake of the Long Arm,river,,,
-2033,3955,213,213,179,Great Imphras River,river,,,
-2034,3956,237,188,237,Icelace River,river,,,
-2035,3957,194,231,176,River of Shadows,river,,,
-2036,3958,237,191,161,River Alambar,river,,,
-2037,3959,225,234,252,River Beaumaris,river,,,
-2038,3960,124,228,231,The Wyvernflow,river,,,
-2039,3961,185,219,237,Wyvernwater,river,,,
-2040,3962,219,225,167,River Arkhen,river,,,
-2041,3963,164,179,206,Selgaunt Bay,sea,,,
-2042,3964,204,252,138,The Neck,sea,,,
-2043,3965,163,225,184,Easting Reach,sea,,,
-2044,3966,85,224,198,Vilhon Reach,sea,,,
-2045,3967,143,206,225,Western Wizard's Reach,sea,,,
-2046,3968,169,199,241,Forgotten Shore,sea,,,
-2047,3969,49,223,157,River Xon,river,,,
-2048,3970,140,194,190,Trackless Sea,sea,,,
-2049,3971,14,111,141,Trackless Sea,sea,,,
-2050,3972,18,246,241,Western Trackless Sea,sea,,,
-2051,3973,49,135,150,Western Trackless Sea,sea,,,
-2052,3974,147,250,250,Western Trackless Sea,sea,,,
-2053,3975,156,245,204,Trackless Sea,sea,,,
-2054,3976,35,113,196,Western Trackless Sea,sea,,,
-2055,3977,2,172,204,Trackless Sea,sea,,,
-2056,3978,165,222,211,Dragon Sea,sea,,,
-2057,3979,70,137,210,Dragon Sea,sea,,,
-2058,3980,83,161,223,Dragon Sea,sea,,,
-2059,3981,162,222,205,Bay of Relmaur,sea,,,
-2060,3982,70,236,187,Sea of Caravans,sea,,,
-2061,3983,24,167,107,al-Tariq Channel,sea,,,
-2062,3984,60,51,215,Suq Bay,sea,,,
-2063,3985,17,60,220,Suq Bay,sea,,,
-2064,3986,26,94,176,Golden Gulf,sea,,,
-2065,3987,19,95,153,Golden Gulf,sea,,,
-2066,3988,4,126,228,Golden Gulf,sea,,,
-2067,3989,58,95,96,Pearl Banks,sea,,,
-2068,3990,97,186,242,Crowded Sea,sea,,,
-2069,3991,105,169,127,Pilgrims Gulf,sea,,,
-2070,3992,18,94,154,Crowded Sea,sea,,,
-2071,3993,12,226,213,Serpent Bay,sea,,,
-2072,3994,32,145,212,The Gateway,sea,,,
-2073,3995,25,179,213,Gulf of Kadar,sea,,,
-2074,3996,236,150,36,Upper River Delimbiyr,river,,,
-2075,3997,7,209,190,Crowded Sea,sea,,,
-2076,3998,224,234,224,Foreigners Sea,sea,,,
-2077,3999,6,233,196,Foreigners Sea,sea,,,
-2078,4000,119,203,229,Foreigners Sea,sea,,,
-2079,4001,47,148,248,Southern Segara Sea,sea,,,
-2080,4002,108,96,186,Crowded Sea,sea,,,
-2081,4003,25,155,152,Crimson Sea,sea,,,
-2082,4004,51,123,232,Devil Shark Coast,sea,,,
-2083,4005,134,170,177,Sea of Marids,sea,,,
-2084,4006,171,245,241,Luirenstrand,sea,,,
-2085,4007,26,54,168,Crowded Sea,sea,,,
-2086,4008,54,115,174,Crowded Sea,sea,,,
-2087,4009,59,136,150,Crowded Sea,sea,,,
-2088,4010,13,149,224,Crowded Sea,sea,,,
-2089,4011,205,197,228,Trackless Sea,sea,,,
-2090,4012,184,176,216,Surbrin River,river,,,
-2091,4013,61,213,225,Nogaro River,river,,,
-2092,4014,42,195,90,Nogaro River,river,,,
-2093,4015,192,212,124,Kadan River,river,,,
-2094,4016,67,216,152,al-Iltifat River,river,,,
-2095,4017,134,228,218,al-Iltifat River,river,,,
-2096,4018,75,150,238,River Tantulph,river,,,
-2097,4019,56,253,20,River Sundarra,river,,,
-2098,4020,108,246,121,Sword River,river,,,
-2099,4021,41,166,191,The Stormflow,river,,,
-2100,4022,41,189,62,Skelkor River,river,,,
-2101,4023,203,218,225,Crescent Lake,river,,,
-2102,4024,135,211,140,River Vypaeryn,river,,,
-2103,4025,102,157,215,River Esmur,river,,,
-2104,4026,251,238,59,Glaur River,river,,,
-2105,4027,240,191,126,Lake Glaur,river,,,
-2106,4028,48,185,238,Corsair's Doom,sea,,,
-2107,4029,81,246,243,Crowded Sea,sea,,,
-2108,4030,124,179,115,Eastern Segara Sea,sea,,,
-2109,4031,170,243,197,Western Segara Sea,sea,,,
-2110,4032,141,209,227,Sempar River,river,,,
-2111,4033,43,203,213,Nixin River,river,,,
-2112,4034,43,159,254,Merrow's Feast,sea,,,
-2113,4035,83,138,167,Pirate's Wreck,sea,,,
-2114,4036,105,159,192,Akotan Sea,sea,,,
-2115,4037,91,192,98,Great Sea,sea,,,
-2176,4038,49,84,221,High Desert,impassable,,,
-2177,4039,89,56,179,High Desert,impassable,,,
-2178,4040,31,32,192,Genies Anvil,impassable,,,
-2179,4041,64,72,27,Mamnu Island,impassable,,,
-2180,4042,49,1,173,al-Sartan,impassable,,,
-2181,4043,33,35,26,Harab,impassable,,,
-2182,4044,66,57,28,Bariya,impassable,,,
-2183,4045,37,41,103,al-Akara Mountains,impassable,,,
-2184,4046,80,22,38,Howling Mountains,impassable,,,
-2185,4047,96,37,125,The Elephants Spine,impassable,,,
-2186,4048,61,47,9,al-Sayaj Mountains,impassable,,,
-2187,4049,71,20,96,Ghost Mountains,impassable,,,
-2188,4050,32,55,109,al-Yabki Mountains,impassable,,,
-2189,4051,56,2,221,al-Suqut Mountains,impassable,,,
-2190,4052,61,53,54,Range of the Marching Camels,impassable,,,
-2191,4053,44,49,41,Spine of the Dog,impassable,,,
-2192,4054,58,56,1,Mountains of Forgotten Dreams,impassable,,,
-2193,4055,87,1,73,Mountains of the Lizards Tongue,impassable,,,
-2194,4056,62,31,35,Wall of the Wailing Elephant,impassable,,,
-2196,4057,151,229,211,Endless Ice Sea,impassable,,,
-2197,4058,40,66,177,The Starspur,impassable,,,
-2198,4059,13,18,44,Jumpa Gorge,impassable,,,
-2199,4060,155,169,137,Lake Longreach,impassable,,,
-2200,4061,161,200,228,Spine of the World,impassable,,,
-2201,4062,228,231,237,Sea of Moving Ice,impassable,,,
-2202,4063,191,191,213,Great Ice Sea,impassable,,,
-2203,4064,194,200,194,Reghed Glacier,impassable,,,
-2205,4065,137,222,216,Endless Ice Sea,impassable,,,
-2206,4066,254,92,168,Sanrach Mountains,impassable,,,
-2207,4067,182,203,133,Ghalyi Shan,impassable,,,
-2208,4068,188,234,252,Land of the Snow Spirits,impassable,,,
-2209,4069,167,143,243,The Yehimal,impassable,,,
-2210,4070,149,118,58,Furrowed Mountains,impassable,,,
-2211,4071,240,228,191,Kavir al-Mawt,impassable,,,
-2212,4072,194,216,206,Katakoro Shan,impassable,,,
-2214,4073,243,209,121,The Giants Belt,impassable,,,
-2215,4074,216,115,55,Dragonsword Mountains,impassable,,,
-2216,4075,228,67,121,Dustwall Mountains,impassable,,,
-2217,4076,213,200,191,Spiderhaunt Peaks,impassable,,,
-2218,4077,39,43,64,Mountains of Copper,impassable,,,
-2219,4078,27,134,43,Sentinel Spire,impassable,,,
-2220,4079,115,36,18,Kora Shan,impassable,,,
-2221,4080,164,85,55,Hagon Shan,impassable,,,
-2222,4081,100,39,161,Glittering Spires,impassable,,,
-2223,4082,234,146,58,Curna Mountains,impassable,,,
-2224,4083,43,137,55,The North Wall,impassable,,,
-2225,4084,100,182,124,The West Wall,impassable,,,
-2226,4085,64,155,58,The East Wall,impassable,,,
-2227,4086,30,112,222,Gnollwatch Mountains,impassable,,,
-2228,4087,46,55,46,Rathgaunt Hills,impassable,,,
-2229,4088,30,49,64,Tannath,impassable,,,
-2230,4089,91,36,61,Alamir Mountains,impassable,,,
-2231,4090,213,58,43,Firesteap Mountains,impassable,,,
-2232,4091,149,24,18,Uthangol Mountains,impassable,,,
-2233,4092,206,158,222,Adder Peaks,impassable,,,
-2234,4093,155,58,137,The Maerthwatch,impassable,,,
-2235,4094,91,222,70,Smoking Mountains,impassable,,,
-2236,4095,36,231,128,Cloven Mountains,impassable,,,
-2237,4096,219,231,85,Thunder Peaks,impassable,,,
-2238,4097,219,216,197,Eastern Stormhorns,impassable,,,
-2239,4098,170,200,143,Sunset Mountains,impassable,,,
-2240,4099,249,109,115,The Stormhorns,impassable,,,
-2242,4100,24,170,112,Galena Mountains,impassable,,,
-2243,4101,36,94,200,Sunrise Mountains,impassable,,,
-2244,4102,61,188,173,The Thaymount,impassable,,,
-2245,4103,59,5,37,Earthfast Mountains,impassable,,,
-2246,4104,33,137,103,Earthspur Mountains,impassable,,,
-2247,4105,237,46,167,Sword Mountains,impassable,,,
-2248,4106,225,85,176,Nether Mountains,impassable,,,
-2249,4107,225,79,18,Rauvin Mountains,impassable,,,
-2250,4108,88,79,243,Ice Mountains,impassable,,,
-2251,4109,43,36,167,The Ice Spires,impassable,,,
-2252,4110,140,252,118,Greypeak Mountains,impassable,,,
-2253,4111,97,206,219,The High Country,impassable,,,
-2254,4112,52,61,179,A-Ling Shan,impassable,,,
-2255,4113,85,100,234,Kun-Yen Shan,impassable,,,
-2256,4114,33,39,188,Toadsquat Mountains,impassable,,,
-2257,4115,100,112,240,Dragonspine Mountains,impassable,,,
-2258,4116,36,188,191,Qimam al-Kadan,impassable,,,
-2259,4117,70,240,140,World Pillar Mountains,impassable,,,
-2260,4118,24,194,134,Wu Pi Te Shao,impassable,,,
-2261,4119,167,234,73,Konig Peaks,impassable,,,
-2262,4120,24,100,209,Mistcliff Mountains,impassable,,,
-2263,4121,197,49,179,Sanrach Mountains,impassable,,,
-2264,4122,234,49,58,Hazur Mountains,impassable,,,
-2265,4123,252,115,9,Guth Mountains,impassable,,,
-2266,4124,179,46,82,Delphin Mountains,impassable,,,
-2267,4125,228,106,158,Sky Lizard Mountains,impassable,,,
-2268,4126,30,103,94,Marching Mountains,impassable,,,
-2269,4127,58,234,27,Starspire Mountains,impassable,,,
-2270,4128,27,234,200,Omlarandin,impassable,,,
-2271,4129,76,33,200,Kobold Mountains,impassable,,,
-2272,4130,21,121,255,Wild Coast,impassable,,,
-2273,4131,33,33,70,Snowflake Mountains,impassable,,,
-2274,4132,109,109,21,Kuldin Peaks,impassable,,,
-2275,4133,109,55,164,High Peaks,impassable,,,
-2276,4134,124,33,58,Deepwing Mountains,impassable,,,
-2277,4135,100,33,21,Orsraun Mountains,impassable,,,
-2278,4136,39,33,94,Giants Run Mountains,impassable,,,
-2279,4137,21,67,121,Troll Mountains,impassable,,,
-2280,4138,91,216,185,Orbrekh Mountains,impassable,,,
-2281,4139,118,200,134,Cloud Peaks,impassable,,,
-2282,4140,128,237,219,Small Teeth,impassable,,,
-2283,4141,203,206,219,Akanapeaks,impassable,,,
-2284,4142,203,173,219,Aphrunn Mountains,impassable,,,
-2285,4143,88,35,198,Dragonjaw Mountains,impassable,,,
-2286,4144,182,73,200,Thesk Mountains,impassable,,,
-2287,4145,243,73,79,The Riders to the Sky,impassable,,,
-2288,4146,243,100,46,Mount Thulbane,impassable,,,
-2289,4147,191,39,82,White Peaks,impassable,,,
-2290,4148,240,197,24,Desertsmouth Mountains,impassable,,,
-2291,4149,191,70,24,Troll Hills,impassable,,,
-2292,4150,56,31,23,Giantspire Mountains,impassable,,,
-2293,4151,167,64,24,Firward Mountains,impassable,,,
-2294,4152,228,228,191,Icerim Mountains,impassable,,,
-2295,4153,228,43,18,Godswatch Mountains,impassable,,,
-2296,4154,213,94,85,Raurin Alta Mountains,impassable,,,
-2297,4155,255,94,36,Abbey Mountains,impassable,,,
-2298,4156,39,234,222,Mountains of Gold,impassable,,,
-2299,4157,225,246,64,Firepeaks,impassable,,,
-2300,4158,30,52,36,Scimitar Spires,impassable,,,
-2301,4159,167,176,24,Dragons Back Peaks,impassable,,,
-2302,4160,73,234,234,Teeth of Taglo,impassable,,,
-2303,4161,249,149,70,Ushar Mountains,impassable,,,
-2304,4162,219,49,61,Ulhai Shan,impassable,,,
-2305,4163,27,158,234,Koryaz Shan,impassable,,,
-2306,4164,55,52,206,Hagga Shan,impassable,,,
-2309,4165,170,103,85,Jotunhammer Mountains,impassable,,,
-2310,4166,106,103,46,Black Mountains,impassable,,,
-2312,4167,228,109,112,Hollow Crown Mountains,impassable,,,
-2313,4168,79,73,134,Ardulith Mountains,impassable,,,
-2315,4169,9,60,195,Skelkor Mountains,impassable,,,
-2317,4170,213,43,46,Lugsaas Chain,impassable,,,
-2318,4171,149,137,234,Tutsaas Chain,impassable,,,
-2319,4172,15,33,179,Angsaas Chain,impassable,,,
-2320,4173,209,91,216,Keryjek Range,impassable,,,
-2321,4174,115,49,12,Novularond,impassable,,,
-2322,4175,131,64,52,Surykyk Range,impassable,,,
-2324,4176,216,200,164,Nakalpgotak Range,impassable,,,
-2325,4177,121,225,203,Glacier of Ulutiu,impassable,,,
-2326,4178,158,61,43,Shan Trango,impassable,,,
-2327,4179,79,115,24,Chu Yuan,impassable,,,
-2328,4180,58,43,70,Deang Mountains,impassable,,,
-2329,4181,43,52,24,Jumpa River Gorge,impassable,,,
-2330,4182,158,216,106,Hakari Ridge,impassable,,,
-2333,4183,0,33,64,Mahasarpa,impassable,,,
-2334,4184,197,73,15,Southern Wu Pi Te Shao,impassable,,,
-2335,4185,146,243,79,Northern Wu Pi Te Shao,impassable,,,
-2336,4186,106,33,170,Po Yul Dzayul Range,impassable,,,
-2337,4187,176,191,112,Growing Mountains,impassable,,,
-2338,4188,94,18,21,Salju Shan,impassable,,,
-2339,4189,203,164,179,The Burning Lands,impassable,,,
-2340,4190,216,158,115,Haunted Lands,impassable,,,
-2341,4191,67,219,209,Sacred Mountain of Kushk,impassable,,,
-2342,4192,91,91,152,Intan Shan,impassable,,,
-2343,4193,203,237,213,Fengnao,impassable,,,
-2344,4194,33,43,237,Petan,impassable,,,
-2345,4195,21,24,43,Krashatai Shan,impassable,,,
-2347,4196,97,188,194,The Dock,impassable,,,
-2348,4197,97,33,97,Salju Shan,impassable,,,
-2349,4198,149,64,225,Peaks of Flame,impassable,,,
-2351,4199,55,49,158,Gorge of Gauros,impassable,,,
-2352,4200,141,25,182,Po Yul Dzayul,impassable,,,
-2353,4201,166,220,125,Greypeak Mountains,impassable,,,
-2354,4202,141,216,84,Greypeak Mountains,impassable,,,
-2355,4203,151,220,63,Greypeak Mountains,impassable,,,
-2356,4204,48,30,14,Star Mounts,impassable,,,
-2357,4205,71,38,69,Shining Plateau,impassable,,,
-2358,4206,88,213,149,Western Yal Tengri,sea,,,
-2359,4207,134,234,170,Eastern Yal Tengri,sea,,,
-2360,4208,67,188,121,Bay of Raum,sea,,,
-2361,4209,134,200,124,Northern Yal Tengri,sea,,,
-2362,4210,237,191,188,Lower Arundi River,river,,,
-2363,4211,225,222,176,Arundi River,river,,,
-2364,4212,52,164,240,Winterflow River,river,,,
-2365,4213,163,185,144,The Great Anvil,impassable,,,
-2376,4214,69,22,155,Eskornar Peaks,impassable,,,
-2377,4215,17,62,170,Dusk Mountains,impassable,,,
-2378,4216,12,59,150,Glaur Mountains,impassable,,,
-2379,4217,51,30,22,Elkannath Mountains,impassable,,,
-2381,4218,18,40,245,Arandron,impassable,,,
-2382,4219,38,62,118,Katashaka,impassable,,,
-2410,4220,19,31,60,Dawning Mountains,impassable,,,
-2464,4221,137,55,36,The Highlands,impassable,,,
-2492,4222,73,39,15,Hissing Isles,impassable,,,
-2512,4223,31,31,160,Frost Hills,impassable,,,
-2581,4224,85,87,48,West Sea,sea,,,
-2582,4225,52,57,246,Gulf of Katashaka,sea,,,
-2583,4226,65,212,157,Gulf of Lopango,sea,,,
-2584,4227,163,255,182,Lopango Sea,sea,,,
-2585,4228,232,217,189,South Maztica Sea,sea,,,
-2586,4229,183,20,53,North Maztica Sea,sea,,,
-2630,4230,75,195,232,Trackless Sea,sea,,,
-2631,4231,8,51,64,Trackless Sea,sea,,,
-2632,4232,74,113,126,Trackless Sea,sea,,,
-2633,4233,122,139,144,The Western Frost,impassable,,,
-2643,4234,65,11,100,The High Ice,impassable,,,
-2644,4235,99,222,100,Xothaerin,impassable,,,
-2645,4236,214,60,60,Kossuth's Eye,impassable,,,
-2646,4237,190,55,190,Korolnor,impassable,,,
-2647,4238,213,213,0,Torglor,impassable,,,
-2648,4239,90,20,70,Drakkalor,impassable,,,
-2649,4240,79,113,199,Barakuir,impassable,,,
-2650,4241,108,149,29,Holorar,impassable,,,
-2653,4242,160,147,147,Zolkir,impassable,,,
-2654,4243,237,9,121,Rogarsheim,impassable,,,
-2655,4244,56,143,23,Tvarstoldt,impassable,,,
-2656,4245,193,186,20,Jotunhammer,impassable,,,
-2657,4246,192,43,193,Stone Wood,impassable,,,
-2658,4247,43,193,193,Lillemaren,impassable,,,
-2660,4248,19,124,19,Trondhelm,impassable,,,
-2661,4249,109,184,202,Trackless Strait,sea,,,
-2662,4250,141,222,245,Strait of Oman,sea,,,
-2663,4251,121,121,181,Strait of Alaron,sea,,,
-2664,4252,220,170,240,Strait of the Leviathan,sea,,,
-2665,4253,153,213,223,Lotan's Abyss,sea,,,
-2666,4254,173,247,222,Corwell Firth,sea,,,
-2667,4255,245,210,245,Dragon Head,sea,,,
-2668,4256,210,245,233,Kingsbay,sea,,,
-2669,4257,235,210,245,Mintarn Coast,sea,,,
-2670,4258,210,245,230,Callidyrr Coast,sea,,,
-2671,4259,230,180,220,Northwind Strait,sea,,,
-2672,4260,135,100,35,Cambro Mountains,impassable,,,
-2673,4261,20,75,0,Lisloch,impassable,,,
-2674,4262,75,0,22,Lisbunt,impassable,,,
-2675,4263,75,55,0,Farfair,impassable,,,
-2676,4264,0,0,1,Fairheight Range,impassable,,,
-2677,4265,144,4,4,Aspenheight,impassable,,,
-2678,4266,245,220,245,Lake of the Leech,lake,,,
-2679,4267,245,200,245,Lisloch,lake,,,
-2680,4268,245,190,245,Lac Sielya,lake,,,
-2681,4269,245,180,245,Firloch,lake,,,
-2682,4270,245,170,245,Shee Pool,lake,,,
-2683,4271,245,160,245,Mal Tamesis,lake,,,
-2684,4272,245,150,245,Mal Tarbat,lake,,,
-2685,4273,245,140,245,Lake Chrysalis,lake,,,
-2686,4274,245,130,245,Harloch,lake,,,
-2687,4275,125,150,5,Brannoch,impassable,,,
-2689,4276,9,90,90,Storaad,impassable,,,
-2690,4277,180,210,90,Orcskulls,impassable,,,
-2691,4278,100,210,90,Breasal,impassable,,,
-2692,4279,100,95,30,Dennin's Delve,impassable,,,
-2693,4280,35,100,30,Llyrath,impassable,,,
-,4281,0,0,96,Trackless Deep,sea,,,
+2479,2984,196,146,93,b_guihar,barony,b_guihar,c_guihar,tribal_holding
+2332,2985,6,232,13,b_yuanqihar,barony,b_yuanqihar,c_east_rendai,castle_holding
+2332,2986,122,2,134,b_shanshan,barony,b_shanshan,c_east_rendai,city_holding
+2332,2987,143,151,131,b_tengcheng,barony,b_tengcheng,c_east_rendai,church_holding
+1139,2988,172,112,127,b_shengyi,barony,b_shengyi,c_middle_rendai,tribal_holding
+1306,2989,134,149,146,b_tongwei,barony,b_tongwei,c_west_rendai,tribal_holding
+1772,2990,27,94,141,b_zhoman,barony,b_zhoman,c_zhoman,tribal_holding
+1373,2991,77,54,222,b_seikung,barony,b_seikung,c_seikung,castle_holding
+1373,2992,175,12,11,b_mianxiang,barony,b_mianxiang,c_seikung,city_holding
+1373,2993,192,104,91,b_shizuiguan,barony,b_shizuiguan,c_seikung,church_holding
+1373,2994,5,68,27,b_meiyuan,barony,b_meiyuan,c_seikung,castle_holding
+1372,2995,148,111,56,b_akshu,barony,b_akshu,c_akshu,castle_holding
+1372,2996,16,63,49,b_mudanxing,barony,b_mudanxing,c_akshu,city_holding
+1372,2997,1,57,71,b_qingmay,barony,b_qingmay,c_akshu,church_holding
+1374,2998,5,149,204,b_feifeng,barony,b_feifeng,c_feifeng,castle_holding
+1374,2999,113,197,160,b_itu,barony,b_itu,c_feifeng,city_holding
+1375,3000,95,142,132,b_po,barony,b_po,c_herders_crook,castle_holding
+1375,3001,142,251,81,b_tanggong,barony,b_tanggong,c_herders_crook,city_holding
+1376,3002,94,15,199,b_atai,barony,b_atai,c_atai,tribal_holding
+1377,3003,71,61,228,b_guizen,barony,b_guizen,c_halu,tribal_holding
+1383,3004,22,245,7,b_shou_kuan,barony,b_shou_kuan,c_shou_kuan,castle_holding
+1383,3005,202,219,222,b_xinging,barony,b_xinging,c_shou_kuan,city_holding
+1383,3006,242,181,203,b_xutou,barony,b_xutou,c_shou_kuan,church_holding
+1394,3007,59,177,230,b_beijiangm,barony,b_beijiangm,c_wellspring_hills,tribal_holding
+1768,3008,216,83,189,b_xuheing,barony,b_xuheing,c_xuheing,castle_holding
+2213,3009,94,17,63,b_taicheng,barony,b_taicheng,c_kuan_road,castle_holding
+2213,3010,23,74,39,b_nangong,barony,b_nangong,c_kuan_road,city_holding
+2213,3011,106,23,57,b_mudanramay,barony,b_mudanramay,c_kuan_road,church_holding
+2480,3012,233,198,182,b_quchang,barony,b_quchang,c_quchang,tribal_holding
+2482,3013,217,136,39,b_zoajing,barony,b_zoajing,c_zoajing,castle_holding
+2482,3014,171,32,195,b_guirao,barony,b_guirao,c_zoajing,city_holding
+2482,3015,201,237,232,b_shangxing,barony,b_shangxing,c_zoajing,church_holding
+1767,3016,236,205,207,b_hengfena,barony,b_hengfena,c_hengfena,tribal_holding
+1393,3017,128,186,102,b_chaikou,barony,b_chaikou,c_chaikou_hills,tribal_holding
+1392,3018,183,126,165,b_meiliang,barony,b_meiliang,c_fertile_moon,tribal_holding
+2481,3019,173,228,164,b_tongchun,barony,b_tongchun,c_tongchun,castle_holding
+2481,3020,105,7,93,b_shizuitong,barony,b_shizuitong,c_tongchun,church_holding
+2481,3021,8,232,94,b_shizuiliang,barony,b_shizuiliang,c_tongchun,city_holding
+1363,3022,91,188,13,b_toming,barony,b_toming,c_toming,castle_holding
+1363,3023,0,212,69,b_guusai,barony,b_guusai,c_toming,city_holding
+1363,3024,135,216,49,b_jiangjin,barony,b_jiangjin,c_toming,church_holding
+1367,3025,140,40,97,b_mishan,barony,b_mishan,c_mishan,castle_holding
+1367,3026,74,167,167,b_hangping,barony,b_hangping,c_mishan,city_holding
+1379,3027,8,236,145,b_laiwei,barony,b_laiwei,c_laiwei,castle_holding
+1379,3028,240,153,147,b_jiangyi,barony,b_jiangyi,c_laiwei,city_holding
+1770,3029,27,102,147,b_naon,barony,b_naon,c_naon,castle_holding
+2483,3030,43,48,169,b_shangtao,barony,b_shangtao,c_shangtao,castle_holding
+2483,3031,212,240,67,b_qindong,barony,b_qindong,c_shangtao,city_holding
+1310,3032,111,71,16,b_shihfang,barony,b_shihfang,c_shihfang,castle_holding
+1310,3033,6,214,46,b_zhongzhou,barony,b_zhongzhou,c_shihfang,city_holding
+1769,3034,206,84,155,b_huai,barony,b_huai,c_huai,castle_holding
+1312,3035,27,157,170,b_tapenga,barony,b_tapenga,c_tapenga,castle_holding
+1312,3036,20,233,62,b_guangqiu,barony,b_guangqiu,c_tapenga,city_holding
+1312,3037,184,211,29,b_suchun,barony,b_suchun,c_tapenga,church_holding
+1311,3038,111,0,41,b_nanxun,barony,b_nanxun,c_nanxun,castle_holding
+1311,3039,133,37,83,b_yueh,barony,b_yueh,c_nanxun,city_holding
+1309,3040,222,112,216,b_jiaoguan,barony,b_jiaoguan,c_sky_fields,castle_holding
+1309,3041,103,29,170,b_sharbei,barony,b_sharbei,c_sky_fields,city_holding
+1309,3042,222,29,63,b_changzhou,barony,b_changzhou,c_sky_fields,church_holding
+815,3043,162,93,244,b_jingong,barony,b_jingong,c_yellow_serpent,castle_holding
+1766,3044,95,147,19,b_qinyi,barony,b_qinyi,c_qinyi,castle_holding
+1765,3045,107,110,174,b_hame,barony,b_hame,c_hame,castle_holding
+1343,3046,162,99,17,b_chao_yang,barony,b_chao_yang,c_chao_yang,castle_holding
+1343,3047,210,35,228,b_yincha,barony,b_yincha,c_chao_yang,city_holding
+1343,3048,187,21,126,b_jiaxian,barony,b_jiaxian,c_chao_yang,church_holding
+1308,3049,136,255,183,b_qingliang,barony,b_qingliang,c_west_road,castle_holding
+1308,3050,225,20,93,b_guangtou,barony,b_guangtou,c_west_road,city_holding
+1345,3051,144,117,126,b_loulan,barony,b_loulan,c_loulan,castle_holding
+1345,3052,25,178,4,b_putai,barony,b_putai,c_loulan,city_holding
+1345,3053,64,12,213,b_suizhou,barony,b_suizhou,c_loulan,church_holding
+1382,3054,68,74,57,b_jinchou,barony,b_jinchou,c_taotie,castle_holding
+1382,3055,100,252,62,b_guanghai,barony,b_guanghai,c_taotie,city_holding
+1381,3056,226,242,220,b_fukiow,barony,b_fukiow,c_fukiow,castle_holding
+1381,3057,111,161,71,b_donggyi,barony,b_donggyi,c_fukiow,city_holding
+1695,3058,212,147,23,b_kuo_meilan,barony,b_kuo_meilan,c_kuo_meilan,castle_holding
+2346,3059,50,207,189,b_delliun,barony,b_delliun,c_delliun,castle_holding
+2346,3060,156,11,56,b_pingliang,barony,b_pingliang,c_delliun,church_holding
+2346,3061,241,136,135,b_darkvale,barony,b_darkvale,c_delliun,city_holding
+1313,3062,72,64,169,b_ermani,barony,b_ermani,c_generals_stand,tribal_holding
+1344,3063,226,38,104,b_zhouramay,barony,b_zhouramay,c_kuang_chu_road,castle_holding
+1344,3064,136,243,49,b_shanchun,barony,b_shanchun,c_kuang_chu_road,city_holding
+1378,3065,122,203,247,b_kangste,barony,b_kangste,c_kangste,castle_holding
+1378,3066,61,183,226,b_anzhoun,barony,b_anzhoun,c_kangste,city_holding
+1315,3067,144,140,188,b_qudao,barony,b_qudao,c_qudao,tribal_holding
+1364,3068,52,72,244,b_kai_shan,barony,b_kai_shan,c_kai_shan,city_holding
+1364,3069,200,150,6,b_qinggong,barony,b_qinggong,c_kai_shan,castle_holding
+1364,3070,188,202,48,b_donghua,barony,b_donghua,c_kai_shan,church_holding
+1364,3071,74,226,44,b_guijiang,barony,b_guijiang,c_kai_shan,city_holding
+1366,3072,227,171,193,b_kochung,barony,b_kochung,c_kochung,church_holding
+1366,3073,124,134,3,b_hengwei,barony,b_hengwei,c_kochung,castle_holding
+1369,3074,225,203,195,b_weifei,barony,b_weifei,c_weifei,castle_holding
+1369,3075,104,130,174,b_zhaojing,barony,b_zhaojing,c_weifei,city_holding
+1369,3076,241,189,93,b_hengliang,barony,b_hengliang,c_weifei,church_holding
+1415,3077,22,124,66,b_zhouang,barony,b_zhouang,c_white_hills,castle_holding
+1415,3078,160,48,112,b_guaoun,barony,b_guaoun,c_white_hills,city_holding
+1415,3079,219,38,205,b_shutong,barony,b_shutong,c_white_hills,church_holding
+1365,3080,18,44,1,b_yao_sai,barony,b_yao_sai,c_yao_sai,castle_holding
+1365,3081,201,224,39,b_baohou,barony,b_baohou,c_yao_sai,city_holding
+1368,3082,20,13,247,b_wang,barony,b_wang,c_wang,castle_holding
+1368,3083,234,130,235,b_qinshu,barony,b_qinshu,c_wang,city_holding
+1771,3084,31,76,174,b_meinan,barony,b_meinan,c_meinan,castle_holding
+2485,3085,28,214,17,b_changdao,barony,b_changdao,c_changdao,tribal_holding
+2486,3086,73,171,207,b_jianggong,barony,b_jianggong,c_forests_edge,tribal_holding
+1370,3087,252,125,16,b_taishan,barony,b_taishan,c_taishan,castle_holding
+1370,3088,24,160,209,b_nanxing,barony,b_nanxing,c_taishan,city_holding
+1371,3089,217,213,110,b_saigai,barony,b_saigai,c_saigai,church_holding
+1371,3090,247,125,219,b_tenghai,barony,b_tenghai,c_saigai,castle_holding
+1371,3091,118,170,72,b_hunhai,barony,b_hunhai,c_saigai,church_holding
+905,3092,218,81,241,b_kourmira,barony,b_kourmira,c_kourmira,tribal_holding
+905,3093,184,174,40,b_balenulalik,barony,b_balenulalik,c_kourmira,city_holding
+905,3094,249,220,120,b_tenji,barony,b_tenji,c_kourmira,church_holding
+905,3095,5,72,172,b_nanshark,barony,b_nanshark,c_kourmira,castle_holding
+904,3096,228,53,60,b_banlm,barony,b_banlm,c_banlm,tribal_holding
+904,3097,126,99,28,b_sago,barony,b_sago,c_banlm,city_holding
+903,3098,1,148,183,b_winterkeep,barony,b_winterkeep,c_winterkeep,castle_holding
+1787,3099,144,116,112,b_seshano,barony,b_seshano,c_seshano,tribal_holding
+894,3100,250,158,218,b_teri,barony,b_teri,c_teri,tribal_holding
+897,3101,116,189,162,b_qorkh,barony,b_qorkh,c_qorkh,tribal_holding
+895,3102,230,239,151,b_tuma,barony,b_tuma,c_tuma,tribal_holding
+896,3103,164,9,158,b_daynk,barony,b_daynk,c_daynk,tribal_holding
+901,3104,5,65,114,b_nanhu,barony,b_nanhu,c_nanhu,tribal_holding
+915,3105,160,225,247,b_yegororyanen,barony,b_yegororyanen,c_yegororyanen,tribal_holding
+899,3106,144,71,205,b_quaraband,barony,b_quaraband,c_quaraband,tribal_holding
+902,3107,241,69,96,b_darakh,barony,b_darakh,c_darakh,tribal_holding
+902,3108,149,49,30,b_taynligola,barony,b_taynligola,c_darakh,city_holding
+900,3109,87,111,60,b_salira,barony,b_salira,c_salira,tribal_holding
+900,3110,161,168,46,b_natangoj,barony,b_natangoj,c_salira,city_holding
+1776,3111,228,27,84,b_vral,barony,b_vral,c_vral,tribal_holding
+1779,3112,69,226,125,b_bukhouk,barony,b_bukhouk,c_bukhouk,tribal_holding
+1778,3113,15,211,118,b_kituzeelal,barony,b_kituzeelal,c_kituzeelal,tribal_holding
+898,3114,107,33,176,b_terva,barony,b_terva,c_flowery_well,tribal_holding
+906,3115,180,188,138,b_atoratgins,barony,b_atoratgins,c_atoratgins,tribal_holding
+850,3116,226,242,27,b_borich,barony,b_borich,c_borich,tribal_holding
+853,3117,16,208,70,b_saintkho,barony,b_saintkho,c_iris_spring,castle_holding
+852,3118,208,83,58,b_jarir,barony,b_jarir,c_jarir,tribal_holding
+854,3119,152,68,32,b_fortress_of_the_old_man,barony,b_fortress_of_the_old_man,c_sentinel_spire,church_holding
+854,3120,73,99,12,b_budaarcha,barony,b_budaarcha,c_sentinel_spire,castle_holding
+854,3121,3,51,129,b_chintshen,barony,b_chintshen,c_sentinel_spire,church_holding
+826,3122,189,243,211,b_leopard_shan,barony,b_leopard_shan,c_leopard_shan,tribal_holding
+933,3123,94,66,179,b_akashay,barony,b_akashay,c_akashay,tribal_holding
+827,3124,219,253,77,b_amassa,barony,b_amassa,c_amassa,tribal_holding
+828,3125,218,24,193,b_jelnesh,barony,b_jelnesh,c_jelnesh,tribal_holding
+1331,3126,25,34,35,b_li_raz,barony,b_li_raz,c_li_raz,city_holding
+879,3127,13,134,14,b_sakh,barony,b_sakh,c_sakh,tribal_holding
+1271,3128,124,115,233,b_haxkhun,barony,b_haxkhun,c_haxkhun,city_holding
+882,3129,159,246,66,b_munli,barony,b_munli,c_munli,tribal_holding
+880,3130,183,226,241,b_bariya,barony,b_bariya,c_bariya,tribal_holding
+881,3131,214,251,188,b_tariatooroi,barony,b_tariatooroi,c_tariatooroi,tribal_holding
+886,3132,199,128,41,b_nogoonraat,barony,b_nogoonraat,c_nogoonraat,tribal_holding
+884,3133,27,85,82,b_bulaantaro,barony,b_bulaantaro,c_bulaantaro,tribal_holding
+883,3134,11,152,252,b_gurvandene,barony,b_gurvandene,c_gurvandene,tribal_holding
+885,3135,195,55,212,b_hatgiainli,barony,b_hatgiainli,c_hatgiainli,tribal_holding
+1780,3136,55,201,20,b_abarun,barony,b_abarun,c_abarun,tribal_holding
+855,3137,255,120,64,b_bura,barony,b_bura,c_iceroot_forest,tribal_holding
+857,3138,107,191,65,b_bulangalant,barony,b_bulangalant,c_bulangalant,tribal_holding
+856,3139,11,228,54,b_shirc,barony,b_shirc,c_shirc,tribal_holding
+887,3140,144,40,89,b_banda,barony,b_banda,c_banda,tribal_holding
+891,3141,20,12,152,b_charig,barony,b_charig,c_bitter_well,tribal_holding
+888,3142,81,186,131,b_bogon,barony,b_bogon,c_horseshoe_oasis,church_holding
+876,3143,117,187,202,b_nagoo,barony,b_nagoo,c_nagoo,tribal_holding
+889,3144,2,100,103,b_tatanulgts,barony,b_tatanulgts,c_tatanulgts,tribal_holding
+877,3145,141,20,40,b_ansi,barony,b_ansi,c_ansi,city_holding
+893,3146,197,158,72,b_bara,barony,b_bara,c_bara,tribal_holding
+870,3147,67,189,191,b_chegoyui,barony,b_chegoyui,c_chegoyui,city_holding
+878,3148,11,123,88,b_deraiairgak,barony,b_deraiairgak,c_deraiairgak,tribal_holding
+892,3149,28,140,129,b_taria,barony,b_taria,c_pigeon_rock,tribal_holding
+1334,3150,35,164,194,b_jugicha,barony,b_jugicha,c_jugicha,city_holding
+1272,3151,194,144,151,b_quaraqand,barony,b_quaraqand,c_quaraqand,city_holding
+1380,3152,84,203,117,b_zoachang,barony,b_zoachang,c_thunder_hills,tribal_holding
+1317,3153,33,80,38,b_kwachow,barony,b_kwachow,c_kwachow,castle_holding
+1318,3154,219,194,16,b_nagai,barony,b_nagai,c_nagai_terrace,tribal_holding
+1316,3155,92,247,252,b_taikho,barony,b_taikho,c_taikho_gaze,tribal_holding
+1319,3156,110,133,63,b_yohun,barony,b_yohun,c_yohun_fields,tribal_holding
+1314,3157,222,247,232,b_hulan,barony,b_hulan,c_hulan,tribal_holding
+1279,3158,174,231,66,b_banai,barony,b_banai,c_banai,tribal_holding
+1335,3159,148,187,166,b_ondene,barony,b_ondene,c_ondene,tribal_holding
+1336,3160,96,63,167,b_xair,barony,b_xair,c_xair,tribal_holding
+868,3161,172,29,1,b_chan_liu_shui,barony,b_chan_liu_shui,c_chan_liu_shui,tribal_holding
+869,3162,245,246,244,b_bakhuk,barony,b_bakhuk,c_bakhuk,tribal_holding
+862,3163,87,140,222,b_mata_bol,barony,b_mata_bol,c_mata,tribal_holding
+859,3164,128,85,221,b_ni_ko,barony,b_ni_ko,c_ni_ko,tribal_holding
+867,3165,174,34,141,b_tonli,barony,b_tonli,c_tonli,tribal_holding
+861,3166,194,6,42,b_burich,barony,b_burich,c_burich,tribal_holding
+865,3167,205,196,16,b_bisoturi,barony,b_bisoturi,c_bisoturi,tribal_holding
+863,3168,74,184,102,b_khol,barony,b_khol,c_khol,tribal_holding
+864,3169,103,219,219,b_qantun,barony,b_qantun,c_qantun,tribal_holding
+860,3170,52,14,15,b_gukh,barony,b_gukh,c_gukh,castle_holding
+911,3171,45,29,31,b_noondai,barony,b_noondai,c_noondai,castle_holding
+858,3172,104,37,216,b_byog,barony,b_byog,c_umberwood,castle_holding
+1783,3173,145,77,220,b_bahat,barony,b_bahat,c_bahat,castle_holding
+2307,3174,173,152,237,b_treley,barony,b_treley,c_the_great_spire,castle_holding
+871,3175,142,195,45,b_tungtairira,barony,b_tungtairira,c_tungtairira,tribal_holding
+873,3176,90,83,229,b_bunshin,barony,b_bunshin,c_bunshin,tribal_holding
+872,3177,93,68,144,b_kholassa,barony,b_kholassa,c_kholassa,tribal_holding
+875,3178,124,48,131,b_shota,barony,b_shota,c_shota,tribal_holding
+1277,3179,84,237,205,b_lajang,barony,b_lajang,c_lajang,castle_holding
+1322,3180,208,118,216,b_simbilan,barony,b_simbilan,c_kuning,tribal_holding
+1762,3181,50,98,97,b_potong,barony,b_potong,c_aval,tribal_holding
+1285,3182,55,66,156,b_muara,barony,b_muara,c_muara,castle_holding
+2488,3183,92,26,73,b_thapadan,barony,b_thapadan,c_jakadiri,tribal_holding
+2487,3184,253,73,54,b_kanori,barony,b_kanori,c_panjang_river,tribal_holding
+2489,3185,66,168,141,b_saridang,barony,b_saridang,c_detar_land,tribal_holding
+2490,3186,139,139,56,b_barit,barony,b_barit,c_chulacca,tribal_holding
+2491,3187,121,41,245,b_tapakgan,barony,b_tapakgan,c_lunru,tribal_holding
+1167,3188,193,79,62,b_funashi,barony,b_funashi,c_hernes_wood,castle_holding
+1190,3189,113,71,255,b_anktarina,barony,b_anktarina,c_anktarina,tribal_holding
+1761,3190,129,43,133,b_amithiph,barony,b_amithiph,c_upper_sempadan,castle_holding
+1170,3191,249,230,160,b_tshalkha,barony,b_tshalkha,c_tshalkha,castle_holding
+2331,3192,132,137,228,b_senia,barony,b_senia,c_senia_plateau,tribal_holding
+1168,3193,245,168,179,b_jhalolokati,barony,b_jhalolokati,c_jhalolokati,tribal_holding
+1166,3194,250,9,223,b_adapra,barony,b_adapra,c_segaran_swamp,castle_holding
+1169,3195,58,200,200,b_battachi,barony,b_battachi,c_odesh,castle_holding
+1520,3196,20,20,244,b_bukitega,barony,b_bukitega,c_bukitega,tribal_holding
+1519,3197,144,172,8,b_narodara,barony,b_narodara,c_narodara,tribal_holding
+1389,3198,148,8,4,b_silapathar,barony,b_silapathar,c_silapathar,tribal_holding
+1390,3199,133,125,216,b_narari,barony,b_narari,c_narari,tribal_holding
+1512,3200,162,171,246,b_limjung,barony,b_limjung,c_limjung,tribal_holding
+1511,3201,203,27,0,b_jeranjah,barony,b_jeranjah,c_jeranjah,tribal_holding
+1510,3202,111,139,28,b_samphos,barony,b_samphos,c_samphos,tribal_holding
+1518,3203,0,4,56,b_tayabuk,barony,b_tayabuk,c_tayabuk,tribal_holding
+1517,3204,146,163,213,b_nathenje,barony,b_nathenje,c_nathenje,tribal_holding
+1505,3205,56,113,36,b_kajiaruti,barony,b_kajiaruti,c_kajiaruti,tribal_holding
+1506,3206,123,29,42,b_hudariyah,barony,b_hudariyah,c_hudariyah,tribal_holding
+1508,3207,232,53,35,b_sigram,barony,b_sigram,c_sigram,tribal_holding
+1504,3208,100,135,239,b_al_hanieh,barony,b_al_hanieh,c_al_hanieh,castle_holding
+1507,3209,125,210,39,b_giniracha,barony,b_giniracha,c_giniracha,tribal_holding
+1514,3210,176,192,205,b_nawal,barony,b_nawal,c_nawal,tribal_holding
+1513,3211,108,212,77,b_tadabbur,barony,b_tadabbur,c_tadabbur,tribal_holding
+1513,3212,213,181,52,b_al_hamidiyah,barony,b_al_hamidiyah,c_tadabbur,castle_holding
+1513,3213,187,206,52,b_ronralal,barony,b_ronralal,c_tadabbur,city_holding
+1515,3214,28,168,85,b_gimise,barony,b_gimise,c_gimise,tribal_holding
+1516,3215,164,208,61,b_qanadad,barony,b_qanadad,c_qanadad,tribal_holding
+1509,3216,249,128,146,b_sariban,barony,b_sariban,c_sariban,tribal_holding
+1467,3217,68,120,167,b_huzuz,barony,b_huzuz,c_huzuz,castle_holding
+1467,3218,33,10,48,b_gamremah,barony,b_gamremah,c_huzuz,church_holding
+1467,3219,74,202,226,b_sadabad,barony,b_sadabad,c_huzuz,castle_holding
+1557,3220,196,24,101,b_magrib,barony,b_magrib,c_magrib,castle_holding
+1557,3221,63,164,83,b_jeral,barony,b_jeral,c_magrib,city_holding
+1557,3222,45,112,215,b_bareel,barony,b_bareel,c_magrib,church_holding
+1468,3223,98,152,195,b_saraq,barony,b_saraq,c_saraq,castle_holding
+1468,3224,155,253,130,b_mahan,barony,b_mahan,c_saraq,city_holding
+1468,3225,179,134,66,b_dirhan,barony,b_dirhan,c_saraq,church_holding
+1469,3226,79,91,110,b_zayir,barony,b_zayir,c_zayir,castle_holding
+1469,3227,203,251,24,b_farwuraq,barony,b_farwuraq,c_zayir,city_holding
+1466,3228,11,124,215,b_wadurah,barony,b_wadurah,c_al_sarif,tribal_holding
+1464,3229,154,33,40,b_halwa,barony,b_halwa,c_halwa,castle_holding
+1464,3230,160,204,170,b_qurtai,barony,b_qurtai,c_halwa,city_holding
+1464,3231,128,20,196,b_shinuraiq,barony,b_shinuraiq,c_halwa,church_holding
+1465,3232,115,63,106,b_zarif,barony,b_zarif,c_zarif,castle_holding
+1465,3233,11,250,22,b_rawdat_thematah,barony,b_rawdat_thematah,c_zarif,city_holding
+1465,3234,205,69,91,b_shahaid,barony,b_shahaid,c_zarif,church_holding
+1463,3235,217,71,111,b_sadul,barony,b_sadul,c_al_malih,castle_holding
+1463,3236,48,143,245,b_arehla,barony,b_arehla,c_al_malih,city_holding
+1458,3237,129,121,0,b_fereej_al_amail,barony,b_fereej_al_amail,c_golden_falcon,tribal_holding
+1461,3238,48,199,66,b_wasat,barony,b_wasat,c_wasat,castle_holding
+1461,3239,39,253,181,b_wusan,barony,b_wusan,c_wasat,city_holding
+1461,3240,138,248,129,b_huwaga,barony,b_huwaga,c_wasat,church_holding
+1461,3241,32,184,72,b_qalat,barony,b_qalat,c_wasat,castle_holding
+1460,3242,122,184,190,b_hayyir,barony,b_hayyir,c_hayyir,castle_holding
+1460,3243,100,161,210,b_busaib,barony,b_busaib,c_hayyir,city_holding
+1460,3244,160,218,111,b_jahrarak,barony,b_jahrarak,c_hayyir,church_holding
+1460,3245,53,75,183,b_winalus,barony,b_winalus,c_hayyir,castle_holding
+1556,3246,152,191,39,b_al_nuziyyah,barony,b_al_nuziyyah,c_al_nuziyyah,castle_holding
+1556,3247,149,88,33,b_suwut,barony,b_suwut,c_al_nuziyyah,city_holding
+1459,3248,111,62,214,b_haimaq,barony,b_haimaq,c_jibal_al_taif,tribal_holding
+1462,3249,22,97,132,b_zill,barony,b_zill,c_zill,castle_holding
+1462,3250,229,204,110,b_abrura,barony,b_abrura,c_zill,city_holding
+1455,3251,132,162,191,b_shakham,barony,b_shakham,c_shakham,castle_holding
+1455,3252,49,249,154,b_wubufi,barony,b_wubufi,c_shakham,church_holding
+1453,3253,228,200,126,b_hiyal,barony,b_hiyal,c_hiyal,castle_holding
+1453,3254,107,90,73,b_jurdaiya,barony,b_jurdaiya,c_hiyal,city_holding
+1453,3255,191,107,80,b_hamuwa,barony,b_hamuwa,c_hiyal,church_holding
+1453,3256,178,214,246,b_sabus,barony,b_sabus,c_hiyal,church_holding
+1555,3257,27,234,97,b_aib,barony,b_aib,c_aib,castle_holding
+1555,3258,4,110,63,b_abu_azada,barony,b_abu_azada,c_aib,city_holding
+1555,3259,201,218,36,b_maraj,barony,b_maraj,c_aib,church_holding
+1554,3260,18,75,144,b_karzuwa,barony,b_karzuwa,c_karzuwa,tribal_holding
+1452,3261,224,6,216,b_budiya,barony,b_budiya,c_al_wahl,castle_holding
+1452,3262,252,11,142,b_halura,barony,b_halura,c_al_wahl,city_holding
+1454,3263,30,181,128,b_dubegat,barony,b_dubegat,c_dubegat,castle_holding
+1477,3264,36,98,11,b_itiraf,barony,b_itiraf,c_itiraf,castle_holding
+1477,3265,4,84,137,b_samaybi,barony,b_samaybi,c_itiraf,church_holding
+1477,3266,86,233,115,b_umm_kulaf,barony,b_umm_kulaf,c_itiraf,city_holding
+1477,3267,94,103,87,b_badais,barony,b_badais,c_itiraf,church_holding
+1474,3268,47,120,237,b_fahhas,barony,b_fahhas,c_fahhas,castle_holding
+1474,3269,213,170,88,b_sabam,barony,b_sabam,c_fahhas,city_holding
+1474,3270,218,53,14,b_shamai,barony,b_shamai,c_fahhas,church_holding
+1591,3271,118,49,112,b_hahami,barony,b_hahami,c_hahami,castle_holding
+1591,3272,137,208,155,b_hazar,barony,b_hazar,c_hahami,city_holding
+1473,3273,24,111,107,b_dakan,barony,b_dakan,c_dakan,castle_holding
+1473,3274,90,207,226,b_hamail,barony,b_hamail,c_dakan,church_holding
+1479,3275,163,179,34,b_burj,barony,b_burj,c_burj,castle_holding
+1479,3276,124,226,243,b_bahlalah,barony,b_bahlalah,c_burj,city_holding
+1479,3277,141,135,223,b_shaga,barony,b_shaga,c_burj,church_holding
+1482,3278,109,49,233,b_fanus,barony,b_fanus,c_fanus,castle_holding
+1482,3279,241,175,114,b_haralus,barony,b_haralus,c_fanus,city_holding
+1476,3280,3,37,112,b_sibbaqiyah,barony,b_sibbaqiyah,c_hitan_island,castle_holding
+1475,3281,242,69,129,b_alarah,barony,b_alarah,c_sumuk_island,castle_holding
+2375,3282,68,148,241,b_al_jarracha,barony,b_al_jarracha,c_risha,tribal_holding
+1483,3283,115,53,137,b_faihakus,barony,b_faihakus,c_al_faraq_islands,tribal_holding
+1480,3284,238,205,242,b_mahabba,barony,b_mahabba,c_mahabba,castle_holding
+1480,3285,194,110,131,b_hamz_al_jasrail,barony,b_hamz_al_jasrail,c_mahabba,city_holding
+1480,3286,156,240,220,b_khaligat,barony,b_khaligat,c_mahabba,church_holding
+1480,3287,117,247,145,b_mirbifi,barony,b_mirbifi,c_mahabba,city_holding
+1481,3288,64,5,153,b_hudid,barony,b_hudid,c_hudid,castle_holding
+1481,3289,137,233,74,b_araitan,barony,b_araitan,c_hudid,city_holding
+1481,3290,116,144,230,b_hususan,barony,b_hususan,c_hudid,church_holding
+1481,3291,216,45,6,b_nuzheem,barony,b_nuzheem,c_hudid,castle_holding
+1478,3292,252,166,78,b_biduraq,barony,b_biduraq,c_al_munamma,castle_holding
+1478,3293,159,112,125,b_umm_salal_barata,barony,b_umm_salal_barata,c_al_munamma,church_holding
+1484,3294,98,81,54,b_al_harmah,barony,b_al_harmah,c_al_harmah,tribal_holding
+1484,3295,177,103,5,b_tetari,barony,b_tetari,c_al_harmah,city_holding
+1471,3296,237,76,2,b_hilm,barony,b_hilm,c_hilm,castle_holding
+1471,3297,246,69,178,b_zarwuya,barony,b_zarwuya,c_hilm,city_holding
+1471,3298,142,38,216,b_raleem,barony,b_raleem,c_hilm,church_holding
+1471,3299,163,212,52,b_as_bidbiyat,barony,b_as_bidbiyat,c_hilm,church_holding
+1472,3300,30,204,177,b_talab,barony,b_talab,c_talab,castle_holding
+1472,3301,188,7,204,b_jurdabis,barony,b_jurdabis,c_talab,city_holding
+1472,3302,2,179,249,b_zabrila,barony,b_zabrila,c_talab,church_holding
+1470,3303,164,64,175,b_fujegat,barony,b_fujegat,c_fujegat,castle_holding
+1470,3304,57,14,6,b_banad,barony,b_banad,c_fujegat,church_holding
+1396,3305,126,162,190,b_qudra,barony,b_qudra,c_qudra,castle_holding
+1396,3306,151,59,59,b_hamsaad,barony,b_hamsaad,c_qudra,city_holding
+1396,3307,51,42,63,b_jawfah,barony,b_jawfah,c_qudra,church_holding
+1396,3308,169,98,36,b_ain_smafarik,barony,b_ain_smafarik,c_qudra,castle_holding
+1338,3309,253,166,229,b_liham,barony,b_liham,c_liham,castle_holding
+1338,3310,183,145,77,b_al_sari,barony,b_al_sari,c_liham,city_holding
+1338,3311,35,31,78,b_umm_rahud,barony,b_umm_rahud,c_liham,church_holding
+1338,3312,109,135,41,b_rabali,barony,b_rabali,c_liham,castle_holding
+1400,3313,143,34,95,b_el_khrouled,barony,b_el_khrouled,c_al_faddi,tribal_holding
+1397,3314,233,218,42,b_taliat,barony,b_taliat,c_taliat,castle_holding
+1397,3315,192,236,233,b_omidihreza,barony,b_omidihreza,c_taliat,city_holding
+1397,3316,181,143,192,b_salmaqqah,barony,b_salmaqqah,c_taliat,church_holding
+1397,3317,204,251,58,b_qatimis,barony,b_qatimis,c_taliat,castle_holding
+1398,3318,97,83,41,b_adhal,barony,b_adhal,c_adhal,castle_holding
+1398,3319,45,217,3,b_yagrah,barony,b_yagrah,c_adhal,city_holding
+2170,3320,26,200,214,b_kaslaib,barony,b_kaslaib,c_kaslaib,tribal_holding
+1450,3321,40,95,210,b_zuwaruk,barony,b_zuwaruk,c_zuwaruk,castle_holding
+1451,3322,160,215,186,b_rago,barony,b_rago,c_rago,castle_holding
+1553,3323,247,14,237,b_malualti,barony,b_malualti,c_malualti,tribal_holding
+1399,3324,118,24,18,b_mina,barony,b_mina,c_mina,castle_holding
+1399,3325,176,87,129,b_muyar,barony,b_muyar,c_mina,city_holding
+1399,3326,164,27,195,b_gokorhisar,barony,b_gokorhisar,c_mina,church_holding
+1536,3327,53,55,126,b_goulous,barony,b_goulous,c_lizards_tongue_pass,tribal_holding
+1537,3328,204,48,57,b_nouarada,barony,b_nouarada,c_nouarada,tribal_holding
+1347,3329,206,231,157,b_krak_al_niraan,barony,b_krak_al_niraan,c_krak_al_niraan,castle_holding
+1347,3330,77,190,69,b_ghaliha,barony,b_ghaliha,c_krak_al_niraan,city_holding
+1349,3331,84,20,110,b_sokkar,barony,b_sokkar,c_sokkar,castle_holding
+1352,3332,85,189,61,b_taham,barony,b_taham,c_taham,castle_holding
+1352,3333,50,199,132,b_al_qufag,barony,b_al_qufag,c_taham,city_holding
+1273,3334,123,246,29,b_genies_garden,barony,b_genies_garden,c_genies_garden,tribal_holding
+2125,3335,226,133,179,b_ubar,barony,b_ubar,c_ubar,castle_holding
+2125,3336,173,215,186,b_baqarm,barony,b_baqarm,c_ubar,city_holding
+2125,3337,224,251,225,b_akhmedo,barony,b_akhmedo,c_ubar,church_holding
+2126,3338,192,158,116,b_midnight_waters,barony,b_midnight_waters,c_midnight_waters,tribal_holding
+2123,3339,31,150,252,b_krak_al_mazhar,barony,b_krak_al_mazhar,c_krak_al_mazhar,castle_holding
+1348,3340,226,18,175,b_moradask,barony,b_moradask,c_moradask,castle_holding
+1348,3341,174,46,128,b_sugola,barony,b_sugola,c_moradask,city_holding
+2425,3342,78,44,162,b_khor_biligat,barony,b_khor_biligat,c_sea_of_salt,castle_holding
+953,3343,245,182,213,b_al_anwahr,barony,b_al_anwahr,c_al_anwahr,tribal_holding
+1457,3344,160,107,123,b_surireb,barony,b_surireb,c_hand_of_the_sky,tribal_holding
+1456,3345,91,115,165,b_adrila,barony,b_adrila,c_adrila,castle_holding
+2124,3346,9,35,162,b_jabal_sarahin,barony,b_jabal_sarahin,c_jabal_sarahin,castle_holding
+1563,3347,233,132,219,b_tajar,barony,b_tajar,c_tajar,castle_holding
+1563,3348,223,217,8,b_baharoud,barony,b_baharoud,c_tajar,city_holding
+1563,3349,110,57,142,b_miladis,barony,b_miladis,c_tajar,church_holding
+1587,3350,196,204,81,b_al_suweb,barony,b_al_suweb,c_al_abib,tribal_holding
+2171,3351,8,87,36,b_sinna,barony,b_sinna,c_sinna,tribal_holding
+1562,3352,152,206,53,b_takeyef,barony,b_takeyef,c_takeyef,castle_holding
+1559,3353,17,35,223,b_ar_rasumah,barony,b_ar_rasumah,c_ar_rasumah,castle_holding
+1558,3354,178,226,21,b_gamruhan,barony,b_gamruhan,c_gamruhan,tribal_holding
+1539,3355,209,45,57,b_telah,barony,b_telah,c_telah,tribal_holding
+1552,3356,60,165,123,b_aman,barony,b_aman,c_aman,tribal_holding
+1560,3357,237,218,89,b_hamid,barony,b_hamid,c_hamid,tribal_holding
+1561,3358,154,177,176,b_jamal,barony,b_jamal,c_jamal,tribal_holding
+1541,3359,152,115,124,b_hulm,barony,b_hulm,c_hulm,tribal_holding
+1551,3360,160,244,102,b_raziz,barony,b_raziz,c_raziz,tribal_holding
+1550,3361,188,220,71,b_yarrat,barony,b_yarrat,c_yarrat,tribal_holding
+1549,3362,205,166,191,b_wakrawa,barony,b_wakrawa,c_wakrawa,tribal_holding
+1545,3363,110,2,101,b_sadazeh,barony,b_sadazeh,c_sadazeh,tribal_holding
+945,3364,217,33,121,b_muluk,barony,b_muluk,c_muluk,castle_holding
+945,3365,250,197,40,b_ashfah,barony,b_ashfah,c_muluk,city_holding
+945,3366,159,98,97,b_athuw,barony,b_athuw,c_muluk,church_holding
+947,3367,66,197,93,b_talv,barony,b_talv,c_sakina,tribal_holding
+2501,3368,120,11,208,b_maharas_vale,barony,b_maharas_vale,c_maharas_vale,castle_holding
+951,3369,154,239,160,b_qadib,barony,b_qadib,c_qadib,castle_holding
+951,3370,21,113,31,b_ruwa,barony,b_ruwa,c_qadib,city_holding
+952,3371,21,193,12,b_al_haul,barony,b_al_haul,c_al_haul,tribal_holding
+950,3372,51,53,35,b_hafaya,barony,b_hafaya,c_hafaya,castle_holding
+950,3373,226,26,250,b_yabah,barony,b_yabah,c_hafaya,city_holding
+950,3374,205,227,175,b_umm_gafago,barony,b_umm_gafago,c_hafaya,church_holding
+950,3375,16,157,10,b_dammaydah,barony,b_dammaydah,c_hafaya,castle_holding
+959,3376,90,193,58,b_rana,barony,b_rana,c_al_kidr,tribal_holding
+954,3377,122,195,138,b_utaqa,barony,b_utaqa,c_utaqa,castle_holding
+954,3378,238,130,167,b_muqdawja,barony,b_muqdawja,c_utaqa,city_holding
+954,3379,147,197,99,b_khaniw,barony,b_khaniw,c_utaqa,church_holding
+960,3380,58,244,228,b_tujul,barony,b_tujul,c_jasan_pass,castle_holding
+1350,3381,86,170,79,b_surardaha,barony,b_surardaha,c_burning_shore,tribal_holding
+948,3382,121,57,254,b_jahaai,barony,b_jahaai,c_bladed_coast,tribal_holding
+946,3383,164,202,107,b_simbaya,barony,b_simbaya,c_simbaya,castle_holding
+946,3384,157,118,111,b_ghumra,barony,b_ghumra,c_simbaya,city_holding
+949,3385,150,239,251,b_umara,barony,b_umara,c_umara,castle_holding
+949,3386,53,33,36,b_khenlal,barony,b_khenlal,c_umara,city_holding
+949,3387,123,39,132,b_rinina,barony,b_rinina,c_umara,church_holding
+2500,3388,118,186,127,b_mazat,barony,b_mazat,c_mazat,castle_holding
+940,3389,76,116,72,b_hawa,barony,b_hawa,c_hawa,castle_holding
+940,3390,232,38,189,b_safe_cove,barony,b_safe_cove,c_hawa,city_holding
+940,3391,191,160,154,b_diraraht,barony,b_diraraht,c_hawa,church_holding
+940,3392,111,135,69,b_tissemgara,barony,b_tissemgara,c_hawa,castle_holding
+939,3393,46,63,44,b_ghajar,barony,b_ghajar,c_ghajar,castle_holding
+939,3394,63,155,229,b_muscat,barony,b_muscat,c_ghajar,city_holding
+941,3395,114,164,114,b_al_oyun,barony,b_al_oyun,c_the_eyes,castle_holding
+941,3396,166,171,108,b_mabb,barony,b_mabb,c_the_eyes,castle_holding
+942,3397,130,18,77,b_al_azra,barony,b_al_azra,c_al_azra,castle_holding
+942,3398,164,47,231,b_khanala,barony,b_khanala,c_al_azra,city_holding
+943,3399,239,84,49,b_al_harir,barony,b_al_harir,c_al_harir,castle_holding
+943,3400,248,151,254,b_sedfan,barony,b_sedfan,c_al_harir,city_holding
+944,3401,68,30,52,b_ghadal,barony,b_ghadal,c_the_wizards_reach,castle_holding
+944,3402,232,106,115,b_kaha,barony,b_kaha,c_the_wizards_reach,city_holding
+1218,3403,195,88,203,b_nemoree_high,barony,b_nemoree_high,c_nemoree_isles,tribal_holding
+1124,3404,129,28,102,b_far_nemoree,barony,b_far_nemoree,c_far_nemoree,castle_holding
+934,3405,98,227,194,b_al_tir,barony,b_al_tir,c_the_bird,castle_holding
+934,3406,36,74,62,b_quyah,barony,b_quyah,c_the_bird,city_holding
+1351,3407,221,218,135,b_lahib,barony,b_lahib,c_lahib_island,castle_holding
+935,3408,23,118,8,b_al_raqsa,barony,b_al_raqsa,c_the_dancer,castle_holding
+935,3409,58,60,63,b_kerkejez,barony,b_kerkejez,c_the_dancer,city_holding
+1339,3410,32,85,143,b_al_qalat,barony,b_al_qalat,c_the_fortress,castle_holding
+1339,3411,28,70,144,b_rouinet,barony,b_rouinet,c_the_fortress,city_holding
+1538,3412,90,233,201,b_al_fujinat,barony,b_al_fujinat,c_dahab_island,tribal_holding
+936,3413,46,7,157,b_jarazah,barony,b_jarazah,c_the_dune,city_holding
+938,3414,122,139,139,b_ravenwing,barony,b_ravenwing,c_the_camels_hump,castle_holding
+938,3415,74,71,70,b_daramabar,barony,b_daramabar,c_the_camels_hump,city_holding
+937,3416,161,6,247,b_muzefroun,barony,b_muzefroun,c_the_chador,castle_holding
+937,3417,224,44,76,b_as_saniyah,barony,b_as_saniyah,c_the_chador,city_holding
+2122,3418,154,31,226,b_sembabule,barony,b_sembabule,c_sembabule,castle_holding
+2122,3419,183,34,176,b_karuyaga,barony,b_karuyaga,c_sembabule,church_holding
+2121,3420,208,14,28,b_zeibiley,barony,b_zeibiley,c_zeibiley,castle_holding
+2121,3421,155,1,195,b_cyanbungo,barony,b_cyanbungo,c_zeibiley,city_holding
+2121,3422,32,171,152,b_byri,barony,b_byri,c_zeibiley,church_holding
+2120,3423,28,43,100,b_lugabi,barony,b_lugabi,c_lugabi,castle_holding
+2120,3424,48,29,118,b_nyachedo,barony,b_nyachedo,c_lugabi,city_holding
+2120,3425,118,17,238,b_mabansenyi,barony,b_mabansenyi,c_lugabi,church_holding
+2389,3426,97,238,181,b_giteyosha,barony,b_giteyosha,c_giteyosha,castle_holding
+2389,3427,141,176,138,b_godaayacado,barony,b_godaayacado,c_giteyosha,city_holding
+2389,3428,79,19,206,b_kibongari,barony,b_kibongari,c_giteyosha,church_holding
+2119,3429,190,39,94,b_kiasia,barony,b_kiasia,c_kiasia,castle_holding
+2119,3430,249,191,36,b_maligi,barony,b_maligi,c_kiasia,city_holding
+2119,3431,13,77,51,b_gisetara,barony,b_gisetara,c_kiasia,church_holding
+2118,3432,45,135,165,b_babado,barony,b_babado,c_babado,castle_holding
+2118,3433,169,220,119,b_lino,barony,b_lino,c_babado,city_holding
+2118,3434,182,84,190,b_nyaroto,barony,b_nyaroto,c_babado,church_holding
+2117,3435,132,66,66,b_mekebat,barony,b_mekebat,c_mekebat,castle_holding
+2117,3436,119,51,3,b_indole,barony,b_indole,c_mekebat,church_holding
+2117,3437,173,98,44,b_kinana,barony,b_kinana,c_mekebat,city_holding
+2372,3438,114,53,198,b_morgala,barony,b_morgala,c_ndoto,tribal_holding
+2373,3439,142,56,80,b_chalasam,barony,b_chalasam,c_nyangumi,castle_holding
+2369,3440,206,196,230,b_kupote,barony,b_kupote,c_kupoteza,tribal_holding
+2370,3441,202,60,229,b_emu,barony,b_emu,c_damu,tribal_holding
+2371,3442,186,38,174,b_morgu,barony,b_morgu,c_mnyama,tribal_holding
+2368,3443,219,200,51,b_kufa,barony,b_kufa,c_amekufa,castle_holding
+2368,3444,147,124,46,b_amekufa,barony,b_amekufa,c_amekufa,city_holding
+2368,3445,198,3,148,b_mukafa,barony,b_mukafa,c_amekufa,church_holding
+2366,3446,81,195,123,b_kavu,barony,b_kavu,c_ardhi_kavu,city_holding
+2366,3447,57,147,82,b_luvu,barony,b_luvu,c_ardhi_kavu,castle_holding
+2367,3448,227,17,37,b_shasira,barony,b_shasira,c_hasira,castle_holding
+2367,3449,196,227,167,b_kashira,barony,b_kashira,c_hasira,city_holding
+2367,3450,95,124,99,b_loshina,barony,b_loshina,c_hasira,church_holding
+2116,3451,213,59,135,b_belhancol,barony,b_belhancol,c_belhancol,castle_holding
+2116,3452,88,64,228,b_morosi,barony,b_morosi,c_belhancol,city_holding
+2116,3453,189,113,106,b_mtwabako,barony,b_mtwabako,c_belhancol,church_holding
+2390,3454,150,44,204,b_moraan,barony,b_moraan,c_moraan,castle_holding
+2390,3455,55,147,47,b_rini,barony,b_rini,c_moraan,city_holding
+2390,3456,224,89,219,b_babondo,barony,b_babondo,c_moraan,church_holding
+1624,3457,19,217,223,b_wanrifa,barony,b_wanrifa,c_wahasha,tribal_holding
+1622,3458,0,228,167,b_marmadani,barony,b_marmadani,c_almawt,tribal_holding
+1623,3459,64,186,134,b_farahah,barony,b_farahah,c_sharira,tribal_holding
+1546,3460,52,40,228,b_akota,barony,b_akota,c_medina_akota,castle_holding
+1546,3461,176,159,177,b_yawoon,barony,b_yawoon,c_medina_akota,city_holding
+1546,3462,154,78,54,b_regdaruk,barony,b_regdaruk,c_medina_akota,church_holding
+1547,3463,209,190,27,b_fida,barony,b_fida,c_fida,tribal_holding
+1544,3464,19,141,55,b_sabrasha,barony,b_sabrasha,c_sabrasha,tribal_holding
+1548,3465,122,133,9,b_sumedhimiya,barony,b_sumedhimiya,c_marching_camels_road,tribal_holding
+1543,3466,44,61,69,b_naqayna,barony,b_naqayna,c_naqayna,tribal_holding
+1542,3467,61,114,55,b_teladem,barony,b_teladem,c_teladem,tribal_holding
+1528,3468,106,60,50,b_medina_al_afyal,barony,b_medina_al_afyal,c_medina_al_afyal,castle_holding
+1528,3469,94,54,83,b_gimba,barony,b_gimba,c_medina_al_afyal,city_holding
+1528,3470,152,114,22,b_kayunhunga,barony,b_kayunhunga,c_medina_al_afyal,church_holding
+1527,3471,234,24,46,b_kasal,barony,b_kasal,c_kasal,castle_holding
+1527,3472,147,100,69,b_lyareka,barony,b_lyareka,c_kasal,church_holding
+1521,3473,95,12,115,b_al_kurtum,barony,b_al_kurtum,c_al_kurtum,castle_holding
+1522,3474,217,181,55,b_bab_al_gaba,barony,b_bab_al_gaba,c_bab_al_gaba,castle_holding
+1522,3475,111,157,120,b_gadin,barony,b_gadin,c_bab_al_gaba,city_holding
+1525,3476,249,98,209,b_al_asirr,barony,b_al_asirr,c_al_asirr,castle_holding
+1525,3477,140,180,54,b_bashera,barony,b_bashera,c_al_asirr,city_holding
+1525,3478,93,35,123,b_taxal,barony,b_taxal,c_al_asirr,church_holding
+1523,3479,226,89,61,b_the_calves,barony,b_the_calves,c_the_calves,castle_holding
+1524,3480,244,162,95,b_nahr_al_fil,barony,b_nahr_al_fil,c_nahr_al_fil,castle_holding
+1524,3481,150,121,75,b_bahandri,barony,b_bahandri,c_nahr_al_fil,city_holding
+1526,3482,203,159,91,b_horn_of_afyal,barony,b_horn_of_afyal,c_horn_of_afyal,castle_holding
+1526,3483,33,203,123,b_wazikkar,barony,b_wazikkar,c_horn_of_afyal,city_holding
+1598,3484,170,114,166,b_gana,barony,b_gana,c_gana,castle_holding
+1598,3485,60,184,137,b_kache,barony,b_kache,c_gana,city_holding
+1598,3486,205,232,89,b_wad_menar,barony,b_wad_menar,c_gana,church_holding
+1597,3487,240,122,250,b_krak_al_shidda,barony,b_krak_al_shidda,c_krak_al_shidda,tribal_holding
+1599,3488,149,213,166,b_taam,barony,b_taam,c_taam,tribal_holding
+1592,3489,79,1,251,b_sikak,barony,b_sikak,c_sikak,castle_holding
+1592,3490,199,121,107,b_sahazz,barony,b_sahazz,c_sikak,city_holding
+1592,3491,139,119,157,b_al_tudah,barony,b_al_tudah,c_sikak,church_holding
+1588,3492,18,0,28,b_turab,barony,b_turab,c_turab,castle_holding
+1588,3493,208,127,240,b_el_boudouaou,barony,b_el_boudouaou,c_turab,church_holding
+1588,3494,250,177,208,b_sralanca,barony,b_sralanca,c_turab,church_holding
+1588,3495,10,230,121,b_al_manurah,barony,b_al_manurah,c_turab,church_holding
+1593,3496,51,107,35,b_samak,barony,b_samak,c_maribar_island,castle_holding
+1594,3497,186,128,228,b_jumlat,barony,b_jumlat,c_jumlat,castle_holding
+1594,3498,169,1,41,b_zaralfa,barony,b_zaralfa,c_jumlat,church_holding
+1594,3499,182,35,224,b_dibba_qorewah,barony,b_dibba_qorewah,c_jumlat,church_holding
+1595,3500,3,228,226,b_safaq,barony,b_safaq,c_safaq,castle_holding
+1595,3501,214,253,66,b_rawdat_azizair,barony,b_rawdat_azizair,c_safaq,city_holding
+1596,3502,236,46,57,b_durrar,barony,b_durrar,c_pearl_banks,castle_holding
+1605,3503,230,208,165,b_ajayib,barony,b_ajayib,c_ajayib,castle_holding
+1605,3504,172,159,61,b_sadabulus,barony,b_sadabulus,c_ajayib,city_holding
+1605,3505,0,216,191,b_buni,barony,b_buni,c_ajayib,church_holding
+1602,3506,86,13,189,b_araneh,barony,b_araneh,c_araneh,castle_holding
+1602,3507,24,7,195,b_sabakan,barony,b_sabakan,c_araneh,church_holding
+1604,3508,155,154,123,b_intibah,barony,b_intibah,c_intibah,castle_holding
+1604,3509,177,227,198,b_noubin,barony,b_noubin,c_intibah,city_holding
+1603,3510,42,118,192,b_al_mahabanah,barony,b_al_mahabanah,c_al_mahabanah,tribal_holding
+1600,3511,17,20,142,b_msalin,barony,b_msalin,c_msalin,castle_holding
+1600,3512,252,2,32,b_ifbat,barony,b_ifbat,c_msalin,city_holding
+1606,3513,152,114,116,b_regdasaid,barony,b_regdasaid,c_regdasaid,tribal_holding
+1609,3514,252,51,235,b_ibreb,barony,b_ibreb,c_ibreb,castle_holding
+1589,3515,64,89,61,b_zaym,barony,b_zaym,c_zaym,tribal_holding
+1589,3516,147,148,57,b_khaldun,barony,b_khaldun,c_zaym,church_holding
+1590,3517,245,9,251,b_hakim,barony,b_hakim,c_hakim,tribal_holding
+1601,3518,98,237,229,b_murr,barony,b_murr,c_murr,tribal_holding
+1496,3519,180,98,30,b_rogosto,barony,b_rogosto,c_rogosto,castle_holding
+1496,3520,34,175,44,b_hadirma,barony,b_hadirma,c_rogosto,city_holding
+1496,3521,249,19,175,b_taleik,barony,b_taleik,c_rogosto,church_holding
+1492,3522,143,98,162,b_yinazzil,barony,b_yinazzil,c_yinazzil,castle_holding
+1492,3523,200,68,165,b_hasdames,barony,b_hasdames,c_yinazzil,city_holding
+1492,3524,229,176,231,b_ar_rahiriyah,barony,b_ar_rahiriyah,c_yinazzil,church_holding
+1497,3525,252,208,115,b_mafrad,barony,b_mafrad,c_mafrad,castle_holding
+1497,3526,68,165,147,b_hutan,barony,b_hutan,c_mafrad,city_holding
+1497,3527,130,134,178,b_anaah,barony,b_anaah,c_mafrad,church_holding
+1495,3528,39,248,193,b_sagat,barony,b_sagat,c_dawihi_island,tribal_holding
+1498,3529,93,215,187,b_krak_al_uruj,barony,b_krak_al_uruj,c_krak_al_uruj,castle_holding
+1498,3530,52,159,53,b_sahala,barony,b_sahala,c_krak_al_uruj,city_holding
+1499,3531,255,63,173,b_ankatatra,barony,b_ankatatra,c_ankatatra,tribal_holding
+1500,3532,150,35,227,b_mahazaka,barony,b_mahazaka,c_mahazaka,tribal_holding
+1503,3533,121,47,3,b_tayaraan,barony,b_tayaraan,c_tayaraan,castle_holding
+1503,3534,72,22,230,b_momayo,barony,b_momayo,c_tayaraan,city_holding
+1503,3535,185,199,8,b_senza,barony,b_senza,c_tayaraan,church_holding
+1501,3536,1,172,126,b_kitbezi,barony,b_kitbezi,c_kitbezi,tribal_holding
+1502,3537,234,27,192,b_kapuli,barony,b_kapuli,c_kapuli,tribal_holding
+1494,3538,30,249,67,b_kadarasto,barony,b_kadarasto,c_kadarasto,castle_holding
+1494,3539,37,149,116,b_milaydah,barony,b_milaydah,c_kadarasto,city_holding
+1494,3540,240,134,13,b_taqqa,barony,b_taqqa,c_kadarasto,church_holding
+1494,3541,66,115,68,b_salname,barony,b_salname,c_kadarasto,church_holding
+2172,3542,240,216,240,b_sendalam,barony,b_sendalam,c_sendalam,castle_holding
+2172,3543,69,239,232,b_metawet,barony,b_metawet,c_sendalam,city_holding
+1493,3544,50,196,215,b_krak_al_sajjaan,barony,b_krak_al_sajjaan,c_krak_al_sajjaan,castle_holding
+1493,3545,12,85,103,b_qudsamanah,barony,b_qudsamanah,c_krak_al_sajjaan,city_holding
+1493,3546,72,71,46,b_touinana,barony,b_touinana,c_krak_al_sajjaan,church_holding
+1491,3547,9,204,82,b_qudalla,barony,b_qudalla,c_qudalla,castle_holding
+1491,3548,8,100,126,b_wad_bangola,barony,b_wad_bangola,c_qudalla,city_holding
+1488,3549,44,172,123,b_dihliz,barony,b_dihliz,c_dihliz,castle_holding
+1488,3550,38,122,14,b_tescahaqd,barony,b_tescahaqd,c_dihliz,city_holding
+1488,3551,48,91,190,b_jura,barony,b_jura,c_dihliz,church_holding
+2173,3552,170,133,28,b_sorib,barony,b_sorib,c_sorib,tribal_holding
+1487,3553,112,28,209,b_bisatare,barony,b_bisatare,c_bisatare,tribal_holding
+1487,3554,118,131,46,b_byoranga,barony,b_byoranga,c_bisatare,church_holding
+1489,3555,95,193,49,b_sidi,barony,b_sidi,c_sidi_island,castle_holding
+1490,3556,85,136,126,b_elne,barony,b_elne,c_elne,castle_holding
+1486,3557,191,156,62,b_ysawis,barony,b_ysawis,c_ysawis,castle_holding
+1486,3558,54,193,219,b_areef,barony,b_areef,c_ysawis,city_holding
+1486,3559,171,244,55,b_qurirah,barony,b_qurirah,c_ysawis,church_holding
+1485,3560,146,54,247,b_qosodera,barony,b_qosodera,c_qosodera,tribal_holding
+2175,3561,210,17,249,b_ragado,barony,b_ragado,c_ragado,tribal_holding
+1613,3562,70,67,176,b_al_ralilah,barony,b_al_ralilah,c_naqq_and_qutil,tribal_holding
+1615,3563,147,118,48,b_al_bariya,barony,b_al_bariya,c_eayan_aljunun,tribal_holding
+1614,3564,193,182,118,b_al_dawhawa,barony,b_al_dawhawa,c_thueban,tribal_holding
+2169,3565,77,227,162,b_saasakhoura,barony,b_saasakhoura,c_dirs,tribal_holding
+1611,3566,92,25,148,b_tall_fallunawa,barony,b_tall_fallunawa,c_anklis_and_qusur,tribal_holding
+1612,3567,234,152,83,b_al_hamim,barony,b_al_hamim,c_manhus_and_saliam,tribal_holding
+1610,3568,150,165,171,b_al_sisarran,barony,b_al_sisarran,c_dabab,tribal_holding
+2166,3569,9,252,77,b_qudana,barony,b_qudana,c_al_zabdiyat,castle_holding
+2167,3570,141,222,199,b_bandar_al_saadat,barony,b_bandar_al_saadat,c_masud_jazayir,castle_holding
+1607,3571,6,132,0,b_bidbooth,barony,b_bidbooth,c_al_tarik_islands,tribal_holding
+2374,3572,182,29,223,b_mahaireb,barony,b_mahaireb,c_sayf,tribal_holding
+1608,3573,77,138,127,b_kharaifat,barony,b_kharaifat,c_tarikat_island,tribal_holding
+2168,3574,126,250,147,b_suralah,barony,b_suralah,c_jazayir_al_alfar,tribal_holding
+1531,3575,4,154,101,b_uruk,barony,b_uruk,c_uruk,tribal_holding
+1531,3576,8,44,141,b_jemdet,barony,b_jemdet,c_uruk,city_holding
+1531,3577,180,18,127,b_warka,barony,b_warka,c_uruk,church_holding
+1532,3578,245,181,36,b_misbahd,barony,b_misbahd,c_misbahd,castle_holding
+1532,3579,105,189,97,b_lakar,barony,b_lakar,c_misbahd,city_holding
+1532,3580,111,185,221,b_adaba,barony,b_adaba,c_misbahd,church_holding
+1530,3581,190,122,138,b_jinutt,barony,b_jinutt,c_jinutt,tribal_holding
+1530,3582,158,107,133,b_sarhak,barony,b_sarhak,c_jinutt,city_holding
+1530,3583,2,255,160,b_aprech,barony,b_aprech,c_jinutt,church_holding
+1533,3584,117,99,78,b_al_maralem,barony,b_al_maralem,c_rubbans_tears,tribal_holding
+1529,3585,122,112,63,b_kilad,barony,b_kilad,c_mergu,tribal_holding
+1618,3586,68,161,36,b_jebafi,barony,b_jebafi,c_jezarh_jadew,tribal_holding
+1621,3587,112,89,178,b_tall_kuthah,barony,b_tall_kuthah,c_bender_adewah,tribal_holding
+1619,3588,52,64,222,b_al_qusanawat,barony,b_al_qusanawat,c_jezarh_shemshar,tribal_holding
+1620,3589,135,38,82,b_el_gamahimiya,barony,b_el_gamahimiya,c_bender_berdh,tribal_holding
+2165,3590,72,78,184,b_bidburaq,barony,b_bidburaq,c_leneta,tribal_holding
+1534,3591,9,138,172,b_dawarout,barony,b_dawarout,c_jezarh_mar,tribal_holding
+2163,3592,2,218,189,b_madirah,barony,b_madirah,c_mergu_saah,tribal_holding
+2162,3593,85,145,24,b_amudani,barony,b_amudani,c_jezarh_mah_alewd,tribal_holding
+1535,3594,18,42,176,b_al_salakamah,barony,b_al_salakamah,c_serzeman_bamar,tribal_holding
+2164,3595,254,37,57,b_karza,barony,b_karza,c_jezarh_restakhaz,tribal_holding
+2493,3596,222,251,102,b_quellarzorl,barony,b_quellarzorl,c_menzoberranzan,castle_holding
+2503,3597,81,211,40,b_ched_nasad,barony,b_ched_nasad,c_ched_nasad,castle_holding
+2494,3598,68,98,153,b_the_mantle,barony,b_the_mantle,c_bauthwaf,castle_holding
+306,3599,152,51,148,b_glaurimm_keep,barony,b_glaurimm_keep,c_mt_hotenow,castle_holding
+306,3600,53,1,52,b_gauntlgrym,barony,b_gauntlgrym,c_mt_hotenow,castle_holding
+2502,3601,152,115,145,b_gracklstugh,barony,b_gracklstugh,c_gracklstugh,castle_holding
+2502,3602,242,80,103,b_northfurrow,barony,b_northfurrow,c_gracklstugh,city_holding
+2443,3603,241,30,231,b_eryndlyn,barony,b_eryndlyn,c_eryndlyn,castle_holding
+2443,3604,22,117,29,b_five_pillars,barony,b_five_pillars,c_eryndlyn,city_holding
+2445,3605,21,161,106,b_kanaglym,barony,b_kanaglym,c_kanaglym,castle_holding
+2445,3606,94,228,42,b_nepenthe_basin,barony,b_nepenthe_basin,c_kanaglym,city_holding
+2445,3607,50,111,65,b_hunnabar,barony,b_hunnabar,c_kanaglym,church_holding
+2241,3608,244,126,73,b_dolblunde,barony,b_dolblunde,c_dolblunde,tribal_holding
+2441,3609,95,209,82,b_adamantine_palace,barony,b_adamantine_palace,c_splendarrmornn,castle_holding
+2441,3610,163,104,188,b_splendarrmornn,barony,b_splendarrmornn,c_splendarrmornn,castle_holding
+2441,3611,72,165,107,b_westdelve,barony,b_westdelve,c_splendarrmornn,church_holding
+1408,3612,108,16,193,b_deadstone_cleft,barony,b_deadstone_cleft,c_loagrann,tribal_holding
+1408,3613,17,4,60,b_orlbar,barony,b_orlbar,c_loagrann,city_holding
+2474,3614,140,166,184,b_east_keep,barony,b_east_keep,c_east_keep,castle_holding
+2474,3615,81,132,76,b_wyrmstrike_mines,barony,b_wyrmstrike_mines,c_east_keep,city_holding
+2474,3616,176,54,122,b_mithril_pick_hall,barony,b_mithril_pick_hall,c_east_keep,church_holding
+2477,3617,193,141,37,b_north_peak,barony,b_north_peak,c_north_peak,castle_holding
+2477,3618,91,61,101,b_fellridge,barony,b_fellridge,c_north_peak,city_holding
+2477,3619,69,161,153,b_vigilant_towers,barony,b_vigilant_towers,c_north_peak,church_holding
+1407,3620,216,234,52,b_obrynns_landing,barony,b_obrynns_landing,c_high_gap,castle_holding
+1407,3621,205,158,87,b_lothamar,barony,b_lothamar,c_high_gap,church_holding
+2442,3622,209,225,135,b_nether_keep,barony,b_nether_keep,c_nether_mountains,tribal_holding
+2442,3623,112,75,171,b_ammarindar,barony,b_ammarindar,c_nether_mountains,city_holding
+2446,3624,203,8,187,b_citadel_yaunoroth,barony,b_citadel_yaunoroth,c_yaunoroth,tribal_holding
+2446,3625,42,97,227,b_yaunoroth,barony,b_yaunoroth,c_yaunoroth,city_holding
+2446,3626,154,10,181,b_helmmas_hall,barony,b_helmmas_hall,c_yaunoroth,church_holding
+1449,3627,185,178,203,b_dekanter,barony,b_dekanter,c_dekanter,tribal_holding
+1449,3628,160,196,168,b_dethdor,barony,b_dethdor,c_dekanter,city_holding
+1150,3629,167,151,147,b_rrinlurgh,barony,b_rrinlurgh,c_naurogloth,tribal_holding
+1150,3630,130,83,167,b_sstharalam,barony,b_sstharalam,c_naurogloth,city_holding
+1150,3631,209,227,179,b_sstissamuun,barony,b_sstissamuun,c_naurogloth,church_holding
+1340,3632,79,111,233,b_ironfang_deep,barony,b_ironfang_deep,c_ironfang_deep,castle_holding
+1340,3633,129,40,73,b_thogh,barony,b_thogh,c_ironfang_deep,city_holding
+1340,3634,144,245,52,b_zigila,barony,b_zigila,c_ironfang_deep,church_holding
+1340,3635,170,9,232,b_dhoggari,barony,b_dhoggari,c_ironfang_deep,castle_holding
+1342,3636,75,248,47,b_bronzehelms,barony,b_bronzehelms,c_bronzehelms,castle_holding
+1342,3637,208,132,213,b_bigwahr,barony,b_bigwahr,c_bronzehelms,city_holding
+1341,3638,218,163,168,b_drivendelve,barony,b_drivendelve,c_old_drivendelve,tribal_holding
+1341,3639,136,146,198,b_khagkohldur,barony,b_khagkohldur,c_old_drivendelve,city_holding
+2506,3640,177,58,187,b_dunspeirrin,barony,b_dunspeirrin,c_dunspeirrin,castle_holding
+2505,3641,137,223,55,b_drik_hargunen,barony,b_drik_hargunen,c_drik_hargunen,castle_holding
+2505,3642,147,54,182,b_ferugehk,barony,b_ferugehk,c_drik_hargunen,city_holding
+2505,3643,12,153,209,b_orefall_cavern,barony,b_orefall_cavern,c_drik_hargunen,church_holding
+2504,3644,98,96,11,b_oryndoll,barony,b_oryndoll,c_oryndoll,castle_holding
+2504,3645,180,250,221,b_thrall_caverns,barony,b_thrall_caverns,c_oryndoll,church_holding
+2560,3646,238,8,244,b_undraeth,barony,b_undraeth,c_undraeth,castle_holding
+2523,3647,50,199,150,b_fireforges,barony,b_fireforges,c_fireforges,castle_holding
+2523,3648,188,199,91,b_chund_peak,barony,b_chund_peak,c_fireforges,city_holding
+2522,3649,89,53,35,b_khaelud,barony,b_khaelud,c_khaelud,castle_holding
+2522,3650,208,21,51,b_thordenak,barony,b_thordenak,c_khaelud,city_holding
+2549,3651,36,11,83,b_traaskl_thorog,barony,b_traaskl_thorog,c_traaskl_thorog,tribal_holding
+2558,3652,55,166,49,b_planners_citadel,barony,b_planners_citadel,c_deep_imaskar,castle_holding
+2558,3653,34,144,222,b_deep_imaskar,barony,b_deep_imaskar,c_deep_imaskar,city_holding
+2558,3654,247,237,77,b_purple_library,barony,b_purple_library,c_deep_imaskar,church_holding
+2518,3655,246,222,208,b_qarlondrar,barony,b_qarlondrar,c_qarlondrar,castle_holding
+2518,3656,210,145,244,b_cave_of_sighs,barony,b_cave_of_sighs,c_qarlondrar,city_holding
+2518,3657,18,84,46,b_gorfaern,barony,b_gorfaern,c_qarlondrar,church_holding
+851,3658,162,44,62,b_siremun,barony,b_siremun,c_firepeaks,castle_holding
+851,3659,179,76,72,b_natoigo,barony,b_natoigo,c_firepeaks,city_holding
+851,3660,129,254,236,b_diarintarj,barony,b_diarintarj,c_firepeaks,church_holding
+2521,3661,206,247,2,b_raskuldin,barony,b_raskuldin,c_raskuldin,castle_holding
+2521,3662,88,60,35,b_gorduun,barony,b_gorduun,c_raskuldin,city_holding
+2521,3663,150,82,136,b_skull_peak,barony,b_skull_peak,c_raskuldin,church_holding
+2525,3664,167,169,11,b_utuerth,barony,b_utuerth,c_utuerth,castle_holding
+2525,3665,221,43,65,b_white_sand,barony,b_white_sand,c_utuerth,city_holding
+2559,3666,177,85,124,b_makthar,barony,b_makthar,c_ikemmu,castle_holding
+2559,3667,177,148,147,b_pyton,barony,b_pyton,c_ikemmu,city_holding
+2520,3668,239,70,6,b_ahruukar,barony,b_ahruukar,c_ahruukar,castle_holding
+2520,3669,107,107,227,b_arau,barony,b_arau,c_ahruukar,city_holding
+2520,3670,74,166,190,b_vardetor,barony,b_vardetor,c_ahruukar,church_holding
+847,3671,133,131,251,b_songfarla,barony,b_songfarla,c_songfarla,castle_holding
+847,3672,167,17,14,b_gilded_nugget,barony,b_gilded_nugget,c_songfarla,city_holding
+847,3673,181,223,94,b_covarrkar_cave,barony,b_covarrkar_cave,c_songfarla,church_holding
+1774,3674,217,188,210,b_thelaena,barony,b_thelaena,c_oyargh,tribal_holding
+2519,3675,7,223,212,b_harheldur,barony,b_harheldur,c_harheldur,castle_holding
+2519,3676,59,96,213,b_mordinsonn,barony,b_mordinsonn,c_harheldur,city_holding
+2519,3677,129,123,48,b_firedelves,barony,b_firedelves,c_harheldur,church_holding
+2570,3678,47,190,85,b_thazar_pass,barony,b_thazar_pass,c_thazar_pass,castle_holding
+2450,3679,89,35,50,b_castle_maerimydra,barony,b_castle_maerimydra,c_maerimydra,castle_holding
+2451,3680,69,248,60,b_castle_zanhoriloch,barony,b_castle_zanhoriloch,c_zanhoriloch,castle_holding
+2451,3681,71,20,153,b_mhorilot,barony,b_mhorilot,c_zanhoriloch,church_holding
+2628,3682,159,183,198,b_szith_morcane,barony,b_szith_morcane,c_szith_morcane,church_holding
+2557,3683,101,138,214,b_house_of_lolth,barony,b_house_of_lolth,c_sschindylryn,church_holding
+2463,3684,238,164,205,b_thunderholme,barony,b_thunderholme,c_thunderholme,castle_holding
+2463,3685,61,167,1,b_high_crimmond,barony,b_high_crimmond,c_thunderholme,city_holding
+2415,3686,18,32,228,b_tethyamar,barony,b_tethyamar,c_tethyamar,castle_holding
+2415,3687,215,156,54,b_ironthrone,barony,b_ironthrone,c_tethyamar,city_holding
+2415,3688,58,146,251,b_helgrinns_arch,barony,b_helgrinns_arch,c_tethyamar,castle_holding
+2469,3689,47,255,229,b_aefarn_citadel,barony,b_aefarn_citadel,c_turnback_mountain,church_holding
+2469,3690,16,72,166,b_aefarn,barony,b_aefarn,c_turnback_mountain,castle_holding
+2469,3691,107,214,166,b_house_of_gold,barony,b_house_of_gold,c_turnback_mountain,city_holding
+356,3692,33,157,88,b_ondathel,barony,b_ondathel,c_ondathel,tribal_holding
+356,3693,77,22,64,b_esham,barony,b_esham,c_ondathel,city_holding
+356,3694,169,67,2,b_brightfalls,barony,b_brightfalls,c_ondathel,church_holding
+353,3695,32,176,199,b_forharn,barony,b_forharn,c_forharn,castle_holding
+353,3696,248,142,199,b_kossuths_ire,barony,b_kossuths_ire,c_forharn,church_holding
+353,3697,62,153,219,b_geshun,barony,b_geshun,c_forharn,city_holding
+2589,3698,181,27,79,b_smokespire,barony,b_smokespire,c_smokespire,tribal_holding
+2594,3699,233,83,242,b_iltkazar,barony,b_iltkazar,c_iltkazar,castle_holding
+2594,3700,202,159,128,b_mith_baraks_hall,barony,b_mith_baraks_hall,c_iltkazar,city_holding
+2440,3701,126,62,189,b_sarengard_keep,barony,b_sarengard_keep,c_mount_sarengard,castle_holding
+2440,3702,172,132,193,b_vault_of_cloaked_midnight,barony,b_vault_of_cloaked_midnight,c_mount_sarengard,church_holding
+2652,3703,49,193,51,b_brightaxe_hall,barony,b_brightaxe_hall,c_brightaxe_hall,castle_holding
+2651,3704,76,219,186,b_guallidurth,barony,b_guallidurth,c_guallidurth,castle_holding
+2651,3705,157,155,110,b_rringlor_north,barony,b_rringlor_north,c_guallidurth,city_holding
+2694,3706,26,81,222,b_the_mad_wizards_lair,barony,b_the_mad_wizards_lair,c_undermountain,castle_holding
+2697,3707,171,12,187,b_lair_of_the_eye,barony,b_lair_of_the_eye,c_lair_of_the_eye,city_holding
+2696,3708,210,155,49,b_the_port,barony,b_the_port,c_skullport,city_holding
+2695,3709,176,29,255,b_the_promenade,barony,b_the_promenade,c_sargauth,church_holding
+222,3710,131,206,143,Grampalt Highlands,impassable,,,
+1586,3711,144,5,42,Orsraun Mountains,impassable,,,
+1791,3712,223,157,218,Coast of Moray,sea,,,
+1792,3713,194,213,228,Sea of Swords,sea,,,
+1793,3714,232,251,68,Trackless Sea,sea,,,
+1794,3715,157,200,255,Lantan Coast,sea,,,
+1795,3716,242,212,245,Lantan Coast,sea,,,
+1796,3717,119,187,206,Sea of Swords,sea,,,
+1797,3718,246,226,209,Middle Shining Sea,sea,,,
+1798,3719,143,180,182,Lapal Coast,sea,,,
+1799,3720,127,236,188,Lake of Steam,sea,,,
+1800,3721,185,191,213,Far Northern Sea of Swords,sea,,,
+1801,3722,143,164,161,Northern Sea of Swords,sea,,,
+1802,3723,188,200,225,Sea of Swords,sea,,,
+1803,3724,216,222,213,Western Frozenfar,sea,,,
+1804,3725,164,191,173,Eastern Frozenfar,sea,,,
+1805,3726,197,219,234,Middle Frozenfar,sea,,,
+1806,3727,146,182,200,Southern Frozenfar,sea,,,
+1807,3728,179,219,237,Korinn Archipelago,sea,,,
+1808,3729,128,173,225,Southern Sea of Swords,sea,,,
+1809,3730,200,170,197,Flamsterd Coast,sea,,,
+1810,3731,213,197,194,Sea of Moonshae,sea,,,
+1811,3732,161,237,197,Norland Coast,sea,,,
+1812,3733,225,216,234,Wave Rocks,sea,,,
+1813,3734,231,179,197,Snowdown Coast,sea,,,
+1814,3735,149,170,182,The Teeth,sea,,,
+1815,3736,197,185,161,Tashtan Coast,sea,,,
+1816,3737,237,213,188,Dolphingulph,sea,,,
+1817,3738,167,194,185,Calim Coast,sea,,,
+1818,3739,213,216,213,Eastern Calim Coast,sea,,,
+1819,3740,173,173,179,Lapal Coast,sea,,,
+1820,3741,197,191,228,The Singing Rocks,sea,,,
+1821,3742,164,222,185,Talagaths Gauntlet,sea,,,
+1822,3743,170,231,219,Eastern Lake of Steam,sea,,,
+1823,3744,234,231,170,Western Lake of Steam,sea,,,
+1824,3745,237,200,170,Nelanther Isles,sea,,,
+1825,3746,228,228,206,Firedrake Bay,sea,,,
+1826,3747,209,222,173,Western Shining Sea,sea,,,
+1827,3748,188,191,228,Chultan Coast,sea,,,
+1828,3749,206,209,191,Araksa,sea,,,
+1829,3750,206,252,206,Lantan Coast,sea,,,
+1830,3751,182,203,161,Outer Shining Sea,sea,,,
+1831,3752,194,228,200,Coast of Mists,sea,,,
+1832,3753,219,222,185,Wild Coast,sea,,,
+1833,3754,234,182,158,Thindol Coast,sea,,,
+1834,3755,234,228,200,Bay of Taertal,sea,,,
+1835,3756,167,197,234,Lake Halruaa,sea,,,
+1836,3757,240,216,219,Nimlith Coast,sea,,,
+1837,3758,209,209,191,Farmeadows Coast,sea,,,
+1838,3759,231,185,206,Evermeet Approach,sea,,,
+1839,3760,182,219,170,Taltempla Coast,sea,,,
+1840,3761,240,197,209,Beacon Rocks Passage,sea,,,
+1841,3762,161,231,182,Northern Nimbral Coast,sea,,,
+1842,3763,170,206,231,Southern Nimbral Coast,sea,,,
+1843,3764,219,206,228,Konigheim Coast,sea,,,
+1844,3765,170,228,209,Bay of Pirates,sea,,,
+1845,3766,206,167,222,Coast of Pearls,sea,,,
+1846,3767,188,219,194,Utter Eastern Coast,sea,,,
+1847,3768,188,194,255,Estagund Coast,sea,,,
+1848,3769,222,216,206,Bay of the Dancing Dolphins,sea,,,
+1849,3770,246,200,173,Inner Golden Water,sea,,,
+1850,3771,246,237,182,Outer Golden Water,sea,,,
+1851,3772,158,206,234,Luiren Coast,sea,,,
+1852,3773,170,182,170,Corsair Straits,sea,,,
+1853,3774,237,219,194,Trackless Sea,sea,,,
+1854,3775,237,115,176,River Mirar,river,,,
+1855,3776,158,228,246,Lower River Chionthar,river,,,
+1856,3777,182,155,167,River Chionthar,river,,,
+1857,3778,191,219,197,Eastern Segara Sea,sea,,,
+1858,3779,158,237,100,Esmel River,river,,,
+1859,3780,115,219,200,Lake Esmel,river,,,
+1860,3781,158,219,55,Lower Sulduskoon River,river,,,
+1861,3782,52,179,155,Sulduskoon River,river,,,
+1862,3783,246,167,131,Lower River Ith,river,,,
+1863,3784,134,228,58,River Ith,river,,,
+1864,3785,121,143,146,River Olung,river,,,
+1865,3786,182,206,203,Lake Luo,river,,,
+1866,3787,231,225,158,River Shaar,river,,,
+1867,3788,137,231,188,Lake Lhespen,river,,,
+1868,3789,219,179,103,Upper River Shaar,river,,,
+1869,3790,237,237,231,River Talar,river,,,
+1870,3791,18,170,207,Istishias Respite,sea,,,
+1871,3792,21,64,169,Sashela's Fountain,sea,,,
+1872,3793,213,225,219,River Delimbiyr,river,,,
+1873,3794,249,200,158,Lower River Dessarin,river,,,
+1874,3795,228,164,106,River Dessarin,river,,,
+1875,3796,209,209,231,Golden Coast,sea,,,
+1876,3797,137,216,216,Corsair Sea,sea,,,
+1877,3798,246,228,134,Haunted Coast,sea,,,
+1878,3799,185,222,200,Corsair Passage,sea,,,
+1879,3800,228,219,219,Middle Shining Sea,sea,,,
+1880,3801,176,200,206,Sea of Nemoree,sea,,,
+1881,3802,179,182,161,Lapalgulph,sea,,,
+1882,3803,203,222,176,River Panka,river,,,
+1883,3804,12,188,225,Lapal Sea,river,,,
+1884,3805,222,222,234,Lapal Flow,river,,,
+1885,3806,243,216,252,Reaching River,river,,,
+1886,3807,203,237,237,Upper River Chionthar,river,,,
+1887,3808,219,203,237,Amstel River,river,,,
+1888,3809,237,252,240,River Maeru,river,,,
+1889,3810,209,216,185,River Halar,river,,,
+1890,3811,228,206,231,River Aluar,river,,,
+1891,3812,55,124,91,Lake Maeru,river,,,
+1892,3813,219,243,249,Highridden River,river,,,
+1893,3814,209,191,12,River Agis,river,,,
+1894,3815,112,228,219,Bay of Chult,sea,,,
+1895,3816,200,182,134,Samarach Coast,sea,,,
+1896,3817,203,234,155,Zakharan Coast,sea,,,
+1897,3818,193,203,244,Bay of Bormul,sea,,,
+1898,3819,240,209,219,Nelanther Isles,sea,,,
+1899,3820,213,206,231,Xontuil Bay,sea,,,
+1900,3821,197,217,185,Rauvin River,river,,,
+1901,3822,29,14,100,Trollcrag Mountains,impassable,,,
+1902,3823,222,149,124,The Riftlake,lake,,,
+1903,3824,185,179,176,Icerim Lake,lake,,,
+1904,3825,128,131,131,Lake Thaylambar,impassable,,,
+1905,3826,43,191,246,Lake Woe,lake,,,
+1906,3827,143,155,149,Lake Tirulag,impassable,,,
+1907,3828,216,203,216,Lake Musker,lake,,,
+1908,3829,161,164,173,Lake Mereth,lake,,,
+1909,3830,91,109,112,Lake Muirenon,lake,,,
+1910,3831,213,219,228,Huta Lake,lake,,,
+1911,3832,85,73,79,Pelauvir Lake,lake,,,
+1912,3833,143,121,131,Ice Lakes,lake,,,
+1913,3834,109,61,70,Redwaters,lake,,,
+1914,3835,149,124,112,Lac Dinneshere,lake,,,
+1915,3836,39,55,52,Maer Dualdon,lake,,,
+1916,3837,27,76,67,Everlake,lake,,,
+1917,3838,85,118,152,Highstar Lake,lake,,,
+1918,3839,155,188,203,Lake Weng,lake,,,
+1919,3840,112,155,173,Lake of the Snake,lake,,,
+1920,3841,70,76,73,Redwater,lake,,,
+1921,3842,97,112,188,Lake Sember,lake,,,
+1922,3843,52,176,200,Pool of Yeven,lake,,,
+1923,3844,149,206,170,Lake Icemelt,lake,,,
+1924,3845,64,79,118,Impresk Lake,lake,,,
+1925,3846,24,39,164,Shalane Lake,lake,,,
+1926,3847,161,61,61,Bloodlake,lake,,,
+1927,3848,30,209,21,Evenstar Lake,lake,,,
+1928,3849,58,46,219,Beastburn Lake,lake,,,
+1929,3850,33,24,146,Nor Tso,lake,,,
+1930,3851,33,203,191,Nor Yudol,lake,,,
+1931,3852,15,36,149,Nor Zanskra,lake,,,
+1932,3853,209,200,55,Nor Takt,lake,,,
+1933,3854,58,131,55,Nor Subra,lake,,,
+1934,3855,109,206,161,Nor Gubol,lake,,,
+1935,3856,131,58,170,Lonely Lake,lake,,,
+1936,3857,222,176,73,Lake Ashane,lake,,,
+1937,3858,237,191,197,Lugotak Sea,lake,,,
+1938,3859,194,109,97,Umaylu Lake,lake,,,
+1939,3860,124,46,55,Igotak Sea,lake,,,
+1940,3861,234,216,176,Nakalpgotak Sea,lake,,,
+1941,3862,112,85,49,Lugalpgotak Sea,lake,,,
+1942,3863,170,167,152,Nukqup Lake,lake,,,
+1943,3864,97,55,36,Ahtahqugotak Sea,lake,,,
+1944,3865,228,134,124,Angsaas Lake,lake,,,
+1945,3866,185,100,36,Lake of Dreams,lake,,,
+1946,3867,246,79,185,Myrloch,lake,,,
+1947,3868,219,185,222,Lake Sunder,lake,,,
+1948,3869,149,85,146,Norfen Lake,lake,,,
+1949,3870,203,128,185,Vasty Drink,lake,,,
+1950,3871,164,234,200,Cherrapuni Nor,lake,,,
+1951,3872,88,203,82,Manasowar,lake,,,
+1952,3873,243,228,149,Norasil,lake,,,
+1953,3874,213,197,206,Akundi,lake,,,
+1954,3875,155,158,231,Dharbang,lake,,,
+1955,3876,243,170,185,The Lost King,lake,,,
+1956,3877,206,219,88,Hungste,lake,,,
+1957,3878,185,225,64,Lake of Palms,lake,,,
+1958,3879,128,252,188,Lake of Drifting Stars,lake,,,
+1959,3880,152,36,158,Taak Lake,lake,,,
+1960,3881,70,200,36,Akpahlurik Lake,lake,,,
+1961,3882,43,33,64,Risuak Lake,lake,,,
+1962,3883,30,85,30,Nyu Lake,lake,,,
+1963,3884,173,219,213,Llashloch,lake,,,
+1964,3885,216,21,179,Nad Ho Ting,lake,,,
+1965,3886,30,21,179,Nam Tso,lake,,,
+1966,3887,206,106,39,Lake Menuap,lake,,,
+1967,3888,197,161,252,Lake Serampa,lake,,,
+1968,3889,121,49,182,Lake Pasar,lake,,,
+1969,3890,234,225,200,Lake Panjang,lake,,,
+1970,3891,234,228,143,Lake Dingin,lake,,,
+1971,3892,43,58,228,Lake Halu,lake,,,
+1972,3893,67,240,216,Lake Murthil,impassable,,,
+1973,3894,121,52,182,Yeshelmaar Lake,impassable,,,
+1974,3895,213,106,209,Lake Flamm,impassable,,,
+1975,3896,161,231,140,Lake Aryana,lake,,,
+1976,3897,213,64,131,Nebulae Pool,lake,,,
+1977,3898,149,213,167,Clearflow River,river,,,
+1978,3899,246,176,185,River Murghol,river,,,
+1979,3900,191,225,206,Lake of Mists,river,,,
+1980,3901,179,209,225,Brightstar Lake,sea,,,
+1981,3902,191,219,206,Semphar Water,sea,,,
+1982,3903,128,231,246,Upper Rauthenflow River,river,,,
+1983,3904,206,155,188,Lower Rauthenflow River,river,,,
+1984,3905,234,240,112,Lower River Murghol,river,,,
+1985,3906,164,203,234,The Goldenflow,river,,,
+1986,3907,231,228,240,Sempharin,river,,,
+1987,3908,196,240,197,Aldani Basin,lake,,,
+1988,3909,114,216,244,Arch Basin,lake,,,
+1989,3910,41,100,203,Lake of the Ghuls,lake,,,
+1990,3911,2,176,38,Lake of the Winter Spirits,lake,,,
+1991,3912,98,176,195,Lake Oraundil,lake,,,
+1992,3913,62,161,250,Ulvarr Water,lake,,,
+1993,3914,226,207,170,Lake Miir,lake,,,
+1994,3915,51,154,206,Bloodmuck,lake,,,
+1995,3916,128,203,186,Lake Tabat,lake,,,
+1996,3917,61,46,236,Shadow Sea,lake,,,
+1997,3918,228,228,228,Icelace Lake,lake,,,
+1998,3919,202,172,202,Alamber Sea,sea,,,
+1999,3920,188,230,232,Eastern Moonsea,sea,,,
+2000,3921,222,216,228,Easting Reach,sea,,,
+2001,3922,137,164,167,Northern Alamber Sea,sea,,,
+2002,3923,179,206,200,Eastern Wizards Reach,sea,,,
+2003,3924,134,161,146,Bay of Chessenta,sea,,,
+2004,3925,200,213,213,Southern Alamber Sea,sea,,,
+2005,3926,185,194,255,Lake of Dragons,sea,,,
+2006,3927,134,146,200,Dragon Reach,sea,,,
+2007,3928,128,206,225,Inner Vilhon Reach,sea,,,
+2008,3929,70,155,209,Outer Vilhon Reach,sea,,,
+2009,3930,109,155,176,Chessentan Coast,sea,,,
+2010,3931,149,152,203,Sea of Dlurg,sea,,,
+2011,3932,88,191,209,Turmish Coast,sea,,,
+2012,3933,131,161,167,Starmantle Reach,sea,,,
+2013,3934,118,176,170,Thousand Swords,sea,,,
+2014,3935,118,200,182,Sea of Fallen Stars,sea,,,
+2015,3936,203,246,155,River Lis,sea,,,
+2016,3937,176,225,216,Western Moonsea,sea,,,
+2017,3938,246,140,18,Fire River,river,,,
+2018,3939,246,182,234,Traders Bay,river,,,
+2019,3940,170,231,203,River of Metals,river,,,
+2020,3941,112,106,134,Methmere,river,,,
+2021,3942,219,219,167,River of Swords,river,,,
+2022,3943,231,228,231,Azulduth,river,,,
+2023,3944,237,167,176,Adder River,river,,,
+2024,3945,228,219,194,River Akax,river,,,
+2025,3946,64,225,46,The Akanamere,river,,,
+2026,3947,222,213,234,The Nagaflow,river,,,
+2027,3948,39,112,231,Nagawater,river,,,
+2028,3949,237,179,197,River Umber,river,,,
+2029,3950,76,73,85,Lake Umber,river,,,
+2030,3951,176,185,188,Lower Wet River,river,,,
+2031,3952,225,237,225,Wet River,river,,,
+2032,3953,49,82,140,Lake of the Long Arm,river,,,
+2033,3954,213,213,179,Great Imphras River,river,,,
+2034,3955,237,188,237,Icelace River,river,,,
+2035,3956,194,231,176,River of Shadows,river,,,
+2036,3957,237,191,161,River Alambar,river,,,
+2037,3958,225,234,252,River Beaumaris,river,,,
+2038,3959,124,228,231,The Wyvernflow,river,,,
+2039,3960,185,219,237,Wyvernwater,river,,,
+2040,3961,219,225,167,River Arkhen,river,,,
+2041,3962,164,179,206,Selgaunt Bay,sea,,,
+2042,3963,204,252,138,The Neck,sea,,,
+2043,3964,163,225,184,Easting Reach,sea,,,
+2044,3965,85,224,198,Vilhon Reach,sea,,,
+2045,3966,143,206,225,Western Wizard's Reach,sea,,,
+2046,3967,169,199,241,Forgotten Shore,sea,,,
+2047,3968,49,223,157,River Xon,river,,,
+2048,3969,140,194,190,Trackless Sea,sea,,,
+2049,3970,14,111,141,Trackless Sea,sea,,,
+2050,3971,18,246,241,Western Trackless Sea,sea,,,
+2051,3972,49,135,150,Western Trackless Sea,sea,,,
+2052,3973,147,250,250,Western Trackless Sea,sea,,,
+2053,3974,156,245,204,Trackless Sea,sea,,,
+2054,3975,35,113,196,Western Trackless Sea,sea,,,
+2055,3976,2,172,204,Trackless Sea,sea,,,
+2056,3977,165,222,211,Dragon Sea,sea,,,
+2057,3978,70,137,210,Dragon Sea,sea,,,
+2058,3979,83,161,223,Dragon Sea,sea,,,
+2059,3980,162,222,205,Bay of Relmaur,sea,,,
+2060,3981,70,236,187,Sea of Caravans,sea,,,
+2061,3982,24,167,107,al-Tariq Channel,sea,,,
+2062,3983,60,51,215,Suq Bay,sea,,,
+2063,3984,17,60,220,Suq Bay,sea,,,
+2064,3985,26,94,176,Golden Gulf,sea,,,
+2065,3986,19,95,153,Golden Gulf,sea,,,
+2066,3987,4,126,228,Golden Gulf,sea,,,
+2067,3988,58,95,96,Pearl Banks,sea,,,
+2068,3989,97,186,242,Crowded Sea,sea,,,
+2069,3990,105,169,127,Pilgrims Gulf,sea,,,
+2070,3991,18,94,154,Crowded Sea,sea,,,
+2071,3992,12,226,213,Serpent Bay,sea,,,
+2072,3993,32,145,212,The Gateway,sea,,,
+2073,3994,25,179,213,Gulf of Kadar,sea,,,
+2074,3995,236,150,36,Upper River Delimbiyr,river,,,
+2075,3996,7,209,190,Crowded Sea,sea,,,
+2076,3997,224,234,224,Foreigners Sea,sea,,,
+2077,3998,6,233,196,Foreigners Sea,sea,,,
+2078,3999,119,203,229,Foreigners Sea,sea,,,
+2079,4000,47,148,248,Southern Segara Sea,sea,,,
+2080,4001,108,96,186,Crowded Sea,sea,,,
+2081,4002,25,155,152,Crimson Sea,sea,,,
+2082,4003,51,123,232,Devil Shark Coast,sea,,,
+2083,4004,134,170,177,Sea of Marids,sea,,,
+2084,4005,171,245,241,Luirenstrand,sea,,,
+2085,4006,26,54,168,Crowded Sea,sea,,,
+2086,4007,54,115,174,Crowded Sea,sea,,,
+2087,4008,59,136,150,Crowded Sea,sea,,,
+2088,4009,13,149,224,Crowded Sea,sea,,,
+2089,4010,205,197,228,Trackless Sea,sea,,,
+2090,4011,184,176,216,Surbrin River,river,,,
+2091,4012,61,213,225,Nogaro River,river,,,
+2092,4013,42,195,90,Nogaro River,river,,,
+2093,4014,192,212,124,Kadan River,river,,,
+2094,4015,67,216,152,al-Iltifat River,river,,,
+2095,4016,134,228,218,al-Iltifat River,river,,,
+2096,4017,75,150,238,River Tantulph,river,,,
+2097,4018,56,253,20,River Sundarra,river,,,
+2098,4019,108,246,121,Sword River,river,,,
+2099,4020,41,166,191,The Stormflow,river,,,
+2100,4021,41,189,62,Skelkor River,river,,,
+2101,4022,203,218,225,Crescent Lake,river,,,
+2102,4023,135,211,140,River Vypaeryn,river,,,
+2103,4024,102,157,215,River Esmur,river,,,
+2104,4025,251,238,59,Glaur River,river,,,
+2105,4026,240,191,126,Lake Glaur,river,,,
+2106,4027,48,185,238,Corsair's Doom,sea,,,
+2107,4028,81,246,243,Crowded Sea,sea,,,
+2108,4029,124,179,115,Eastern Segara Sea,sea,,,
+2109,4030,170,243,197,Western Segara Sea,sea,,,
+2110,4031,141,209,227,Sempar River,river,,,
+2111,4032,43,203,213,Nixin River,river,,,
+2112,4033,43,159,254,Merrow's Feast,sea,,,
+2113,4034,83,138,167,Pirate's Wreck,sea,,,
+2114,4035,105,159,192,Akotan Sea,sea,,,
+2115,4036,91,192,98,Great Sea,sea,,,
+2176,4037,49,84,221,High Desert,impassable,,,
+2177,4038,89,56,179,High Desert,impassable,,,
+2178,4039,31,32,192,Genies Anvil,impassable,,,
+2179,4040,64,72,27,Mamnu Island,impassable,,,
+2180,4041,49,1,173,al-Sartan,impassable,,,
+2181,4042,33,35,26,Harab,impassable,,,
+2182,4043,66,57,28,Bariya,impassable,,,
+2183,4044,37,41,103,al-Akara Mountains,impassable,,,
+2184,4045,80,22,38,Howling Mountains,impassable,,,
+2185,4046,96,37,125,The Elephants Spine,impassable,,,
+2186,4047,61,47,9,al-Sayaj Mountains,impassable,,,
+2187,4048,71,20,96,Ghost Mountains,impassable,,,
+2188,4049,32,55,109,al-Yabki Mountains,impassable,,,
+2189,4050,56,2,221,al-Suqut Mountains,impassable,,,
+2190,4051,61,53,54,Range of the Marching Camels,impassable,,,
+2191,4052,44,49,41,Spine of the Dog,impassable,,,
+2192,4053,58,56,1,Mountains of Forgotten Dreams,impassable,,,
+2193,4054,87,1,73,Mountains of the Lizards Tongue,impassable,,,
+2194,4055,62,31,35,Wall of the Wailing Elephant,impassable,,,
+2196,4056,151,229,211,Endless Ice Sea,impassable,,,
+2197,4057,40,66,177,The Starspur,impassable,,,
+2198,4058,13,18,44,Jumpa Gorge,impassable,,,
+2199,4059,155,169,137,Lake Longreach,impassable,,,
+2200,4060,161,200,228,Spine of the World,impassable,,,
+2201,4061,228,231,237,Sea of Moving Ice,impassable,,,
+2202,4062,191,191,213,Great Ice Sea,impassable,,,
+2203,4063,194,200,194,Reghed Glacier,impassable,,,
+2205,4064,137,222,216,Endless Ice Sea,impassable,,,
+2206,4065,254,92,168,Sanrach Mountains,impassable,,,
+2207,4066,182,203,133,Ghalyi Shan,impassable,,,
+2208,4067,188,234,252,Land of the Snow Spirits,impassable,,,
+2209,4068,167,143,243,The Yehimal,impassable,,,
+2210,4069,149,118,58,Furrowed Mountains,impassable,,,
+2211,4070,240,228,191,Kavir al-Mawt,impassable,,,
+2212,4071,194,216,206,Katakoro Shan,impassable,,,
+2214,4072,243,209,121,The Giants Belt,impassable,,,
+2215,4073,216,115,55,Dragonsword Mountains,impassable,,,
+2216,4074,228,67,121,Dustwall Mountains,impassable,,,
+2217,4075,213,200,191,Spiderhaunt Peaks,impassable,,,
+2218,4076,39,43,64,Mountains of Copper,impassable,,,
+2219,4077,27,134,43,Sentinel Spire,impassable,,,
+2220,4078,115,36,18,Kora Shan,impassable,,,
+2221,4079,164,85,55,Hagon Shan,impassable,,,
+2222,4080,100,39,161,Glittering Spires,impassable,,,
+2223,4081,234,146,58,Curna Mountains,impassable,,,
+2224,4082,43,137,55,The North Wall,impassable,,,
+2225,4083,100,182,124,The West Wall,impassable,,,
+2226,4084,64,155,58,The East Wall,impassable,,,
+2227,4085,30,112,222,Gnollwatch Mountains,impassable,,,
+2228,4086,46,55,46,Rathgaunt Hills,impassable,,,
+2229,4087,30,49,64,Tannath,impassable,,,
+2230,4088,91,36,61,Alamir Mountains,impassable,,,
+2231,4089,213,58,43,Firesteap Mountains,impassable,,,
+2232,4090,149,24,18,Uthangol Mountains,impassable,,,
+2233,4091,206,158,222,Adder Peaks,impassable,,,
+2234,4092,155,58,137,The Maerthwatch,impassable,,,
+2235,4093,91,222,70,Smoking Mountains,impassable,,,
+2236,4094,36,231,128,Cloven Mountains,impassable,,,
+2237,4095,219,231,85,Thunder Peaks,impassable,,,
+2238,4096,219,216,197,Eastern Stormhorns,impassable,,,
+2239,4097,170,200,143,Sunset Mountains,impassable,,,
+2240,4098,249,109,115,The Stormhorns,impassable,,,
+2242,4099,24,170,112,Galena Mountains,impassable,,,
+2243,4100,36,94,200,Sunrise Mountains,impassable,,,
+2244,4101,61,188,173,The Thaymount,impassable,,,
+2245,4102,59,5,37,Earthfast Mountains,impassable,,,
+2246,4103,33,137,103,Earthspur Mountains,impassable,,,
+2247,4104,237,46,167,Sword Mountains,impassable,,,
+2248,4105,225,85,176,Nether Mountains,impassable,,,
+2249,4106,225,79,18,Rauvin Mountains,impassable,,,
+2250,4107,88,79,243,Ice Mountains,impassable,,,
+2251,4108,43,36,167,The Ice Spires,impassable,,,
+2252,4109,140,252,118,Greypeak Mountains,impassable,,,
+2253,4110,97,206,219,The High Country,impassable,,,
+2254,4111,52,61,179,A-Ling Shan,impassable,,,
+2255,4112,85,100,234,Kun-Yen Shan,impassable,,,
+2256,4113,33,39,188,Toadsquat Mountains,impassable,,,
+2257,4114,100,112,240,Dragonspine Mountains,impassable,,,
+2258,4115,36,188,191,Qimam al-Kadan,impassable,,,
+2259,4116,70,240,140,World Pillar Mountains,impassable,,,
+2260,4117,24,194,134,Wu Pi Te Shao,impassable,,,
+2261,4118,167,234,73,Konig Peaks,impassable,,,
+2262,4119,24,100,209,Mistcliff Mountains,impassable,,,
+2263,4120,197,49,179,Sanrach Mountains,impassable,,,
+2264,4121,234,49,58,Hazur Mountains,impassable,,,
+2265,4122,252,115,9,Guth Mountains,impassable,,,
+2266,4123,179,46,82,Delphin Mountains,impassable,,,
+2267,4124,228,106,158,Sky Lizard Mountains,impassable,,,
+2268,4125,30,103,94,Marching Mountains,impassable,,,
+2269,4126,58,234,27,Starspire Mountains,impassable,,,
+2270,4127,27,234,200,Omlarandin,impassable,,,
+2271,4128,76,33,200,Kobold Mountains,impassable,,,
+2272,4129,21,121,255,Wild Coast,impassable,,,
+2273,4130,33,33,70,Snowflake Mountains,impassable,,,
+2274,4131,109,109,21,Kuldin Peaks,impassable,,,
+2275,4132,109,55,164,High Peaks,impassable,,,
+2276,4133,124,33,58,Deepwing Mountains,impassable,,,
+2277,4134,100,33,21,Orsraun Mountains,impassable,,,
+2278,4135,39,33,94,Giants Run Mountains,impassable,,,
+2279,4136,21,67,121,Troll Mountains,impassable,,,
+2280,4137,91,216,185,Orbrekh Mountains,impassable,,,
+2281,4138,118,200,134,Cloud Peaks,impassable,,,
+2282,4139,128,237,219,Small Teeth,impassable,,,
+2283,4140,203,206,219,Akanapeaks,impassable,,,
+2284,4141,203,173,219,Aphrunn Mountains,impassable,,,
+2285,4142,88,35,198,Dragonjaw Mountains,impassable,,,
+2286,4143,182,73,200,Thesk Mountains,impassable,,,
+2287,4144,243,73,79,The Riders to the Sky,impassable,,,
+2288,4145,243,100,46,Mount Thulbane,impassable,,,
+2289,4146,191,39,82,White Peaks,impassable,,,
+2290,4147,240,197,24,Desertsmouth Mountains,impassable,,,
+2291,4148,191,70,24,Troll Hills,impassable,,,
+2292,4149,56,31,23,Giantspire Mountains,impassable,,,
+2293,4150,167,64,24,Firward Mountains,impassable,,,
+2294,4151,228,228,191,Icerim Mountains,impassable,,,
+2295,4152,228,43,18,Godswatch Mountains,impassable,,,
+2296,4153,213,94,85,Raurin Alta Mountains,impassable,,,
+2297,4154,255,94,36,Abbey Mountains,impassable,,,
+2298,4155,39,234,222,Mountains of Gold,impassable,,,
+2299,4156,225,246,64,Firepeaks,impassable,,,
+2300,4157,30,52,36,Scimitar Spires,impassable,,,
+2301,4158,167,176,24,Dragons Back Peaks,impassable,,,
+2302,4159,73,234,234,Teeth of Taglo,impassable,,,
+2303,4160,249,149,70,Ushar Mountains,impassable,,,
+2304,4161,219,49,61,Ulhai Shan,impassable,,,
+2305,4162,27,158,234,Koryaz Shan,impassable,,,
+2306,4163,55,52,206,Hagga Shan,impassable,,,
+2309,4164,170,103,85,Jotunhammer Mountains,impassable,,,
+2310,4165,106,103,46,Black Mountains,impassable,,,
+2312,4166,228,109,112,Hollow Crown Mountains,impassable,,,
+2313,4167,79,73,134,Ardulith Mountains,impassable,,,
+2315,4168,9,60,195,Skelkor Mountains,impassable,,,
+2317,4169,213,43,46,Lugsaas Chain,impassable,,,
+2318,4170,149,137,234,Tutsaas Chain,impassable,,,
+2319,4171,15,33,179,Angsaas Chain,impassable,,,
+2320,4172,209,91,216,Keryjek Range,impassable,,,
+2321,4173,115,49,12,Novularond,impassable,,,
+2322,4174,131,64,52,Surykyk Range,impassable,,,
+2324,4175,216,200,164,Nakalpgotak Range,impassable,,,
+2325,4176,121,225,203,Glacier of Ulutiu,impassable,,,
+2326,4177,158,61,43,Shan Trango,impassable,,,
+2327,4178,79,115,24,Chu Yuan,impassable,,,
+2328,4179,58,43,70,Deang Mountains,impassable,,,
+2329,4180,43,52,24,Jumpa River Gorge,impassable,,,
+2330,4181,158,216,106,Hakari Ridge,impassable,,,
+2333,4182,0,33,64,Mahasarpa,impassable,,,
+2334,4183,197,73,15,Southern Wu Pi Te Shao,impassable,,,
+2335,4184,146,243,79,Northern Wu Pi Te Shao,impassable,,,
+2336,4185,106,33,170,Po Yul Dzayul Range,impassable,,,
+2337,4186,176,191,112,Growing Mountains,impassable,,,
+2338,4187,94,18,21,Salju Shan,impassable,,,
+2339,4188,203,164,179,The Burning Lands,impassable,,,
+2340,4189,216,158,115,Haunted Lands,impassable,,,
+2341,4190,67,219,209,Sacred Mountain of Kushk,impassable,,,
+2342,4191,91,91,152,Intan Shan,impassable,,,
+2343,4192,203,237,213,Fengnao,impassable,,,
+2344,4193,33,43,237,Petan,impassable,,,
+2345,4194,21,24,43,Krashatai Shan,impassable,,,
+2347,4195,97,188,194,The Dock,impassable,,,
+2348,4196,97,33,97,Salju Shan,impassable,,,
+2349,4197,149,64,225,Peaks of Flame,impassable,,,
+2351,4198,55,49,158,Gorge of Gauros,impassable,,,
+2352,4199,141,25,182,Po Yul Dzayul,impassable,,,
+2353,4200,166,220,125,Greypeak Mountains,impassable,,,
+2354,4201,141,216,84,Greypeak Mountains,impassable,,,
+2355,4202,151,220,63,Greypeak Mountains,impassable,,,
+2356,4203,48,30,14,Star Mounts,impassable,,,
+2357,4204,71,38,69,Shining Plateau,impassable,,,
+2358,4205,88,213,149,Western Yal Tengri,sea,,,
+2359,4206,134,234,170,Eastern Yal Tengri,sea,,,
+2360,4207,67,188,121,Bay of Raum,sea,,,
+2361,4208,134,200,124,Northern Yal Tengri,sea,,,
+2362,4209,237,191,188,Lower Arundi River,river,,,
+2363,4210,225,222,176,Arundi River,river,,,
+2364,4211,52,164,240,Winterflow River,river,,,
+2365,4212,163,185,144,The Great Anvil,impassable,,,
+2376,4213,69,22,155,Eskornar Peaks,impassable,,,
+2377,4214,17,62,170,Dusk Mountains,impassable,,,
+2378,4215,12,59,150,Glaur Mountains,impassable,,,
+2379,4216,51,30,22,Elkannath Mountains,impassable,,,
+2381,4217,18,40,245,Arandron,impassable,,,
+2382,4218,38,62,118,Katashaka,impassable,,,
+2410,4219,19,31,60,Dawning Mountains,impassable,,,
+2464,4220,137,55,36,The Highlands,impassable,,,
+2492,4221,73,39,15,Hissing Isles,impassable,,,
+2512,4222,31,31,160,Frost Hills,impassable,,,
+2581,4223,85,87,48,West Sea,sea,,,
+2582,4224,52,57,246,Gulf of Katashaka,sea,,,
+2583,4225,65,212,157,Gulf of Lopango,sea,,,
+2584,4226,163,255,182,Lopango Sea,sea,,,
+2585,4227,232,217,189,South Maztica Sea,sea,,,
+2586,4228,183,20,53,North Maztica Sea,sea,,,
+2630,4229,75,195,232,Trackless Sea,sea,,,
+2631,4230,8,51,64,Trackless Sea,sea,,,
+2632,4231,74,113,126,Trackless Sea,sea,,,
+2633,4232,122,139,144,The Western Frost,impassable,,,
+2643,4233,65,11,100,The High Ice,impassable,,,
+2644,4234,99,222,100,Xothaerin,impassable,,,
+2645,4235,214,60,60,Kossuth's Eye,impassable,,,
+2646,4236,190,55,190,Korolnor,impassable,,,
+2647,4237,213,213,0,Torglor,impassable,,,
+2648,4238,90,20,70,Drakkalor,impassable,,,
+2649,4239,79,113,199,Barakuir,impassable,,,
+2650,4240,108,149,29,Holorar,impassable,,,
+2653,4241,160,147,147,Zolkir,impassable,,,
+2654,4242,237,9,121,Rogarsheim,impassable,,,
+2655,4243,56,143,23,Tvarstoldt,impassable,,,
+2656,4244,193,186,20,Jotunhammer,impassable,,,
+2657,4245,192,43,193,Stone Wood,impassable,,,
+2658,4246,43,193,193,Lillemaren,impassable,,,
+2660,4247,19,124,19,Trondhelm,impassable,,,
+2661,4248,109,184,202,Trackless Strait,sea,,,
+2662,4249,141,222,245,Strait of Oman,sea,,,
+2663,4250,121,121,181,Strait of Alaron,sea,,,
+2664,4251,220,170,240,Strait of the Leviathan,sea,,,
+2665,4252,153,213,223,Lotan's Abyss,sea,,,
+2666,4253,173,247,222,Corwell Firth,sea,,,
+2667,4254,245,210,245,Dragon Head,sea,,,
+2668,4255,210,245,233,Kingsbay,sea,,,
+2669,4256,235,210,245,Mintarn Coast,sea,,,
+2670,4257,210,245,230,Callidyrr Coast,sea,,,
+2671,4258,230,180,220,Northwind Strait,sea,,,
+2672,4259,135,100,35,Cambro Mountains,impassable,,,
+2673,4260,20,75,0,Lisloch,impassable,,,
+2674,4261,75,0,22,Lisbunt,impassable,,,
+2675,4262,75,55,0,Farfair,impassable,,,
+2676,4263,0,0,1,Fairheight Range,impassable,,,
+2677,4264,144,4,4,Aspenheight,impassable,,,
+2678,4265,245,220,245,Lake of the Leech,lake,,,
+2679,4266,245,200,245,Lisloch,lake,,,
+2680,4267,245,190,245,Lac Sielya,lake,,,
+2681,4268,245,180,245,Firloch,lake,,,
+2682,4269,245,170,245,Shee Pool,lake,,,
+2683,4270,245,160,245,Mal Tamesis,lake,,,
+2684,4271,245,150,245,Mal Tarbat,lake,,,
+2685,4272,245,140,245,Lake Chrysalis,lake,,,
+2686,4273,245,130,245,Harloch,lake,,,
+2687,4274,125,150,5,Brannoch,impassable,,,
+2689,4275,9,90,90,Storaad,impassable,,,
+2690,4276,180,210,90,Orcskulls,impassable,,,
+2691,4277,100,210,90,Breasal,impassable,,,
+2692,4278,100,95,30,Dennin's Delve,impassable,,,
+2693,4279,35,100,30,Llyrath,impassable,,,
+,4280,0,0,96,Trackless Deep,sea,,,
 2314,,,,,,dropped,,,
 2316,,,,,,dropped,,,
 2698,,,,,,dropped,,,
