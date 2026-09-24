@@ -111,6 +111,24 @@ def run(ctx: Context) -> StepResult:
     # proof that `[map.provinces] smooth_edges` was read at all
     # (docs/step_map_baronies.md §10)
     pe = report.get("province_edges", {})
+    # lane `relief-paint`: same reasoning again -- the summary line is the
+    # proof `[map] relief_paint`/`trees_slope_gate` were actually read
+    # (docs/step_map_paint.md §11).
+    rp = report.get("relief_paint", {})
+    tsg = report.get("trees_slope_gate", {})
+    rp_summary = (
+        f"; relief paint: {rp.get('primary_changed_px', 0)} land px "
+        f"({100 * rp.get('primary_changed_share', 0):.1f} %) primary "
+        "material changed by relief bin, "
+        f"{rp.get('eligible_px', 0)} px eligible "
+        f"({100 * rp.get('eligible_share', 0):.1f} % of land)"
+        if rp else ""
+    )
+    tsg_summary = (
+        f"; trees slope gate: {tsg.get('dropped_px', 0)} px above p"
+        f"{tsg.get('percentile', 0)} excluded"
+        if tsg else ""
+    )
     pe_summary = (
         f"; organic province borders sigma {pe['sigma_src_px']} source px, "
         f"relief warp {pe['relief_warped_px']} px, "
@@ -140,6 +158,7 @@ def run(ctx: Context) -> StepResult:
             f"{prov['ck3_total']} provinces, {bar['placed']} baronies in "
             f"{bar['counties']} counties, {bar['demoted']} demoted, "
             f"{prov['lost']} lost" + pe_summary + hd_summary
+            + rp_summary + tsg_summary
         ),
         counts={
             "provinces": prov["ck3_total"],
@@ -168,6 +187,10 @@ def run(ctx: Context) -> StepResult:
                if trees else {}),
             **({"colormap_px": colormap["width"] * colormap["height"]}
                if colormap else {}),
+            **({"relief_paint_primary_changed_px": rp["primary_changed_px"]}
+               if rp else {}),
+            **({"trees_slope_gate_dropped_px": tsg["dropped_px"]}
+               if tsg else {}),
             # how many locator instances left the province centroid, and how
             # many county capitals took their CK2 positions.txt slot-0 town
             # as the anchor (docs/step_map_assets.md)
@@ -359,6 +382,36 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         terrain_paint_max_shift_source_px=float(
             raw.get("terrain_paint_max_shift_source_px", 1.0)
         ),
+        # SAME SHAPE AGAIN (lane `relief-paint`): a `[map] relief_paint*` key
+        # read only by `ck2ck3.map.config.load` and not here is the same
+        # silent no-op the `colormap`/`trees*` bugs below already were.
+        # tests/test_map_relief_paint.py::test_cli_config_builder_reads_the_relief_paint_keys.
+        relief_paint=bool(raw.get("relief_paint", True)),
+        relief_paint_csv=Path(
+            str(raw.get("relief_paint_csv", "mappings/relief_paint.csv"))
+        ),
+        relief_paint_categories_csv=Path(
+            str(raw.get(
+                "relief_paint_categories_csv",
+                "mappings/paint_material_categories.csv",
+            ))
+        ),
+        relief_paint_family_csv=Path(
+            str(raw.get(
+                "relief_paint_family_csv",
+                "mappings/relief_paint_family_materials.csv",
+            ))
+        ),
+        relief_paint_sigma_px=float(raw.get("relief_paint_sigma_px", 4.5)),
+        relief_paint_interior_weight=float(
+            raw.get("relief_paint_interior_weight", 0.0)
+        ),
+        relief_paint_classes=tuple(
+            str(k) for k in raw.get(
+                "relief_paint_classes",
+                ("mountains", "desert_mountains", "hills"),
+            )
+        ),
         # BUG FIXED (lane `colormap-fix`): this builder never read any of the
         # five `[map] colormap*` keys, so `configs/faerun.toml`'s own
         # `colormap = false` (set by the coordinator after the CK2-colormap
@@ -413,6 +466,10 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
         trees_mask_smooth=bool(raw.get("trees_mask_smooth", True)),
         trees_mask_threshold=float(raw.get("trees_mask_threshold", 0.5)),
         trees_mask_blur_px=float(raw.get("trees_mask_blur_px", 0.0)),
+        trees_slope_gate=bool(raw.get("trees_slope_gate", False)),
+        trees_slope_gate_percentile=float(
+            raw.get("trees_slope_gate_percentile", 95.0)
+        ),
         mod_name=ctx.config.name,
         mod_version=ctx.config.version,
         supported_version=ctx.config.supported_version,

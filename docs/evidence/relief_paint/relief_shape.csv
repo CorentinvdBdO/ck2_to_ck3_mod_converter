@@ -1,0 +1,6 @@
+crop,map,channel_share,n_land,channel_px,n_transects,median_width_ratio,mean_width_ratio
+vanilla_0,vanilla,0.02087,262144,5470,60,2.0,2.237
+vanilla_1,vanilla,0.02004,262144,5254,60,2.143,2.513
+vanilla_2,vanilla,0.01909,262144,5005,60,1.857,2.09
+spine,relief-paint,0.00763,232532,1775,60,2.0,2.219
+thay,relief-paint,0.0079,258031,2039,60,1.875,2.05

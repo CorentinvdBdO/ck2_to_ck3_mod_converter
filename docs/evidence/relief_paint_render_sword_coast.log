@@ -1,0 +1,9 @@
+sun elevation 33.1 deg, azimuth 167.5 deg (gfx/map/environment/environment.txt sun_direction)
+camera tilt 50 deg (common/defines/graphic/00_graphics.txt ZOOM_STEPS_TILT[0])
+  ck2 source native box (topology.bmp px) = (1323, 749, 1693, 1118), crop shape (369, 370)
+loading paint from /home/cvdbdo/git/paradox/ck3/wt/_out/relief-paint...
+  ck2_source: shape (369, 370), level [3855, 35354]
+  plain_rescale: shape (712, 712), level [3855, 35354]
+  build17: shape (712, 712), level [0, 35528]
+  ours: shape (712, 712), level [0, 35421]
+done in 4.0s -> docs/evidence/relief_paint

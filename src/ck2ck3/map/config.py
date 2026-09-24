@@ -776,6 +776,79 @@ class MapConfig:
     #: hoped for) in `paint_edges.build_soft_blend`: an out-of-bound pixel
     #: reverts to CK2's own class. 0 disables the check.
     terrain_paint_max_shift_source_px: float = 1.0
+    #: lane `relief-paint`: within each pixel's CK2 class, stochastically
+    #: sample a material FAMILY (grass/forest/rock/scree-snow/soil) from
+    #: vanilla's own measured mix for that pixel's (slope, curvature,
+    #: elevation) bin, then substitute that class's own measured top
+    #: material for the winning family into the `detail_index`
+    #: primary/secondary slot (`docs/step_map_paint.md` §11). Never changes
+    #: a weight VALUE, only which ordinal a slot's weight is attached to --
+    #: the blend-statistics invariant (§10) is exact by construction. An
+    #: earlier version picked only the single top-ranked family
+    #: deterministically and measured 93% rock on `mountains` against
+    #: vanilla's own 36% (coordinator review); this version samples the
+    #: actual proportions. Restricted (round 3, `relief_paint_classes`
+    #: below) to classes/pixels where relief actually carries signal --
+    #: elsewhere it read as independent per-pixel noise ("camouflage" on
+    #: flat `sword_coast` plains, speckle on flat `taiga`), because relief
+    #: only explains 2-8% of a class's in-class material entropy on
+    #: average and near-0% on a genuinely flat class
+    #: (`docs/evidence/relief_paint/relief_paint_family_share_check.csv`,
+    #: `docs/step_map_paint.md` §11.3e).
+    #: Requires `terrain_paint_soft_edges = true`; a no-op with a warning
+    #: otherwise. Default true since 2026-09-24 (visual + numeric check
+    #: passed, `docs/evidence/HANDOFF_relief_paint.md`).
+    relief_paint: bool = True
+    #: the measured conditional table
+    #: (`scripts/measure_vanilla_relief_paint.py` ->
+    #: `scripts/build_relief_paint_csv.py`)
+    relief_paint_csv: Path = Path("mappings/relief_paint.csv")
+    #: vanilla material id -> coarse relief category (rock / snow_scree /
+    #: soil_grass / forest / other), `scripts/measure_vanilla_relief_paint.py`
+    relief_paint_categories_csv: Path = Path("mappings/paint_material_categories.csv")
+    #: class + family -> vanilla material id (that class's OWN measured top
+    #: pick for that family, interior pixels only) --
+    #: `scripts/measure_vanilla_relief_paint.py`. This is what lets a class
+    #: gain a material `mappings/terrain_paint.csv`'s hand-picked 2-3 rows
+    #: never named (coordinator review, `docs/step_map_paint.md` §11: a
+    #: class whose configured mix is all one family, e.g. `mountains`'
+    #: three mountain_02* rock variants, cannot show relief by reordering
+    #: alone).
+    relief_paint_family_csv: Path = Path("mappings/relief_paint_family_materials.csv")
+    #: Gaussian blur width (canvas px) the per-pixel family CHOICE is
+    #: smoothed at before argmax, so painted families read as patches at
+    #: vanilla's own measured scale
+    #: (`docs/evidence/vanilla_paint_family_patch_scale.csv`, mean e-fold
+    #: radius over two mountain crops) rather than per-pixel noise.
+    relief_paint_sigma_px: float = 4.5
+    #: only substitute a pixel's primary/secondary material when its
+    #: existing primary `detail_intensity` weight is at least this fraction
+    #: (0-1). Default 0 = apply everywhere. `verified` this cannot default
+    #: higher: §10's own per-class mix caps primary weight at its
+    #: configured 0.55 EVERYWHERE, including deep class interiors (measured
+    #: max over the whole canvas: 0.56) -- weight alone cannot distinguish
+    #: "far from a class boundary" from "this class's own 3-material split",
+    #: so a >0 default silently substituted on 0% of land the first time
+    #: this was tried. A future per-pixel boundary distance (not weight)
+    #: could still gate the SECONDARY channel specifically.
+    relief_paint_interior_weight: float = 0.0
+    #: CK3 terrain classes relief-paint substitution is even allowed to
+    #: touch. Coordinator review, round 3: vanilla's own measured relief-vs-
+    #: material link is only 2-8% of a class's in-class entropy
+    #: (`docs/evidence/vanilla_paint_vs_relief.md`), so on a class whose own
+    #: slope/elevation range is narrow (flat classes like `taiga`, `plains`,
+    #: `forest`) sampling from the measured conditional is close to sampling
+    #: from the class's UNCONDITIONAL mix per pixel -- independent noise
+    #: with no spatial structure, which read as "camouflage" on
+    #: `sword_coast`'s flat plains/forest and speckle on flat `taiga`. The
+    #: three classes below are where a real, wide relief range exists
+    #: (`docs/step_map_paint.md` §11); every other class's paint is left
+    #: byte-identical to §10's own output, and even within these three,
+    #: `build_class_eligible_mask` additionally requires
+    #: `slope_bin > 0 OR elev_bin > 0` (not genuinely flat AND unprominent).
+    relief_paint_classes: tuple[str, ...] = (
+        "mountains", "desert_mountains", "hills",
+    )
     #: write gfx/map/terrain/colormap.dds — a measured tint per CK3 terrain
     #: key, calibrated against vanilla's own per-material colormap means
     #: (docs/step_map_paint.md §9.6/§9.7, lane `colormap-fix`; superseded the
@@ -871,6 +944,17 @@ class MapConfig:
     #: extra Gaussian (in source pixels) on the interpolated tree field
     #: before the threshold; 0 = bilinear only.
     trees_mask_blur_px: float = 0.0
+    #: lane `relief-paint`: gate tree eligibility on the finished heightmap's
+    #: own slope, following vanilla's own measured tree-density-vs-slope
+    #: curve (`scripts/measure_vanilla_tree_slope.py`,
+    #: `docs/evidence/vanilla_tree_slope.csv`). False keeps the pre-lane
+    #: behaviour (terrain-key eligibility only, no slope test).
+    trees_slope_gate: bool = False
+    #: land-slope percentile (0-100) above which a pixel is never eligible
+    #: for a tree, regardless of terrain key. Default is
+    #: `scripts/measure_vanilla_tree_slope.py`'s own measured vanilla
+    #: cutoff -- see docs/step_map_paint.md §11 for the number.
+    trees_slope_gate_percentile: float = 95.0
     #: evidence output directory (relative to the converter repo)
     evidence_dir: Path = Path("docs/evidence")
     #: descriptor.mod fields for the generated mod
@@ -989,6 +1073,32 @@ def load(path: str | Path) -> MapConfig:
         terrain_paint_max_shift_source_px=float(
             raw.get("terrain_paint_max_shift_source_px", 1.0)
         ),
+        relief_paint=bool(raw.get("relief_paint", True)),
+        relief_paint_csv=Path(
+            str(raw.get("relief_paint_csv", "mappings/relief_paint.csv"))
+        ),
+        relief_paint_categories_csv=Path(
+            str(raw.get(
+                "relief_paint_categories_csv",
+                "mappings/paint_material_categories.csv",
+            ))
+        ),
+        relief_paint_family_csv=Path(
+            str(raw.get(
+                "relief_paint_family_csv",
+                "mappings/relief_paint_family_materials.csv",
+            ))
+        ),
+        relief_paint_sigma_px=float(raw.get("relief_paint_sigma_px", 4.5)),
+        relief_paint_interior_weight=float(
+            raw.get("relief_paint_interior_weight", 0.0)
+        ),
+        relief_paint_classes=tuple(
+            str(k) for k in raw.get(
+                "relief_paint_classes",
+                ("mountains", "desert_mountains", "hills"),
+            )
+        ),
         colormap=bool(raw.get("colormap", True)),
         colormap_tints_csv=Path(
             str(raw.get("colormap_tints_csv", "mappings/colormap_tints.csv"))
@@ -1025,6 +1135,10 @@ def load(path: str | Path) -> MapConfig:
         trees_mask_smooth=bool(raw.get("trees_mask_smooth", True)),
         trees_mask_threshold=float(raw.get("trees_mask_threshold", 0.5)),
         trees_mask_blur_px=float(raw.get("trees_mask_blur_px", 0.0)),
+        trees_slope_gate=bool(raw.get("trees_slope_gate", False)),
+        trees_slope_gate_percentile=float(
+            raw.get("trees_slope_gate_percentile", 95.0)
+        ),
         evidence_dir=_path(str(out.get("evidence_dir", "docs/evidence"))),
         mod_name=str(out.get("mod_name", "Faerun (CK2 conversion, raw)")),
         mod_version=str(out.get("mod_version", "0.1.0")),

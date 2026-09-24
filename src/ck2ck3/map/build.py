@@ -45,6 +45,7 @@ from . import (
     idmap,
     locators,
     provinces,
+    relief_paint,
     rivers,
     surround,
     table,
@@ -509,6 +510,12 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
 
     # ---------------------------------------------------------------- images
     paint_warp = None
+    # lane `relief-paint`: defaults for the skip_images path (trees.bmp
+    # scatter runs even with skip_images=True -- text output only -- so
+    # these must exist unconditionally, not just inside the raster block
+    # below).
+    relief_slope_bin = relief_curv_bin = relief_elev_bin = None
+    trees_steep_mask = None
     if not skip_images:
         log("writing provinces.png")
         rgb = _to_rgb(ck3_raster, ids)
@@ -645,6 +652,47 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 f"({100 * moved / float(water_mask.size):.1f} % of the canvas) "
                 "displaced"
             )
+        # lane `relief-paint`: slope/curvature/elevation bins, computed HERE
+        # for the same reason as `paint_warp` just above -- `heights` is
+        # deleted a few lines below and both the terrain-paint redistribution
+        # and the tree slope gate run after that. Three uint8 canvas planes
+        # (3 x 56 MB), not a copy of the heightmap.
+        if cfg.relief_paint:
+            # coordinator review, second pass: elevation must be a PER-CLASS
+            # percentile of local relief (a class's own internal roughness
+            # decides its "high" bin, never the map's overall roughness --
+            # Thay's uniformly-textured plateau otherwise sat in the "high"
+            # bin almost everywhere and painted rock/snow broadly). This
+            # needs the class each canvas pixel belongs to BEFORE
+            # `paint_edges.build_soft_blend` computes it -- the same
+            # CK2-code -> CK3-class lookup that function uses internally,
+            # applied to `codes_tgt` a few passes early.
+            _early_table = dict(
+                terrain.CK2_TO_CK3_TERRAIN if not cfg.terrain_map else cfg.terrain_map
+            )
+            _cls_lut, _early_class_names = paint_edges._class_of_code(
+                code_names, _early_table, cfg.terrain_default
+            )
+            relief_cls_hard = _cls_lut[codes_tgt]
+            relief_slope_bin, relief_curv_bin, relief_elev_bin = (
+                relief_paint.compute_relief_bins(
+                    heights,
+                    (canvas.height, canvas.width),
+                    land_mask=~water_mask,
+                    cls=relief_cls_hard,
+                    n_classes=len(_early_class_names),
+                    resolution_factor=cfg.heightmap.resolution_factor,
+                )
+            )
+            del _early_table, _cls_lut, _early_class_names, relief_cls_hard
+        if cfg.trees_slope_gate:
+            trees_steep_mask = relief_paint.compute_slope_percentile_mask(
+                heights,
+                (canvas.height, canvas.width),
+                land_mask=~water_mask,
+                percentile=cfg.trees_slope_gate_percentile,
+                resolution_factor=cfg.heightmap.resolution_factor,
+            )
         sink.binary("map_data/heightmap.png", lambda p: heightmap.save_png(heights, p))
 
         log("packing heightmap")
@@ -742,13 +790,108 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                     land_mask=~water_mask,
                     warn=sink.warn,
                 )
+                relief_index = soft.index
+                if cfg.relief_paint:
+                    shares_table = relief_paint.read_relief_shares_table(
+                        _repo_path(cfg, cfg.relief_paint_csv)
+                    )
+                    family_table = relief_paint.read_family_material_table(
+                        _repo_path(cfg, cfg.relief_paint_family_csv)
+                    )
+                    if not shares_table or not family_table:
+                        sink.warn(
+                            f"[map] relief_paint = true but "
+                            f"{cfg.relief_paint_csv} or "
+                            f"{cfg.relief_paint_family_csv} is missing/empty; "
+                            "no redistribution applied (uv run "
+                            "scripts/measure_vanilla_relief_paint.py && uv run "
+                            "scripts/build_relief_paint_csv.py)"
+                        )
+                    else:
+                        # fallback ordinal per class: that class's own
+                        # already-configured primary material, for a
+                        # (class, family) the measurement never saw
+                        material_mix = paint_edges.read_material_mix(paint_csv)
+                        fallback_ordinal = {}
+                        for key, mix in material_mix.items():
+                            if mix:
+                                fallback_ordinal[key] = paint_ordinals.get(mix[0][0], 0)
+                        missing_family: set[tuple[str, str]] = set()
+                        family_mat_table = relief_paint.family_material_ordinal_table(
+                            soft.class_names, family_table, paint_ordinals,
+                            fallback_ordinal=fallback_ordinal,
+                            missing=missing_family,
+                        )
+                        if missing_family:
+                            sink.warn(
+                                f"relief_paint: {len(missing_family)} "
+                                "(class, family) pairs have no measured "
+                                "material; fell back to the class's own "
+                                "configured primary"
+                            )
+                        # coordinator review, round 3: relief paint outside
+                        # a class whose own relief range is wide reads as
+                        # noise (only 2-8% of a class's in-class material
+                        # entropy is relief-driven, `docs/evidence/
+                        # vanilla_paint_vs_relief.md`) -- gate the WHOLE
+                        # substitution (every family, not just rock/snow) to
+                        # `cfg.relief_paint_classes` and, within them, to
+                        # away-from-flat-and-unprominent ground. Every other
+                        # class/pixel's `detail_index`/`detail_intensity`
+                        # stays byte-identical to §10's own output.
+                        relief_eligible_mask = relief_paint.build_class_eligible_mask(
+                            soft.class_index,
+                            soft.class_names,
+                            cfg.relief_paint_classes,
+                            relief_slope_bin,
+                            relief_elev_bin,
+                        )
+                        relief_index, relief_stats = (
+                            relief_paint.apply_relief_family_paint(
+                                soft.index,
+                                soft.intensity,
+                                soft.class_index,
+                                soft.class_names,
+                                relief_slope_bin,
+                                relief_curv_bin,
+                                relief_elev_bin,
+                                shares_table=shares_table,
+                                family_mat_table=family_mat_table,
+                                sigma_px=cfg.relief_paint_sigma_px,
+                                interior_weight=cfg.relief_paint_interior_weight,
+                                land_mask=~water_mask,
+                                eligible_mask=relief_eligible_mask,
+                            )
+                        )
+                        del relief_eligible_mask
+                        report["relief_paint"] = relief_stats
+                        log(
+                            "relief paint: "
+                            f"{relief_stats['primary_changed_px']} land px "
+                            f"({100 * relief_stats['primary_changed_share']:.1f} %) "
+                            "primary material substituted by relief family, "
+                            f"restricted to {list(cfg.relief_paint_classes)} "
+                            f"above a flat/low threshold "
+                            f"({relief_stats['eligible_px']} land px eligible, "
+                            f"{100 * relief_stats['eligible_share']:.1f} % of land) "
+                            f"(sigma {cfg.relief_paint_sigma_px} px, interior "
+                            f"weight >= {cfg.relief_paint_interior_weight}, "
+                            f"{len(shares_table)} measured bins, "
+                            f"{len(family_table)} class/family materials)"
+                        )
                 paint = terrain_paint.PaintLayers(
-                    index=soft.index,
+                    index=relief_index,
                     intensity=soft.intensity,
                     classes=_class_pixel_counts(codes_tgt, code_names, cfg),
                     quantize=max(1, int(cfg.terrain_paint_quantize)),
                 )
             else:
+                if cfg.relief_paint:
+                    sink.warn(
+                        "[map] relief_paint = true but terrain_paint_soft_edges "
+                        "= false; relief_paint requires the soft-edge blend "
+                        "(no-op)"
+                    )
                 paint = terrain_paint.build_layers(
                     codes_tgt,
                     code_names,
@@ -946,6 +1089,21 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             ).astype(bool)
         impassable_mask = np.isin(ck3_raster, list(impassable_ck3))
         eligible = forest_canvas & ~water_mask & ~impassable_mask
+        if trees_steep_mask is not None:
+            # lane `relief-paint`: vanilla's own tree density falls off
+            # sharply above its own measured slope percentile
+            # (docs/step_map_paint.md §11,
+            # scripts/measure_vanilla_tree_slope.py) -- a steep face keeps
+            # its forest terrain-key paint but gets no scattered instances.
+            gated = int((eligible & trees_steep_mask).sum())
+            eligible = eligible & ~trees_steep_mask
+            report["trees_slope_gate"] = {
+                "percentile": cfg.trees_slope_gate_percentile,
+                "dropped_px": gated,
+            }
+            log(f"trees slope gate: {gated} px above the "
+                f"{cfg.trees_slope_gate_percentile}th land-slope percentile "
+                "excluded from eligibility")
         tree_terrain_code, tree_terrain_keys = _terrain_code_grid(
             ck3_raster, terrain_ck3, cfg.terrain_default
         )
@@ -1027,6 +1185,7 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         foliage = locators.render_foliage_stubs(cfg.ck3_game_dir)
     else:
         foliage = {}
+    del relief_slope_bin, relief_curv_bin, relief_elev_bin, trees_steep_mask
     for rel, text in foliage.items():
         sink.text(rel, text)
     if foliage:
