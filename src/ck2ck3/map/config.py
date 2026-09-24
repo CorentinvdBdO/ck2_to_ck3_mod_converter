@@ -167,6 +167,22 @@ class HeightmapConfig:
     sea_shelf_px: int = 24
     #: 16-bit height of the open-sea floor (vanilla: 0)
     sea_floor: int = 0
+    #: write `map_data/heightmap.png` (the raw, unpacked 16-bit image) to the
+    #: output mod. The engine never reads it -- `map_data/default.map`'s
+    #: `topology = "heightmap.heightmap"` names only
+    #: `packed_heightmap.png`/`indirection_heightmap.png`
+    #: (`docs/formats_packed_heightmap.md`, CLAUDE.md invariant, `verified`
+    #: against vanilla's own `heightmap.heightmap` and a grep of every text
+    #: file under `game_files` for the string) -- so it is purely a
+    #: reference artifact this repo's own evidence scripts (`thay_render.py`,
+    #: `measure_relief_shape.py`, `relief_sharp_common.plain_rescale_canvas`
+    #: siblings) read back for analysis. At `resolution_factor = 1` it is
+    #: 39 MB and safe to commit; at `resolution_factor = 2` it is ~126 MB,
+    #: over GitHub's 100 MB hard limit (vanilla's own is 122 MB -- Paradox
+    #: ships it from a non-git pipeline). Default `True` so 1x behaviour is
+    #: unchanged; `configs/faerun.toml` sets it `False` at
+    #: `resolution_factor = 2` (docs/step_map_heightmap.md §2i).
+    ship_heightmap_png: bool = True
 
 
 #: vanilla per-CK3-terrain high-frequency RMS (16-bit levels, land only),
@@ -1126,6 +1142,7 @@ def load(path: str | Path) -> MapConfig:
             ck3_max_level=int(hm.get("ck3_max_level", 65535)),
             curve=[(int(a), int(b)) for a, b in hm.get("curve", [])],
             tile_size=int(hm.get("tile_size", 33)),
+            ship_heightmap_png=bool(hm.get("ship_heightmap_png", True)),
         ),
         # standalone TOML nests this as its own [heightmap_detail] table
         # (the CLI's [map] uses flat heightmap_detail* keys instead -- see

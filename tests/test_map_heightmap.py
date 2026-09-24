@@ -228,3 +228,73 @@ def test_deepen_sea_is_a_no_op_without_water():
 
     h = np.full((8, 8), 20000, dtype=np.uint16)
     assert (heightmap.deepen_sea(h, 4883) == h).all()
+
+
+def test_map_config_threads_every_heightmap_key_from_the_cli_config():
+    """``ck2ck3.steps.map._map_config`` -- the function the real CLI builds
+    ``HeightmapConfig`` from -- is a SECOND construction site independent of
+    ``ck2ck3.map.config.map_config``'s own (`docs/step_map_heightmap.md`
+    §2i, the coordinator's catch): `ship_heightmap_png = false` in
+    `configs/faerun.toml` silently had no effect because this function's own
+    copy of the field list had never been extended to read it, so a real 2x
+    run still shipped a 131 MB `heightmap.png`. Pin every
+    `[map.heightmap]` key this function reads, including the resolution ones
+    that DID already work (so a future field earns the same test, not just
+    the one that broke)."""
+    from pathlib import Path
+
+    from ck2ck3.steps import map as map_step
+
+    class Cfg:
+        raw = {
+            "map": {
+                "vanilla_km_per_px": 1.0,
+                "source_km_per_px": 1.0,
+                "heightmap": {
+                    "resolution_factor": 2,
+                    "ck2_sea_level": 90,
+                    "ck3_water_level": 1000,
+                    "ck3_max_level": 60000,
+                    "tile_size": 65,
+                    "deepen_sea": False,
+                    "sea_shelf_px": 48,
+                    "sea_floor": 5,
+                    "ship_heightmap_png": False,
+                },
+            }
+        }
+        path = Path("configs/x.toml")
+        out = Path("/tmp/out")
+        prefix = "fae"
+        bookmark_date = (1357, 1, 1)
+        name = "n"
+        version = "0"
+        supported_version = "1.19.*"
+
+    class Ctx:
+        config = Cfg()
+
+        def ck2(self, *parts):
+            return Path("/tmp/ck2").joinpath(*parts)
+
+        def ck3(self, *parts):
+            return Path("/tmp/ck3").joinpath(*parts)
+
+    hm = map_step._map_config(Ctx()).heightmap
+    assert hm.resolution_factor == 2
+    assert hm.ck2_sea_level == 90
+    assert hm.ck3_water_level == 1000
+    assert hm.ck3_max_level == 60000
+    assert hm.tile_size == 65
+    assert hm.deepen_sea is False
+    assert hm.sea_shelf_px == 48
+    assert hm.sea_floor == 5
+    assert hm.ship_heightmap_png is False
+
+    # and the defaults, with none of the keys present
+    Cfg.raw["map"]["heightmap"] = {}
+    hm = map_step._map_config(Ctx()).heightmap
+    assert hm.resolution_factor == 1
+    assert hm.tile_size == 33
+    assert hm.deepen_sea is True
+    assert hm.ship_heightmap_png is True

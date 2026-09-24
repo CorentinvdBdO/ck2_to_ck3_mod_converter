@@ -200,6 +200,7 @@ def apply(
     water_level: int,
     max_level: int,
     cfg: HeightmapDetailConfig,
+    resolution_factor: int = 1,
 ) -> tuple[np.ndarray, dict]:
     """Return ``(detailed heights uint16, stats dict)``.
 
@@ -208,6 +209,19 @@ def apply(
     shape as ``heights`` -- at ``resolution_factor > 1`` the caller must
     upsample the province-raster-resolution masks first (nearest neighbour;
     ``map.build._nn_upsample``).
+
+    ``resolution_factor`` (the caller's ``[map.heightmap] resolution_factor``)
+    is the ground-distance conversion for the few constants inside this
+    module that are not already expressed in km or driven by ``km_per_px``:
+    the river-carve cross-section (``_carve_rivers``'s width/blur/margin, all
+    module-level *canvas*-pixel constants) and the erosion's fractal-seed
+    octave sigmas (``heightmap_erosion.fractal_seed``/``ridged_seed``,
+    likewise canvas px) -- at ``resolution_factor > 1`` those pixel counts
+    have to grow by the same factor or they describe half the intended
+    ground distance (docs/step_map_heightmap.md §2e/§2i). Every ``cfg.*_px``
+    field is scaled by the caller instead (``map.build``'s ``detail_cfg``),
+    since ``HeightmapDetailConfig`` is otherwise a plain data holder with no
+    knowledge of the canvas.
     """
     if heights.dtype != np.uint16:
         raise ValueError(f"heights must be uint16, got {heights.dtype}")
@@ -289,6 +303,8 @@ def apply(
             ridged_weight=ridged_w,
             ridged_sharpness=cfg.ridged_sharpness,
             diffusion_scale=diff_scale,
+            seed_sigma_scale=float(resolution_factor),
+            px_scale=float(resolution_factor),
         )
         del gate, ridged_w, diff_scale
         relief_diag["erosion_slope_gate_steps"] = round(
@@ -373,7 +389,10 @@ def apply(
     del amp, noise
 
     # 3. river valleys -----------------------------------------------------
-    delta = _carve_rivers(delta, land, river_body, river_width_index, cfg.river_depth)
+    delta = _carve_rivers(
+        delta, land, river_body, river_width_index, cfg.river_depth,
+        px_scale=float(resolution_factor),
+    )
 
     # 3b. bound the excursion by the headroom that actually exists ---------
     delta, headroom_diag = _limit_excursion(
@@ -888,21 +907,32 @@ def _carve_rivers(
     river_body: np.ndarray,
     river_width_index: np.ndarray,
     depth: float,
+    px_scale: float = 1.0,
 ) -> np.ndarray:
     """Gaussian cross-section valley along the traced river body pixels.
 
     Subtracted on land only, so a river never raises a pixel above its
     neighbours -- it can only cut a valley into what pass 1+2 already built.
+
+    ``px_scale`` (the caller's ``resolution_factor``) grows the whole
+    cross-section -- base width, per-index width and the blur/margin that
+    round it off -- by the same factor as the canvas, so a river reads the
+    same width in km whether the heightmap is 1x or 2x
+    (docs/step_map_heightmap.md §2i); ``depth`` is levels, not a distance,
+    and is untouched.
     """
     if not river_body.any():
         return out
     dist = distance_transform_edt(~river_body).astype(np.float32)
     width_px = np.zeros(river_body.shape, dtype=np.float32)
-    width_px[river_body] = (
+    width_px[river_body] = px_scale * (
         _RIVER_WIDTH_BASE_PX
         + (11.0 - river_width_index[river_body]) * _RIVER_WIDTH_PER_INDEX
     )
-    wsp = gaussian_filter(width_px, _RIVER_BLUR_PX, mode="nearest") + _RIVER_MARGIN_PX
+    wsp = (
+        gaussian_filter(width_px, _RIVER_BLUR_PX * px_scale, mode="nearest")
+        + _RIVER_MARGIN_PX * px_scale
+    )
     valley = depth * np.exp(-((dist / wsp) ** 2))
     return out - valley * land
 

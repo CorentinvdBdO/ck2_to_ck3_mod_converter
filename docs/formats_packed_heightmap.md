@@ -62,6 +62,24 @@ this module, and it needs a Windows/Proton run of the game with the mod loaded.
 `Heightmap.LoadMaxError` is the compiled-in tolerance the packer uses — it has
 no default in any shipped `.settings` file, which is why §5 has to fit it.
 
+### Can the game boot with the packed pair and no `heightmap.png` at all?
+
+**Yes** — this is the mirror of the question above, and it is what lane
+`heightmap-2x` acts on (`docs/step_map_heightmap.md` §2i,
+`[map.heightmap] ship_heightmap_png = false` at `resolution_factor = 2`,
+where `heightmap.png` is ~126 MB, over GitHub's 100 MB hard limit).
+`default.map` never names `heightmap.png`; every `Failed loading …` string
+above is about the *packed* pair, and every `heightmap.png`-adjacent string
+in `ck3.exe` (`CHeightmapResolutionTool`, `CEditorHeightmap`,
+`ApplyHeightmapResolution`) is namespaced `PdxMapEditor` — the Repack
+Window's own tool for producing the pair, not a runtime load path. So the
+map editor needs `heightmap.png` to *regenerate* the pair; the game itself,
+launched normally (no `-debug_mode`, no map editor), needs only
+`heightmap.heightmap` + the pair. A mod dropping `heightmap.png` loses the
+ability to repack from inside the editor, nothing else. Not launch-tested
+here either (still no headless CK3 in this repo), same caveat as the
+question above — `assumed` on the same strength of evidence.
+
 ---
 
 ## 1. The descriptor

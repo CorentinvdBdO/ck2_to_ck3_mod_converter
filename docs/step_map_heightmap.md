@@ -932,6 +932,291 @@ unchanged (Thay p95 129 against 134). So the ridged seed is a shape change
 and costs nothing measurable elsewhere.
 ---
 
+## 2i. `resolution_factor = 2`, shipped: the ground-distance audit
+
+User decision 2026-09-24 (`docs/DECISIONS.md`): ship at vanilla's own
+resolution, 2× the province canvas, with the erosion/detail passes running
+*at* 2× rather than a bicubic upsample of a 1× map (§2e's control measured
+that adds no frequency at all — 0.29–0.36 × vanilla at 0.6 c/km). Lane
+`heightmap-2x`.
+
+**Why this is not a one-line flip.** §2e already found the two-key packer
+change (`resolution_factor = 2` + `tile_size = 65`) and already found the
+mechanism of the defect: every `*_px` key of this module is a **canvas**-
+pixel length, and at 2× the heightmap is a finer grid than the canvas, so an
+unconverted pixel count describes half its intended ground distance. §2e
+had `ck2ck3.map.build` scale three of them
+(`deterrace_sigma_px`/`gain_blur_px`/`coast_smooth_px`) and stopped there,
+flagging `fractal_seed`'s octave sigmas and `_carve_rivers`'s width
+constants as still wrong. This section is the full audit that finding asked
+for, `grep`-driven over every module `heights` passes through
+(`ck2ck3.map.{heightmap,heightmap_detail,heightmap_erosion,lake_to_land,build}`).
+
+**The constants, what each one is, and how each is now converted:**
+
+| constant | module | was | now |
+|---|---|---|---|
+| `deterrace_sigma_px`, `gain_blur_px`, `coast_smooth_px` | `heightmap_detail` cfg | × `f` (§2e) | unchanged |
+| `wall_spread_window_px`, `wall_spread_sigma_px` | `heightmap_detail` cfg | canvas px | × `f`, `build.detail_cfg` |
+| `bound_window_px` (the §2f one-source-pixel bound) | `heightmap_detail` cfg | canvas px | × `f`, rounded, min 1 |
+| `source_adaptive_window_px` (§2h source-roughness window) | `heightmap_detail` cfg | canvas px | × `f` |
+| `fractal_seed`/`ridged_seed` octave sigmas `(0.8, 1.6, 3.2, 6.4, 12.0)` | `heightmap_erosion` | fixed, module-level | × `f` via `eroded_relief(seed_sigma_scale=f)` |
+| `erosion_slope_ceiling_steps` (the §2d cliff-foot-moat cap) | `heightmap_erosion.eroded_relief` | levels/canvas-px | ÷ `f` (the *same* physical cliff spans `f`× more output pixels, so its slope in levels/px is `1/f` of the 1× value — `px_scale=f`) |
+| `_RIVER_WIDTH_BASE_PX`, `_RIVER_WIDTH_PER_INDEX`, `_RIVER_BLUR_PX`, `_RIVER_MARGIN_PX` | `heightmap_detail._carve_rivers` | fixed module constants | × `f` via `px_scale=f` |
+| `sea_shelf_px` (`deepen_sea`'s coastal ramp) | `heightmap.deepen_sea` | canvas px | × `f` at the `build.py` call site |
+| `inpaint_heights`'s `sigma_px` (lake harmonic fill) | `lake_to_land` | canvas px, default 1.5 | × `f`, passed explicitly |
+| `carve_valleys`'s `ring_px`/`ring_max_px` (valley bank search) | `lake_to_land` | canvas px, defaults 15/240 | × `f`, passed explicitly |
+
+**Not scaled, and why that is correct, not an oversight:** every `*_km`
+key and every constant multiplied through `km_per_px` (`HF_SIGMA_KM`,
+`KEEP_STRUCTURE_BELOW_KM`, the whole spectral-fill/`macro_slope_gate`
+machinery, `SOURCE_PX_KM`) — `ck2ck3.map.build` already passes
+`km_per_px = cfg.scale.vanilla_km_per_px / f` into `heightmap_detail.apply`,
+so anything built on it is resolution-correct by construction and needed no
+change. `fill_min_cycles_per_km`, `erosion_slope_gate_steps` (via
+`macro_slope_gate`, km-based), `river_depth`, `cliff_step_levels` and every
+`*_levels` constant are heights or km, not pixel distances, and are
+untouched. The "never below the downstream neighbour" incision guard inside
+`eroded_relief` reads the *true*, unscaled per-pixel slope on purpose — it
+is a per-pixel physical invariant, not a ground-distance measurement
+(`heightmap_erosion.eroded_relief`'s own docstring).
+
+**A second, pre-existing bug this audit found and fixed: `heights` and the
+province raster silently disagreed in shape at `resolution_factor > 1`.**
+`lake_to_land.inpaint_heights`/`carve_valleys` index `heights` (already `f`×
+canvas resolution, from `heightmap.build`) through `ck3_raster` (always
+canvas resolution — province-raster-derived arrays never grow with the
+heightmap). At `f = 1` the two happen to be the same array and the bug is
+invisible; at `f = 2` it is a shape mismatch. `ck2ck3.map.build` now
+nearest-neighbour-upsamples `ck3_raster`/`water_mask` to heightmap
+resolution (`_nn_upsample`, the same helper `heightmap_detail.apply`'s own
+land/terrain/river inputs already used) before either lake_to_land call.
+
+**Evidence and measurement tooling had the same bug, twice over, and needed
+the same fix:**
+
+* `scripts/relief_sharp_common.plain_rescale_canvas()` (`docs/evidence/relief_sharp/*.csv`,
+  and every one of `scripts/verify_heightmap_detail_invariants.py`'s source-
+  bound/closed-depression/wall/narrow-canyon checks) hardcoded the 1× canvas
+  geometry, so at `f = 2` it returned a shape that could never match
+  `heights` and every one of those checks silently reported "SKIPPED" — a
+  green invariants run that had stopped checking four of its nine invariants.
+  Now takes `resolution_factor`, scaling all four geometry constants
+  (`CANVAS_*`, `SCALED_*`, `OFFSET_*`).
+* `scripts/verify_heightmap_detail_invariants.py` itself additionally hard-
+  refused any `provinces.png`/`heightmap.png` size mismatch
+  (`if prov.shape[:2] != heights.shape: return 1`) — correct at `f = 1`,
+  wrong at `f = 2`, where vanilla's own map ships the two at different sizes
+  on purpose. It now derives `resolution_factor` from the ratio, upsamples
+  the province-id raster once at the top of `main`, and every downstream
+  per-province check (land/water invariant, valley/lake-to-land checks, the
+  narrow-canyon scan) works unmodified against the upsampled array. Every
+  window constant used against a `heights`-resolution array
+  (`bound_window`, `NARROW_CANYON_WIDTH_PX`/`RING_PX`,
+  `BED_VS_BANK_RING_PX`, `relief_pits_common.terrain_codes_from_mod`'s own
+  province-terrain rasterisation, `closed_depression_excess_stats`'s
+  `EXCESS_WINDOWS_PX`) is multiplied by the detected factor at the call
+  site.
+* `scripts/measure_relief_shape.py` (drainage density, valley V/U shape)
+  took a `--resolution-factor` flag: its `OUR_CROPS` origins and `CROP_PX`
+  window are canvas-px, and vanilla's own crops were being 2×2-mean-pooled
+  down to match a 1× "ours" — at `f = 2` both are the same native
+  resolution and the pooling is now skipped instead of blurring vanilla's
+  own signal.
+
+**Known gap, left as a documented limit, not fixed:** `relief_pits_common`'s
+research-only windows outside the invariants script's own call sites —
+`CLIFF_WIDTH_PX` inside `wall_stats`'s `cliff_drop_concentration`, and the
+`MOAT_CLOSING_PX`/`MOAT_NEAR_PX`/`MOAT_FAR_PX` transect constants in
+`relief_sharp_common` used only by the §2d isolation studies — are still
+1×-canvas-px and were not threaded through for this lane. They are informational
+diagnostics (check 6 already compares the *output's* ratio to the *source's
+own* ratio at the same unscaled window, so it stays self-consistent even
+unconverted) rather than pass/fail gates on the shipped file, and are not
+used by `verify_heightmap_detail_invariants.py`'s exit code.
+
+**Verification method.** No new synthetic 1×-vs-2× fixture was added
+(`ci/checks.sh`'s own runtime budget does not have room for a second `map`
+step); instead `uv run pytest -m "not slow"` (1337 passed) plus a real
+`configs/faerun.toml` run at `resolution_factor = 2` is the check — every
+`*_px` constant above is exercised on the real canvas, at the real 1.9543×
+oversample, with the real lake/valley overrides live. `docs/evidence/heightmap_2x/`
+carries the run log, sizes, timing/RSS and the spectrum/shape tables.
+
+**The first full run found the real cost, and it was not the erosion.** The
+first `resolution_factor = 2` run of this lane's own code took **1808 s**
+for the `map` step (30 min) — a real regression to chase, not the ~2×–4×
+this section's own audit predicted. `lake_to_land.inpaint_heights` (the §2h
+iii harmonic lake fill) runs 400 iterations of a whole-canvas
+`gaussian_filter`, and at `resolution_factor = 2` `sigma_px` is correctly
+doubled (this section) to keep the same ground blur — so the same 400
+passes now cost ~4× the per-pixel work over ~4× the pixels. Profiling this
+run's own wall-clock (the `building heightmap` → `lake_to_land heightmap
+inpaint` log gap) put it at roughly **700 s** on its own, for **34,560**
+hole pixels (0.015 % of the canvas) — 5 marsh provinces near Thaymount, not
+spread across the map.
+
+**Fix: solve on the holes' own bounding box, not the canvas.**
+Blur-and-restore is a diffusion process — information travels
+`~sigma_px * sqrt(2 * iterations)` px in `iterations` passes — so
+`inpaint_heights` now crops to the union of every hole's bounding box padded
+by four times that radius (a "fixed" land pixel inside the padding is
+restored to its true value every pass exactly as in the whole-canvas
+version, so the artificial crop edge has decayed to negligible influence
+long before it could reach a hole), with a fallback to the whole canvas if
+the padded box would already cover more than 60 % of it. Re-run with the
+fix: same inputs, byte-identical stats (`before_median`/`after_median`/
+`bank_median` unchanged to the decimal — `verified`, the two runs' log
+lines), `crop_frac_of_canvas` **0.0115** (2,589,796 of 225.8M px), and the
+whole `building heightmap` → `synthesising heightmap detail` gap (heightmap
+build + lake inpaint + valley carve + `deepen_sea`) dropped from an
+estimated ~750 s to **~27 s**. `carve_valleys` (the river-valley bank
+search) was never the cost — it is a bounded ring-dilation per province, six
+of them, not a canvas-wide iteration — and needed no change.
+
+**What is left, honestly.** The erosion/detail pass itself
+(`heightmap_detail.apply`'s `relief_mode = "eroded"`) is `erosion_iterations
+× accum_iterations` = 16 × 3 relaxation passes of 8-neighbour shifted
+multiply-adds over the *whole* heightmap-resolution array by design (§2c:
+the catchment has to be carried on the same grid the incision cuts), so it
+does not shrink the way a small, localised hole-fill does — it cost
+**454.6 s** on both runs (identical to the decimal, since nothing in the
+lake-fill fix touches it), essentially 4× its 1× cost because there are 4×
+the pixels. This is the genuine, physically-expected cost of running the
+erosion *at* 2× rather than upsampling a 1× result (which is exactly why
+§2e's own upsample control was rejected — sharpness has to come from the
+pass, and the pass has to touch every pixel). Total `map` step after the
+lake-inpaint fix: see the run log referenced in the HANDOFF; still
+dominated by the erosion pass, which a further lane could shard by tile or
+port to a compiled inner loop (`numba`/Cython) if a faster wall-clock is
+needed — out of this lane's scope, flagged here rather than rewritten under
+time pressure.
+
+**`map_data/heightmap.png` is not shipped at `resolution_factor = 2`.**
+Confirmed by three independent pieces of evidence, all `verified`: (1)
+`map_data/default.map`'s `topology = "heightmap.heightmap"` names only
+`packed_heightmap.png`/`indirection_heightmap.png` (the pre-existing CLAUDE.md
+invariant); (2) a text grep of every file under `../claudespace/game_files`
+finds no reference to `heightmap.png` outside `heightmap.heightmap`'s own two
+lines; (3) `strings` over the installed `ck3.exe` finds the literal string
+`heightmap.png` *and* the message `"original_heightmap_size specified in
+heightmap.heightmap (%d, %d) is not the same resolution as the heightmap you
+are trying to load (%d, %d). Size of the bitmap will be used for packing."`,
+but every symbol near it is namespaced under `PdxMapEditor`
+(`CHeightmapResolutionTool@PdxMapEditor`, `CEditorHeightmap@PdxMapEditor`,
+`ApplyHeightmapResolution`) — the in-game **map editor**'s own tool for
+*producing* the packed pair from a raw `heightmap.png`, not a runtime asset
+path. Vanilla's own `heightmap.png` is 122 MB — over GitHub's 100 MB hard
+limit already, which is only possible because Paradox ships it outside git —
+and ours is ~126 MB at `resolution_factor = 2` (39 MB at 1×, safe). Neither
+Elder Kings 2 nor Godherja was installed locally to check directly (both are
+1× heightmaps anyway, so the question does not arise for them at their
+shipped resolution); the vanilla-binary and `default.map` evidence above is
+what this decision rests on. `[map.heightmap] ship_heightmap_png` (default
+`true`, `configs/faerun.toml` sets it `false`) gates the write; set it `true`
+locally to run this repo's own evidence scripts (they read `heightmap.png`
+back for analysis, never the packed pair) against a generated mod.
+---
+
+## 2j. Dense axis-aligned hairline stripes at 2× — found, isolated, fixed
+
+The first real `resolution_factor = 2` render (coordinator's own look at
+`docs/evidence/heightmap_2x/renders/hillshade_spine_ours_2x.png`) showed a
+dense hairline cross-hatch, mostly horizontal, on every mountain slope — not
+present at 1×. Axis-aligned and 2×-only pointed at a raster-grid-locked
+mechanism, not noise.
+
+**The crop harness.** `scripts/heightmap_2x_crop.py` runs
+`heightmap_detail.apply` on a real ~1 Mpx crop (Spine/Thay/Sword Coast, the
+real topology/province/terrain/river inputs, cached once) instead of the
+full 226 Mpx canvas — seconds per variant instead of ~10.5 minutes. §2h's
+own `relief_pits_ablate_canvas.py` had ruled crop ablation out for charging
+the *spectral fill's amplitude* with anything (no 256 px all-land interior
+patch, `_interior_patch_spectrum` degenerates); that caveat is about gain
+calibration, not about a raster-grid-locked shape defect, and the stripes
+reproduce on the crop pixel-for-pixel identically to the canvas render.
+
+**Isolation, by ablation** (`docs/evidence/heightmap_2x/crop_ablation/`,
+`.npy` diffs against the shipped-config crop, `verified`):
+
+| variant | max diff (levels) | stripes gone? |
+|---|---|---|
+| `no_ridged`, `isotropic_relief`, `no_erosion_diffusion`, `no_source_adaptive_gain`, `diffusion_x4` | **0** (byte-identical) | no — these passes never touch this crop's output at all (the spectral fill's gain evaluates near-zero here, a further symptom of the same degenerate-crop gain calibration §2h already named) |
+| `no_wall_spread` | 1540 | no |
+| `no_source_bound` | 762 | no |
+| `no_deterrace_sigma` (≈0, de-terrace disabled) | 1377 | yes, but everything else changes too (raw quantisation stipple) |
+| **`gaussian_deterrace`** (blind Gaussian instead of Perona-Malik) | 3537 | **yes, cleanly** |
+
+Only swapping Perona-Malik for a blind Gaussian removes the stripes while
+leaving every other pass untouched — the cause is `deterrace_cliff_aware`
+itself, at 2×.
+
+**Root cause.** CLAUDE.md's own 1× invariant already names the mechanism:
+*"Perona-Malik de-terrace alone… turns a multi-pixel CK2 cliff into a 1-px
+axis-aligned wall"* (a classic anisotropic-diffusion staircase-collapse: a
+ramp of small risers each resists diffusion just enough that the whole drop
+concentrates onto whichever edge starts largest). At 1× this is measured
+(source 0.56, pass 1 alone 0.85) and `widen_concentrated_steps` (wall-spread)
+corrects it. The staircase-collapse dynamic gets *more* complete the more
+diffusion steps it is given, and `deterrace_iterations = sigma_px² /
+(2·λ)` scales with the **square** of `deterrace_sigma_px` — itself already
+correctly scaled by `resolution_factor` (§2e/§2i) — so a 2× run gets **~4×**
+the 1× iteration count (54 vs 13 on the Spine crop) and the collapse has
+that much more "time" to fully concentrate a drop before wall-spread ever
+measures it.
+
+**Why wall-spread, itself resolution-scaled, did not catch it.**
+`wall_spread_iterations` made *no* difference at 4, 8 or 16 (crop-harness
+sweep, byte-identical output each time) — the bottleneck is not smoothing
+budget, it is the gate: `over = (ratio_out > max_ratio) & (ratio_out >
+ratio_src + source_margin)`. `max_ratio`/`source_margin` are dimensionless
+and were never scaled — reasonably, since a ratio needs no ground-distance
+conversion — but they were tuned entirely against 1×'s own baseline, where
+the *source's own* concentration ratio sits near 0.5. At 2× a genuine cliff
+is naturally **less** concentrated (it spans ~2× more pixels), so the
+source's own ratio measured on these crops is **0.23–0.29**: the 1×-tuned
+gate (`max_ratio = 0.55`) never fires on this build's own manufactured
+walls, because they never looked concentrated enough by the 1× yardstick
+even though they were far more concentrated than *this* source's own.
+
+**Fix, `ck2ck3.map.build`'s `detail_cfg` replace(), `resolution_factor > 1`
+only:** `wall_spread_max_ratio = 0.20`, `wall_spread_source_margin = 0.05`
+(from 0.55/0.15). Found by a crop-harness sweep (0.55 → 0.10 in steps),
+picked at the point every one of the three regions clears check 6's own
+threshold (`source + 0.35`) with room:
+
+| region | source k=2 | k=5 | shipped (broken) k=2 | **fixed** k=2 | k=5 | threshold k=2 |
+|---|---|---|---|---|---|---|
+| Thay | 0.29 | 0.08 | — | **0.31** | 0.12 | 0.64 |
+| Spine | 0.29 | 0.03 | 0.81 | **0.33** | 0.03 | 0.64 |
+| Sword Coast | 0.23 | 0.05 | — | **0.29** | 0.00 | 0.58 |
+
+Elevation range is unaffected (Spine crop: p99 28,954 vs 29,035, std 5873
+vs 5885, both < 0.5 % — the macro terrain is untouched); only the
+pathological single-pixel gradient spike shrinks (Spine crop grad p99
+**1053 → 693** levels/px, max 2196 → 1446) — wall-spread finally doing the
+job it was built for, not new blurring. Confirmed by eye on all three
+regions (`docs/evidence/heightmap_2x/crop_ablation/crop_{region}_FIXED.png`)
+and on the real, whole-canvas rebuild.
+
+**Not scaled per-`f` from first principles** — 0.20/0.05 is an empirical fit
+at `f = 2`, documented as such rather than derived, since only `f ∈ {1, 2}`
+is used anywhere in this repo or its two reference total conversions.
+
+**The FFT "2-px period power" detector the coordinator also asked for was
+tried and did not discriminate the artefact cleanly** — a Nyquist-bin-power
+and a near-Nyquist axis-vs-diagonal 2-D power ratio were both computed on
+the source, the broken build and the fixed build (`verified`): neither
+separated "broken" from "fixed" (axis/diag near-Nyquist energy 19.1 / 10.1 /
+10.2 respectively — the *source* itself scored highest). The artefact is a
+handful of concentrated single-pixel edges, not a periodic signal a whole-
+field FFT resolves well against broadband terrain texture. Check 6
+(`edge_step_orientation_counts`, already in `scripts/
+verify_heightmap_detail_invariants.py`) is the direct, working detector —
+it is what caught this defect and what confirms the fix — so no second,
+weaker metric was added.
+---
+
 ## 3. Invariants — what cannot break, and why it cannot
 
 * **Every water pixel is returned byte-identical to the plain rescale.**

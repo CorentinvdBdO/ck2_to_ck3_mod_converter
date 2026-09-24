@@ -209,7 +209,8 @@ def build15_reconstruction_canvas(cache_dir: Path) -> np.ndarray:
 
 def load_sources(cache_dir: Path, region: str = "thay",
                  include_build15: bool = True,
-                 extra: dict[str, Path] | None = None) -> dict[str, np.ndarray]:
+                 extra: dict[str, Path] | None = None,
+                 extra_resolution_factor: int = 1) -> dict[str, np.ndarray]:
     ys, xs = crop_slices(region)
     ck2_crop, native_box = ck2_source_truth_crop(region)
     print(f"  ck2 source native box (topology.bmp px) = {native_box}, "
@@ -223,8 +224,15 @@ def load_sources(cache_dir: Path, region: str = "thay",
     }
     if include_build15:
         out["build15"] = build15_reconstruction_canvas(cache_dir)[ys, xs]
+    # a `--extra` source may be a heightmap built at a different
+    # `[map.heightmap] resolution_factor` than the other four (all canvas
+    # resolution) -- the same physical crop needs `resolution_factor`x the
+    # pixel coordinates on a finer grid (docs/step_map_heightmap.md §2i).
+    ef = extra_resolution_factor
+    ys_e = slice(ys.start * ef, ys.stop * ef)
+    xs_e = slice(xs.start * ef, xs.stop * ef)
     for name, path in (extra or {}).items():
-        out[name] = C.load16(path)[ys, xs]
+        out[name] = C.load16(path)[ys_e, xs_e]
     return out
 
 
@@ -380,6 +388,10 @@ def main() -> None:
     ap.add_argument("--extra", nargs="*", default=[],
                     help="name=path/to/heightmap.png, rendered alongside the "
                          "four standard sources")
+    ap.add_argument("--extra-resolution-factor", type=int, default=1,
+                    help="[map.heightmap] resolution_factor the --extra "
+                         "heightmap(s) were built at (the four standard "
+                         "sources are always canvas resolution)")
     ap.add_argument("--paint-mod", default=None,
                     help="lane `relief-paint`: a generated mod dir whose "
                          "gfx/map/terrain/detail_index.(tga|dds) is draped "
@@ -407,7 +419,8 @@ def main() -> None:
 
     t0 = time.time()
     sources = load_sources(cache_dir, args.region,
-                           include_build15=not args.no_build15, extra=extra)
+                           include_build15=not args.no_build15, extra=extra,
+                           extra_resolution_factor=args.extra_resolution_factor)
     label = args.region.capitalize()
     # "thay" keeps the original (unprefixed) filenames this lane's docs
     # already reference; any other region gets its own name in the file so

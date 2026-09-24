@@ -116,6 +116,16 @@ DEFAULT_EROSION_SLOPE_GATE_STEPS = 1.0
 #: hard mask would print the gate's own outline into the map.
 _GATE_SOFTNESS = 0.5
 
+#: :func:`fractal_seed`/:func:`ridged_seed`'s own default octave sigmas,
+#: canvas px at ``resolution_factor = 1``.  Module-level so
+#: :func:`eroded_relief` can scale them by the caller's own resolution
+#: factor (``seed_sigma_scale``) instead of hardcoding two copies -- at
+#: ``resolution_factor > 1`` the heightmap is a finer grid than the canvas,
+#: so a pixel-count sigma has to grow by the same factor to keep seeding the
+#: same km-scale relief (docs/step_map_heightmap.md §2e/§2i: unscaled, the
+#: 2x prototype's synthetic relief sat at half its intended ground scale).
+_DEFAULT_SEED_SIGMAS_PX: tuple[float, ...] = (0.8, 1.6, 3.2, 6.4, 12.0)
+
 
 def _slices(shape: tuple[int, int], dy: int, dx: int):
     """Source and destination slices for a translation by ``(dy, dx)``."""
@@ -497,6 +507,8 @@ def eroded_relief(
     ridged_weight: np.ndarray | float = 0.0,
     ridged_sharpness: float = 2.0,
     diffusion_scale: np.ndarray | float = 1.0,
+    seed_sigma_scale: float = 1.0,
+    px_scale: float = 1.0,
 ) -> tuple[np.ndarray, dict]:
     """Return ``(relief field, diagnostics)`` -- unit-variance over land.
 
@@ -517,15 +529,33 @@ def eroded_relief(
     initial relief in place of :func:`fractal_seed`, and ``diffusion_scale``
     (per pixel) multiplies the hillslope diffusion -- the two halves of §2g's
     sharp-mountain treatment, applied per terrain class by the caller.
+
+    ``px_scale`` (the caller's ``resolution_factor``) re-expresses
+    ``slope_ceiling_steps`` in *this grid's* pixels: :func:`_steepest_descent`
+    reads ``w``'s raw pixel-to-pixel difference, not a km-normalised one, so
+    "one quantisation riser" is a bigger per-pixel slope at 1x than at 2x --
+    the same physical cliff spans twice as many pixels on the finer grid, so
+    its slope in levels/px is half. Dividing the ceiling by ``px_scale`` keeps
+    it discriminating the same real-world cliff at any resolution
+    (docs/step_map_heightmap.md §2i). The "never below the downstream
+    neighbour" guard a few lines down reads ``w``'s *true* slope and is left
+    alone on purpose -- that invariant is a per-pixel statement regardless of
+    ground scale.
     """
     h0 = np.array(base, dtype=np.float32)
+    seed_sigmas = (
+        _DEFAULT_SEED_SIGMAS_PX if seed_sigma_scale == 1.0
+        else tuple(s * seed_sigma_scale for s in _DEFAULT_SEED_SIGMAS_PX)
+    )
     rw = np.asarray(ridged_weight, dtype=np.float32)
     if rw.size and float(rw.max()) <= 0.0:
-        seed = fractal_seed(h0.shape, rng)
+        seed = fractal_seed(h0.shape, rng, sigmas_px=seed_sigmas)
         ridged_land_frac = 0.0
     else:
-        smooth = fractal_seed(h0.shape, rng)
-        ridged = ridged_seed(h0.shape, rng, sharpness=ridged_sharpness)
+        smooth = fractal_seed(h0.shape, rng, sigmas_px=seed_sigmas)
+        ridged = ridged_seed(
+            h0.shape, rng, sigmas_px=seed_sigmas, sharpness=ridged_sharpness
+        )
         rwc = np.clip(rw, 0.0, 1.0)
         seed = (1.0 - rwc) * smooth + rwc * ridged
         del smooth, ridged
@@ -538,6 +568,7 @@ def eroded_relief(
     del seed
     ceiling = (
         float(slope_ceiling_steps) * QUANTISATION_STEP_LEVELS
+        / max(float(px_scale), 1e-6)
         if slope_ceiling_steps > 0 else 0.0
     )
     landf = land.astype(np.float32)
@@ -613,4 +644,5 @@ def eroded_relief(
         "erosion_field_rms_levels": round(sd, 1),
         "erosion_gate_land_mean": round(gate_land_frac, 4),
         "erosion_ridged_land_mean": round(ridged_land_frac, 4),
+        "seed_sigma_scale": round(float(seed_sigma_scale), 3),
     }

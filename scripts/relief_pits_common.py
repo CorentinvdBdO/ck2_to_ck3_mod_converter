@@ -506,7 +506,7 @@ def local_relief(a: np.ndarray, mask: np.ndarray, size: int = 5) -> dict:
 # --------------------------------------------------------------------------- #
 # per-pixel terrain class, read back off a generated mod
 # --------------------------------------------------------------------------- #
-def terrain_codes_from_mod(mod_dir, ys: slice, xs: slice):
+def terrain_codes_from_mod(mod_dir, ys: slice, xs: slice, resolution_factor: int = 1):
     """``(code array, keys)`` for a crop, from a generated mod's own files.
 
     `common/province_terrain/*.txt` (`<province id>=<terrain key>`) indexed
@@ -514,6 +514,13 @@ def terrain_codes_from_mod(mod_dir, ys: slice, xs: slice):
     `ck2ck3.map.build` hands the detail pass, but readable without running a
     conversion, so the study scripts and the pass agree on the class of every
     pixel.
+
+    `provinces.png` is always canvas resolution, even when the heightmap is
+    `resolution_factor`x it (vanilla itself ships them at different sizes);
+    `resolution_factor > 1` nearest-neighbour-upsamples the returned code
+    array to match, the same convention ``ck2ck3.map.build._nn_upsample``
+    uses for every other province-resolution array a heightmap-resolution
+    pass needs (docs/step_map_heightmap.md §2i).
     """
     from pathlib import Path
 
@@ -554,6 +561,9 @@ def terrain_codes_from_mod(mod_dir, ys: slice, xs: slice):
         if t is None or t == default_land:
             continue
         code[key == rgb] = index[t]
+    if resolution_factor != 1:
+        code = np.repeat(np.repeat(code, resolution_factor, axis=0),
+                          resolution_factor, axis=1)
     return code, keys
 
 
