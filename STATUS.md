@@ -1,7 +1,7 @@
 # STATUS — ck2_to_ck3_mod_converter
 
 Rewritten by `/status` and `/ship`. Overwrite, never append.
-Updated: 2026-09-12 19:40 by Claude session (coordinator)
+Updated: 2026-09-24 03:00 by Claude session (coordinator)
 
 ## Lanes in flight
 | lane | branch | owner | done when | state | checks |
@@ -19,8 +19,8 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 ## Repos
 | repo | path | base | origin | state |
 |---|---|---|---|---|
-| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main fbc94bd+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
-| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 17 2026-09-12 19:30; tiger fatal 0 / error 58; invariants hold; soak alive |
+| converter | `paradox/ck3/ck2_to_ck3_mod_converter` | main fac9e31+ | github.com/CorentinvdBdO/ck2_to_ck3_mod_converter (public) | 16 steps (`--list-steps`), full run ~3 min, 1482 files + 2 gitignored TGA; ck3-tiger fatal 0; pytest 1058 |
+| faerun_ck2_to_ck3_converted (generated) | `paradox/ck3/claudespace/mods/faerun_ck2_to_ck3_converted` | main 127036a | github.com/CorentinvdBdO/faerun_ck2_to_ck3_converted (private) | build 20 2026-09-24 02:45; tiger fatal 0 / error 58; invariants hold; soak alive |
 | forgotten_kings (submod) | `paradox/ck3/claudespace/mods/forgotten_kings` | main 3812924 | github.com/CorentinvdBdO/forgotten_kings (private, GPL-3.0) | skeleton + roadmap notes + `docs/design_dlc_gating.md` |
 | ck3_fantasy_assets | `paradox/ck3/ck3_fantasy_assets` | main | none (local by decision) | skeleton |
 | claudespace (workspace) | `paradox/ck3/claudespace` | master 17a247a | none | test harness, headless display, `/fk-push` `/fk-test` `/fk-errors`, `scripts/ck3_bisect.sh` |
@@ -42,6 +42,9 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - Open human decisions: `docs/evidence/HANDOFF_integration_B.md` §open questions (8), `docs/step_*.md` open sections.
 
 ## Last results
+- 2026-09-24 — **build 20, relief-driven paint**: mountains/desert_mountains/hills get rock faces, snow/scree crests and green valley pockets from vanilla's measured family-vs-relief table; other classes byte-identical to build 19 (flat-ground sampling was camouflage noise). `docs/step_map_paint.md` §11.
+- 2026-09-24 — **build 19, Thay fixed at the root**: the canyon rings were 16,786 undefined black pixels in CK2's `provinces.bmp` mapped to ocean; they now take their nearest province. Plus wall spreading, 5 plateau lakes → marsh (`overrides/lake_to_land.csv`, user decision), 6 high river provinces carved as valleys. `docs/step_map_heightmap.md` §2h.
+- 2026-09-23 — **build 18, on_actions**: 0 orphaned/0 missing-loc events of ours; 159 live, 1 reachable; faith/culture value rewrite. **Research**: `docs/research_race_tooling.md` (races, DNA format, picture→DNA pipeline, `scripts/dna_parse.py`).
 - 2026-09-12 — **build 17, organic borders**: `provinces.png` is a bounded smooth argmax of the CK2 id map, not a NEAREST resize. Every border and coastline was a vanilla-shaped border stretched 1.95× (mean straight run of a crack 3.39 px vs vanilla 1.76); now 1.91 px, max displacement 0.72 CK2 px, colours/adjacencies unchanged, heightmap coast follows, 3704 baronies placed. Still stepped *inside* counties (barony growth is 4-connected BFS) — backlog. `docs/step_map_baronies.md` §10.
 - 2026-09-12 — **build 16, playtest-4 relief fixes (offline study, no probes)**: Thay's pits were pass 4 — Faerûn's CK2 lakes sit on high plateaus, CK3's water level is global, so each lake is a hole through its plateau and the coast smoothing dragged the ring of land 55 % down to sea level (pit p95 4086 vs interior 290). The old "cliff-foot excess" metric was a difference and could not see it. Now: `coast_mode = "damp_detail"`, erosion gated on source slope, fill roll-on 0.10 c/km, and a hard bound `source_local_min − tol ≤ out ≤ source_local_max + tol` (tol = 2× class HF RMS) checked by the invariants script (0 px outside). Thay pit p95/p99 576/2612 → 136/392, lake rings 4086 → 53. Ridged relief on mountain classes: ridge share 1.04× vanilla, gradient kurtosis 0.13× → 0.45× (2× heightmap is the remaining lever). `docs/step_map_heightmap.md` §2f/§2g, `docs/evidence/relief_pits/`.
 - 2026-09-11 — **build 15, the playtest-3 fixes, all seen in game**: (1) *pixels* — the edges, not the resolution: distance-field class blend + third material per class + relief-modulated boundaries bounded to one CK2 pixel, smooth trees mask; blend now 3.23 channels/px (vanilla 3.47); full-res paint free (RLE 172 → 24 MB) — Wealdath's forest is organic (`claudespace/docs/evidence/b14_wealdath_paint.png`). (2) *Thay moat* — the stream-power erosion read the macro escarpment as slope and planed the rim; the fill also injected 35–60 km relief the CK2 source already resolves. `erosion_slope_ceiling_steps = 0.5`, `fill_min_cycles_per_km = 0.05`: cliff-foot excess +2927 → −116 levels, plateau flat again (`b15_thay_moat_fixed.png`). (3) *Europe under water* — `water/watercolor_rgb_waterspec_a.dds` is a painting of Eurasia; with `foam_map`, `snow_mask` and `surround_mask` now written for our canvas the deep sea is flat teal and shelves follow Faerûn's coast (`b15_deep_water.png`, `b15_shelf.png`). (4) *top border* — `surround_mask.dds` B channel made terrain transparent over up to 4545 of our rows; regenerated, the NW corner is drawn (`b15_north_edge.png`). 2× heightmap prototyped, not shipped: 182 MB pair, 348 s, 19.8 GB RSS (`docs/step_map_heightmap.md` §2e).
@@ -64,6 +67,6 @@ Shipped 2026-09-07/08 (all on `main`, pushed): project-kickoff, mappings, mappin
 - 2026-09-08 — vanilla control in the same headless harness: menu 42 s, In Game with `-test` 54 s.
 
 ## Next 3
-1. User playtest 5 of build 17: Thay's plateau (pits), mountain sharpness, borders and coastlines at close zoom. Decide on the 2× heightmap (kurtosis 0.45× vanilla is the 1× ceiling; 182 MB / ~6 min per build).
-2. Crash soak: 10 unattended soaks, correlate the 0x141972299 dying runs (1 of 21 so far).
-3. **on_actions lane** (`docs/evidence/HANDOFF_events.md` §3), then `modified` events; backlog: barony borders inside counties, `deepen_sea` shelf vs smoothed coast, `tests/test_cli.py` dirties evidence CSVs, `river_depth` vs the bound tolerance.
+1. User playtest of build 20: Thay (plateau, marsh lakes, river valleys), mountain paint, lowlands. Decide the 2× heightmap (kurtosis 0.45× vanilla is the 1× ceiling; 182 MB / ~6 min).
+2. **Events**: the `modified` events lane and the 77 unmapped on_actions (`docs/evidence/HANDOFF_on_actions.md`) — until then only 1 of 159 live events fires.
+3. **Characters**: wire `scripts/dna_parse.py` into mass DNA generation per race/culture (`docs/research_race_tooling.md` §7 first step); backlog: 77 narrow water-pinned canyons elsewhere (`docs/evidence/narrow_water_pinned_canyons.csv`), drainage density 0.38× vanilla, 12 proposed high lakes.
