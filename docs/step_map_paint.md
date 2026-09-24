@@ -1128,3 +1128,420 @@ vanilla, Elder Kings 2 and Godherja all use, and the one no installed mod
 tests a smaller alternative to (§8.5). The 100 MB/file constraint that
 forced 0.5 in §8.4 no longer binds, with 70 MB of headroom on the larger
 layer.
+
+## 11. Lane `relief-paint`: the erosion's shape is invisible because the paint does not follow it
+
+**Question.** Playtest: "procedural erosion patterns [are] not great
+(probably need to edit the paint maps too)". `docs/step_map_heightmap.md`
+§2g had already measured the *heightmap's* own shape defect (gradient
+kurtosis 0.45x vanilla at 1x resolution, ridge share met at 1.02-1.04x) —
+this lane's job is the other half: even where the erosion's shape IS right,
+does the paint show it, or does one CK3 terrain class always wear one
+material mix regardless of slope?
+
+### 11.1 Measured first: does vanilla itself vary paint within a class by relief?
+
+`scripts/measure_vanilla_relief_paint.py` pairs vanilla's own
+`detail_index.tga` primary material channel with vanilla's own
+`heightmap.png` (aligned 2x -> 1x onto the paint/province pixel grid) and
+derives, per CK3 terrain class, `P(material family | slope bin, curvature
+bin, flow-accumulation bin, elevation bin)`. Materials are grouped into six
+families (`forest`, `grass`, `rock`, `snow`, `soil`, `other`; "scree" folded
+into `rock`, §11.3) by a name heuristic over vanilla's own
+`materials.settings` ids (`mappings/paint_material_categories.csv`,
+`ck2ck3.map.relief_paint.classify_material`). Vanilla's
+own real-world-regional material families (`gen_*`/`medi_*`/`northern_*`/
+`india_*`/`central_*`/`tropical*`) are excluded — `docs/step_map_paint.md`
+§9.3/§10.4 already found these contaminate any per-class vote with Earth
+geography (a tropical-mountain province votes `gen_tropical_lowlands`); the
+first run of this script hit the same contamination on `mountains` before
+the filter was added, kept as a negative result in
+`docs/evidence/vanilla_paint_vs_relief.md`.
+
+**Answer: yes, vanilla varies its paint within a class, in the expected
+direction, but the effect is modest** (`docs/evidence/vanilla_paint_vs_relief.csv`,
+`_mi.csv`, `.md`; `verified`, 11,998,972 non-regional vanilla land px):
+
+| axis | mean fraction of in-class material entropy explained | max (one class) |
+|---|---|---|
+| slope | 0.021 | 0.095 |
+| curvature | 0.008 | 0.025 |
+| flow accumulation | 0.004 | 0.015 |
+| elevation | 0.037 | 0.097 |
+
+Flow is the weakest axis everywhere and is dropped from the applied table;
+elevation is, on this measurement, actually a stronger predictor than slope
+for the one material that matters most visually (`mountains`: elevation
+eta^2 0.0345 against slope's 0.0002 — `docs/evidence/vanilla_paint_vs_relief_mi.csv`),
+so the applied table conditions on **slope x curvature x elevation**. The
+direction is exactly the hypothesis: `mountains` at high slope, ridge, high
+elevation is 30.8% `snow` (top material `mountain_02_snow`) against 9.7-22.0%
+at lower elevation; `rock` is 25-30% across the same bins and only really
+drops (to 17%) in the low-slope, low-elevation, ridge bin
+(`docs/evidence/vanilla_paint_vs_relief.csv`, rows `mountains,high,*,*`,
+`category_shares` column). It is a real, measurable, *small* signal at the
+per-material level — vanilla's own material choice per pixel is dominated by
+other factors this script does not model (province-level art direction, hand
+painting), not primarily by local relief. §11.2/§11.3 below is the story of
+what that smallness cost the first two applied designs, and how sampling
+the full measured MIX (not just its largest member) fixed it.
+
+### 11.2 v1: reorder only — coordinator review found it invisible
+
+The first version of this module only *reordered which of a class's already
+-vetted materials (`mappings/terrain_paint.csv`, audited §9.3) occupied
+which `detail_index` weight slot*, per pixel, by the measured category
+ranking. **Coordinator review of the renders found it did nothing**:
+`paintshade_spine_ours.png` vs the pre-lane `paintshade_spine_build17.png`
+differed by a mean absolute pixel value of **0.51/255** — visually
+identical. Cause, `verified` directly from `mappings/terrain_paint.csv`:
+`mountains`'s own configured mix is `mountain_02` / `mountain_02_c` /
+`mountain_02_d_valleys` — three bare-rock variants of the SAME family — so
+reordering them can never produce a green valley or a white crest; there
+was no grass or snow material in the pixel to promote.
+
+### 11.3 v2: substitute a real material, sampled from the measured MIX
+
+Fixing the palette alone was not enough either. A second measured defect,
+also caught before shipping the default on: v2's first cut still picked the
+single highest-ranked family **deterministically** (argmax of a spatially
+smoothed rank), and measured **93% rock on `mountains`** against vanilla's
+own real area share of **36%** (`scripts/verify_relief_paint_family_shares.py`,
+first run). The reason: a real vanilla bin is a MIX — `mountains` at high
+slope+elevation+ridge is 31% snow, 29% rock, 18% grass, not a single
+winner — and an argmax can only ever reproduce the largest share, never the
+rest of the distribution.
+
+**What ships now**, `ck2ck3.map.relief_paint.apply_relief_family_paint`:
+
+1. Per CK3 terrain class, vanilla's own top vanilla material **per family**
+   (`grass`/`forest`/`rock`/`snow`/`soil`, "scree" folded into `rock` —
+   vanilla's own `materials.settings` has a dedicated `snow` id but no
+   dedicated scree/talus one — plus an `other` catch-all), measured on
+   INTERIOR pixels only (dist > 5px from a class boundary, same definition
+   `measure_vanilla_paint_blend.py` §10.4 already uses) —
+   `mappings/relief_paint_family_materials.csv`. This is the class's real
+   in-game palette, not the 2-3 hand-picked rows in
+   `mappings/terrain_paint.csv`.
+2. Per `(class, slope, curvature, elevation)` bin, the measured family MIX
+   as actual proportions (not just rank) — `mappings/relief_paint.csv`'s
+   `category_shares` column.
+3. At paint time, **stochastic sampling** from that mix: inverse-CDF against
+   a spatially-coherent uniform field (a Gaussian-blurred standard-normal
+   noise field pushed through the normal CDF — a Gaussian copula, so the
+   marginal is exactly uniform and the spatial correlation length is
+   `sigma_px`), independently for the primary and secondary channel. This
+   reproduces the whole measured mix in expectation, not just its mode, and
+   the blur means the outcome still reads as PATCHES at vanilla's measured
+   scale rather than per-pixel noise.
+4. The winning family's material replaces `detail_index` channel 0
+   (primary) and channel 1 (secondary; falls back to the pixel's own
+   original secondary if the two channels would otherwise repeat an
+   ordinal — vanilla never repeats one, `docs/step_map_paint.md`
+   invariant).
+
+Because the weight VALUES in `detail_intensity` never move — only which
+ordinal a slot's existing weight is attached to — the two invariants this
+lane was told to keep are exact by construction, not by re-measurement:
+
+* **§10's blend statistics** (`mean_nonzero_channels`, `blend_entropy_bits`,
+  `mean_primary_weight`) are functions of the weight vector alone; nothing
+  that only relabels ordinals can move any of them.
+* **The one-source-pixel class-boundary bound (§10.2)** is untouched: this
+  module never reads or writes `codes_tgt`/`soft.class_index`.
+
+A `(class, slope_bin, curvature_bin, elevation_bin)` combination the
+measurement never saw >= 30 vanilla samples for is left **untouched**, not
+forced to an invented family; 390 of a possible 405 (15 painted classes x 27
+bins) combinations were measured. Bins are computed on **our own finished
+heightmap** (`compute_relief_bins`, called from `build.py` right before
+`heights` is deleted, same pattern `paint_edges.relief_warp` already uses).
+Wired into `build.py` right after `paint_edges.build_soft_blend` builds the
+soft-edge `SoftBlend` (requires `terrain_paint_soft_edges = true` — a no-op
+with a warning otherwise), before the pair is downsampled/written. §11.3d
+below is the round-2 revision of exactly how `slope`/`curvature`/`elevation`
+bins are computed — the whole-map-tercile version described in the first
+cut of this section was replaced.
+
+**`interior_weight` (a boundary gate) defaults to 0, not >0 — also
+measured, not assumed.** An early cut tried gating the substitution on
+"primary `detail_intensity` weight >= 0.7" to skip active cross-class
+boundary blends. That gate fired on **0% of the canvas**: §10's own
+per-class mix caps primary weight at its configured 0.55 EVERYWHERE,
+including deep class interiors (measured max over the whole canvas: 0.56)
+— weight reflects the class's OWN 3-material split, not distance to a
+boundary, so no threshold could ever separate the two. Caught by
+`primary_changed_px = 0` on the first real build with the gate on.
+
+### 11.3b Config (`[map]`, read by `steps/map.py` AND `ck2ck3.map.config.load` — both, per the five-times-hit silent-no-op bug)
+
+| key | default | meaning |
+|---|---|---|
+| `relief_paint` | `true` | substitute materials by the measured relief-conditioned family mix. Default true since 2026-09-24 (visual + numeric check passed, §11.6). |
+| `relief_paint_csv` | `mappings/relief_paint.csv` | the measured per-bin family-mix table |
+| `relief_paint_family_csv` | `mappings/relief_paint_family_materials.csv` | each class's own top material per family |
+| `relief_paint_categories_csv` | `mappings/paint_material_categories.csv` | material id -> family (evidence/render use; not read by the v2 apply path itself) |
+| `relief_paint_sigma_px` | `4.5` | Gaussian-copula noise correlation length, canvas px — vanilla's own measured patch scale (§11.3c) |
+| `relief_paint_interior_weight` | `0.0` | apply everywhere (see above for why a boundary weight gate does not work) |
+| `relief_paint_classes` | `("mountains", "desert_mountains", "hills")` | classes relief paint is even allowed to touch — round 3, §11.3e; every other class keeps §10's own paint byte-identical |
+| `trees_slope_gate` | `false` | gate tree eligibility on land slope (§11.4) |
+| `trees_slope_gate_percentile` | `95.0` | land-slope percentile above which no tree is eligible, when the gate is on |
+
+`tests/test_map_relief_paint.py::test_cli_config_builder_reads_the_relief_paint_keys`
+and `test_standalone_config_load_reads_the_relief_paint_keys` pin both
+readers.
+
+### 11.3c Patch scale
+
+`scripts/measure_vanilla_relief_paint.py` measures the spatial coherence
+scale directly on vanilla: a numeric family-score field's radial
+autocorrelation e-fold radius (same recipe as
+`scripts/measure_vanilla_colormap_blur.py`), over the Thay and Spine
+mountain windows — **4 px** and **5 px**, mean **4.5 px**
+(`docs/evidence/vanilla_paint_family_patch_scale.csv`), which is
+`relief_paint_sigma_px`'s default.
+
+### 11.3d Round 2: whole-map terciles put snow on flat lowland forest — fixed by per-class relative relief + a physical gate
+
+**Coordinator-flagged defect**, confirmed on the render before any code
+changed: `paintshade_spine_ours.png` showed grey and white (rock/snow)
+blobs scattered on the flat, low, green lowland forest south of the Spine —
+ground vanilla never paints that way. Root cause, exactly as flagged: the
+first cut's `elevation_bin` (and `slope_bin`/`curvature_bin`) were **whole-map
+terciles** — a bin's *label* (low/mid/high) was relative to the entire
+canvas's distribution, not to the class or the local landscape. A
+flat, low-lying forest class still has *some* pixels a hair higher than its
+neighbours; the whole-map tercile called those "high elevation" (because the
+canvas as a whole spans mountains thousands of levels taller), and vanilla's
+own measured conditional table has non-zero rock/snow share in high bins for
+almost every class — so the sampler occasionally painted snow on what is, in
+absolute and relative terms, flat ground.
+
+Two independent changes, both `verified` on the render and by test
+(`tests/test_map_relief_paint.py::test_compute_relief_bins_elevation_is_per_class_not_whole_map`,
+`::test_apply_physical_family_gate_vetoes_rock_and_snow_on_flat_low_ground`):
+
+1. **Elevation is `local_relief = height − gaussian_filter(height,
+   LOCAL_RELIEF_SIGMA_PX=24)` (a class's own height above its own local
+   base, over roughly vanilla's own valley width), binned by that class's
+   own tercile of `local_relief`** — never the whole map's. A uniformly low,
+   flat class now gets an even ~1/3 split of ITS OWN small range, and "high"
+   for it means "the highest point in this lowland", not "as tall as a
+   mountain".
+2. **`apply_physical_family_gate` forces rock and snow to probability 0
+   whenever `slope_bin == 0 AND elev_bin == 0`** (flat AND locally low),
+   renormalising the remaining families to sum to 1 — a hard floor-free veto
+   rather than trusting vanilla's own measured (and, at that bin, mostly
+   noise-driven) small non-zero share. `slope`/`curvature` are computed on a
+   **meso-scale** height field (`gaussian_filter(height, 24)` — the same
+   sigma) rather than the raw per-pixel gradient/Laplacian, and binned
+   against **fixed, vanilla-measured absolute cutoffs**
+   (`VANILLA_SLOPE_CUTOFFS = (21.13, 58.62)`,
+   `VANILLA_CURVATURE_CUTOFFS = (-0.676, 0.407)` — printed by
+   `scripts/measure_vanilla_relief_paint.py`, baked into `relief_paint.py`),
+   not a per-map percentile: a percentile is cross-map-relative by
+   definition and would let a rougher map (Faerun measurably is, at fine
+   scales — `docs/map_fidelity.md`) call its own average terrain "steep".
+
+**Verified on the render, final build**: `paintshade_spine_ours.png`
+(regenerated from the final `--steps map` output, this section's numbers)
+shows clean green/tan on the flat lowland south of the range — no
+grey/white speckle — while the mountain crest still reads rock/snow/grass
+exactly as in §11.6.
+
+**Known remaining softer gap, `assumed` not a code defect**: Thay's own
+plateau paint (`paintshade_ours.png`) is visibly finer-grained ("busier")
+than a smooth reference crop. Two independent lines of evidence say this
+tracks Thay's own terrain, not a paint bug: (a)
+`scripts/measure_vanilla_relief_paint.py`'s own patch-scale measurement
+(§11.3c) puts vanilla's **Thay-crop** e-fold radius at **4 px** — objectively
+fine-grained already, smaller than the Spine crop's 5 px — so a correctly
+vanilla-calibrated `sigma_px` should look busier there by construction; (b)
+raising `relief_paint_sigma_px` to 20 (5x the Thay-measured 4 px, tested via
+`configs/_scratch_relief_paint.toml`, not shipped) did make Thay's patches
+visibly larger and smoother, but at a scale with no vanilla support — it was
+reverted rather than kept, because it would trade a measured value for an
+unmeasured "looks nicer" one. The finer texture itself is consistent with
+Thay's own heightmap being a genuinely rougher, eroded plateau at fine
+scales (`docs/step_map_heightmap.md` §2b/§2g, owned by lane `thay-relief`,
+out of this lane's edit scope) feeding rapidly-varying meso-scale
+slope/curvature bins into an otherwise-correct sampler.
+
+### 11.3e Round 3: relief paint is only signal on mountains/hills — everywhere else it is noise, so it now only touches those classes
+
+**Coordinator-flagged defect**, confirmed on the round-2 render before any
+code changed: §11.3d's fix (per-class relative relief + a physical gate)
+removed the flat-lowland speckle its own bug caused, but the render still
+showed two more problems, both on classes OUTSIDE the mountains/hills
+family: `taiga` (flat, low-relief-signal class) still had white/grey
+speckle, and `sword_coast` (mostly flat `plains`/`forest`) turned into
+what the coordinator named **camouflage** — grass/forest/soil/other
+blobs sampled independently per pixel with no relation to the ground,
+strictly worse than build 17/19's uniform lowland paint.
+
+**Root cause is this module's own first measurement**
+(`docs/evidence/vanilla_paint_vs_relief.md`, §11.1): relief explains only
+**2-8%** of a class's in-class material entropy. That number was always
+an AVERAGE — it is dominated by the classes with a wide relief range
+(`mountains`, `hills`), and on a genuinely flat class the measured
+conditional at any bin is close to that class's own UNCONDITIONAL mix.
+Sampling stochastically from something close to a flat, unconditional
+distribution, independently per pixel, is close to sampling independent
+noise — there is no real correlation with the ground for a viewer to read
+as "relief", only visible texture where none should be.
+
+**Fix: restrict the WHOLE substitution (every family, not just rock/snow)
+to a config allow-list of classes, `[map] relief_paint_classes` (default
+`("mountains", "desert_mountains", "hills")` — the three CK3 terrain keys
+whose own slope/elevation range is wide enough for the measured
+conditional to actually vary bin to bin), and within them, to pixels
+where `slope_bin > 0 OR elev_bin > 0`** (the same flat-and-unprominent
+threshold `apply_physical_family_gate` already used for rock/snow
+specifically, now applied class-wide by
+`ck2ck3.map.relief_paint.build_class_eligible_mask`). Every class outside
+the allow-list, and every flat/low pixel even inside it, gets **zero**
+substitution — `detail_index`/`detail_intensity` there are left
+byte-identical to §10's own output, asserted directly by
+`tests/test_map_relief_paint.py::
+test_apply_relief_family_paint_leaves_excluded_classes_byte_identical`
+on a synthetic two-class fixture (one allow-listed, one not, both given
+the same 100%-measured bin so any leak would be visible).
+
+**Cost, measured on the final build** (`docs/evidence/relief_paint_build.log`):
+relief paint now touches **6,842,018 land px (25.9%)**, down from
+20,262,569 (76.6%) in round 2 — **7,836,769 px (29.6% of land)** are even
+eligible (mountains/desert_mountains/hills, above the flat/low threshold)
+before the has-data/sampling gate narrows it further. `detail_index.tga`
+dropped to **29 MB** (from 46 MB) for the same reason: most of the canvas
+reverted to §10's own simpler, more-compressible constant-per-class fill.
+
+**Verified on the render, final build, all three regions**: flat lowland
+(`sword_coast`'s plains/forest, Thay's crater floor, Spine's lowland
+forest) is now clean and uniform, matching build 17/19's own look —
+no camouflage, no speckle. Mountain/hill terrain everywhere still reads
+as rock/snow/grass/tan patches, unchanged from §11.3d's render. The
+family-share check (`scripts/verify_relief_paint_family_shares.py`) drops
+sharply, to **10/48**, on a class basis this is EXPECTED and not
+re-litigated here: it compares each class's OWN AREA against vanilla's
+real, much richer material palette, and 12 of the 15 painted classes are
+now, by design, untouched from §10's simpler 2-3-material configured mix
+— the check was never meant to hold for a class this lane no longer
+paints (§11.6).
+
+### 11.4 Trees vs slope: measured, and why the gate defaults off
+
+`scripts/measure_vanilla_tree_slope.py` bins vanilla's own 549,126 tree
+instances (all 18 `gfx/map/map_object_data/generated/*.txt` files) by the
+land slope under them. **The curve is real but gradual, not a cliff**
+(`docs/evidence/vanilla_tree_slope.csv`, `verified`): relative density rises
+to 1.20x on gentle slopes (25th-70th percentile — gentle ground carries
+*more* trees than dead-flat ground), then declines smoothly to 0.271x even
+in the steepest 0.5% of land — it never reaches zero. Density first sustains
+under half the land mean at the 95th percentile, which is
+`trees_slope_gate_percentile`'s default, but **`trees_slope_gate` itself
+defaults to `false`**: a hard percentile cutoff (`ck2ck3.map.relief_paint
+.compute_slope_percentile_mask`, wired into `tree_scatter` eligibility in
+`build.py`) is a coarser model than the measured curve actually supports.
+The mechanism is implemented and tested for whoever wants a future graded
+density multiplier instead of a binary gate.
+
+### 11.5 The heightmap's shape: cited, not re-measured, plus two new numbers
+
+Per the lane boundary (`heightmap_detail.py`/`heightmap_erosion.py` belong
+to lane `thay-relief`; this lane only reads their output), gradient kurtosis
+and ridge share are **cited** from `docs/step_map_heightmap.md` §2g rather
+than re-derived: **0.44-0.45x vanilla** gradient kurtosis at 1x resolution
+(the measured ceiling — that section already attributes it to two
+structural facts, not a tunable parameter: the metric's own 8 px high-pass
+sits at 0.337 cycles/km against vanilla's 0.674 Nyquist, and the cliff-aware
+de-terrace deliberately spends the quantisation risers that gave the *plain
+rescale* its higher-but-wrong kurtosis), **ridge share 1.02-1.04x** (inside
++-20%, met).
+
+`scripts/measure_relief_shape.py` adds two numbers that section does not
+have, on this lane's own finished heightmap (real run, `[map] relief_paint
+= true`, `trees_slope_gate = true`), same crops
+(`docs/evidence/heightmap_erosion/crops.json`), same vanilla reference
+windows (`docs/evidence/relief_paint/relief_shape.csv`, `.md`, `verified`):
+
+* **drainage density** — channel px / land px at a FIXED absolute
+  flow-accumulation cutoff (vanilla's own pooled 98th percentile across its
+  three reference windows, applied identically everywhere; a per-crop
+  percentile was tried first and rejected as degenerate by construction —
+  it renormalises to ~2% on every crop regardless of the real network,
+  kept as a documented negative result in the script's own docstring).
+  **Vanilla mean 0.0200; ours 0.0076-0.0079 (0.38-0.40x vanilla)** — our
+  drainage network is real but noticeably less concentrated than vanilla's
+  at the same absolute threshold and the same crop scale.
+* **valley cross-section V vs U** (width at 75% depth / width at 25% depth
+  across channel transects; higher = more V-shaped, near 1 = flatter-floored
+  U-shape). **Vanilla mean 2.0; ours 1.875-2.0** — already close to vanilla,
+  unlike drainage density.
+
+**Recommendation for the next heightmap lane, with the measured ceiling
+stated rather than assumed**: gradient kurtosis cannot move much past 0.45x
+at 1x resolution — both structural causes above are resolution-bound, not
+parameter-bound, so `resolution_factor = 2` is the identified lever, not a
+guess. Its shipped cost is already measured (§2e): 182 MB packed pair, 348 s
+`map` step, 19.8 GB peak RSS. **The drainage-density shortfall (0.38-0.40x)
+is a separate, independent finding** — valley cross-section already matches
+vanilla, so this is not a resolution question; it points at the erosion's
+own catchment size (`erosion_iterations` x `erosion_accum_iterations`) as
+the more promising lever, flagged for lane `thay-relief` rather than fixed
+here (`heightmap_detail.py`/`heightmap_erosion.py` are out of this lane's
+scope). Both numbers should be re-measured with
+`scripts/measure_relief_shape.py` whenever the erosion parameters change.
+
+### 11.6 Verification
+
+**Visual, checked directly (coordinator instruction: "look at them
+yourself before reporting").** `docs/evidence/relief_paint/
+paintshade_{ours,spine_ours,sword_coast_ours}.png` vs `paintshade_vanilla_
+alps.png` (a real vanilla mountain window, same 512 px / 1.4839 km-per-px
+scale): Thay's crater rim and escarpment now show grey rock on the steep
+walls, green grass/forest patches threading the lowlands and the crater
+floor, tan/beige patches on the plateaus, and small white patches at the
+highest points — the same structural read as the vanilla reference. Before
+v2 (§11.2), the same crop was a flat grey blob with a green base and no
+internal structure.
+
+**Numeric, round-3 final run** (relief paint restricted to
+`mountains`/`desert_mountains`/`hills`, above a flat/low threshold, §11.3e),
+`[map] relief_paint = true`, `trees_slope_gate = true`, `--steps map` only
+(`docs/evidence/relief_paint_build.log`), `verified`:
+
+* **relief paint changed the primary material on 6,842,018 land px
+  (25.9%)**, of **7,836,769 px (29.6% of land) eligible**
+  (mountains/desert_mountains/hills, above the flat/low threshold) — down
+  from round 2's 20,262,569 px (76.6%), the expected and intended effect of
+  restricting the substitution to classes/pixels where relief actually
+  carries signal (§11.3e).
+* **`scripts/verify_relief_paint_family_shares.py`: 10 of 48 (class,
+  family) pairs with >= 1% vanilla area share land within +-30% of
+  vanilla's own measured share** (`docs/evidence/relief_paint/
+  relief_paint_family_share_check.csv`) — down from round 2's 21/48. This
+  drop is an EXPECTED consequence of §11.3e's fix, not a quality
+  regression: 12 of the 15 painted classes are now, by design, entirely
+  untouched by relief paint (byte-identical to §10's own simpler
+  2-3-material configured mix), so their area-share necessarily disagrees
+  with vanilla's much richer real palette. The check remains meaningful
+  only for the three relief-eligible classes; `mountains` itself still
+  shows 3/6 families within tolerance (`grass` 1.09x, `other` 1.14x, `rock`
+  0.86x) and `hills` 2/6 (`other` 0.83x, `soil` 1.20x). The coordinator's
+  stated success order — visual first — is what this round's fix targets
+  and what the render confirms (below).
+* **trees slope gate excluded 55,465 px** (above the 95th land-slope
+  percentile) from tree eligibility.
+* ck3-tiger (`scripts/validate_output_mod.sh`, map-only descriptor):
+  **fatal 0**, 1326 error/fatal (all `title d_x not defined in
+  common/landed_titles/` cascading from a map-only build with no `titles`
+  step run, not caused by this lane), 322 warnings (`rivers`, pre-existing).
+  Nothing in the report names `detail_index`, `detail_intensity`,
+  `relief_paint` or `materials.settings`.
+* paint file sizes (`[map] terrain_paint_format = "tga_rle"`,
+  `terrain_paint_scale = 1.0`, both from `configs/faerun.toml`, unchanged by
+  this lane): `detail_index.tga` **29 MB** (down from round 2's 46 MB —
+  most of the canvas reverted to §10's simpler, more-compressible fill),
+  `detail_intensity.tga` **24 MB** — both comfortably under GitHub's
+  100 MB/file limit.
+* `uv run pytest`: **1370 passed** (0 failed). `ci/checks.sh`: green.
