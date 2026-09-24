@@ -531,10 +531,13 @@ deepen_sea = true
 sea_shelf_px = 24
 sea_floor = 0
 
-# 1 = heightmap.png the same size as provinces.png. Both Elder Kings 2 and
-# Godherja do this and declare original_heightmap_size equal to their provinces
-# size; only vanilla uses 2 (a 122 MB PNG).
-resolution_factor = 1
+# Vanilla's own choice: heightmap.png at 2x provinces.png (18432x9216 for its
+# 9216x4608 canvas), so the erosion/detail passes get the 0.337-0.674 c/km
+# band vanilla's own ridges and gullies live in (a 1x sheet's Nyquist stops at
+# 0.337). User decision 2026-09-24 (docs/DECISIONS.md): ship at vanilla's own
+# resolution. Elder Kings 2/Godherja ship 1x instead -- both valid, this is a
+# look call. docs/step_map_heightmap.md §2e/§2i.
+resolution_factor = 2
 # CK2 topology.bmp value of the water surface. Measured, not the CK2 default of
 # 95 taken on faith - though it turns out to be 95: Faerun's topology has a
 # four-value dead band at 93-96 with zero pixels, water tops out at 92 and land
@@ -549,8 +552,23 @@ ck3_max_level = 49205  # vanilla's own heightmap maximum
 # Extra (ck2_8bit, ck3_16bit) control points between the water level and the
 # top. Empty = a straight line, which keeps relative altitudes honest.
 curve = []
-# Both reference total conversions use 33; vanilla uses 65.
-tile_size = 33
+# The indirection map addresses the atlas with 8-bit offsets, so one
+# compression level holds at most 256x256 = 65,536 distinct tiles: at
+# resolution_factor=2 our canvas is 520x424 tiles at tile_size=33 (stride 32)
+# and write_packed raises. 65 (stride 64) gives 260x212 = 55,120 and packs --
+# exactly what vanilla's own 2x sheet uses. Both reference TCs (1x heightmaps)
+# use 33. docs/step_map_heightmap.md §2e.
+tile_size = 65
+# The engine never reads map_data/heightmap.png (only heightmap.heightmap's
+# packed_heightmap.png/indirection_heightmap.png pair -- CLAUDE.md invariant,
+# verified: heightmap.heightmap and every text file under game_files name
+# only the packed pair). At resolution_factor=2 it is ~126 MB, over GitHub's
+# 100 MB hard limit (vanilla's own is 122 MB, shipped outside git). Dropped
+# from the committed mod; re-enable locally (true) to run this repo's own
+# evidence scripts (thay_render.py, measure_relief_shape.py,
+# relief_sharp_common.plain_rescale_canvas siblings), which read it back for
+# analysis. docs/step_map_heightmap.md §2i.
+ship_heightmap_png = false
 
 # Barony subdivision: one CK3 province per CK2 holding built in
 # history/provinces. Reference: docs/step_map_baronies.md.

@@ -269,16 +269,46 @@ def inpaint_heights(
     mask *after* :func:`patch_water_ids`, so the overridden pixels are
     already "land" and are not in it -- they are found here from
     ``ck3_raster`` directly, the same way :func:`patch_codes` finds them.
+
+    **Solved on a crop, not the whole canvas.** The lane `heightmap-2x`
+    coordinator's own catch: at `resolution_factor = 2` (`sigma_px` doubled
+    to keep the same ground blur, docs/step_map_heightmap.md §2i) this ran
+    400 full-canvas Gaussian blurs over 225.8M px -- ~450s of the 1808s
+    `map` step, for holes covering 34,560 px total (0.015% of the canvas).
+    Blur-and-restore is a diffusion process: information travels
+    `~sigma * sqrt(2 * iterations)` px in `iterations` passes, so cropping to
+    the holes' own bounding box plus several multiples of that radius (the
+    "fixed" land pixels inside the padding are restored to their true value
+    every pass exactly as in the full-canvas version, so the artificial crop
+    edge -- a `mode="nearest"` boundary now sitting well inside real land
+    rather than at the canvas edge -- has decayed to negligible influence by
+    the time it could reach a hole). Falls back to the whole canvas if the
+    padded box would already cover most of it, so a future rule set with
+    holes spread across the map regresses to the old behaviour rather than a
+    wrong answer.
     """
     if not rules:
         return heights, {}
     hole_ids = {ck2_to_ck3[cid] for cid in rules if cid in ck2_to_ck3}
     if not hole_ids:
         return heights, {"holes_px": 0}
-    holes = np.isin(ck3_raster, list(hole_ids))
-    if not holes.any():
+    holes_full = np.isin(ck3_raster, list(hole_ids))
+    if not holes_full.any():
         return heights, {"holes_px": 0}
-    out = heights.astype(np.float32).copy()
+
+    H, W = heights.shape
+    ys, xs = np.nonzero(holes_full)
+    # propagation radius of `iterations` passes of a sigma-`sigma_px`
+    # Gaussian blur-and-restore, times a safety factor
+    margin = int(round(sigma_px * (2.0 * iterations) ** 0.5 * 4.0)) + 8
+    y0, y1 = max(0, int(ys.min()) - margin), min(H, int(ys.max()) + margin + 1)
+    x0, x1 = max(0, int(xs.min()) - margin), min(W, int(xs.max()) + margin + 1)
+    crop_frac = ((y1 - y0) * (x1 - x0)) / float(H * W)
+    if crop_frac > 0.6:
+        y0, y1, x0, x1 = 0, H, 0, W  # holes too spread out -- whole canvas
+
+    holes = holes_full[y0:y1, x0:x1]
+    out = heights[y0:y1, x0:x1].astype(np.float32).copy()
     original = out.copy()
     fixed = ~holes  # every pixel that must keep its own value every pass
     before = out[holes]
@@ -291,9 +321,13 @@ def inpaint_heights(
         "after_median": round(float(np.median(out[holes])), 1),
         "before_min": round(float(before.min()), 1),
         "after_min": round(float(out[holes].min()), 1),
+        "crop_px": int((y1 - y0) * (x1 - x0)),
+        "crop_frac_of_canvas": round(crop_frac, 5),
     }
     result = heights.copy()
-    result[holes] = np.rint(out[holes]).astype(heights.dtype)
+    crop_result = result[y0:y1, x0:x1]
+    crop_result[holes] = np.rint(out[holes]).astype(heights.dtype)
+    result[y0:y1, x0:x1] = crop_result
     return result, stats
 
 

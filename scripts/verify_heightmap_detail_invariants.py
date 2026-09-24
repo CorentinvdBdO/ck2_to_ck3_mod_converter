@@ -95,7 +95,8 @@ def expand_ranges(spec: str) -> set[int]:
 
 def check_source_bound(out: Path, heights: np.ndarray, land: np.ndarray,
                        water_level: int, sigmas: float, window: int,
-                       valley_mask: np.ndarray | None = None) -> dict:
+                       valley_mask: np.ndarray | None = None,
+                       resolution_factor: int = 1) -> dict:
     """Check 3: the output never leaves the CK2 author's own surface + texture.
 
     Independent of the converter's own arrays: the source is rebuilt here from
@@ -126,10 +127,11 @@ def check_source_bound(out: Path, heights: np.ndarray, land: np.ndarray,
     import relief_pits_common as P
     import relief_sharp_common as C
 
-    source = C.plain_rescale_canvas()
+    source = C.plain_rescale_canvas(resolution_factor=resolution_factor)
     if source.shape != heights.shape:
         return {"skipped": f"source {source.shape} != heightmap {heights.shape}"}
-    tcode, tkeys = P.terrain_codes_from_mod(out, slice(None), slice(None))
+    tcode, tkeys = P.terrain_codes_from_mod(
+        out, slice(None), slice(None), resolution_factor=resolution_factor)
     tol = P.tolerance_field(tcode, tkeys, sigmas=sigmas)
     # A land pixel the plain rescale itself put at or below the water level is
     # *raised to the pin* by the land invariant, which is a bigger claim than
@@ -153,7 +155,9 @@ def check_source_bound(out: Path, heights: np.ndarray, land: np.ndarray,
     return row
 
 
-def check_closed_depression_excess(heights: np.ndarray, land: np.ndarray) -> dict:
+def check_closed_depression_excess(
+    heights: np.ndarray, land: np.ndarray, resolution_factor: int = 1,
+) -> dict:
     """Check 5 (docs/step_map_heightmap.md §2h): a closed loop no single
     small window can see.
 
@@ -180,10 +184,11 @@ def check_closed_depression_excess(heights: np.ndarray, land: np.ndarray) -> dic
     import relief_pits_common as P
     import relief_sharp_common as C
 
-    source = C.plain_rescale_canvas()
+    source = C.plain_rescale_canvas(resolution_factor=resolution_factor)
     if source.shape != heights.shape:
         return {"skipped": f"source {source.shape} != heightmap {heights.shape}"}
-    return P.closed_depression_excess_stats(source, heights, land)
+    widths = tuple(w * resolution_factor for w in P.EXCESS_WINDOWS_PX)
+    return P.closed_depression_excess_stats(source, heights, land, widths=widths)
 
 
 #: check 6's gate: the output's axis-aligned/diagonal giant-step ratio must
@@ -283,7 +288,7 @@ BED_VS_BANK_TOL = 1000.0
 def check_river_valleys(
     overrides_path: Path, id_map_path: Path, water_ids_ck3: set[int],
     heights: np.ndarray, prov_key: np.ndarray, definition: list[dict],
-    water_level: int,
+    water_level: int, *, ring_px: int = BED_VS_BANK_RING_PX,
 ) -> tuple[list[str], set[int]]:
     """Check 8 (docs/step_map_heightmap.md §2h (d)): every province
     `overrides/river_valleys.csv` names `valley` is the OPPOSITE case of
@@ -366,7 +371,7 @@ def check_river_valleys(
         # pinned to the water level" is necessary but was NOT sufficient,
         # since a bed one riser above the water level passes it too.
         ring = (
-            binary_dilation(mask, iterations=BED_VS_BANK_RING_PX)
+            binary_dilation(mask, iterations=ring_px)
             & ~mask & (heights > water_level)
         )
         if not ring.any():
@@ -379,7 +384,7 @@ def check_river_valleys(
             problems.append(
                 f"river_valleys: CK2 province {ck2_id} -> CK3 {ck3_id} "
                 f"(valley) bed median {bed:.0f} is {drop:.0f} levels below "
-                f"its own bank median {bank:.0f} (ring {BED_VS_BANK_RING_PX} "
+                f"its own bank median {bank:.0f} (ring {ring_px} "
                 f"px) -- wanted <= {limit:.0f} (depth "
                 f"{BED_VS_BANK_DEFAULT_DEPTH:.0f} + tol {BED_VS_BANK_TOL:.0f}); "
                 "reads like a canyon, not a shallow valley"
@@ -406,6 +411,8 @@ NARROW_CANYON_RING_PX = 15
 def check_no_narrow_water_pinned_canyons(
     heights: np.ndarray, water_mask_all: np.ndarray, prov_key: np.ndarray,
     definition: list[dict], water_ids: set[int], water_level: int,
+    *, width_px: float = NARROW_CANYON_WIDTH_PX, ring_px: int = NARROW_CANYON_RING_PX,
+    resolution_factor: int = 1,
 ) -> list[dict]:
     """Check 9: any water province narrow enough and surrounded by land high
     enough, with every one of its own pixels still exactly pinned to the
@@ -434,7 +441,7 @@ def check_no_narrow_water_pinned_canyons(
         return [{"id": None, "name": None,
                   "message": f"narrow-canyon check SKIPPED (import: {type(exc).__name__}: {exc})"}]
     try:
-        plain = C.plain_rescale_canvas()
+        plain = C.plain_rescale_canvas(resolution_factor=resolution_factor)
     except Exception as exc:                                  # noqa: BLE001
         return [{"id": None, "name": None,
                   "message": f"narrow-canyon check SKIPPED ({type(exc).__name__}: {exc})"}]
@@ -460,7 +467,7 @@ def check_no_narrow_water_pinned_canyons(
     slices = find_objects(label_img)
 
     H, W = heights.shape
-    pad = NARROW_CANYON_RING_PX + 1
+    pad = ring_px + 1
     hits: list[dict] = []
     for i, row in enumerate(water_rows, start=1):
         sl = slices[i - 1] if i - 1 < len(slices) else None
@@ -477,10 +484,10 @@ def check_no_narrow_water_pinned_canyons(
         if not (own_vals <= water_level).all():
             continue  # not (fully) pinned -- e.g. a `valley` row, already fine
         width = 2.0 * float(distance_transform_edt(mask).max())
-        if width >= NARROW_CANYON_WIDTH_PX:
+        if width >= width_px:
             continue
         ring = (
-            binary_dilation(mask, iterations=NARROW_CANYON_RING_PX)
+            binary_dilation(mask, iterations=ring_px)
             & ~mask & ~water_mask_all[y0:y1, x0:x1]
         )
         if not ring.any():
@@ -515,6 +522,7 @@ def main(argv: list[str]) -> int:
     water_level = int(args[1]) if len(args) > 1 else WATER_LEVEL
     bound_sigmas = 2.0
     bound_window = 3
+    bound_window_explicit = False
     do_bound = "--no-bound" not in flags
     do_closed_depression = "--no-closed-depression" not in flags
     do_wall = "--no-wall" not in flags
@@ -523,6 +531,7 @@ def main(argv: list[str]) -> int:
             bound_sigmas = float(f.split("=", 1)[1])
         elif f.startswith("--bound-window="):
             bound_window = int(f.split("=", 1)[1])
+            bound_window_explicit = True
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
     definition = read_definition(out / "map_data/definition.csv")
@@ -544,19 +553,38 @@ def main(argv: list[str]) -> int:
     if heights.dtype != np.uint16:
         print(f"heightmap.png is not 16-bit (got {heights.dtype})")
         return 1
-    if prov.shape[:2] != heights.shape:
+    # `[map.heightmap] resolution_factor`: vanilla itself ships a heightmap
+    # that is 2x provinces.png, so "different sizes" is not by itself wrong
+    # -- only a non-integer or non-uniform ratio is (docs/step_map_heightmap.md
+    # §2i). Every per-province check below needs `key` (the provinces.png id
+    # raster) at the SAME resolution as `heights`, nearest-neighbour
+    # upsampled like every other province-resolution array a heightmap pass
+    # consumes (`ck2ck3.map.build._nn_upsample`).
+    ph, pw = prov.shape[:2]
+    hh, hw = heights.shape
+    if hh % ph or hw % pw or hh // ph != hw // pw:
         print(
-            f"provinces.png {prov.shape[:2]} and heightmap.png {heights.shape} "
-            "are different sizes"
+            f"provinces.png {pw}x{ph} and heightmap.png {hw}x{hh} are not a "
+            "uniform integer multiple of each other"
         )
         return 1
+    resolution_factor = hh // ph
+    if resolution_factor != 1:
+        print(f"resolution_factor {resolution_factor} detected "
+              f"(heightmap {hw}x{hh} vs provinces {pw}x{ph})")
+        if not bound_window_explicit:
+            bound_window *= resolution_factor
 
     key = (prov[..., 0].astype(np.int64) << 16) | (prov[..., 1].astype(np.int64) << 8) | prov[..., 2]
+    if resolution_factor != 1:
+        key = np.repeat(np.repeat(key, resolution_factor, axis=0),
+                         resolution_factor, axis=1)
 
     river_valley_problems, valley_ids = check_river_valleys(
         Path(__file__).resolve().parents[1] / "overrides/river_valleys.csv",
         Path(__file__).resolve().parents[1] / "docs/evidence/province_id_map.csv",
         water_ids, heights, key, definition, water_level,
+        ring_px=BED_VS_BANK_RING_PX * resolution_factor,
     )
 
     # every CK3 id named by *either* overrides file -- the check 9 "watched"
@@ -658,7 +686,7 @@ def main(argv: list[str]) -> int:
                 valley_mask_arr = None
             bound_row = check_source_bound(
                 out, heights, land_mask, water_level, bound_sigmas, bound_window,
-                valley_mask=valley_mask_arr)
+                valley_mask=valley_mask_arr, resolution_factor=resolution_factor)
         except Exception as exc:                      # noqa: BLE001
             bound_row = {"skipped": f"{type(exc).__name__}: {exc}"}
 
@@ -690,13 +718,14 @@ def main(argv: list[str]) -> int:
     if do_closed_depression:
         try:
             land_mask = heights > water_level
-            cd_row = check_closed_depression_excess(heights, land_mask)
+            cd_row = check_closed_depression_excess(
+                heights, land_mask, resolution_factor=resolution_factor)
             if cd_row.get("skipped"):
                 print(f"closed-depression excess SKIPPED ({cd_row['skipped']})")
             else:
                 print("closed-depression excess (§2h, informational -- "
                       "compare to docs/evidence/thay_relief/):")
-                for w in (3, 9, 27):
+                for w in (3 * resolution_factor, 9 * resolution_factor, 27 * resolution_factor):
                     p95 = cd_row.get(f"cd_excess_{w}px_p95")
                     p99 = cd_row.get(f"cd_excess_{w}px_p99")
                     mx = cd_row.get(f"cd_excess_{w}px_max")
@@ -712,7 +741,7 @@ def main(argv: list[str]) -> int:
             import relief_sharp_common as C
 
             land_mask = heights > water_level
-            source = C.plain_rescale_canvas()
+            source = C.plain_rescale_canvas(resolution_factor=resolution_factor)
             if source.shape != heights.shape:
                 print(f"wall concentration      SKIPPED (source {source.shape} "
                       f"!= heightmap {heights.shape})")
@@ -745,6 +774,9 @@ def main(argv: list[str]) -> int:
         water_mask_all = heights <= water_level
         canyon_hits = check_no_narrow_water_pinned_canyons(
             heights, water_mask_all, key, definition, water_ids, water_level,
+            width_px=NARROW_CANYON_WIDTH_PX * resolution_factor,
+            ring_px=NARROW_CANYON_RING_PX * resolution_factor,
+            resolution_factor=resolution_factor,
         )
         if canyon_hits and canyon_hits[0]["id"] is None:
             print(canyon_hits[0]["message"])

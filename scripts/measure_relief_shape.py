@@ -158,7 +158,21 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("heightmap", type=Path)
     ap.add_argument("--tag", default="ours")
+    ap.add_argument(
+        "--resolution-factor", type=int, default=1,
+        help="[map.heightmap] resolution_factor `heightmap` was built at. "
+             "Vanilla's own heightmap.png is always 2x its provinces.png "
+             "(docs/step_map_heightmap.md §2e); at resolution_factor=1 the "
+             "vanilla crops are 2x2-mean-pooled down to our coarser grid so "
+             "the two are compared at the same ground scale, and at "
+             "resolution_factor=2 both are already the same native "
+             "resolution and the pooling is skipped -- pooling a 2x crop "
+             "down to match a 2x crop would just blur vanilla's own signal "
+             "(docs/step_map_heightmap.md §2i).",
+    )
     args = ap.parse_args(argv)
+    f = args.resolution_factor
+    crop_px = CROP_PX * f
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -167,8 +181,11 @@ def main(argv: list[str]) -> int:
     van_crops = []
     for y, x in VANILLA_CROPS:
         crop = van[y:y + 2 * CROP_PX, x:x + 2 * CROP_PX]
-        crop = crop[: crop.shape[0] // 2 * 2, : crop.shape[1] // 2 * 2]
-        crop = crop.reshape(crop.shape[0] // 2, 2, crop.shape[1] // 2, 2).mean((1, 3))
+        if f == 1:
+            crop = crop[: crop.shape[0] // 2 * 2, : crop.shape[1] // 2 * 2]
+            crop = crop.reshape(crop.shape[0] // 2, 2, crop.shape[1] // 2, 2).mean((1, 3))
+        # f == 2: vanilla's own heightmap.png is already this resolution
+        # (2x its provinces.png) -- no pooling, compare native-for-native.
         land = crop > VANILLA_WATER
         van_crops.append((crop, land))
     del van
@@ -194,9 +211,10 @@ def main(argv: list[str]) -> int:
     print(f"our heightmap ({args.heightmap})...", flush=True)
     ours = load16(args.heightmap)
     land_ours = ours > 0
-    for name, (y, x) in OUR_CROPS.items():
-        y1 = min(y + CROP_PX, ours.shape[0])
-        x1 = min(x + CROP_PX, ours.shape[1])
+    for name, (y0, x0) in OUR_CROPS.items():
+        y, x = y0 * f, x0 * f
+        y1 = min(y + crop_px, ours.shape[0])
+        x1 = min(x + crop_px, ours.shape[1])
         crop = ours[y:y1, x:x1]
         land = land_ours[y:y1, x:x1]
         if land.sum() < 100:

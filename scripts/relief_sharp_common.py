@@ -59,8 +59,17 @@ def load16(path: Path) -> np.ndarray:
         return np.asarray(im.convert("I;16")).astype(np.uint16)
 
 
-def plain_rescale_canvas() -> np.ndarray:
-    """`ours before any detail pass`, exactly as ck2ck3.map.heightmap builds it."""
+def plain_rescale_canvas(resolution_factor: int = 1) -> np.ndarray:
+    """`ours before any detail pass`, exactly as ck2ck3.map.heightmap builds it.
+
+    ``resolution_factor`` matches ``[map.heightmap] resolution_factor``: at
+    2x the heightmap is a finer grid than the canvas (``ck2ck3.map.heightmap.
+    target_size``/``build``), so every one of the four canvas geometry
+    constants below has to scale with it or the plain rescale this lane's own
+    scripts compare against comes out the wrong shape (docs/step_map_heightmap.md
+    §2i) -- silently skipping every check that depends on it, source bound,
+    closed depression, wall concentration and narrow canyon alike.
+    """
     from ck2ck3.map import heightmap as hm
     from ck2ck3.map.config import HeightmapConfig
 
@@ -71,10 +80,14 @@ def plain_rescale_canvas() -> np.ndarray:
             ck3_max_level=MAX_LEVEL,
         )
     )
+    f = resolution_factor
+    scaled_w, scaled_h = SCALED_W * f, SCALED_H * f
+    canvas_w, canvas_h = CANVAS_W * f, CANVAS_H * f
+    offset_x, offset_y = OFFSET_X * f, OFFSET_Y * f
     with Image.open(CK2_MAP / "topology.bmp") as im:
-        scaled = np.asarray(im.convert("L").resize((SCALED_W, SCALED_H), Image.LANCZOS))
-    out8 = np.full((CANVAS_H, CANVAS_W), CK2_SEA_LEVEL, dtype=np.uint8)
-    out8[OFFSET_Y:OFFSET_Y + SCALED_H, OFFSET_X:OFFSET_X + SCALED_W] = scaled
+        scaled = np.asarray(im.convert("L").resize((scaled_w, scaled_h), Image.LANCZOS))
+    out8 = np.full((canvas_h, canvas_w), CK2_SEA_LEVEL, dtype=np.uint8)
+    out8[offset_y:offset_y + scaled_h, offset_x:offset_x + scaled_w] = scaled
     return lut[out8]
 
 

@@ -69,6 +69,12 @@ Image.MAX_IMAGE_PIXELS = None
 REGIONS: dict[str, tuple[int, int, int, int]] = {
     "thay": (1583, 4752, 2222, 5311),
     "spine": (416, 2032, 516, 2315),
+    # same box `scripts/relief_paint_render.py` uses: a Sword Coast HILL
+    # region (not the Waterdeep flat coastal box), 512 px around the centre
+    # of docs/step_map_paint.md §9.4's own Sword Coast box -- the third of
+    # the user's three named crops for the resolution_factor=2 evidence
+    # (docs/step_map_heightmap.md §2i).
+    "sword_coast": (1708, 2848, 2220, 3360),
 }
 #: back-compat for callers that still import the old single-region name
 THAY_CORE = REGIONS["thay"]
@@ -203,7 +209,8 @@ def build15_reconstruction_canvas(cache_dir: Path) -> np.ndarray:
 
 def load_sources(cache_dir: Path, region: str = "thay",
                  include_build15: bool = True,
-                 extra: dict[str, Path] | None = None) -> dict[str, np.ndarray]:
+                 extra: dict[str, Path] | None = None,
+                 extra_resolution_factor: int = 1) -> dict[str, np.ndarray]:
     ys, xs = crop_slices(region)
     ck2_crop, native_box = ck2_source_truth_crop(region)
     print(f"  ck2 source native box (topology.bmp px) = {native_box}, "
@@ -217,8 +224,17 @@ def load_sources(cache_dir: Path, region: str = "thay",
     }
     if include_build15:
         out["build15"] = build15_reconstruction_canvas(cache_dir)[ys, xs]
+    # `--extra` sources may be a heightmap built at a different
+    # `[map.heightmap] resolution_factor` than the other four (all canvas
+    # resolution, `resolution_factor=1`) -- `REGIONS`/`crop_slices` are
+    # canvas px, so a `resolution_factor`x source needs the same physical
+    # crop at `resolution_factor`x the pixel coordinates
+    # (docs/step_map_heightmap.md §2i).
+    ef = extra_resolution_factor
+    ys_e = slice(ys.start * ef, ys.stop * ef)
+    xs_e = slice(xs.start * ef, xs.stop * ef)
     for name, path in (extra or {}).items():
-        out[name] = C.load16(path)[ys, xs]
+        out[name] = C.load16(path)[ys_e, xs_e]
     return out
 
 
@@ -280,6 +296,10 @@ def main() -> None:
     ap.add_argument("--extra", nargs="*", default=[],
                     help="name=path/to/heightmap.png, rendered alongside the "
                          "four standard sources")
+    ap.add_argument("--extra-resolution-factor", type=int, default=1,
+                    help="[map.heightmap] resolution_factor the --extra "
+                         "heightmap(s) were built at (the four standard "
+                         "sources are always canvas resolution)")
     args = ap.parse_args()
 
     out = Path(args.out_dir)
@@ -297,7 +317,8 @@ def main() -> None:
 
     t0 = time.time()
     sources = load_sources(cache_dir, args.region,
-                           include_build15=not args.no_build15, extra=extra)
+                           include_build15=not args.no_build15, extra=extra,
+                           extra_resolution_factor=args.extra_resolution_factor)
     label = args.region.capitalize()
     # "thay" keeps the original (unprefixed) filenames this lane's docs
     # already reference; any other region gets its own name in the file so

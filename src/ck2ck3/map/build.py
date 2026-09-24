@@ -621,6 +621,17 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
 
         log("building heightmap")
         heights = heightmap.build(src / "topology.bmp", canvas, cfg.heightmap)
+        # every downstream heightmap pass reads this: at resolution_factor > 1
+        # `heights` is `f`x the canvas, but `ck3_raster`/`water_mask` (and
+        # everything else the province step built) stay at canvas resolution
+        # -- they have to be nearest-neighbour upsampled before they can index
+        # or mask a `heights`-shaped array, and every *_px window/ring/sigma
+        # below is a *canvas*-pixel length that has to grow by `f` to mean the
+        # same ground distance on the finer grid (docs/step_map_heightmap.md
+        # §2i).
+        f = cfg.heightmap.resolution_factor
+        ck3_raster_hm = _nn_upsample(ck3_raster, f)
+        water_mask_hm = _nn_upsample(water_mask, f)
 
         if lake_to_land_rules:
             # BEFORE deepen_sea: CK2 draws a lake's own topology.bmp pixels
@@ -631,8 +642,9 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             # province is reclassified -- reclassifying the province alone
             # is not enough (docs/step_map_heightmap.md §2h iii).
             heights, l2l_height_stats = lake_to_land.inpaint_heights(
-                heights, ck3_raster, ids.ck2_to_ck3, lake_to_land_rules,
-                water_mask,
+                heights, ck3_raster_hm, ids.ck2_to_ck3, lake_to_land_rules,
+                water_mask_hm,
+                sigma_px=1.5 * f,
             )
             log(f"lake_to_land heightmap inpaint: {l2l_height_stats}")
             report.setdefault("lake_to_land", {})["heights"] = l2l_height_stats
@@ -646,8 +658,9 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
             # seed must not include any other still-pinned water province
             # (docs/step_map_heightmap.md §2h (d)).
             heights, valley_stats = lake_to_land.carve_valleys(
-                heights, ck3_raster, ids.ck2_to_ck3, river_valley_rules,
-                land_mask=~water_mask, water_level=cfg.heightmap.ck3_water_level,
+                heights, ck3_raster_hm, ids.ck2_to_ck3, river_valley_rules,
+                land_mask=~water_mask_hm, water_level=cfg.heightmap.ck3_water_level,
+                ring_px=15 * f, ring_max_px=240 * f,
             )
             log(f"river_valleys heightmap carve: {valley_stats}")
             report.setdefault("river_valleys", {})["heights"] = valley_stats
@@ -661,13 +674,14 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
         if cfg.heightmap.deepen_sea:
             # CK2 carries almost no bathymetry; CK3 paints shallow water as
             # sand (docs/step_map_heightmap.md, 2026-09-10 in-game check).
+            sea_shelf_px_hm = cfg.heightmap.sea_shelf_px * f
             log(f"deepening the sea (floor {cfg.heightmap.sea_floor}, "
-                f"shelf {cfg.heightmap.sea_shelf_px} px)")
+                f"shelf {sea_shelf_px_hm} px)")
             before = heights[heights <= cfg.heightmap.ck3_water_level]
             heights = heightmap.deepen_sea(
                 heights,
                 cfg.heightmap.ck3_water_level,
-                shelf_px=cfg.heightmap.sea_shelf_px,
+                shelf_px=sea_shelf_px_hm,
                 floor=cfg.heightmap.sea_floor,
             )
             after = heights[heights <= cfg.heightmap.ck3_water_level]
@@ -675,7 +689,7 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 "median_before": int(np.median(before)) if before.size else 0,
                 "median_after": int(np.median(after)) if after.size else 0,
                 "water_level": int(cfg.heightmap.ck3_water_level),
-                "shelf_px": int(cfg.heightmap.sea_shelf_px),
+                "shelf_px": int(sea_shelf_px_hm),
             }
             log(f"sea floor: median {report['sea_floor']['median_before']} -> "
                 f"{report['sea_floor']['median_after']} (water level "
@@ -698,19 +712,84 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 f"fill>={cfg.heightmap_detail.fill_min_cycles_per_km} c/km, "
                 f"slope ceiling {cfg.heightmap_detail.erosion_slope_ceiling_steps}"
                 " steps; docs/step_map_heightmap.md §2b/§2c/§2d)")
-            f = cfg.heightmap.resolution_factor
             # every `*_px` key is a *canvas*-pixel length, so at
             # resolution_factor > 1 it has to be re-expressed in heightmap
             # pixels or the same number means half the distance on the
             # ground: a sigma 2.2 px de-terrace at 2x blurs 1.6 km instead
             # of 3.3 km and leaves the transfer curve's risers behind
-            # (docs/step_map_heightmap.md §2e).
+            # (docs/step_map_heightmap.md §2e). Every window/sigma px key of
+            # `HeightmapDetailConfig` gets the same treatment (§2i audit):
+            # `deterrace_sigma_px`/`gain_blur_px`/`coast_smooth_px` (§2e,
+            # original), plus `wall_spread_window_px`/`wall_spread_sigma_px`
+            # (the wall-spread local-relief window), `bound_window_px` (the
+            # §2f one-source-pixel bound window) and
+            # `source_adaptive_window_px` (the §2h source-roughness window).
+            # `fill_min_cycles_per_km`/`erosion_slope_ceiling_steps`/
+            # `erosion_slope_gate_steps`/`river_depth` and every `*_km` key
+            # are already ground-distance units and need no scaling; the
+            # spectral pass and `macro_slope_gate` take `km_per_px` directly.
             detail_cfg = (
                 cfg.heightmap_detail if f == 1 else replace(
                     cfg.heightmap_detail,
                     deterrace_sigma_px=cfg.heightmap_detail.deterrace_sigma_px * f,
                     gain_blur_px=cfg.heightmap_detail.gain_blur_px * f,
                     coast_smooth_px=cfg.heightmap_detail.coast_smooth_px * f,
+                    wall_spread_window_px=max(
+                        1, int(round(cfg.heightmap_detail.wall_spread_window_px * f))
+                    ),
+                    wall_spread_sigma_px=cfg.heightmap_detail.wall_spread_sigma_px * f,
+                    bound_window_px=max(
+                        1, int(round(cfg.heightmap_detail.bound_window_px * f))
+                    ),
+                    source_adaptive_window_px=(
+                        cfg.heightmap_detail.source_adaptive_window_px * f
+                    ),
+                    # the coordinator's own catch, 2026-09-24: the first real
+                    # resolution_factor=2 run showed dense axis-aligned
+                    # (mostly horizontal) hairline stripes on every slope --
+                    # visible in a render, and check 6 (wall concentration)
+                    # failing hard (axis/diag k=2 0.8 vs the source's own
+                    # 0.25, threshold 0.60). `scripts/heightmap_2x_crop.py`
+                    # (a ~1 M px crop harness, seconds per run instead of
+                    # ~10.5 minutes) isolated it by ablation: disabling
+                    # ridged relief, erosion diffusion, source-adaptive gain,
+                    # or the source bound left the stripes byte-for-byte
+                    # unchanged; running Gaussian de-terrace instead of
+                    # Perona-Malik removed them completely.  Cause: PM's own
+                    # known staircase-collapse artifact
+                    # (`heightmap_erosion.deterrace_cliff_aware`'s docstring,
+                    # CLAUDE.md) gets *more* pronounced with more diffusion
+                    # steps, and `deterrace_iterations = sigma_px**2 /
+                    # (2*lambda)` scales with the SQUARE of `deterrace_sigma_px`
+                    # -- which is itself scaled by `f` above -- so 2x runs
+                    # ~4x the 1x iteration count (54 vs 13 here) and the
+                    # collapse has that much more "time" to fully concentrate
+                    # a drop onto one axis-aligned edge before wall-spread
+                    # ever sees it. `wall_spread_iterations` made no
+                    # difference at any resolution (crop-harness swept 4/8/16,
+                    # identical output): the bottleneck is the GATE, not the
+                    # smoothing budget.  `wall_spread_max_ratio`/
+                    # `wall_spread_source_margin` are dimensionless (not
+                    # scaled elsewhere) but were tuned entirely at 1x, where
+                    # the source's own concentration ratio is close to 0.5;
+                    # at 2x a genuine cliff is naturally *less* concentrated
+                    # (it spans ~2x more pixels), so the source's own ratio
+                    # drops to ~0.25-0.3 and the OLD gate (0.55/0.15) never
+                    # fires on this build's own manufactured walls. A crop
+                    # sweep (thay/spine/sword_coast) found `max_ratio = 0.20`,
+                    # `source_margin = 0.05` clears check 6's threshold
+                    # (source + 0.35) on all three with room, while leaving
+                    # land elevation range unchanged (p99/std moved < 0.5 %)
+                    # -- only the pathological single-pixel gradient spikes
+                    # shrink (p99 1053 -> 693 levels/px on the Spine crop),
+                    # which is wall-spread doing its job, not new smoothing.
+                    # Not re-derived from first principles; an empirical fit
+                    # at f=2, documented rather than hard-coded per-factor
+                    # since only f in {1, 2} is used anywhere
+                    # (docs/step_map_heightmap.md §2i,
+                    # docs/evidence/heightmap_2x/crop_ablation/).
+                    wall_spread_max_ratio=0.20,
+                    wall_spread_source_margin=0.05,
                 )
             )
             terrain_code, terrain_keys = _terrain_code_grid(
@@ -735,6 +814,7 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 water_level=cfg.heightmap.ck3_water_level,
                 max_level=cfg.heightmap.ck3_max_level,
                 cfg=detail_cfg,
+                resolution_factor=f,
             )
             detail_stats["resolution_factor"] = f
             detail_stats["deterrace_sigma_px_used"] = detail_cfg.deterrace_sigma_px
@@ -823,7 +903,17 @@ def run(cfg: MapConfig, sink: Sink, *, skip_images: bool = False) -> dict:
                 percentile=cfg.trees_slope_gate_percentile,
                 resolution_factor=cfg.heightmap.resolution_factor,
             )
-        sink.binary("map_data/heightmap.png", lambda p: heightmap.save_png(heights, p))
+        if cfg.heightmap.ship_heightmap_png:
+            sink.binary("map_data/heightmap.png", lambda p: heightmap.save_png(heights, p))
+        else:
+            # the engine never reads this file (only heightmap.heightmap's
+            # packed_heightmap.png/indirection_heightmap.png pair, CLAUDE.md
+            # invariant) -- at resolution_factor=2 it is ~126 MB, over
+            # GitHub's 100 MB hard limit, so it is dropped from the shipped
+            # mod rather than committed (docs/step_map_heightmap.md §2i).
+            log("skipping map_data/heightmap.png (ship_heightmap_png=false: "
+                "not read by the engine, dropped to stay under GitHub's "
+                "100 MB file limit at this resolution_factor)")
 
         log("packing heightmap")
         meta = _write_packed(sink, heights, cfg)

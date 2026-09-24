@@ -310,6 +310,7 @@ def _map_config(ctx: Context) -> map_config.MapConfig:
             deepen_sea=bool(hm.get("deepen_sea", True)),
             sea_shelf_px=int(hm.get("sea_shelf_px", 24)),
             sea_floor=int(hm.get("sea_floor", 0)),
+            ship_heightmap_png=bool(hm.get("ship_heightmap_png", True)),
         ),
         heightmap_detail=map_config.heightmap_detail_config(raw),
         provinces=map_config.ProvincesConfig(
